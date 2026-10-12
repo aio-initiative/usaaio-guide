@@ -1,0 +1,14 @@
+
+# Python bytecode from the figure pipeline
+__pycache__/
+*.pyc
+
+# Local venv for the figure pipeline
+.venv/
+
+# macOS folder metadata
+.DS_Store
+
+# Generated slide decks (rebuild: npm run build:slides).
+# Anchored, so it does not also swallow scripts/slides/ where the generator lives.
+/slides/

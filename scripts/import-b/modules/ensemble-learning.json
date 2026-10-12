@@ -1,0 +1,137 @@
+{
+  "aModule": "tree-based-models-ensembles",
+  "stage": "Round 1",
+  "order": [
+    "ens-two-teams-of-models",
+    "ens-trees-that-skip-a-row",
+    "ens-copied-column-importance",
+    "ens-adaboost-after-one-round",
+    "ens-absolute-error-first-round",
+    "ens-rounds-to-fit-training-set",
+    "ens-three-voters-one-test-set",
+    "ens-patients-out-of-bag"
+  ],
+  "fixes": [
+    {
+      "file": "ens-adaboost-after-one-round",
+      "find": "<center>\n\n| Row",
+      "replace": "| Row",
+      "why": "The importer never calls its own strip_center_tags(), so the two centering tags survive as empty prose paragraphs in the theory setup and as a stray '<center> </center>' inside the index prompt. The tags are presentation only; dropping them changes no word of B's text."
+    },
+    {
+      "file": "ens-adaboost-after-one-round",
+      "find": "0.10 |\n\n</center>\n\nThis",
+      "replace": "0.10 |\n\nThis",
+      "why": "Second half of the same workaround."
+    },
+    {
+      "file": "ens-copied-column-importance",
+      "find": "The run gives x0 0.23 and the copy 0.24.",
+      "replace": "One run gives x0 0.23 and the copy 0.24, and the exact values shift with the data and the seed.",
+      "why": "The statement gives no dataset and no seed, so 0.23 and 0.24 cannot be reproduced from it. The sentence now says they come from one run and vary. The 8/15 against 1/3 argument is unchanged."
+    }
+  ],
+  "parts": {
+    "ens-two-teams-of-models": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "ens-trees-that-skip-a-row": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "explanation",
+        "requirement": "Reasoning is required."
+      }
+    },
+    "ens-copied-column-importance": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "ens-adaboost-after-one-round": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "ens-absolute-error-first-round": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is required."
+      }
+    },
+    "ens-rounds-to-fit-training-set": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "ens-three-voters-one-test-set": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "explanation",
+        "requirement": "Reasoning is required."
+      }
+    },
+    "ens-patients-out-of-bag": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "explanation",
+        "requirement": "Reasoning is required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "ens-two-teams-of-models": "Team 1 trains small neural nets on the full training set, each from a different random seed, and averages their predictions. Averaging 5 nets gives a variance of 0.8 at one test input and averaging 15 gives 0.6. Assume every net's prediction has the same variance and every pair of nets the same correlation.",
+    "ens-adaboost-after-one-round": "Partway through AdaBoost, eight training rows carry weights that add up to 1. This round's stump misclassifies rows 4 and 6 and gets the other six right. AdaBoost gives it its vote and updates the weights as in the lesson.",
+    "ens-patients-out-of-bag": "A clinic's table has 300 patients with three visits each, one row per visit, 900 rows in all. A patient's three rows are nearly identical, and they carry the same label. A random forest of 200 deep trees is trained on the 900 rows with oob_score=True, and the model will be used on patients the clinic has not seen yet."
+  }
+}

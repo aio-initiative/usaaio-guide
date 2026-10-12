@@ -1,0 +1,93 @@
+{
+  "aModule": "sequence-models-transfer-learning",
+  "stage": "Camp",
+  "fixes": [],
+  "parts": {
+    "rnn-clipped-bias-gradient": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "rnn-delay-line-state-size": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "rnn-forget-bias-memory-span": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "rnn-hundred-steps-triangular-w": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "rnn-raising-the-recurrent-weight": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "rnn-truncation-chunk-reach": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "rnn-bidirectional-summary-vector": "A bidirectional GRU with hidden size 32 reads 40-token reviews, so each step's output holds 64 features and h_n stacks the two directions. Which expression joins each pass's final state, taken after that pass has read all 40 tokens, into a (16, 64) summary with one row per review?",
+    "rnn-clipped-bias-gradient": "A recurrent model's gradients on one batch have length 12 for W_hh, length 4 for W_xh, and the bias gradient is (1.8, -2.4). Between loss.backward() and optimizer.step() the loop calls PyTorch's clip_grad_norm_ with a threshold of 2.0. What gradient does the optimizer then use for the bias?",
+    "rnn-delay-line-state-size": "A linear RNN with the identity instead of tanh has to output each input two steps later, with the first two outputs zero. The question is the smallest hidden size that can do this exactly, weights that work at that size, and why nothing smaller can.",
+    "rnn-forget-bias-memory-span": "An LSTM carries a stored value through steps where the input gate is 0 and the forget gate is set by its bias alone. Compute how many steps a bias of 3 takes to halve the value and the smallest bias that keeps at least 90% after 200 steps, then explain why a bias of 20 is too large.",
+    "rnn-gru-flipped-update-gate": "A teammate's GRU writes the update gate's blend the other way round: their gate keeps the old state where yours keeps the candidate, with the reset gate and the candidate computed the same way. Which update-gate weights and bias make the two GRUs compute exactly the same function?",
+    "rnn-hundred-steps-triangular-w": "A recurrent layer with two hidden units uses a triangular recurrent matrix whose largest singular value is exactly 1.6. By at most how much can 100 steps scale the length of a gradient carried back through the layer?",
+    "rnn-loss-at-every-step": "A recurrent layer with two hidden units uses the identity instead of tanh, makes a prediction at every step, and the loss sums the squared error over three steps. Given the error at each of the three steps, find the gradient of the total loss with respect to the first hidden state.",
+    "rnn-raising-the-recurrent-weight": "A one-unit tanh RNN carries information across long gaps in which no input arrives, and its per-step gradient factor is the recurrent weight times the tanh slope at the new state. A teammate proposes raising the recurrent weight past 1 to stop the gradient product from shrinking; the parts ask whether that helps, why it cannot at a settled state, and when the gradient explodes instead.",
+    "rnn-truncation-chunk-reach": "A stream is cut into chunks of k steps and trained with truncated BPTT, so each loss reaches only the inputs inside its own chunk. Find what fraction of the steps see the reading five steps back at k = 8, and how large k must be for that fraction to reach 90 percent."
+  },
+  "order": [
+    "rnn-delay-line-state-size",
+    "rnn-loss-at-every-step",
+    "rnn-truncation-chunk-reach",
+    "rnn-clipped-bias-gradient",
+    "rnn-forget-bias-memory-span",
+    "rnn-gru-flipped-update-gate",
+    "rnn-bidirectional-summary-vector",
+    "rnn-hundred-steps-triangular-w",
+    "rnn-raising-the-recurrent-weight"
+  ]
+}

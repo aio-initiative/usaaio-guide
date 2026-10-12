@@ -1,0 +1,68 @@
+{
+  "module": "transformer-predict",
+  "stage": "Round 2",
+  "index": [
+    {
+      "id": "tf-the-loss-of-a-longer-text",
+      "moduleId": "transformer-predict",
+      "title": "The Loss of a Longer Text",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=tf-the-loss-of-a-longer-text",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "The training text grows to \"the cat sat on the\", so the model reads four tokens and each position predicts the one after it. The causal mask keeps the first three losses as they were, and the new position, whose input is \"on\", gets a final vector of its own. Compute the cross-entropy loss averaged over all four positions. 1 part.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    }
+  ],
+  "theory": [
+    {
+      "id": "tf-the-loss-of-a-longer-text",
+      "moduleId": "transformer-predict",
+      "title": "The Loss of a Longer Text",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "The training text grows to \"the cat sat on the\". The model reads \"the cat sat on\" and makes four predictions, with the targets \"cat\", \"sat\", \"on\" and \"the\". Running the block on these four tokens gives \"on\", at the fourth position, the final vector $(-0.675,\\ -0.796,\\ -0.221,\\ 1.692)$."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the loss, averaged over the four positions? Give three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The first three positions are the ones on this page. The causal mask keeps each of them from seeing \"on\", so their final vectors, probabilities and losses do not change: 3.906, 3.583 and 0.299."
+            },
+            {
+              "p": "The new position needs its logits, the dot products of its final vector with the eight rows of $E$:"
+            },
+            {
+              "tex": "\\begin{array}{ccccccccc}\n\\text{} & \\text{`<end>`} & \\text{the} & \\text{cat} & \\text{sat} & \\text{on} & \\text{mat} & \\text{dog} & \\text{ran} \\\\ \\hline\n\\text{Logit} & \\text{−1.692} & \\text{−0.675} & \\text{−1.017} & 1.471 & 3.163 & \\text{−1.471} & 0.896 & \\text{−0.896} \\\\\n\\text{$e$ to its power} & 0.184 & 0.509 & 0.362 & 4.354 & 23.641 & 0.230 & 2.450 & 0.408\n\\end{array}"
+            },
+            {
+              "p": "The total is 32.138, so the probability of the target \"the\" is $0.509 / 32.138 = 0.01584$, and its loss is $-\\log 0.01584 = 4.145$. The average over the four positions is"
+            },
+            {
+              "tex": "\\frac{3.906 + 3.583 + 0.299 + 4.145}{4} = \\frac{11.933}{4} = 2.983 ."
+            },
+            {
+              "p": "The model again gives \"on\" the most probability, 0.736, so the new target costs more than any of the first three. Dividing the four losses by 3, the number of positions on this page, would give 3.978. Every position with a target counts once, and the last input token, \"on\", has one."
+            },
+            {
+              "result": "2.983"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

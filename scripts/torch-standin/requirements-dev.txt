@@ -1,0 +1,9 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+numpy
+pytest
+torch
+torchvision
+# Only for run_notebooks.py, which runs notebooks that draw figures and one that reads digits
+# with scikit-learn. The parity tests need neither, so they stay out of their own venv.
+matplotlib
+scikit-learn

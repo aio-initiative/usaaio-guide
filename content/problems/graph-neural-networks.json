@@ -1,0 +1,849 @@
+{
+  "module": "graph-neural-networks",
+  "stage": "Advanced",
+  "index": [
+    {
+      "id": "graph-neural-networks-implementation-task",
+      "moduleId": "graph-neural-networks",
+      "title": "Graph Message Passing Practice",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=graph-neural-networks",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Advanced"
+      ],
+      "prompt": "Neighborhood feature propagation (the core GNN operation) + a classifier. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Test accuracy must reach the target shown in the evaluation cell."
+    },
+    {
+      "id": "gnn-attention-on-an-edge-list-numpy",
+      "moduleId": "graph-neural-networks",
+      "title": "Graph Attention on an Edge List",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=gnn-attention-on-an-edge-list-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Advanced"
+      ],
+      "prompt": "Graph libraries compute the lesson's attention head from the edge list instead of a masked n by n score matrix: one score per edge, and a softmax taken separately over the edges that end at each node. Write that softmax and the head in NumPy, for seven accounts on a site where following is one-way.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "gnn-train-a-gcn-by-hand-numpy",
+      "moduleId": "graph-neural-networks",
+      "title": "Training a Two-Layer GCN by Hand",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=gnn-train-a-gcn-by-hand-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Advanced"
+      ],
+      "prompt": "Ninety air-quality sensors are scattered over a field, and each one sits in one of three pollution zones. Only fifteen sensors have been checked by hand. Train a two-layer GCN on those fifteen, with the forward pass, the loss and the gradients written in NumPy, and compare it with the same network when it cannot see the graph.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "gnn-a-favorite-neighbor-for-each-node",
+      "moduleId": "graph-neural-networks",
+      "title": "A Favorite Neighbor for Each Node",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=gnn-a-favorite-neighbor-for-each-node",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Advanced"
+      ],
+      "prompt": "Four listeners on a music site are linked in a ring, P to j to Q to k and back to P, so P and Q each know j and k. Each has one taste score: P is 0, j is 1, k is 9 and Q is 10, and a recommender wants each listener to weight most the friend whose taste is closest to their own, so P should prefer j over k while Q should prefer k over j. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "gnn-a-sum-that-forgets-nothing",
+      "moduleId": "graph-neural-networks",
+      "title": "A Sum Readout That Forgets Nothing",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=gnn-a-sum-that-forgets-nothing",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Advanced"
+      ],
+      "prompt": "After its message-passing layers, every node's state is a whole number from 0 to 3, and every graph has one to four nodes. The readout applies a fixed function f to each node's state and adds up the results. Which f gives different readouts to any two graphs whose node states differ as collections, ignoring order?",
+      "answer": "f(x) = 5^x. Write the readout as c0 + 5 c1 + 25 c2 + 125 c3, where cx counts the nodes in state x. Each count is between 0 and 4, so these are the digits of the readout in base 5, and two different lists of counts give two different numbers. The base has to exceed the largest possible count, which is why base 4 fails. A sum can tell apart every collection, but only after a well-chosen f, which in practice is a learned network applied to each node before the sum."
+    },
+    {
+      "id": "gnn-a-swapped-edge-convention",
+      "moduleId": "graph-neural-networks",
+      "title": "An Edge List Read Backward",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=gnn-a-swapped-edge-convention",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Advanced"
+      ],
+      "prompt": "A network of six junctions is stored as an edge list where the top row of each column sends a message to the bottom row, and the layer should give each junction the sum of its incoming messages. A teammate builds the dense matrix the other way round, A[src, dst] = 1, and computes A @ H. Decide for which junctions the product still gives the right sum whatever the features in H are.",
+      "answer": "Junctions 0 and 1. With A[src, dst] = 1, row v of A marks the junctions that v sends to, so A @ H gives each junction the sum over the junctions it sends to. That equals the sum over the junctions it receives from, for every H, exactly when the two lists are the same, that is when all of the junction's roads are two-way. Junction 0 sends to and receives from 1, and junction 1 sends to and receives from 0 and 2. Every other junction has a one-way road, and junction 5, which sends nowhere, gets 0 in place of h4."
+    },
+    {
+      "id": "gnn-average-over-a-node-and-its-neighbors",
+      "moduleId": "graph-neural-networks",
+      "title": "An Average over a Node and Its Neighbors",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=gnn-average-over-a-node-and-its-neighbors",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Advanced"
+      ],
+      "prompt": "Every node of a graph carries one number and has at least one neighbor, and the target at each node is the plain average of the node's own number and its neighbors'. Four layers are offered, each with one output per node, the identity in place of the activation, and any weights you like. Which one outputs exactly that target at every node of every graph?",
+      "answer": "A single GAT head, with its weight and attention vector chosen by hand. Set the weight to 1 and the attention vector to 0. Every score is then LeakyReLU(0) = 0, whatever the features, so the softmax gives each of the d_v + 1 nodes in the neighborhood, the node included, the same weight 1/(d_v + 1), and the output is t_v. The softmax divides by the size of each neighborhood on its own, which is the degree-dependent share that GCN and GraphSAGE cannot produce. If the half of the attention vector that multiplies the neighbor's z were not 0, the scores, and with them the weights, would change with the neighbors' features, and the average would no longer be plain."
+    },
+    {
+      "id": "gnn-constant-signal-on-a-star",
+      "moduleId": "graph-neural-networks",
+      "title": "A Constant Signal on a Star",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=gnn-constant-signal-on-a-star",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Advanced"
+      ],
+      "prompt": "A star graph has one hub joined to seven leaves and no other edges, and every node carries the same scalar feature 1. Apply only the aggregation step of a GCN layer with the symmetric degree normalization, no weight matrix and no nonlinearity, and report what the hub receives. Then give the hub a feature r and every leaf a 1, and find the r for which the output equals the input. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "gnn-features-for-a-featureless-graph",
+      "moduleId": "graph-neural-networks",
+      "title": "Input Features for Graphs That Have None",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=gnn-features-for-a-featureless-graph",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Advanced"
+      ],
+      "prompt": "Every graph in a dataset has 12 nodes and an adjacency matrix but the nodes carry no features, so a model must build its input matrix from the adjacency alone. Which of four candidates keeps the stack of graph convolution layers permutation equivariant, so renumbering a graph only reorders the output rows?",
+      "answer": "H = A(A1), one column holding for each node the sum of its neighbors' degrees. A1 is the vector of degrees, and multiplying it by A adds up each node's neighbors' degrees. After renumbering, the adjacency is P A P^T, and since P^T P = I and P^T 1 = 1 (a permutation leaves the all-ones vector alone), the new input is P A P^T P A P^T 1 = P A A 1. That is the old input with its rows moved like the nodes, the only property of H that the lesson's derivation uses, so every layer stays equivariant."
+    },
+    {
+      "id": "gnn-many-layers-without-weights",
+      "moduleId": "graph-neural-networks",
+      "title": "Where Many Layers Without Weights Lead",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=gnn-many-layers-without-weights",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Advanced"
+      ],
+      "prompt": "A stack of k GCN layers with the identity weight matrix and no nonlinearity pushes the node features through the normalized adjacency S, k times. Find what S^k H tends to as k grows for the symmetric normalization, and for the row-average normalization. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "gnn-three-neighbors-at-every-node",
+      "moduleId": "graph-neural-networks",
+      "title": "Two Graphs with Three Neighbors at Every Node",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=gnn-three-neighbors-at-every-node",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Advanced"
+      ],
+      "prompt": "Graph X is the complete bipartite graph K(3,3) and graph Y is a triangular prism. Both are connected with six nodes, nine edges and exactly three neighbors at every node, and the nodes carry no features. Decide whether a message-passing network of the lesson's form can give the two graphs different outputs, whether joining one extra node to everything changes that, and find the smallest power k for which the traces of A to the k differ between the two graphs. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "gnn-three-rounds-of-neighbor-sums",
+      "moduleId": "graph-neural-networks",
+      "title": "Three Rounds of Neighbor Sums",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=gnn-three-rounds-of-neighbor-sums",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Advanced"
+      ],
+      "prompt": "A bare message-passing network on a five-node graph replaces each node's vector by the sum of its neighbors' vectors every round. Work out how many times node 4's vector counts node 3's starting vector after three rounds and after four rounds, and say which nodes within three hops have no effect after three rounds. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    }
+  ],
+  "theory": [
+    {
+      "id": "gnn-a-favorite-neighbor-for-each-node",
+      "moduleId": "graph-neural-networks",
+      "title": "A Favorite Neighbor for Each Node",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "Four listeners on a music site are linked in a ring, $P$ to $j$ to $Q$ to $k$ and back to $P$, so $P$ and $Q$ each know $j$ and $k$. Each has one number $h$ for their taste: $h_P = 0$, $h_j = 1$, $h_k = 9$ and $h_Q = 10$. A recommender wants each listener to weight most the friend whose taste is closest to their own, so $P$ should weight $j$ above $k$, and $Q$ should weight $k$ above $j$."
+      ],
+      "setup": [
+        {
+          "p": "The lesson's attention head, with one feature per node, has $z = wh$ for some $w \\ne 0$ and the scores"
+        },
+        {
+          "tex": "e_{il} = \\operatorname{LeakyReLU}(a_1 z_i + a_2 z_l),"
+        },
+        {
+          "p": "with slope 0.2 for negative inputs, followed by a softmax over each node's neighbors and itself."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Can any choice of $w$, $a_1$ and $a_2$ make $P$ weight $j$ above $k$ and $Q$ weight $k$ above $j$? Prove your answer."
+            }
+          ],
+          "answer": [
+            {
+              "p": "No. Fix a node $i$. Its weights share one denominator, so $\\alpha_{ij} > \\alpha_{ik}$ exactly when $e_{ij} > e_{ik}$. LeakyReLU is strictly increasing, with slope 1 above 0 and 0.2 below, so"
+            },
+            {
+              "tex": "e_{ij} > e_{ik} \\iff a_1 z_i + a_2 z_j > a_1 z_i + a_2 z_k \\iff a_2 w\\,(h_j - h_k) > 0 ."
+            },
+            {
+              "p": "The term $a_1 z_i$ cancels, so the comparison does not involve $i$ at all. With $h_j - h_k = -8$, both $P$ and $Q$ weight $j$ above $k$ when $a_2 w < 0$, both weight $k$ above $j$ when $a_2 w > 0$, and both weight them equally when $a_2 = 0$. They never disagree."
+            },
+            {
+              "p": "The same holds on any graph. Every node ranks the nodes it attends to by one key, $a_2 z_l$, shared by the whole graph. The receiver changes how sharp its softmax is, through where the LeakyReLU bends, but never the order. This is sometimes called static attention."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A variant applies the nonlinearity before the attention vector instead of after it:"
+            },
+            {
+              "tex": "e_{il} = \\mathbf{b}^\\top \\operatorname{LeakyReLU}\\!\\left(M \\begin{pmatrix} h_i \\\\ h_l \\end{pmatrix}\\right),\n\\qquad\nM = \\begin{pmatrix} 1 & -1 \\\\ -1 & 1 \\end{pmatrix},\n\\qquad\n\\mathbf{b} = \\begin{pmatrix} -1 \\\\ -1 \\end{pmatrix},"
+            },
+            {
+              "p": "with the same slope and the same softmax. Show that it gives $P$ and $Q$ the preferences the recommender wants, and find the weight $Q$ puts on $k$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "$M$ maps $(h_i, h_l)$ to $(h_i - h_l,\\ h_l - h_i)$. For any number $d$, one of $d$ and $-d$ is positive and passes unchanged, and the other is scaled by 0.2, so $\\operatorname{LeakyReLU}(d) + \\operatorname{LeakyReLU}(-d) = |d| - 0.2|d| = 0.8|d|$. With $\\mathbf{b} = (-1, -1)$,"
+            },
+            {
+              "tex": "e_{il} = -0.8\\,|h_i - h_l| ,"
+            },
+            {
+              "p": "a score that falls as the tastes move apart and depends on the receiver."
+            },
+            {
+              "list": [
+                "$P$: itself 0, $j$ gives $-0.8$, $k$ gives $-7.2$, so $P$ weights $j$ above $k$.",
+                "$Q$: itself 0, $j$ gives $-7.2$, $k$ gives $-0.8$, so $Q$ weights $k$ above $j$."
+              ]
+            },
+            {
+              "p": "$Q$'s weight on $k$ is"
+            },
+            {
+              "tex": "\\frac{e^{-0.8}}{e^{0} + e^{-7.2} + e^{-0.8}} = \\frac{0.4493}{1.4501} = 0.310 ."
+            },
+            {
+              "p": "The argument of Part 1 does not apply, because the score is no longer an increasing function of one sum $a_1 z_i + a_2 z_l$. The LeakyReLU acts on two combinations of $h_i$ and $h_l$, and $\\mathbf{b}$ then mixes the results, so the order of the neighbors can depend on $i$. This change is the one made by the GATv2 layer."
+            },
+            {
+              "result": "0.310"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gnn-a-sum-that-forgets-nothing",
+      "moduleId": "graph-neural-networks",
+      "title": "A Sum Readout That Forgets Nothing",
+      "difficulty": "Medium",
+      "minutes": 8,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "After its message-passing layers, a network has turned every node's state into a whole number from 0 to 3. Every graph has between one and four nodes. The readout applies a fixed function $f$ to each node's state and adds up the results, $\\sum_v f(h_v)$. Which $f$ gives different readouts to any two graphs whose node states differ as collections, ignoring order?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$f(x) = x + 1$",
+                  "explain": "Adding 1 makes nodes in state 0 count, but f is still linear, so collections with the same size and the same total clash: states 0 and 3 give 1 + 4 = 5, and so do states 1 and 2. Sizes can clash too: one node in state 1 and two nodes in state 0 both give 2."
+                },
+                {
+                  "text": "$f(x) = x^2$",
+                  "explain": "Squaring gives f(0) = 0, so nodes in state 0 add nothing: one node in state 0 and two nodes in state 0 both read out 0. It also lets four nodes in state 1 match one node in state 2, both 4."
+                },
+                {
+                  "text": "$f(x) = 4^x$",
+                  "explain": "Each node in state x adds 1 to digit x of a number in base 4, which identifies the collection while no state occurs 4 times. A graph may have four nodes, though, and four nodes in state 0 read out 4 \u00d7 1 = 4, the same as one node in state 1: the digit carries over."
+                },
+                {
+                  "text": "$f(x) = 5^x$",
+                  "correct": true,
+                  "explain": "Write the readout as c0 + 5 c1 + 25 c2 + 125 c3, where cx counts the nodes in state x. Each count is between 0 and 4, so these are the digits of the readout in base 5, and two different lists of counts give two different numbers. The base has to exceed the largest possible count, which is why base 4 fails. A sum can tell apart every collection, but only after a well-chosen f, which in practice is a learned network applied to each node before the sum."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write the readout as c0 + 5 c1 + 25 c2 + 125 c3, where cx counts the nodes in state x. Each count is between 0 and 4, so these are the digits of the readout in base 5, and two different lists of counts give two different numbers. The base has to exceed the largest possible count, which is why base 4 fails. A sum can tell apart every collection, but only after a well-chosen f, which in practice is a learned network applied to each node before the sum."
+            },
+            {
+              "result": "$f(x) = 5^x$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gnn-a-swapped-edge-convention",
+      "moduleId": "graph-neural-networks",
+      "title": "An Edge List Read Backward",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A network of six junctions, joined by some one-way and some two-way roads, is stored as an edge list. Each column is one direction of travel: the junction in the top row sends a message along it to the junction in the bottom row."
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "edge_index = np.array([[0, 1, 1, 2, 2, 3, 4, 4],    # sources",
+                  "                       [1, 0, 2, 1, 3, 4, 2, 5]])   # targets"
+                ]
+              }
+            },
+            {
+              "p": "The layer should give each junction the sum of its incoming messages. A teammate builds the dense matrix with `A[src, dst] = 1` and computes `A @ H`. For which junctions does `A @ H` still give the right sum, whatever the features in `H`?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Junctions 0 and 1",
+                  "correct": true,
+                  "explain": "With A[src, dst] = 1, row v of A marks the junctions that v sends to, so A @ H gives each junction the sum over the junctions it sends to. That equals the sum over the junctions it receives from, for every H, exactly when the two lists are the same, that is when all of the junction's roads are two-way. Junction 0 sends to and receives from 1, and junction 1 sends to and receives from 0 and 2. Every other junction has a one-way road, and junction 5, which sends nowhere, gets 0 in place of h4."
+                },
+                {
+                  "text": "Junctions 0, 1 and 2",
+                  "explain": "Junction 2 has a two-way road to junction 1, but it also has one-way roads: it receives from 4 and sends to 3. The swapped product gives it h1 + h3 instead of h1 + h4. A junction comes out right only when every one of its roads is two-way, which holds at 0 and 1."
+                },
+                {
+                  "text": "Junctions 0, 1, 2 and 3",
+                  "explain": "Junctions 0 to 3 each send as many messages as they receive, but the sum depends on which junctions those are, not how many. Junction 3 receives from 2 and sends to 4, so the swapped product gives it h4 in place of h2. Only 0 and 1 have the same junctions on both sides."
+                },
+                {
+                  "text": "No junction",
+                  "explain": "The swap reverses every edge, and reversing a two-way road changes nothing. Junctions 0 and 1 have only two-way roads, so their sums come out right whatever H holds. The error stays invisible there, as it does on an undirected graph, and shows at the other four."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "With A[src, dst] = 1, row v of A marks the junctions that v sends to, so A @ H gives each junction the sum over the junctions it sends to. That equals the sum over the junctions it receives from, for every H, exactly when the two lists are the same, that is when all of the junction's roads are two-way. Junction 0 sends to and receives from 1, and junction 1 sends to and receives from 0 and 2. Every other junction has a one-way road, and junction 5, which sends nowhere, gets 0 in place of h4."
+            },
+            {
+              "result": "Junctions 0 and 1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gnn-average-over-a-node-and-its-neighbors",
+      "moduleId": "graph-neural-networks",
+      "title": "An Average over a Node and Its Neighbors",
+      "difficulty": "Medium",
+      "minutes": 8,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Every node $v$ of a graph carries one number $h_v$ and has $d_v \\ge 1$ neighbors. The target at each node is the plain average over the node and its neighbors,"
+            },
+            {
+              "tex": "t_v = \\frac{1}{d_v + 1}\\Big(h_v + \\sum_{u \\sim v} h_u\\Big),"
+            },
+            {
+              "p": "where $u \\sim v$ means that $u$ and $v$ share an edge. Each layer below has one output per node, uses the identity in place of $\\sigma$, and may take any weights. Which one outputs exactly $t_v$ at every node of every graph?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "A GCN layer, with its weight set to 1",
+                  "explain": "With weight 1 the GCN gives node v each h_u divided by the square root of (d_v + 1)(d_u + 1), over its neighbors and itself. Its own share is 1/(d_v + 1), as the target wants, but a neighbor's share equals that only when the neighbor has the same degree. On a path of three nodes the middle node gets 1/3 of its own value and about 0.408 of each end's, weights that add up to 1.15, so the output is not an average. Another weight only rescales all of them together."
+                },
+                {
+                  "text": "A GraphSAGE layer averaging over all neighbors, with no sampling, and its two weights chosen by hand",
+                  "explain": "It outputs W_self times h_v plus W_nb times the mean over all the neighbors. The target is h_v/(d_v + 1) plus d_v/(d_v + 1) times that mean, so it needs W_self = 1/(d_v + 1) and W_nb = d_v/(d_v + 1), which change with the degree. One fixed pair, such as 1/3 and 2/3, is right at nodes with two neighbors and wrong at nodes with one, which need 1/2 and 1/2."
+                },
+                {
+                  "text": "A single GAT head, with its weight and attention vector chosen by hand",
+                  "correct": true,
+                  "explain": "Set the weight to 1 and the attention vector to 0. Every score is then LeakyReLU(0) = 0, whatever the features, so the softmax gives each of the d_v + 1 nodes in the neighborhood, the node included, the same weight 1/(d_v + 1), and the output is t_v. The softmax divides by the size of each neighborhood on its own, which is the degree-dependent share that GCN and GraphSAGE cannot produce. If the half of the attention vector that multiplies the neighbor's z were not 0, the scores, and with them the weights, would change with the neighbors' features, and the average would no longer be plain."
+                },
+                {
+                  "text": "None of the three, since the node's own share has to change with its degree",
+                  "explain": "The node's own share does have to change with its degree, 1/(d_v + 1), and fixed weights on the node and on its neighbors' mean cannot do that. A softmax can: a GAT head whose scores are all equal gives each of the d_v + 1 nodes in the neighborhood the weight 1/(d_v + 1), so it outputs t_v at every node."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Set the weight to 1 and the attention vector to 0. Every score is then LeakyReLU(0) = 0, whatever the features, so the softmax gives each of the d_v + 1 nodes in the neighborhood, the node included, the same weight 1/(d_v + 1), and the output is t_v. The softmax divides by the size of each neighborhood on its own, which is the degree-dependent share that GCN and GraphSAGE cannot produce. If the half of the attention vector that multiplies the neighbor's z were not 0, the scores, and with them the weights, would change with the neighbors' features, and the average would no longer be plain."
+            },
+            {
+              "result": "A single GAT head, with its weight and attention vector chosen by hand"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gnn-constant-signal-on-a-star",
+      "moduleId": "graph-neural-networks",
+      "title": "A Constant Signal on a Star",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "A star graph has a hub joined to seven leaves and no other edges. Every node carries the same scalar feature, 1. Apply only the aggregation step of a GCN layer, $\\tilde{D}^{-1/2}\\hat{A}\\tilde{D}^{-1/2}H$ with $\\hat{A} = A + I$, with no weight matrix and no nonlinearity."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What value does the hub get?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "With self-loops the hub has degree $\\tilde{D}_{hh} = 7 + 1 = 8$ and every leaf has degree $1 + 1 = 2$. The entry of the normalized matrix for an edge $(v, u)$, self-loops included, is $1 / \\sqrt{\\tilde{D}_{vv}\\tilde{D}_{uu}}$."
+            },
+            {
+              "list": [
+                "The hub: its self-loop gives $1/\\sqrt{8 \\cdot 8} = 1/8$ and each of the seven leaves gives $1/\\sqrt{8 \\cdot 2} = 1/4$, so the hub gets $\\tfrac18 + \\tfrac74 = 1.875$.",
+                "A leaf: its self-loop gives $1/\\sqrt{2 \\cdot 2} = 1/2$ and the hub gives $1/4$, so a leaf gets $0.75$."
+              ]
+            },
+            {
+              "p": "A constant input does not come out constant. The row average $\\tilde{D}^{-1}\\hat{A}$ would give 1 everywhere, because each of its rows adds up to 1. The symmetric version divides by $\\sqrt{\\tilde{D}_{vv}}$ on one side and $\\sqrt{\\tilde{D}_{uu}}$ on the other, so a node gains when its neighbors have smaller degree than it does, like the hub, and loses when they have larger degree, like the leaves."
+            },
+            {
+              "p": "Two slips give other numbers. Degrees taken from $A$ without the self-loops (7 and 1) give the hub $\\tfrac17 + 7/\\sqrt7 = 2.789$. Dropping the self-loops altogether gives $7/\\sqrt7 = 2.646$."
+            },
+            {
+              "result": "1.875"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Some inputs do come out unchanged. Give the hub the feature $r$ and every leaf the feature 1. For which $r$ is the output equal to the input?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Repeat Part 1 with the hub at $r$:"
+            },
+            {
+              "tex": "\\text{hub: } \\frac{r}{8} + 7 \\cdot \\frac14 = r ,\n\\qquad\n\\text{leaf: } \\frac12 + \\frac{r}{4} = 1 ."
+            },
+            {
+              "p": "The first gives $\\tfrac78 r = \\tfrac74$ and the second $\\tfrac{r}{4} = \\tfrac12$, and both give $r = 2$. That is $\\sqrt8 / \\sqrt2$, the ratio of the square roots of the degrees. The pattern holds on every graph: with $\\mathbf{s}$ the vector of $\\sqrt{\\tilde{D}_{vv}}$,"
+            },
+            {
+              "tex": "\\tilde{D}^{-1/2}\\hat{A}\\tilde{D}^{-1/2}\\,\\mathbf{s}\n= \\tilde{D}^{-1/2}\\hat{A}\\mathbf{1}\n= \\tilde{D}^{-1/2}\\tilde{D}\\mathbf{1} = \\mathbf{s},"
+            },
+            {
+              "p": "because $\\hat{A}\\mathbf{1}$ is the vector of degrees. The row average keeps a constant signal, and the symmetric normalization keeps a signal proportional to the square root of the degree instead."
+            },
+            {
+              "result": "2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gnn-features-for-a-featureless-graph",
+      "moduleId": "graph-neural-networks",
+      "title": "Input Features for Graphs That Have None",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Every graph in a dataset has 12 nodes and an adjacency matrix $A$, but the nodes carry no features. Before its stack of GCN layers, a model builds the input matrix $H$ from $A$ alone. Which choice keeps the model permutation equivariant, so that numbering the nodes of a graph differently only reorders the rows of the output?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$H = I$, the $12 \\times 12$ identity, so node $v$ starts with the one-hot vector of its number",
+                  "explain": "Renumbering the nodes does not change this input: the renumbered graph starts from the identity too. Equivariance needs the input rows to move with the nodes, which would give P times I, that is P. With the identity, a node's output depends on the number it happens to carry, so one graph numbered two ways gets two different sets of outputs."
+                },
+                {
+                  "text": "$H = A(A\\mathbf{1})$, one column holding for each node the sum of its neighbors' degrees",
+                  "correct": true,
+                  "explain": "A1 is the vector of degrees, and multiplying it by A adds up each node's neighbors' degrees. After renumbering, the adjacency is P A P^T, and since P^T P = I and P^T 1 = 1 (a permutation leaves the all-ones vector alone), the new input is P A P^T P A P^T 1 = P A A 1. That is the old input with its rows moved like the nodes, the only property of H that the lesson's derivation uses, so every layer stays equivariant."
+                },
+                {
+                  "text": "$H = A$, so node $v$ starts with its own row of the adjacency matrix",
+                  "explain": "The rows do move with the nodes, but so do the columns. After renumbering, the input is P A P^T rather than P A. Column k of A means adjacent to node k, so renumbering also changes which feature is which, while W keeps reading column k with the same weights. With S the normalized adjacency, the first layer gives P times \u03c3(S A P^T W), and that equals P times the old output \u03c3(S A W) only when P^T W = W, which for every renumbering needs all rows of W to be equal."
+                },
+                {
+                  "text": "One column holding each node's rank when the nodes are sorted by degree, ties going to the lower number",
+                  "explain": "The rank depends only on the graph as long as all degrees differ. Nodes of equal degree, though, are ordered by their numbers, so if two of them trade numbers they also trade ranks: the same node gets a different input, not just a different row. Most graphs have many nodes of equal degree, so the outputs depend on the numbering."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "A1 is the vector of degrees, and multiplying it by A adds up each node's neighbors' degrees. After renumbering, the adjacency is P A P^T, and since P^T P = I and P^T 1 = 1 (a permutation leaves the all-ones vector alone), the new input is P A P^T P A P^T 1 = P A A 1. That is the old input with its rows moved like the nodes, the only property of H that the lesson's derivation uses, so every layer stays equivariant."
+            },
+            {
+              "result": "$H = A(A\\mathbf{1})$, one column holding for each node the sum of its neighbors' degrees"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gnn-many-layers-without-weights",
+      "moduleId": "graph-neural-networks",
+      "title": "Where Many Layers Without Weights Lead",
+      "difficulty": "Hard",
+      "minutes": 35,
+      "overview": [
+        "Take a connected undirected graph, add self-loops, $\\hat{A} = A + I$, and write"
+      ],
+      "setup": [
+        {
+          "tex": "S = \\tilde{D}^{-1/2}\\hat{A}\\tilde{D}^{-1/2}"
+        },
+        {
+          "p": "for the GCN's normalized adjacency, where $\\tilde{D}$ holds the degrees of $\\hat{A}$. A stack of $k$ GCN layers with $W = I$ and no nonlinearity computes $S^k H$. This problem finds what that tends to as $k$ grows."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Show that every eigenvalue $\\lambda$ of $S$ satisfies $-1 < \\lambda \\le 1$, that $\\tilde{D}^{1/2}\\mathbf{1}$ is an eigenvector with eigenvalue 1, and that every eigenvector with eigenvalue 1 is a multiple of it."
+            }
+          ],
+          "answer": [
+            {
+              "p": "$S$ is symmetric, so its eigenvalues are real and each one equals $\\mathbf{x}^\\top S\\mathbf{x} / \\lVert\\mathbf{x}\\rVert^2$ for its eigenvector $\\mathbf{x}$. Write $d_v = \\tilde{D}_{vv}$ and $y_v = x_v / \\sqrt{d_v}$. Then"
+            },
+            {
+              "tex": "\\mathbf{x}^\\top S\\mathbf{x} = \\sum_{u, v} \\hat{A}_{uv}\\, y_u y_v ,\n\\qquad\n\\lVert\\mathbf{x}\\rVert^2 = \\sum_v d_v y_v^2 = \\sum_{u, v} \\hat{A}_{uv}\\, y_v^2\n= \\frac12 \\sum_{u, v} \\hat{A}_{uv}\\,(y_u^2 + y_v^2),"
+            },
+            {
+              "p": "using $d_v = \\sum_u \\hat{A}_{uv}$ and then the symmetry of $\\hat{A}$. Subtracting and adding the two,"
+            },
+            {
+              "tex": "\\lVert\\mathbf{x}\\rVert^2 - \\mathbf{x}^\\top S\\mathbf{x} = \\frac12 \\sum_{u, v} \\hat{A}_{uv}\\,(y_u - y_v)^2 \\ge 0 ,\n\\qquad\n\\lVert\\mathbf{x}\\rVert^2 + \\mathbf{x}^\\top S\\mathbf{x} = \\frac12 \\sum_{u, v} \\hat{A}_{uv}\\,(y_u + y_v)^2 ."
+            },
+            {
+              "p": "The first gives $\\lambda \\le 1$. In the second, the self-loop terms $u = v$ have $\\hat{A}_{vv} = 1$ and contribute $\\tfrac12 (2y_v)^2 = 2y_v^2$ each, so the sum is at least $2\\sum_v y_v^2 > 0$ for $\\mathbf{x} \\ne 0$. That gives $\\lambda > -1$."
+            },
+            {
+              "p": "Since $\\hat{A}\\mathbf{1}$ is the vector of degrees, $S\\,\\tilde{D}^{1/2}\\mathbf{1} = \\tilde{D}^{-1/2}\\hat{A}\\mathbf{1} = \\tilde{D}^{-1/2}\\tilde{D}\\mathbf{1} = \\tilde{D}^{1/2}\\mathbf{1}$. Conversely, $\\lambda = 1$ makes the first sum 0, so $y_u = y_v$ across every edge. The graph is connected, so $y$ is the same at every node and $\\mathbf{x} = c\\,\\tilde{D}^{1/2}\\mathbf{1}$."
+            },
+            {
+              "p": "The self-loops matter for the lower bound. Without them, a bipartite graph such as a ring of eight nodes has the eigenvalue $-1$, with the eigenvector that alternates $+1, -1$ around the ring. With them, the ring's smallest eigenvalue is $-1/3$."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A wheel has a hub joined to eight rim nodes, and the rim nodes form a ring, each joined to the next. The hub starts with feature 1, and the rim nodes alternate 1, 0, 1, 0, 1, 0, 1, 0 around the ring. What value does the hub's feature approach as $k$ grows? Give three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write $S = \\sum_i \\lambda_i \\mathbf{q}_i\\mathbf{q}_i^\\top$ with orthonormal eigenvectors. Then $S^k = \\sum_i \\lambda_i^k \\mathbf{q}_i\\mathbf{q}_i^\\top$, and by Part 1 every $\\lambda_i^k \\to 0$ except the single eigenvalue 1, whose unit eigenvector is $\\mathbf{q} = \\tilde{D}^{1/2}\\mathbf{1} / \\lVert \\tilde{D}^{1/2}\\mathbf{1} \\rVert$. So"
+            },
+            {
+              "tex": "S^k\\mathbf{h} \\to \\mathbf{q}\\mathbf{q}^\\top\\mathbf{h}\n= \\tilde{D}^{1/2}\\mathbf{1}\\;\\frac{\\sum_u \\sqrt{d_u}\\, h_u}{\\sum_u d_u} ."
+            },
+            {
+              "p": "With self-loops the hub has degree $8 + 1 = 9$ and each rim node $2 + 1 + 1 = 4$, so $\\sum_u d_u = 9 + 8 \\cdot 4 = 41$ and"
+            },
+            {
+              "tex": "\\sum_u \\sqrt{d_u}\\, h_u = 3 \\cdot 1 + 2 \\cdot (1 + 0 + 1 + 0 + 1 + 0 + 1 + 0) = 11 ."
+            },
+            {
+              "p": "The hub approaches $3 \\cdot 11 / 41 = 33/41 = 0.805$, and every rim node $2 \\cdot 11/41 = 0.537$, whether it started at 1 or at 0."
+            },
+            {
+              "p": "The approach is quick on this graph. The other eigenvalues have size at most $0.604$, and the hub is at $0.778, 0.809, 0.804, 0.805$ after one to four layers. Of the nine starting numbers, the limit keeps one, the weighted sum 11. Every start with the same weighted sum ends in the same place, so a deep stack of plain GCN layers loses the differences between nodes. This is called oversmoothing."
+            },
+            {
+              "result": "0.805"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Replace $S$ by the row-normalized $\\tilde{D}^{-1}\\hat{A}$, which averages each node with its neighbors. From the same start, what value does the hub's feature approach now?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The two matrices are similar, $\\tilde{D}^{-1}\\hat{A} = \\tilde{D}^{-1/2} S\\,\\tilde{D}^{1/2}$, so"
+            },
+            {
+              "tex": "(\\tilde{D}^{-1}\\hat{A})^k = \\tilde{D}^{-1/2} S^k \\tilde{D}^{1/2}\n\\to \\tilde{D}^{-1/2}\\mathbf{q}\\mathbf{q}^\\top\\tilde{D}^{1/2}\n= \\frac{\\mathbf{1}\\,(\\tilde{D}\\mathbf{1})^\\top}{\\sum_u d_u} ."
+            },
+            {
+              "p": "Every node, hub and rim alike, approaches the degree-weighted average of the start:"
+            },
+            {
+              "tex": "\\frac{\\sum_u d_u h_u}{\\sum_u d_u} = \\frac{9 \\cdot 1 + 4 \\cdot 4}{41} = \\frac{25}{41} = 0.610 ."
+            },
+            {
+              "p": "Both normalizations end with a single number. The row average spreads it evenly, a constant vector, and the symmetric normalization spreads it in proportion to $\\sqrt{d_v}$, which is why the hub ended above the rim in Part 2."
+            },
+            {
+              "result": "0.610"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gnn-three-neighbors-at-every-node",
+      "moduleId": "graph-neural-networks",
+      "title": "Two Graphs with Three Neighbors at Every Node",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "Graph $X$ has six nodes in two groups of three, with every node of one group joined to every node of the other: the complete bipartite graph $K_{3,3}$. Graph $Y$ is a triangular prism: two triangles, with each corner of one joined to one corner of the other. Both graphs are connected and have six nodes and nine edges, and every node has exactly three neighbors. The nodes carry no features, so every node of both graphs starts with the same vector $\\mathbf{h}^{(0)}$."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "A network of the lesson's message-passing form runs on both graphs: any permutation-invariant aggregator, any update function, any number of layers, the same functions at every node, and then a sum, mean or max readout. Can it give $X$ and $Y$ different outputs? Prove your answer."
+            }
+          ],
+          "answer": [
+            {
+              "p": "No. Claim: after every layer $\\ell$, all twelve nodes of the two graphs hold one and the same state $\\mathbf{h}^{(\\ell)}$."
+            },
+            {
+              "p": "It holds for $\\ell = 0$. Suppose it holds for $\\ell$. Every node, in either graph, has three neighbors, all in state $\\mathbf{h}^{(\\ell)}$, so every node aggregates the same collection $\\{\\mathbf{h}^{(\\ell)}, \\mathbf{h}^{(\\ell)}, \\mathbf{h}^{(\\ell)}\\}$ into the same message $\\mathbf{m}$ and updates to the same $\\operatorname{UPDATE}(\\mathbf{h}^{(\\ell)}, \\mathbf{m})$. So the claim holds for $\\ell + 1$."
+            },
+            {
+              "p": "After the last layer each graph holds six copies of one state, so its sum, mean and max are equal too. The argument covers every layer in the lesson. A GCN sees degree 4 everywhere once the self-loops are added, so every edge gets the same weight $\\tfrac14$, and a GAT head scores every edge alike because all the $\\mathbf{z}_j$ are equal."
+            },
+            {
+              "p": "So no such network can tell whether a node sits on a triangle. Every node of $Y$ sits on one and no node of $X$ does, which a chemist would care about, since three-membered rings change how a molecule behaves."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "A common addition is one extra node joined to every node of the graph, so that information can pass between any two nodes in two steps. Does it let the network separate $X$ and $Y$? Explain."
+            }
+          ],
+          "answer": [
+            {
+              "p": "No. Run the same induction with two kinds of node. Claim: after every layer, all twelve original nodes share one state $\\mathbf{a}^{(\\ell)}$, and the two extra nodes share one state $\\mathbf{b}^{(\\ell)}$, both starting from $\\mathbf{h}^{(0)}$."
+            },
+            {
+              "p": "In either graph, an original node sees three original neighbors and the extra node, the collection $\\{\\mathbf{a}, \\mathbf{a}, \\mathbf{a}, \\mathbf{b}\\}$, and the extra node sees six original nodes, $\\{\\mathbf{a}, \\dots, \\mathbf{a}\\}$. The collections match between $X$ and $Y$, so the new states match, and the claim passes to the next layer. The readouts agree, with or without the extra node included."
+            },
+            {
+              "p": "The extra node shortens paths, but a node never learns which path a message came along. It receives only the collection of its neighbors' states, and in $X$ and $Y$ those collections are the same at every layer."
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The trace of $A^k$ counts the closed walks of $k$ steps, those that start and end at the same node. What is the smallest $k$ for which $\\operatorname{tr}(A^k)$ differs between $X$ and $Y$?"
+            }
+          ],
+          "answer": [
+            {
+              "list": [
+                "$k = 1$: no node has a self-loop, so both traces are 0.",
+                "$k = 2$: a closed walk of two steps goes out along an edge and back, so the trace is the sum of the degrees, 18 for both.",
+                "$k = 3$: a closed walk of three steps goes around a triangle. Each triangle gives 6 of them, 3 starting nodes times 2 directions. $X$ has no triangle, since a triangle would need two joined nodes in the same group, and $Y$ has two, so the traces are 0 and 12."
+              ]
+            },
+            {
+              "p": "The answer is $k = 3$. The counts $\\tfrac12 (A^3)_{vv}$, the number of triangles at node $v$, separate the two graphs at once, and they are computed from $A$ alone, so as input features they keep a GCN equivariant: $(PA^3P^\\top)_{vv}$ is the old count of the node that moved to $v$. By Part 1, though, no message-passing network can compute them from identical starting states. Counts like these are one way to give a graph network more than message passing alone can see. The traces keep differing after $k = 3$: 162 against 114 at $k = 4$, and 0 against 180 at $k = 5$. $X$ is bipartite, so all its odd traces are 0."
+            },
+            {
+              "result": "3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gnn-three-rounds-of-neighbor-sums",
+      "moduleId": "graph-neural-networks",
+      "title": "Three Rounds of Neighbor Sums",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A graph has five nodes. Nodes 0, 1 and 2 form a triangle, and a tail runs from node 2 to node 3 and on to node 4, so the edges are 0-1, 0-2, 1-2, 2-3 and 3-4. A bare message-passing network runs on it. Each round replaces every node's vector by the sum of its neighbors' vectors,"
+      ],
+      "setup": [
+        {
+          "tex": "\\mathbf{h}_v^{\\text{new}} = \\sum_{u \\sim v} \\mathbf{h}_u ,"
+        },
+        {
+          "p": "where $u \\sim v$ means that $u$ and $v$ share an edge. There are no weights and no nonlinearity. Write $\\mathbf{h}_0, \\dots, \\mathbf{h}_4$ for the starting vectors. After any number of rounds, node 4's vector is a sum of starting vectors, each counted a whole number of times."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "After three rounds, how many times does node 4's vector count $\\mathbf{h}_3$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Unroll the rounds backward. After three rounds node 4 holds the sum of its neighbors' vectors after two rounds, each of those holds the sum of its neighbors' vectors after one round, and so on. So $\\mathbf{h}_u$ is counted once for every walk of three steps that starts at node 4 and ends at node $u$. Node 4's only neighbor is 3, and node 3's neighbors are 2 and 4, so the walks are"
+            },
+            {
+              "tex": "\\begin{array}{cc}\n\\text{Walk} & \\text{Ends at} \\\\ \\hline\n\\text{4 \u2192 3 \u2192 2 \u2192 0} & 0 \\\\\n\\text{4 \u2192 3 \u2192 2 \u2192 1} & 1 \\\\\n\\text{4 \u2192 3 \u2192 2 \u2192 3} & 3 \\\\\n\\text{4 \u2192 3 \u2192 4 \u2192 3} & 3\n\\end{array}"
+            },
+            {
+              "p": "and node 4's vector is $\\mathbf{h}_0 + \\mathbf{h}_1 + 2\\mathbf{h}_3$. The count is 2. In matrix form three rounds compute $A^3 H$, and the count is the entry $(A^3)_{43}$."
+            },
+            {
+              "result": "2"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "After four rounds, how many times does node 4's vector count $\\mathbf{h}_3$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "A walk of four steps from node 4 to node 3 enters node 3 at its last step, from node 2 or node 4, so its first three steps go from node 4 to node 2 or to node 4. Part 1 listed every three-step walk from node 4, and they end at 0, 1, 3 and 3. None ends at 2 or 4, so the count is 0."
+            },
+            {
+              "p": "Extending each walk of Part 1 by one step gives node 4's vector after four rounds, $\\mathbf{h}_0 + \\mathbf{h}_1 + 4\\mathbf{h}_2 + 2\\mathbf{h}_4$. Node 4's only neighbor has dropped out. On the tail, a walk alternates between node 3 and the pair 2, 4, so it reaches node 3 only after an odd number of steps unless it goes around the triangle, the graph's only odd cycle. The shortest such walk, 4 \u2192 3 \u2192 2 \u2192 0 \u2192 1 \u2192 2 \u2192 3, takes six steps, and after six rounds the count of $\\mathbf{h}_3$ is 2 again."
+            },
+            {
+              "result": "0"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "The lesson says that $L$ layers let information flow up to $L$ hops. Which nodes within three hops of node 4 have no effect on its vector after three rounds, and why? Change the rule so that after $L$ rounds every node within $L$ hops counts."
+            }
+          ],
+          "answer": [
+            {
+              "p": "After three rounds the counts of $\\mathbf{h}_0, \\dots, \\mathbf{h}_4$ are 1, 1, 0, 2, 0. Node 2, two hops away, and node 4 itself have no effect, although both are within three hops."
+            },
+            {
+              "p": "The rule keeps no part of a node's own vector, so every round moves each contribution one step along an edge, and after $L$ rounds only walks of exactly $L$ steps count. Node 2 is two steps from node 4, and a walk can grow by going back and forth along an edge, two steps at a time, so node 2 counts after 2, 4, 6, ... rounds. An odd number of steps needs the triangle, the graph's only odd cycle, and the shortest odd walk from node 4 to node 2, 4 \u2192 3 \u2192 2 \u2192 0 \u2192 1 \u2192 2, takes five steps. Node 4 itself, at distance 0, is cut off after three rounds in the same way."
+            },
+            {
+              "p": "The fix is to let the update use the node's own state, as the lesson's $\\operatorname{UPDATE}(\\mathbf{h}_v, \\mathbf{m}_v)$ does. The simplest version adds it to the message, $\\mathbf{h}_v^{\\text{new}} = \\mathbf{h}_v + \\sum_{u \\sim v} \\mathbf{h}_u$, which is $(A + I)H$, the self-loops that Step 2 of the GCN derivation adds. Now a walk may stay where it is at any step, so every walk of at most $L$ steps counts, and after three rounds node 4's vector is $\\mathbf{h}_0 + \\mathbf{h}_1 + 3\\mathbf{h}_2 + 5\\mathbf{h}_3 + 4\\mathbf{h}_4$: every node within three hops, with no zero."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

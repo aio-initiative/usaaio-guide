@@ -1,0 +1,911 @@
+{
+ "module": "time-series",
+ "stage": "Round 2",
+ "index": [
+  {
+   "id": "ts-changes-when-growth-speeds-up",
+   "moduleId": "time-series",
+   "title": "A Model on Changes When Growth Speeds Up",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=ts-changes-when-growth-speeds-up",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 2"
+   ],
+   "prompt": "A 5-nearest-neighbor regressor predicts the next day-to-day change in electricity demand from the last 14 changes, and its forecast is today's demand plus the predicted change. In the test month demand grows by about 0.8 units a day, faster than over any two weeks of the two training years, so how do its one-step forecasts behave?",
+   "answer": "They rise with today's demand but fall short each day, by an amount that stays about the same through the month. The predicted change is an average of the five changes that followed the most similar training stretches, and no training stretch grew this fast, so it stays near the training growth rather than 0.8. Each forecast starts again from today's actual demand, so each day's shortfall is only that day's missing growth, and it does not build up from one day to the next."
+  },
+  {
+   "id": "ts-differencing-a-flat-series",
+   "moduleId": "time-series",
+   "title": "Differencing a Series with No Trend",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=ts-differencing-a-flat-series",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "A series is a constant plus independent noise, and a model forecasts its first differences by least squares. Find the correlation between neighboring differences, the mean squared error of the one-lag forecast, and how that error shrinks as the number of fitted lags grows. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "ts-features-three-days-ahead",
+   "moduleId": "time-series",
+   "title": "Features for a Forecast Three Days Out",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=ts-features-three-days-ahead",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 2"
+   ],
+   "prompt": "A bakery forecasts the loaves it will sell on day t on the evening of day t minus 3, after that day's sales are counted. Its table has one row per day in date order with a column y for loaves sold, and the model is trained on rows indexed by the target day t. Which single pandas expression gives a feature summarizing a week of recent sales using only sales already known on the evening of day t minus 3?",
+   "answer": "df[\"y\"].shift(3).rolling(7).mean(). Shifting by three puts the sales of day t \u2212 3 on row t, and the rolling mean then covers days t \u2212 9 to t \u2212 3. All seven days are counted by the evening of day t \u2212 3, so the feature exists when the forecast is made. The shift has to be at least the forecast horizon, here three days, before any window is aggregated."
+  },
+  {
+   "id": "ts-mape-on-a-quiet-day",
+   "moduleId": "time-series",
+   "title": "One Quiet Day Decides the MAPE",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=ts-mape-on-a-quiet-day",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "A bakery sells a specialty loaf whose daily sales swing widely, and two models forecast five test days, one of which sold only two loaves. Compute each model's MAE and MAPE, then say which metric a baker should choose when every loaf baked and not sold and every customer turned away costs the same. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "ts-mase-against-last-year",
+   "moduleId": "time-series",
+   "title": "MASE for a Quarterly Forecast",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=ts-mase-against-last-year",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "A ski rental shop records its revenue each quarter, in thousands of dollars, for three years. For year 4 the model forecasts 26, 39, 36 and 48 while the actual revenue is 27, 41, 34 and 49. Compute the model's MASE on year 4 against the seasonal naive scale, then find the scale a teammate used to report a MASE of 0.11 and say why that scale flatters the model. 2 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "ts-naive-error-around-the-clock",
+   "moduleId": "time-series",
+   "title": "The Naive Forecast Around the Clock",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=ts-naive-error-around-the-clock",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "An hourly load series is a daily sine cycle plus independent noise, and it may also drift up by a fixed amount each hour. Derive the mean squared error of the naive forecast, which repeats the last value, and of seasonal naive, which repeats the value from the same hour a day earlier, then compare them horizon by horizon. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "ts-the-constant-mape-prefers",
+   "moduleId": "time-series",
+   "title": "The Constant Forecast MAPE Prefers",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=ts-the-constant-mape-prefers",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "A grader scores forecasts by MAPE, so find the one constant forecast it rewards most, derive what that constant is in general, and compute it for daily sales of 4, 5, 10, 20 and 40. Then explain what a model trained on squared error will score under this grader and what change to training fixes it. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "ts-two-steps-two-ways",
+   "moduleId": "time-series",
+   "title": "Two Steps Ahead, Recursive or Direct",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=ts-two-steps-two-ways",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "A standardized series has lag-1 correlation 0.5 and lag-2 correlation 0.6. Forecast two steps ahead by fitting a one-step model and applying it twice, and separately by fitting the two-step target directly, then compare the two mean squared errors. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "ts-when-scale-is-the-signal",
+   "moduleId": "time-series",
+   "title": "When the Scale Is the Signal",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=ts-when-scale-is-the-signal",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 2"
+   ],
+   "prompt": "A plant records 400 vibration readings per pump sample. A worn bearing makes the same hum as a healthy one but its whole trace is about three times as large, and the hum can start anywhere in the sample. Which preprocessing step leaves a classifier with nothing to tell worn pumps from healthy ones?",
+   "answer": "Subtracting each sample's own mean and dividing by its own standard deviation. Dividing each sample by its own standard deviation removes its overall size, and here the size is the only difference between the classes. After it, a worn pump's trace and a healthy pump's trace are the same signal at the same scale, so no model downstream can separate them. Per-series normalization helps when scale is a nuisance, such as a sensor's gain, and here it is the label."
+  },
+  {
+   "id": "ts-windows-for-a-store-chain",
+   "moduleId": "time-series",
+   "title": "Training Windows for a Store Chain",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=ts-windows-for-a-store-chain",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 2"
+   ],
+   "prompt": "A grocery chain has one year of daily sales, days 0 to 364, for each of its 40 stores. A model reads 28 consecutive days of one store and predicts that store's next 7 days, and it is scored on days 335 to 364. How many windows keep every scored day out of the training targets?",
+   "answer": "12,040. A window starting on day s has inputs on days s to s + 27 and targets on days s + 28 to s + 34. All seven targets come before day 335 when s + 34 is at most 334, so s runs from 0 to 300: 301 windows per store, and 40 times that is 12,040. The inputs of the validation windows may reach back into the training days, which is fine, since only targets carry what the model is scored on."
+  },
+  {
+   "id": "ts-rolling-origin-ar-numpy",
+   "moduleId": "time-series",
+   "title": "A Week Ahead, from Every Origin",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=ts-rolling-origin-ar-numpy",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "A parts warehouse plans staff a week in advance, so each Wednesday night it needs a forecast of the orders on each of the next seven days. Fit an autoregressive model in NumPy and score a week-ahead forecast from many rolling origins against the seasonal naive baseline.",
+   "answer": "Ridge regression on the last 28 days of orders predicts the next day, and feeding each prediction back in walks the forecast out to seven days. Scored by MASE against the seasonal naive baseline at 13 rolling origins, the AR model wins on average (about 0.87 against 0.92) and at 6 of the 13 origins. The notebook's own self-checks score your implementation."
+  },
+  {
+   "id": "ml18-mape-trap",
+   "moduleId": "time-series",
+   "title": "The Metric That Divides by Almost Zero",
+   "source": "Custom",
+   "difficulty": "Easy",
+   "url": "/editor/?nb=ml18-mape-trap",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "Score two demand models with MAE, RMSE, MAPE, and sMAPE on data containing near-zero days, and find out which metric changes the ranking and why.",
+   "answer": "Auto-graded inside the notebook. All eight metric values and the largest single-point MAPE contribution must match to 1e-6, and the metrics must not all agree on the winner."
+  }
+ ],
+ "theory": [
+  {
+   "id": "ts-changes-when-growth-speeds-up",
+   "moduleId": "time-series",
+   "title": "A Model on Changes When Growth Speeds Up",
+   "difficulty": "Medium",
+   "minutes": 6,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A 5-nearest-neighbor regressor forecasts tomorrow's electricity demand. Over the two training years demand grew by about 0.3 units a day, with daily noise. The model works on day-to-day changes: its inputs are the last 14 changes, its target is the next change, and its forecast is today's demand plus the predicted change. In the test month demand grows by about 0.8 units a day, faster than over any two weeks of training. Which describes its one-step forecasts during the test month?"
+      },
+      {
+       "choices": [
+        {
+         "text": "They stop rising once they reach the highest demand seen in training.",
+         "explain": "That is the behavior of the same regressor trained on levels, which can only return an average of training demands. This model returns an average of training changes and adds it to today's demand, so its forecasts climb with the actual demand, above anything seen in training."
+        },
+        {
+         "text": "They rise with today's demand but fall short each day, by an amount that stays about the same through the month.",
+         "correct": true,
+         "explain": "The predicted change is an average of the five changes that followed the most similar training stretches, and no training stretch grew this fast, so it stays near the training growth rather than 0.8. Each forecast starts again from today's actual demand, so each day's shortfall is only that day's missing growth, and it does not build up from one day to the next."
+        },
+        {
+         "text": "They fall short by an amount that grows every day of the month.",
+         "explain": "Errors build up when forecasts are fed back in as inputs, as in recursive forecasting several days ahead. A one-step forecast adds the predicted change to the actual demand of today, which already contains every earlier day's growth, so yesterday's shortfall is not carried into today's forecast."
+        },
+        {
+         "text": "They follow the faster growth, since the inputs now show changes near 0.8.",
+         "explain": "A nearest-neighbor regressor can only return an average of training targets, here changes that followed training stretches. Inputs showing changes near 0.8 find the closest training windows, but the changes that came after those windows reflect the slower growth of training, so the forecast change stays well below 0.8."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "The predicted change is an average of the five changes that followed the most similar training stretches, and no training stretch grew this fast, so it stays near the training growth rather than 0.8. Each forecast starts again from today's actual demand, so each day's shortfall is only that day's missing growth, and it does not build up from one day to the next."
+      },
+      {
+       "result": "They rise with today's demand but fall short each day, by an amount that stays about the same through the month."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ts-differencing-a-flat-series",
+   "moduleId": "time-series",
+   "title": "Differencing a Series with No Trend",
+   "difficulty": "Hard",
+   "minutes": 25,
+   "overview": [
+    "Differencing helps when a series trends. This problem measures what it costs when the series does not. Take $y_t = \\mu + \\varepsilon_t$, where the $\\varepsilon_t$ are independent with mean 0 and variance $\\sigma^2$, and let $d_t = y_t - y_{t-1}$. The training set is long enough that every least-squares fit lands on its population value."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the correlation between $d_t$ and $d_{t+1}$?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "$d_t = \\varepsilon_t - \\varepsilon_{t-1}$, so its variance is $\\sigma^2 + \\sigma^2 = 2\\sigma^2$. The two neighboring differences share one noise term with opposite signs:"
+      },
+      {
+       "tex": "\\operatorname{Cov}(d_t, d_{t+1}) = \\operatorname{Cov}(\\varepsilon_t - \\varepsilon_{t-1},\\ \\varepsilon_{t+1} - \\varepsilon_t) = -\\operatorname{Var}(\\varepsilon_t) = -\\sigma^2 ."
+      },
+      {
+       "p": "The correlation is $-\\sigma^2 / 2\\sigma^2 = -0.5$. Differencing has put a pattern into a series that had none: a rise tends to be followed by a fall."
+      },
+      {
+       "result": "$-0.5$"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "A model fits $\\hat{d}_{t+1} = a\\,d_t$ by least squares and forecasts $\\hat{y}_{t+1} = y_t + \\hat{d}_{t+1}$. What is the mean squared error of its forecasts, in units of $\\sigma^2$?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The least-squares slope is $a = \\operatorname{Cov}(d_t, d_{t+1}) / \\operatorname{Var}(d_t) = -1/2$, so"
+      },
+      {
+       "tex": "\\hat{y}_{t+1} = y_t - \\tfrac12(y_t - y_{t-1}) = \\tfrac12(y_t + y_{t-1}) ,"
+      },
+      {
+       "p": "the mean of the last two values. Its error is $\\varepsilon_{t+1} - \\frac12(\\varepsilon_t + \\varepsilon_{t-1})$, with variance $\\sigma^2 + \\frac14\\sigma^2 + \\frac14\\sigma^2 = 1.5\\,\\sigma^2$."
+      },
+      {
+       "p": "For comparison, the naive forecast $y_t$ has error variance $2\\sigma^2$, and the training mean, which estimates $\\mu$, has $\\sigma^2$, the best any forecast can do."
+      },
+      {
+       "result": "1.5"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Now the model uses the last $L$ differences, $d_t, \\dots, d_{t-L+1}$, fitted by least squares. Show that its forecast error is $(1 + \\frac{1}{L+1})\\,\\sigma^2$, and say what that means for how many lags a model on differences needs."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The forecast is $y_t + \\sum_k a_k d_{t-k}$. Each difference is one value minus the one before, so the forecast is a combination $\\sum_{j=0}^{L} w_j\\,y_{t-j}$ of the last $L + 1$ values whose weights add up to 1. Every such combination can be written this way, and since $y_{t+1} - \\hat{y}_{t+1} = d_{t+1} - \\hat{d}_{t+1}$, least squares on the differences picks the combination with the smallest forecast error."
+      },
+      {
+       "p": "With $\\sum w_j = 1$ the error is $\\varepsilon_{t+1} - \\sum_j w_j \\varepsilon_{t-j}$, with variance $\\sigma^2\\big(1 + \\sum_j w_j^2\\big)$. Minimizing $\\sum_j w_j^2$ subject to $\\sum_j w_j = 1$ gives equal weights $w_j = 1/(L+1)$, since by Cauchy-Schwarz $1 = \\big(\\sum_j w_j\\big)^2 \\le (L+1)\\sum_j w_j^2$. So"
+      },
+      {
+       "tex": "\\text{MSE} = \\Big(1 + \\frac{1}{L+1}\\Big)\\sigma^2 ,"
+      },
+      {
+       "p": "and the forecast is the mean of the last $L + 1$ values. With $L = 1$ it is $1.5\\,\\sigma^2$, as in Part 2, and it only reaches the $\\sigma^2$ of the plain mean as $L$ grows without bound. On a series with no trend, the model on differences spends its lags rebuilding the level that differencing threw away: with 9 lags it still has 10% more error than the mean."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ts-features-three-days-ahead",
+   "moduleId": "time-series",
+   "title": "Features for a Forecast Three Days Out",
+   "difficulty": "Medium",
+   "minutes": 6,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A bakery plans its flour orders three days ahead. On the evening of day $t - 3$, after that day's sales are counted, it forecasts the loaves it will sell on day $t$. The table `df` has one row per day, in date order, and the column `y` holds the loaves sold. The model is trained on rows indexed by the target day $t$, and the team wants one feature summarizing a week of recent sales. Which of these can be computed on the evening of day $t - 3$?"
+      },
+      {
+       "choices": [
+        {
+         "text": "`df[\"y\"].shift(1).rolling(7).mean()`",
+         "explain": "Shifting by one makes the window cover days t \u2212 7 to t \u2212 1. That is right for a forecast made the evening before, but on the evening of day t \u2212 3 the sales of days t \u2212 2 and t \u2212 1 have not happened yet."
+        },
+        {
+         "text": "`df[\"y\"].rolling(7).mean().shift(2)`",
+         "explain": "The rolling mean on row t covers days t \u2212 6 to t, and shifting it by two moves it to days t \u2212 8 to t \u2212 2. Day t \u2212 2 is still in the future on the evening of day t \u2212 3: the shift has to be the full three days."
+        },
+        {
+         "text": "`df[\"y\"].rolling(7, center=True).mean().shift(3)`",
+         "explain": "A centered window on row t \u2212 3 covers days t \u2212 6 to t, three days on each side. Shifting it by three moves that same window to row t, so the feature still includes days t \u2212 2, t \u2212 1 and the target day t itself. Centered smoothing looks good on a plot because it uses values from both sides."
+        },
+        {
+         "text": "`df[\"y\"].shift(3).rolling(7).mean()`",
+         "correct": true,
+         "explain": "Shifting by three puts the sales of day t \u2212 3 on row t, and the rolling mean then covers days t \u2212 9 to t \u2212 3. All seven days are counted by the evening of day t \u2212 3, so the feature exists when the forecast is made. The shift has to be at least the forecast horizon, here three days, before any window is aggregated."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Shifting by three puts the sales of day t \u2212 3 on row t, and the rolling mean then covers days t \u2212 9 to t \u2212 3. All seven days are counted by the evening of day t \u2212 3, so the feature exists when the forecast is made. The shift has to be at least the forecast horizon, here three days, before any window is aggregated."
+      },
+      {
+       "result": "`df[\"y\"].shift(3).rolling(7).mean()`"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ts-mape-on-a-quiet-day",
+   "moduleId": "time-series",
+   "title": "One Quiet Day Decides the MAPE",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "A bakery sells a specialty loaf whose daily sales swing widely. Two models forecast five test days:"
+   ],
+   "setup": [
+    {
+     "tex": "\\begin{array}{cccccc}\n\\text{Day} & 1 & 2 & 3 & 4 & 5 \\\\ \\hline\n\\text{Actual} & 50 & 25 & 2 & 20 & 100 \\\\\n\\text{Model A} & 51 & 24 & 12 & 21 & 99 \\\\\n\\text{Model B} & 44 & 29 & 3 & 18 & 112\n\\end{array}"
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Compute the MAE and the MAPE of both models. Give the MAPE of model A, in percent."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The absolute errors are $1, 1, 10, 1, 1$ for model A and $6, 4, 1, 2, 12$ for model B, so"
+      },
+      {
+       "tex": "\\text{MAE}_A = \\frac{14}{5} = 2.8 , \\qquad \\text{MAE}_B = \\frac{25}{5} = 5 ."
+      },
+      {
+       "p": "Dividing each error by that day's actual value gives the percentage errors:"
+      },
+      {
+       "tex": "\\begin{array}{ccccccc}\n\\text{Day} & 1 & 2 & 3 & 4 & 5 & \\text{Mean} \\\\ \\hline\n\\text{Model A} & \\text{2%} & \\text{4%} & \\text{500%} & \\text{5%} & \\text{1%} & \\text{102.4%} \\\\\n\\text{Model B} & \\text{12%} & \\text{16%} & \\text{50%} & \\text{10%} & \\text{12%} & \\text{20%}\n\\end{array}"
+      },
+      {
+       "p": "MAE prefers model A, with 14 loaves of error over the five days against model B's 25. MAPE prefers model B by a factor of five, and the whole difference comes from day 3: model A's other four days add up to 12%, less than model B's."
+      },
+      {
+       "result": "102.4"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Model A's miss of 10 loaves on day 3 adds as much to its MAPE as a miss of how many loaves on day 1 would?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "A miss of $e$ loaves on a day with actual value $y$ adds $e / y$ to the sum of percentage errors. On day 3 that is $10 / 2 = 5$, or 500%. On day 1 the same 500% needs $e / 50 = 5$, so"
+      },
+      {
+       "tex": "e = 5 \\times 50 = 250 \\text{ loaves},"
+      },
+      {
+       "p": "five times the day's sales. MAPE weights each loaf of error by $1 / y$, so a loaf missed on a day selling 2 counts 25 times as much as a loaf missed on a day selling 50."
+      },
+      {
+       "result": "250"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "The bakery's cost is the same for every loaf baked and not sold and for every customer turned away. Which metric should it choose models by, and which model does that pick?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Its cost is proportional to loaves, so MAE measures it: model A, which is off by 14 loaves over the five days against model B's 25. MAPE picks model B because model A was 10 loaves high on a day that sold 2, an expensive day only in percentage terms. MAPE suits a grader who cares about relative error on every day equally, and it is unstable whenever actual values come close to zero, as one slow day showed here."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ts-mase-against-last-year",
+   "moduleId": "time-series",
+   "title": "MASE for a Quarterly Forecast",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "A ski rental shop records its revenue each quarter, in thousands of dollars. The model is trained on three years:"
+   ],
+   "setup": [
+    {
+     "tex": "\\begin{array}{ccccc}\n\\text{Quarter} & \\text{Q1} & \\text{Q2} & \\text{Q3} & \\text{Q4} \\\\ \\hline\n\\text{Year 1} & 20 & 34 & 28 & 42 \\\\\n\\text{Year 2} & 22 & 37 & 29 & 45 \\\\\n\\text{Year 3} & 25 & 38 & 33 & 46\n\\end{array}"
+    },
+    {
+     "p": "For year 4 it forecasts $26, 39, 36, 48$, and the actual revenue turns out to be $27, 41, 34, 49$."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Compute the model's MASE on year 4."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The model's errors are $1, 2, 2, 1$, so its MAE is $6/4 = 1.5$."
+      },
+      {
+       "p": "The series repeats every four quarters, so the baseline is seasonal naive with $m = 4$, and the scale is its error on the training years: each quarter against the same quarter a year earlier, from year 2 on."
+      },
+      {
+       "tex": "|22 - 20|, |37 - 34|, |29 - 28|, |45 - 42|, |25 - 22|, |38 - 37|, |33 - 29|, |46 - 45|\n= 2, 3, 1, 3, 3, 1, 4, 1 ,"
+      },
+      {
+       "p": "with mean $18/8 = 2.25$. So"
+      },
+      {
+       "tex": "\\text{MASE} = \\frac{1.5}{2.25} = \\frac{2}{3} \\approx 0.667 ."
+      },
+      {
+       "p": "The model misses by two thirds of what \"same quarter last year\" missed by in the training data."
+      },
+      {
+       "result": "0.667"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "A teammate reports a MASE of 0.11 for the same forecasts. Find the scale they used, and explain why their number makes the model look far better than it is."
+      }
+     ],
+     "answer": [
+      {
+       "p": "$1.5 / 0.11 \\approx 13.6$, close to the mean absolute one-step change of the training data: the eleven quarter-to-quarter changes are $14, 6, 14, 20, 15, 8, 16, 20, 13, 5, 13$ in size, with mean $144 / 11 \\approx 13.09$, which gives $1.5 / 13.09 \\approx 0.115$. They scaled by the one-step naive forecast."
+      },
+      {
+       "p": "On this series the one-step naive forecast predicts a summer quarter from a winter one and misses by 13 on average, because the season swings by about 15 between neighboring quarters. Beating that says only that the model knows there is a season. Seasonal naive already knows that and misses by 2.25, and the model's 0.667 against it is the number that says what the model adds: about a third less error than repeating last year."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ts-naive-error-around-the-clock",
+   "moduleId": "time-series",
+   "title": "The Naive Forecast Around the Clock",
+   "difficulty": "Hard",
+   "minutes": 25,
+   "overview": [
+    "An hourly load series has a daily cycle and independent noise:"
+   ],
+   "setup": [
+    {
+     "tex": "y_t = A \\sin\\!\\Big(\\frac{2\\pi t}{24} + \\varphi\\Big) + \\varepsilon_t ,"
+    },
+    {
+     "p": "with $\\operatorname{Var}(\\varepsilon_t) = \\sigma^2$. The naive forecast predicts $y_{t+h}$ by $y_t$, and seasonal naive predicts it by $y_{t+h-24}$, for horizons $h = 1, \\dots, 24$. Errors are averaged over the noise and over every hour of the day."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Show that the naive forecast's mean squared error at horizon $h$ is $2\\sigma^2 + A^2\\big(1 - \\cos(2\\pi h / 24)\\big)$, and find the seasonal naive one."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Write $s_t$ for the sine term. The naive error is $(s_{t+h} - s_t) + (\\varepsilon_{t+h} - \\varepsilon_t)$. The two noise terms are independent of each other and of $s$, so they add $2\\sigma^2$. For the rest, with $\\theta = 2\\pi t/24 + \\varphi$ and $\\delta = 2\\pi h/24$,"
+      },
+      {
+       "tex": "s_{t+h} - s_t = A\\big(\\sin(\\theta + \\delta) - \\sin\\theta\\big) = 2A\\cos\\!\\big(\\theta + \\tfrac{\\delta}{2}\\big)\\sin\\tfrac{\\delta}{2} ."
+      },
+      {
+       "p": "Over a whole day $\\cos^2$ averages to $\\frac12$, so the squared gap averages to $2A^2 \\sin^2(\\delta/2) = A^2(1 - \\cos\\delta)$, and"
+      },
+      {
+       "tex": "\\text{MSE}_{\\text{naive}}(h) = 2\\sigma^2 + A^2\\Big(1 - \\cos\\frac{2\\pi h}{24}\\Big) ."
+      },
+      {
+       "p": "Seasonal naive compares values exactly one cycle apart, where the sine terms are equal, so only the noise is left: $2\\sigma^2$ at every horizon."
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "With $A = 2$ and $\\sigma = 0.5$, what is the naive forecast's largest mean squared error over $h = 1, \\dots, 24$?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "$1 - \\cos(2\\pi h/24)$ is largest, equal to 2, at $h = 12$, half a day ahead, where the forecast takes the value at the opposite point of the cycle. There"
+      },
+      {
+       "tex": "\\text{MSE} = 2(0.25) + 4 \\times 2 = 8.5 ,"
+      },
+      {
+       "p": "seventeen times the seasonal naive error of $0.5$. At $h = 24$ the two forecasts are the same value and both have error $0.5$. This hump, worst half a cycle ahead and back to the noise level after a full one, is the shape a naive forecast has on a seasonal series."
+      },
+      {
+       "result": "8.5"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "The load also grows by $b = 0.04$ per hour, so $y_t$ gains a term $b\\,t$. For how many horizons $h$ from 1 to 23 is the naive forecast now more accurate than seasonal naive?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The trend adds a fixed bias to each error. Naive predicts a value $h$ hours old, so it is short by $bh$, and seasonal naive by $24b = 0.96$ at every horizon. The bias is the same at every hour of the day while the seasonal gap averages to zero over the day, so the cross term vanishes and"
+      },
+      {
+       "tex": "\\text{MSE}_{\\text{naive}}(h) = 0.5 + 4\\Big(1 - \\cos\\frac{2\\pi h}{24}\\Big) + 0.0016\\,h^2 , \\qquad\n\\text{MSE}_{\\text{seasonal}} = 0.5 + 0.9216 = 1.4216 ."
+      },
+      {
+       "tex": "\\begin{array}{cccccc}\nh & 1 & 2 & 3 & 22 & 23 \\\\ \\hline\n\\text{Naive} & 0.638 & 1.042 & 1.686 & 1.810 & 1.483\n\\end{array}"
+      },
+      {
+       "p": "Naive wins at $h = 1$ and $h = 2$ only. From $h = 3$ the cycle has moved too far, and near $h = 23$ the cycle term is small again but the trend bias, $0.92$ at $h = 23$, has grown to nearly that of seasonal naive. So **2** horizons. A short-range forecast should lean on the last value and a day-ahead forecast on the same hour yesterday, and a model that predicts several horizons does well to have both as inputs."
+      },
+      {
+       "result": "2"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ts-the-constant-mape-prefers",
+   "moduleId": "time-series",
+   "title": "The Constant Forecast MAPE Prefers",
+   "difficulty": "Hard",
+   "minutes": 25,
+   "overview": [
+    "A grader scores forecasts by MAPE. To see what that rewards, take the simplest forecaster there is: one constant $c > 0$ for every day. On days with actual values $y_1, \\dots, y_n > 0$ its score is"
+   ],
+   "setup": [
+    {
+     "tex": "\\text{MAPE}(c) = \\frac{1}{n} \\sum_{i=1}^{n} \\frac{|y_i - c|}{y_i} ."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Between two neighboring values of the sorted $y_i$, $\\text{MAPE}(c)$ is a straight line in $c$. Find its slope there, and use it to describe the $c$ that minimizes $\\text{MAPE}(c)$."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Each term $|y_i - c| / y_i$ has slope $-1/y_i$ in $c$ while $c < y_i$ and $+1/y_i$ once $c > y_i$. Between two neighboring data values, summing over the terms gives"
+      },
+      {
+       "tex": "\\frac{d}{dc}\\,\\text{MAPE}(c) = \\frac{1}{n}\\Big(\\sum_{y_i < c} \\frac{1}{y_i} - \\sum_{y_i > c} \\frac{1}{y_i}\\Big) ."
+      },
+      {
+       "p": "The function is convex and piecewise linear, and the slope rises from $-\\frac1n\\sum 1/y_i$ to $+\\frac1n\\sum 1/y_i$ as $c$ crosses the data. The minimum is where it changes sign: give each value the weight $1/y_i$, and the minimizer is the value at which the cumulative weight, counted from the smallest $y_i$, first reaches half the total. That is a weighted median with weights $1/y_i$. MAE is the same calculation with every weight equal to 1, which gives the ordinary median."
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "A product's daily sales over five days were $4, 5, 10, 20, 40$. Which constant minimizes MAPE on these days?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The weights $1/y_i$ are $0.25, 0.2, 0.1, 0.05, 0.025$, with total $0.625$ and half of that $0.3125$. Counting from the smallest value, the cumulative weight is $0.25$ at 4 and $0.45$ at 5, so it first passes half at $c = 5$."
+      },
+      {
+       "p": "The slopes confirm it. Between 4 and 5 the slope is $\\frac15(0.25 - 0.375) = -0.025$, still falling, and between 5 and 10 it is $\\frac15(0.45 - 0.175) = 0.055$, rising. At the minimum,"
+      },
+      {
+       "tex": "\\text{MAPE}(5) = \\tfrac15\\big(\\tfrac14 + 0 + \\tfrac{5}{10} + \\tfrac{15}{20} + \\tfrac{35}{40}\\big) = \\tfrac{2.375}{5} = 47.5\\% ,"
+      },
+      {
+       "p": "against $75\\%$ at the median, $c = 10$, which is what MAE picks, and $130\\%$ at the mean, $15.8$, which is what squared error picks."
+      },
+      {
+       "result": "5"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "A team trains a model with squared error and submits it to this grader. Explain what Part 2 says will happen to its score, and describe one change to training that makes it aim at what the grader rewards."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Squared error trains the model to predict the mean of what can happen, MAE the median, and MAPE the $1/y$-weighted median, which never sits above the median, since the weights favor small values. On the five days the three targets are 15.8, 10 and 5. A model trained on squared error aims high for this grader, and its over-forecasts on slow days are the costliest errors MAPE has: a forecast of 15.8 on a day that sells 4 is a 295% miss, while no under-forecast can ever miss by more than 100%."
+      },
+      {
+       "p": "The fix is to train on the grader's loss. Minimizing $\\sum_i \\frac{1}{y_i}\\,|\\hat{y}_i - y_i|$ is minimizing an absolute error in which example $i$ has the weight $1/y_i$, so an MAE (or quantile) loss with sample weights $1/y_i$ trains the model to the target MAPE rewards. Choosing the model on validation MAPE, not on validation squared error, completes it."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ts-two-steps-two-ways",
+   "moduleId": "time-series",
+   "title": "Two Steps Ahead, Recursive or Direct",
+   "difficulty": "Medium",
+   "minutes": 15,
+   "overview": [
+    "A long stationary series has been standardized to mean 0 and variance 1. Its correlation with itself one step later is $r_1 = 0.5$, and two steps later $r_2 = 0.6$. The training set is long enough that every least-squares fit below lands on its population value, and no model needs an intercept."
+   ],
+   "setup": [
+    {
+     "p": "Two forecasts of $y_{t+2}$ from $y_t$ alone are compared:"
+    },
+    {
+     "list": [
+      "**Recursive.** Fit $\\hat{y}_{t+1} = a\\,y_t$ by least squares, apply it once to get $\\hat{y}_{t+1}$, and again to that prediction.",
+      "**Direct.** Fit $\\hat{y}_{t+2} = c\\,y_t$ by least squares."
+     ]
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "The recursive forecast is a multiple of $y_t$. What is the multiple?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Least squares on one input with no intercept gives the slope $a = \\mathbb{E}[y_t y_{t+1}] / \\mathbb{E}[y_t^2]$. For a standardized series the numerator is the lag-1 correlation and the denominator is 1, so $a = r_1 = 0.5$. Applying the model twice gives"
+      },
+      {
+       "tex": "\\hat{y}_{t+2} = a\\,\\hat{y}_{t+1} = a^2 y_t = 0.25\\, y_t ."
+      },
+      {
+       "result": "0.25"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the mean squared error of the recursive two-step forecast?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "For any forecast $k\\,y_t$ of $y_{t+2}$,"
+      },
+      {
+       "tex": "\\mathbb{E}\\big[(y_{t+2} - k\\,y_t)^2\\big] = 1 - 2k\\,r_2 + k^2 ,"
+      },
+      {
+       "p": "using $\\mathbb{E}[y^2] = 1$ and $\\mathbb{E}[y_t y_{t+2}] = r_2$. With $k = 0.25$:"
+      },
+      {
+       "tex": "1 - 2(0.25)(0.6) + 0.0625 = 0.7625 ."
+      },
+      {
+       "result": "0.7625"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Find the direct forecast's error, and show that the recursive one is worse by exactly $(r_1^2 - r_2)^2$. When do the two agree?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The direct fit gives $c = r_2 = 0.6$, and its error is"
+      },
+      {
+       "tex": "1 - 2(0.6)(0.6) + 0.36 = 1 - r_2^2 = 0.64 ."
+      },
+      {
+       "p": "The error $1 - 2k\\,r_2 + k^2$ is a parabola in $k$ with its minimum $1 - r_2^2$ at $k = r_2$, so"
+      },
+      {
+       "tex": "(1 - 2k\\,r_2 + k^2) - (1 - r_2^2) = (k - r_2)^2 ."
+      },
+      {
+       "p": "The recursive forecast uses $k = r_1^2$, so it is worse by $(r_1^2 - r_2)^2 = (0.25 - 0.6)^2 = 0.1225$, and $0.64 + 0.1225 = 0.7625$ as in the part before."
+      },
+      {
+       "p": "They agree only when $r_2 = r_1^2$, which is what a series whose next value depends on the current one alone, an AR(1), would have. Here the series is more alike two steps apart than that, and the one-step model cannot know it, since it never saw a two-step target. The direct model was fitted on exactly that target."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ts-when-scale-is-the-signal",
+   "moduleId": "time-series",
+   "title": "When the Scale Is the Signal",
+   "difficulty": "Medium",
+   "minutes": 5,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A plant records 400 vibration readings per sample from its pumps. A pump with a worn bearing makes the same hum as a healthy one, but its whole trace, hum and background noise together, is about three times as large. The hum can start at any point in the sample. Which preprocessing step leaves a classifier with nothing to tell worn pumps from healthy ones?"
+      },
+      {
+       "choices": [
+        {
+         "text": "Subtracting each sample's own mean and dividing by its own standard deviation",
+         "correct": true,
+         "explain": "Dividing each sample by its own standard deviation removes its overall size, and here the size is the only difference between the classes. After it, a worn pump's trace and a healthy pump's trace are the same signal at the same scale, so no model downstream can separate them. Per-series normalization helps when scale is a nuisance, such as a sensor's gain, and here it is the label."
+        },
+        {
+         "text": "Replacing each sample by the magnitudes of its discrete Fourier transform",
+         "explain": "Magnitudes discard where the hum starts, which is the right invariance here, but they keep its size: scaling a trace by three scales every frequency magnitude by three. The worn class has bins three times as large."
+        },
+        {
+         "text": "Global max pooling over time after a 1-D convolution",
+         "explain": "Pooling discards where the filter fired, but the largest response of a filter to a trace three times as large is three times as large. The pooled features keep the difference between the classes."
+        },
+        {
+         "text": "Standardizing every reading with a single mean and standard deviation computed over the whole training set",
+         "explain": "One mean and one standard deviation shared by every sample changes the units of all of them in the same way, so a worn pump's trace is still three times the size of a healthy one's afterward."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Dividing each sample by its own standard deviation removes its overall size, and here the size is the only difference between the classes. After it, a worn pump's trace and a healthy pump's trace are the same signal at the same scale, so no model downstream can separate them. Per-series normalization helps when scale is a nuisance, such as a sensor's gain, and here it is the label."
+      },
+      {
+       "result": "Subtracting each sample's own mean and dividing by its own standard deviation"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ts-windows-for-a-store-chain",
+   "moduleId": "time-series",
+   "title": "Training Windows for a Store Chain",
+   "difficulty": "Medium",
+   "minutes": 6,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A grocery chain has one year of daily sales, days 0 to 364, for each of its 40 stores. A forecasting model reads the last 28 days of one store and predicts that store's sales on each of the next 7 days at once, so every window is 28 consecutive days of input followed by 7 consecutive days of targets, all from one store."
+      },
+      {
+       "p": "The model will be scored on days 335 to 364, and nothing it is scored on may be learned during training. Across the chain, how many windows can be used for training?"
+      },
+      {
+       "choices": [
+        {
+         "text": "$12{,}320$",
+         "explain": "This keeps every window whose input ends by day 334. A window whose input ends on day 334 has its targets on days 335 to 341, all of them scored days, so the 7 latest starts per store train on validation values. 308 starts per store, times 40."
+        },
+        {
+         "text": "$12{,}280$",
+         "explain": "This keeps every window whose first target is before day 335. The first target is not the last one: a window whose first target falls on day 334 still has six more targets on days 335 to 340. Only windows whose seventh target is before the cut are safe, 301 per store, not 307."
+        },
+        {
+         "text": "$12{,}040$",
+         "correct": true,
+         "explain": "A window starting on day s has inputs on days s to s + 27 and targets on days s + 28 to s + 34. All seven targets come before day 335 when s + 34 is at most 334, so s runs from 0 to 300: 301 windows per store, and 40 times that is 12,040. The inputs of the validation windows may reach back into the training days, which is fine, since only targets carry what the model is scored on."
+        },
+        {
+         "text": "$12{,}000$",
+         "explain": "This finds the last valid start, day 300, and takes it as the count. Starts run from day 0 to day 300, which is 301 windows per store, so the count is 40 times 301, not 40 times 300."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "A window starting on day s has inputs on days s to s + 27 and targets on days s + 28 to s + 34. All seven targets come before day 335 when s + 34 is at most 334, so s runs from 0 to 300: 301 windows per store, and 40 times that is 12,040. The inputs of the validation windows may reach back into the training days, which is fine, since only targets carry what the model is scored on."
+      },
+      {
+       "result": "$12{,}040$"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,19 @@
+{
+  "aModule": "transformer-residual-and-layernorm",
+  "stage": "Round 2",
+  "fixes": [],
+  "parts": {
+    "tf-pre-norm-for-the-first-token": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "tf-pre-norm-for-the-first-token": "Rebuild the running example's transformer block as pre-norm, with the same weights: attention reads the LayerNorm of H and its output is added to H itself, with no LayerNorm after the addition. What is the length, to three decimal places, of the vector for the first token after the attention part and its residual addition?"
+  },
+  "order": [
+    "tf-pre-norm-for-the-first-token"
+  ]
+}

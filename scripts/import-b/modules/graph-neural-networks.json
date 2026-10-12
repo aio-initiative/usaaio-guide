@@ -1,0 +1,92 @@
+{
+  "aModule": "graph-neural-networks",
+  "stage": "Advanced",
+  "fixes": [],
+  "parts": {
+    "gnn-a-favorite-neighbor-for-each-node": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "gnn-average-over-a-node-and-its-neighbors": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "gnn-constant-signal-on-a-star": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "gnn-features-for-a-featureless-graph": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "gnn-many-layers-without-weights": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "gnn-three-neighbors-at-every-node": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "gnn-three-rounds-of-neighbor-sums": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "gnn-a-favorite-neighbor-for-each-node": "Four listeners on a music site are linked in a ring, P to j to Q to k and back to P, so P and Q each know j and k. Each has one taste score: P is 0, j is 1, k is 9 and Q is 10, and a recommender wants each listener to weight most the friend whose taste is closest to their own, so P should prefer j over k while Q should prefer k over j.",
+    "gnn-a-sum-that-forgets-nothing": "After its message-passing layers, every node's state is a whole number from 0 to 3, and every graph has one to four nodes. The readout applies a fixed function f to each node's state and adds up the results. Which f gives different readouts to any two graphs whose node states differ as collections, ignoring order?",
+    "gnn-a-swapped-edge-convention": "A network of six junctions is stored as an edge list where the top row of each column sends a message to the bottom row, and the layer should give each junction the sum of its incoming messages. A teammate builds the dense matrix the other way round, A[src, dst] = 1, and computes A @ H; decide for which junctions the product still gives the right sum whatever the features in H are.",
+    "gnn-average-over-a-node-and-its-neighbors": "Every node of a graph carries one number and has at least one neighbor, and the target at each node is the plain average of the node's own number and its neighbors'. Four layers are offered, each with one output per node, the identity in place of the activation, and any weights you like; which one outputs exactly that target at every node of every graph?",
+    "gnn-constant-signal-on-a-star": "A star graph has one hub joined to seven leaves and no other edges, and every node carries the same scalar feature 1. Apply only the aggregation step of a GCN layer with the symmetric degree normalization, no weight matrix and no nonlinearity, and report what the hub receives; then give the hub a feature r and every leaf a 1, and find the r for which the output equals the input.",
+    "gnn-features-for-a-featureless-graph": "Every graph in a dataset has 12 nodes and an adjacency matrix but the nodes carry no features, so a model must build its input matrix from the adjacency alone. Which of four candidates keeps the stack of graph convolution layers permutation equivariant, so renumbering a graph only reorders the output rows?",
+    "gnn-many-layers-without-weights": "A stack of k GCN layers with the identity weight matrix and no nonlinearity pushes the node features through the normalized adjacency S, k times. Find what S^k H tends to as k grows for the symmetric normalization, and for the row-average normalization.",
+    "gnn-three-neighbors-at-every-node": "Graph X is the complete bipartite graph K(3,3) and graph Y is a triangular prism. Both are connected with six nodes, nine edges and exactly three neighbors at every node, and the nodes carry no features. Decide whether a message-passing network of the lesson's form can give the two graphs different outputs, whether joining one extra node to everything changes that, and find the smallest power k for which the traces of A to the k differ between the two graphs.",
+    "gnn-three-rounds-of-neighbor-sums": "A bare message-passing network on a five-node graph replaces each node's vector by the sum of its neighbours' vectors every round. Work out how many times node 4's vector counts node 3's starting vector after three rounds and after four rounds, and say which nodes within three hops have no effect after three rounds."
+  }
+}

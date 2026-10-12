@@ -1,0 +1,1816 @@
+{
+  "module": "linear-algebra-i-vectors-matrices-systems-transformations",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "vectors-matrices-implementation-task",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Nearest-Centroid Classifier from Scratch",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=vectors-matrices",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "NumPy vector arithmetic: means, norms, broadcasting (no sklearn). Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Test accuracy must reach the target shown in the evaluation cell."
+    },
+    {
+      "id": "linear-algebra-implementation-task",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Least Squares by the Normal Equations",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=linear-algebra",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Normal equations / np.linalg.solve (no sklearn estimators). Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Test R² must reach the target shown in the evaluation cell."
+    },
+    {
+      "id": "vm-cosine-from-distances",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Cosine Similarity from Lengths and a Distance",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=vm-cosine-from-distances",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A vector search service stores the length of every embedding it holds, and its search call returns only the Euclidean distance $\\lVert \\mathbf{q} - \\mathbf{d} \\rVert$ between a query $\\mathbf{q}$ and each document $\\mathbf{d}$. You want cosine similarities, and you cannot read the vectors themselves. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "vm-strip-a-shared-direction",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Compare Two Vectors After Removing a Shared Direction",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=vm-strip-a-shared-direction",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Two review vectors, $\\mathbf{a} = (5, 3, 4)$ and $\\mathbf{b} = (2, 3, 4)$, have cosine similarity about $0.92$. Remove from each its part along $\\mathbf{v} = (1, 1, 1)$ and compare the residuals. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "vm-matrix-from-two-probes",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "The Matrix of a Map from Two Probes",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=vm-matrix-from-two-probes",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A linear map T of the plane is hidden inside a library. You can only call it, and two calls return T(1, 1) = (4, 2) and T(1, −1) = (2, −2). Which matrix represents T?",
+      "answer": "[[3, 1], [0, 2]]. Write the basic arrows with the probes: (1, 0) is half of (1, 1) plus half of (1, −1), and (0, 1) is half of (1, 1) minus half of (1, −1). By linearity T(1, 0) = ((4, 2) + (2, −2)) / 2 = (3, 0) and T(0, 1) = ((4, 2) − (2, −2)) / 2 = (1, 2). Those are the columns. Check: the matrix sends (1, 1) to (3 + 1, 0 + 2) = (4, 2) and (1, −1) to (3 − 1, 0 − 2) = (2, −2)."
+    },
+    {
+      "id": "vm-probe-an-affine-layer",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Predict a Layer's Output from Three Probes",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=vm-probe-an-affine-layer",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A layer with two inputs and two outputs computes f(x) = Wx + b, and you cannot see W or b. Three calls return f(0, 0) = (1, −1), f(1, 0) = (3, 0) and f(0, 1) = (0, 2). What is f(2, 3)?",
+      "answer": "(2, 10). f(0, 0) = b = (1, −1). Subtracting it gives the columns of W: W(1, 0) = (3, 0) − (1, −1) = (2, 1) and W(0, 1) = (0, 2) − (1, −1) = (−1, 3). Then W(2, 3) = 2(2, 1) + 3(−1, 3) = (1, 11), and adding b once gives (2, 10)."
+    },
+    {
+      "id": "vm-order-of-a-low-rank-product",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Which Order to Multiply a Low-Rank Layer",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=vm-order-of-a-low-rank-product",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "To save memory, a layer's $512 \\times 512$ weight matrix is stored as two thin matrices, $W = UV^\\top$, where $U$ and $V$ are both $512 \\times 8$. A batch of 64 inputs is the rows of $X$, shape $64 \\times 512$, and the layer computes $XW$. Count one multiplication for each product of two numbers. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "vm-determinant-of-a-scaled-inverse",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "The Determinant of Undo, Then Double",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=vm-determinant-of-a-scaled-inverse",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A 2 by 2 matrix W sends the unit square to a parallelogram of area 3 without flipping the plane over, so det W = 3. A second map first undoes W and then doubles every vector. Its matrix is 2W^{-1}. What is det(2W^{-1})?",
+      "answer": "4/3. Undoing W divides every area by 3, since det(W^{-1}) det(W) = det(I) = 1. Doubling every vector is the matrix 2I, which doubles both sides of the unit square, so it multiplies areas by 2 · 2 = 4. The product rule gives det(2I) det(W^{-1}) = 4 · 1/3 = 4/3."
+    },
+    {
+      "id": "vm-which-right-sides-are-reachable",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Which Right-Hand Sides Can Be Reached",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=vm-which-right-sides-are-reachable",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Let $A = \\begin{pmatrix} 1 & 2 & 1 \\\\ 2 & 4 & 3 \\\\ 3 & 6 & 4 \\end{pmatrix}$ and $\\mathbf{b} = (1, 0, c)$. For which value of $c$ does $A\\mathbf{x} = \\mathbf{b}$ have a solution, and how many solutions are there then? 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "vm-rank-of-three-outer-products",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "The Rank of a Sum of Three Outer Products",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=vm-rank-of-three-outer-products",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A $3 \\times 3$ matrix is built as a sum of three outer products, $M = \\mathbf{u}_1\\mathbf{v}_1^\\top + \\mathbf{u}_2\\mathbf{v}_2^\\top + \\mathbf{u}_3\\mathbf{v}_3^\\top$, where $\\mathbf{u}_3 = \\mathbf{u}_1 + \\mathbf{u}_2$. Find the rank of $M$. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "vm-fit-a-symmetric-curve",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Least Squares for a Curve Symmetric About Zero",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=vm-fit-a-symmetric-curve",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "An engineer fits $y = a + b\\,t^2$ by least squares to four readings taken at $t = -1, 0, 1, 2$. Find the fitted value of $b$ and the smallest possible sum of squared errors. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "vm-dimension-of-the-residuals",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "How Many Directions the Residuals Fill",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=vm-dimension-of-the-residuals",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "You fit a model with 4 parameters to 10 data points by least squares. The fourth feature turns out to be the sum of the first two (a total recorded next to its parts), so in the 10 by 4 matrix A column 4 is column 1 plus column 2. You compute the matrix P that projects onto the column space of A and find tr(P) = 3. For a data vector b the residual is r = b − Pb = (I − P)b. As b ranges over every vector in R^10, the residuals fill a subspace. What is its dimension?",
+      "answer": "7. Column 4 adds nothing new, so the column space is spanned by columns 1, 2 and 3 and has dimension 3. Every residual is perpendicular to it, and every vector perpendicular to it is its own residual, since its projection is 0. So the residuals fill exactly the directions perpendicular to a 3-dimensional subspace of R^10, a space of dimension 10 - 3 = 7. Dropping column 4 changes neither the column space nor P, so P is also the lesson's formula for the first three columns, with trace 3, and tr(I - P) = 10 - 3 agrees."
+    },
+    {
+      "id": "vm-cosine-search-numpy",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Search by Cosine Similarity in NumPy",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=vm-cosine-search-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Whole-array NumPy: scale each row to length 1, then one matrix product gives every query-document cosine at once, with an all-zero row scored 0 instead of nan. Write your solution in the marked cell, then run the check cell under it.",
+      "answer": "Auto-graded inside the notebook. The check cells assert the similarity matrix's shape and values (an all-zero row scores 0, not nan), that stretching a document leaves its cosines unchanged, and that top_k returns the right document indices, most similar first."
+    },
+    {
+      "id": "vm-remove-two-directions",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Removing Two Directions One at a Time",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=vm-remove-two-directions",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A team cleans an embedding $\\mathbf{x}$ by projecting out two unwanted directions $\\mathbf{v}_1$ and $\\mathbf{v}_2$ one at a time. Compare the result with the true projection of $\\mathbf{x}$ onto the plane the two directions span. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "vm-tiny-residual-large-error",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "A Tiny Residual and a Large Error",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=vm-tiny-residual-large-error",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A solver returns $\\tilde{\\mathbf{x}} = (2, 0)$ for $A\\mathbf{x} = \\mathbf{b}$, where $A = \\begin{pmatrix} 1 & 1 \\\\ 1 & 1.01 \\end{pmatrix}$ and $\\mathbf{b} = (2, 2.01)$. Its residual is tiny. How far can the answer be from the truth? 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "vm-project-onto-a-span-numpy",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Project onto the Span of Dependent Vectors",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=vm-project-onto-a-span-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Modified Gram-Schmidt over the columns of a dependent set: keep the columns that add a new direction and skip the rest, then project onto the span without ever forming (V^T V)^-1. Write your solution in the marked cell, then run the check cell under it.",
+      "answer": "Auto-graded inside the notebook. The check cells assert the basis is orthonormal and spans the same space with the redundant columns dropped, and that the projection matches, with its residual perpendicular to every column of V."
+    },
+    {
+      "id": "theory-vectors-norms-projections",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Vectors, Norms, and Orthogonal Projection",
+      "source": "Original",
+      "difficulty": "Medium",
+      "url": "/theory/?id=theory-vectors-norms-projections",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Includes code",
+        "Round 1"
+      ],
+      "prompt": "Project a vector onto a direction by hand, prove the leftover residual is orthogonal to it, and write the same computation as vectorized NumPy. 9 parts, each with its own grading instruction. Solutions revealed part by part.",
+      "answer": "Worked solutions are given part by part on the problem page, with full derivations and not just final values. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "theory-matrix-linear-maps",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Matrices as Linear Maps, Rank, and Outer-Product Decomposition",
+      "source": "Original",
+      "difficulty": "Medium",
+      "url": "/theory/?id=theory-matrix-linear-maps",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Includes code",
+        "Round 1"
+      ],
+      "prompt": "Recover a matrix from the linear map it performs, find its rank and null space, and split it into the fewest possible rank-one pieces. 8 parts, each with its own grading instruction. Solutions revealed part by part.",
+      "answer": "Worked solutions are given part by part on the problem page (full derivations, not just final values). Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ma6-condition-number",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "A Tiny Residual and a Useless Answer",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ma6-condition-number",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Solve an ill-conditioned Hilbert system and show the residual can sit at machine precision while every digit of the answer is wrong, bounded by the condition number.",
+      "answer": "Auto-graded inside the notebook. Forward error, condition number, and amplification must land within 50% of the reference (they shift by a few percent between NumPy builds), with the residual under 1e-10, the forward error over 1e-4, and the bound holding."
+    },
+    {
+      "id": "ma6-gram-schmidt",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Classical Gram-Schmidt Loses Orthogonality",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=ma6-gram-schmidt",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Implement classical and modified Gram-Schmidt on a nearly-dependent basis and measure how much orthogonality each one loses.",
+      "answer": "Auto-graded inside the notebook. The condition number must match to 1e-6, the classical loss must land within 50% of the reference (it shifts by a few percent between NumPy builds), and the other two losses must sit within 1e-6 of theirs, with modified more than 100x better."
+    },
+    {
+      "id": "ma1-cosine-dedup",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Near-Duplicate Hunting with Cosine Similarity",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/editor/?nb=ma1-cosine-dedup",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Find every pair of bag-of-words documents whose cosine similarity is at least 0.95, normalizing each row without dividing by zero on the five all-zero rows.",
+      "answer": "Auto-graded inside the notebook. The zero-row and duplicate-pair counts must match the reference and the largest off-diagonal similarity must match to 2e-6, with no NaN in any answer."
+    }
+  ],
+  "theory": [
+    {
+      "id": "theory-vectors-norms-projections",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Vectors, Norms, and Orthogonal Projection",
+      "difficulty": "Medium",
+      "minutes": 40,
+      "overview": [
+        "Project a vector onto a direction by hand, prove the leftover residual is orthogonal to it, and write the same computation as vectorized NumPy."
+      ],
+      "setup": [
+        {
+          "p": "Work in $\\mathbb{R}^3$ throughout, with the two vectors"
+        },
+        {
+          "tex": "v = \\begin{bmatrix} 3 \\\\ -1 \\\\ 1 \\end{bmatrix}, \\qquad x = \\begin{bmatrix} 2 \\\\ 4 \\\\ 1 \\end{bmatrix}."
+        },
+        {
+          "p": "Let $\\hat{e} \\in \\mathbb{R}^3$ be the unit vector pointing in the same direction as $v$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Compute the unit vector $\\hat{e} = v / \\lVert v \\rVert_2$. Which of the following equals $\\hat{e}$?"
+            },
+            {
+              "choices": [
+                "A. $\\frac{1}{\\sqrt{11}}(3, -1, 1)^\\top$.",
+                "B. $\\frac{1}{11}(3, -1, 1)^\\top$.",
+                "C. $\\frac{1}{\\sqrt{11}}(3, 1, 1)^\\top$.",
+                "D. $\\frac{1}{5}(3, -1, 1)^\\top$.",
+                "E. $\\frac{1}{\\sqrt{21}}(2, 4, 1)^\\top$."
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The squared length of $v$ is $3^2 + (-1)^2 + 1^2 = 9 + 1 + 1 = 11$, so $\\lVert v \\rVert_2 = \\sqrt{11}$. Scaling every entry of $v$ by that length gives"
+            },
+            {
+              "tex": "\\hat{e} = \\frac{v}{\\lVert v \\rVert_2} = \\frac{1}{\\sqrt{11}} \\begin{bmatrix} 3 \\\\ -1 \\\\ 1 \\end{bmatrix}."
+            },
+            {
+              "p": "The other options are the usual slips. Dividing by $11$ uses the squared norm in place of the norm, the option with a $+1$ in the middle has lost the sign of that entry, dividing by $5$ uses the $\\ell_1$ norm $3 + 1 + 1$, and the last option normalizes $x$ instead of $v$."
+            },
+            {
+              "result": "A. $\\frac{1}{\\sqrt{11}}(3, -1, 1)^\\top$."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Compute the projection coefficient $\\hat{e}^\\top x$, the signed length of the projection of $x$ onto the direction $\\hat{e}$. Which of the following equals it?"
+            },
+            {
+              "choices": [
+                "A. $\\frac{3}{11}$.",
+                "B. $\\frac{3}{\\sqrt{21}}$.",
+                "C. $\\frac{3}{\\sqrt{11}}$.",
+                "D. $\\frac{2}{\\sqrt{11}}$.",
+                "E. $\\sqrt{11}$."
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Take the inner product of $x$ with the unit vector from Part 1:"
+            },
+            {
+              "tex": "\\hat{e}^\\top x = \\frac{1}{\\sqrt{11}}\\left( 3 \\cdot 2 + (-1) \\cdot 4 + 1 \\cdot 1 \\right) = \\frac{6 - 4 + 1}{\\sqrt{11}} = \\frac{3}{\\sqrt{11}}."
+            },
+            {
+              "p": "The other options come from the standard slips. The value $3/11$ is the coefficient $\\frac{v^\\top x}{v^\\top v}$, which is the right number to pair with $v$ itself but not with the unit vector, $3/\\sqrt{21}$ divides by $\\lVert x \\rVert_2$ rather than $\\lVert v \\rVert_2$, $2/\\sqrt{11}$ drops the final $1 \\cdot 1$ term, and $\\sqrt{11}$ comes from writing $6 + 4 + 1$ instead of $6 - 4 + 1$."
+            },
+            {
+              "result": "C. $\\frac{3}{\\sqrt{11}}$."
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Let $r$ be the residual left after $x$ is projected onto $\\hat{e}$, that is $r = x - (\\hat{e}^\\top x)\\,\\hat{e}$. Which of the following equals $r$?"
+            },
+            {
+              "choices": [
+                "A. $\\frac{1}{11}(13, 41, 8)^\\top$.",
+                "B. $\\frac{1}{11}(13, 47, 8)^\\top$.",
+                "C. $\\frac{1}{11}(9, -3, 3)^\\top$.",
+                "D. $(-7, 7, -2)^\\top$.",
+                "E. $\\frac{1}{121}(13, 47, 8)^\\top$."
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "From Parts 1 and 2, the projection vector is"
+            },
+            {
+              "tex": "(\\hat{e}^\\top x)\\,\\hat{e} = \\frac{3}{\\sqrt{11}} \\cdot \\frac{1}{\\sqrt{11}} \\begin{bmatrix} 3 \\\\ -1 \\\\ 1 \\end{bmatrix} = \\frac{3}{11} \\begin{bmatrix} 3 \\\\ -1 \\\\ 1 \\end{bmatrix} = \\frac{1}{11}\\begin{bmatrix} 9 \\\\ -3 \\\\ 3 \\end{bmatrix}."
+            },
+            {
+              "p": "Subtract it from $x = \\frac{1}{11}(22, 44, 11)^\\top$, taking care with the middle sign:"
+            },
+            {
+              "tex": "r = \\frac{1}{11}\\begin{bmatrix} 22 - 9 \\\\ 44 + 3 \\\\ 11 - 3 \\end{bmatrix} = \\frac{1}{11}\\begin{bmatrix} 13 \\\\ 47 \\\\ 8 \\end{bmatrix}."
+            },
+            {
+              "p": "Among the other options, $\\frac{1}{11}(13, 41, 8)^\\top$ slips the sign on the middle entry, $\\frac{1}{11}(9, -3, 3)^\\top$ is the projection vector itself rather than the residual, $(-7, 7, -2)^\\top$ pairs the coefficient $3$ with $v$ instead of the unit vector $\\hat{e}$, and $\\frac{1}{121}(13, 47, 8)^\\top$ squares the denominator. As a sanity check, $r^\\top v = \\frac{1}{11}(39 - 47 + 8) = 0$, which is exactly what Part 4 proves must happen."
+            },
+            {
+              "result": "B. $\\frac{1}{11}(13, 47, 8)^\\top$."
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Let $\\hat{e}$ be any unit vector and let $x$ be any vector. Prove that the residual"
+            },
+            {
+              "tex": "r = x - (\\hat{e}^\\top x)\\,\\hat{e}"
+            },
+            {
+              "p": "is orthogonal to $\\hat{e}$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Take the inner product of $r$ with $\\hat{e}$ and expand using linearity:"
+            },
+            {
+              "tex": "\\hat{e}^\\top r = \\hat{e}^\\top \\big( x - (\\hat{e}^\\top x)\\hat{e} \\big) = \\hat{e}^\\top x - (\\hat{e}^\\top x)\\,\\hat{e}^\\top \\hat{e}."
+            },
+            {
+              "p": "The scalar $\\hat{e}^\\top x$ pulls out of the second term because it is just a number. Since $\\hat{e}$ is a unit vector, $\\hat{e}^\\top \\hat{e} = \\lVert \\hat{e} \\rVert_2^2 = 1$, so"
+            },
+            {
+              "tex": "\\hat{e}^\\top r = \\hat{e}^\\top x - (\\hat{e}^\\top x) \\cdot 1 = 0."
+            },
+            {
+              "p": "Therefore $r \\perp \\hat{e}$. Note where the unit-length assumption was used: for a general non-unit $v$ the correct projection coefficient is $\\frac{v^\\top x}{v^\\top v}$, and the same cancellation happens."
+            }
+          ]
+        },
+        {
+          "id": "1.5",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Using Part 4, prove the Pythagorean identity"
+            },
+            {
+              "tex": "\\lVert x \\rVert_2^2 = (\\hat{e}^\\top x)^2 + \\lVert r \\rVert_2^2,"
+            },
+            {
+              "p": "and then verify it numerically for the specific $x$ and $r$ from Parts 2 and 3."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write $x$ as the sum of its two pieces, $x = (\\hat{e}^\\top x)\\hat{e} + r$, and expand the squared norm:"
+            },
+            {
+              "tex": "\\lVert x \\rVert_2^2 = \\big\\lVert (\\hat{e}^\\top x)\\hat{e} + r \\big\\rVert_2^2 = (\\hat{e}^\\top x)^2 \\lVert \\hat{e} \\rVert_2^2 + 2(\\hat{e}^\\top x)\\,\\hat{e}^\\top r + \\lVert r \\rVert_2^2."
+            },
+            {
+              "p": "The cross term vanishes because $\\hat{e}^\\top r = 0$ by Part 4, and $\\lVert \\hat{e} \\rVert_2^2 = 1$, leaving $\\lVert x \\rVert_2^2 = (\\hat{e}^\\top x)^2 + \\lVert r \\rVert_2^2$."
+            },
+            {
+              "p": "Numerically: $\\lVert x \\rVert_2^2 = 4 + 16 + 1 = 21$, $(\\hat{e}^\\top x)^2 = \\left(\\frac{3}{\\sqrt{11}}\\right)^2 = \\frac{9}{11}$, and"
+            },
+            {
+              "tex": "\\lVert r \\rVert_2^2 = \\frac{13^2 + 47^2 + 8^2}{11^2} = \\frac{169 + 2209 + 64}{121} = \\frac{2442}{121} = \\frac{222}{11}."
+            },
+            {
+              "p": "Indeed $\\frac{9}{11} + \\frac{222}{11} = \\frac{231}{11} = 21$. This identity is the whole reason PCA can talk about \"variance explained\" and \"reconstruction error\" as two halves of one budget."
+            }
+          ]
+        },
+        {
+          "id": "1.6",
+          "kind": "derivation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Define the cosine similarity of two nonzero vectors $u$ and $w$ as"
+            },
+            {
+              "tex": "\\operatorname{sim}(u, w) = \\frac{u^\\top w}{\\lVert u \\rVert_2 \\lVert w \\rVert_2}."
+            },
+            {
+              "p": "Determine the range of $\\operatorname{sim}(u, w)$, and state exactly when each endpoint is attained."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Apply the Cauchy-Schwarz inequality, $\\lvert u^\\top w \\rvert \\le \\lVert u \\rVert_2 \\lVert w \\rVert_2$. Dividing by the (positive) product of norms gives"
+            },
+            {
+              "tex": "-1 \\le \\operatorname{sim}(u, w) \\le 1."
+            },
+            {
+              "p": "A cleaner way to see it: let $\\hat{u} = u / \\lVert u \\rVert_2$ and $\\hat{w} = w / \\lVert w \\rVert_2$, so $\\operatorname{sim} = \\hat{u}^\\top \\hat{w}$. By Part 5 applied with $\\hat{e} = \\hat{u}$ and $x = \\hat{w}$,"
+            },
+            {
+              "tex": "1 = \\lVert \\hat{w} \\rVert_2^2 = (\\hat{u}^\\top \\hat{w})^2 + \\lVert r \\rVert_2^2 \\ \\Longrightarrow \\ (\\hat{u}^\\top \\hat{w})^2 = 1 - \\lVert r \\rVert_2^2 \\le 1."
+            },
+            {
+              "p": "Equality forces $\\lVert r \\rVert_2 = 0$, i.e. $\\hat{w} = \\pm \\hat{u}$: the value $+1$ is attained exactly when $u$ and $w$ point the same way, and $-1$ exactly when they point in opposite directions."
+            },
+            {
+              "result": "$\\operatorname{sim}(u, w) \\in [-1, 1]$, with $+1$ iff $w = \\alpha u$ for some $\\alpha > 0$ and $-1$ iff $w = \\alpha u$ for some $\\alpha < 0$."
+            }
+          ]
+        },
+        {
+          "id": "1.7",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "For the vector $x = (2, 4, 1)^\\top$, compute $\\lVert x \\rVert_1$, $\\lVert x \\rVert_2$, and $\\lVert x \\rVert_\\infty$. Then prove that for every $x \\in \\mathbb{R}^d$,"
+            },
+            {
+              "tex": "\\lVert x \\rVert_\\infty \\le \\lVert x \\rVert_2 \\le \\lVert x \\rVert_1."
+            }
+          ],
+          "answer": [
+            {
+              "p": "For this $x$: $\\lVert x \\rVert_1 = 2 + 4 + 1 = 7$, $\\lVert x \\rVert_2 = \\sqrt{4 + 16 + 1} = \\sqrt{21} \\approx 4.583$, and $\\lVert x \\rVert_\\infty = \\max(2, 4, 1) = 4$. So $4 \\le 4.583 \\le 7$."
+            },
+            {
+              "p": "Left inequality. Let $m = \\arg\\max_i \\lvert x_i \\rvert$. Then"
+            },
+            {
+              "tex": "\\lVert x \\rVert_\\infty^2 = x_m^2 \\le \\sum_{i} x_i^2 = \\lVert x \\rVert_2^2,"
+            },
+            {
+              "p": "since every dropped term is nonnegative. Taking square roots preserves the inequality."
+            },
+            {
+              "p": "Right inequality. Square the $\\ell_1$ norm:"
+            },
+            {
+              "tex": "\\lVert x \\rVert_1^2 = \\Big( \\sum_i \\lvert x_i \\rvert \\Big)^2 = \\sum_i x_i^2 + \\sum_{i \\ne j} \\lvert x_i \\rvert \\lvert x_j \\rvert \\ \\ge \\ \\sum_i x_i^2 = \\lVert x \\rVert_2^2,"
+            },
+            {
+              "p": "because the cross terms are all nonnegative. Taking square roots gives $\\lVert x \\rVert_1 \\ge \\lVert x \\rVert_2$."
+            },
+            {
+              "p": "This ordering is why $\\ell_1$ is the \"expensive\" penalty: for a fixed budget it forces mass onto few coordinates, which is the sparsity effect you meet again in Lasso."
+            }
+          ]
+        },
+        {
+          "id": "1.8",
+          "kind": "explanation",
+          "requirement": "Reasoning is required. Coding is not needed.",
+          "prompt": [
+            {
+              "p": "Suppose an image search service stores $N$ image feature vectors as the rows of $X \\in \\mathbb{R}^{N \\times 64}$, and it needs the matrix $S \\in \\mathbb{R}^{N \\times N}$ of pairwise cosine similarities between those vectors."
+            },
+            {
+              "p": "Explain why it is better to first rescale every row to unit length, forming $W$, and then compute $S = W W^\\top$, rather than forming $X X^\\top$ and dividing afterwards. Cover both the arithmetic cost and what the diagonal entries of $S$ should equal."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Cost. Rescaling is $O(Nd)$ work done once: each of the $N$ rows is multiplied by a single scalar. The alternative first builds $G = X X^\\top$ and then divides entry $(i, j)$ by $\\lVert x^{(i)} \\rVert \\lVert x^{(j)} \\rVert$, which adds $O(N^2)$ divisions on top of the matrix product, and $N^2$ dwarfs $Nd$ once the image collection grows. That route spends $N^2$ extra operations undoing a scaling that $N$ multiplications would have prevented."
+            },
+            {
+              "p": "The diagonal. After rescaling, $S_{ij} = \\hat{v}^{(i)\\top} \\hat{v}^{(j)}$ is precisely the cosine similarity, so $S$ is already the matrix that was asked for, and its diagonal is"
+            },
+            {
+              "tex": "S_{ii} = \\hat{v}^{(i)\\top} \\hat{v}^{(i)} = \\lVert \\hat{v}^{(i)} \\rVert_2^2 = 1."
+            },
+            {
+              "p": "A diagonal of all ones is a free test: any entry that is not $1$ means that row was never rescaled, most often because the row was all zeros and the rescaling tried to divide $0$ by $0$. With the unscaled $G$, the diagonal holds $\\lVert x^{(i)} \\rVert_2^2$, which differs from image to image and carries no similarity information at all. Bright or high-contrast pictures happen to produce longer feature vectors, so raw inner products would rank them as similar to everything in the collection."
+            }
+          ]
+        },
+        {
+          "id": "1.9",
+          "kind": "coding",
+          "requirement": "Write one line of code. Do not use np.linalg, and do not use any loop.",
+          "prompt": [
+            {
+              "p": "Run the following starter code:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "import numpy as np",
+                  "",
+                  "X = np.array([[3.0, -1.0, 1.0], [2.0, 4.0, 1.0], [1.0, 2.0, 2.0]])"
+                ]
+              }
+            },
+            {
+              "p": "Write code to compute the row-normalized matrix"
+            },
+            {
+              "tex": "W = \\begin{bmatrix} \\hat{v}^{(0)\\top} \\\\ \\hat{v}^{(1)\\top} \\\\ \\vdots \\\\ \\hat{v}^{(N-1)\\top} \\end{bmatrix}, \\qquad \\hat{v}^{(n)} = \\frac{v^{(n)}}{\\lVert v^{(n)} \\rVert_2},"
+            },
+            {
+              "p": "where $v^{(n)\\top}$ is row $n$ of $X$. Name the result $\\texttt{W}$."
+            }
+          ],
+          "answer": [
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "W = X / np.sqrt((X ** 2).sum(axis=1, keepdims=True))"
+                ]
+              }
+            },
+            {
+              "p": "Three details carry the whole line. $\\texttt{(X ** 2).sum(axis=1)}$ sums along each row, giving the $N$ squared norms without a loop. $\\texttt{keepdims=True}$ keeps the result shaped $(N, 1)$ instead of $(N,)$, so broadcasting aligns it against the rows of $X$. Drop it and NumPy would try to broadcast a length-$N$ vector across the $d$ columns, which either errors or silently divides the wrong axis when $N = d$. And $\\texttt{np.sqrt}$ replaces the banned $\\texttt{np.linalg.norm}$."
+            },
+            {
+              "p": "For the given $X$, row 0 has norm $\\sqrt{11}$, row 1 has norm $\\sqrt{21}$, and row 2 has norm $3$, so $W$ has rows $(3, -1, 1)/\\sqrt{11}$, $(2, 4, 1)/\\sqrt{21}$, and $(1/3, 2/3, 2/3)$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vm-cosine-from-distances",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Cosine Similarity from Lengths and a Distance",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "A vector search service stores the length of every embedding it holds, and its search call returns only the Euclidean distance $\\lVert \\mathbf{q} - \\mathbf{d} \\rVert$ between a query $\\mathbf{q}$ and each document $\\mathbf{d}$. You want cosine similarities, and you cannot read the vectors themselves."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A query has length 2, a document has length 3, and the service reports a distance of $\\sqrt7$ between them. What is their cosine similarity?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write the squared distance as a dot product and expand it:"
+            },
+            {
+              "tex": "\\lVert \\mathbf{q} - \\mathbf{d} \\rVert^2\n= (\\mathbf{q} - \\mathbf{d}) \\cdot (\\mathbf{q} - \\mathbf{d})\n= \\lVert \\mathbf{q} \\rVert^2 - 2\\,\\mathbf{q} \\cdot \\mathbf{d} + \\lVert \\mathbf{d} \\rVert^2 ."
+            },
+            {
+              "p": "So $7 = 4 - 2\\,\\mathbf{q} \\cdot \\mathbf{d} + 9$, which gives $\\mathbf{q} \\cdot \\mathbf{d} = 3$. Dividing by both lengths,"
+            },
+            {
+              "tex": "\\cos\\theta = \\frac{3}{2 \\cdot 3} = 0.5 ,"
+            },
+            {
+              "p": "an angle of $60^\\circ$. The distance alone does not fix the angle. The same distance $\\sqrt7$ between two vectors of length 2 would give $\\mathbf{q} \\cdot \\mathbf{d} = (4 + 4 - 7)/2 = 0.5$ and a cosine of $0.5/4 = 0.125$, so the lengths are needed every time."
+            },
+            {
+              "result": "0.5"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The team now scales every embedding to length 1 before storing it. Two stored vectors are at distance 0.8. What is their cosine similarity?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "With both lengths equal to 1 the expansion becomes"
+            },
+            {
+              "tex": "\\lVert \\mathbf{q} - \\mathbf{d} \\rVert^2 = 2 - 2\\cos\\theta ,"
+            },
+            {
+              "p": "so $0.64 = 2 - 2\\cos\\theta$ and $\\cos\\theta = 0.68$."
+            },
+            {
+              "result": "0.68"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "After the scaling, is the nearest document by distance always the one with the highest cosine similarity? Was it before the scaling? Give an example in the plane for the case where it fails."
+            }
+          ],
+          "answer": [
+            {
+              "p": "After the scaling, yes. For unit vectors $\\lVert \\mathbf{q} - \\mathbf{d} \\rVert^2 = 2 - 2\\cos\\theta$, so a smaller distance means a larger cosine, and sorting by one sorts by the other in reverse."
+            },
+            {
+              "p": "Before the scaling, no, because the lengths enter the distance. Take the query $\\mathbf{q} = (1, 0)$ and two documents, $\\mathbf{d}_1 = (0.6, 0.6)$ and $\\mathbf{d}_2 = (3, 0)$."
+            },
+            {
+              "list": [
+                "$\\mathbf{d}_1$ is at distance $\\sqrt{0.16 + 0.36} \\approx 0.72$, with cosine $0.6 / (1 \\cdot 0.6\\sqrt2) \\approx 0.71$.",
+                "$\\mathbf{d}_2$ is at distance 2, with cosine 1."
+              ]
+            },
+            {
+              "p": "The nearest document is $\\mathbf{d}_1$, but $\\mathbf{d}_2$ points exactly the way the query does. This is why search libraries ask you to normalize the vectors when you want cosine ranking from a distance index."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vm-strip-a-shared-direction",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Compare Two Vectors After Removing a Shared Direction",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "A team embeds product reviews as vectors with three entries. They find that every review vector has a large part along $\\mathbf{v} = (1, 1, 1)$, which mostly tracks how long the review is, so before comparing two reviews they remove that part and keep only the residual. Two reviews have the vectors"
+      ],
+      "setup": [
+        {
+          "tex": "\\mathbf{a} = (5, 3, 4), \\qquad \\mathbf{b} = (2, 3, 4) ,"
+        },
+        {
+          "p": "whose cosine similarity is $35 / \\sqrt{50 \\cdot 29} \\approx 0.92$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Remove from $\\mathbf{a}$ and from $\\mathbf{b}$ their projections onto $\\mathbf{v}$. What is the cosine similarity of the two residuals?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "$\\mathbf{v}$ is not a unit vector, so project with $\\dfrac{\\mathbf{v} \\cdot \\mathbf{x}}{\\mathbf{v} \\cdot \\mathbf{v}}\\,\\mathbf{v}$. Here $\\mathbf{v} \\cdot \\mathbf{v} = 3$."
+            },
+            {
+              "list": [
+                "$\\mathbf{v} \\cdot \\mathbf{a} = 12$, so the projection is $4\\mathbf{v} = (4, 4, 4)$ and the residual is $\\mathbf{r}_a = (1, -1, 0)$.",
+                "$\\mathbf{v} \\cdot \\mathbf{b} = 9$, so the projection is $3\\mathbf{v} = (3, 3, 3)$ and the residual is $\\mathbf{r}_b = (-1, 0, 1)$."
+              ]
+            },
+            {
+              "p": "Both residuals are perpendicular to $\\mathbf{v}$, as they should be: their entries add up to 0. Then"
+            },
+            {
+              "tex": "\\cos\\theta = \\frac{\\mathbf{r}_a \\cdot \\mathbf{r}_b}{\\lVert \\mathbf{r}_a \\rVert\\,\\lVert \\mathbf{r}_b \\rVert}\n= \\frac{-1 + 0 + 0}{\\sqrt2 \\cdot \\sqrt2} = -0.5 ."
+            },
+            {
+              "p": "The two reviews looked almost the same (0.92) only because both point mostly along $\\mathbf{v}$. What is left after removing it points apart, at $120^\\circ$."
+            },
+            {
+              "result": "$-0.5$"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Show that for $\\mathbf{v} = (1, 1, 1)$ the projection of any $\\mathbf{x} = (x_1, x_2, x_3)$ is the vector with every entry equal to the mean of the entries of $\\mathbf{x}$. What does removing it do to a vector, in words?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The dot product with $\\mathbf{v}$ adds up the entries, $\\mathbf{v} \\cdot \\mathbf{x} = x_1 + x_2 + x_3$, and $\\lVert \\mathbf{v} \\rVert^2 = 3$. The projection is therefore"
+            },
+            {
+              "tex": "\\frac{x_1 + x_2 + x_3}{3}\\,(1, 1, 1) = (\\bar x, \\bar x, \\bar x) ,"
+            },
+            {
+              "p": "where $\\bar x$ is the mean entry. Removing it subtracts the mean from every entry, which is centering. Two vectors whose entries are all large and positive have a high cosine whatever their pattern, and centering first compares only the patterns: here $\\mathbf{a}$ is above its mean in the first entry and $\\mathbf{b}$ in the third. The cosine of centered vectors is the correlation coefficient of their entries."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vm-matrix-from-two-probes",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "The Matrix of a Map from Two Probes",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A linear map $T$ of the plane is hidden inside a library. You can only call it, and two calls return"
+            },
+            {
+              "tex": "T(1, 1) = (4, 2), \\qquad T(1, -1) = (2, -2) ."
+            },
+            {
+              "p": "Which matrix represents $T$?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$\\begin{pmatrix} 4 & 2 \\\\ 2 & -2 \\end{pmatrix}$",
+                  "explain": "This puts the two outputs in as the columns, which would be right only if the inputs were (1, 0) and (0, 1). Check it on (1, 1): it gives (4 + 2, 2 - 2) = (6, 0), not (4, 2). First find where the basic arrows go."
+                },
+                {
+                  "text": "$\\begin{pmatrix} 3 & 1 \\\\ 0 & 2 \\end{pmatrix}$",
+                  "correct": true,
+                  "explain": "Write the basic arrows with the probes: (1, 0) is half of (1, 1) plus half of (1, -1), and (0, 1) is half of (1, 1) minus half of (1, -1). By linearity T(1, 0) = ((4, 2) + (2, -2)) / 2 = (3, 0) and T(0, 1) = ((4, 2) - (2, -2)) / 2 = (1, 2). Those are the columns. Check: the matrix sends (1, 1) to (3 + 1, 0 + 2) = (4, 2) and (1, -1) to (3 - 1, 0 - 2) = (2, -2)."
+                },
+                {
+                  "text": "$\\begin{pmatrix} 3 & 0 \\\\ 1 & 2 \\end{pmatrix}$",
+                  "explain": "T(1, 0) = (3, 0) and T(0, 1) = (1, 2) are right, but they are written as rows. The landing spot of each basic arrow is a column. This matrix sends (1, 1) to (3, 3)."
+                },
+                {
+                  "text": "$\\begin{pmatrix} 3 & -1 \\\\ 0 & -2 \\end{pmatrix}$",
+                  "explain": "The second column takes T(1, -1) minus T(1, 1), which is T(0, -2) halved, so it lands on T(0, -1) = (-1, -2) instead of T(0, 1). Since (0, 1) is half of (1, 1) minus half of (1, -1), subtract in the other order. This matrix sends (1, 1) to (2, -2)."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write the basic arrows with the probes: (1, 0) is half of (1, 1) plus half of (1, -1), and (0, 1) is half of (1, 1) minus half of (1, -1). By linearity T(1, 0) = ((4, 2) + (2, -2)) / 2 = (3, 0) and T(0, 1) = ((4, 2) - (2, -2)) / 2 = (1, 2). Those are the columns. Check: the matrix sends (1, 1) to (3 + 1, 0 + 2) = (4, 2) and (1, -1) to (3 - 1, 0 - 2) = (2, -2)."
+            },
+            {
+              "result": "$\\begin{pmatrix} 3 & 1 \\\\ 0 & 2 \\end{pmatrix}$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vm-probe-an-affine-layer",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Predict a Layer's Output from Three Probes",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A layer with two inputs and two outputs computes $f(\\mathbf{x}) = W\\mathbf{x} + \\mathbf{b}$, and you cannot see $W$ or $\\mathbf{b}$. Three calls return"
+            },
+            {
+              "tex": "f(0, 0) = (1, -1), \\qquad f(1, 0) = (3, 0), \\qquad f(0, 1) = (0, 2) ."
+            },
+            {
+              "p": "What is $f(2, 3)$?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$(6, 6)$",
+                  "explain": "This treats f as linear: 2 f(1, 0) + 3 f(0, 1). But f(0, 0) is not zero, so f is affine, and each output already contains the bias once. So 2 f(1, 0) + 3 f(0, 1) counts the bias 2 + 3 = 5 times instead of once: (1, 11) + 5(1, -1) = (6, 6)."
+                },
+                {
+                  "text": "$(7, 5)$",
+                  "explain": "This adds the bias at the end, but takes the columns of W to be f(1, 0) and f(0, 1), which still contain the bias. The first column of W is f(1, 0) - f(0, 0) = (2, 1), and the second is f(0, 1) - f(0, 0) = (-1, 3)."
+                },
+                {
+                  "text": "$(2, 10)$",
+                  "correct": true,
+                  "explain": "f(0, 0) = b = (1, -1). Subtracting it gives the columns of W: W(1, 0) = (3, 0) - (1, -1) = (2, 1) and W(0, 1) = (0, 2) - (1, -1) = (-1, 3). Then W(2, 3) = 2(2, 1) + 3(-1, 3) = (1, 11), and adding b once gives (2, 10)."
+                },
+                {
+                  "text": "$(1, 11)$",
+                  "explain": "This is W(2, 3) alone: the columns of W are right, but the output is missing its bias. Every output of the layer includes f(0, 0) = (1, -1), so f(2, 3) = (1, 11) + (1, -1)."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "f(0, 0) = b = (1, -1). Subtracting it gives the columns of W: W(1, 0) = (3, 0) - (1, -1) = (2, 1) and W(0, 1) = (0, 2) - (1, -1) = (-1, 3). Then W(2, 3) = 2(2, 1) + 3(-1, 3) = (1, 11), and adding b once gives (2, 10)."
+            },
+            {
+              "result": "$(2, 10)$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vm-order-of-a-low-rank-product",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Which Order to Multiply a Low-Rank Layer",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "To save memory, a layer's $512 \\times 512$ weight matrix is stored as two thin matrices, $W = UV^\\top$, where $U$ and $V$ are both $512 \\times 8$. A batch of 64 inputs is the rows of $X$, shape $64 \\times 512$, and the layer computes $XW$. Count one multiplication for each product of two numbers."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Order 1 forms $W = UV^\\top$ and then computes $XW$. Order 2 computes $XU$ first and then $(XU)V^\\top$. Both give the same matrix, because matrix products can be regrouped. How many times as many multiplications does order 1 use as order 2?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Multiplying an $m \\times n$ matrix by an $n \\times p$ matrix fills $m \\times p$ entries. Every one of them takes $n$ multiplications (a row times a column), so the product costs $mnp$."
+            },
+            {
+              "p": "Order 1:"
+            },
+            {
+              "list": [
+                "$UV^\\top$ is $(512 \\times 8)(8 \\times 512)$: $512 \\cdot 8 \\cdot 512 = 2{,}097{,}152$.",
+                "$XW$ is $(64 \\times 512)(512 \\times 512)$: $64 \\cdot 512 \\cdot 512 = 16{,}777{,}216$.",
+                "Total $18{,}874{,}368$."
+              ]
+            },
+            {
+              "p": "Order 2:"
+            },
+            {
+              "list": [
+                "$XU$ is $(64 \\times 512)(512 \\times 8)$: $64 \\cdot 512 \\cdot 8 = 262{,}144$.",
+                "$(XU)V^\\top$ is $(64 \\times 8)(8 \\times 512)$: $64 \\cdot 8 \\cdot 512 = 262{,}144$.",
+                "Total $524{,}288$."
+              ]
+            },
+            {
+              "p": "The ratio is $18{,}874{,}368 / 524{,}288 = 36$. Order 2 never builds a $512 \\times 512$ matrix: every product passes through the narrow width 8."
+            },
+            {
+              "result": "36"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "In PyTorch's convention the layer computes $XW^\\top$ instead. Write $XW^\\top$ as a product of $X$, $U$ and $V$ (transposed where needed) that never forms a $512 \\times 512$ matrix, and say which matrix to multiply $X$ by first."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Transposing a product reverses its order, so $W^\\top = (UV^\\top)^\\top = (V^\\top)^\\top U^\\top = VU^\\top$. Then"
+            },
+            {
+              "tex": "XW^\\top = (XV)\\,U^\\top ."
+            },
+            {
+              "p": "Multiply $X$ by $V$ first, giving $64 \\times 8$, then by $U^\\top$, which is $8 \\times 512$. The cost is the same $524{,}288$ multiplications. Writing $(XU)V^\\top$ here would be a different matrix, $XW$, which is only equal when $W$ is symmetric."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vm-determinant-of-a-scaled-inverse",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "The Determinant of Undo, Then Double",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A $2 \\times 2$ matrix $W$ sends the unit square to a parallelogram of area 3 without flipping the plane over, so $\\det W = 3$. A second map first undoes $W$ and then doubles every vector. Its matrix is $2W^{-1}$. What is $\\det(2W^{-1})$?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$\\tfrac43$",
+                  "correct": true,
+                  "explain": "Undoing W divides every area by 3, since det(W^{-1}) det(W) = det(I) = 1. Doubling every vector is the matrix 2I, which doubles both sides of the unit square, so it multiplies areas by 2 · 2 = 4. The product rule gives det(2I) det(W^{-1}) = 4 · 1/3 = 4/3."
+                },
+                {
+                  "text": "$\\tfrac23$",
+                  "explain": "This scales the determinant by 2, as if doubling a vector doubled areas. Doubling every vector stretches both directions of the plane, so it multiplies areas by 4: det(2I) = 2 · 2 - 0 · 0 = 4."
+                },
+                {
+                  "text": "$12$",
+                  "explain": "This takes det(W^{-1}) to be det W. Undoing a map that triples areas must divide them by 3, since det(W^{-1}) det(W) = det(I) = 1. So the answer is 4 · 1/3, not 4 · 3."
+                },
+                {
+                  "text": "$\\tfrac1{12}$",
+                  "explain": "This inverts the 2 as well, as if 2W^{-1} were (2W)^{-1}. The second map doubles after undoing W, so det(2W^{-1}) = det(2I) det(W^{-1}) = 4/3. The value 1/12 belongs to (2W)^{-1}, which halves every vector after undoing W."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Undoing W divides every area by 3, since det(W^{-1}) det(W) = det(I) = 1. Doubling every vector is the matrix 2I, which doubles both sides of the unit square, so it multiplies areas by 2 · 2 = 4. The product rule gives det(2I) det(W^{-1}) = 4 · 1/3 = 4/3."
+            },
+            {
+              "result": "$\\tfrac43$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vm-which-right-sides-are-reachable",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Which Right-Hand Sides Can Be Reached",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "Let"
+      ],
+      "setup": [
+        {
+          "tex": "A = \\begin{pmatrix} 1 & 2 & 1 \\\\ 2 & 4 & 3 \\\\ 3 & 6 & 4 \\end{pmatrix},\n\\qquad\n\\mathbf{b} = \\begin{pmatrix} 1 \\\\ 0 \\\\ c \\end{pmatrix} ."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "For which value of $c$ does $A\\mathbf{x} = \\mathbf{b}$ have a solution?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Look at the rows: row 3 of $A$ is row 1 plus row 2. Entry $i$ of $A\\mathbf{x}$ is row $i$ dotted with $\\mathbf{x}$, so every output satisfies"
+            },
+            {
+              "tex": "(A\\mathbf{x})_3 = (A\\mathbf{x})_1 + (A\\mathbf{x})_2 ."
+            },
+            {
+              "p": "A reachable $\\mathbf{b}$ must too: $c = 1 + 0 = 1$. For any other $c$ the point $\\mathbf{b}$ lies off the column space and there is no solution."
+            },
+            {
+              "p": "The columns say the same thing. Column 2 is twice column 1, and columns 1 and 3, $(1, 2, 3)$ and $(1, 3, 4)$, are not multiples of each other, so the rank is 2 and the column space is a plane in 3D. The condition $y_3 = y_1 + y_2$ is the equation of that plane, and $c = 1$ is the one value that puts $\\mathbf{b}$ on it. Here a solution is $(3, 0, -2)$: row 1 gives $3 + 0 - 2 = 1$, row 2 gives $6 + 0 - 6 = 0$ and row 3 gives $9 + 0 - 8 = 1$."
+            },
+            {
+              "result": "1"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "With that $c$, how many solutions are there? Describe all of them."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Rank-nullity for the 3 columns gives $\\dim \\mathcal{N}(A) = 3 - 2 = 1$. Column 2 minus twice column 1 is $\\mathbf{0}$, so $A(-2, 1, 0) = \\mathbf{0}$, and that vector spans the null space."
+            },
+            {
+              "p": "Adding a null vector to a solution gives another solution, so there are infinitely many:"
+            },
+            {
+              "tex": "\\mathbf{x} = (3, 0, -2) + s\\,(-2, 1, 0) \\quad \\text{for any number } s ,"
+            },
+            {
+              "p": "a line in 3D. Every solution has $x_3 = -2$: the first two unknowns only enter through $x_1 + 2x_2$, which must equal 3."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vm-rank-of-three-outer-products",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "The Rank of a Sum of Three Outer Products",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A $3 \\times 3$ matrix is built as a sum of three outer products,"
+      ],
+      "setup": [
+        {
+          "tex": "M = \\sum_{k=1}^{3} \\mathbf{u}_k \\mathbf{v}_k^\\top ,"
+        },
+        {
+          "p": "with"
+        },
+        {
+          "tex": "\\begin{aligned}\n\\mathbf{u}_1 &= (1, 0, 1), & \\mathbf{u}_2 &= (0, 1, 1), & \\mathbf{u}_3 &= (1, 1, 2), \\\\\n\\mathbf{v}_1 &= (0, -3, 2), & \\mathbf{v}_2 &= (1, -4, 4), & \\mathbf{v}_3 &= (1, 2, 0) .\n\\end{aligned}"
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What is the rank of $M$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Three terms only say the rank is at most 3. Look for dependencies: $\\mathbf{u}_3 = \\mathbf{u}_1 + \\mathbf{u}_2$, so the third term splits into two outer products, one with $\\mathbf{u}_1$ and one with $\\mathbf{u}_2$, both with $\\mathbf{v}_3$ on the right. Grouping by $\\mathbf{u}$,"
+            },
+            {
+              "tex": "M = \\mathbf{u}_1(\\mathbf{v}_1 + \\mathbf{v}_3)^\\top + \\mathbf{u}_2(\\mathbf{v}_2 + \\mathbf{v}_3)^\\top\n= \\mathbf{u}_1\\,(1, -1, 2)^\\top + \\mathbf{u}_2\\,(2, -2, 4)^\\top ."
+            },
+            {
+              "p": "That is at most rank 2. But $(2, -2, 4)$ is twice $(1, -1, 2)$, so the two terms share a row vector:"
+            },
+            {
+              "tex": "M = (\\mathbf{u}_1 + 2\\mathbf{u}_2)\\,(1, -1, 2)^\\top = (1, 2, 3)\\,(1, -1, 2)^\\top ."
+            },
+            {
+              "p": "$M$ is one outer product of nonzero vectors, so its rank is 1."
+            },
+            {
+              "p": "Multiplying everything out works too and gives the same answer:"
+            },
+            {
+              "tex": "M = \\begin{pmatrix} 1 & -1 & 2 \\\\ 2 & -2 & 4 \\\\ 3 & -3 & 6 \\end{pmatrix},"
+            },
+            {
+              "p": "where every row is a multiple of $(1, -1, 2)$."
+            },
+            {
+              "result": "1"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Change only $\\mathbf{v}_3$ so that the rank of $M$ becomes 2, and say why one change cannot make it 3."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The rank is 2 when $\\mathbf{v}_1 + \\mathbf{v}_3$ and $\\mathbf{v}_2 + \\mathbf{v}_3$ are independent, because $\\mathbf{u}_1$ and $\\mathbf{u}_2$ are already independent. With $\\mathbf{v}_3 = (0, 0, 0)$ these are $(0, -3, 2)$ and $(1, -4, 4)$, which are not multiples of each other, so the rank is 2. Most other choices work as well."
+            },
+            {
+              "p": "No choice of $\\mathbf{v}_3$ reaches rank 3. Whatever the $\\mathbf{v}$'s are, $\\mathbf{u}_3 = \\mathbf{u}_1 + \\mathbf{u}_2$ lets you rewrite $M$ with only $\\mathbf{u}_1$ and $\\mathbf{u}_2$ on the left, so every column of $M$ is a combination of those two vectors. The rank of a sum of outer products is at most the number of independent $\\mathbf{u}$'s (and of independent $\\mathbf{v}$'s), not the number of terms."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vm-fit-a-symmetric-curve",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Least Squares for a Curve Symmetric About Zero",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "An engineer measures the vibration $y$ of a pump at speeds $t$ above and below its design speed, with $t = 0$ the design speed. She expects the vibration to grow the same way on both sides, so she fits the model"
+      ],
+      "setup": [
+        {
+          "tex": "y = a + b\\,t^2"
+        },
+        {
+          "p": "by least squares to four readings:"
+        },
+        {
+          "tex": "\\begin{array}{ccccc}\nt & -1 & 0 & 1 & 2 \\\\ \\hline\ny & 2 & 1 & 3 & 7\n\\end{array}"
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the fitted value of $b$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The model is a curve in $t$ but a straight combination of the unknowns $a$ and $b$, so least squares applies as it does for a line. Row $i$ of $A$ holds what multiplies $a$ and $b$ for reading $i$: a 1 and $t_i^2$."
+            },
+            {
+              "tex": "A = \\begin{pmatrix} 1 & 1 \\\\ 1 & 0 \\\\ 1 & 1 \\\\ 1 & 4 \\end{pmatrix},"
+            },
+            {
+              "p": "with the readings in $\\mathbf{y} = (2, 1, 3, 7)$."
+            },
+            {
+              "p": "The normal equations $A^\\top A\\,\\hat{\\mathbf{x}} = A^\\top \\mathbf{y}$ use dot products of the columns: $(1,1,1,1) \\cdot (1,1,1,1) = 4$, $(1,1,1,1) \\cdot (1,0,1,4) = 6$, $(1,0,1,4) \\cdot (1,0,1,4) = 18$, and on the right $13$ and $2 + 0 + 3 + 28 = 33$:"
+            },
+            {
+              "tex": "4a + 6b = 13, \\qquad 6a + 18b = 33 ."
+            },
+            {
+              "p": "Three times the first equation is $12a + 18b = 39$. Subtracting the second gives $6a = 6$, so $a = 1$ and $b = (13 - 4)/6 = 1.5$."
+            },
+            {
+              "p": "A common slip is to put $t$ in the second column instead of $t^2$. That fits a line, $y = c + m\\,t$, a different model."
+            },
+            {
+              "result": "1.5"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What is the smallest possible sum of squared errors, the value of $\\lVert \\mathbf{y} - A\\hat{\\mathbf{x}} \\rVert^2$ at the fit? The model has to give the same value at $t = -1$ and $t = 1$, while the readings there differ. Show that no choice of $a$ and $b$ can do better, whatever happens at the other two readings."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Every vector the model can produce, $A\\mathbf{x} = (a + b,\\ a,\\ a + b,\\ a + 4b)$, has equal first and third entries. Call that shared value $p$. The squared errors at $t = -1$ and $t = 1$ add up to"
+            },
+            {
+              "tex": "(2 - p)^2 + (3 - p)^2 = 2\\,(p - 2.5)^2 + 0.5 ,"
+            },
+            {
+              "p": "by expanding both sides ($2p^2 - 10p + 13$ each). This is at least 0.5 for every $p$, and the other two squared errors are at least 0, so no $(a, b)$ has a total below 0.5."
+            },
+            {
+              "p": "The fit reaches 0.5. With $a = 1$ and $b = 1.5$ the fitted values are $(2.5, 1, 2.5, 7)$: $p = 2.5$ makes the first part exactly 0.5, and the readings at $t = 0$ and $t = 2$ are matched exactly. The residual is $(-0.5, 0, 0.5, 0)$, and $0.25 + 0 + 0.25 + 0 = 0.5$."
+            },
+            {
+              "p": "Check that residual against both columns of $A$: $-0.5 + 0 + 0.5 + 0 = 0$, and with weights $(1, 0, 1, 4)$ it is $-0.5 + 0 + 0.5 + 0 = 0$ again. The bound also shows the general rule: readings that the model must fit with one shared value cost at least their spread around their mean, whatever the other parameters do."
+            },
+            {
+              "result": "0.5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vm-dimension-of-the-residuals",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "How Many Directions the Residuals Fill",
+      "difficulty": "Medium",
+      "minutes": 8,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "You fit a model with 4 parameters to 10 data points by least squares. The fourth feature turns out to be the sum of the first two (a total recorded next to its parts), so in the $10 \\times 4$ matrix $A$ column 4 is column 1 plus column 2. You compute the matrix $P$ that projects onto the column space of $A$ and find $\\operatorname{tr}(P) = 3$. For a data vector $\\mathbf{b}$ the residual is $\\mathbf{r} = \\mathbf{b} - P\\mathbf{b} = (I - P)\\mathbf{b}$."
+            },
+            {
+              "p": "As $\\mathbf{b}$ ranges over every vector in $\\mathbb{R}^{10}$, the residuals fill a subspace. What is its dimension?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$0$",
+                  "explain": "This reads P^2 = P as P = I, dividing both sides by P. That step needs P to have an inverse, and a projection onto a smaller subspace has none: it sends every vector perpendicular to that subspace to 0. Most b are not in the column space, so most residuals are not zero."
+                },
+                {
+                  "text": "$3$",
+                  "explain": "That is the rank of A, the dimension of the column space where the fitted values Pb live. The residual is the part of b that the column space misses, which points in the directions perpendicular to it."
+                },
+                {
+                  "text": "$6$",
+                  "explain": "This subtracts the 4 columns, as if each one added a direction. Column 4 is column 1 plus column 2, so the columns span only 3 dimensions, and the residuals keep the other 10 - 3."
+                },
+                {
+                  "text": "$7$",
+                  "correct": true,
+                  "explain": "Column 4 adds nothing new, so the column space is spanned by columns 1, 2 and 3 and has dimension 3. Every residual is perpendicular to it, and every vector perpendicular to it is its own residual, since its projection is 0. So the residuals fill exactly the directions perpendicular to a 3-dimensional subspace of R^10, a space of dimension 10 - 3 = 7. Dropping column 4 changes neither the column space nor P, so P is also the lesson's formula for the first three columns, with trace 3, and tr(I - P) = 10 - 3 agrees."
+                },
+                {
+                  "text": "$10$",
+                  "explain": "b can be any vector in R^10, but the residual cannot. It is always perpendicular to every column of A, which rules out the 3 directions of the column space."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Column 4 adds nothing new, so the column space is spanned by columns 1, 2 and 3 and has dimension 3. Every residual is perpendicular to it, and every vector perpendicular to it is its own residual, since its projection is 0. So the residuals fill exactly the directions perpendicular to a 3-dimensional subspace of R^10, a space of dimension 10 - 3 = 7. Dropping column 4 changes neither the column space nor P, so P is also the lesson's formula for the first three columns, with trace 3, and tr(I - P) = 10 - 3 agrees."
+            },
+            {
+              "result": "$7$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vm-remove-two-directions",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Removing Two Directions One at a Time",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "A team wants an embedding $\\mathbf{x}$ to carry nothing along two unwanted directions, $\\mathbf{v}_1$ and $\\mathbf{v}_2$: the cleaned vector should be perpendicular to both. Their code removes the directions one at a time,"
+      ],
+      "setup": [
+        {
+          "tex": "\\mathbf{x}_1 = \\mathbf{x} - \\frac{\\mathbf{v}_1 \\cdot \\mathbf{x}}{\\mathbf{v}_1 \\cdot \\mathbf{v}_1}\\,\\mathbf{v}_1,\n\\qquad\n\\mathbf{x}_2 = \\mathbf{x}_1 - \\frac{\\mathbf{v}_2 \\cdot \\mathbf{x}_1}{\\mathbf{v}_2 \\cdot \\mathbf{v}_2}\\,\\mathbf{v}_2 ,"
+        },
+        {
+          "p": "and returns $\\mathbf{x}_2$. Take"
+        },
+        {
+          "tex": "\\mathbf{x} = (1, 3, 5), \\qquad \\mathbf{v}_1 = (1, 1, 0), \\qquad \\mathbf{v}_2 = (0, 1, 1) ."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is $\\mathbf{x}_2 \\cdot \\mathbf{v}_1$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "First step: the dot product $\\mathbf{v}_1 \\cdot \\mathbf{x}$ is 4 and $\\lVert \\mathbf{v}_1 \\rVert^2 = 2$, which gives $\\mathbf{x}_1 = (1, 3, 5) - 2(1, 1, 0) = (-1, 1, 5)$, which is perpendicular to $\\mathbf{v}_1$."
+            },
+            {
+              "p": "Second step: the dot product $\\mathbf{v}_2 \\cdot \\mathbf{x}_1$ is 6 and $\\lVert \\mathbf{v}_2 \\rVert^2 = 2$, which gives $\\mathbf{x}_2 = (-1, 1, 5) - 3(0, 1, 1) = (-1, -2, 2)$."
+            },
+            {
+              "p": "Then $\\mathbf{x}_2 \\cdot \\mathbf{v}_1 = -1 - 2 + 0 = -3$. The second step subtracted $3\\mathbf{v}_2$, and $\\mathbf{v}_2$ has a part along $\\mathbf{v}_1$ ($\\mathbf{v}_1 \\cdot \\mathbf{v}_2 = 1 \\ne 0$), so it put back some of the direction the first step had removed. The code's output is perpendicular to $\\mathbf{v}_2$ only."
+            },
+            {
+              "result": "$-3$"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Find the vector the team wanted: $\\mathbf{x}$ minus its projection onto the plane spanned by $\\mathbf{v}_1$ and $\\mathbf{v}_2$. What is its length?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "This is least squares with the columns $\\mathbf{v}_1$ and $\\mathbf{v}_2$: find $\\hat{\\mathbf{c}}$ with $A^\\top A\\,\\hat{\\mathbf{c}} = A^\\top \\mathbf{x}$, where $A = [\\mathbf{v}_1\\ \\mathbf{v}_2]$."
+            },
+            {
+              "tex": "A^\\top A = \\begin{pmatrix} 2 & 1 \\\\ 1 & 2 \\end{pmatrix},\n\\qquad\nA^\\top \\mathbf{x} = \\begin{pmatrix} 4 \\\\ 8 \\end{pmatrix} ."
+            },
+            {
+              "p": "So $2c_1 + c_2 = 4$ and $c_1 + 2c_2 = 8$, which give $c_1 = 0$ and $c_2 = 4$. The projection is $4\\mathbf{v}_2 = (0, 4, 4)$ and the residual is"
+            },
+            {
+              "tex": "\\mathbf{r} = (1, 3, 5) - (0, 4, 4) = (1, -1, 1),"
+            },
+            {
+              "p": "with length $\\sqrt3 \\approx 1.732$. Check: $\\mathbf{r} \\cdot \\mathbf{v}_1 = 0$ and $\\mathbf{r} \\cdot \\mathbf{v}_2 = 0$."
+            },
+            {
+              "p": "The code's answer $(-1, -2, 2)$ has length 3, longer than $\\sqrt3$. The true residual is the shortest vector $\\mathbf{x} - \\mathbf{p}$ over all $\\mathbf{p}$ in the plane, so any other leftover, including the code's, is longer."
+            },
+            {
+              "result": "1.732"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Change the code's second step so that removing the directions one at a time gives the right answer, and show it does on this example."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Sequential removal works when the directions are perpendicular. So first replace $\\mathbf{v}_2$ by its residual after projecting onto $\\mathbf{v}_1$, which is one step of Gram-Schmidt:"
+            },
+            {
+              "tex": "\\mathbf{w} = \\mathbf{v}_2 - \\frac{\\mathbf{v}_1 \\cdot \\mathbf{v}_2}{\\mathbf{v}_1 \\cdot \\mathbf{v}_1}\\,\\mathbf{v}_1\n= (0, 1, 1) - \\tfrac12 (1, 1, 0) = \\left(-\\tfrac12, \\tfrac12, 1\\right) ."
+            },
+            {
+              "p": "$\\mathbf{w}$ is perpendicular to $\\mathbf{v}_1$ and spans the same plane together with it. Remove $\\mathbf{w}$ from $\\mathbf{x}_1$ instead of $\\mathbf{v}_2$. With the multiple $2\\mathbf{w} = (-1, 1, 2)$, which gives the same projection, $(-1, 1, 2) \\cdot \\mathbf{x}_1 = 1 + 1 + 10 = 12$ and $(-1, 1, 2) \\cdot (-1, 1, 2) = 6$, so"
+            },
+            {
+              "tex": "\\mathbf{x}_1 - 2\\,(-1, 1, 2) = (-1, 1, 5) - (-2, 2, 4) = (1, -1, 1),"
+            },
+            {
+              "p": "the residual from the previous part. Removing $\\mathbf{w}$ cannot bring back any $\\mathbf{v}_1$ part, because $\\mathbf{w} \\cdot \\mathbf{v}_1 = 0$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vm-tiny-residual-large-error",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "A Tiny Residual and a Large Error",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A solver is asked for $\\mathbf{x}$ with $A\\mathbf{x} = \\mathbf{b}$, where"
+      ],
+      "setup": [
+        {
+          "tex": "A = \\begin{pmatrix} 1 & 1 \\\\ 1 & 1.01 \\end{pmatrix},\n\\qquad\n\\mathbf{b} = \\begin{pmatrix} 2 \\\\ 2.01 \\end{pmatrix} ,"
+        },
+        {
+          "p": "and it returns $\\tilde{\\mathbf{x}} = (2, 0)$. A common test of an answer is its residual $\\mathbf{b} - A\\tilde{\\mathbf{x}}$: if that is small, the answer is accepted."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the length of the residual $\\mathbf{b} - A\\tilde{\\mathbf{x}}$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "$A\\tilde{\\mathbf{x}} = (2 + 0,\\ 2 + 0) = (2, 2)$, so the residual is $(0, 0.01)$, of length 0.01. Measured against $\\lVert \\mathbf{b} \\rVert \\approx 2.84$, that is about 0.35%, small enough to pass most tests."
+            },
+            {
+              "result": "0.01"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Find the exact solution. How far is $\\tilde{\\mathbf{x}}$ from it?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "$\\det A = 1.01 - 1 = 0.01$, so"
+            },
+            {
+              "tex": "A^{-1} = \\frac{1}{0.01}\\begin{pmatrix} 1.01 & -1 \\\\ -1 & 1 \\end{pmatrix},"
+            },
+            {
+              "p": "whose entries are 101, $-100$, $-100$ and 100. Then $\\mathbf{x} = A^{-1}\\mathbf{b} = (202 - 201,\\ -200 + 201) = (1, 1)$. Check: $A(1, 1) = (2, 2.01)$."
+            },
+            {
+              "p": "The error is $\\tilde{\\mathbf{x}} - \\mathbf{x} = (1, -1)$, of length $\\sqrt2 \\approx 1.414$. Relative to $\\lVert \\mathbf{x} \\rVert = \\sqrt2$ the answer is off by 100%, with a residual of 0.35%."
+            },
+            {
+              "result": "1.414"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Explain the gap between the two numbers using the columns of $A$, and say what it means for checking an answer by its residual."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The columns $(1, 1)$ and $(1, 1.01)$ point almost the same way. The parallelogram they span has area $\\det A = 0.01$, so $A$ squashes the plane nearly onto a line. A step along $(1, -1)$ takes column 1 minus column 2, so it barely moves the output: $A(1, -1) = (1, 1) - (1, 1.01) = (0, -0.01)$. That is exactly the step from $\\mathbf{x}$ to $\\tilde{\\mathbf{x}}$."
+            },
+            {
+              "p": "In general the error and the residual are linked by the inverse: $\\mathbf{x} - \\tilde{\\mathbf{x}} = A^{-1}(\\mathbf{b} - A\\tilde{\\mathbf{x}})$. Here $A^{-1}$ has entries near 100, so it multiplies the residual $(0, 0.01)$ up to $(-1, 1)$. A small residual means a small error only when $A^{-1}$ is not large, that is, when $A$ is well conditioned. The same amplification hits the data: if the second entry of $\\mathbf{b}$ had been measured as $2.00$ instead of $2.01$, the exact solution would jump from $(1, 1)$ to $(2, 0)$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "theory-matrix-linear-maps",
+      "moduleId": "linear-algebra-i-vectors-matrices-systems-transformations",
+      "title": "Matrices as Linear Maps, Rank, and Outer-Product Decomposition",
+      "difficulty": "Medium",
+      "minutes": 45,
+      "overview": [
+        "Recover a matrix from the linear map it performs, find its rank and null space, and split it into the fewest possible rank-one pieces."
+      ],
+      "setup": [
+        {
+          "p": "A robot wrist controller reads four joint angles $x_0, x_1, x_2, x_3$ and outputs three motor commands. For any angle vector"
+        },
+        {
+          "tex": "x = \\begin{bmatrix} x_0 \\\\ x_1 \\\\ x_2 \\\\ x_3 \\end{bmatrix}, \\qquad \\text{the controller computes} \\qquad Ax = \\begin{bmatrix} x_0 + x_2 \\\\ x_1 - x_3 \\\\ 2x_0 + x_3 \\end{bmatrix}."
+        },
+        {
+          "p": "The first command tilts the hand by the sum of two angles, the second turns it by the difference of two others, and the third is a weighted grip drive."
+        }
+      ],
+      "parts": [
+        {
+          "id": "2.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Write down the $3 \\times 4$ matrix $A$ that represents this controller."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Entry $(i, j)$ of $A$ is the coefficient of $x_j$ in output coordinate $i$. Each output names its inputs directly, so the rows can be transcribed one at a time:"
+            },
+            {
+              "tex": "A = \\begin{bmatrix} 1 & 0 & 1 & 0 \\\\ 0 & 1 & 0 & -1 \\\\ 2 & 0 & 0 & 1 \\end{bmatrix}."
+            },
+            {
+              "p": "The fastest check is column by column: column $j$ is $Ae_j$. Feeding in $e_0 = (1,0,0,0)^\\top$ returns $(1, 0, 2)^\\top$, and the first column is indeed $(1, 0, 2)^\\top$. The same agreement holds for the other three basis vectors. On a larger map this column test is far quicker than re-reading every row."
+            }
+          ]
+        },
+        {
+          "id": "2.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Compute $\\operatorname{rank}(A)$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The three rows are $r_0 = (1,0,1,0)$, $r_1 = (0,1,0,-1)$, and $r_2 = (2,0,0,1)$. Suppose $\\alpha_0 r_0 + \\alpha_1 r_1 + \\alpha_2 r_2 = 0$. Coordinate $1$ appears only in $r_1$, so $\\alpha_1 = 0$. Coordinate $2$ appears only in $r_0$, so $\\alpha_0 = 0$. Coordinate $3$ then reads $\\alpha_2 = 0$."
+            },
+            {
+              "p": "The rows are linearly independent, so the row rank is $3$, and $\\operatorname{rank}(A) = 3$. Since $A$ has only $3$ rows this is the largest possible value: $A$ has full row rank, and the controller can drive the wrist to any commanded $(y_0, y_1, y_2)$."
+            },
+            {
+              "result": "$\\operatorname{rank}(A) = 3$."
+            }
+          ]
+        },
+        {
+          "id": "2.3",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Determine $\\dim \\mathcal{N}(A)$, where $\\mathcal{N}(A) = \\{ x : Ax = 0 \\}$ is the null space, and give a basis for it."
+            }
+          ],
+          "answer": [
+            {
+              "p": "By the rank-nullity theorem, for $A \\in \\mathbb{R}^{m \\times n}$,"
+            },
+            {
+              "tex": "\\operatorname{rank}(A) + \\dim \\mathcal{N}(A) = n = 4,"
+            },
+            {
+              "p": "so $\\dim \\mathcal{N}(A) = 4 - 3 = 1$."
+            },
+            {
+              "p": "To find the basis, solve $Ax = 0$ row by row. The third equation gives $x_3 = -2x_0$. The second then gives $x_1 = x_3 = -2x_0$. The first gives $x_2 = -x_0$. Only $x_0$ remains free, so setting $x_0 = 1$,"
+            },
+            {
+              "tex": "\\mathcal{N}(A) = \\operatorname{span}\\left\\{ \\begin{bmatrix} 1 \\\\ -2 \\\\ -1 \\\\ -2 \\end{bmatrix} \\right\\}."
+            },
+            {
+              "p": "Check: $A(1, -2, -1, -2)^\\top = (1 - 1,\\ -2 + 2,\\ 2 - 2)^\\top = (0,0,0)^\\top$. Physically, that angle configuration leaves every motor idle, so the controller loses one degree of freedom and cannot be inverted."
+            }
+          ]
+        },
+        {
+          "id": "2.4",
+          "kind": "derivation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Any matrix can be rebuilt as a sum of outer products,"
+            },
+            {
+              "tex": "A = \\sum_{i=0}^{I-1} u^{(i)} v^{(i)\\top},"
+            },
+            {
+              "p": "with column vectors $u^{(i)} \\in \\mathbb{R}^3$ and $v^{(i)} \\in \\mathbb{R}^4$. For the controller matrix above, find"
+            },
+            {
+              "olist": [
+                "the smallest possible $I$.",
+                "$u^{(i)}$ and $v^{(i)}$ for all $i \\in \\{0, 1, \\dots, I-1\\}$."
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each term $u^{(i)} v^{(i)\\top}$ is an outer product, hence a matrix of rank at most $1$. Rank is subadditive, so $\\operatorname{rank}(A) \\le I$, and by Part 2 we need $I \\ge 3$."
+            },
+            {
+              "p": "$I = 3$ is achievable: take $u^{(i)} = e_i$, the $i$-th standard basis vector of $\\mathbb{R}^3$, and $v^{(i)\\top}$ the $i$-th row of $A$. Then $e_i v^{(i)\\top}$ is the matrix that is zero everywhere except row $i$, and summing the three rebuilds $A$."
+            },
+            {
+              "tex": "u^{(0)} = \\begin{bmatrix} 1 \\\\ 0 \\\\ 0 \\end{bmatrix},\\ v^{(0)} = \\begin{bmatrix} 1 \\\\ 0 \\\\ 1 \\\\ 0 \\end{bmatrix}; \\quad u^{(1)} = \\begin{bmatrix} 0 \\\\ 1 \\\\ 0 \\end{bmatrix},\\ v^{(1)} = \\begin{bmatrix} 0 \\\\ 1 \\\\ 0 \\\\ -1 \\end{bmatrix}; \\quad u^{(2)} = \\begin{bmatrix} 0 \\\\ 0 \\\\ 1 \\end{bmatrix},\\ v^{(2)} = \\begin{bmatrix} 2 \\\\ 0 \\\\ 0 \\\\ 1 \\end{bmatrix}."
+            },
+            {
+              "result": "$I = 3$, with the $u^{(i)}, v^{(i)}$ above (the decomposition is not unique, and the SVD gives another valid choice with the same $I$)."
+            }
+          ]
+        },
+        {
+          "id": "2.5",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Prove that for any matrix $A$, the smallest $I$ for which a decomposition $A = \\sum_{i=0}^{I-1} u^{(i)} v^{(i)\\top}$ exists is exactly $\\operatorname{rank}(A)$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Two inequalities."
+            },
+            {
+              "p": "$I \\ge \\operatorname{rank}(A)$. Every column of $u v^\\top$ is a multiple of $u$, so $\\operatorname{rank}(uv^\\top) \\le 1$. Rank is subadditive, $\\operatorname{rank}(M + N) \\le \\operatorname{rank}(M) + \\operatorname{rank}(N)$, because the column space of $M + N$ is contained in the sum of the two column spaces. Applying this $I - 1$ times gives $\\operatorname{rank}(A) \\le I$."
+            },
+            {
+              "p": "$I \\le \\operatorname{rank}(A)$. Let $r = \\operatorname{rank}(A)$ and let $u^{(0)}, \\dots, u^{(r-1)}$ be a basis of the column space $\\mathcal{C}(A)$. Every column $a_j$ of $A$ lies in $\\mathcal{C}(A)$, so it has a unique expansion $a_j = \\sum_{i} c_{ij} u^{(i)}$. Collecting the coefficients into vectors $v^{(i)}$ with $v^{(i)}_j = c_{ij}$ gives"
+            },
+            {
+              "tex": "A = \\begin{bmatrix} a_0 & \\cdots & a_{n-1} \\end{bmatrix} = \\sum_{i=0}^{r-1} u^{(i)} v^{(i)\\top},"
+            },
+            {
+              "p": "a decomposition with $I = r$ terms. Both bounds together give minimum $I = \\operatorname{rank}(A)$."
+            }
+          ]
+        },
+        {
+          "id": "2.6",
+          "kind": "derivation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Let $A \\in \\mathbb{R}^{m \\times n}$ have rank $r$. Storing $A$ densely costs $mn$ numbers, and storing the $r$ outer-product factors costs $r(m + n)$ numbers."
+            },
+            {
+              "p": "Determine exactly when the factored form is cheaper, and evaluate the condition for a $4096 \\times 4096$ weight matrix with $r = 8$ (the setting a LoRA adapter targets)."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The factored form stores $r$ vectors of length $m$ and $r$ of length $n$, so it is cheaper exactly when"
+            },
+            {
+              "tex": "r(m + n) < mn \\quad \\Longleftrightarrow \\quad r < \\frac{mn}{m + n}."
+            },
+            {
+              "p": "For $m = n$ this simplifies to $r < m/2$: a square matrix pays off as soon as its rank is below half its dimension."
+            },
+            {
+              "p": "For $m = n = 4096$ and $r = 8$: dense storage is $4096^2 = 16{,}777{,}216$ numbers, factored storage is $8 \\cdot 8192 = 65{,}536$ numbers, a $256\\times$ reduction. The threshold $mn/(m+n) = 2048$ is far above $8$, which is why low-rank adapters are so cheap, and also why they can only express updates that genuinely live in a low-dimensional subspace."
+            }
+          ]
+        },
+        {
+          "id": "2.7",
+          "kind": "mcq",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Let $B \\in \\mathbb{R}^{4 \\times 5}$ with $\\operatorname{rank}(B) = 2$, and let $A$ be the matrix from this problem. Which statement about $\\operatorname{rank}(AB)$ is correct?"
+            },
+            {
+              "choices": [
+                "A. $\\operatorname{rank}(AB) = 3$, because $A$ has full row rank.",
+                "B. $\\operatorname{rank}(AB) = 5$, because $AB \\in \\mathbb{R}^{3 \\times 5}$.",
+                "C. $\\operatorname{rank}(AB) \\le 2$.",
+                "D. $\\operatorname{rank}(AB) = \\operatorname{rank}(A) + \\operatorname{rank}(B) = 5$.",
+                "E. There is not enough information to bound $\\operatorname{rank}(AB)$."
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Rank is submultiplicative under products:"
+            },
+            {
+              "tex": "\\operatorname{rank}(AB) \\le \\min\\big( \\operatorname{rank}(A), \\operatorname{rank}(B) \\big) = \\min(3, 2) = 2."
+            },
+            {
+              "p": "The reason is that the columns of $AB$ are $A$ applied to the columns of $B$, so $\\mathcal{C}(AB) \\subseteq A\\,\\mathcal{C}(B)$, whose dimension cannot exceed $\\dim \\mathcal{C}(B) = 2$."
+            },
+            {
+              "p": "A is wrong because full row rank in $A$ cannot manufacture rank that $B$ does not have. B and D confuse rank with matrix shape: rank never exceeds $\\min(m, n)$, and ranks do not add under multiplication. This bound is why stacking two low-rank layers with no nonlinearity between them buys you nothing."
+            },
+            {
+              "result": "C. $\\operatorname{rank}(AB) \\le 2$."
+            }
+          ]
+        },
+        {
+          "id": "2.8",
+          "kind": "coding",
+          "requirement": "Do not use np.linalg, do not use the @ operator or .T, and do not use any loop.",
+          "prompt": [
+            {
+              "p": "Run the following starter code:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "import numpy as np",
+                  "",
+                  "A = np.array([[1, 0, 1, 0], [0, 1, 0, -1], [2, 0, 0, 1]], dtype=float)",
+                  "x = np.array([1.0, 2.0, 3.0, 4.0])"
+                ]
+              }
+            },
+            {
+              "p": "Write one line of code that computes the matrix-vector product $Ax$ and names it $\\texttt{y}$."
+            }
+          ],
+          "answer": [
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "y = (A * x).sum(axis=1)"
+                ]
+              }
+            },
+            {
+              "p": "Broadcasting does the work. $\\texttt{x}$ has shape $(4,)$ and $\\texttt{A}$ has shape $(3, 4)$, so NumPy stretches $\\texttt{x}$ across the three rows, giving an elementwise product whose entry $(i, j)$ is $A_{ij} x_j$. Summing along $\\texttt{axis=1}$ collapses the $j$ index, which is precisely $y_i = \\sum_j A_{ij} x_j$."
+            },
+            {
+              "p": "For the given values, $y = (1 + 3,\\ 2 - 4,\\ 2 + 4)^\\top = (4, -2, 6)^\\top$. Note this trick costs $mn$ memory for the intermediate product, so it is a constraint-satisfying answer rather than the way you would write production code. There, $\\texttt{A @ x}$ calls BLAS and allocates nothing."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

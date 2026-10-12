@@ -1,0 +1,39 @@
+{
+  "aModule": "vision-adversarial-attacks",
+  "stage": "Round 2",
+  "fixes": [],
+  "parts": {
+    "cv-average-precision-and-nms": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.4": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "cv-faint-lines-alone": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "cv-average-precision-and-nms": "A line detector is scored on four 6 by 6 test images, each holding one line, with up to two predicted boxes per image. Compute average precision with and without non-maximum suppression at two IoU thresholds, then say when a teammate's two claims about duplicates and NMS each fail.",
+    "cv-faint-lines-alone": "A 6 by 6 image holds a bright vertical line that a PGD attack has dimmed while adding faint horizontal lines across rows 2 and 5. Try the faint lines on their own: add a to every pixel of rows 2 and 5, keep the line at 1, and find the vertical filter's pooled total at a = 0.4 plus the smallest a at which the network stops preferring vertical."
+  }
+}

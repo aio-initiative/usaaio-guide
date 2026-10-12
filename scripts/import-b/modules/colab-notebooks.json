@@ -1,0 +1,42 @@
+{
+  "aModule": "colab-markdown-notebooks",
+  "stage": "Round 1",
+  "order": [
+    "cn-a-loop-that-failed-halfway",
+    "cn-timeit-repeats-the-update",
+    "cn-which-edit-moves-the-split",
+    "cn-audit-before-you-submit",
+    "cn-read-the-counts-backward"
+  ],
+  "fixes": [
+    {
+      "file": "cn-audit-before-you-submit",
+      "find": "1. Cell 1: install, imports, seed, and the definition of `embed`.\n2. Cell 2: download and read the reviews.\n3. Cell 5: train the word vectors (saving them is now optional).\n4. Cell 4: `X = embed(reviews[\"text\"], vectors)`.\n5. Cell 6: fit the classifier and print the accuracy.",
+      "replace": "- Cell 1: install, imports, seed, and the definition of `embed`.\n- Cell 2: download and read the reviews.\n- Cell 5: train the word vectors (saving them is now optional).\n- Cell 4: `X = embed(reviews[\"text\"], vectors)`.\n- Cell 6: fit the classifier and print the accuracy.",
+      "why": "Format conversion only, no wording change: A's theory block model has a list kind for `- ` items and none for a numbered list (the converter warns 'a numbered list is not converted'), and the ordered array keeps the sequence. The words are unchanged."
+    },
+    {
+      "file": "cn-read-the-counts-backward",
+      "find": "For example, change Cell 4's count from 8 to 3. Cell 4 now runs before Cell\n1, and executions 6 and 7 come after it and are missing. Either could have\nredefined `price`, so the kernel's `price` could double, triple, add 5, or\nsomething else entirely.",
+      "replace": "For example, change Cell 4's count from 8 to 3. Cell 4 now runs before Cell\n1, and the last visible run is execution 6, which only prints. Executions 7\nand 8 come after it and are missing, and either could have redefined\n`price`, so the kernel's `price` could double, triple, add 5, or something\nelse entirely.",
+      "why": "With Cell 4 changed to count 3, the four visible counts are 3 (Cell 4), 4 (Cell 1), 5 (Cell 3) and 6 (Cell 2); execution 6 is displayed beside Cell 2, so the runs past the last visible one are 7 and 8, not 6 and 7. Swarm review fix: bprob-6 finding 1, confirmed by bprv-6 and by pack-6's problem corrections."
+    }
+  ],
+  "parts": {
+    "cn-audit-before-you-submit": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.3": {"kind": "explanation", "requirement": "Reasoning is required."}
+    },
+    "cn-read-the-counts-backward": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.3": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.4": {"kind": "explanation", "requirement": "Reasoning is required."}
+    }
+  },
+  "indexPrompt": {
+    "cn-audit-before-you-submit": "A notebook was built over one afternoon on a single runtime and never restarted, so the cell that defines a helper sits below the cell that calls it. Say which cell fails first after a restart, which fails first on a grader's fresh runtime, and how to reorder and test the notebook so both runs work.",
+    "cn-read-the-counts-backward": "Four code cells show the execution counts of their latest runs, the outputs are cleared, and the kernel is still running. Work out what Cell 2 printed when it last ran, what the kernel returns now, and what a fresh run from the top prints."
+  }
+}

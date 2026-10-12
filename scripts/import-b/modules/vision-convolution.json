@@ -1,0 +1,16 @@
+{
+  "aModule": "vision-convolution",
+  "stage": "Round 2",
+  "fixes": [],
+  "parts": {
+    "cv-vertical-filter-on-a-cross": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "cv-vertical-filter-on-a-cross": "A bright row is added through the running example's bright column, so the image becomes a cross, and the same vertical filter is slid over it. Decide which rows of the 4 by 4 feature map change and what they become."
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "aModule": "probability-foundations",
+  "stage": "Round 1",
+  "order": [
+    "pb-tickets-exactly-one-topic",
+    "pb-mislabelled-in-a-batch",
+    "pb-at-least-one-failing-test",
+    "pb-accuracy-under-a-new-mix",
+    "pb-host-who-prefers-a-box",
+    "pb-spam-share-at-a-new-base-rate",
+    "pb-alert-with-two-causes",
+    "pb-prior-worth-forty-views",
+    "pb-decide-to-block",
+    "pb-detectors-that-share-mistakes",
+    "pb-rare-class-in-batches"
+  ],
+  "fixes": [
+    {
+      "file": "pb-accuracy-under-a-new-mix",
+      "find": "What is the model's accuracy on fog photos?",
+      "replace": "What is the model's accuracy on fog photos? Give your answer as a decimal between 0 and 1.",
+      "why": "The scenario is stated in percentages but the key is answer=\"0.6\", so \"60\" or \"60%\" would fail a strict numeric check. Swarm review fix (bprv-45)."
+    },
+    {
+      "file": "pb-accuracy-under-a-new-mix",
+      "find": "What accuracy should the team expect there?",
+      "replace": "What accuracy should the team expect there? Give your answer as a decimal between 0 and 1.",
+      "why": "Same mismatch; the key is answer=\"0.845\", so \"84.5%\" would be marked wrong. Swarm review fix (bprv-45)."
+    }
+  ],
+  "parts": {
+    "pb-tickets-exactly-one-topic": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."}
+    },
+    "pb-accuracy-under-a-new-mix": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is required."}
+    },
+    "pb-spam-share-at-a-new-base-rate": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is required."}
+    },
+    "pb-prior-worth-forty-views": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is required."}
+    },
+    "pb-decide-to-block": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.3": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.4": {"kind": "computation", "requirement": "Reasoning is required."}
+    },
+    "pb-detectors-that-share-mistakes": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.3": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.4": {"kind": "derivation", "requirement": "A complete derivation is required."}
+    },
+    "pb-rare-class-in-batches": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.3": {"kind": "computation", "requirement": "Reasoning is required."}
+    }
+  },
+  "indexPrompt": {
+    "pb-tickets-exactly-one-topic": "A help desk tags its 800 support tickets: 260 mention billing, 180 a refund and 430 neither, and a ticket can mention both. What is the probability a random ticket mentions exactly one of the two topics?",
+    "pb-mislabelled-in-a-batch": "A folder holds 12 labelled images and 4 of them carry the wrong label. A reviewer draws 5 of the 12 at random, without putting any back. How likely is it that the 5 include at least 2 mislabelled images?",
+    "pb-at-least-one-failing-test": "A test suite has 10 test cases and 3 of them fail on the current build. A script picks 2 different cases at random to rerun and raises a warning whenever at least one of the pair fails. The warning is raised. What is the probability that both rerun cases fail?",
+    "pb-accuracy-under-a-new-mix": "A photo classifier is right on 95% of daytime photos and 80% of night photos, and its overall accuracy on a test set that is 70% daytime, 20% night and 10% fog is 88.5%. Find its accuracy on fog photos, then the accuracy to expect in a valley with a different mix.",
+    "pb-host-who-prefers-a-box": "A prize is hidden in one of three boxes. The host opens box 3 with probability 3/4 when he has a choice of two empty boxes, and he opens box 3, which is empty. What is the probability the prize is in box 2?",
+    "pb-spam-share-at-a-new-base-rate": "A spam filter is tested on an inbox where one email in five is spam, and 60% of the email it flags there is spam. Deployed on an inbox where only 5% is spam, and treating each email exactly as before, what fraction of its flags are spam?",
+    "pb-alert-with-two-causes": "A server alert fires whenever the disk is full, and half the time when the disk is fine but the network is down. One morning the alert fires and you find the network down. What is the probability the disk is full?",
+    "pb-prior-worth-forty-views": "A team rates a new ad with a Beta prior worth 40 views and mean click rate 0.05, then sees 7 clicks in the first 60 views. What is the posterior average click rate, and how many further views without a click bring it back down to 0.05?",
+    "pb-decide-to-block": "A payment service sees 400 legitimate payments for every fraudulent one and blocks a payment when blocking is cheaper in expectation. Two signals come with known rates in fraud and in legitimate payments. Find the likelihood ratio the service blocks at, the fraud probability for a payment showing both signals, and what a shared cause of the two signals does to the calculation.",
+    "pb-detectors-that-share-mistakes": "Two fraud detectors each flag 80% of fraudulent claims and 10% of genuine ones, but trained on similar data they tend to make the same mistakes. Compare the fraud probability the conditional independence assumption gives for a claim both flag with the probability the joint table gives.",
+    "pb-rare-class-in-batches": "A training set of 60 examples has 6 in a rare class. Each epoch the 60 are shuffled and cut into 6 batches of 10. What is the probability the first batch contains no rare example, that every batch contains exactly one, and that at least one batch contains none?"
+  }
+}

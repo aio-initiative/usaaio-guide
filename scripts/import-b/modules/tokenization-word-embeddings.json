@@ -1,0 +1,95 @@
+{
+  "aModule": "natural-language-processing-tokenization-embeddings",
+  "stage": "Camp",
+  "fixes": [],
+  "parts": {
+    "twe-analogy-nearest-word": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "twe-negative-sampling-optimum": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "twe-one-table-for-both-roles": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "twe-skipgram-loss-floor": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "twe-what-the-biases-buy": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "twe-analogy-nearest-word": "A five-word embedding table in three dimensions is given, and a query vector is built as dog minus puppy plus kitten. Say which table word has the highest cosine similarity with it, give the lowest cosine kitten can keep when the step direction varies, and state how the ranking rule must change so the test measures the analogy.",
+    "twe-greedy-wordpiece-dead-end": "A WordPiece vocabulary holds eleven entries: car, carp, cart, ten, e, t, s, ##pet, ##on, ##s and ##en, where an entry beginning with ## is a piece that continues a word. Split at the spaces, how many tokens does the greedy longest-match encoder output for the text tent cartons carpet, given that a word with no match at some position becomes a single unknown token?",
+    "twe-negative-sampling-optimum": "Skip-gram with negative sampling trains on a corpus where harbor is the center of 2,000 pairs and 120 of them have boat as the context, with five negatives drawn per pair from a noise distribution. Find the dot product that maximizes the objective, redo it when the negative count rises, and say what training does to a word that never appears nearby.",
+    "twe-one-table-for-both-roles": "A student runs skip-gram with one shared table, so each word has a single vector used as both the center and the context vector, on the two-word text tick tock tick tock. Find the lowest average loss it can reach in any dimension, show that the usual two tables can do arbitrarily better, and show what the one-table constraint costs on real text.",
+    "twe-skipgram-loss-floor": "A skip-gram model is trained on the (center, context) pairs of a small corpus, and the table counts the pairs by their context word: tide pairs with sea 8 times, moon 4, high 4 and ship 0, 16 pairs in all; anchor pairs with sea 6, moon 0, high 0 and ship 6, 12 pairs; gull pairs with sea 16 times, moon 0, high 0 and ship 0, 16 pairs. Find the probability a fully trained model gives to moon as a context word of tide, and the lowest value the average loss over all 44 pairs can reach in nats per pair.",
+    "twe-what-the-biases-buy": "A four-by-four co-occurrence table whose entries halve along every row and column is fitted to GloVe. Part 1 asks for the smallest embedding dimension that reproduces every log count with dot products alone, and Part 2 asks the same question once the biases are kept. Part 3 fixes the biases from the row and column totals and asks what the dot products must then fit and what that quantity measures.",
+    "twe-wordpiece-first-merge": "A WordPiece tokenizer is trained on five words: stub 9 times, jab 5, zest 10, buff 3 and tab 1. Training starts from single letters, with each letter one symbol wherever it sits in its word and no continuation markers, so which pair of adjacent symbols does WordPiece merge first?"
+  },
+  "order": [
+    "twe-wordpiece-first-merge",
+    "twe-skipgram-loss-floor",
+    "twe-negative-sampling-optimum",
+    "twe-what-the-biases-buy",
+    "twe-greedy-wordpiece-dead-end",
+    "twe-analogy-nearest-word",
+    "twe-one-table-for-both-roles"
+  ]
+}

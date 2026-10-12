@@ -1,0 +1,136 @@
+{
+  "module": "semantic-segmentation-unet-masks",
+  "stage": "Round 2",
+  "index": [
+    {
+      "id": "cv-kernel-four-stride-two",
+      "moduleId": "semantic-segmentation-unet-masks",
+      "title": "Kernel 4, Stride 2, Padding 1",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cv-kernel-four-stride-two",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A transposed convolution with kernel size 4, stride 2 and padding 1 enlarges a map by a factor of 2. Apply it, with the kernel 1, 1, 1, 1, to the column 6, 6 and work out the output. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "cv3-dice-empty-mask",
+      "moduleId": "semantic-segmentation-unet-masks",
+      "title": "A Perfect Score on an Empty Mask",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=cv3-dice-empty-mask",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Compute Dice and IoU over slices where most ground-truth masks are empty, and measure how much the empty-empty convention moves the headline number.",
+      "answer": "Auto-graded inside the notebook. All three Dice conventions, IoU, and the counts must match to 1e-6, and the three Dice conventions must differ by more than 0.2."
+    },
+    {
+      "id": "cv3-boundary-iou",
+      "moduleId": "semantic-segmentation-unet-masks",
+      "title": "IoU Cannot See the Edges",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=cv3-boundary-iou",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Implement binary erosion and boundary IoU, and show how a blob prediction with the right area hides from plain IoU but not from the boundary metric.",
+      "answer": "Auto-graded inside the notebook. Both IoUs, both boundary IoUs, and their gaps must match to 1e-6, with the boundary gap more than twice as large."
+    },
+    {
+      "id": "cv4-pck-normalization",
+      "moduleId": "semantic-segmentation-unet-masks",
+      "title": "A Keypoint Metric That Does Not Care How Big You Are",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=cv4-pck-normalization",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Score two pose models with PCK at 10 pixels and with PCK at 0.2 of the torso length on a dataset where half the people are small, and watch the raw pixel metric rank the models backwards.",
+      "answer": "Auto-graded inside the notebook. All four PCK values must match the reference to 1e-6, and the two metrics must disagree about which model is better."
+    }
+  ],
+  "theory": [
+    {
+      "id": "cv-kernel-four-stride-two",
+      "moduleId": "semantic-segmentation-unet-masks",
+      "title": "Kernel 4, Stride 2, Padding 1",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "Many U-Nets and image generators enlarge a map 2 times with a transposed convolution of kernel size 4, stride 2 and padding 1, a kernel size that is a multiple of the stride."
+      ],
+      "setup": [
+        {
+          "p": "Apply this layer, with the kernel (1, 1, 1, 1), to the first column of the pooled vertical map, 6, 6."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the sum of the output values?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each input value scales the kernel and is added in starting at its index times the stride, so the first 6 lands on places 1 to 4 and the second on places 3 to 6:"
+            },
+            {
+              "tex": "\\begin{array}{ccccccc}\n\\text{Place} & 1 & 2 & 3 & 4 & 5 & 6 \\\\ \\hline\n\\text{First 6} & 6 & 6 & 6 & 6 & \\text{} & \\text{} \\\\\n\\text{Second 6} & \\text{} & \\text{} & 6 & 6 & 6 & 6 \\\\\n\\text{Sum} & 6 & 6 & 12 & 12 & 6 & 6\n\\end{array}"
+            },
+            {
+              "p": "That is $(2 - 1) \\times 2 + 4 = 6$ values. Padding 1 drops the first and the last, leaving 6, 12, 12, 6, the $(2 - 1) \\times 2 - 2 + 4 = 4$ values of the formula, with sum 36."
+            },
+            {
+              "result": "36"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "The column 6, 6 is the same value all the way along, and this kernel's copies overlap evenly. Is the output the same value all the way along? If not, say which values differ and why. Then say what the same layer gives for the longer column 6, 6, 6, 6, and find a kernel of size 4 whose output for 6, 6 is the same value all the way along."
+            }
+          ],
+          "answer": [
+            {
+              "p": "No. Every inside value gets two copies of the kernel and the two end values get one, so the output is 6, 12, 12, 6. That is not the checkerboard of the page, which alternates through the inside. It is an edge effect: an end value is missing the copy that an input value beyond the edge would have added. The longer column gives eight values, 6, 12, 12, 12, 12, 12, 12, 6: even inside, half at each end, whatever the length."
+            },
+            {
+              "p": "For a kernel $(a, b, c, d)$ the six values before padding are $6a, 6b, 6(a + c), 6(b + d), 6c, 6d$, so after padding the output is"
+            },
+            {
+              "tex": "6b, \\quad 6(a + c), \\quad 6(b + d), \\quad 6c ."
+            },
+            {
+              "p": "It is even when $b = a + c = b + d = c$, which forces $a = d = 0$ and $b = c$. The kernel (0, 1, 1, 0) gives 6, 6, 6, 6, the same as repeating each value twice. The inside values alternate between $a + c$ and $b + d$, so a learned kernel with $a + c \\ne b + d$ makes the checkerboard, and one with weight on its outer places, $a$ or $d$ not 0, leaves the ends out of step with the inside."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

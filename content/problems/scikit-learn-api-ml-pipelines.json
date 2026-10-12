@@ -1,0 +1,960 @@
+{
+ "module": "scikit-learn-api-ml-pipelines",
+ "stage": "Round 1",
+ "index": [
+  {
+   "id": "sklearn-workflow-implementation-task",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "Scikit-Learn Pipeline Practice",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=sklearn-workflow",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 1"
+   ],
+   "prompt": "Pipeline + ColumnTransformer (imputation, encoding, scaling in one object). Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+   "answer": "Auto-graded inside the notebook. Test accuracy must reach the target shown in the evaluation cell."
+  },
+  {
+   "id": "skl-mean-model-on-new-rows",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "The Training Mean, Scored on New Rows",
+   "source": "USAAIO-style",
+   "difficulty": "Easy",
+   "url": "/theory/?id=skl-mean-model-on-new-rows",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "A kiosk records its daily ice cream sales, in hundreds of cones. Five spring days form the training set and five summer days the test set. A teammate fits a DummyRegressor, which learns the mean of the training targets during fit and predicts it for every row, as a baseline for the real model. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "skl-a-feature-that-should-not-vote",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "Nearest Listing Before and After Scaling",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=skl-a-feature-that-should-not-vote",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "A used-car site predicts whether a listing sells within a week with a 1-nearest-neighbor classifier on two features: the asking price in dollars and the number of photos in the listing. A new listing asks 11,000 dollars and has 7 photos, against four training listings whose prices, photo counts and outcomes are shown on the problem page. A study of a much larger set of listings on this site found that the photo count has no relation to how fast a car sells. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "skl-scaler-fit-on-the-new-batch",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "Scaling a Batch from a Drifting Sensor",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=skl-scaler-fit-on-the-new-batch",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "A pump's bearing temperature, in degrees Celsius, was logged on six normal days: 15, 19, 19, 21, 21 and 25. A StandardScaler was fit on those six readings, and the monitoring rule raises an alarm for any reading whose standardized value is above 1.5. This week the bearing is wearing out, and its six readings are 21, 25, 25, 27, 27 and 31. A teammate writes the weekly job as one fit_transform call on the whole week, then counts the alarms. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "skl-scaling-one-row-at-a-time",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "A Prediction Function That Scales Its Input",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=skl-scaling-one-row-at-a-time",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 1"
+   ],
+   "prompt": "A contestant trains a KNN classifier on standardized training rows, without a pipeline, and submits a prediction function for the grader to call. The grader calls it once per hidden row, each time with an array of shape (1, d). What do the grader's predictions look like?",
+   "answer": "One label for every row, since every call scales its row to the same point. Fit on one row, the scaler's mean for every feature is that row's own value, and the spread is 0, which StandardScaler replaces with 1. So every hidden row becomes the all-zero vector, the point of the training mean, and KNN returns the same label for all of them: the majority among the 5 training rows nearest the average row. Passing the whole hidden set at once would avoid the constant output but still let the hidden rows set their own scaling. Keep the fitted scaler and call scaler.transform, or wrap both steps in a Pipeline."
+  },
+  {
+   "id": "skl-scaling-a-filled-gap",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "Where a Filled Gap Lands After Scaling",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=skl-scaling-a-filled-gap",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "A rental site's numeric pipeline for the age of a building, in years, is an imputer that fills missing values with the training median followed by a standard scaler. It is fit on six training listings whose building ages are 28, missing, 2, 25, 29 and 11. A new listing arrives with its building age missing. 2 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "skl-f1-of-which-class",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "The F1 That f1_score Reports",
+   "source": "Custom",
+   "difficulty": "Easy",
+   "url": "/theory/?id=skl-f1-of-which-class",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 1"
+   ],
+   "prompt": "A tuned model on the breast-cancer data is scored on a test set of 50 malignant and 80 benign tumors. The model calls 44 of the malignant tumors malignant and 6 benign, and it calls 77 of the benign tumors benign and 3 malignant. A teammate wants the F1 score for finding malignant tumors and runs f1_score with no average argument. What does it print?",
+   "answer": "0.945. With no average argument, f1_score scores only the class with label 1. np.bincount counts 50 rows of label 0 and 80 of label 1, and there are 80 benign tumors, so label 1 is benign. For benign, TP = 77, FP = 6 (malignant tumors called benign) and FN = 3, so F1 = 154 / (154 + 9) = 0.945. The teammate's number describes the class that was not wanted. Pass pos_label=0 for malignant (0.907), or average='macro' for the contest's metric (0.926)."
+  },
+  {
+   "id": "skl-baseline-one-row-out",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "A Majority-Class Baseline, One Row Out",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=skl-baseline-one-row-out",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "A DummyClassifier with strategy most_frequent ignores the features. During fit it stores the most common label of the rows it is given, and it predicts that label for every row. A small study has 12 labeled rows, and you score this baseline with cross_val_score under a 12-fold KFold, so each fold holds out a single row and the score of a fold is 1 or 0. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "skl-best-of-five-noisy-scores",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "The Best of Five Noisy Scores",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=skl-best-of-five-noisy-scores",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "A grid search tries five settings of a model. Suppose all five have the same true accuracy on new data, 0.70. Each setting's mean cross-validated accuracy misses the truth by luck of the folds: it comes out 0.68 or 0.72 with probability one half each, independently of the other settings. best_score_ is the largest of the five. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "skl-scans-of-the-same-patient",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "Two Scans per Patient",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=skl-scans-of-the-same-patient",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "A clinic has two scans from each of six patients. A single score is read off each scan, and the two scans of one patient give close scores. Each patient is labeled sick or healthy, with the six patients' scan scores and labels shown on the problem page. The model is a 1-nearest-neighbor classifier on the scan score. It will be used on scans of new patients. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "skl-shuffled-days",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "Cross-Validating a Sales Trend",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=skl-shuffled-days",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "A shop's sales grew by 2 units a day over eight days, from 10 on day 1 to 24 on day 8. The model is a KNeighborsRegressor with two neighbors and the day number as its only feature: it predicts the mean sales of the two training days nearest in number. It will be used each evening to predict the next day's sales. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "skl-leak-free-preprocessing",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "Leak-Free Preprocessing by Hand",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=skl-leak-free-preprocessing",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 1"
+   ],
+   "prompt": "Write the fit and the transform of an imputer, a standard scaler and a one-hot encoder by hand, then run the same steps inside cross-validation so each fold learns only from its own rows. Write your solution in the marked cells, then run the check cell under each part to grade yourself.",
+   "answer": "Auto-graded inside the notebook. Each check cell prints \"Part N passed\" when that part's function is right."
+  },
+  {
+   "id": "classical-ml-overview-implementation-task",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "Classical ML Baseline Practice",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=classical-ml-overview",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 1"
+   ],
+   "prompt": "Any classical scikit-learn model + a validation split. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+   "answer": "Auto-graded inside the notebook. Test accuracy must reach the target shown in the evaluation cell."
+  }
+ ],
+ "theory": [
+  {
+   "id": "skl-mean-model-on-new-rows",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "The Training Mean, Scored on New Rows",
+   "difficulty": "Easy",
+   "minutes": 8,
+   "overview": [
+    "A kiosk records its daily ice cream sales, in hundreds of cones. Five spring days form the training set and five summer days the test set:"
+   ],
+   "setup": [
+    {
+     "tex": "\\begin{array}{cc}\n\\text{Split} & \\text{Sales} \\\\ \\hline\n\\text{Training} & \\text{6, 8, 10, 12, 14} \\\\\n\\text{Test} & \\text{12, 13, 14, 15, 16}\n\\end{array}"
+    },
+    {
+     "p": "A teammate fits `DummyRegressor()`, which learns the mean of the training targets during `fit` and predicts it for every row, as a baseline for the real model."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What does `baseline.score(X_test, y_test)` return?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "`score` returns $R^2 = 1 - SS_{\\text{res}} / SS_{\\text{tot}}$ on the rows it is given. The baseline predicts the training mean, 10, for every test day."
+      },
+      {
+       "list": [
+        "$SS_{\\text{res}}$ adds the squared errors of those predictions: $2^2 + 3^2 + 4^2 + 5^2 + 6^2 = 90$.",
+        "$SS_{\\text{tot}}$ adds the squared distances of the test targets from their own mean, 14: $4 + 1 + 0 + 1 + 4 = 10$."
+       ]
+      },
+      {
+       "p": "So $R^2 = 1 - 90/10 = -8$."
+      },
+      {
+       "result": "$-8$"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "What does `baseline.score(X_train, y_train)` return?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "On the training rows the prediction 10 is exactly the mean of the targets, so $SS_{\\text{res}} = SS_{\\text{tot}}$ and $R^2 = 0$."
+      },
+      {
+       "result": "0"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "The teammate reads $-8$ as a bug, since the lesson says a model that always predicts the mean scores 0. Say what is wrong with that reading."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The zero is for the mean of the targets being scored. $SS_{\\text{tot}}$ is always measured around the mean of the rows passed to `score`, here the test mean 14, which the baseline never saw. The baseline predicts the training mean 10, which sits 4 below every test day on average, and that miss alone adds $5 \\times 4^2 = 80$ to $SS_{\\text{res}}$. So nothing is broken: a test $R^2$ can be any negative number, and a large negative value warns that the test rows differ from the training rows, here by season."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "skl-a-feature-that-should-not-vote",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "Nearest Listing Before and After Scaling",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "A used-car site predicts whether a listing sells within a week with a 1-nearest-neighbor classifier on two features: the asking price in dollars and the number of photos in the listing. Four training listings:"
+   ],
+   "setup": [
+    {
+     "tex": "\\begin{array}{cccc}\n\\text{Listing} & \\text{Price} & \\text{Photos} & \\text{Sold within a week} \\\\ \\hline\n1 & \\text{8,500} & 9 & \\text{yes} \\\\\n2 & \\text{11,500} & 15 & \\text{yes} \\\\\n3 & \\text{12,500} & 7 & \\text{no} \\\\\n4 & \\text{15,500} & 1 & \\text{no}\n\\end{array}"
+    },
+    {
+     "p": "A new listing asks 11,000 dollars and has 7 photos. A study of a much larger set of listings on this site found that the photo count has no relation to how fast a car sells."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Which training listing is the new listing's nearest neighbor in raw units?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The price gaps are 2,500, 500, 1,500 and 4,500 dollars, while the photo gaps are at most 8. Squared, a gap of 8 photos adds 64 to a squared distance of at least $500^2 = 250{,}000$, so price decides alone. Listing 2, 500 dollars away, is nearest (distance about 500.06), and the prediction is \"yes\"."
+      },
+      {
+       "result": "2"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "Divide each feature by its standard deviation over the four training listings, for the training listings and the new one alike, and find the new listing's nearest neighbor again. Which listing is it?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Price has mean 12,000 and standard deviation $\\sqrt{(3500^2 + 500^2 + 500^2 + 3500^2)/4} = 2500$. Photos have mean 8 and standard deviation $\\sqrt{(1 + 49 + 1 + 49)/4} = 5$. Dividing by these, the listings sit at"
+      },
+      {
+       "tex": "(3.4, 1.8), \\quad (4.6, 3.0), \\quad (5.0, 1.4), \\quad (6.2, 0.2),"
+      },
+      {
+       "p": "and the new listing at $(4.4, 1.4)$. The distances are about 1.08, 1.61, 0.60 and 2.16, so listing 3 is nearest and the prediction flips to \"no\". Subtracting each feature's mean as well, as a `StandardScaler` does, moves every point by the same amount and leaves these distances unchanged. Listing 2 dropped from first to third because its 15 photos are now $1.6$ standard deviations from the new listing's 7."
+      },
+      {
+       "result": "3"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Which prediction do you trust, and what would you change in the pipeline?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Trust the raw \"yes\". Standardizing gives every feature the same spread, so it gives every feature the same say in the distance, whether or not it carries information. The photo count is noise here, and scaling turned it from a feature that never mattered into one that decides the neighbor."
+      },
+      {
+       "p": "Scaling is still right for KNN, but only on features that belong in the distance. Drop the photo count, then scale. On price alone, the scaled nearest neighbor is listing 2 again, since scaling one feature never changes which rows are nearest along it."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "skl-scaler-fit-on-the-new-batch",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "Scaling a Batch from a Drifting Sensor",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "A pump's bearing temperature, in degrees Celsius, was logged on six normal days: 15, 19, 19, 21, 21 and 25. A `StandardScaler` was fit on those six readings, and the monitoring rule raises an alarm for any reading whose standardized value is above 1.5."
+   ],
+   "setup": [
+    {
+     "p": "This week the bearing is wearing out, and its six readings are 21, 25, 25, 27, 27 and 31. A teammate writes the weekly job as"
+    },
+    {
+     "code": {
+      "language": "python",
+      "lines": [
+       "z = StandardScaler().fit_transform(week)   # week holds this week's 6 readings",
+       "alarms = (z > 1.5).sum()"
+      ]
+     }
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "How many alarms does the teammate's job raise this week?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "`fit_transform(week)` learns the mean and standard deviation of this week's readings. The mean is 26 and the deviations are $-5, -1, -1, 1, 1, 5$, so the standard deviation is $\\sqrt{54/6} = 3$. The standardized values are $-1.67, -0.33, -0.33, 0.33, 0.33, 1.67$, and only the 31 is above 1.5. That is 1 alarm, the same count as on the six normal days."
+      },
+      {
+       "result": "1"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "How many alarms does the rule raise when this week's readings are transformed with the scaler fit on the normal days?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The normal days have mean 20 and deviations $-5, -1, -1, 1, 1, 5$, so their standard deviation is also 3. This week's readings become $(x - 20)/3 = 0.33, 1.67, 1.67, 2.33, 2.33, 3.67$, with mean 2. Every reading except the 21 is above 1.5, so the rule raises 5 alarms."
+      },
+      {
+       "result": "5"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Explain the difference between the two counts, and say which rows the scaler should be fit on."
+      }
+     ],
+     "answer": [
+      {
+       "p": "A scaler fit on the batch it transforms always returns values with mean 0 and standard deviation 1, whatever the batch looks like. The whole week ran 6 degrees hot, and refitting moved the mean up by exactly those 6 degrees, so the shift the alarm exists to catch was subtracted away. The rule saw an ordinary week."
+      },
+      {
+       "p": "The rule's threshold of 1.5 means \"1.5 standard deviations from normal operation\", so the scaler must be fit once on the normal days and only `transform` called on new readings. The same holds for any model: the transformation is part of the fitted model, learned from training rows, and new rows are measured against it."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "skl-scaling-one-row-at-a-time",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "A Prediction Function That Scales Its Input",
+   "difficulty": "Medium",
+   "minutes": 6,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A contestant trains a KNN classifier on standardized training rows, without a pipeline, and submits this function for the grader to call:"
+      },
+      {
+       "code": {
+        "language": "python",
+        "lines": [
+         "scaler = StandardScaler().fit(X_train)",
+         "knn = KNeighborsClassifier(n_neighbors=5).fit(scaler.transform(X_train), y_train)",
+         "",
+         "def my_prediction(X_new):",
+         "    return knn.predict(StandardScaler().fit_transform(X_new))"
+        ]
+       }
+      },
+      {
+       "p": "The grader calls `my_prediction` once per hidden row, each time with an array of shape `(1, d)`. What do the grader's predictions look like?"
+      },
+      {
+       "choices": [
+        {
+         "text": "The labels a pipeline would give, since each row is still scaled before it is predicted",
+         "explain": "This is true of a pipeline, which scales new rows with the statistics stored during fit. Here a fresh scaler is fit on each call, so each row is scaled with its own mean, which is the row itself."
+        },
+        {
+         "text": "An error from every call, since a single row has a standard deviation of 0",
+         "explain": "StandardScaler guards against this. A feature with zero spread in the rows it is fit on gets a scale of 1 instead of a division by zero, so the call runs without an error or a warning, and the mistake goes unnoticed."
+        },
+        {
+         "text": "One label for every row, since every call scales its row to the same point",
+         "correct": true,
+         "explain": "Fit on one row, the scaler's mean for every feature is that row's own value, and the spread is 0, which StandardScaler replaces with 1. So every hidden row becomes the all-zero vector, the point of the training mean, and KNN returns the same label for all of them: the majority among the 5 training rows nearest the average row. Passing the whole hidden set at once would avoid the constant output but still let the hidden rows set their own scaling. Keep the fitted scaler and call scaler.transform, or wrap both steps in a Pipeline."
+        },
+        {
+         "text": "Labels from the training rows nearest each row in raw units, as a one-row batch stays unscaled",
+         "explain": "fit_transform on one row does not leave it unchanged. It subtracts the row's own mean, which is the row itself, so every feature becomes 0. Even an unscaled row would give the wrong neighbors, since knn was fit on standardized rows."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Fit on one row, the scaler's mean for every feature is that row's own value, and the spread is 0, which StandardScaler replaces with 1. So every hidden row becomes the all-zero vector, the point of the training mean, and KNN returns the same label for all of them: the majority among the 5 training rows nearest the average row. Passing the whole hidden set at once would avoid the constant output but still let the hidden rows set their own scaling. Keep the fitted scaler and call scaler.transform, or wrap both steps in a Pipeline."
+      },
+      {
+       "result": "One label for every row, since every call scales its row to the same point"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "skl-scaling-a-filled-gap",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "Where a Filled Gap Lands After Scaling",
+   "difficulty": "Medium",
+   "minutes": 10,
+   "overview": [
+    "A rental site's numeric pipeline for the age of a building, in years, is"
+   ],
+   "setup": [
+    {
+     "code": {
+      "language": "python",
+      "lines": [
+       "numeric = Pipeline([(\"fill\", SimpleImputer(strategy=\"median\")),",
+       "                    (\"scale\", StandardScaler())])"
+      ]
+     }
+    },
+    {
+     "p": "It is fit on six training listings whose building ages are 28, missing, 2, 25, 29 and 11. A new listing arrives with its building age missing."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "What value does `numeric.transform` give the new listing's building age?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "`fit` runs the steps in order on the training rows, and each step is fit on the output of the step before it."
+      },
+      {
+       "olist": [
+        "The imputer stores the median of the five known ages. Sorted, they are 2, 11, 25, 28 and 29, so the median is 25, and it fills the training gap with 25.",
+        "The scaler is fit on the filled column, 28, 25, 2, 25, 29 and 11. Its mean is $120/6 = 20$, and the deviations $8, 5, -18, 5, 9, -9$ give the standard deviation $\\sqrt{600/6} = 10$."
+       ]
+      },
+      {
+       "p": "At prediction time the gap is filled with 25 and scaled to $(25 - 20)/10 = 0.5$."
+      },
+      {
+       "p": "Two slips give nearby numbers. Fitting the scaler on the five known ages (mean 19, standard deviation $\\sqrt{114} \\approx 10.68$) gives $0.56$. Using the sample standard deviation, $\\sqrt{600/5} \\approx 10.95$, as `pandas` `std()` does, gives $0.46$. `StandardScaler` divides by $n$."
+      },
+      {
+       "result": "0.5"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "A teammate expected a filled gap to come out as 0 after scaling. For which imputer strategy is that true, and why does it fail here?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "It is true for `strategy=\"mean\"`. Filling with the mean of the known values leaves the mean of the column unchanged, so the scaler's mean equals the fill value and every filled gap becomes $0$."
+      },
+      {
+       "p": "The median of a skewed column is not its mean. Here the 2-year-old building pulls the mean of the filled column down to 20, below the median 25, so a filled gap lands at $0.5$. Once a `SimpleImputer` sits before the scaler, the scaler's statistics include the filled values as well."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "skl-f1-of-which-class",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "The F1 That f1_score Reports",
+   "difficulty": "Easy",
+   "minutes": 5,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A tuned model on the breast-cancer data is scored on a test set of 50 malignant and 80 benign tumors:"
+      },
+      {
+       "code": {
+        "language": "python",
+        "lines": [
+         ">>> print(np.bincount(y_test))",
+         "[50 80]"
+        ]
+       }
+      },
+      {
+       "p": "The model calls 44 of the malignant tumors malignant and 6 benign, and it calls 77 of the benign tumors benign and 3 malignant. A teammate wants the F1 score for finding malignant tumors and runs"
+      },
+      {
+       "code": {
+        "language": "python",
+        "lines": [
+         "print(round(f1_score(y_test, pred), 3))"
+        ]
+       }
+      },
+      {
+       "p": "What does it print?"
+      },
+      {
+       "choices": [
+        {
+         "text": "0.907",
+         "explain": "This is the F1 of the malignant class: TP = 44, FP = 3 and FN = 6 give 88 / 97 = 0.907. It is what the teammate wanted, but f1_score with no average argument uses average='binary' with pos_label=1. np.bincount shows 50 rows with label 0 and 80 with label 1, so label 1 is benign here. To get the malignant F1, pass pos_label=0."
+        },
+        {
+         "text": "0.945",
+         "correct": true,
+         "explain": "With no average argument, f1_score scores only the class with label 1. np.bincount counts 50 rows of label 0 and 80 of label 1, and there are 80 benign tumors, so label 1 is benign. For benign, TP = 77, FP = 6 (malignant tumors called benign) and FN = 3, so F1 = 154 / (154 + 9) = 0.945. The teammate's number describes the class that was not wanted. Pass pos_label=0 for malignant (0.907), or average='macro' for the contest's metric (0.926)."
+        },
+        {
+         "text": "0.926",
+         "explain": "This is the macro-F1, the mean of 0.907 for malignant and 0.945 for benign. f1_score averages over the classes only when it is told to with average='macro'. Its default scores the single class with label 1."
+        },
+        {
+         "text": "0.931",
+         "explain": "This is the accuracy, 121 correct out of 130. f1_score never counts the correct predictions of both classes together. Its default is the F1 of the class with label 1, which is benign here."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "With no average argument, f1_score scores only the class with label 1. np.bincount counts 50 rows of label 0 and 80 of label 1, and there are 80 benign tumors, so label 1 is benign. For benign, TP = 77, FP = 6 (malignant tumors called benign) and FN = 3, so F1 = 154 / (154 + 9) = 0.945. The teammate's number describes the class that was not wanted. Pass pos_label=0 for malignant (0.907), or average='macro' for the contest's metric (0.926)."
+      },
+      {
+       "result": "0.945"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "skl-baseline-one-row-out",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "A Majority-Class Baseline, One Row Out",
+   "difficulty": "Medium",
+   "minutes": 10,
+   "overview": [
+    "`DummyClassifier(strategy=\"most_frequent\")` ignores the features. During `fit` it stores the most common label of the rows it is given, and it predicts that label for every row. A small study has 12 labeled rows, and you score this baseline with"
+   ],
+   "setup": [
+    {
+     "code": {
+      "language": "python",
+      "lines": [
+       "scores = cross_val_score(DummyClassifier(strategy=\"most_frequent\"), X, y,",
+       "                         cv=KFold(n_splits=12))"
+      ]
+     }
+    },
+    {
+     "p": "so each fold holds out a single row and the score of a fold is 1 or 0."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "The 12 rows have 6 labels of each class. What is `scores.mean()`?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Take any fold. Its held-out row has some label, say $A$. The 11 training rows then hold 5 rows of $A$ and 6 of the other class, $B$. `cross_val_score` refits the baseline on those 11 rows, so it learns $B$ and predicts $B$ for the held-out row, which is wrong. Every fold is like this, so all 12 scores are 0 and the mean is 0."
+      },
+      {
+       "result": "0"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "Now the 12 rows have 8 labels of class 1 and 4 of class 0. What is `scores.mean()`?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Holding out a class 1 row leaves 7 of class 1 and 4 of class 0, so the baseline predicts 1 and is right. Holding out a class 0 row leaves 8 and 3, so it predicts 1 and is wrong. That is 8 right out of 12, $2/3 \\approx 0.667$, the share of the majority class."
+      },
+      {
+       "result": "0.667"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "A model scores 0.42 accuracy in the same cross-validation on the balanced rows of Part 1. A teammate says it beats the baseline by 42 points. What is wrong, and what should the comparison use?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Removing a row shifts the training labels away from that row's class, and a baseline that only counts labels follows the shift every time. In Part 1 the shift is enough to flip its vote, so it scores 0 on balanced data where a fixed guess of either class would score 0.5 on new rows. The 0 is an artifact of holding out one row at a time, not the baseline's real skill."
+      },
+      {
+       "p": "A model at 0.42 is below the 0.5 of a fixed guess. Compare against a baseline that learns nothing from the training labels, such as `DummyClassifier(strategy=\"constant\", constant=1)`. It predicts 1 in every fold, so it is right on exactly the 6 rows of class 1 whatever the folds. It scores 0.5 under leave-one-out, and also 0.5 under the stratified `cv=5` below, with fold scores 0.67, 0.33, 0.5, 0.5 and 0.5."
+      },
+      {
+       "p": "Larger folds do not rescue the majority baseline on 12 rows. With `cv=5`, which is stratified, its fold scores are 0.33, 0.33, 0.5, 0.5 and 0.5, a mean of 0.43, and the model at 0.42 would look level with it. A fold of three rows holds two of one class, so its training part leans toward the other class and the baseline gets 1 of the 3 right. A fold of two rows, one of each class, leaves a tie. The shift fades only when each fold is a small share of many rows."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "skl-best-of-five-noisy-scores",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "The Best of Five Noisy Scores",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "A grid search tries five settings of a model. Suppose all five have the same true accuracy on new data, 0.70. Each setting's mean cross-validated accuracy misses the truth by luck of the folds: it comes out 0.68 or 0.72 with probability one half each, independently of the other settings. `best_score_` is the largest of the five."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the probability that `best_score_` is 0.72?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "`best_score_` is 0.68 only if all five settings come out low, which has probability $(1/2)^5 = 1/32$. Otherwise at least one is 0.72, so the probability is $1 - 1/32 = 31/32 = 0.96875$."
+      },
+      {
+       "result": "0.96875"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "What is the expected value of `best_score_`?"
+      }
+     ],
+     "answer": [
+      {
+       "tex": "\\mathbb{E}[\\text{best}] = 0.72 \\cdot \\tfrac{31}{32} + 0.68 \\cdot \\tfrac{1}{32}\n= 0.70 + 0.02 \\cdot \\tfrac{30}{32} = 0.71875 ."
+      },
+      {
+       "p": "Each setting's own score is right on average, 0.70, but the largest of five is not."
+      },
+      {
+       "result": "0.71875"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "What accuracy do you expect from the winning setting on the test set, and how does nested cross-validation measure it without the test set?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "0.70. The winner was chosen for its lucky folds, and new rows do not repeat that luck, so the test score falls back to the true 0.70. `best_score_` overstates it by about 0.019, and the gap grows with the number of settings tried: with 20 settings, the chance that all 20 come out low is about one in a million."
+      },
+      {
+       "p": "Nested cross-validation runs the whole search inside each outer training part and scores the chosen setting on the outer fold, which played no part in the choice. Those scores average to the 0.70 of the procedure, not the 0.72 of a lucky pick."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "skl-scans-of-the-same-patient",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "Two Scans per Patient",
+   "difficulty": "Medium",
+   "minutes": 15,
+   "overview": [
+    "A clinic has two scans from each of six patients. A single score is read off each scan, and the two scans of one patient give close scores. Each patient is labeled sick or healthy:"
+   ],
+   "setup": [
+    {
+     "tex": "\\begin{array}{ccc}\n\\text{Patient} & \\text{Scan scores} & \\text{Label} \\\\ \\hline\n1 & \\text{1.0, 1.3} & \\text{sick} \\\\\n2 & \\text{2.0, 2.3} & \\text{sick} \\\\\n3 & \\text{3.0, 3.3} & \\text{healthy} \\\\\n4 & \\text{4.0, 4.3} & \\text{sick} \\\\\n5 & \\text{5.0, 5.3} & \\text{healthy} \\\\\n6 & \\text{6.0, 6.3} & \\text{healthy}\n\\end{array}"
+    },
+    {
+     "p": "The model is a 1-nearest-neighbor classifier on the scan score. It will be used on scans of new patients."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "Estimate its accuracy by leave-one-out over the 12 scans: each scan is held out in turn, and the model is fit on the other 11. What accuracy do you get?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The other scan of the same patient is 0.3 away, and every scan of another patient is at least 0.7 away. So each held-out scan's nearest neighbor is its twin, which carries the same label, and all 12 predictions are right. The accuracy is 1."
+      },
+      {
+       "result": "1"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "Now hold out one patient at a time, both scans together, and fit on the other five patients (`LeaveOneGroupOut` with the patient as the group). What accuracy do you get?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Each held-out scan now meets only other patients. Its nearest neighbor is the closest scan of the patient just below or just above it:"
+      },
+      {
+       "tex": "\\begin{array}{cccc}\n\\text{Scan} & \\text{Nearest other scan} & \\text{Prediction} & \\text{Right?} \\\\ \\hline\n1.0 & 2.0 & \\text{sick} & \\text{yes} \\\\\n1.3 & 2.0 & \\text{sick} & \\text{yes} \\\\\n2.0 & 1.3 & \\text{sick} & \\text{yes} \\\\\n2.3 & 3.0 & \\text{healthy} & \\text{no} \\\\\n3.0 & 2.3 & \\text{sick} & \\text{no} \\\\\n3.3 & 4.0 & \\text{sick} & \\text{no} \\\\\n4.0 & 3.3 & \\text{healthy} & \\text{no} \\\\\n4.3 & 5.0 & \\text{healthy} & \\text{no} \\\\\n5.0 & 4.3 & \\text{sick} & \\text{no} \\\\\n5.3 & 6.0 & \\text{healthy} & \\text{yes} \\\\\n6.0 & 5.3 & \\text{healthy} & \\text{yes} \\\\\n6.3 & 5.3 & \\text{healthy} & \\text{yes}\n\\end{array}"
+      },
+      {
+       "p": "Six of the 12 are right, so the accuracy is 0.5."
+      },
+      {
+       "result": "0.5"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Which estimate describes the model on new patients, and why does the other one come out so high?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The patient-wise estimate, 0.5. A new patient has no twin scan in the training data, which is exactly the situation of a held-out patient."
+      },
+      {
+       "p": "Row-wise leave-one-out kept the other scan of each held-out patient in the training rows. Each prediction copied the label of a scan from the same person, a match the model will never have for a new patient, and a 1-nearest-neighbor model finds that match every time. The validation rows were not independent of the training rows, so the score measured memory. Whenever rows come in groups that a new case will not share, the folds must split by group, with `GroupKFold` or `LeaveOneGroupOut`."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "skl-shuffled-days",
+   "moduleId": "scikit-learn-api-ml-pipelines",
+   "title": "Cross-Validating a Sales Trend",
+   "difficulty": "Medium",
+   "minutes": 15,
+   "overview": [
+    "A shop's sales grew by 2 units a day over eight days:"
+   ],
+   "setup": [
+    {
+     "tex": "\\begin{array}{ccccccccc}\n\\text{Day} & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\\\ \\hline\n\\text{Sales} & 10 & 12 & 14 & 16 & 18 & 20 & 22 & 24\n\\end{array}"
+    },
+    {
+     "p": "The model is `KNeighborsRegressor(n_neighbors=2)` with the day number as its only feature: it predicts the mean sales of the two training days nearest in number. It will be used each evening to predict the next day's sales."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "Score it by leave-one-out: each day is held out in turn and predicted from a model fit on the other seven. What is the mean absolute error?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "For days 2 to 7 the two nearest training days are the day before and the day after, and their mean is exactly the held-out day's sales, so the error is 0. Day 1's nearest are days 2 and 3, with mean 13 against 10. Day 8's are days 7 and 6, with mean 21 against 24. The mean absolute error is $(3 + 3)/8 = 0.75$."
+      },
+      {
+       "result": "0.75"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "Score it the way it will be used: for each day $t$ from 3 to 8, fit on days 1 to $t - 1$ and predict day $t$ (`TimeSeriesSplit(n_splits=6)` makes these splits). What is the mean absolute error?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The two nearest training days are always $t - 1$ and $t - 2$, with mean sales $(y_{t-1} + y_{t-2})/2 = y_t - 3$. Each prediction is 3 too low, so the mean absolute error is 3."
+      },
+      {
+       "result": "3"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Which number should you report for this model, and what made the other one four times smaller?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Report 3. Each evening the model predicts a day that lies after every training day, and the forward splits test exactly that."
+      },
+      {
+       "p": "Leave-one-out held out days from the middle of the series and kept the days on both sides in training. Averaging a neighbor on each side of a linear trend gives the held-out value exactly, so the model was interpolating between known days. In use it can only extrapolate, and averaging two past days always lags the trend. On rows ordered in time, the validation rows must come after the training rows, as `TimeSeriesSplit` arranges."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

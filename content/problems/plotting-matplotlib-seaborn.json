@@ -1,0 +1,939 @@
+{
+  "module": "plotting-matplotlib-seaborn",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "viz-one-slow-request",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "One Slow Request in a Histogram",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=viz-one-slow-request",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "You time 20 requests to a model server, in milliseconds, and want to see how the times are spread. Most of them sit between 12 and 48 ms, and one takes 412 ms. You plot them with a histogram of 10 bins. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "viz-two-logging-rates",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "Two Curves Logged at Different Rates",
+      "source": "USAAIO-style",
+      "difficulty": "Easy",
+      "url": "/theory/?id=viz-two-logging-rates",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A training run lasts 2,000 steps. It records the training loss every 50 steps, at steps 50, 100, and so on to 2000, into the list train_log, and the validation loss every 200 steps, at steps 200, 400, and so on to 2000, into val_log. Both lists go on one plot against their position in the list rather than against the step they were recorded at. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "viz-overlapping-bands-paired-seeds",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "Two Models Whose Bands Overlap",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=viz-overlapping-bands-paired-seeds",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Two models are trained with the same 5 random seeds, so each seed gives both models the same data split and the same initial weights. A teammate plots each model's mean test accuracy with a band of one standard deviation, sees the two bands overlap, and concludes that neither model is better than the other. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "viz-data-needed-from-a-log-log-plot",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "How Much Data a Log-Log Plot Asks for",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=viz-data-needed-from-a-log-log-plot",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "You train the same model on 1,000, 2,000, 4,000, ..., 64,000 examples and plot its test error against the training set size N with ax.loglog(N, err). The seven points fall on a straight line, from an error of 0.32 at N = 1,000 to 0.04 at N = 64,000. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "viz-annotations-transposed",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "Recall Read Off an Annotated Confusion Matrix",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=viz-annotations-transposed",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A classifier sorts 150 scanned documents into invoices, receipts and contracts, and its confusion matrix is drawn with imshow, the true classes as rows, and a count written into every cell. The counts are labelled with a loop that calls ax.text(i, j, ...), so a reader who reads a count off the figure may not be reading the cell they think they are. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "viz-a-diagonal-that-drowns-the-rest",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "A Diagonal That Drowns Out the Mistakes",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=viz-a-diagonal-that-drowns-the-rest",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A speech model sorts 3,850 clips into four commands. Its confusion matrix, with true commands as rows, has 940, 12, 3 and 5 in row 1, then 7, 910, 24 and 19 in row 2, then 2, 9, 955 and 4 in row 3, and finally 6, 21, 8 and 925 in row 4. Drawn with ax.imshow(cm, cmap=\"Blues\"), the diagonal is dark and all twelve other cells look the same pale color, so the figure does not show which commands get mixed up. Which change makes the mistakes visible?",
+      "answer": "ax.imshow(cm, cmap=\"Blues\", vmin=0, vmax=24). Counts above vmax get the darkest color, so the diagonal saturates, while the off-diagonal counts spread over the whole map: 24 is darkest, 12 sits halfway and 2 near the light end. Write the counts in the cells, so the saturated diagonal can still be read. The question was which commands get mixed up, and the colors now answer it: the cells in row 2, column 3 (24) and row 4, column 2 (21), counting from 1."
+    },
+    {
+      "id": "viz-box-plot-of-review-lengths",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "A Box Plot of Review Lengths",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=viz-box-plot-of-review-lengths",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A shop compares how long its customers' reviews are in each product category with a box plot of word counts. The garden category has 9 reviews, from 38 to 104 words, and seaborn takes the box edges from NumPy's default percentile rule. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "viz-tight-is-not-accurate",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "A Tight Cloud Beside the Diagonal",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=viz-tight-is-not-accurate",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "Two models predict how many minutes a food delivery takes. On five test orders they give the actual times and the two predictions shown on the problem page. You draw predicted against actual for each model, with the line y = x. Model 1's points lie in a neat row parallel to the line, and model 2's scatter on both sides of it. Both models are judged by their mean squared error: the average over the orders of (predicted - actual)^2. Which statement is right?",
+      "answer": "Model 2 is better as it stands, but model 1 minus 5 minutes beats both. Model 1's errors are 4, 5, 6, 5 and 5, a mean squared error of 25.4, and model 2's are −6, 3, −2, 6 and −1, a mean squared error of 17.2. But model 1 is off by almost the same 5 minutes every time, which the plot shows as a cloud parallel to y = x. Subtracting 5 leaves errors −1, 0, 1, 0 and 0, a mean squared error of 0.4. Model 2's errors change sign from order to order, and no single correction removes them. In practice, estimate the shift on validation orders: a shift picked on these five test orders makes the test score look better than it will be on new orders."
+    },
+    {
+      "id": "viz-plt-calls-after-two-figures",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "Saving and Closing After Two Figures",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=viz-plt-calls-after-two-figures",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A training script makes a loss figure and a confusion-matrix figure, then saves and closes them, mixing figure methods with pyplot calls. What ends up in loss.png, and what happens in the last two lines? Two pyplot conventions settle it: plt.close() with no argument closes only the current figure, not all of them, and a closed figure is removed from pyplot's list of open figures but the figure object still exists, so its own savefig method still draws it to a file.",
+      "answer": "loss.png shows the confusion matrix, and it prints [1]. plt.subplots makes its new figure current, so after the second call the current figure is fig_cm, and ax_loss.set_yscale does not change that. plt.savefig then writes the confusion matrix to loss.png, and plt.close() closes fig_cm. fig_cm.savefig still works on the closed figure, so confusion.png holds the confusion matrix too. The loss figure is never saved and stays open, so it prints [1]. Calling fig_loss.savefig and plt.close(fig_loss) names the figure you mean."
+    },
+    {
+      "id": "viz-a-band-on-a-log-axis",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "A Spread Band on a Log Axis",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=viz-a-band-on-a-log-axis",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "You train a model with 4 seeds on a hard problem and plot the mean validation loss with a band from one standard deviation below the mean to one above, on a log y axis because the loss falls by several factors of ten. At the last epoch the four runs end at 0.01, 0.1, 0.1 and 1.0. Use the standard deviation that divides by the number of runs, as np.std does. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "viz-learning-curves-from-a-log",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "Learning Curves from a Training Log",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=viz-learning-curves-from-a-log",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Four runs of the same model wrote their losses to one shuffled table, and one of them crashed partway through. Turn it into the usual learning-curves figure: the mean loss at each epoch with a band of one standard deviation, for training and validation, with a mark at the best epoch.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "viz-grade-a-styled-line",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "Grade a Plot Without Looking at It",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=viz-grade-a-styled-line",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Write two checks of the kind an autograder uses: one that lists what a styled line gets wrong and one that checks histogram bars against their bin edges. Run both on figures drawn right and drawn in several wrong ways.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+    }
+  ],
+  "theory": [
+    {
+      "id": "viz-one-slow-request",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "One Slow Request in a Histogram",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "You time 20 requests to a model server, in milliseconds, and want to see how the times are spread:"
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "lat = [12, 14, 15, 17, 18, 19, 21, 22, 22, 24,",
+              "       25, 27, 28, 31, 33, 36, 40, 44, 48, 412]",
+              "fig, ax = plt.subplots()",
+              "ax.hist(lat, bins=10)"
+            ]
+          }
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "How wide is each bin, in milliseconds?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The range runs from 12 to 412, which is 400 ms, and 10 equal bins make each one $400 / 10 = 40$ ms wide. The edges are 12, 52, 92, ..., 412."
+            },
+            {
+              "result": "40"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "How many of the 10 bars have a height above zero?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Every typical request lies between 12 and 48 ms, so all 19 of them fall in the first bin, from 12 to 52. The request at 412 ms falls in the last bin. The 8 bins in between are empty. The plot shows a bar of height 19 at the left, a bar of height 1 at the right and nothing between them, so it says nothing about how the 19 typical times are spread. One slow request set the bin width for all the others."
+            },
+            {
+              "result": "2"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "To see the typical requests, a teammate redraws with `ax.hist(lat, bins=np.arange(10, 55, 5))`, which gives bin edges 10, 15, ..., 50. What do the heights of all the bars add up to?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The new bins are 5 ms wide and run from 10 to 50. Counting the values in each bin gives 2, 4, 4, 3, 2, 1, 2 and 1, so the typical requests now show a peak between 15 and 25 ms and a tail toward 50 ms. These add up to 19, not 20. The request at 412 ms lies outside every bin, and `ax.hist` leaves it out without a warning."
+            },
+            {
+              "p": "The plot is clearer, but it hides the one value a reader of a latency plot most needs to know. Say in the title or caption that one request at 412 ms is not shown, or keep every request and space the x axis by ratios with `ax.set_xscale(\"log\")` and bins whose edges grow by a constant factor, such as `np.geomspace(10, 500, 15)`."
+            },
+            {
+              "result": "19"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "viz-two-logging-rates",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "Two Curves Logged at Different Rates",
+      "difficulty": "Easy",
+      "minutes": 6,
+      "overview": [
+        "A training run lasts 2,000 steps. It records the training loss every 50 steps, at steps 50, 100, ..., 2000, into the list `train_log`, and the validation loss every 200 steps, at steps 200, 400, ..., 2000, into `val_log`. Both go on one plot:"
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "fig, ax = plt.subplots()",
+              "ax.plot(train_log, label=\"training\")",
+              "ax.plot(val_log, label=\"validation\")",
+              "ax.set_xlabel(\"step\")",
+              "ax.legend()"
+            ]
+          }
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Which training step's loss is drawn at the same x as the final validation loss?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Neither call passes x, so matplotlib draws each list at the positions 0, 1, 2, ... of its values. `val_log` holds $2000 / 200 = 10$ values, so the final validation loss sits at $x = 9$. The training curve has $2000 / 50 = 40$ values and runs on to $x = 39$."
+            },
+            {
+              "p": "Position 9 of `train_log` is its tenth value, recorded at step $10 \\times 50 = 500$. The final validation loss was recorded at step 2000. So the plot puts a validation loss from the end of training directly above a training loss from a quarter of the way in. A reader would think the validation loss fell as fast as the training loss did over the first 500 steps, and compare the two curves at x values where they mean different steps."
+            },
+            {
+              "result": "500"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "coding",
+          "requirement": "Reasoning is not required. Rewrite the two plotting calls.",
+          "prompt": [
+            {
+              "p": "Rewrite the two plotting calls so that every point sits at its step."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Pass the steps as x:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "ax.plot(np.arange(50, 2001, 50), train_log, label=\"training\")",
+                  "ax.plot(np.arange(200, 2001, 200), val_log, label=\"validation\")"
+                ]
+              }
+            },
+            {
+              "p": "Now both curves end at step 2000, the validation point recorded at step 1000 sits above the training point recorded at step 1000, and the x label is right. With only 10 validation points, `marker=\"o\"` on the second call shows where the measurements are and that the line between them is drawn, not measured."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "viz-overlapping-bands-paired-seeds",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "Two Models Whose Bands Overlap",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "You train models A and B with the same 5 random seeds. The seed sets the data split and the initial weights, so seed 3 gives both models the same split. Their test accuracies are:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{cccccc}\n\\text{seed} & 1 & 2 & 3 & 4 & 5 \\\\ \\hline\n\\text{A} & 0.78 & 0.83 & 0.76 & 0.81 & 0.82 \\\\\n\\text{B} & 0.81 & 0.85 & 0.80 & 0.84 & 0.85\n\\end{array}"
+        },
+        {
+          "p": "A teammate plots each model's mean with a band of one standard deviation (dividing by the number of runs, as `np.std` does), sees that the bands overlap, and concludes that B is no better than A."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Over what width of accuracy do the two bands overlap? Give it to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "A's mean is $4.00 / 5 = 0.800$. Its distances from the mean are $-0.02$, $0.03$, $-0.04$, $0.01$ and $0.02$, whose squares average to $0.0034 / 5 = 0.00068$, so its standard deviation is about $0.026$ and its band runs from $0.774$ to $0.826$."
+            },
+            {
+              "p": "B's mean is $4.15 / 5 = 0.830$. Its distances are $-0.02$, $0.02$, $-0.03$, $0.01$ and $0.02$, whose squares average to $0.0022 / 5 = 0.00044$, so its standard deviation is about $0.021$ and its band runs from $0.809$ to $0.851$."
+            },
+            {
+              "p": "The bands overlap from $0.809$ to $0.826$, a width of about $0.017$."
+            },
+            {
+              "result": "0.017"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Now take B minus A for each seed. What is the standard deviation of these five differences?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The differences are $0.03$, $0.02$, $0.04$, $0.03$ and $0.03$. Their mean is $0.03$, the distances from it are $0$, $-0.01$, $0.01$, $0$ and $0$, and their squares average to $0.0002 / 5 = 0.00004$. The standard deviation is $\\sqrt{0.00004} \\approx 0.0063$."
+            },
+            {
+              "result": "0.0063"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Is the teammate right? What plot would show the comparison better?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "No. B beats A on every one of the 5 seeds, by 0.02 to 0.04. The bands overlap because some seeds are harder than others for both models: seed 3 gives the lowest accuracy to both and seed 2 a high one to both. That variation is shared, so it widens each model's band without making the comparison any less certain."
+            },
+            {
+              "p": "Plot what the question is about, the difference B minus A for each seed, as 5 points or as a mean with its band. The band of the differences runs from about $0.030 - 0.006 = 0.024$ to $0.036$, nowhere near 0. Two overlapping bands show that runs vary. They do not show that two models are the same, when the models were run on the same seeds."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "viz-data-needed-from-a-log-log-plot",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "How Much Data a Log-Log Plot Asks for",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "You train the same model on 1,000, 2,000, 4,000, ..., 64,000 examples and plot its test error against the training set size $N$ with `ax.loglog(N, err)`. The seven points fall on a straight line, from an error of 0.32 at $N = 1{,}000$ to 0.04 at $N = 64{,}000$."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the error at $N = 16{,}000$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "On `loglog` both axes space values by ratios, so along a straight line every step of the same ratio in $N$ multiplies the error by the same factor. From 1,000 to 64,000 is a factor of 64, six doublings, and the error falls by a factor of $0.32 / 0.04 = 8$. Since $64 = 8^2$, the error falls like $1 / \\sqrt{N}$:"
+            },
+            {
+              "tex": "\\text{err} = 0.32 \\sqrt{\\frac{1000}{N}} ."
+            },
+            {
+              "p": "At $N = 16{,}000$ that is $0.32 \\sqrt{1/16} = 0.32 / 4 = 0.08$. Each doubling of $N$ divides the error by $\\sqrt{2} \\approx 1.41$."
+            },
+            {
+              "p": "Reading the line as if the axes were linear goes wrong: 16,000 is less than a quarter of the way from 1,000 to 64,000, which would put the error near 0.25. On the log axis it is two thirds of the way, four doublings out of six."
+            },
+            {
+              "result": "0.08"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "If the line keeps going, how many examples does an error of 0.02 take?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The error has to halve from 0.04, and it falls like $1 / \\sqrt{N}$, so $N$ has to grow by a factor of $2^2 = 4$: from 64,000 to 256,000. From the formula, $0.32 \\sqrt{1000 / N} = 0.02$ gives $\\sqrt{1000 / N} = 1/16$, so $N = 1000 \\times 256 = 256{,}000$."
+            },
+            {
+              "p": "Halving the error takes four times the data, and that is worth knowing before you collect it. The straight line is also only a measured trend: past 64,000 nothing guarantees it continues."
+            },
+            {
+              "result": "256000"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "A teammate drew the same seven points on linear axes, saw the curve flatten out after about 30,000 examples, and concluded that more data no longer helps. What does each plot show about the last doubling, from 32,000 to 64,000?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The error at 32,000 is $0.32 / \\sqrt{32} \\approx 0.057$, so the last doubling takes it from 0.057 to 0.040, a drop of 0.017. On a linear y axis that spans 0.04 to 0.32, the drop is about 6% of the height, spread over the right half of the plot, so the curve looks flat."
+            },
+            {
+              "p": "On the log-log plot the same doubling is one more equal step down the straight line. Every doubling cuts the error by the same 29%, the first one and the last one alike. The linear plot shows that each new example buys less than the one before, which is true. The log-log plot shows that each doubling still buys the same relative gain, which is the question that decides whether to collect more data."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "viz-annotations-transposed",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "Recall Read Off an Annotated Confusion Matrix",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A classifier sorts 150 scanned documents into invoices, receipts and contracts. Its confusion matrix has the true classes as rows and the predicted classes as columns, in that order:"
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "cm = np.array([[42,  6,  2],",
+              "               [ 3, 37, 10],",
+              "               [ 1, 14, 35]])",
+              "names = [\"invoice\", \"receipt\", \"contract\"]",
+              "fig, ax = plt.subplots(figsize=(4, 4))",
+              "ax.imshow(cm, cmap=\"Blues\")",
+              "ax.set_xticks(range(3), names)",
+              "ax.set_yticks(range(3), names)",
+              "ax.set(xlabel=\"predicted\", ylabel=\"true\")",
+              "for i in range(3):",
+              "    for j in range(3):",
+              "        ax.text(i, j, cm[i, j], va=\"center\", ha=\"center\")"
+            ]
+          }
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A reader looks at the cell in the row labeled contract and the column labeled receipt. What number is written there?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "`imshow` draws row $r$, column $c$ of the matrix centered at $x = c$, $y = r$. The loop calls `ax.text(i, j, ...)` with $x = i$ and $y = j$, so the count `cm[i, j]` lands in row $j$, column $i$: every count is written in the mirror-image cell across the diagonal."
+            },
+            {
+              "p": "The contract row is $r = 2$ and the receipt column is $c = 1$, so the text there came from the call with $i = 1$, $j = 2$, which wrote `cm[1, 2]` $= 10$. The true count for contracts called receipts is `cm[2, 1]` $= 14$. The colors are right, because `imshow` drew `cm` itself, so this cell is shaded for 14 and labeled 10. The fix is `ax.text(j, i, ...)`."
+            },
+            {
+              "result": "10"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The reader computes the recall of the contract class from the numbers written in the figure, as the contract cell on the diagonal over the sum of the contract row. What do they get, to three decimal places?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The diagonal is written correctly, since `cm[i, i]` lands in row $i$, column $i$. The contract row of the figure shows `cm[0, 2]`, `cm[1, 2]` and `cm[2, 2]`, which is the contract column of the matrix: 2, 10 and 35. So the reader gets"
+            },
+            {
+              "tex": "\\frac{35}{2 + 10 + 35} = \\frac{35}{47} \\approx 0.745 ."
+            },
+            {
+              "p": "That is the precision for contract: of the 47 documents predicted contract, 35 were contracts. The true recall is $35 / (1 + 14 + 35) = 35 / 50 = 0.70$. Writing the counts transposed swaps rows with columns, so every recall read off the figure is really a precision, and the other way round. The off-diagonal cells mislead too: the figure shows 14 receipts called contracts and 10 contracts called receipts, when it was 10 receipts and 14 contracts."
+            },
+            {
+              "result": "0.745"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "viz-a-diagonal-that-drowns-the-rest",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "A Diagonal That Drowns Out the Mistakes",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A speech model sorts 3,850 clips into four commands. Its confusion matrix, with true commands as rows, is"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "cm = np.array([[940,  12,   3,   5],",
+                  "               [  7, 910,  24,  19],",
+                  "               [  2,   9, 955,   4],",
+                  "               [  6,  21,   8, 925]])"
+                ]
+              }
+            },
+            {
+              "p": "Drawn with `ax.imshow(cm, cmap=\"Blues\")`, the diagonal is dark and all twelve other cells look the same pale color, so the figure does not show which commands get mixed up. Which change makes the mistakes visible?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "`ax.imshow(cm, cmap=\"Blues\", vmin=0, vmax=24)`",
+                  "correct": true,
+                  "explain": "Counts above vmax get the darkest color, so the diagonal saturates, while the off-diagonal counts spread over the whole map: 24 is darkest, 12 sits halfway and 2 near the light end. Write the counts in the cells, so the saturated diagonal can still be read. The question was which commands get mixed up, and the colors now answer it: the cells in row 2, column 3 (24) and row 4, column 2 (21), counting from 1."
+                },
+                {
+                  "text": "`ax.imshow(cm / cm.sum(axis=1, keepdims=True), cmap=\"Blues\")`",
+                  "explain": "Each row sums to about 960, so dividing by it scales every cell by nearly the same amount. The largest mistake becomes 24 / 960 = 0.025 while the diagonal is about 0.95 to 0.98, the same proportions as before, and the mistakes stay pale."
+                },
+                {
+                  "text": "`ax.imshow(cm, cmap=\"Blues\", vmin=24)`",
+                  "explain": "vmin sets the value drawn in the lightest color, so every count up to 24, all twelve mistakes, now gets that same lightest color, and only the diagonal is shaded. To spread the mistakes over the map, the largest of them has to be the top of the scale, vmax."
+                },
+                {
+                  "text": "`ax.imshow(cm, cmap=\"jet\")`",
+                  "explain": "The limits are unchanged, so every mistake still sits within 2.5% of the low end, where jet is one dark blue. A rainbow map also adds bright bands where the data has none."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Counts above vmax get the darkest color, so the diagonal saturates, while the off-diagonal counts spread over the whole map: 24 is darkest, 12 sits halfway and 2 near the light end. Write the counts in the cells, so the saturated diagonal can still be read. The question was which commands get mixed up, and the colors now answer it: the cells in row 2, column 3 (24) and row 4, column 2 (21), counting from 1."
+            },
+            {
+              "result": "`ax.imshow(cm, cmap=\"Blues\", vmin=0, vmax=24)`"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "viz-box-plot-of-review-lengths",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "A Box Plot of Review Lengths",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A shop compares how long its customers' reviews are in each product category with `sns.boxplot(data=reviews, x=\"category\", y=\"words\")`. The garden category has 9 reviews, of these lengths in words:"
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "[64, 104, 52, 61, 38, 75, 58, 70, 67]"
+            ]
+          }
+        },
+        {
+          "p": "seaborn takes the box edges, the 25th and 75th percentiles, with NumPy's default rule. For 9 values that gives the 3rd and the 7th smallest. For 10 values the 25th percentile lies a quarter of the way from the 3rd smallest value to the 4th, and the 75th percentile three quarters of the way from the 7th to the 8th."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "How many of the 9 reviews are drawn as separate dots?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Sorted, the lengths are 38, 52, 58, 61, 64, 67, 70, 75 and 104. The box runs from the 3rd value, 58, to the 7th, 70, so it is 12 words long, and a whisker may reach $1.5 \\times 12 = 18$ words beyond it: down to 40 and up to 88. Two reviews lie outside that reach, 38 below and 104 above, so two dots are drawn. The whiskers stop at the last reviews inside it, 52 and 75."
+            },
+            {
+              "result": "2"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A tenth garden review comes in, 96 words long, and the plot is drawn again. Where does the lower whisker end now?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Sorted, the ten lengths are 38, 52, 58, 61, 64, 67, 70, 75, 96 and 104. The box edges move:"
+            },
+            {
+              "tex": "Q_1 = 58 + \\tfrac{1}{4}(61 - 58) = 58.75, \\qquad Q_3 = 70 + \\tfrac{3}{4}(75 - 70) = 73.75 ."
+            },
+            {
+              "p": "The box is now $73.75 - 58.75 = 15$ words long, and a whisker may reach $1.5 \\times 15 = 22.5$ words beyond it: down to $36.25$ and up to $96.25$. The review of 38 words is now inside the reach, so the lower whisker runs all the way down to it, 38. The new review of 96 words is inside too, and the upper whisker ends there. Only the review of 104 words is still a dot."
+            },
+            {
+              "result": "38"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "The review of 38 words did not change, yet it stopped being drawn as an outlier. Why, and what does that say about reading the dots on a box plot?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "A long review landed above the box and pulled the 75th percentile up from 70 to 73.75. The box grew from 12 to 15 words, and with it the reach of both whiskers, which is 1.5 box lengths. The lower fence moved down from 40 to 36.25, past the short review."
+            },
+            {
+              "p": "So a dot is not a property of the value alone. It says the value is far from the middle half of this particular group, measured in that group's own box lengths. One new value can add or remove dots anywhere in the group, and with only 9 or 10 values the box itself moves a lot. Before calling a dot an error in the data, look at the value and at how many values the box is built from."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "viz-tight-is-not-accurate",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "A Tight Cloud Beside the Diagonal",
+      "difficulty": "Medium",
+      "minutes": 7,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Two models predict how many minutes a food delivery takes. On five test orders they give:"
+            },
+            {
+              "tex": "\\begin{array}{cccccc}\n\\text{actual} & 18 & 25 & 31 & 40 & 52 \\\\ \\hline\n\\text{model 1} & 22 & 30 & 37 & 45 & 57 \\\\\n\\text{model 2} & 12 & 28 & 29 & 46 & 51\n\\end{array}"
+            },
+            {
+              "p": "You draw predicted against actual for each model, with the line $y = x$. Model 1's points lie in a neat row parallel to the line, and model 2's scatter on both sides of it. Both models are judged by their mean squared error: the average over the orders of $(\\text{predicted} - \\text{actual})^2$. Which statement is right?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Model 1 is better, since its points lie close to a straight line",
+                  "explain": "Points close to a line are not points close to y = x. Model 1's errors are 4, 5, 6, 5 and 5 minutes, all too long, with a mean squared error of 127 / 5 = 25.4, against model 2's 86 / 5 = 17.2."
+                },
+                {
+                  "text": "Model 2 is better as it stands, but model 1 minus 5 minutes beats both",
+                  "correct": true,
+                  "explain": "Model 1's errors are 4, 5, 6, 5 and 5, a mean squared error of 25.4, and model 2's are −6, 3, −2, 6 and −1, a mean squared error of 17.2. But model 1 is off by almost the same 5 minutes every time, which the plot shows as a cloud parallel to y = x. Subtracting 5 leaves errors −1, 0, 1, 0 and 0, a mean squared error of 0.4. Model 2's errors change sign from order to order, and no single correction removes them. In practice, estimate the shift on validation orders: a shift picked on these five test orders makes the test score look better than it will be on new orders."
+                },
+                {
+                  "text": "Model 1 predicts too short every time, so adding 5 minutes makes it the best",
+                  "explain": "This swaps above and below. Model 1 predicts 22 minutes for an 18-minute delivery and is too long every time, so its points sit above y = x. Adding 5 would double its errors to about 10 minutes, a mean squared error near 100."
+                },
+                {
+                  "text": "Model 2 is better, and model 1 can only be fixed by retraining it",
+                  "explain": "Model 2 does score better, 17.2 against 25.4. But model 1's errors are nearly constant, so one subtraction, which needs no retraining, brings its mean squared error down to 0.4."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Model 1's errors are 4, 5, 6, 5 and 5, a mean squared error of 25.4, and model 2's are −6, 3, −2, 6 and −1, a mean squared error of 17.2. But model 1 is off by almost the same 5 minutes every time, which the plot shows as a cloud parallel to y = x. Subtracting 5 leaves errors −1, 0, 1, 0 and 0, a mean squared error of 0.4. Model 2's errors change sign from order to order, and no single correction removes them. In practice, estimate the shift on validation orders: a shift picked on these five test orders makes the test score look better than it will be on new orders."
+            },
+            {
+              "result": "Model 2 is better as it stands, but model 1 minus 5 minutes beats both"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "viz-plt-calls-after-two-figures",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "Saving and Closing After Two Figures",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A training script makes a loss figure and a confusion-matrix figure, then saves and closes them, mixing figure methods with pyplot calls:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "fig_loss, ax_loss = plt.subplots()          # figure number 1",
+                  "ax_loss.plot(steps, loss)",
+                  "fig_cm, ax_cm = plt.subplots()              # figure number 2",
+                  "ax_cm.imshow(cm, cmap=\"Blues\")",
+                  "ax_loss.set_yscale(\"log\")",
+                  "plt.savefig(\"loss.png\")",
+                  "plt.close()",
+                  "fig_cm.savefig(\"confusion.png\")",
+                  "print(plt.get_fignums())                    # the numbers of the figures still open"
+                ]
+              }
+            },
+            {
+              "p": "What ends up in `loss.png`, and what happens in the last two lines?"
+            },
+            {
+              "p": "Two pyplot conventions settle it: `plt.close()` with no argument closes only the **current** figure, not all of them, and a closed figure is removed from pyplot's list of open figures but the figure object still exists, so its own `savefig` method still draws it to a file."
+            },
+            {
+              "choices": [
+                {
+                  "text": "`loss.png` shows the loss curve on a log axis, and it prints `[2]`",
+                  "explain": "This assumes that calling ax_loss.set_yscale made the loss figure current again. Calling a method of an Axes does not change which figure pyplot works on, so plt.savefig and plt.close both act on the confusion matrix."
+                },
+                {
+                  "text": "`loss.png` shows the confusion matrix, and it prints `[]`",
+                  "explain": "plt.close() with no argument closes one figure, the current one. Closing every figure takes plt.close('all'), so the loss figure stays open as number 1."
+                },
+                {
+                  "text": "`loss.png` shows the confusion matrix, and `fig_cm.savefig` raises an error",
+                  "explain": "Closing a figure removes it from pyplot's list of open figures, but the figure object still exists, and its own savefig method still draws it to a file. Nothing raises."
+                },
+                {
+                  "text": "`loss.png` shows the confusion matrix, and it prints `[1]`",
+                  "correct": true,
+                  "explain": "plt.subplots makes its new figure current, so after the second call the current figure is fig_cm, and ax_loss.set_yscale does not change that. plt.savefig then writes the confusion matrix to loss.png, and plt.close() closes fig_cm. fig_cm.savefig still works on the closed figure, so confusion.png holds the confusion matrix too. The loss figure is never saved and stays open, so it prints [1]. Calling fig_loss.savefig and plt.close(fig_loss) names the figure you mean."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "plt.subplots makes its new figure current, so after the second call the current figure is fig_cm, and ax_loss.set_yscale does not change that. plt.savefig then writes the confusion matrix to loss.png, and plt.close() closes fig_cm. fig_cm.savefig still works on the closed figure, so confusion.png holds the confusion matrix too. The loss figure is never saved and stays open, so it prints [1]. Calling fig_loss.savefig and plt.close(fig_loss) names the figure you mean."
+            },
+            {
+              "result": "`loss.png` shows the confusion matrix, and it prints `[1]`"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "viz-a-band-on-a-log-axis",
+      "moduleId": "plotting-matplotlib-seaborn",
+      "title": "A Spread Band on a Log Axis",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "You train a model with 4 seeds on a hard problem and plot the mean validation loss with a band from one standard deviation below the mean to one above, on a log y axis because the loss falls by several factors of ten. At the last epoch the four runs end at"
+      ],
+      "setup": [
+        {
+          "tex": "0.01, \\quad 0.1, \\quad 0.1, \\quad 1.0 ."
+        },
+        {
+          "p": "Use the standard deviation that divides by the number of runs, as `np.std` does."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Where does the lower edge of the band, mean minus one standard deviation, sit at the last epoch? Give it to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The mean is $(0.01 + 0.1 + 0.1 + 1.0) / 4 = 1.21 / 4 = 0.3025$. The distances from it are $-0.2925$, $-0.2025$, $-0.2025$ and $0.6975$, whose squares are about $0.0856$, $0.0410$, $0.0410$ and $0.4865$. Their mean is $0.6541 / 4 \\approx 0.1635$, so the standard deviation is about $0.404$, and the lower edge is"
+            },
+            {
+              "tex": "0.3025 - 0.404 \\approx -0.102 ."
+            },
+            {
+              "p": "A log axis cannot show a negative value, so the band has no lower edge there: it runs off the bottom of the plot, as if some runs had ended far below 0.01, though none did. Even the center is misleading. Three of the four runs end at or below 0.1, but the mean, 0.30, is pulled up by the one run at 1.0."
+            },
+            {
+              "result": "$-0.102$"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A fix is to summarize in log space: take $\\log_{10}$ of each run's loss, compute the mean $m$ and standard deviation $s$ of those four numbers, and draw the center at $10^{m}$ and the band from $10^{m - s}$ to $10^{m + s}$. Where is the center?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The logs are $-2$, $-1$, $-1$ and $0$, so $m = -4 / 4 = -1$ and the center is $10^{-1} = 0.1$. This is the geometric mean of the four losses, $(0.01 \\times 0.1 \\times 0.1 \\times 1.0)^{1/4} = (10^{-4})^{1/4} = 0.1$. It matches the two middle runs, where the arithmetic mean, 0.3025, matched none of them."
+            },
+            {
+              "result": "0.1"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Where is the upper edge of the log-space band? Give it to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The distances of the logs from $m = -1$ are $-1$, $0$, $0$ and $1$, so $s = \\sqrt{(1 + 0 + 0 + 1) / 4} = \\sqrt{0.5} \\approx 0.707$. The upper edge is"
+            },
+            {
+              "tex": "10^{-1 + 0.707} = 10^{-0.293} \\approx 0.509 ,"
+            },
+            {
+              "p": "and the lower edge is $10^{-1.707} \\approx 0.0196$. Both edges are the same factor, $10^{0.707} \\approx 5.09$, away from the center, so on the log axis the band is symmetric around 0.1 and every point of it can be drawn. Say in the caption that the band is one standard deviation of $\\log_{10}$ of the loss, since a reader would otherwise read it as the usual band."
+            },
+            {
+              "result": "0.509"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

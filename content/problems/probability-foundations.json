@@ -1,0 +1,1320 @@
+{
+  "module": "probability-foundations",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "probability-statistics-implementation-task",
+      "moduleId": "probability-foundations",
+      "title": "Gaussian Naive Bayes from Scratch",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=probability-statistics",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Bayes' rule with Gaussian likelihoods and log-probabilities. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Test accuracy must reach the target shown in the evaluation cell."
+    },
+    {
+      "id": "theory-probability-bayes",
+      "moduleId": "probability-foundations",
+      "title": "Bayes' Rule, Conditional Independence, and Naive Bayes",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=theory-probability-bayes",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Apply Bayes' rule to a screening test, then build a Naive Bayes classifier and count what its independence assumption buys you. 8 parts, each with its own grading instruction. Solutions revealed part by part.",
+      "answer": "Worked solutions are given part by part on the problem page: full derivations, not just final values. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ps1-two-tests",
+      "moduleId": "probability-foundations",
+      "title": "Two Tests, One Rare Disease",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/editor/?nb=ps1-two-tests",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Work the base-rate fallacy in odds form: posterior after one positive screening test, after a second conditionally independent one, and the false-to-true positive ratio.",
+      "answer": "Auto-graded inside the notebook. All three quantities must match to a relative tolerance of 1e-6."
+    },
+    {
+      "id": "pb-tickets-exactly-one-topic",
+      "moduleId": "probability-foundations",
+      "title": "Tickets About Exactly One Topic",
+      "difficulty": "Easy",
+      "url": "/theory/?id=pb-tickets-exactly-one-topic",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A help desk tags its 800 support tickets: 260 mention billing, 180 a refund and 430 neither, and a ticket can mention both. What is the probability a random ticket mentions exactly one of the two topics? 1 part.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pb-mislabelled-in-a-batch",
+      "moduleId": "probability-foundations",
+      "title": "Two Mislabelled Images in a Batch",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pb-mislabelled-in-a-batch",
+      "source": "Custom",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A folder holds 12 labelled images, and 4 of them carry the wrong label. A reviewer draws 5 of the 12 at random, without putting any back, so each set of 5 images has the same chance. How likely is it that the reviewer's 5 include at least 2 mislabelled images?",
+      "answer": "0.576. There are C(12, 5) = 792 equally likely batches. C(8, 5) = 56 of them have no mislabelled image, and 4 × C(8, 4) = 4 × 70 = 280 have exactly one. The complement of 'at least 2' is 'none or one', so the probability is 1 − (56 + 280)/792 = 456/792 = 19/33 ≈ 0.576."
+    },
+    {
+      "id": "pb-at-least-one-failing-test",
+      "moduleId": "probability-foundations",
+      "title": "Given That at Least One Fails",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pb-at-least-one-failing-test",
+      "source": "Custom",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A test suite has 10 test cases, and 3 of them fail on the current build. A script picks 2 different test cases at random to rerun, every pair equally likely. It does not say which test cases it picked, but it raises a warning, and it does this whenever at least one of the pair fails. The warning is raised. What is the probability that both test cases fail?",
+      "answer": "1/8. There are C(10, 2) = 45 equally likely pairs. Pairs with no failure number C(7, 2) = 21, so 45 − 21 = 24 pairs contain at least one failure. Both fail in C(3, 2) = 3 pairs. Given the warning, the sample space shrinks to the 24 pairs, so the answer is 3/24 = 1/8."
+    },
+    {
+      "id": "pb-accuracy-under-a-new-mix",
+      "moduleId": "probability-foundations",
+      "title": "Accuracy Under a New Mix of Photos",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pb-accuracy-under-a-new-mix",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A photo classifier is right on 95% of daytime photos and 80% of night photos, and its overall accuracy on a test set that is 70% daytime, 20% night and 10% fog is 88.5%. Find its accuracy on fog photos, then the accuracy to expect in a valley with a different mix. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pb-host-who-prefers-a-box",
+      "moduleId": "probability-foundations",
+      "title": "A Host Who Prefers Box 3",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pb-host-who-prefers-a-box",
+      "source": "Custom",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A prize is hidden in one of three boxes, each equally likely. You point at box 1. The host knows where the prize is and must then open a box that you did not point at and that is empty. When both of the other boxes are empty, he opens box 3 with probability 3/4 and box 2 with probability 1/4. He opens box 3, and it is empty. What is the probability that the prize is in box 2?",
+      "answer": "4/7. Take the three places the prize could be as hypotheses, each with prior 1/3. The likelihood of 'he opens box 3' is 3/4 if the prize is in box 1 (both others are empty, and he picks box 3 with probability 3/4), 1 if it is in box 2 (box 3 is his only option), and 0 if it is in box 3. Bayes' theorem gives box 2 the posterior (1/3)(1) / ((1/3)(3/4) + (1/3)(1) + 0) = 1 / (7/4) = 4/7. Box 1 gets the other 3/7."
+    },
+    {
+      "id": "pb-spam-share-at-a-new-base-rate",
+      "moduleId": "probability-foundations",
+      "title": "The Same Filter in a Cleaner Inbox",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pb-spam-share-at-a-new-base-rate",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A spam filter is tested on an inbox where one email in five is spam, and 60% of the email it flags there is spam. Deployed on an inbox where only 5% is spam, and treating each email exactly as before, what fraction of its flags are spam? 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pb-alert-with-two-causes",
+      "moduleId": "probability-foundations",
+      "title": "An Alert with Two Causes",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pb-alert-with-two-causes",
+      "source": "Custom",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A server alert always fires when the disk is full. When the disk is not full but the network is down, it fires half the time. Otherwise it stays silent. On any day the disk is full with probability 0.10 and the network is down with probability 0.20, and the two failures are independent. One morning the alert fires. You check the network and find it is down. What is the probability that the disk is full?",
+      "answer": "0.182. Write D for a full disk and N for the network being down. Given N, the alert fires with probability 1 if D and 1/2 if not. So $P(D \\mid \\text{alert and } N)$ = (0.10 × 0.20 × 1) / (0.10 × 0.20 × 1 + 0.90 × 0.20 × 1/2) = 0.02 / (0.02 + 0.09) = 2/11 ≈ 0.182. The alert alone had raised the disk from 0.10 to 0.10 / 0.19 ≈ 0.526. Finding the network down explains much of the alert away, but not all of it, since a down network sets off the alert only half the time."
+    },
+    {
+      "id": "pb-prior-worth-forty-views",
+      "moduleId": "probability-foundations",
+      "title": "A Prior Worth Forty Views",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pb-prior-worth-forty-views",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A team rates a new ad with a Beta prior worth 40 views and mean click rate 0.05, then sees 7 clicks in the first 60 views. What is the posterior average click rate, and how many further views without a click bring it back down to 0.05? 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pb-grid-posterior",
+      "moduleId": "probability-foundations",
+      "title": "A Posterior on a Grid",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=pb-grid-posterior",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "A model made k errors on n test examples and its error rate p is unknown. The team is sure, from earlier models, that the rate is below 0.2 and is otherwise undecided, which no Beta prior says. Put the prior on a grid of 1,000 cells instead, compute posterior weights in logarithms so they survive n in the thousands, and read off the posterior mean, the probability above a threshold and a 95% upper point.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "pb-decide-to-block",
+      "moduleId": "probability-foundations",
+      "title": "When to Block a Payment",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pb-decide-to-block",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A payment service sees 400 legitimate payments for every fraudulent one and blocks a payment when blocking is cheaper in expectation. Two signals come with known rates in fraud and in legitimate payments. Find the likelihood ratio the service blocks at, the fraud probability for a payment showing both signals, and what a shared cause of the two signals does to the calculation. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pb-detectors-that-share-mistakes",
+      "moduleId": "probability-foundations",
+      "title": "Two Detectors That Share Their Mistakes",
+      "difficulty": "Hard",
+      "url": "/theory/?id=pb-detectors-that-share-mistakes",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Two fraud detectors each flag 80% of fraudulent claims and 10% of genuine ones, but trained on similar data they tend to make the same mistakes. Compare the fraud probability the conditional independence assumption gives for a claim both flag with the probability the joint table gives. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pb-rare-class-in-batches",
+      "moduleId": "probability-foundations",
+      "title": "One Rare Example per Batch",
+      "difficulty": "Hard",
+      "url": "/theory/?id=pb-rare-class-in-batches",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A training set of 60 examples has 6 in a rare class. Each epoch the 60 are shuffled and cut into 6 batches of 10. What is the probability the first batch contains no rare example, that every batch contains exactly one, and that at least one batch contains none? 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pb-naive-bayes-spam-numpy",
+      "moduleId": "probability-foundations",
+      "title": "A Naive Bayes Spam Filter in NumPy",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=pb-naive-bayes-spam-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Each email is a row of 0s and 1s over a small vocabulary. Build a naive Bayes filter with NumPy alone: fit the class priors and the Laplace-smoothed word probabilities, then return the posterior of each class in logarithms, with a stable log-sum-exp so the numbers stay finite on a 3,000-word vocabulary.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "foundations-14-bayes-decisions",
+      "moduleId": "probability-foundations",
+      "title": "AI Foundations 14: Bayes' Rule, Base Rates and Decisions Under Uncertainty",
+      "source": "AI Foundations",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=foundations-14-bayes-decisions",
+      "tags": [
+        "Coding",
+        "Course",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Course notebook, about ~5 h end to end. Read it top to bottom, then do the exercises marked with a pencil icon - each one checks itself - and finish with the exam-style quiz.",
+      "answer": "Self-checking: every exercise has a checker cell that prints a verdict, and the quiz answers are explained at the end of the notebook."
+    }
+  ],
+  "theory": [
+    {
+      "id": "theory-probability-bayes",
+      "moduleId": "probability-foundations",
+      "title": "Bayes' Rule, Conditional Independence, and Naive Bayes",
+      "difficulty": "Medium",
+      "minutes": 45,
+      "overview": [
+        "Apply Bayes' rule to a screening test, then build a Naive Bayes classifier and count what its independence assumption buys you."
+      ],
+      "setup": [
+        {
+          "p": "A screening test for a disease $D$ has the following properties:"
+        },
+        {
+          "list": [
+            "the prevalence in the population is $P(D) = 0.01$.",
+            "the sensitivity (true positive rate) is $P(+ \\mid D) = 0.99$.",
+            "the false positive rate is $P(+ \\mid \\lnot D) = 0.05$."
+          ]
+        }
+      ],
+      "parts": [
+        {
+          "id": "7.1",
+          "kind": "mcq",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A randomly chosen person tests positive. What is $P(D \\mid +)$?"
+            },
+            {
+              "choices": [
+                "A. $\\tfrac{99}{100}$.",
+                "B. $\\tfrac{1}{2}$.",
+                "C. $\\tfrac{1}{3}$.",
+                "D. $\\tfrac{1}{6}$.",
+                "E. $\\tfrac{1}{20}$."
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "First get the marginal probability of a positive test by the law of total probability:"
+            },
+            {
+              "tex": "P(+) = P(+ \\mid D)P(D) + P(+ \\mid \\lnot D)P(\\lnot D) = 0.99(0.01) + 0.05(0.99) = 0.0099 + 0.0495 = 0.0594."
+            },
+            {
+              "p": "Then apply Bayes' rule:"
+            },
+            {
+              "tex": "P(D \\mid +) = \\frac{P(+ \\mid D) P(D)}{P(+)} = \\frac{0.0099}{0.0594} = \\frac{1}{6} \\approx 16.67\\%."
+            },
+            {
+              "result": "D. $\\tfrac{1}{6}$."
+            }
+          ]
+        },
+        {
+          "id": "7.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Derive Bayes' rule,"
+            },
+            {
+              "tex": "P(A \\mid B) = \\frac{P(B \\mid A)P(A)}{P(B)},"
+            },
+            {
+              "p": "starting from the definition of conditional probability. State the assumption needed."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The definition of conditional probability, valid whenever the conditioning event has positive probability, is"
+            },
+            {
+              "tex": "P(A \\mid B) = \\frac{P(A \\cap B)}{P(B)}, \\qquad P(B \\mid A) = \\frac{P(A \\cap B)}{P(A)}."
+            },
+            {
+              "p": "Solve the second for the joint probability: $P(A \\cap B) = P(B \\mid A) P(A)$. Substituting into the first gives"
+            },
+            {
+              "tex": "P(A \\mid B) = \\frac{P(B \\mid A)P(A)}{P(B)}."
+            },
+            {
+              "p": "The only assumptions are $P(B) > 0$ (so the left side is defined) and $P(A) > 0$ (so $P(B \\mid A)$ is defined). Everything else is bookkeeping. Bayes' rule is just the statement that the joint probability $P(A \\cap B)$ can be factored in two orders."
+            },
+            {
+              "p": "In classification language, $P(A)$ is the prior, $P(B \\mid A)$ the likelihood, $P(B)$ the evidence, and $P(A \\mid B)$ the posterior. The evidence is the same for every class, which is why classifiers can rank classes by prior $\\times$ likelihood alone and skip computing it."
+            }
+          ]
+        },
+        {
+          "id": "7.3",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "The test in Part 1 is correct 99% of the time on sick people and 95% of the time on healthy people, yet a positive result means the person is probably healthy."
+            },
+            {
+              "p": "Explain why, using a concrete population of $10{,}000$ people."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Take $10{,}000$ people. Of these, $1\\%$, or $100$ people, have the disease and $9{,}900$ do not."
+            },
+            {
+              "list": [
+                "Among the $100$ sick, the test flags $0.99 \\times 100 = 99$ (true positives).",
+                "Among the $9{,}900$ healthy, the test flags $0.05 \\times 9{,}900 = 495$ (false positives)."
+              ]
+            },
+            {
+              "p": "So $99 + 495 = 594$ people test positive, and only $99$ of them are sick:"
+            },
+            {
+              "tex": "P(D \\mid +) = \\frac{99}{594} = \\frac{1}{6}."
+            },
+            {
+              "p": "The resolution is that the healthy group is $99$ times larger, so even a small error rate on it ($5\\%$) produces five times more positives than the sick group produces in total. A low false positive rate applied to a huge population still swamps a high true positive rate applied to a tiny one."
+            },
+            {
+              "p": "This is the base rate fallacy, and it recurs whenever a model is evaluated on a rare class: accuracy and sensitivity say nothing about precision unless you also know the prevalence. It is the same phenomenon that makes accuracy a useless metric on imbalanced data."
+            }
+          ]
+        },
+        {
+          "id": "7.4",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "The test is now applied to a high-risk clinic where the prevalence is $P(D) = 0.10$ instead of $0.01$. Recompute $P(D \\mid +)$, and comment on what changed."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Recompute the evidence with the new prior:"
+            },
+            {
+              "tex": "P(+) = 0.99(0.10) + 0.05(0.90) = 0.099 + 0.045 = 0.144,"
+            },
+            {
+              "p": "so"
+            },
+            {
+              "tex": "P(D \\mid +) = \\frac{0.099}{0.144} = \\frac{11}{16} = 68.75\\%."
+            },
+            {
+              "p": "The test did not change at all: its sensitivity and false positive rate are fixed properties of the assay. Only the prior moved, from $1\\%$ to $10\\%$, and the posterior jumped from $16.7\\%$ to $68.75\\%$."
+            },
+            {
+              "p": "This is why screening decisions are population-specific, and the machine-learning analogue is direct: a model trained where the positive class is $10\\%$ of the data will produce badly calibrated probabilities when deployed where it is $1\\%$. Its likelihoods are still valid, but its implied prior is not. Recalibrating by adjusting the decision threshold or the prior is usually cheaper than retraining."
+            }
+          ]
+        },
+        {
+          "id": "7.5",
+          "kind": "derivation",
+          "requirement": "Reasoning is required. Coding is not needed.",
+          "prompt": [
+            {
+              "p": "A Naive Bayes classifier models $P(y \\mid x)$ for a feature vector $x = (x_0, \\dots, x_{d-1})$."
+            },
+            {
+              "p": "State the conditional independence assumption it makes, and use it plus Bayes' rule to write the decision rule for predicting the class."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The assumption is that the features are conditionally independent **given the class**:"
+            },
+            {
+              "tex": "P(x_0, \\dots, x_{d-1} \\mid y) = \\prod_{j=0}^{d-1} P(x_j \\mid y)."
+            },
+            {
+              "p": "Combining with Bayes' rule,"
+            },
+            {
+              "tex": "P(y \\mid x) = \\frac{P(y)\\, P(x \\mid y)}{P(x)} = \\frac{P(y) \\prod_{j} P(x_j \\mid y)}{P(x)}."
+            },
+            {
+              "p": "The evidence $P(x)$ does not depend on $y$, so it can be dropped when comparing classes, giving the decision rule"
+            },
+            {
+              "tex": "\\hat{y} = \\arg\\max_{y} \\ P(y) \\prod_{j=0}^{d-1} P(x_j \\mid y) = \\arg\\max_{y} \\left[ \\log P(y) + \\sum_{j=0}^{d-1} \\log P(x_j \\mid y) \\right]."
+            },
+            {
+              "p": "Note carefully what is *not* claimed: the features need not be independent marginally. In spam detection, \"free\" and \"offer\" clearly co-occur, but the model only assumes they are independent once you fix whether the message is spam. The assumption is usually false even so, and Naive Bayes still classifies well, because the $\\arg\\max$ only needs the ranking of classes to be right, not the probabilities."
+            }
+          ]
+        },
+        {
+          "id": "7.6",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Suppose there are $C$ classes and $d$ binary features."
+            },
+            {
+              "p": "Count the number of free parameters needed to specify the class-conditional distributions (a) exactly, with no independence assumption, and (b) under the Naive Bayes assumption. Evaluate both for $C = 2$ and $d = 1000$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "(a) Exact. For each class you must specify a distribution over all $2^d$ binary feature patterns. That takes $2^d - 1$ free numbers per class (the last is fixed by normalization), so"
+            },
+            {
+              "tex": "C\\big(2^d - 1\\big) \\text{ parameters}."
+            },
+            {
+              "p": "(b) Naive Bayes. For each class and each feature you need only $P(x_j = 1 \\mid y)$, a single number, so"
+            },
+            {
+              "tex": "Cd \\text{ parameters}."
+            },
+            {
+              "p": "For $C = 2$, $d = 1000$: the exact model needs $2(2^{1000} - 1) \\approx 2 \\times 10^{301}$ parameters, more than the number of atoms in the observable universe, and unlearnable from any finite dataset. Naive Bayes needs $2 \\times 1000 = 2000$."
+            },
+            {
+              "p": "This is the real trade being made. The independence assumption is a bias that is almost certainly wrong, but it reduces the parameter count from exponential to linear in $d$, so the variance collapses. On small datasets that trade is usually worth it, which is why Naive Bayes remains a strong text-classification baseline."
+            }
+          ]
+        },
+        {
+          "id": "7.7",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Two practical failures of a direct implementation of the product $\\prod_j P(x_j \\mid y)$:"
+            },
+            {
+              "olist": [
+                "the product underflows to $0$ for large $d$.",
+                "a single feature value never seen with class $y$ in training makes the whole product $0$."
+              ]
+            },
+            {
+              "p": "Explain the cause of each and give the standard fix."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Underflow. Each factor is a probability in $[0, 1]$, so a product of $d = 1000$ of them is astronomically small: with typical factors around $10^{-3}$ the product is near $10^{-3000}$, far below the smallest positive double ($\\approx 10^{-308}$). It rounds to exactly $0$ for every class, and the $\\arg\\max$ becomes an arbitrary tie."
+            },
+            {
+              "p": "The fix is to work in log space, which turns the product into a sum:"
+            },
+            {
+              "tex": "\\log P(y) + \\sum_{j=0}^{d-1} \\log P(x_j \\mid y)."
+            },
+            {
+              "p": "Logs of small probabilities are moderate negative numbers, so nothing underflows, and since $\\log$ is strictly increasing the $\\arg\\max$ is unchanged."
+            },
+            {
+              "p": "Zero counts. If the training data never pairs feature value $x_j = v$ with class $y$, the maximum-likelihood estimate is $P(x_j = v \\mid y) = 0$, and one zero factor annihilates the entire product regardless of how strongly the other $999$ features vote for $y$. In log space this is $-\\infty$, which is just as fatal."
+            },
+            {
+              "p": "The fix is Laplace (add-one) smoothing: for a feature with $V$ possible values,"
+            },
+            {
+              "tex": "\\hat{P}(x_j = v \\mid y) = \\frac{\\text{count}(x_j = v, y) + \\alpha}{\\text{count}(y) + \\alpha V}, \\qquad \\alpha > 0,"
+            },
+            {
+              "p": "which keeps every estimate strictly positive while still summing to $1$ over $v$. It is exactly the posterior mean under a Dirichlet prior, so \"smoothing\" is Bayesian reasoning applied one level up: never let a finite sample assert that something is impossible."
+            }
+          ]
+        },
+        {
+          "id": "7.8",
+          "kind": "mcq",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Let $A$ and $B$ be events and $Y$ a class label. Which statement is correct?"
+            },
+            {
+              "choices": [
+                "A. Conditional independence given $Y$ implies marginal independence.",
+                "B. Marginal independence implies conditional independence given $Y$.",
+                "C. Neither implication holds in general.",
+                "D. The two conditions are equivalent whenever $P(Y) > 0$.",
+                "E. Conditional independence given $Y$ implies $A$ and $B$ are disjoint."
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Neither implication holds. Counterexamples in both directions:"
+            },
+            {
+              "p": "Conditionally independent but not marginally: let $Y$ be whether a message is spam, $A$ the word \"free\" appears, $B$ the word \"offer\" appears. Within spam these may be independent, and within non-spam too, yet marginally they are positively correlated because both are more common in spam. Conditioning removed the common cause."
+            },
+            {
+              "p": "Marginally independent but not conditionally: let $A$ and $B$ be independent fair coin flips and let $Y = A \\oplus B$ (their XOR). Marginally, knowing $A$ says nothing about $B$. But given $Y = 1$, knowing $A$ determines $B$ exactly. Conditioning on a common *effect* created a dependence."
+            },
+            {
+              "p": "This second pattern is called explaining away, and it is why Naive Bayes' assumption cannot be checked by looking at marginal feature correlations."
+            },
+            {
+              "result": "C. Neither implication holds in general."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pb-tickets-exactly-one-topic",
+      "moduleId": "probability-foundations",
+      "title": "Tickets About Exactly One Topic",
+      "difficulty": "Easy",
+      "minutes": 6,
+      "overview": [
+        "A help desk tags its last 800 support tickets by topic. 260 tickets mention billing, 180 mention a refund, and 430 mention neither. A ticket can mention both."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "You pick one of the 800 tickets at random. What is the probability that it mentions exactly one of the two topics?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Start from the tickets that mention at least one topic. By the complement rule they are the $800 - 430 = 370$ tickets that are not in \"neither\"."
+            },
+            {
+              "p": "Adding the two topic counts gives $260 + 180 = 440$, which is 70 more than 370. Inclusion-exclusion says the difference is the overlap counted twice:"
+            },
+            {
+              "tex": "370 = 260 + 180 - \\text{both} \\quad\\Longrightarrow\\quad \\text{both} = 70 ."
+            },
+            {
+              "p": "So $260 - 70 = 190$ tickets mention billing only and $180 - 70 = 110$ mention a refund only. Exactly one topic is $190 + 110 = 300$ tickets:"
+            },
+            {
+              "tex": "P(\\text{exactly one}) = \\frac{300}{800} = 0.375 ."
+            },
+            {
+              "p": "The same count in one line is \"at least one\" minus \"both\", $370 - 70 = 300$. The answer $370/800 = 0.4625$ is the probability of billing or refund, which keeps the 70 tickets that mention both. The answer $440/800 = 0.55$ counts those 70 tickets twice."
+            },
+            {
+              "result": "0.375"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pb-mislabelled-in-a-batch",
+      "moduleId": "probability-foundations",
+      "title": "Two Mislabelled Images in a Batch",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A folder holds 12 labelled images, and 4 of them carry the wrong label. A reviewer draws 5 of the 12 at random, without putting any back, so each set of 5 images has the same chance. How likely is it that the reviewer's 5 include at least 2 mislabelled images?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$0.929$",
+                  "explain": "This is 1 minus the chance of no mislabelled image, C(8, 5) / C(12, 5) = 56/792. It answers 'at least 1'. The 280 batches with exactly one mislabelled image, 4 × C(8, 4), have to be removed as well."
+                },
+                {
+                  "text": "$0.909$",
+                  "explain": "This chooses 2 of the 4 mislabelled images and then any 3 of the other 10, C(4, 2) × C(10, 3) = 720 batches out of 792. A batch with 3 mislabelled images is counted 3 times this way, once for each pair inside it you could have chosen first, and a batch with 4 is counted 6 times. Count by the exact number of mislabelled images instead."
+                },
+                {
+                  "text": "$0.576$",
+                  "correct": true,
+                  "explain": "There are C(12, 5) = 792 equally likely batches. C(8, 5) = 56 of them have no mislabelled image, and 4 × C(8, 4) = 4 × 70 = 280 have exactly one. The complement of 'at least 2' is 'none or one', so the probability is 1 − (56 + 280)/792 = 456/792 = 19/33 ≈ 0.576."
+                },
+                {
+                  "text": "$0.539$",
+                  "explain": "This treats the 5 draws as independent, each mislabelled with probability 1/3, as if every image went back before the next draw: 1 − (2/3)^5 − 5(1/3)(2/3)^4 = 131/243. Without putting images back, each draw changes what is left, so count sets of 5 with combinations."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "There are C(12, 5) = 792 equally likely batches. C(8, 5) = 56 of them have no mislabelled image, and 4 × C(8, 4) = 4 × 70 = 280 have exactly one. The complement of 'at least 2' is 'none or one', so the probability is 1 − (56 + 280)/792 = 456/792 = 19/33 ≈ 0.576."
+            },
+            {
+              "result": "$0.576$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pb-at-least-one-failing-test",
+      "moduleId": "probability-foundations",
+      "title": "Given That at Least One Fails",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A test suite has 10 test cases, and 3 of them fail on the current build. A script picks 2 different test cases at random to rerun, every pair equally likely. It does not say which test cases it picked, but it raises a warning, and it does this whenever at least one of the pair fails. The warning is raised. What is the probability that both test cases fail?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$2/9$",
+                  "explain": "This conditions on one named test case failing and then asks how likely the other one is to fail, 2 of the remaining 9. The warning names no test case. It rules out only the 21 pairs with no failure, so the sample space is all 24 pairs with at least one failure, and 21 of them have exactly one."
+                },
+                {
+                  "text": "$1/8$",
+                  "correct": true,
+                  "explain": "There are C(10, 2) = 45 equally likely pairs. Pairs with no failure number C(7, 2) = 21, so 45 − 21 = 24 pairs contain at least one failure. Both fail in C(3, 2) = 3 pairs. Given the warning, the sample space shrinks to the 24 pairs, so the answer is 3/24 = 1/8."
+                },
+                {
+                  "text": "$1/15$",
+                  "explain": "This is P(both fail) = 3/45 over all 45 pairs, without the warning. Conditioning on 'at least one fails' divides by the 24 pairs that match it, not by all 45."
+                },
+                {
+                  "text": "$3/10$",
+                  "explain": "This assumes the other test case fails with its unconditional chance, 3/10, as if the two picks did not interact. They do: the pick is without repeats, and the warning is about the pair as a whole. Shrink the sample space to the 24 pairs with a failure and count the pairs where both fail."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "There are C(10, 2) = 45 equally likely pairs. Pairs with no failure number C(7, 2) = 21, so 45 − 21 = 24 pairs contain at least one failure. Both fail in C(3, 2) = 3 pairs. Given the warning, the sample space shrinks to the 24 pairs, so the answer is 3/24 = 1/8."
+            },
+            {
+              "result": "$1/8$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pb-accuracy-under-a-new-mix",
+      "moduleId": "probability-foundations",
+      "title": "Accuracy Under a New Mix of Photos",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "A model labels the animals in photos from trail cameras. Its test set is 70% daytime photos, 20% night photos and 10% photos taken in fog. On that test set the model is right on 95% of daytime photos, on 80% of night photos, and on 88.5% of all photos. The report does not give the fog accuracy."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What is the model's accuracy on fog photos? Give your answer as a decimal between 0 and 1."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Pick a test photo at random. The three conditions do not overlap and cover every photo, so by the law of total probability"
+            },
+            {
+              "tex": "P(\\text{right}) = 0.95 \\times 0.70 + 0.80 \\times 0.20 + x \\times 0.10 ,"
+            },
+            {
+              "p": "where $x$ is the accuracy on fog photos. With $P(\\text{right}) = 0.885$,"
+            },
+            {
+              "tex": "0.885 = 0.665 + 0.160 + 0.10\\,x \\quad\\Longrightarrow\\quad x = \\frac{0.060}{0.10} = 0.60 ."
+            },
+            {
+              "result": "0.6"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "The cameras are moving to a valley where the photos will be 50% daytime, 35% night and 15% fog. Each condition's accuracy stays what it was in the test. What accuracy should the team expect there? Give your answer as a decimal between 0 and 1."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The accuracy within each condition is $P(\\text{right} \\mid \\text{condition})$, and that does not change. Only the weights $P(\\text{condition})$ change, so apply total probability again with the new weights:"
+            },
+            {
+              "tex": "0.95 \\times 0.50 + 0.80 \\times 0.35 + 0.60 \\times 0.15 = 0.475 + 0.280 + 0.090 = 0.845 ."
+            },
+            {
+              "p": "The overall accuracy drops from 0.885 to 0.845 without the model getting any worse at anything. The valley simply has more of the photos it finds hard. An overall accuracy describes one mix of cases. A plain average of the three accuracies, $0.783$, matches neither mix."
+            },
+            {
+              "result": "0.845"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pb-host-who-prefers-a-box",
+      "moduleId": "probability-foundations",
+      "title": "A Host Who Prefers Box 3",
+      "difficulty": "Medium",
+      "minutes": 8,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A prize is hidden in one of three boxes, each equally likely. You point at box 1. The host knows where the prize is and must then open a box that you did not point at and that is empty. When both of the other boxes are empty, he opens box 3 with probability 3/4 and box 2 with probability 1/4. He opens box 3, and it is empty. What is the probability that the prize is in box 2?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$1/3$",
+                  "explain": "This keeps the prior for box 2, as if an empty box 3 told you nothing about box 2. It removes box 3 from the running, and the 1/3 it held has to go to boxes 1 and 2 in proportion to how likely the host was to open box 3 in each case."
+                },
+                {
+                  "text": "$1/2$",
+                  "explain": "This splits the chance equally between the two boxes left. That is right only for a host who always opens box 3 when he can, because then he opens it whether the prize is in box 1 or box 2. This host opens box 3 only 3/4 of the time when the prize is in box 1, so box 1 keeps less of its share than box 2."
+                },
+                {
+                  "text": "$2/3$",
+                  "explain": "This is the answer for a host who picks at random between two empty boxes, opening box 3 with probability 1/2 when the prize is in box 1. This host opens it with probability 3/4, so box 1 keeps more of its share than under a random host."
+                },
+                {
+                  "text": "$3/7$",
+                  "explain": "This is the posterior of box 1, (1/3)(3/4) divided by the same total. The question asks about box 2, which gets the rest once box 3 is ruled out."
+                },
+                {
+                  "text": "$4/7$",
+                  "correct": true,
+                  "explain": "Take the three places the prize could be as hypotheses, each with prior 1/3. The likelihood of 'he opens box 3' is 3/4 if the prize is in box 1 (both others are empty, and he picks box 3 with probability 3/4), 1 if it is in box 2 (box 3 is his only option), and 0 if it is in box 3. Bayes' theorem gives box 2 the posterior (1/3)(1) / ((1/3)(3/4) + (1/3)(1) + 0) = 1 / (7/4) = 4/7. Box 1 gets the other 3/7."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Take the three places the prize could be as hypotheses, each with prior 1/3. The likelihood of 'he opens box 3' is 3/4 if the prize is in box 1 (both others are empty, and he picks box 3 with probability 3/4), 1 if it is in box 2 (box 3 is his only option), and 0 if it is in box 3. Bayes' theorem gives box 2 the posterior (1/3)(1) / ((1/3)(3/4) + (1/3)(1) + 0) = 1 / (7/4) = 4/7. Box 1 gets the other 3/7."
+            },
+            {
+              "result": "$4/7$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pb-spam-share-at-a-new-base-rate",
+      "moduleId": "probability-foundations",
+      "title": "The Same Filter in a Cleaner Inbox",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "A spam filter is tested on an inbox where one email in five is spam. In that test, 60% of the email it flags is spam. It is then deployed on an inbox where 5% of the email is spam. The filter treats each spam email, and each legitimate one, exactly as it did in the test. Only the share of spam is different."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What fraction of the email it flags in the new inbox is spam?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Use the odds form. In the test the prior odds of spam were $20 : 80 = 1 : 4$, and the posterior odds after a flag were $60 : 40 = 3 : 2$. Posterior odds equal prior odds times the likelihood ratio, so the flag's likelihood ratio is"
+            },
+            {
+              "tex": "\\frac{P(\\text{flag} \\mid \\text{spam})}{P(\\text{flag} \\mid \\text{not spam})} = \\frac{3/2}{1/4} = 6 ."
+            },
+            {
+              "p": "The likelihood ratio depends only on how the filter treats each class, so it is still 6 in the new inbox. There the prior odds are $5 : 95 = 1 : 19$, and"
+            },
+            {
+              "tex": "\\frac{1}{19} \\times 6 = \\frac{6}{19} , \\qquad P(\\text{spam} \\mid \\text{flag}) = \\frac{6}{6 + 19} = \\frac{6}{25} = 0.24 ."
+            },
+            {
+              "p": "About three flags in four are now legitimate email, although nothing about the filter changed. Keeping 0.6 forgets that the base rate moved. Scaling 0.6 by $0.05/0.20$ to get $0.15$ treats the probability, not the odds, as the thing that scales with the prior."
+            },
+            {
+              "result": "0.24"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What share of spam would an inbox need for 3 of every 4 flagged emails to be spam?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The target posterior odds are $3 : 1$. Dividing by the likelihood ratio 6 gives the prior odds that produce them, $3/6 = 1 : 2$. Odds of $1 : 2$ are a probability of $1/(1 + 2) = 1/3$, so a third of the inbox would have to be spam."
+            },
+            {
+              "p": "You never needed the filter's two rates separately. A filter that flags 90% of spam and 15% of legitimate email and one that flags 60% and 10% have the same ratio, 6, and give the same answers here."
+            },
+            {
+              "result": "0.3333"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pb-alert-with-two-causes",
+      "moduleId": "probability-foundations",
+      "title": "An Alert with Two Causes",
+      "difficulty": "Medium",
+      "minutes": 8,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A server alert always fires when the disk is full. When the disk is not full but the network is down, it fires half the time. Otherwise it stays silent. On any day the disk is full with probability 0.10 and the network is down with probability 0.20, and the two failures are independent. One morning the alert fires. You check the network and find it is down. What is the probability that the disk is full?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$0.182$",
+                  "correct": true,
+                  "explain": "Write D for a full disk and N for the network being down. Given N, the alert fires with probability 1 if D and 1/2 if not. So $P(D \\mid \\text{alert and } N)$ = (0.10 × 0.20 × 1) / (0.10 × 0.20 × 1 + 0.90 × 0.20 × 1/2) = 0.02 / (0.02 + 0.09) = 2/11 ≈ 0.182. The alert alone had raised the disk from 0.10 to 0.10 / 0.19 ≈ 0.526. Finding the network down explains much of the alert away, but not all of it, since a down network sets off the alert only half the time."
+                },
+                {
+                  "text": "$0.526$",
+                  "explain": "This is $P(D \\mid \\text{alert})$ = 0.10 / 0.19, using the alert and ignoring what you found. P(alert) = 0.10 + 0.90 × 0.20 × 1/2 = 0.19. Once you know the network is down, a second explanation of the alert is on the table, and the disk becomes less likely."
+                },
+                {
+                  "text": "$0.100$",
+                  "explain": "This treats the alert as carrying no news about the disk once the network is known to be down, which leaves the everyday 0.10. That would hold if a down network always set off the alert. Here it does so only half the time, so an alert is still twice as likely with a full disk as without one."
+                },
+                {
+                  "text": "$0$",
+                  "explain": "This assumes one cause rules out the other, as if the network being down meant the disk must be fine. The failures are independent, and the alert does not stop at one cause."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write D for a full disk and N for the network being down. Given N, the alert fires with probability 1 if D and 1/2 if not. So $P(D \\mid \\text{alert and } N)$ = (0.10 × 0.20 × 1) / (0.10 × 0.20 × 1 + 0.90 × 0.20 × 1/2) = 0.02 / (0.02 + 0.09) = 2/11 ≈ 0.182. The alert alone had raised the disk from 0.10 to 0.10 / 0.19 ≈ 0.526. Finding the network down explains much of the alert away, but not all of it, since a down network sets off the alert only half the time."
+            },
+            {
+              "result": "$0.182$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pb-prior-worth-forty-views",
+      "moduleId": "probability-foundations",
+      "title": "A Prior Worth Forty Views",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "A team launches a new ad. Past ads had an average click rate of 0.05, and the team decides that this experience should count as much as 40 views of data. So it uses the Beta prior with mean 0.05 whose $a + b$ is 40. In its first 60 views the new ad is clicked 7 times."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What is the average click rate under the posterior?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The prior has $a/(a + b) = 0.05$ and $a + b = 40$, so $a = 2$ and $b = 38$: 2 imaginary clicks and 38 imaginary non-clicks. The data add 7 clicks to $a$ and $60 - 7 = 53$ non-clicks to $b$:"
+            },
+            {
+              "tex": "\\text{Beta}(2 + 7,\\ 38 + 53) = \\text{Beta}(9,\\ 91), \\qquad \\text{average} = \\frac{9}{9 + 91} = 0.09 ."
+            },
+            {
+              "p": "The raw rate is $7/60 \\approx 0.117$. The posterior sits between the prior's 0.05 and the data's 0.117, closer to the data because 60 real views outweigh 40 imaginary ones. Adding all 60 views to $b$ instead of the 53 non-clicks gives Beta(9, 98) and $0.084$, which counts the 7 clicks as non-clicks too."
+            },
+            {
+              "result": "0.09"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "The ad keeps running. How many more views, all without a click, would bring the posterior average back down to 0.05?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each view without a click adds 1 to $b$ and leaves $a = 9$. After $m$ such views the posterior is Beta$(9,\\ 91 + m)$, with average $9/(100 + m)$. Set it to 0.05:"
+            },
+            {
+              "tex": "\\frac{9}{100 + m} = 0.05 \\quad\\Longrightarrow\\quad 100 + m = 180 \\quad\\Longrightarrow\\quad m = 80 ."
+            },
+            {
+              "p": "The 7 early clicks are worth 80 empty views. By then the ad has 7 clicks in 140 views, a raw rate of exactly 0.05, and the posterior average agrees with it, because the prior's average was also 0.05."
+            },
+            {
+              "result": "80"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pb-decide-to-block",
+      "moduleId": "probability-foundations",
+      "title": "When to Block a Payment",
+      "difficulty": "Medium",
+      "minutes": 20,
+      "overview": [
+        "A payment service sees 400 legitimate payments for every fraudulent one. A fraudulent payment that goes through costs it 400 dollars. Blocking a legitimate payment costs it 10 dollars in support time and lost sales. Blocking a fraud costs nothing, and neither does letting a legitimate payment through. For each payment the service blocks when the expected cost of blocking is lower than the expected cost of letting it through."
+      ],
+      "setup": [
+        {
+          "p": "Two signals are recorded for every payment:"
+        },
+        {
+          "tex": "\\begin{array}{ccc}\n\\text{Signal} & \\text{In fraud} & \\text{In legitimate payments} \\\\ \\hline\n\\text{New device} & \\text{60\\%} & \\text{8\\%} \\\\\n\\text{Foreign IP address} & \\text{30\\%} & \\text{5\\%}\n\\end{array}"
+        },
+        {
+          "p": "Given whether a payment is fraud, the two signals occur independently of each other."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Write $q$ for the probability that a payment is fraud given what you have seen. Find the decision rule in terms of the odds $q/(1 - q)$, then give the likelihood ratio of the evidence above which the service blocks."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Blocking costs 10 dollars when the payment is legitimate, so its expected cost is $10(1 - q)$. Letting it through costs 400 dollars when it is fraud, an expected $400q$. Block when"
+            },
+            {
+              "tex": "400\\,q > 10\\,(1 - q) \\quad\\Longleftrightarrow\\quad \\frac{q}{1 - q} > \\frac{10}{400} = \\frac{1}{40} ."
+            },
+            {
+              "p": "The prior odds are $1 : 400$, and the posterior odds are the prior odds times the likelihood ratio $L$ of the evidence. So the service blocks when"
+            },
+            {
+              "tex": "\\frac{L}{400} > \\frac{1}{40} \\quad\\Longleftrightarrow\\quad L > 10 ."
+            },
+            {
+              "result": "10"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "A payment shows both a new device and a foreign IP address. What is the probability that it is fraud? Does the service block it?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The likelihood ratios are $0.60/0.08 = 7.5$ for a new device and $0.30/0.05 = 6$ for a foreign IP. Neither reaches 10 alone. The signals are conditionally independent given the class, so their ratios multiply: $7.5 \\times 6 = 45$. The posterior odds are $45 : 400 = 9 : 80$, so"
+            },
+            {
+              "tex": "q = \\frac{9}{9 + 80} = \\frac{9}{89} \\approx 0.101 ."
+            },
+            {
+              "p": "Since $45 > 10$, the service blocks it, although the payment is about 90% likely to be legitimate. The expected costs explain why: blocking costs $10 \\times 80/89 \\approx 8.99$ dollars, and letting it through costs $400 \\times 9/89 \\approx 40.45$ dollars. A rare but expensive mistake can outweigh a likely but cheap one."
+            },
+            {
+              "result": "0.101"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Another payment shows a new device but a domestic IP address. Find the likelihood ratio of this evidence. Is it the 7.5 of the device signal alone?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Seeing no foreign IP is evidence too. It happens in $70\\%$ of fraud and $95\\%$ of legitimate payments, a likelihood ratio of $0.70/0.95 \\approx 0.737$, which points away from fraud. Multiplying,"
+            },
+            {
+              "tex": "L = 7.5 \\times \\frac{0.70}{0.95} = \\frac{105}{19} \\approx 5.53 ."
+            },
+            {
+              "p": "So the answer is no: 7.5 would describe a payment where the IP was never recorded. Here the posterior odds are $5.53 : 400$, a fraud probability of about 0.014, and the service lets it through. Using 7.5 would reach the same decision here, since it is also below 10. But a signal that is more common in fraud always has a ratio below 1 when it is absent, so leaving out the absent signals always overstates the case for blocking."
+            },
+            {
+              "result": "5.53"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Now suppose the two signals share a cause. Every payment with a foreign IP address comes through a proxy that also reports a new device, in fraud and in legitimate payments alike. The rates in the table do not change. What is the likelihood ratio of seeing both signals now, and does the service block the payment?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Seeing both is now the same event as seeing a foreign IP, because a foreign IP always comes with a new device. So"
+            },
+            {
+              "tex": "L = \\frac{P(\\text{both} \\mid \\text{fraud})}{P(\\text{both} \\mid \\text{legitimate})} = \\frac{0.30}{0.05} = 6 ."
+            },
+            {
+              "p": "The posterior odds are $6 : 400$, a fraud probability of $6/406 \\approx 0.015$, and since $6 < 10$ the service lets the payment through. Multiplying $7.5 \\times 6 = 45$ would block it. Once the foreign IP is known, the new device adds no evidence, so the product counts one cause twice. This is the double counting that the conditional independence assumption of naive Bayes hides. Before multiplying likelihood ratios, check that each signal still says something new once the others are known."
+            },
+            {
+              "result": "6"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pb-detectors-that-share-mistakes",
+      "moduleId": "probability-foundations",
+      "title": "Two Detectors That Share Their Mistakes",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "An insurer runs two fraud detectors, A and B, on every claim. 5% of claims are fraudulent. Each detector on its own flags 80% of fraudulent claims and 10% of genuine ones. The detectors were trained on similar data, so they tend to make the same mistakes. Measured on past claims:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{ccccc}\n\\text{} & \\text{Both flag} & \\text{Only A flags} & \\text{Only B flags} & \\text{Neither flags} \\\\ \\hline\n\\text{Fraudulent claims} & 0.70 & 0.10 & 0.10 & 0.10 \\\\\n\\text{Genuine claims} & 0.06 & 0.04 & 0.04 & 0.86\n\\end{array}"
+        },
+        {
+          "p": "Each row gives the probabilities for one kind of claim, so each row sums to 1."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "An analyst assumes the detectors are conditionally independent given the truth. What probability of fraud does that assumption give for a claim that both detectors flag?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The prior odds of fraud are $5 : 95 = 1 : 19$. Each flag has likelihood ratio $0.80/0.10 = 8$, and under conditional independence the two ratios multiply:"
+            },
+            {
+              "tex": "\\frac{1}{19} \\times 8 \\times 8 = \\frac{64}{19}, \\qquad P(\\text{fraud} \\mid \\text{both}) = \\frac{64}{64 + 19} = \\frac{64}{83} \\approx 0.771 ."
+            },
+            {
+              "result": "0.771"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Use the table instead. What is the probability of fraud for a claim that both detectors flag?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The evidence is the single event \"both flag\". Bayes' theorem with the table's joint probabilities gives"
+            },
+            {
+              "tex": "P(\\text{fraud} \\mid \\text{both}) = \\frac{0.70 \\times 0.05}{0.70 \\times 0.05 + 0.06 \\times 0.95} = \\frac{0.035}{0.035 + 0.057} = \\frac{35}{92} \\approx 0.380 ."
+            },
+            {
+              "p": "The independence assumption predicted that both detectors flag a genuine claim with probability $0.10^2 = 0.01$. The table says $0.06$, six times more often. In fraud it predicted $0.80^2 = 0.64$ against the true $0.70$. The true likelihood ratio of two flags is $0.70/0.06 \\approx 11.7$, not 64."
+            },
+            {
+              "result": "0.380"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Detector A has flagged a claim. By what factor does B's flag then multiply the odds of fraud?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Once A has flagged, the evidence B adds is measured by B's flag rates among claims A flagged:"
+            },
+            {
+              "tex": "P(\\text{B} \\mid \\text{A}, \\text{fraud}) = \\frac{0.70}{0.80} = 0.875, \\qquad P(\\text{B} \\mid \\text{A}, \\text{genuine}) = \\frac{0.06}{0.10} = 0.6 ."
+            },
+            {
+              "p": "The factor is $0.875/0.6 = 35/24 \\approx 1.46$. A's flag alone takes the odds from $1 : 19$ to $8 : 19$, a probability of about 0.296. B's flag then multiplies them by 1.46, to $35 : 57$, which is the $35/92 \\approx 0.380$ of the previous part. On its own B's flag is worth a factor of 8, but most of what it knows, A already said: B flags 60% of the genuine claims that fooled A."
+            },
+            {
+              "result": "1.46"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Show that the two detectors are not independent overall either, and say what the insurer should measure before it treats a second detector as new evidence."
+            }
+          ],
+          "answer": [
+            {
+              "p": "By total probability, A flags with probability $0.80 \\times 0.05 + 0.10 \\times 0.95 = 0.135$, and so does B. Both flag with probability $0.70 \\times 0.05 + 0.06 \\times 0.95 = 0.092$. Independent flags would give $0.135^2 \\approx 0.018$, about five times less. Some of that gap would appear even with conditionally independent detectors, since each flag makes fraud more likely: they would give $0.64 \\times 0.05 + 0.01 \\times 0.95 = 0.0415$. The rest comes from the shared mistakes."
+            },
+            {
+              "p": "The quantity that matters is how often the second detector flags the claims the first one flagged, separately for fraudulent and for genuine claims. The ratio of those two rates, $0.875/0.6$ here, is the factor a second flag really adds. If it is close to the second detector's own ratio, 8 here, the detectors behave as conditionally independent and multiplying is safe."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pb-rare-class-in-batches",
+      "moduleId": "probability-foundations",
+      "title": "One Rare Example per Batch",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "A training set has 60 examples, and 6 of them belong to a rare class. Each epoch the 60 examples are shuffled, with every order equally likely, and cut into 6 batches of 10: positions 1 to 10 form the first batch, 11 to 20 the second, and so on."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What is the probability that the first batch contains no rare example?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The first batch is a set of 10 of the 60 examples, and a uniform shuffle makes every set of 10 equally likely. It avoids the rare class when all 10 come from the 54 others:"
+            },
+            {
+              "tex": "\\frac{\\binom{54}{10}}{\\binom{60}{10}} = \\frac{50 \\cdot 49 \\cdot 48 \\cdot 47 \\cdot 46 \\cdot 45}{60 \\cdot 59 \\cdot 58 \\cdot 57 \\cdot 56 \\cdot 55} \\approx 0.317 ."
+            },
+            {
+              "p": "The middle form cancels the common factors of the two factorials. It also reads the other way round: the 6 rare examples take 6 of the 60 positions, and all of them must land among the 50 positions outside the first batch. Placing each rare example in the first batch independently with probability $1/6$ would give $(5/6)^6 \\approx 0.335$. That is close but wrong, since once some rare examples sit outside the first batch, fewer outside positions are left for the rest."
+            },
+            {
+              "result": "0.317"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What is the probability that every batch contains exactly one rare example?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Only the 6 positions taken by the rare examples matter, and every set of 6 positions out of 60 is equally likely: $\\binom{60}{6} = 50{,}063{,}860$ sets. One rare example per batch means one position in each block of 10, and the counting principle gives $10^6$ such sets. So"
+            },
+            {
+              "tex": "\\frac{10^6}{\\binom{60}{6}} = \\frac{1{,}000{,}000}{50{,}063{,}860} \\approx 0.0200 ."
+            },
+            {
+              "p": "Assigning each rare example to a batch independently and uniformly would give $6!/6^6 \\approx 0.0154$. That model misses that a batch already holding a rare example has fewer free places."
+            },
+            {
+              "result": "0.0200"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What is the probability that at least one batch contains no rare example?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "There are 6 rare examples and 6 batches. If every batch held at least one, the six batches would already use up all six, so each would hold exactly one. \"Every batch has at least one\" is therefore the same event as the previous part, and by the complement rule"
+            },
+            {
+              "tex": "P(\\text{some batch has none}) = 1 - 0.0200 = 0.980 ."
+            },
+            {
+              "p": "A plain shuffle leaves at least one batch without the rare class in 98% of epochs. A batch with no rare example gives the model no gradient signal from that class, which is why stratified batching places the rare examples on purpose instead of hoping the shuffle spreads them."
+            },
+            {
+              "result": "0.980"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

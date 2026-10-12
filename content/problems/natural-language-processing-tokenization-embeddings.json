@@ -1,0 +1,785 @@
+{
+ "module": "natural-language-processing-tokenization-embeddings",
+ "stage": "Camp",
+ "index": [
+  {
+   "id": "twe-wordpiece-first-merge",
+   "moduleId": "natural-language-processing-tokenization-embeddings",
+   "title": "The First Merge WordPiece Makes",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=twe-wordpiece-first-merge",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Camp"
+   ],
+   "prompt": "A WordPiece tokenizer is trained on five words: stub 9 times, jab 5, zest 10, buff 3 and tab 1. Training starts from single letters, with each letter one symbol wherever it sits in its word and no continuation markers, so which pair of adjacent symbols does WordPiece merge first?",
+   "answer": "ja. Weighted by the word counts, the symbols appear a 6, b 18, e 10, f 6, j 5, s 19, t 20, u 12 and z 10 times. ja occurs 5 times, all in jab, so it scores 5 / (5 × 6) = 1/6, about 0.167. The next scores are ze at 10 / (10 × 10) = 0.100, ff at 3 / (6 × 6) = 0.083, ab at 6 / (6 × 18) ≈ 0.056 and es at 10 / (10 × 19) ≈ 0.053, and the most frequent pair, st, scores 19 / (19 × 20) = 0.050. j never appears without a, and a appears only once without j, in tab, so almost every use of either symbol is a use of the pair."
+  },
+  {
+   "id": "twe-skipgram-loss-floor",
+   "moduleId": "natural-language-processing-tokenization-embeddings",
+   "title": "How Low the Skip-Gram Loss Can Go",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=twe-skipgram-loss-floor",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "A skip-gram model is trained on the (center, context) pairs of a small corpus, and the table counts the pairs by their context word: tide pairs with sea 8 times, moon 4, high 4 and ship 0, 16 pairs in all. Anchor pairs with sea 6, moon 0, high 0 and ship 6, 12 pairs. Gull pairs with sea 16 times, moon 0, high 0 and ship 0, 16 pairs. Find the probability a fully trained model gives to moon as a context word of tide, and the lowest value the average loss over all 44 pairs can reach in nats per pair. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "twe-cbow-gradient-check",
+   "moduleId": "natural-language-processing-tokenization-embeddings",
+   "title": "CBOW Gradients, Checked by Finite Differences",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=twe-cbow-gradient-check",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Camp"
+   ],
+   "prompt": "CBOW predicts the word at the center of a window from the average of the vectors around it. Write the loss of one window, a central-difference gradient that works for any function of an array, and the exact gradient with respect to both embedding tables, then let the finite differences test the exact one.",
+   "answer": "Auto-graded inside the notebook. The exact gradients must match the finite differences to 1e-7 on three windows, and the rows of the input table outside the window must stay zero."
+  },
+  {
+   "id": "twe-negative-sampling-optimum",
+   "moduleId": "natural-language-processing-tokenization-embeddings",
+   "title": "The Dot Product Negative Sampling Settles On",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=twe-negative-sampling-optimum",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "Skip-gram with negative sampling trains on a corpus where harbor is the center of 2,000 pairs and 120 of them have boat as the context, with five negatives drawn per pair from a noise distribution. Find the dot product that maximizes the objective, redo it when the negative count rises, and say what training does to a word that never appears nearby. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "twe-what-the-biases-buy",
+   "moduleId": "natural-language-processing-tokenization-embeddings",
+   "title": "What GloVe's Biases Buy",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=twe-what-the-biases-buy",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "A four-by-four co-occurrence table whose entries halve along every row and column is fitted to GloVe. Part 1 asks for the smallest embedding dimension that reproduces every log count with dot products alone, and Part 2 asks the same question once the biases are kept. Part 3 fixes the biases from the row and column totals and asks what the dot products must then fit and what that quantity measures. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "twe-greedy-wordpiece-dead-end",
+   "moduleId": "natural-language-processing-tokenization-embeddings",
+   "title": "Encoding Three Words with WordPiece",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=twe-greedy-wordpiece-dead-end",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Camp"
+   ],
+   "prompt": "A WordPiece vocabulary holds eleven entries: car, carp, cart, ten, e, t, s, ##pet, ##on, ##s and ##en, where an entry beginning with ## is a piece that continues a word. Split at the spaces, how many tokens does the greedy longest-match encoder output for the text tent cartons carpet, given that a word with no match at some position becomes a single unknown token?",
+   "answer": "5. cartons is cart, ##on, ##s, 3 tokens. tent starts with ten, the longest entry that matches, and the rest, t, would need ##t, which is not an entry, so the whole word becomes one [UNK]. carpet starts with carp, since carpe and carpet are not entries, and the rest, et, has neither ##et nor ##e, so it becomes one [UNK] as well, although car followed by ##pet spells it. The encoder takes the longest match at each position and never goes back to try a shorter one. 1 + 3 + 1 = 5."
+  },
+  {
+   "id": "twe-analogy-nearest-word",
+   "moduleId": "natural-language-processing-tokenization-embeddings",
+   "title": "Where Dog Minus Puppy Plus Kitten Lands",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=twe-analogy-nearest-word",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "A five-word embedding table in three dimensions is given, and a query vector is built as dog minus puppy plus kitten. Say which table word has the highest cosine similarity with it, give the lowest cosine kitten can keep when the step direction varies, and state how the ranking rule must change so the test measures the analogy. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "twe-one-table-for-both-roles",
+   "moduleId": "natural-language-processing-tokenization-embeddings",
+   "title": "Skip-Gram with One Table",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=twe-one-table-for-both-roles",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "A student runs skip-gram with one shared table, so each word has a single vector used as both the center and the context vector, on the two-word text tick tock tick tock. Find the lowest average loss it can reach in any dimension, show that the usual two tables can do arbitrarily better, and show what the one-table constraint costs on real text. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "twe-unigram-vocabulary",
+   "moduleId": "natural-language-processing-tokenization-embeddings",
+   "title": "Training a Unigram Vocabulary",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=twe-unigram-vocabulary",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Camp"
+   ],
+   "prompt": "Train a unigram tokenizer's vocabulary from the top down: write the probability of a word as the sum over all its segmentations, the EM step that re-estimates the token probabilities, and the pruning step that drops the tokens the corpus needs least, then train a vocabulary on a small corpus of English words.",
+   "answer": "Auto-graded inside the notebook. Expected token counts, removal losses and the worked examples must match to 1e-9, the corpus-wide re-estimated probability to 1e-6, and single letters must always survive pruning."
+  },
+  {
+   "id": "nl1-bpe-merges",
+   "moduleId": "natural-language-processing-tokenization-embeddings",
+   "title": "Train a Tokenizer in Forty Lines",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=nl1-bpe-merges",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Camp"
+   ],
+   "prompt": "Implement byte-pair encoding end to end (count pairs, merge the most frequent, repeat), then encode held-out words and measure what an unfamiliar spelling costs.",
+   "answer": "Auto-graded inside the notebook. Merge count, vocabulary size, and per-word token counts must match to 1e-6, with the rare word costing more than twice the common ones."
+  },
+  {
+   "id": "rp3-analogy-exclusion",
+   "moduleId": "natural-language-processing-tokenization-embeddings",
+   "title": "The Analogy Task Everyone Accidentally Cheats At",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=rp3-analogy-exclusion",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Camp"
+   ],
+   "prompt": "Run vector-arithmetic word analogies with and without excluding the three query words, and measure how much of the reported accuracy depends on that one detail.",
+   "answer": "Auto-graded inside the notebook. Both accuracies, the input-return fraction, and the mean rank must match to 1e-6, with exclusion worth over 30 points."
+  }
+ ],
+ "theory": [
+  {
+   "id": "twe-wordpiece-first-merge",
+   "moduleId": "natural-language-processing-tokenization-embeddings",
+   "title": "The First Merge WordPiece Makes",
+   "difficulty": "Medium",
+   "minutes": 8,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A WordPiece tokenizer is trained on a corpus of five words, each given with the number of times it appears:"
+      },
+      {
+       "tex": "\\begin{array}{cccccc}\n\\text{Word} & \\text{stub} & \\text{jab} & \\text{zest} & \\text{buff} & \\text{tab} \\\\ \\hline\n\\text{Count} & 9 & 5 & 10 & 3 & 1\n\\end{array}"
+      },
+      {
+       "p": "Training starts from single letters. Treat every letter as one symbol, wherever it sits in its word, with no `##` markers. Which pair of adjacent symbols does WordPiece merge first?"
+      },
+      {
+       "choices": [
+        {
+         "text": "`st`",
+         "explain": "st is the most frequent pair, 9 times in stub and 10 in zest, so 19 in all, and BPE would merge it first. WordPiece divides the pair count by the counts of its two symbols. s appears 19 times and t 20 times, so st scores 19 / (19 × 20) = 1/20 = 0.05, far below ja's 1/6."
+        },
+        {
+         "text": "`ze`",
+         "explain": "z and e appear only in zest, so they never occur apart. But a pair whose symbols only ever occur together scores one over its own count, here 10 / (10 × 10) = 1/10, and a rarer pair beats it: ja scores 5 / (5 × 6) = 1/6. Counting each distinct word once instead of by its count also gives ze, with a score of 1 / (1 × 1) = 1. The counts must be weighted by how often each word appears."
+        },
+        {
+         "text": "`ja`",
+         "correct": true,
+         "explain": "Weighted by the word counts, the symbols appear a 6, b 18, e 10, f 6, j 5, s 19, t 20, u 12 and z 10 times. ja occurs 5 times, all in jab, so it scores 5 / (5 × 6) = 1/6, about 0.167. The next scores are ze at 10 / (10 × 10) = 0.100, ff at 3 / (6 × 6) = 0.083, ab at 6 / (6 × 18) ≈ 0.056 and es at 10 / (10 × 19) ≈ 0.053, and the most frequent pair, st, scores 19 / (19 × 20) = 0.050. j never appears without a, and a appears only once without j, in tab, so almost every use of either symbol is a use of the pair."
+        },
+        {
+         "text": "`ff`",
+         "explain": "This counts the letter f once for each buff. buff has two f's, so f appears 2 × 3 = 6 times and ff scores 3 / (6 × 6) = 1/12, about 0.083, below ja at 1/6. With f counted 3 times, ff would score 3 / (3 × 3) = 1/3 and come first."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Weighted by the word counts, the symbols appear a 6, b 18, e 10, f 6, j 5, s 19, t 20, u 12 and z 10 times. ja occurs 5 times, all in jab, so it scores 5 / (5 × 6) = 1/6, about 0.167. The next scores are ze at 10 / (10 × 10) = 0.100, ff at 3 / (6 × 6) = 0.083, ab at 6 / (6 × 18) ≈ 0.056 and es at 10 / (10 × 19) ≈ 0.053, and the most frequent pair, st, scores 19 / (19 × 20) = 0.050. j never appears without a, and a appears only once without j, in tab, so almost every use of either symbol is a use of the pair."
+      },
+      {
+       "result": "`ja`"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "twe-skipgram-loss-floor",
+   "moduleId": "natural-language-processing-tokenization-embeddings",
+   "title": "How Low the Skip-Gram Loss Can Go",
+   "difficulty": "Medium",
+   "minutes": 15,
+   "overview": [
+    "A skip-gram model is trained on the (center, context) pairs of a small corpus. Every pair has one of three center words, and the table counts the pairs by their context word:"
+   ],
+   "setup": [
+    {
+     "tex": "\\begin{array}{cccccc}\n\\text{Center} & \\text{sea} & \\text{moon} & \\text{high} & \\text{ship} & \\text{Pairs} \\\\ \\hline\n\\text{tide} & 8 & 4 & 4 & 0 & 16 \\\\\n\\text{anchor} & 6 & 0 & 0 & 6 & 12 \\\\\n\\text{gull} & 16 & 0 & 0 & 0 & 16\n\\end{array}"
+    },
+    {
+     "p": "The loss is the average of $-\\ln P(o \\mid c)$ over the 44 pairs, in nats, where $P(o \\mid c)$ is the skip-gram softmax over the whole vocabulary. The dimension $d$ is as large as needed, so the vectors can give each center word any scores over the vocabulary."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Training runs for a long time, and the loss approaches its lowest possible value. What probability does the model then give to moon as a context word of tide?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Group the 44 terms of the loss by center word. With $n_{co}$ the count of the pair $(c, o)$ and $q_c(o) = P(o \\mid c)$,"
+      },
+      {
+       "tex": "\\mathcal{L} = \\frac{1}{44} \\sum_{c} \\Big( -\\sum_{o} n_{co} \\ln q_c(o) \\Big)."
+      },
+      {
+       "p": "Each center word has its own vector $\\mathbf{v}_c$, and the dimension is large enough for its scores to be anything, so the three distributions $q_{\\text{tide}}$, $q_{\\text{anchor}}$ and $q_{\\text{gull}}$ can be chosen separately. For tide, minimize $-\\sum_o n_o \\ln q(o)$ subject to $\\sum_o q(o) = 1$. Setting the derivative of $-\\sum_o n_o \\ln q(o) + \\lambda \\big(\\sum_o q(o) - 1\\big)$ to zero gives $q(o) = n_o / \\lambda$, and the constraint makes $\\lambda = 16$:"
+      },
+      {
+       "tex": "q_{\\text{tide}}(\\text{moon}) = \\frac{4}{16} = 0.25 ."
+      },
+      {
+       "p": "The best model reproduces the share of tide's pairs that have each context word: 1/2 for sea, 1/4 for moon, 1/4 for high, and 0 for every other word."
+      },
+      {
+       "result": "0.25"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is that lowest value of the average loss, in nats per pair?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "At the optimum each center word contributes its pair count times the entropy of its context distribution:"
+      },
+      {
+       "tex": "\\begin{array}{cccc}\n\\text{Center} & \\text{Context distribution} & \\text{Entropy (nats)} & \\text{Pairs} \\\\ \\hline\n\\text{tide} & \\text{1/2, 1/4, 1/4} & \\tfrac12 \\ln 2 + 2 \\cdot \\tfrac14 \\ln 4 = 1.5 \\ln 2 & 16 \\\\\n\\text{anchor} & \\text{1/2, 1/2} & \\ln 2 & 12 \\\\\n\\text{gull} & 1 & 0 & 16\n\\end{array}"
+      },
+      {
+       "tex": "\\mathcal{L}_{\\min} = \\frac{16 \\cdot 1.5 \\ln 2 + 12 \\ln 2 + 16 \\cdot 0}{44}\n= \\frac{36 \\ln 2}{44} = \\frac{9}{11} \\ln 2 \\approx 0.567 ."
+      },
+      {
+       "result": "0.567"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Explain why no choice of vectors gives a loss below this value, and why the gull pairs can bring their share of the loss as close to 0 as you like but never to 0 itself."
+      }
+     ],
+     "answer": [
+      {
+       "p": "For one center word with context counts $n_o$ and total $n$, write $\\hat p(o) = n_o / n$. Its share of the loss is $n$ times the cross-entropy $-\\sum_o \\hat p(o) \\ln q(o)$, which equals the entropy of $\\hat p$ plus $D_{\\mathrm{KL}}(\\hat p \\Vert q)$. The KL divergence is never negative and is 0 only at $q = \\hat p$, so no softmax does better than $\\hat p$, and the entropy of the data is a floor that no vectors can go below. The loss measures how unpredictable the context is, and tide's context really is uncertain: a model that knows the corpus perfectly still pays $1.5 \\ln 2 \\approx 1.04$ nats on an average tide pair."
+      },
+      {
+       "p": "Gull's context is always sea, so its floor is $-\\ln 1 = 0$. But a softmax gives every word a positive probability, $e^{s} / \\sum e^{s'} > 0$, so $P(\\text{sea} \\mid \\text{gull}) < 1$ for any finite scores. The loss on gull's pairs falls toward 0 only as the score of sea moves infinitely far above the others, which training approaches without ever reaching. The same holds for the zero entries of tide and anchor, which is why the lowest value is a limit and not a point training arrives at."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "twe-negative-sampling-optimum",
+   "moduleId": "natural-language-processing-tokenization-embeddings",
+   "title": "The Dot Product Negative Sampling Settles On",
+   "difficulty": "Hard",
+   "minutes": 20,
+   "overview": [
+    "Skip-gram with negative sampling is trained on a corpus in which the word harbor is the center of 2,000 (center, context) pairs, and 120 of those pairs have the context word boat. For every pair, $k = 5$ negative words are drawn independently from a noise distribution $P_n$, which gives boat the probability $P_n(\\text{boat}) = 0.003$."
+   ],
+   "setup": [
+    {
+     "p": "Write $x = \\mathbf{u}_{\\text{boat}}^\\top \\mathbf{v}_{\\text{harbor}}$ and treat it as a free number: the vectors have enough dimensions that this one dot product can be set without changing any other."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Which value of $x$ maximizes the negative-sampling objective, summed over all of harbor's training pairs? Give it to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Two kinds of term contain $x$."
+      },
+      {
+       "list": [
+        "**Real pairs.** Each of the 120 pairs (harbor, boat) contributes $\\ln \\sigma(x)$.",
+        "**Negatives.** Each of harbor's 2,000 pairs draws 5 negatives, and each draw is boat with probability 0.003. The expectation in the objective turns that into $2000 \\times 5 \\times 0.003 = 30$ draws of boat, whatever the pair's real context word, each contributing $\\ln \\sigma(-x)$."
+       ]
+      },
+      {
+       "p": "The part of the objective that depends on $x$ is"
+      },
+      {
+       "tex": "J(x) = 120 \\ln \\sigma(x) + 30 \\ln \\sigma(-x) ."
+      },
+      {
+       "p": "With $\\frac{d}{dx} \\ln \\sigma(x) = 1 - \\sigma(x)$ and $\\frac{d}{dx} \\ln \\sigma(-x) = -\\sigma(x)$,"
+      },
+      {
+       "tex": "J'(x) = 120\\,\\big(1 - \\sigma(x)\\big) - 30\\,\\sigma(x) = 120 - 150\\,\\sigma(x) ."
+      },
+      {
+       "p": "$J'$ falls as $x$ rises, so $J$ is concave and its maximum is where $J'(x) = 0$, at $\\sigma(x) = 120/150 = 0.8$. Since $\\sigma(x) / \\big(1 - \\sigma(x)\\big) = e^{x}$,"
+      },
+      {
+       "tex": "x^* = \\ln \\frac{0.8}{0.2} = \\ln 4 \\approx 1.386 ."
+      },
+      {
+       "p": "At the optimum the classifier says \"real\" with probability 0.8: of the 150 times on average that the pair (harbor, boat) reaches the classifier, 120 are real and 30 are noise."
+      },
+      {
+       "result": "1.386"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "The model is trained again on the same corpus with $k = 15$. What is the optimal $x$ now? Then write $x^*$ for any pair $(c, o)$ in terms of $P(o \\mid c)$, the share of $c$'s pairs that have context $o$, the noise probability $P_n(o)$ and $k$."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Boat is now drawn $2000 \\times 15 \\times 0.003 = 90$ times on average, so $\\sigma(x^*) = 120 / 210 = 4/7$ and"
+      },
+      {
+       "tex": "x^* = \\ln \\frac{120}{90} = \\ln \\frac{4}{3} \\approx 0.288 ."
+      },
+      {
+       "p": "In general, with $N_c$ pairs centered on $c$ and $n_{co}$ of them with context $o$, the same steps give $\\sigma(x^*) = n_{co} / \\big(n_{co} + k N_c P_n(o)\\big)$, so"
+      },
+      {
+       "tex": "x^* = \\ln \\frac{n_{co}}{k\\,N_c\\,P_n(o)} = \\ln \\frac{P(o \\mid c)}{P_n(o)} - \\ln k ."
+      },
+      {
+       "p": "Tripling $k$ lowers every optimal dot product by the same $\\ln 3$, from $\\ln 4$ to $\\ln 4 - \\ln 3$. If $P_n$ is the unigram distribution of context words, $P(o \\mid c) / P_n(o) = P(c, o) / \\big(P(c) P(o)\\big)$ and $x^*$ is the pointwise mutual information of the pair minus $\\ln k$. word2vec draws negatives from the unigram distribution raised to the power 3/4, which gives rare words more of the draws, and the optimum moves with it."
+      },
+      {
+       "result": "0.288"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "harbor never appears near the word algebra, and $P_n(\\text{algebra}) = 0.001$. What does training with $k = 5$ do to $y = \\mathbf{u}_{\\text{algebra}}^\\top \\mathbf{v}_{\\text{harbor}}$, treated as a free number like $x$? What keeps it finite in a real model?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Only negatives involve $y$: on average $2000 \\times 5 \\times 0.001 = 10$ draws of algebra, so the terms that contain $y$ add up to $J(y) = 10 \\ln \\sigma(-y)$, with derivative $-10\\,\\sigma(y) < 0$. It rises forever as $y$ falls, so there is no finite optimum, and gradient ascent keeps pushing $y$ down. The push weakens as $\\sigma(y) \\to 0$, so $y$ drifts down more and more slowly."
+      },
+      {
+       "p": "In a real model $y$ is not free. $\\mathbf{v}_{\\text{harbor}}$ and $\\mathbf{u}_{\\text{algebra}}$ take part in many other dot products, and with $d$ in the hundreds and a vocabulary in the hundreds of thousands they cannot satisfy every pair at once. Training also stops after a few passes over the corpus. So $y$ ends up moderately negative, set by the compromise among all of harbor's and algebra's pairs, and not by this pair alone."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "twe-what-the-biases-buy",
+   "moduleId": "natural-language-processing-tokenization-embeddings",
+   "title": "What GloVe's Biases Buy",
+   "difficulty": "Medium",
+   "minutes": 15,
+   "overview": [
+    "A co-occurrence table for four words:"
+   ],
+   "setup": [
+    {
+     "tex": "\\begin{array}{ccccc}\nX_{ij} & w_1 & w_2 & w_3 & w_4 \\\\ \\hline\n\\mathbf{w}_1 & 64 & 32 & 16 & 8 \\\\\n\\mathbf{w}_2 & 32 & 16 & 8 & 4 \\\\\n\\mathbf{w}_3 & 16 & 8 & 4 & 2 \\\\\n\\mathbf{w}_4 & 8 & 4 & 2 & 1\n\\end{array}"
+    },
+    {
+     "p": "GloVe is fitted to it with word vectors $\\mathbf{w}_i$ and context vectors $\\mathbf{c}_j$ of $d$ dimensions. An exact fit makes every residual 0, so the weights $f(X_{ij})$ do not matter for the questions below."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Strip GloVe of its biases, as in the section, so that $\\mathbf{w}_i^\\top \\mathbf{c}_j$ alone must equal $\\log X_{ij}$ for all 16 pairs. What is the smallest $d$ for which an exact fit exists?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Every row of $X$ is a multiple of $(8, 4, 2, 1)$, so $X$ itself has rank 1: $X_{ij} = 2^{8 - i - j}$. The fit is to $\\log X$, though, and the logarithm turns that product into a sum:"
+      },
+      {
+       "tex": "\\log X_{ij} = (8 - i - j) \\log 2 = a_i + a_j,\n\\qquad a_i = (4 - i) \\log 2 ."
+      },
+      {
+       "p": "As a matrix, $\\log X = \\mathbf{a} \\mathbf{1}^\\top + \\mathbf{1} \\mathbf{a}^\\top$, the sum of two rank-one matrices, so its rank is at most 2, and it is 2: rows 1 and 2 and columns 1 and 2 give the block $\\log 2 \\begin{pmatrix} 6 & 5 \\\\ 5 & 4 \\end{pmatrix}$, whose determinant is $(24 - 25)(\\log 2)^2 \\neq 0$."
+      },
+      {
+       "p": "A product $W C^\\top$ of matrices with $d$ columns has rank at most $d$, so $d = 1$ cannot fit $\\log X$ exactly. With $d = 2$, the rows $\\mathbf{w}_i = (a_i, 1)$ and $\\mathbf{c}_j = (1, a_j)$ give $\\mathbf{w}_i^\\top \\mathbf{c}_j = a_i + a_j$, an exact fit. The smallest $d$ is 2."
+      },
+      {
+       "result": "2"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Now keep the biases, so that $\\mathbf{w}_i^\\top \\mathbf{c}_j + b_i + b'_j$ must equal $\\log X_{ij}$. What is the smallest $d$ for an exact fit? ($d = 0$ is allowed: the model then has only its biases.)"
+      }
+     ],
+     "answer": [
+      {
+       "p": "$\\log X_{ij} = a_i + a_j$ is already in the form $b_i + b'_j$. Take $b_i = a_i$ and $b'_j = a_j$, and the biases fit the table exactly with no vectors at all, $d = 0$. The biases are a rank-two term of the special form $\\mathbf{b} \\mathbf{1}^\\top + \\mathbf{1} \\mathbf{b}'^\\top$ that the model gets without spending any dimensions on it. Here they absorb the whole table, which in Part 1 cost two dimensions."
+      },
+      {
+       "result": "0"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "In a real corpus, let $n_i = \\sum_j X_{ij}$ be the row sums of the table and $N = \\sum_{i,j} X_{ij}$ its total. Suppose the biases are fixed at $b_i = \\log n_i$ and $b'_j = \\log n_j - \\log N$. What must the dot products $\\mathbf{w}_i^\\top \\mathbf{c}_j$ then fit, what does that quantity measure, and what is it for the table above?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Subtracting the biases from $\\log X_{ij}$ leaves"
+      },
+      {
+       "tex": "\\mathbf{w}_i^\\top \\mathbf{c}_j \\approx \\log X_{ij} - \\log n_i - \\log n_j + \\log N\n= \\log \\frac{X_{ij}}{n_i n_j / N} ."
+      },
+      {
+       "p": "$n_i n_j / N$ is the count the pair would have if the two words were placed independently, keeping their totals. So the dot products fit the log of the ratio of the observed count to that expected count, which is the pointwise mutual information of the pair estimated from the table. Pairs that occur together more often than chance get positive dot products, and pairs that avoid each other get negative ones. Word frequency itself goes into the biases and takes up no dimensions."
+      },
+      {
+       "p": "For the table above, the row sums are $n = (120, 60, 30, 15)$ and $N = 225$, so for example $n_1 n_1 / N = 14400 / 225 = 64 = X_{11}$. Every entry equals its independent count, the target is 0 for every pair, and the vectors have nothing left to fit. This is the table of four words that occur independently of each other, which is why the biases alone fitted it in Part 2."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "twe-greedy-wordpiece-dead-end",
+   "moduleId": "natural-language-processing-tokenization-embeddings",
+   "title": "Encoding Three Words with WordPiece",
+   "difficulty": "Medium",
+   "minutes": 8,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A WordPiece vocabulary has these eleven entries. An entry that begins with `##` is a piece that continues a word."
+      },
+      {
+       "code": {
+        "language": "text",
+        "lines": [
+         "car   carp   cart   ten   e   t   s   ##pet   ##on   ##s   ##en"
+        ]
+       }
+      },
+      {
+       "p": "The text `tent cartons carpet` is split at the spaces, and WordPiece's encoder turns each word into tokens. How many tokens does it output for the whole text?"
+      },
+      {
+       "choices": [
+        {
+         "text": "5",
+         "correct": true,
+         "explain": "cartons is cart, ##on, ##s, 3 tokens. tent starts with ten, the longest entry that matches, and the rest, t, would need ##t, which is not an entry, so the whole word becomes one [UNK]. carpet starts with carp, since carpe and carpet are not entries, and the rest, et, has neither ##et nor ##e, so it becomes one [UNK] as well, although car followed by ##pet spells it. The encoder takes the longest match at each position and never goes back to try a shorter one. 1 + 3 + 1 = 5."
+        },
+        {
+         "text": "6",
+         "explain": "This spells carpet as car ##pet, a valid split, but not the one the encoder finds. It takes the longest entry that matches at the start, carp, and never goes back to try car. After carp it is stuck at et, so carpet becomes a single [UNK], and the count is 1 + 3 + 1 = 5."
+        },
+        {
+         "text": "7",
+         "explain": "This keeps the pieces matched before the encoder got stuck and adds one [UNK] for the rest: ten [UNK] and carp [UNK], 2 tokens each. When some position of a word has no match, the whole word becomes a single [UNK], so tent and carpet are 1 token each and the count is 5."
+        },
+        {
+         "text": "8",
+         "explain": "This looks up the pieces after the first one without their ## prefix, so tent becomes ten t and carpet becomes carp e t. The entries e and t can only start a word. Inside a word the encoder needs ##t and ##e, which are not in the vocabulary, so both words become [UNK] and the count is 1 + 3 + 1 = 5."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "cartons is cart, ##on, ##s, 3 tokens. tent starts with ten, the longest entry that matches, and the rest, t, would need ##t, which is not an entry, so the whole word becomes one [UNK]. carpet starts with carp, since carpe and carpet are not entries, and the rest, et, has neither ##et nor ##e, so it becomes one [UNK] as well, although car followed by ##pet spells it. The encoder takes the longest match at each position and never goes back to try a shorter one. 1 + 3 + 1 = 5."
+      },
+      {
+       "result": "5"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "twe-analogy-nearest-word",
+   "moduleId": "natural-language-processing-tokenization-embeddings",
+   "title": "Where Dog Minus Puppy Plus Kitten Lands",
+   "difficulty": "Hard",
+   "minutes": 25,
+   "overview": [
+    "A small embedding table has five words in three dimensions:"
+   ],
+   "setup": [
+    {
+     "tex": "\\begin{array}{cc}\n\\text{Word} & \\text{Vector} \\\\ \\hline\n\\text{puppy} & \\text{(4, 0, 0)} \\\\\n\\text{dog} & \\text{(4, 0, 1)} \\\\\n\\text{kitten} & \\text{(0, 4, 0)} \\\\\n\\text{cat} & \\text{(1, 4, 2)} \\\\\n\\text{animal} & \\text{(4, 4, 4)}\n\\end{array}"
+    },
+    {
+     "p": "To test whether the table captures the step from a young animal to a grown one, a student computes $\\mathbf{q} = \\text{dog} - \\text{puppy} + \\text{kitten}$ and looks for the word whose vector has the highest cosine similarity with $\\mathbf{q}$."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Which word of the table has the highest cosine similarity with $\\mathbf{q}$? Type the word."
+      }
+     ],
+     "answer": [
+      {
+       "p": "$\\mathbf{q} = (4, 0, 1) - (4, 0, 0) + (0, 4, 0) = (0, 4, 1)$, with $\\lVert \\mathbf{q} \\rVert = \\sqrt{17}$."
+      },
+      {
+       "tex": "\\begin{array}{cccc}\n\\text{Word} & \\mathbf{q} \\cdot \\mathbf{v} & \\lVert \\mathbf{v} \\rVert & \\text{Cosine} \\\\ \\hline\n\\text{puppy} & 0 & 4 & 0.000 \\\\\n\\text{dog} & 1 & \\sqrt{17} & 0.059 \\\\\n\\text{kitten} & 16 & 4 & \\mathbf{0.970} \\\\\n\\text{cat} & 18 & \\sqrt{21} & 0.953 \\\\\n\\text{animal} & 20 & \\sqrt{48} & 0.700\n\\end{array}"
+      },
+      {
+       "p": "Kitten comes first: the query returns one of the three words it was built from. Cat, the word the student was looking for, is second. Ranking by the dot product without dividing by the lengths would put animal first, at 20, because its vector is the longest, and that is why the ranking uses the cosine."
+      },
+      {
+       "result": "kitten"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Keep kitten and the length of the step $\\boldsymbol{\\delta} = \\text{dog} - \\text{puppy}$ fixed, but let the step point in any direction, so that $\\mathbf{q} = \\text{kitten} + \\boldsymbol{\\delta}$. What is the lowest cosine similarity kitten can have with $\\mathbf{q}$? Give it to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Write $\\mathbf{c}$ for kitten, so $\\lVert \\mathbf{c} \\rVert = 4$ and $\\lVert \\boldsymbol{\\delta} \\rVert = 1$. Let $t = \\mathbf{c} \\cdot \\boldsymbol{\\delta} / \\lVert \\mathbf{c} \\rVert$, the part of the step along $\\mathbf{c}$, which ranges over $[-1, 1]$. Then"
+      },
+      {
+       "tex": "\\cos(\\mathbf{c}, \\mathbf{c} + \\boldsymbol{\\delta})\n= \\frac{\\lVert \\mathbf{c} \\rVert^2 + \\mathbf{c} \\cdot \\boldsymbol{\\delta}}\n{\\lVert \\mathbf{c} \\rVert \\, \\lVert \\mathbf{c} + \\boldsymbol{\\delta} \\rVert}\n= \\frac{4 + t}{\\sqrt{17 + 8t}} ."
+      },
+      {
+       "p": "The cosine is positive, so minimize its square $g(t) = (4 + t)^2 / (17 + 8t)$:"
+      },
+      {
+       "tex": "g'(t) = \\frac{2(4 + t)(17 + 8t) - 8(4 + t)^2}{(17 + 8t)^2}\n= \\frac{(4 + t)(2 + 8t)}{(17 + 8t)^2} ,"
+      },
+      {
+       "p": "which is 0 at $t = -1/4$, negative before and positive after. There $g = (15/4)^2 / 15 = 15/16$, so the lowest cosine is"
+      },
+      {
+       "tex": "\\sqrt{15/16} = \\frac{\\sqrt{15}}{4} \\approx 0.968 ,"
+      },
+      {
+       "p": "against 1 at both ends, $t = \\pm 1$. Geometrically, $\\mathbf{q}$ lies on a sphere of radius 1 around $\\mathbf{c}$, and the angle at the origin is largest when the line from the origin touches that sphere, where $\\sin \\theta = 1/4$. In general, a step of length $r \\lVert \\mathbf{c} \\rVert$ with $r < 1$ leaves $\\cos(\\mathbf{c}, \\mathbf{q}) \\ge \\sqrt{1 - r^2}$."
+      },
+      {
+       "result": "0.968"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "What does Part 2 say a word other than kitten needs to come first? Change the ranking rule so that the test measures the analogy, and say which word of the table it returns then."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Whatever direction the step takes, kitten keeps a cosine of at least 0.968 with $\\mathbf{q}$, so any other word must do better than that, which means lying within about $14.5^\\circ$ of $\\mathbf{q}$. The step is a quarter of kitten's length, so $\\mathbf{q}$ stays close to kitten, and only a word whose vector is almost exactly kitten plus the step can beat it. Cat, at 0.953, is close but not that close. The shorter the step is next to the vector it is added to, the closer $\\sqrt{1 - r^2}$ gets to 1 and the harder kitten is to beat."
+      },
+      {
+       "p": "The fix is to leave the three query words out of the ranking and return the best of the rest. That is how analogy benchmarks score word vectors: the answer to \"a is to b as c is to ?\" is the word, other than a, b and c, with the highest cosine similarity to $b - a + c$. Under that rule the table returns cat, with 0.953 against 0.700 for animal, and the analogy holds. Without the rule, a test of this table would count the analogy as failed even though cat is the best answer it could give."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "twe-one-table-for-both-roles",
+   "moduleId": "natural-language-processing-tokenization-embeddings",
+   "title": "Skip-Gram with One Table",
+   "difficulty": "Hard",
+   "minutes": 25,
+   "overview": [
+    "A student implements skip-gram with a single table: each word has one vector, used as $\\mathbf{v}_w$ when the word is the center and as $\\mathbf{u}_w$ when it is a context word. The training text is the two words tick and tock alternating many times,"
+   ],
+   "setup": [
+    {
+     "code": {
+      "language": "text",
+      "lines": [
+       "tick tock tick tock tick tock ..."
+      ]
+     }
+    },
+    {
+     "p": "with a window of one word on each side. Every (center, context) pair is then (tick, tock) or (tock, tick), the two kinds equally often, and the softmax runs over the two-word vocabulary tick and tock."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the lowest average loss, in nats per pair, that a single table can reach, in any dimension? Give it to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Write $\\mathbf{a}$ for the vector of tick and $\\mathbf{b}$ for tock. With tick as the center, the scores are $\\mathbf{a} \\cdot \\mathbf{a}$ for tick and $\\mathbf{a} \\cdot \\mathbf{b}$ for tock, so"
+      },
+      {
+       "tex": "P(\\text{tock} \\mid \\text{tick})\n= \\frac{e^{\\mathbf{a} \\cdot \\mathbf{b}}}{e^{\\mathbf{a} \\cdot \\mathbf{a}} + e^{\\mathbf{a} \\cdot \\mathbf{b}}}\n= \\frac{1}{1 + e^{x}},\n\\qquad x = \\lVert \\mathbf{a} \\rVert^2 - \\mathbf{a} \\cdot \\mathbf{b} ,"
+      },
+      {
+       "p": "and in the same way $P(\\text{tick} \\mid \\text{tock}) = 1 / (1 + e^{y})$ with $y = \\lVert \\mathbf{b} \\rVert^2 - \\mathbf{a} \\cdot \\mathbf{b}$. The two kinds of pair are equally common, so with $g(t) = \\ln(1 + e^{t})$ the average loss is"
+      },
+      {
+       "tex": "\\mathcal{L} = \\tfrac12 \\big( g(x) + g(y) \\big) ."
+      },
+      {
+       "p": "$x$ and $y$ are tied together: $x + y = \\lVert \\mathbf{a} \\rVert^2 - 2\\,\\mathbf{a} \\cdot \\mathbf{b} + \\lVert \\mathbf{b} \\rVert^2 = \\lVert \\mathbf{a} - \\mathbf{b} \\rVert^2 \\ge 0$. $g$ is convex and increasing, so"
+      },
+      {
+       "tex": "\\mathcal{L} \\ge g\\Big( \\frac{x + y}{2} \\Big) \\ge g(0) = \\ln 2 \\approx 0.693 ,"
+      },
+      {
+       "p": "the first step by convexity and the second because $(x + y)/2 \\ge 0$. Any table with $\\mathbf{a} = \\mathbf{b}$ reaches it, since then $x = y = 0$. At best, the model gives each word's real neighbor probability 1/2 and the other half to the word itself, which never appears as its own neighbor in this text."
+      },
+      {
+       "result": "0.693"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "With the usual two tables, $\\mathbf{v}_w$ and $\\mathbf{u}_w$ separate, show that the average loss can be made as small as you like."
+      }
+     ],
+     "answer": [
+      {
+       "p": "One dimension is enough. For a number $s > 0$ take"
+      },
+      {
+       "tex": "v_{\\text{tick}} = s, \\quad u_{\\text{tock}} = 1, \\quad\nu_{\\text{tick}} = -1, \\quad v_{\\text{tock}} = -s ."
+      },
+      {
+       "p": "With tick as the center the scores are $u_{\\text{tock}} v_{\\text{tick}} = s$ and $u_{\\text{tick}} v_{\\text{tick}} = -s$, so $P(\\text{tock} \\mid \\text{tick}) = 1 / (1 + e^{-2s})$, and by symmetry $P(\\text{tick} \\mid \\text{tock})$ is the same. The average loss is $\\ln(1 + e^{-2s})$, which goes to 0 as $s$ grows: about 0.127 at $s = 1$, 0.0025 at $s = 3$ and $2 \\times 10^{-9}$ at $s = 10$. The context vector of tick points away from its center vector, which one table cannot do."
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Back to one table, for any vocabulary. Show that for any two words with vectors $\\mathbf{a}$ and $\\mathbf{b}$, at least one of $\\mathbf{a} \\cdot \\mathbf{a} \\ge \\mathbf{a} \\cdot \\mathbf{b}$ and $\\mathbf{b} \\cdot \\mathbf{b} \\ge \\mathbf{a} \\cdot \\mathbf{b}$ holds. What does this mean for a one-table model trained on real text?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Suppose both fail, so $\\mathbf{a} \\cdot \\mathbf{a} < \\mathbf{a} \\cdot \\mathbf{b}$ and $\\mathbf{b} \\cdot \\mathbf{b} < \\mathbf{a} \\cdot \\mathbf{b}$. Adding the two,"
+      },
+      {
+       "tex": "\\lVert \\mathbf{a} - \\mathbf{b} \\rVert^2\n= \\mathbf{a} \\cdot \\mathbf{a} + \\mathbf{b} \\cdot \\mathbf{b} - 2\\,\\mathbf{a} \\cdot \\mathbf{b} < 0 ,"
+      },
+      {
+       "p": "which is impossible. $\\qquad\\blacksquare$"
+      },
+      {
+       "p": "With one table, $\\mathbf{a} \\cdot \\mathbf{a}$ is the score a word gives itself as a context word. So for any two words, at least one of them scores itself at least as high as the other one. Take two words that are often neighbors and almost never their own neighbors, such as salt and pepper. A one-table model cannot make both of them prefer the other: one of the two gives itself at least as much probability as its partner. Part 1 is the extreme case: tick and tock are each other's only neighbors, and the constraint costs $\\ln 2$ per pair. Two tables remove the constraint, because $\\mathbf{u}_w \\cdot \\mathbf{v}_w$ can be as low as the data needs, and that is one reason word2vec keeps $W_{\\text{out}}$ during training even though it is usually discarded afterwards."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

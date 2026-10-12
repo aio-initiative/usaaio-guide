@@ -1,0 +1,526 @@
+/* Whole-site polish after the UI lanes merged (2026-10-12). Imported last in
+   ui.css, so these rules settle the places where two lanes disagree. Each
+   block names the page it fixes. Colors come from the site tokens only. */
+
+/* --- sentence case everywhere ---------------------------------------------- */
+
+/* main.css still sets these kickers and small labels in capitals with wide
+   tracking. UI labels are sentence case, so the text shows as written. */
+.eyebrow,
+.kpi-tile span,
+.stage-meter-head span,
+.chapter-kicker,
+.topic-copy small,
+.route-card span,
+.side-section h3,
+.dash-card span,
+.dash-wide h3,
+.card-kicker,
+.resource-card small,
+.reader-toolbar span,
+.reader-section h2,
+.reader-subblock h3,
+.reader-answer > summary,
+.reader-code-title,
+.reader-focus-copy small,
+.reader-pagenav-card small,
+.timeline span,
+.team-position,
+.team-ioai-tag,
+.team-camp-tag,
+.team-aiic-tag,
+.theory-kicker,
+.theory-answer-label,
+.theory-result span,
+.mock-label,
+.mock-timer-label,
+.mock-stat span,
+.mock-bar-label,
+.mock-paper-kicker,
+.reader-output-title {
+  text-transform: none;
+  letter-spacing: 0.01em;
+}
+
+/* The code label on theory pages is written in lower case ("python"), so it
+   gets a capital first letter instead of all capitals. */
+.theory-code-head {
+  text-transform: capitalize;
+  letter-spacing: 0.01em;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* --- header: actions on the right ------------------------------------------- */
+
+/* On a wide screen the search and login buttons sit at the right edge of the
+   bar, so the header spans the same width as the page below it. */
+@media (min-width: 1100px) {
+  .site-header .nav-divider {
+    margin-left: auto;
+  }
+}
+
+/* --- module reader: one accent color ---------------------------------------- */
+
+/* The reader kept a blue accent for links, the current sidebar entry and the
+   problem titles. The rest of the site uses the terracotta brand, so the
+   reader does too. */
+body[data-page="module"] {
+  --reader-link: var(--brand-strong);
+}
+
+/* Definition bank was a small underlined link. It is a button now, the same
+   size and shape as the one on the problem pages. */
+.reader-article .definition-bank-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.6rem;
+  margin: 0.25rem 0 1.25rem;
+  padding: 0.5rem 1.05rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+
+.reader-article .definition-bank-button::before {
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z'/%3E%3Cpath d='M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z'/%3E%3Cpath d='M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.reader-article .definition-bank-button:hover {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+.reader-article .definition-bank-button:focus-visible {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+/* The sidebar collapse button was a 28px ghost. */
+.reader-nav-toggle {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink-2);
+}
+
+.reader-nav-toggle svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Previous and next cards at the foot of a module: a clearer label and a
+   larger target. */
+.reader-article .reader-pagenav-card {
+  min-height: 4.25rem;
+  padding: 0.85rem 1.1rem;
+  border-width: 1.5px;
+}
+
+.reader-article .reader-pagenav-card small {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.reader-article .reader-pagenav-card:hover {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+}
+
+/* --- multiple choice: one frame per option ----------------------------------- */
+
+/* main.css draws a border on each option row and problem-page.css drew a
+   second one on the button inside it, so every option showed two outlines.
+   The row is now the only frame. It holds the choice and, once picked, the
+   verdict, so the explanation reads as part of that option. */
+.mcq-card .mcq-option {
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.mcq-card .mcq-choice,
+.mcq-card .mcq-choice:hover,
+.mcq-card .mcq-option.is-correct .mcq-choice,
+.mcq-card .mcq-option.is-wrong .mcq-choice,
+.mcq-card .mcq-option[data-picked="true"] .mcq-choice {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.mcq-card .mcq-choice:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: -3px;
+  box-shadow: none;
+}
+
+.mcq-card:not(.is-solved) .mcq-option:not(.is-picked):hover {
+  border-color: var(--navy);
+  background: var(--navy-soft);
+}
+
+.mcq-card .mcq-option.is-correct {
+  border-color: var(--green);
+  background: var(--green-soft);
+}
+
+.mcq-card .mcq-option.is-wrong {
+  border-color: var(--coral);
+  background: var(--coral-soft);
+}
+
+.mcq-card .mcq-verdict-body {
+  margin: 0 1.1rem 1rem;
+  background: var(--paper);
+}
+
+.mcq-card.is-solved .mcq-option:not(.is-correct):not(.is-wrong) {
+  border-color: var(--line-soft);
+  background: var(--surface-2);
+  box-shadow: none;
+}
+
+/* --- problem pages: parts and the number checker ---------------------------- */
+
+/* main.css removes the top border of the first part, written for the old
+   ruled list. Parts are cards now, so the first one needs its full outline. */
+.theory-parts > .theory-part:first-child {
+  border-top: 1px solid var(--line);
+}
+
+/* Check is the main action of the checker, so it uses the primary style
+   instead of a black button found nowhere else on the page. */
+.theory-check-button {
+  border: 1.5px solid var(--brand);
+  background: var(--brand);
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+.theory-check-button:hover {
+  border-color: var(--brand-strong);
+  background: var(--brand-strong);
+}
+
+.theory-check-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+.theory-check-input::placeholder {
+  font-family: var(--font-body);
+  letter-spacing: 0;
+  color: var(--muted-2);
+}
+
+/* The result line reserved a blank row under the input before any check.
+   It stays in the page (it is the live region) but takes no room. */
+.theory-check-result:empty {
+  min-height: 0;
+  margin: 0;
+}
+
+/* On a phone the action bar wrapped "Read the module" and "Reveal all
+   answers" onto two lines each. Definition bank and Read the module share the
+   first row (the mock's primary button joins them), every other action takes
+   a full row. */
+@media (max-width: 640px) {
+  .pp-head .pp-action {
+    white-space: nowrap;
+  }
+
+  .pp-head .pp-action:not(.pp-complete):not(.definition-bank-button):not(.theory-meta-link) {
+    flex-basis: 100%;
+  }
+}
+
+/* --- notebook editor ---------------------------------------------------------- */
+
+/* The editor toolbar kept the old compact 34px buttons with 13px labels. They
+   now match the mock run toolbar, which is built on this page. */
+.editor-toolbar {
+  gap: 0.5rem;
+  padding: 0.6rem 0.7rem;
+}
+
+.editor-toolbar .button {
+  min-height: 2.75rem;
+  padding: 0.5rem 1.05rem;
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+}
+
+.editor-toolbar .button svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Run all had a grey outline around its terracotta fill. */
+.editor-toolbar .button-primary {
+  border: 1.5px solid var(--brand);
+  color: #fff;
+}
+
+.editor-toolbar .button-primary:hover:not(:disabled) {
+  border-color: var(--brand-strong);
+  background: var(--brand-strong);
+}
+
+.editor-toolbar .button-secondary {
+  border: 1.5px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: var(--shadow-sm);
+}
+
+.editor-toolbar .button-secondary:hover:not(:disabled) {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+.editor-split {
+  min-height: 2.75rem;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.92rem;
+}
+
+.editor-kernel {
+  min-height: 2.25rem;
+  font-size: 0.8rem;
+}
+
+/* The run button beside each cell was 24px. */
+.editor-cell .cell-run {
+  width: 32px;
+  height: 32px;
+}
+
+/* The subtitle was set in the code font. It is a sentence, so it uses the
+   body font like every other page subtitle. */
+body[data-page="editor"] .page-hero p:not(.eyebrow) {
+  font-family: var(--font-body);
+  font-size: 1rem;
+}
+
+.editor-note {
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+/* On a phone the two back links sat right aligned under the title. They now
+   start at the left edge like the title. */
+@media (max-width: 760px) {
+  body[data-page="editor"] .page-hero {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  body[data-page="editor"] .editor-hero-actions {
+    justify-content: flex-start;
+  }
+}
+
+/* --- dashboard ------------------------------------------------------------- */
+
+/* The activity grid is 958px wide. Its scroller let it widen the whole page
+   on a phone. Containing it keeps the scrolling inside the card. */
+.activity-scroll {
+  position: relative;
+  contain: paint;
+}
+
+/* --- text arrows ----------------------------------------------------------- */
+
+/* The → glyph sits low in the display font, under the middle of the label it
+   follows. A tenth of an em up centres it on the capitals beside it. */
+.glossary-module > span[aria-hidden="true"],
+.chapter-table-link > span[aria-hidden="true"],
+.stage-card-cta > span[aria-hidden="true"],
+.pp-head .theory-meta-link.pp-action::after,
+body[data-page="contact"] .report-issue-link::after,
+.about-tile-name::after {
+  position: relative;
+  top: -0.1em;
+}
+
+/* --- quick fixes (owner, 2026-10-12 12:25 PM) ------------------------------ */
+
+/* MCQ page labels in sentence case, like every other label on the site. */
+.theory-paper [class*="label"],
+.theory-paper [class*="kicker"],
+.theory-paper [class*="eyebrow"],
+.theory-paper aside h2,
+.theory-paper aside h3 {
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* Dropdowns: the current page is shown by its tinted row alone, no side bar. */
+.site-header .nav-menu-panel a.active::before {
+  display: none;
+}
+
+/* Mock minutes: no spinner arrows, so the number stays centred. */
+.mock-minutes {
+  -moz-appearance: textfield;
+  appearance: textfield;
+  text-align: center;
+}
+
+.mock-minutes::-webkit-outer-spin-button,
+.mock-minutes::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Dashboard welcome card: title and line centred on the button's axis. */
+[data-page="dashboard"] .dash-hero {
+  align-items: center;
+}
+
+[data-page="dashboard"] .dash-hero h1 {
+  margin: 0;
+}
+
+[data-page="dashboard"] .dash-hero p {
+  margin: 0.35rem 0 0;
+}
+
+/* Opening the sign-in window hid the scrollbar and shifted the page left. Keep
+   the scrollbar's space reserved so nothing moves. */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* Problems filter row: Shuffle, Random and Reset are icon buttons (their name
+   shows on hover), so the row is lighter. */
+.problems-sort-row .sort-button {
+  width: 42px;
+  min-width: 42px;
+  height: 42px;
+  padding: 0;
+  justify-content: center;
+}
+
+.problems-sort-row .sort-button svg {
+  margin: 0;
+}
+
+/* Resource shelf: a short last row of cards is centred, as on USAAIO links. */
+[data-page="resources"] .resource-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+[data-page="resources"] .resource-grid > * {
+  flex: 0 1 calc((100% - 2 * 1.1rem) / 3);
+}
+
+@media (max-width: 900px) {
+  [data-page="resources"] .resource-grid > * {
+    flex-basis: calc((100% - 1.1rem) / 2);
+  }
+}
+
+@media (max-width: 600px) {
+  [data-page="resources"] .resource-grid > * {
+    flex-basis: 100%;
+  }
+}
+
+html .pp-head .pp-fact dt,
+html .pp-panel-title,
+html .mcq-submit-card .mcq-legend,
+html .mcq-submit-card .mcq-tag {
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* --- one green for done (owner, 2026-10-12 12:30 PM) ----------------------
+   Anything the reader has finished reads in the site's one green, var(--green):
+   every progress fill, the module problem meter, the status circle, completed
+   chips and the activity grid (tints of the same green, not terracotta). */
+html .pprog-fill,
+html .pprog-type--code .pprog-fill,
+html .pprog-type--mcq .pprog-fill,
+html .pprog-type--text .pprog-fill,
+html [data-page="dashboard"] .dash-stage .pprog-fill,
+html .reader-article .reader-progress-fill,
+html .meter-fill,
+html .stage-meter .meter-fill,
+html [data-page="dashboard"] .kpi-tile .meter-fill,
+html .glance-bar i,
+html .chapter-table tbody tr:hover .glance-bar i {
+  background: var(--green);
+}
+
+html .activity-square.level-1,
+html [data-page="dashboard"] .activity-square.level-1 { background: color-mix(in srgb, var(--green) 22%, var(--paper)); }
+html .activity-square.level-2,
+html [data-page="dashboard"] .activity-square.level-2 { background: color-mix(in srgb, var(--green) 45%, var(--paper)); }
+html .activity-square.level-3,
+html [data-page="dashboard"] .activity-square.level-3 { background: color-mix(in srgb, var(--green) 70%, var(--paper)); }
+html .activity-square.level-4,
+html [data-page="dashboard"] .activity-square.level-4 { background: var(--green); }
+
+/* Inline code on problem pages, the mock run and coding statements looks like
+   it does in lessons: a grey chip with a little padding (owner, 2026-10-12).
+   Option cards keep their own code style. */
+html .theory-paper :not(pre) > code,
+html .mock-run-shell :not(pre) > code,
+html body[data-page="editor"] .editor-md :not(pre) > code {
+  padding: 0.125rem 0.3rem;
+  border-radius: 0.25rem;
+  background: var(--reader-code-bg, #e5e7eb);
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+html .theory-paper .mcq-choice :not(pre) > code,
+html .mock-run-shell .mcq-choice :not(pre) > code {
+  padding: 0;
+  background: none;
+  font-size: 1em;
+}
+
+/* Section pages: "Continue: <module>" replaces the in-progress count. */
+html .stage-resume {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  color: var(--ink-2);
+  font-weight: 600;
+  text-decoration: none;
+}
+html .stage-resume strong { color: var(--brand-strong); }
+html .stage-resume span { transition: transform 140ms ease; }
+html .stage-resume:hover strong,
+html .stage-resume:focus-visible strong { text-decoration: underline; text-underline-offset: 3px; }
+html .stage-resume:hover span { transform: translateX(3px); }

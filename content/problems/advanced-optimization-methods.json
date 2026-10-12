@@ -1,0 +1,296 @@
+{
+ "module": "advanced-optimization-methods",
+ "stage": "Round 2",
+ "index": [
+  {
+   "id": "cvx-four-examples-two-per-batch",
+   "moduleId": "advanced-optimization-methods",
+   "title": "Four Examples, Two per Batch",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=cvx-four-examples-two-per-batch",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "Four examples have per-example gradients 1, 3, 5 and 7, and SGD averages two different examples drawn at random. Find the variance of that batch gradient, then explain why it is lower than the 1/B rule predicts and what the full batch gives. 2 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "cvx-newton-on-a-square-root",
+   "moduleId": "advanced-optimization-methods",
+   "title": "Newton's Method on the Square Root of 1 + w²",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=cvx-newton-on-a-square-root",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "Take the smooth convex loss f(w) = sqrt(1 + w^2), whose minimum is at w = 0. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "cvx-two-minima-and-a-flat-point",
+   "moduleId": "advanced-optimization-methods",
+   "title": "Two Minima and the Point Between Them",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=cvx-two-minima-and-a-flat-point",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "A loss with two weights has minima at (0, 1) and (0, -1) and a saddle point between them at (0, 0). Gradient descent with step size 0.1 starts just off the saddle: say at which step the run first leaves it, what happens from a start exactly on it, and what that says about a loss curve that sits flat and then falls again. 2 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  }
+ ],
+ "theory": [
+  {
+   "id": "cvx-four-examples-two-per-batch",
+   "moduleId": "advanced-optimization-methods",
+   "title": "Four Examples, Two per Batch",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "A model with one weight is trained on four examples. At the current weight, the per-example gradients are"
+   ],
+   "setup": [
+    {
+     "tex": "\\nabla\\mathcal{L}_1 = 1, \\quad \\nabla\\mathcal{L}_2 = 3, \\quad\n\\nabla\\mathcal{L}_3 = 5, \\quad \\nabla\\mathcal{L}_4 = 7 ."
+    },
+    {
+     "p": "SGD draws a mini-batch of $B = 2$ different examples, every pair equally likely, and uses the average of their two gradients."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the variance of the batch gradient over the random choice of batch? Give it as a fraction or to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The full gradient is the average of all four, $(1 + 3 + 5 + 7)/4 = 4$."
+      },
+      {
+       "p": "There are six pairs. Their batch gradients are"
+      },
+      {
+       "tex": "\\begin{array}{ccccccc}\n\\text{Pair} & \\{1,2\\} & \\{1,3\\} & \\{1,4\\} & \\{2,3\\} & \\{2,4\\} & \\{3,4\\} \\\\ \\hline\ng & 2 & 3 & 4 & 4 & 5 & 6\n\\end{array}"
+      },
+      {
+       "p": "They average to 4, the full gradient, as they must. Their squared distances from 4 are $4, 1, 0, 0, 1, 4$, which average to $10/6 = 5/3 \\approx 1.667$."
+      },
+      {
+       "result": "1.667"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "A batch of one example has variance $\\big((-3)^2 + (-1)^2 + 1^2 + 3^2\\big)/4 = 5$. The lesson says the variance falls roughly like $1/B$, which predicts $2.5$ for $B = 2$. Explain why the answer is lower, what $B = 4$ gives, and when the $1/B$ rule is accurate."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The $1/B$ rule assumes the examples in a batch are independent draws, each from all $n$ examples. That holds when the batch is drawn with replacement: then the 16 ordered pairs, repeats included, give $5/2$."
+      },
+      {
+       "p": "A batch of different examples is not two independent draws. With replacement, a batch can hold example 1 twice or example 4 twice, with batch gradients 1 and 7, the farthest from 4. Without replacement, once example 1 is in the batch the other slot must hold a larger gradient, so the extremes cannot pair with themselves and the averages bunch closer to 4. Here that cuts the variance from $5/2$ to $5/3$, by the factor $(n - B)/(n - 1) = 2/3$."
+      },
+      {
+       "p": "Where the factor comes from: write $d_i$ for example $i$'s gradient minus the full gradient, with $\\sigma^2$ the average of $d_i^2$ (here 5). The $d_i$ sum to 0 over all $n$ examples, so $0 = \\big(\\sum_i d_i\\big)^2$ is $n\\sigma^2$ plus the $n(n - 1)$ cross terms $d_i d_j$ with $i \\ne j$. Their average, the covariance of two different draws, is therefore $-\\sigma^2/(n - 1)$ (here $-5/3$). A batch of $B$ different draws has $B$ variances and $B(B - 1)$ such covariances, so"
+      },
+      {
+       "tex": "\\operatorname{Var}(g) = \\frac{1}{B^2}\\Big(B\\sigma^2 - B(B - 1)\\frac{\\sigma^2}{n - 1}\\Big)\n= \\frac{\\sigma^2}{B}\\Big(1 - \\frac{B - 1}{n - 1}\\Big) ,"
+      },
+      {
+       "p": "and the bracket is $(n - B)/(n - 1)$. With $n = 4$ and $B = 2$ this is $\\tfrac52 \\times \\tfrac23 = \\tfrac53$."
+      },
+      {
+       "p": "At $B = 4$ every batch is the whole data set, so the batch gradient is always 4 and its variance is 0, although $1/B$ would predict $5/4$."
+      },
+      {
+       "p": "In training, $n$ is in the thousands or millions and $B$ is a few dozen or hundred, so $(n - B)/(n - 1)$ is within a fraction of a percent of 1 and the $1/B$ rule is accurate. It breaks only when the batch is a large share of the data, as in this tiny example."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cvx-newton-on-a-square-root",
+   "moduleId": "advanced-optimization-methods",
+   "title": "Newton's Method on the Square Root of 1 + w²",
+   "difficulty": "Hard",
+   "minutes": 15,
+   "overview": [
+    "Take the smooth convex loss"
+   ],
+   "setup": [
+    {
+     "tex": "f(w) = \\sqrt{1 + w^2} ,"
+    },
+    {
+     "p": "whose minimum is at $w = 0$."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Newton's method starts at $w_0 = 0.9$. After how many steps is $|w_k|$ below $10^{-6}$ for the first time?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The derivatives are"
+      },
+      {
+       "tex": "f'(w) = \\frac{w}{\\sqrt{1 + w^2}}, \\qquad f''(w) = \\frac{1}{(1 + w^2)^{3/2}} ,"
+      },
+      {
+       "p": "so $f'/f'' = w(1 + w^2)$ and the Newton step simplifies to"
+      },
+      {
+       "tex": "w \\leftarrow w - w(1 + w^2) = -w^3 ."
+      },
+      {
+       "p": "So $|w_k| = 0.9^{3^k}$: $0.729$, $0.387$, $0.0581$, $1.97 \\times 10^{-4}$, then $7.6 \\times 10^{-12}$. The first value below $10^{-6}$ is at $k = 5$."
+      },
+      {
+       "p": "The first steps are slow because $0.9$ is far from the minimum on this function's scale. Once $|w|$ is small, cubing it roughly triples the number of correct digits each step, even faster than the doubling the lesson describes (at the minimum $f'''(0) = 0$, which makes this function converge faster than the typical case)."
+      },
+      {
+       "result": "5"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "From which starting points does Newton's method converge? Give the boundary value of $|w_0|$, and say what happens on each side of it."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Since $w_k = (-1)^k w_0^{3^k}$, the iterates go to 0 when $|w_0| < 1$ and to infinity when $|w_0| > 1$. From $w_0 = 1.1$: $-1.33$, $2.36$, $-13.1$, $2250$, and so on. At $|w_0| = 1$ they bounce between $1$ and $-1$ forever."
+      },
+      {
+       "p": "Far from 0 the function is almost a straight line, so $f''$ is tiny. Newton fits a parabola with that tiny curvature, and its bottom lies far beyond the true minimum, on the other side. Convexity does not stop this: it guarantees that a zero gradient is the global minimum, not that the Newton step moves toward it. Quadratic convergence is a promise about points already close to the minimum."
+      },
+      {
+       "result": "1"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Does gradient descent with $\\eta = 1$ converge on this $f$ from every start? Prove your answer, and compare it with part 2."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Yes. The curvature $f''(w) = (1 + w^2)^{-3/2}$ is at most 1, at $w = 0$. So the largest curvature anywhere is $\\lambda_{\\max} = 1$, and the descent lemma says the step $\\eta = 1/\\lambda_{\\max} = 1$ lowers the loss by at least $\\tfrac12 f'(w)^2$ every step. The loss never drops below 1, so these decreases must shrink toward 0, which forces $f'(w_k) \\to 0$. Since $|f'(w)| = |w|/\\sqrt{1 + w^2}$ is 0 only at $w = 0$ and grows with $|w|$, the iterates go to 0."
+      },
+      {
+       "p": "The update is $w \\leftarrow w - w/\\sqrt{1 + w^2}$. For large $|w|$ the step is close to 1 in size, toward 0, so from $w_0 = 10$ it walks down by about one unit per step and reaches $|w| < 10^{-6}$ after 13 steps. From $w_0 = 1.1$, where Newton blows up, it takes 4."
+      },
+      {
+       "p": "There is no contradiction. Gradient descent uses a fixed step set by the largest curvature anywhere, which is cautious. Newton divides by the curvature at the current point, which is fast near the minimum and reckless where the curvature is small. Practical Newton solvers add a safeguard, such as shrinking the step until the loss goes down."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cvx-two-minima-and-a-flat-point",
+   "moduleId": "advanced-optimization-methods",
+   "title": "Two Minima and the Point Between Them",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "A loss with two weights,"
+   ],
+   "setup": [
+    {
+     "tex": "f(x, y) = x^2 + \\tfrac12 (y^2 - 1)^2 ,"
+    },
+    {
+     "p": "has its minima at $(0, 1)$ and $(0, -1)$, with $f = 0$, and a stationary point at $(0, 0)$, with $f = \\tfrac12$. Gradient descent runs with $\\eta = 0.1$ from $(1, 10^{-6})$."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "At which step does $|y|$ first exceed $0.01$?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The Hessian at $(0, 0)$ is $\\operatorname{diag}(2, -2)$: the point is a minimum along $x$ and a maximum along $y$, a saddle point. Near it the gradient is about $(2x, -2y)$, so one step multiplies each coordinate by $1 - \\eta\\lambda$:"
+      },
+      {
+       "tex": "x \\leftarrow (1 - 0.2)\\,x = 0.8\\,x, \\qquad y \\leftarrow (1 + 0.2)\\,y = 1.2\\,y ."
+      },
+      {
+       "p": "A negative curvature gives a factor above 1, so $y$ grows. It needs $10^{-6} \\cdot 1.2^k > 0.01$, that is $k > \\ln(10^4)/\\ln 1.2 \\approx 50.5$, so step 51. The exact gradient of $\\tfrac12(y^2 - 1)^2$ is $2y(y^2 - 1)$, whose cubic part is $10^{-4}$ of the linear part at $|y| = 0.01$ and does not change the count."
+      },
+      {
+       "p": "By then $x = 0.8^{51} \\approx 10^{-5}$, so the loss reads about $0.5$, the saddle's value, and the gradient is tiny. For about 50 steps the run looks converged, though it is nowhere near a minimum."
+      },
+      {
+       "result": "51"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "What happens from $(1, 0)$, and from $(1, 10^{-12})$? What does this say about loss plateaus in training?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "From $(1, 0)$, $y$ stays exactly 0, since $0 \\cdot 1.2 = 0$, and gradient descent converges to the saddle $(0, 0)$, where the gradient is zero. Nothing in the gradient tells it that the point is not a minimum."
+      },
+      {
+       "p": "From $(1, 10^{-12})$, $y$ must grow by a factor $10^{10}$ instead of $10^4$, which takes $\\ln(10^{10})/\\ln 1.2 \\approx 126.3$, so 127 steps. The time spent near the saddle grows like $\\ln(1/|y_0|)$: every factor of 10 closer to the bad direction's zero costs another $\\ln 10/\\ln 1.2 \\approx 12.6$ steps. After escaping, the run drops quickly to the minimum at $(0, 1)$."
+      },
+      {
+       "p": "A loss curve that sits flat and then falls again often means the run passed near a saddle point. The gradient noise of SGD and random initialization make an exact zero along the escape direction unlikely, so the run does escape, but how long it lingers depends on how close it came."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

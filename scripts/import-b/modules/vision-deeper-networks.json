@@ -1,0 +1,19 @@
+{
+ "aModule": "vision-deeper-networks",
+ "stage": "Round 2",
+ "parts": {
+  "cv-first-block-of-stage-2": {
+   "1.1": {
+    "kind": "computation",
+    "requirement": "Reasoning is not required."
+   },
+   "1.2": {
+    "kind": "computation",
+    "requirement": "Reasoning is not required."
+   }
+  }
+ },
+ "indexPrompt": {
+  "cv-first-block-of-stage-2": "Stage 2 of ResNet-50 has 4 bottleneck blocks that work with 128 channels in the middle and give 512 out, and its first block also halves the maps with a stride of 2. Count the parameters of that first block and of the whole stage, including the batch normalization after every convolution."
+ }
+}

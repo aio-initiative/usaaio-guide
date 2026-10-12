@@ -1,0 +1,35 @@
+{
+  "aModule": "transformer-generate",
+  "stage": "Round 2",
+  "fixes": [],
+  "parts": {
+    "tf-rows-a-training-step-changes": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "tf-word-order-without-positions": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "tf-rows-a-training-step-changes": "The running example ties its weights, so the embedding table both embeds the input tokens and makes the logits. After one step of gradient descent on the training text the cat sat on, how many of the eight rows of the table change?",
+    "tf-word-order-without-positions": "Remove the position values from the running example and keep the causal mask. Show that the last token comes out identical for the cat sat and for cat the sat, explain why two stacked blocks can still separate the two orders, and show that dropping the mask as well makes them indistinguishable at any depth."
+  },
+  "order": [
+    "tf-rows-a-training-step-changes",
+    "tf-word-order-without-positions"
+  ]
+}

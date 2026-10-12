@@ -1,0 +1,125 @@
+{
+  "module": "generative-adversarial-networks",
+  "stage": "Camp",
+  "index": [
+    {
+      "id": "gen-a-generator-leaner-than-collapse",
+      "moduleId": "generative-adversarial-networks",
+      "title": "A Generator That Leans Without Collapsing",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=gen-a-generator-leaner-than-collapse",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "The data is LEFT or RIGHT with probability one half each. A generator leans without collapsing: it returns LEFT on four of every five random inputs and RIGHT on the fifth. Find the score the best discriminator gives each image and the value it attains. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    }
+  ],
+  "theory": [
+    {
+      "id": "gen-a-generator-leaner-than-collapse",
+      "moduleId": "generative-adversarial-networks",
+      "title": "A Generator That Leans Without Collapsing",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "Keep the running example's data, LEFT or RIGHT with probability one half each. Now change the generator. It is biased but not collapsed: on four of every five random inputs it returns LEFT, and on the fifth it returns RIGHT. It has not lost the ability to produce either image. It just leans toward one."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Find the score the best discriminator gives LEFT, the generator held fixed."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The best discriminator scores an image by dividing the data's probability for it by the sum of the data's and the generator's probabilities. What matters is how the generator's probability splits between the two training images, not whether it has lost one of them. Here it makes LEFT on four inputs in five, so"
+            },
+            {
+              "tex": "p_g(\\text{LEFT}) = 0.8, \\qquad p_g(\\text{RIGHT}) = 0.2,"
+            },
+            {
+              "p": "and"
+            },
+            {
+              "tex": "D^*(\\text{LEFT}) = \\frac{0.5}{0.5 + 0.8} = \\frac{5}{13} = 0.3846 ."
+            },
+            {
+              "p": "That is close to the page's one third, which came from treating the generator as fully collapsed. The score has risen because the generator produces LEFT less often than the collapsed generator does, $0.8$ instead of $1$, so a LEFT image carries more evidence that it is real."
+            },
+            {
+              "result": "0.385"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Give the value $V$ that the discriminator attains at its two best scores, to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "$V$ averages the two logarithms over both the real images and the generated ones, so there are four terms and each carries a different weight. The two $\\ln d$ terms are weighted by the data's probabilities, both one half, and the two $\\ln(1 - d)$ terms are weighted by the generator's probabilities, 0.8 and 0.2."
+            },
+            {
+              "p": "The best score on RIGHT is"
+            },
+            {
+              "tex": "D^*(\\text{RIGHT}) = \\frac{0.5}{0.5 + 0.2} = \\frac{5}{7} = 0.7143,"
+            },
+            {
+              "p": "so with $D^*(\\text{LEFT}) = 5/13$,"
+            },
+            {
+              "tex": "V = 0.5 \\ln \\frac{5}{13} + 0.5 \\ln \\frac{5}{7} + 0.8 \\ln \\frac{8}{13} + 0.2 \\ln \\frac{2}{7}"
+            },
+            {
+              "tex": "= -0.4778 - 0.1682 - 0.3884 - 0.2506 = -1.2850 ."
+            },
+            {
+              "p": "Each term has to carry its own weight. Averaging the four logarithms with equal weight, a quarter each, gives $-0.7576$, and weighting the generator's two terms by one half each instead of $0.8$ and $0.2$ gives $-1.5151$, while dropping the averaging to keep only the two terms the page computes for a single real LEFT image and a single generated RIGHT image gives $\\ln(5/13) + \\ln(2/7) = -2.2083$. Either of those is a different quantity, not a rounding of this one."
+            },
+            {
+              "p": "For a check, $-1.285$ sits between the page's $-0.955$ for a collapsed generator and $-1.386$ for one that matches the data, as it should: leaning toward the data is better than collapsing onto one image and worse than matching it. The same fact appears through the Jensen-Shannon form. With $m(\\text{LEFT}) = 0.65$ and $m(\\text{RIGHT}) = 0.35$, the divergence is 0.0507, and $-\\ln 4 + 2 \\times 0.0507 = -1.285$."
+            },
+            {
+              "result": "$-1.285$"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "A student writes that the two scores must add to one, since the discriminator gives one score per image and there are only two images, so RIGHT gets $1 - 0.385 = 0.615$. Give the score the best discriminator really gives RIGHT, and say what would have to hold for that student's number to be right."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The real score is $5/7 = 0.714$, so the student's figure is too low by about 0.1."
+            },
+            {
+              "p": "A discriminator's score on an image is a comparison between that image's probability under the data and its probability under the generator. The two scores are separate quantities, each with its own generator probability in it, and nothing forces them to be complementary. They are complements only when the generator's probability is the same for both images, which means the generator is not leaning. Here it makes LEFT four times as often as RIGHT, and only the RIGHT score feels it: the student's complement of 0.385 gives 0.615 where the true score is $5/7 = 0.714$, while the LEFT score is the student's 0.385 exactly. The generator's bias moves the two scores independently, and the sum is 1.099 rather than 1."
+            },
+            {
+              "p": "One observation cannot settle this either. Scoring a single generated image reports $p_g$ at that image and nothing about the other one, so a discriminator that has been shown many LEFT images and one RIGHT image has learned little about what to do with a RIGHT image. That is the practical reason mode collapse survives: a generator that leans toward LEFT is punished on LEFT at a score of 0.385, but the discriminator's suspicion of RIGHT is smaller than the count of LEFT images would suggest, so the generator gains by drifting back toward RIGHT without ever having to give up LEFT. It is the drift, and not a hard flip, that the scores here describe."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

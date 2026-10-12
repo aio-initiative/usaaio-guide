@@ -1,0 +1,613 @@
+{
+  "module": "semi-supervised-learning",
+  "stage": "Round 2",
+  "index": [
+    {
+      "id": "ssl-when-unlabeled-points-hurt",
+      "moduleId": "semi-supervised-learning",
+      "title": "When the Unlabeled Points Cannot Help",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ssl-when-unlabeled-points-hurt",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "Two round blobs of sensor readings sit far apart with almost no points between them, and only four readings are labeled. Four variants change the classes or the spread of the blobs. Pick the variant where the unlabeled readings add nothing or make things worse than using the four labels alone.",
+      "answer": "The class is whether a point lies above or below the horizontal line through both blob centers, in either blob. Here the boundary is the line y = 0 through both centers, which cuts each blob in half through its densest part. The density has no dip there, so the unlabeled points say nothing about where it is. Worse, propagation spreads labels freely within each blob, so each blob's points take a mix of the labels inside it and the blob structure, not the line, decides the result."
+    },
+    {
+      "id": "ssl-spreading-outvotes-a-label",
+      "moduleId": "semi-supervised-learning",
+      "title": "When the Neighbors Outvote a Label",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=ssl-spreading-outvotes-a-label",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "Three photos of the same bird form a triangle in a similarity graph with every edge of weight 1. Two are labeled A and the third, by a slip, is labeled B. Label spreading iterates F toward alpha S F plus (1 - alpha) Y on the one-hot label matrix Y with the symmetrically normalized weights S, starting from F = Y. How large must alpha get before the third photo carries more weight on A than on B, and what does every row settle on as alpha approaches 1? 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ssl-fixmatch-batch-loss",
+      "moduleId": "semi-supervised-learning",
+      "title": "One Batch of FixMatch by Hand",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ssl-fixmatch-batch-loss",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A 3-class image model is trained with the FixMatch recipe and a confidence threshold of 0.9. One batch holds four unlabeled images, and each image's strongly augmented copy is scored against the pseudo-label taken from its weakly augmented copy. The unlabeled loss is the mean of the per-image cross-entropy terms over the whole batch, with an image that clears no threshold contributing zero. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ssl-knn-label-propagation",
+      "moduleId": "semi-supervised-learning",
+      "title": "Label Propagation on a kNN Graph",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ssl-knn-label-propagation",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "semi-supervised",
+        "Round 2"
+      ],
+      "prompt": "A scanner's readings form two noisy rings around the origin, plus a small cluster far from both of a kind nobody has labeled yet, and one point of each ring is labeled. Build the k-nearest-neighbor graph, run label propagation on it, and solve for the same fixed point directly, and in both cases report the points that no label can reach instead of guessing a class for them. Three functions, each with its own check cell.",
+      "answer": "Self-checking: each part ends with a check cell that prints 'Part N passed' when the code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "ssl-every-row-clears-the-bar",
+      "moduleId": "semi-supervised-learning",
+      "title": "Every Row Clears the Bar",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ssl-every-row-clears-the-bar",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A 4-class tabular problem has 40 features, 24 labeled rows and 1,476 unlabeled rows. Two self-training runs, one with almost no penalty on the weights and one with a strong penalty, both fit the 24 labeled rows, yet the first absorbs 637 unlabeled rows at confidence 0.99 and the second absorbs none. Which reading of the two runs is right?",
+      "answer": "Neither count says how often a pseudo-label is right: 24 rows in 40 dimensions are separable, so the weak penalty inflates every probability and the strong one shrinks them all. 24 points in 40 dimensions can always be split perfectly by a linear model. With almost no penalty, the fit lowers its log loss by growing the weights without limit, and that pushes predicted probabilities toward 0 and 1 on unlabeled rows too. The strong penalty keeps the weights small and every probability low. The 0.99 means a different thing in each model and nothing in either. In the run these counts come from, about 80% of the 637 rows are right. Compare confidence with accuracy on held-out labeled rows before trusting a threshold."
+    },
+    {
+      "id": "ssl-self-training-an-svm",
+      "moduleId": "semi-supervised-learning",
+      "title": "The Boundary That Self-Training Cannot Move",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=ssl-self-training-an-svm",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A hard-margin linear SVM on a line is fitted to two inspected parts and then self-trained on eleven unlabeled readings, pseudo-labeling every reading inside its margin. Find the boundary after the first refit, show the loop stops there, and count how many pseudo-labels come out wrong. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ssl-propagation-on-a-long-chain",
+      "moduleId": "semi-supervised-learning",
+      "title": "How Long Label Propagation Takes on a Chain",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=ssl-propagation-on-a-long-chain",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "Readings taken along a pipeline form a chain graph with the two ends labeled and the m points between them unlabeled, and label propagation repeats a sweep in which every unlabeled point takes the average of its neighbors. Find the fixed point, show the error decay is governed by sine eigenvectors of the sweep matrix, and count the sweeps that shrink the slowest error component by a factor of a million for a chain of 9 and of 99 unlabeled points. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ssl-semi-supervised-em",
+      "moduleId": "semi-supervised-learning",
+      "title": "A Mixture Model Fitted with Six Labels",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=ssl-semi-supervised-em",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "semi-supervised",
+        "Round 2"
+      ],
+      "prompt": "A field holds two varieties of a crop, and the seeds of each have lengths that are roughly normal. A thousand seeds were measured, and only six were identified by hand. Fit a two-component Gaussian mixture by expectation-maximization using all thousand lengths with the six known varieties held fixed, and compare the result with a model fitted to the six alone. Write the E-step, the M-step, the log-likelihood and the fitting loop. The check cell then compares the result with a model fitted to the six alone. Three parts, each with its own check cell.",
+      "answer": "Self-checking: each part ends with a check cell that prints 'Part N passed' when the code is right. A worked solution is folded at the end of the notebook."
+    }
+  ],
+  "theory": [
+    {
+      "id": "ssl-when-unlabeled-points-hurt",
+      "moduleId": "semi-supervised-learning",
+      "title": "When the Unlabeled Points Cannot Help",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A sensor dataset has 1,000 two-dimensional points in two round blobs, one centered at $(-4, 0)$ and one at $(4, 0)$, each a Gaussian with standard deviation 1, so almost no points fall between them. Four of the points are labeled, two per class, and you run label propagation on an RBF graph over all 1,000. The four variants below change either how the classes are defined or how the data looks."
+            },
+            {
+              "p": "In which variant should you expect the 996 unlabeled points to add nothing, or to make the result worse than a classifier fitted to the four labels alone?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "The class is the blob a point belongs to, but the left blob holds 900 points and the right blob only 100",
+                  "explain": "Imbalance changes how many points each class has, not where the sparse region lies. Each blob is still one class and the gap between them is still empty, so propagation still fills each blob from its labels. The labels just need to cover both blobs."
+                },
+                {
+                  "text": "The class is the blob a point belongs to, and all four labeled points sit on the inner edges of the blobs, next to the gap",
+                  "explain": "Where the labeled points sit inside a blob hardly matters for propagation: each blob is densely connected, so a label anywhere in it spreads through all of it, and the empty gap stops it from crossing. Labels near the gap are, if anything, the ones a supervised classifier would also get right."
+                },
+                {
+                  "text": "The class is whether a point lies above or below the horizontal line through both blob centers, in either blob",
+                  "correct": true,
+                  "explain": "Here the boundary is the line y = 0 through both centers, which cuts each blob in half through its densest part. The density has no dip there, so the unlabeled points say nothing about where it is. Worse, propagation spreads labels freely within each blob, so each blob's points take a mix of the labels inside it and the blob structure, not the line, decides the result."
+                },
+                {
+                  "text": "The class is the blob a point belongs to, but the blobs have standard deviation 2, so some points fall in the gap",
+                  "explain": "With standard deviation 2 the blobs overlap a little, but the density between them still falls to a clear minimum near x = 0. The boundary still runs through the sparsest region, so propagation still helps, though a few points near the middle may go either way."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Here the boundary is the line y = 0 through both centers, which cuts each blob in half through its densest part. The density has no dip there, so the unlabeled points say nothing about where it is. Worse, propagation spreads labels freely within each blob, so each blob's points take a mix of the labels inside it and the blob structure, not the line, decides the result."
+            },
+            {
+              "result": "The class is whether a point lies above or below the horizontal line through both blob centers, in either blob"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ssl-spreading-outvotes-a-label",
+      "moduleId": "semi-supervised-learning",
+      "title": "When the Neighbors Outvote a Label",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "Three photos of the same bird are linked to each other in a similarity graph, each edge of weight 1. Two of them are labeled $A$ and the third, by a slip, is labeled $B$. Write $Y$ for the $3 \\times 2$ matrix of one-hot labels, rows in the order $A, A, B$, and $S = D^{-1/2} W D^{-1/2}$ for the symmetrically normalized weights. Label spreading repeats $F \\leftarrow \\alpha S F + (1 - \\alpha) Y$ from $F = Y$, with $0 < \\alpha < 1$."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Find the limit $F^\\ast$ of the iteration as a formula in $S$, $Y$ and $\\alpha$, then compute the third photo's row. Above which value of $\\alpha$ does that photo end up with more weight on $A$ than on $B$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The iteration is $F_{t+1} = \\alpha S F_t + (1 - \\alpha) Y$. The eigenvalues of $S$ lie in $[-1, 1]$, so those of $\\alpha S$ have size at most $\\alpha < 1$ and the iteration converges. Its limit satisfies $F^\\ast = \\alpha S F^\\ast + (1 - \\alpha) Y$, so"
+            },
+            {
+              "tex": "F^\\ast = (1 - \\alpha)(I - \\alpha S)^{-1} Y ."
+            },
+            {
+              "p": "Every degree is 2, so $S = W / 2 = \\tfrac12 (J - I)$, where $J$ is the all-ones matrix. Then $I - \\alpha S = (1 + \\tfrac{\\alpha}{2}) I - \\tfrac{\\alpha}{2} J$. A matrix $aI - cJ$ with $J^2 = 3J$ has inverse $\\tfrac1a\\big(I + \\tfrac{c}{a - 3c} J\\big)$, and here $a - 3c = 1 - \\alpha$, so"
+            },
+            {
+              "tex": "(I - \\alpha S)^{-1} = \\frac{1}{1 + \\alpha/2}\\Big(I + \\frac{\\alpha/2}{1 - \\alpha} J\\Big)."
+            },
+            {
+              "p": "Row 3 of $JY$ is the column sums of $Y$, $(2, 1)$, and row 3 of $Y$ is $(0, 1)$. Multiplying by $1 - \\alpha$,"
+            },
+            {
+              "tex": "F^\\ast_3 = \\frac{1}{1 + \\alpha/2}\\Big((1 - \\alpha)(0, 1) + \\tfrac{\\alpha}{2}(2, 1)\\Big)\n= \\Big(\\frac{\\alpha}{1 + \\alpha/2},\\ \\frac{1 - \\alpha/2}{1 + \\alpha/2}\\Big)."
+            },
+            {
+              "p": "The $A$ entry wins when $\\alpha > 1 - \\alpha/2$, that is when $\\alpha > 2/3$. At $\\alpha = 2/3$ the row is $(0.5, 0.5)$, at $\\alpha = 0.8$ it is $(0.571, 0.429)$, and at $\\alpha = 0.2$, the value scikit-learn's `LabelSpreading` uses by default, it is $(0.182, 0.818)$, so the slip survives."
+            },
+            {
+              "result": "0.6667"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "What does each photo's row tend to as $\\alpha \\to 1$, after dividing it by its sum? Give the $A$ share. What would the same limit do on a graph with two clusters, each holding its own correct labels?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write $S = \\sum_k \\lambda_k v_k v_k^\\top$. For a connected graph the largest eigenvalue is $\\lambda_1 = 1$ with $v_1 \\propto \\sqrt{d}$, the square roots of the degrees, and every other $\\lambda_k$ is below 1. Then"
+            },
+            {
+              "tex": "(1 - \\alpha)(I - \\alpha S)^{-1} = \\sum_k \\frac{1 - \\alpha}{1 - \\alpha \\lambda_k}\\, v_k v_k^\\top\n\\;\\longrightarrow\\; v_1 v_1^\\top ,"
+            },
+            {
+              "p": "because the factor is 1 for $\\lambda_1 = 1$ and tends to 0 for every $\\lambda_k < 1$. So row $i$ of $F^\\ast$ tends to $v_{1,i}\\,(v_1^\\top Y)$, and after normalizing every row is proportional to the same vector $\\sum_j \\sqrt{d_j}\\, Y_j$. In the triangle all degrees are equal, so every row tends to $(2/3, 1/3)$: the $A$ share is $2/3$ for all three photos, which matches Part 1's formula at $\\alpha = 1$."
+            },
+            {
+              "p": "On two clusters joined by a few edges the same thing happens: every point in both clusters tends to one shared mixture of all the labels, so the cluster that holds fewer labels is swallowed by the global majority. A large $\\alpha$ lets neighbors correct a slip, and too large an $\\alpha$ erases the labels altogether. Plain label propagation sits at the other extreme: it clamps the labeled rows, so a labeled point keeps its own label whatever its neighbors say, and the slip in this triangle is never corrected."
+            },
+            {
+              "result": "0.6667"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ssl-fixmatch-batch-loss",
+      "moduleId": "semi-supervised-learning",
+      "title": "One Batch of FixMatch by Hand",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A 3-class image model is trained with the FixMatch recipe and a confidence threshold of 0.9. One batch holds four unlabeled images. For each, the model's softmax output on a weakly augmented copy and on a strongly augmented copy, as the probabilities of classes 0, 1 and 2, is:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{ccc}\n\\text{Image} & \\text{Weak copy} & \\text{Strong copy} \\\\ \\hline\n1 & \\text{(0.96, 0.03, 0.01)} & \\text{(0.50, 0.30, 0.20)} \\\\\n2 & \\text{(0.62, 0.30, 0.08)} & \\text{(0.40, 0.40, 0.20)} \\\\\n3 & \\text{(0.02, 0.93, 0.05)} & \\text{(0.25, 0.25, 0.50)} \\\\\n4 & \\text{(0.10, 0.12, 0.78)} & \\text{(0.10, 0.60, 0.30)}\n\\end{array}"
+        },
+        {
+          "p": "The unlabeled loss of the batch is the sum of the per-image cross-entropy terms divided by the number of images in the batch, 4, with an image that contributes no term counting as 0. Use natural logarithms."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Compute the unlabeled loss of this batch."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Only images whose weak-copy prediction clears the threshold get a pseudo-label. Image 1 (0.96 on class 0) and image 3 (0.93 on class 1) clear 0.9. Images 2 (0.62) and 4 (0.78) do not, so they contribute 0."
+            },
+            {
+              "p": "Each pseudo-label is the weak copy's top class, and the loss is the cross-entropy of the strong copy's prediction against it:"
+            },
+            {
+              "list": [
+                "Image 1: label class 0, strong copy gives it 0.50, term $-\\ln 0.50 = 0.693$.",
+                "Image 3: label class 1, strong copy gives it 0.25, term $-\\ln 0.25 = 1.386$."
+              ]
+            },
+            {
+              "p": "The loss is $(0.693 + 1.386) / 4 = 0.520$."
+            },
+            {
+              "p": "Two slips give other numbers. Taking image 3's label from the strong copy, class 2, gives the term $-\\ln 0.50$ and a loss of 0.347. Scoring the weak copy against its own label gives $(-\\ln 0.96 - \\ln 0.93)/4 = 0.028$, a loss that is small exactly when the model is already confident and so teaches nothing."
+            },
+            {
+              "result": "0.520"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Let $z$ be the logits of image 3's strong copy, so its softmax is $(0.25, 0.25, 0.50)$. Find the gradient of the batch loss with respect to $z$, and give its entry for class 1. What does one gradient descent step do to the strong copy's prediction?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "For a softmax $p$ and a one-hot target $e_y$, the gradient of $-\\ln p_y$ with respect to the logits is $p - e_y$. Image 3's term enters the batch loss divided by 4, so"
+            },
+            {
+              "tex": "\\frac{\\partial \\mathcal{L}}{\\partial z} = \\frac{1}{4}\\big((0.25, 0.25, 0.50) - (0, 1, 0)\\big) = (0.0625,\\ -0.1875,\\ 0.125)."
+            },
+            {
+              "p": "The class 1 entry is $-0.1875$. A descent step moves $z$ against the gradient: it raises the class 1 logit and lowers the other two, most of all class 2, which the strong copy currently prefers. The label is held fixed at the weak copy's answer, so the step teaches the model to give the distorted image the answer it gives the clean one. That is the consistency the method is named for. Image 2 and image 4 get no gradient at all from this batch."
+            },
+            {
+              "result": "$-0.1875$"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Lower the threshold to 0.75 and compute the loss again. Image 4 now contributes. Is its pseudo-label likely to help?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Image 4's weak copy, 0.78 on class 2, now clears 0.75, so it gets the label class 2. Its strong copy gives class 2 only 0.30, a term of $-\\ln 0.30 = 1.204$. The loss is $(0.693 + 1.386 + 1.204) / 4 = 0.821$."
+            },
+            {
+              "p": "The higher loss does not mean the model got worse: the two thresholds define different losses, so their values cannot be compared. What changed is which labels the model trains on. Image 4's label rests on a prediction of only 0.78, and its strong copy puts 0.60 on class 1. If class 2 is wrong, the step pushes the model toward it on a copy where it currently says something else, which is how wrong pseudo-labels get absorbed. That is why FixMatch uses a high threshold."
+            },
+            {
+              "result": "0.821"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ssl-every-row-clears-the-bar",
+      "moduleId": "semi-supervised-learning",
+      "title": "Every Row Clears the Bar",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A 4-class tabular problem has 40 features, 24 labeled rows (6 per class) and 1,476 unlabeled rows. You wrap `LogisticRegression` in `SelfTrainingClassifier` with `threshold=0.99`. With `C=1e6`, almost no penalty, the first round absorbs 637 unlabeled rows. With `C=0.01`, a strong penalty, it absorbs none and stops. Both models fit all 24 labeled rows perfectly."
+            },
+            {
+              "p": "Which reading of these two runs is right?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "The C = 1e6 model is the stronger one: 637 rows clear 0.99, so it is sure of them, and the C = 0.01 model is too weak to trust any of its predictions",
+                  "explain": "Confidence is not correctness. A probability that clears 0.99 means something only if, on data the model was not fitted to, rows at that confidence are right about 99% of the time. Here the 637 rows absorbed with C = 1e6 are right about 80% of the time, and the weak penalty is the reason they cleared the bar."
+                },
+                {
+                  "text": "Neither count says how often a pseudo-label is right: 24 rows in 40 dimensions are separable, so the weak penalty inflates every probability and the strong one shrinks them all",
+                  "correct": true,
+                  "explain": "24 points in 40 dimensions can always be split perfectly by a linear model. With almost no penalty, the fit lowers its log loss by growing the weights without limit, and that pushes predicted probabilities toward 0 and 1 on unlabeled rows too. The strong penalty keeps the weights small and every probability low. The 0.99 means a different thing in each model and nothing in either. In the run these counts come from, about 80% of the 637 rows are right. Compare confidence with accuracy on held-out labeled rows before trusting a threshold."
+                },
+                {
+                  "text": "Logistic regression is fitted by log loss, so its probabilities are calibrated: about 99% of the 637 rows are right, and the C = 0.01 model is just underconfident",
+                  "explain": "Logistic regression's probabilities are well calibrated when the model is fitted to plenty of data that it cannot fit perfectly. With 24 rows in 40 dimensions it fits the labeled rows perfectly, the log loss on them can be pushed toward 0 only by inflating the weights, and the probabilities on new rows inherit that inflation. About 80% of the 637 are right, not 99%."
+                },
+                {
+                  "text": "The threshold is too low for the C = 1e6 model: at 0.999 only the rows it is truly certain about would pass, and the loop would then be safe to run",
+                  "explain": "Raising the bar does not fix inflated probabilities. With the weights growing without limit, many rows sit at 0.999 and beyond, and a higher threshold keeps the most extreme of them, which are not much more often right: in the same run 388 rows clear 0.999 and about 83% of them are right, against 80% at 0.99. The threshold can only mean something after the probabilities do."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "24 points in 40 dimensions can always be split perfectly by a linear model. With almost no penalty, the fit lowers its log loss by growing the weights without limit, and that pushes predicted probabilities toward 0 and 1 on unlabeled rows too. The strong penalty keeps the weights small and every probability low. The 0.99 means a different thing in each model and nothing in either. In the run these counts come from, about 80% of the 637 rows are right. Compare confidence with accuracy on held-out labeled rows before trusting a threshold."
+            },
+            {
+              "result": "Neither count says how often a pseudo-label is right: 24 rows in 40 dimensions are separable, so the weak penalty inflates every probability and the strong one shrinks them all"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ssl-self-training-an-svm",
+      "moduleId": "semi-supervised-learning",
+      "title": "The Boundary That Self-Training Cannot Move",
+      "difficulty": "Hard",
+      "minutes": 30,
+      "overview": [
+        "A machine logs one reading $x$ per part, and a part is faulty ($+1$) exactly when $x > 2$. Only two parts were inspected: $x = -3$ is fine ($-1$) and $x = 3$ is faulty ($+1$). Eleven more readings are unlabeled:"
+      ],
+      "setup": [
+        {
+          "tex": "-2.5,\\ -2,\\ -1.5,\\ -1,\\ -0.25,\\ 0.5,\\ 1,\\ 3.5,\\ 4,\\ 4.5,\\ 5 ."
+        },
+        {
+          "p": "A hard-margin linear SVM $f(x) = wx + b$ is fitted to the labeled parts. Each round of self-training gives every unlabeled reading inside the margin, $|f(x)| < 1$, the pseudo-label $\\operatorname{sign} f(x)$, adds it to the labeled set, and refits. The loop stops when a round adds nothing."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Fit the first SVM, run the first round, and find the decision boundary $-b/w$ after the refit."
+            }
+          ],
+          "answer": [
+            {
+              "p": "In one dimension the hard-margin SVM puts its boundary halfway between the closest pair of opposite labels and scales $w$ so that $f = \\pm 1$ on them. From $-3$ and $3$: the boundary is at 0 and $f(x) = x/3$."
+            },
+            {
+              "p": "Inside the margin, $|x/3| < 1$, lie the seven readings from $-2.5$ to $1$. Their signs give $-1$ to $-2.5, -2, -1.5, -1, -0.25$ and $+1$ to $0.5$ and $1$. The four readings from 3.5 up have $f > 1$ and are not taken."
+            },
+            {
+              "p": "After the refit the closest opposite pair is $-0.25$ (labeled $-1$) and $0.5$ (pseudo-labeled $+1$), so the boundary is at $(-0.25 + 0.5)/2 = 0.125$, with $w = 2/0.75 = 8/3$."
+            },
+            {
+              "result": "0.125"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Show that the second round adds nothing, and that the loop would add nothing even if it also absorbed the readings outside the margin with their signs. Then show that for any data on a line, this loop stops after one round that changes the boundary, with the boundary halfway between the two readings, labeled or pseudo-labeled, that straddle where it started."
+            }
+          ],
+          "answer": [
+            {
+              "p": "After round 1 the margin is the interval $[-0.25, 0.5]$, whose ends are the new support vectors. No unlabeled reading lies strictly inside it, so round 2 adds nothing and the loop stops."
+            },
+            {
+              "p": "The readings outside the margin would not change anything either. A point with pseudo-label $\\operatorname{sign} f(x)$ and $|f(x)| \\ge 1$ satisfies $y f(x) \\ge 1$, so it meets the hard-margin constraint at the current $(w, b)$. Adding constraints that the current solution already meets cannot make a smaller $\\lVert w \\rVert$ feasible, so the solution stays the same."
+            },
+            {
+              "p": "In general, let the first boundary be $c$ and let round 1 absorb every unlabeled reading in the margin $[\\ell, r]$. The nearest negative after the round is the largest absorbed or labeled reading below $c$, and the nearest positive is the smallest one above $c$. The new boundary sits halfway between them, and the new margin is exactly the interval between them. Every reading in that interval was inside the old margin and has already been absorbed, so none is left for round 2. The boundary can move only within the gap between the two readings that straddle $c$, and the labels it gave in round 1 never change."
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "How many pseudo-labels end up wrong? Where would a boundary placed in the lowest-density region of all thirteen readings go, and how many of the eleven would it get wrong? Explain what this says about self-training an SVM."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The final boundary 0.125 calls $0.5$ and $1$ faulty, and both are fine since they are below 2: 2 wrong pseudo-labels, so 9 of the 11 unlabeled readings are right."
+            },
+            {
+              "p": "Sorted, the thirteen readings have their widest gap between $1$ and $3$, width 2 against at most 0.75 anywhere else. A boundary in the middle of that gap, at $x = 2$, is the true rule and gets all eleven right. The unlabeled data shows where it is: the fine parts form one cluster from $-3$ to $1$ and the faulty parts another from $3$ to $5$."
+            },
+            {
+              "p": "Self-training cannot find that gap. Its first boundary, at 0, sits inside the fine cluster because the two inspected parts happen to be placed symmetrically about it. Round 1 then labels $0.5$ and $1$ faulty, and those wrong labels become support vectors: the final boundary is pinned by the positive one at 0.5. The readings that could move an SVM are exactly the ones inside its margin, where its own predictions are least reliable, and the ones it is sure about cannot move it at all. A method that searches for the low-density gap would place the boundary there. Label propagation on a graph that joins readings less than 1 apart, for one, links each cluster into one piece and the two clusters not at all, so each inspected part labels its whole cluster."
+            },
+            {
+              "result": "2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ssl-propagation-on-a-long-chain",
+      "moduleId": "semi-supervised-learning",
+      "title": "How Long Label Propagation Takes on a Chain",
+      "difficulty": "Hard",
+      "minutes": 35,
+      "overview": [
+        "Readings taken along a pipeline form a chain graph: points $0, 1, \\dots, m + 1$, with an edge of weight 1 between each pair of neighbors. Point 0 is labeled $A$ and point $m + 1$ is labeled $B$, and the $m$ points between them are unlabeled. Write $f_i$ for the probability of $A$ at point $i$, with $f_0 = 1$ and $f_{m+1} = 0$ clamped. Label propagation starts from $f_i = 0$ at every unlabeled point and repeats the sweep \"every unlabeled point takes the average of its neighbors, then the labeled points are reset\"."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Find the fixed point $f^\\ast$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "At the fixed point each unlabeled point is the average of its two neighbors, $f_i = \\tfrac12 (f_{i-1} + f_{i+1})$, so $f_{i+1} - f_i = f_i - f_{i-1}$: the differences are constant and $f$ is linear in $i$. With $f_0 = 1$ and $f_{m+1} = 0$,"
+            },
+            {
+              "tex": "f^\\ast_i = 1 - \\frac{i}{m + 1} ."
+            },
+            {
+              "p": "It is unique, since the difference of two solutions is linear and zero at both ends."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Let $e_t$ be the vector of errors $f_i - f^\\ast_i$ at the $m$ unlabeled points after $t$ sweeps. Show that $e_{t+1} = T_{UU} e_t$, where $T_{UU}$ is the $m \\times m$ matrix with $\\tfrac12$ just above and just below the diagonal and 0 elsewhere. Then show that for $k = 1, \\dots, m$ the vector $v_k$ with entries $\\sin\\!\\big(i k \\pi / (m + 1)\\big)$, $i = 1, \\dots, m$, is an eigenvector of $T_{UU}$ with eigenvalue $\\cos\\!\\big(k\\pi/(m+1)\\big)$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "On the unlabeled points one sweep is $f_U \\leftarrow T_{UU} f_U + T_{UL} y_L$, where $T_{UL} y_L$ carries the clamped values ($\\tfrac12$ at point 1 from $f_0 = 1$, and 0 at point $m$). The fixed point satisfies $f^\\ast_U = T_{UU} f^\\ast_U + T_{UL} y_L$. Subtracting, $e_{t+1} = T_{UU} e_t$, and so $e_t = T_{UU}^{\\,t} e_0$."
+            },
+            {
+              "p": "For the eigenvectors write $\\theta = k\\pi/(m + 1)$ and $s_i = \\sin(i\\theta)$, noting $s_0 = 0$ and $s_{m+1} = \\sin(k\\pi) = 0$. Row $i$ of $T_{UU} v_k$ is $\\tfrac12 (s_{i-1} + s_{i+1})$, which also holds at $i = 1$ and $i = m$ because the missing neighbors contribute $s_0 = s_{m+1} = 0$. By the sum-to-product formula,"
+            },
+            {
+              "tex": "\\tfrac12\\big(\\sin((i - 1)\\theta) + \\sin((i + 1)\\theta)\\big) = \\sin(i\\theta)\\cos\\theta ,"
+            },
+            {
+              "p": "so $T_{UU} v_k = \\cos\\theta \\; v_k$. The $m$ values of $\\theta$ give $m$ distinct eigenvalues, so these are all of them."
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Take $m = 9$. Which eigenvalue governs how fast the error dies out, and how many sweeps does it take that component of the error to shrink by a factor of $10^6$? Round up to a whole sweep."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Expand $e_0 = \\sum_k c_k v_k$. Then $e_t = \\sum_k c_k \\cos^t(\\theta_k) v_k$, and each component shrinks by $|\\cos\\theta_k|$ per sweep. The slowest are $k = 1$ and $k = m$, both with $|\\cos\\theta| = \\cos\\!\\big(\\pi/(m+1)\\big)$, and the start $e_0 = -f^\\ast_U$ has a component along $v_1$, since $f^\\ast_U$ and $v_1$ are both positive at every point."
+            },
+            {
+              "p": "For $m = 9$, $\\rho = \\cos(\\pi/10) = 0.9511$. Shrinking by $10^6$ needs $\\rho^t \\le 10^{-6}$:"
+            },
+            {
+              "tex": "t \\ge \\frac{\\ln 10^6}{-\\ln 0.9511} = \\frac{13.82}{0.0502} = 275.3 ,"
+            },
+            {
+              "p": "so 276 sweeps. A run of the loop that stops when the largest error has fallen to $10^{-6}$ of its starting value, 0.9 at point 1, takes 269 sweeps. The difference is the start: the slowest component's largest entry is 0.63, not 0.9, and $\\ln(0.9/0.63)/0.0502 \\approx 7$ sweeps."
+            },
+            {
+              "result": "276"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Now take $m = 99$, a chain ten times as long. How many sweeps does the same shrinking take? Show that the count grows like $(m + 1)^2$, and say what this means for running propagation on long thin structures in data."
+            }
+          ],
+          "answer": [
+            {
+              "p": "$\\rho = \\cos(\\pi/100) = 0.99950656$, and $\\ln 10^6 / (-\\ln \\rho) = 27{,}991.5$, so 27,992 sweeps."
+            },
+            {
+              "p": "The six-decimal value $0.999507$ is not enough here: it gives $-\\ln \\rho = 0.000493122$ and a count of 28,017, because near $1$, rounding $\\rho$ to six decimals moves its logarithm in the fourth significant figure. Keep eight decimals, or work with $-\\ln \\rho = 0.000493561$ directly."
+            },
+            {
+              "p": "For large $m$, $\\cos x \\approx 1 - x^2/2$ and $-\\ln(1 - u) \\approx u$ give $-\\ln \\rho \\approx \\pi^2 / \\big(2(m + 1)^2\\big)$, so the sweep count is"
+            },
+            {
+              "tex": "t \\approx \\frac{2 (m + 1)^2 \\ln 10^6}{\\pi^2} ,"
+            },
+            {
+              "p": "which gives 280 for $m = 9$ and 27,996 for $m = 99$. Ten times the length costs a hundred times the sweeps, and each sweep also costs more."
+            },
+            {
+              "p": "A label spreads one edge per sweep, and the averaging smooths the profile along the chain like heat diffusing along a rod, which takes time proportional to the square of the length. Data with long thin structures, such as the crescents of two-moons or a curve sampled with a kNN graph, behaves like a chain, so a fixed small iteration budget can stop far from the fixed point. The closed form $F_U = (I - T_{UU})^{-1} T_{UL} Y_L$ does not care: here $I - T_{UU}$ is tridiagonal and one solve costs about $m$ operations."
+            },
+            {
+              "result": "27992"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

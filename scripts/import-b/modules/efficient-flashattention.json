@@ -1,0 +1,30 @@
+{
+  "aModule": "efficient-flashattention",
+  "stage": "Advanced",
+  "fixes": [
+    {
+      "file": "eff-window-of-three",
+      "find": "since a row of $t$ tokens computes $t$ scores instead of $t^2$",
+      "replace": "since a text of $t$ tokens costs about $w \\times t$ scores with a window of width $w$, instead of $t \\times t$"
+    }
+  ],
+  "parts": {
+    "eff-window-of-three": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "eff-window-of-three": "One head of a model reading \"the cat sat on\" has the problem's table of four rows of attention scores and the value behind each key. With a sliding window of 3 and the causal mask, find the weight the last token gives to the one before it, the head's output for the last token, and how many of the table's 16 scores the head still computes."
+  }
+}

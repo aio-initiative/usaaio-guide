@@ -1,0 +1,59 @@
+{
+  "aModule": "training-loop-in-pytorch",
+  "stage": "Round 1",
+  "fixes": [
+    {
+      "file": "tl-find-the-bugs",
+      "find": "`log` then stores one such\n   tensor per epoch, so the graph of every validation pass ever run stays\n   in memory until `fit` returns.",
+      "replace": "`log` then stores one such\n   tensor per epoch, so the graph of every validation pass ever run stays\n   in memory until the caller drops the `log` list that `fit` returns."
+    }
+  ],
+  "parts": {
+    "tl-backward-fills-grad": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "tl-find-the-bugs": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "tl-train-and-eval": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "tlp-grad-accumulation": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "tl-backward-fills-grad": "In the five-line training step, loss.backward() sits between optimizer.zero_grad() and optimizer.step(). Say what has changed in each parameter once backward returns, and which of the other two calls moves the parameters and which clears the gradients.",
+    "tl-find-the-bugs": "A contestant's training function runs without an error and its logged loss falls, but it carries four defects. Name each one and what it does to the run, compute the loss the buggy batch average reports, and write the corrected function.",
+    "tl-train-and-eval": "A contestant's loop calls model.train() at the top of each epoch and model.eval() before measuring validation accuracy. What do those two calls change?",
+    "tlp-grad-accumulation": "A batch too large for memory is cut into k micro-batches, each loss is backpropagated in turn, and the optimizer steps once at the end. Prove why each micro-batch loss needs a 1/k factor first, say which learning rate the unscaled loop is effectively using, and compute the true gradient when the micro-batches are unequal sizes."
+  }
+}

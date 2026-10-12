@@ -1,0 +1,107 @@
+{
+  "module": "evaluating-generative-models",
+  "stage": "Camp",
+  "index": [
+    {
+      "id": "egm-bleu-and-rouge-for-one-pair",
+      "moduleId": "evaluating-generative-models",
+      "title": "BLEU and ROUGE on One Pair of Sentences",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=egm-bleu-and-rouge-for-one-pair",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "Score the lesson's own candidate and reference with the two text metrics it introduces: the clipped precisions that feed BLEU, BLEU-2 itself, and ROUGE-1 recall, then say why the same pair scores higher under ROUGE. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    }
+  ],
+  "theory": [
+    {
+      "id": "egm-bleu-and-rouge-for-one-pair",
+      "moduleId": "evaluating-generative-models",
+      "title": "BLEU and ROUGE on One Pair of Sentences",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "The lesson scores one candidate against one reference: candidate \"the cat sat on the mat\", reference \"the cat is on the mat\". Both have six tokens. This problem recomputes the numbers behind the lesson's BLEU-2 and its ROUGE-1 recall, and asks why the same pair scores higher under ROUGE."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Give the clipped unigram precision and the clipped bigram precision for this pair, as fractions."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Clipping lets each candidate $n$-gram match only as many times as it occurs in the reference. Unigrams: \"the\" $\\min(2,2)=2$, \"cat\" 1, \"sat\" 0 because it is absent from the reference, \"on\" 1, \"mat\" 1, which is 5 matches out of 6 candidate unigrams."
+            },
+            {
+              "tex": "p_1 = \\tfrac{5}{6} = 0.8333 ."
+            },
+            {
+              "p": "Bigrams: the candidate has \"the cat\", \"cat sat\", \"sat on\", \"on the\", \"the mat\", and the reference has \"the cat\", \"cat is\", \"is on\", \"on the\", \"the mat\". Only \"the cat\", \"on the\" and \"the mat\" match, which is 3 out of 5."
+            },
+            {
+              "tex": "p_2 = \\tfrac{3}{5} = 0.6 ."
+            },
+            {
+              "result": "$p_1 = 5/6$ and $p_2 = 3/5$"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Give BLEU-2 for this pair, to four decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Both sentences have six tokens, so $c = r = 6$ and the brevity penalty is 1. BLEU-2 is the geometric mean of the two clipped precisions above:"
+            },
+            {
+              "tex": "\\text{BLEU-2} = \\exp\\!\\left(\\tfrac12 \\ln \\tfrac56 + \\tfrac12 \\ln \\tfrac35\\right) = \\exp(-0.3466) = \\sqrt{0.5} = 0.7071 ."
+            },
+            {
+              "p": "The two lengths are equal, so no brevity penalty enters. The same pair scores 0 at BLEU-4, because the 4-gram order has no match at all and the geometric mean of the log precisions picks up a $\\ln 0$ term, which is why sentence-level BLEU is nearly useless and smoothing is standard for short segments."
+            },
+            {
+              "result": "0.7071"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "ROUGE-1 recall for the same pair is $5/6 = 0.8333$, which is higher than BLEU-2. Explain why the same pair scores higher under ROUGE-1 recall than under BLEU-2, and name the word of the candidate that is responsible for the gap."
+            }
+          ],
+          "answer": [
+            {
+              "p": "ROUGE-1 recall counts how many of the reference's unigrams the candidate covers: 5 of 6, giving $0.8333$. It looks at one order only, and it is recall, so the candidate's wrong word \"sat\" costs it nothing. \"sat\" is not a reference unigram, so it is simply not among the 5 covered, and the score is the same whatever the candidate says in that slot, as long as the slot is not a reference word."
+            },
+            {
+              "p": "BLEU-2 multiplies two precisions together, so the same word costs the candidate twice. First, \"sat\" cannot match, which is why $p_1$ is $5/6$ rather than 1. Second, it breaks two bigrams, \"cat sat\" and \"sat on\", neither of which is in the reference, which is why $p_2$ falls to $3/5$. A geometric mean of two numbers lies between them, so BLEU-2 is pulled below $p_1 = 5/6$ by the weaker $p_2 = 3/5$ and lands at $0.7071$, below ROUGE-1's $0.8333$."
+            },
+            {
+              "p": "The responsible word is \"sat\". Replacing it with \"is\" makes the two sentences identical, lifting $p_1$ to 1, $p_2$ to 1, and BLEU-2 to 1 with them, while ROUGE-1 recall would rise only from $5/6$ to $6/6$. That is the orientation difference the lesson draws: BLEU is precision-family and penalizes a wrong word, ROUGE is recall-family and notices only a missing one."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

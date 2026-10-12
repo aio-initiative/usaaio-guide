@@ -1,0 +1,24 @@
+{
+  "aModule": "clustering",
+  "stage": "Round 1",
+  "order": [
+    "km-spread-from-distances",
+    "km-update-for-manhattan",
+    "km-where-lloyd-can-stop",
+    "km-third-seed",
+    "km-silhouette-on-a-line",
+    "km-transform-that-changes-nothing",
+    "km-match-clusters-to-types",
+    "km-cost-of-a-merge",
+    "km-outlier-own-center",
+    "km-inertia-rose-with-k"
+  ],
+  "fixes": [
+    {
+      "file": "km-cost-of-a-merge",
+      "find": "Clusters 1 and 2 have the closest centers, but both are large, and the\nfactor $pq/(p+q)$ is close to the size of the smaller cluster.",
+      "replace": "Clusters 1 and 2 have the closest centers, but both are large, and the factor $pq/(p+q)$ is at most the size of the smaller cluster, and near it when one cluster is much larger.",
+      "why": "For the merge of clusters 1 and 2 that opens this sentence, pq/(p+q) = 30*30/60 = 15 against a smaller cluster of 30, exactly half of it, so 'close to' is false for the very case being named; the bound pq/(p+q) <= min(p,q) always holds, and the merges with cluster 3 give 30*6/36 = 5 against a smaller cluster of 6, which is the case where the factor really is near the smaller size. Swarm review fix bprv-32."
+    }
+  ]
+}

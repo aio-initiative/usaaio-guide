@@ -1,0 +1,247 @@
+{
+  "round1": [
+    {
+      "name": "Python",
+      "items": [
+        "python-basics",
+        "programming-essentials",
+        "pandas-data-cleaning-storing",
+        "plotting-matplotlib-seaborn",
+        "colab-markdown-notebooks",
+        "scikit-learn-api-ml-pipelines",
+        "why-pytorch-not-tensorflow",
+        "pytorch-tensors-autograd",
+        "training-loop-in-pytorch",
+        "pytorch-essentials"
+      ]
+    },
+    {
+      "name": "Math",
+      "items": [
+        "linear-algebra-i-vectors-matrices-systems-transformations",
+        "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+        "calculus-gradients"
+      ]
+    },
+    {
+      "name": "Probability and Statistics",
+      "items": [
+        "probability-foundations",
+        "expectations-multivariate-distributions",
+        "statistics-hypothesis-testing"
+      ]
+    },
+    {
+      "name": "Classical ML",
+      "items": [
+        "data-processing-features",
+        "linear-logistic-regression",
+        "loss-functions",
+        "supervised-learning-foundations",
+        "kernel-methods-svms",
+        "decision-trees-knn",
+        "tree-based-models-ensembles",
+        "clustering",
+        "clustering-methods"
+      ]
+    },
+    {
+      "name": "Deep Learning",
+      "items": [
+        "neural-networks-perceptrons-mlps-activations",
+        "neural-network-regularization-dropout-batchnorm",
+        "model-training",
+        "optimization-adam-sgd"
+      ]
+    },
+    {
+      "name": "Computer Vision",
+      "items": [
+        "convolutional-neural-networks"
+      ]
+    }
+  ],
+  "round2": [
+    {
+      "name": "Math",
+      "items": [
+        "forward-propagation",
+        "backpropagation-mechanics",
+        "advanced-linear-algebra-projections-svd-low-rank"
+      ]
+    },
+    {
+      "name": "Classical ML",
+      "items": [
+        "model-evaluation",
+        "bias-variance-cross-validation",
+        "principal-component-analysis",
+        "nonlinear-dimensionality-reduction",
+        "semi-supervised-learning",
+        "time-series",
+        "dimensionality-reduction"
+      ]
+    },
+    {
+      "name": "Deep Learning",
+      "items": [
+        "advanced-optimization",
+        "advanced-optimization-methods"
+      ]
+    },
+    {
+      "name": "Computer Vision",
+      "items": [
+        "vision-setup",
+        "vision-pixels",
+        "vision-convolution",
+        "vision-relu-and-pooling",
+        "vision-classify",
+        "vision-deeper-networks",
+        "vision-transfer-learning",
+        "hierarchical-vision-models",
+        "computer-vision-classification-augmentation",
+        "semantic-segmentation-unet-masks",
+        "vision-adversarial-attacks",
+        "modern-vision-architectures-resnet-efficientnet-transfer"
+      ]
+    },
+    {
+      "name": "Transformers and Attention",
+      "items": [
+        "transformer-setup",
+        "transformer-tokenize",
+        "transformer-embed",
+        "transformer-add-position",
+        "transformer-qkv",
+        "transformer-scores",
+        "transformer-mask-and-softmax",
+        "transformer-weighted-sum",
+        "transformer-multi-head",
+        "transformer-residual-and-layernorm",
+        "transformer-feed-forward",
+        "transformer-stack",
+        "transformer-predict",
+        "transformer-generate",
+        "transformer-fundamentals",
+        "transformer-architectures-bert-mlm",
+        "gpt-causal-lm",
+        "transformer-architectures-gpt-autoregressive",
+        "transformer-architectures-t5-encoder-decoder"
+      ]
+    },
+    {
+      "name": "Representation Learning",
+      "items": [
+        "contrastive-learning"
+      ]
+    }
+  ],
+  "camp": [
+    {
+      "name": "Probability and Statistics",
+      "items": [
+        "information-theory-core"
+      ]
+    },
+    {
+      "name": "Computer Vision",
+      "items": [
+        "vision-transformers-vit-attention",
+        "object-detection-fpn-yolo"
+      ]
+    },
+    {
+      "name": "NLP",
+      "items": [
+        "natural-language-processing-tokenization-embeddings",
+        "pre-training-fine-tuning",
+        "sequence-models-transfer-learning"
+      ]
+    },
+    {
+      "name": "Transformers and Attention",
+      "items": [
+        "rag-retrieval-embeddings",
+        "relative-position-rope-positional-methods",
+        "cross-attention-multimodal-attention"
+      ]
+    },
+    {
+      "name": "Representation Learning",
+      "items": [
+        "representation-learning-autoencoders-vaes-latent-spaces",
+        "vae-encoder-decoder-generation",
+        "autoregressive-generative-models"
+      ]
+    },
+    {
+      "name": "Generative Models",
+      "items": [
+        "generative-setup",
+        "generative-adversarial-networks",
+        "generative-adding-noise",
+        "generative-removing-noise",
+        "generative-guidance-and-stable-diffusion",
+        "evaluating-generative-models",
+        "diffusion-models"
+      ]
+    },
+    {
+      "name": "Extra",
+      "items": [
+        "sciml-setup",
+        "sciml-the-equation",
+        "sciml-network-as-solution",
+        "sciml-derivatives",
+        "sciml-physics-loss",
+        "sciml-training-and-checking",
+        "neural-operators"
+      ]
+    }
+  ],
+  "advanced": [
+    {
+      "name": "Probability and Statistics",
+      "items": [
+        "applied-information-theory"
+      ]
+    },
+    {
+      "name": "Transformers and Attention",
+      "items": [
+        "gqa-mla-attention-complexity",
+        "efficient-attention-long-context",
+        "efficient-setup",
+        "efficient-prefill-and-decode",
+        "efficient-kv-cache",
+        "efficient-sharing-keys-and-values",
+        "efficient-flashattention",
+        "efficient-linear-attention",
+        "sparse-attention-sinks-and-eviction",
+        "state-space-models",
+        "mixture-of-experts"
+      ]
+    },
+    {
+      "name": "Representation Learning",
+      "items": [
+        "multimodal-learning"
+      ]
+    },
+    {
+      "name": "Reinforcement Learning",
+      "items": [
+        "reinforcement-learning",
+        "policy-gradients",
+        "preference-optimization-rlhf-and-dpo"
+      ]
+    },
+    {
+      "name": "Extra",
+      "items": [
+        "graph-neural-networks"
+      ]
+    }
+  ]
+}

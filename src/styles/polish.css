@@ -1,0 +1,20 @@
+.chapter-card{box-shadow:none;border-radius:0}
+.resource-card,.problem-card{box-shadow:none;border-radius:6px}
+.chapter-card-head{box-shadow:none}
+.reader-chip,.filter-chip,.filter-button{border-radius:4px;box-shadow:none}
+.reader-code-block,.editor-workspace{
+ --tok-kw:#79436e;--tok-str:#386641;--tok-com:#687166;--tok-num:#9b532e;
+ --tok-fn:#285b85;--tok-def:#285b85;--tok-dec:#79436e;--tok-blt:#285b85;--tok-op:#555b65;
+}
+.reader-code-block{background:#faf8f2;border:1px solid #e5e0d4;border-radius:5px;box-shadow:none;color:#303740}
+.reader-code-block pre{background:#faf8f2;color:#303740}
+.reader-code-block .reader-code-title{background:#f2efe6;border-bottom:1px solid #e5e0d4;color:#59616a}
+.reader-code-block code .tok-kw{color:#79436e;font-weight:600}
+.reader-code-block code .tok-str{color:#386641}
+.reader-code-block code .tok-com{color:#687166;font-style:italic}
+.reader-code-block code .tok-num{color:#9b532e}
+.reader-code-block code .tok-fn,.reader-code-block code .tok-def,.reader-code-block code .tok-blt{color:#285b85}
+.reader-code-block code .tok-op{color:#555b65}
+.reader-code-block code .tok-dec{color:#79436e}
+/* Only the outer spans are numbered rows; tokens remain inline. */
+.reader-code-block pre code span{display:inline;padding:0;border:0;min-height:0;background:none}

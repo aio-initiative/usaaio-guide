@@ -1,0 +1,689 @@
+/* Lesson pages (UI overhaul 2026-10-11): a centred reading column, clear
+   separation between prose, code, output, math and figures, and toggles that
+   read as buttons. Linked after main.css, so these rules win at equal weight. */
+
+/* --- centred column -------------------------------------------------------- */
+
+/* The old grid gave the left gutter 0.55fr and the right 1.45fr, so the
+   article sat left of centre. Equal gutters centre it in the space beside the
+   sidebar. */
+.usaco-reader {
+  grid-template-columns: 304px minmax(2rem, 1fr) minmax(0, 860px) minmax(2rem, 1fr);
+}
+
+.usaco-reader.nav-collapsed {
+  grid-template-columns: 0 minmax(2rem, 1fr) minmax(0, 860px) minmax(2rem, 1fr);
+}
+
+@media (max-width: 1080px) {
+  .usaco-reader {
+    grid-template-columns: 280px minmax(1.25rem, 1fr) minmax(0, 860px) minmax(1.25rem, 1fr);
+  }
+
+  .usaco-reader.nav-collapsed {
+    grid-template-columns: 0 minmax(1.25rem, 1fr) minmax(0, 760px) minmax(1.25rem, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .reader-article {
+    width: min(100% - 2rem, 720px);
+  }
+}
+
+/* --- prose rhythm ---------------------------------------------------------- */
+
+.reader-article p {
+  margin-bottom: 1.1rem;
+}
+
+.reader-article .reader-section + .reader-section {
+  margin-top: 3rem;
+}
+
+/* --- code blocks ----------------------------------------------------------- */
+
+.reader-article .reader-code-block {
+  margin: 1.75rem 0;
+  border: 1px solid #cfd4dc;
+  border-left: 4px solid var(--navy);
+  border-radius: var(--radius);
+  background: #f4f6f9;
+  box-shadow: var(--shadow-sm);
+}
+
+.reader-article .reader-code-title {
+  padding: 0.55rem 0.7rem 0.55rem 1rem;
+  border-bottom: 1px solid #dde1e7;
+  background: #e9edf2;
+  color: var(--ink-2);
+  font-family: var(--font-reader);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.reader-article .reader-code-title > span::before {
+  content: "";
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-right: 0.5rem;
+  border-radius: 50%;
+  background: var(--navy);
+  vertical-align: 0.05rem;
+}
+
+.reader-article .reader-code-copy {
+  min-height: 2rem;
+  padding: 0.25rem 0.85rem;
+  border: 1px solid #c4cad3;
+  border-radius: var(--radius-sm);
+  background: #fff;
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.reader-article .reader-code-copy:hover,
+.reader-article .reader-code-copy:focus-visible {
+  border-color: var(--navy);
+  color: var(--navy);
+  box-shadow: 0 0 0 3px var(--navy-soft);
+}
+
+.reader-article .reader-code-block pre {
+  max-height: 640px;
+  padding: 1rem 0;
+  font-size: 0.85rem;
+  line-height: 1.65;
+}
+
+/* --- output ---------------------------------------------------------------- */
+
+.reader-article .reader-output {
+  margin: 1.5rem 0 1.75rem;
+  border: 1px solid #cfe3d8;
+  border-left: 4px solid var(--green);
+  border-radius: var(--radius);
+  background: #f6fbf8;
+}
+
+.reader-article .reader-code-block:has(+ .reader-output) {
+  margin-bottom: 0;
+}
+
+.reader-article .reader-code-block + .reader-output {
+  margin-top: 0;
+  border-top: 1px dashed #b9d6c6;
+}
+
+.reader-article .reader-output-title {
+  padding: 0.5rem 1rem 0.25rem;
+  border-top: 0;
+  color: var(--green);
+  font-family: var(--font-reader);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.reader-article .reader-output pre {
+  max-height: 480px;
+  padding: 0.25rem 1rem 0.9rem;
+  font-size: 0.85rem;
+}
+
+/* --- display math and figures ---------------------------------------------- */
+
+.reader-article .reader-math-display {
+  margin: 1.5rem 0;
+  padding: 0.75rem 1rem;
+  overflow-x: auto;
+}
+
+.reader-article figure,
+.reader-article .lesson-figure {
+  margin: 2rem 0;
+}
+
+/* --- tables ---------------------------------------------------------------- */
+
+.reader-article .reader-table-wrap {
+  margin: 1.75rem 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow-x: auto;
+  box-shadow: var(--shadow-sm);
+}
+
+.reader-article .reader-table {
+  width: 100%;
+  margin: 0;
+  border: 0;
+}
+
+.reader-article .reader-table th {
+  background: #f1f2f5;
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  border-bottom: 2px solid var(--line);
+}
+
+.reader-article .reader-table th,
+.reader-article .reader-table td {
+  padding: 0.65rem 0.9rem;
+}
+
+.reader-article .reader-table tbody tr:hover td {
+  background: #fafafc;
+}
+
+/* --- toggles: answers, "Show the code that draws this", optional parts ----- */
+
+.reader-article .reader-answer,
+.reader-article .lesson-optional {
+  margin: 1.5rem 0;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.reader-article .reader-answer > summary,
+.reader-article .lesson-optional > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 3.1rem;
+  padding: 0.8rem 1.1rem;
+  background: var(--surface-2);
+  color: var(--ink);
+  font-family: var(--font-reader);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  cursor: pointer;
+  list-style: none;
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.reader-article .reader-answer > summary::-webkit-details-marker,
+.reader-article .lesson-optional > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* "Show" / "Hide" stay from main.css; the summary text supplies the rest. A
+   round chevron badge on the right shows the state. */
+.reader-article .reader-answer > summary::after {
+  content: "";
+  flex: none;
+  width: 1.9rem;
+  height: 1.9rem;
+  margin-left: auto;
+  border-radius: 50%;
+  background: var(--brand-soft)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 7.75 10 12.25l4.5-4.5' fill='none' stroke='%23a8442a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    center / 1.1rem no-repeat;
+  transition: transform 160ms ease;
+}
+
+.reader-article .reader-answer[open] > summary::after {
+  transform: rotate(180deg);
+}
+
+.reader-article .lesson-optional > summary {
+  justify-content: space-between;
+}
+
+.reader-article .lesson-optional > summary svg {
+  flex: none;
+  width: 1.9rem;
+  height: 1.9rem;
+  padding: 0.4rem;
+  border-radius: 50%;
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+.reader-article .reader-answer > summary:hover,
+.reader-article .lesson-optional > summary:hover {
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+.reader-article .reader-answer > summary:focus-visible,
+.reader-article .lesson-optional > summary:focus-visible {
+  outline: 3px solid var(--brand-ring);
+  outline-offset: -3px;
+}
+
+.reader-article .reader-answer[open] > summary,
+.reader-article .lesson-optional[open] > summary {
+  border-bottom: 1.5px solid var(--line);
+  color: var(--brand-strong);
+}
+
+.reader-article .reader-answer-body,
+.reader-article .lesson-optional-body {
+  padding: 1rem 1.25rem 1.25rem;
+  border-top: 0;
+}
+
+/* A code block inside a toggle already sits in a frame, so drop its margin. */
+.reader-article .reader-answer-body > .reader-code-block:first-child {
+  margin-top: 0.25rem;
+}
+
+/* --- callouts -------------------------------------------------------------- */
+
+.reader-article .lesson-callout {
+  margin: 1.75rem 0;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius);
+}
+
+.reader-article .lesson-callout-label {
+  font-size: 0.95rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* --- runnable Python cells ------------------------------------------------- */
+
+.reader-article .lesson-py-editor {
+  margin: 1.75rem 0;
+  border: 1px solid #cfd4dc;
+  border-left: 4px solid var(--brand);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.reader-article .lesson-py-editor-actions button {
+  min-height: 2.4rem;
+  padding: 0.4rem 1.1rem;
+  font-size: 0.92rem;
+}
+
+.reader-article .reader-code-block pre,
+.reader-article .reader-output pre {
+  background: transparent;
+}
+
+.reader-article .lesson-optional > summary {
+  margin: 0;
+  border-radius: 0;
+}
+
+/* main.css pads every <details> and greys its paragraphs. Lesson toggles frame
+   their own summary and body, and their prose is lesson text. */
+.reader-article .reader-answer,
+.reader-article .lesson-optional {
+  padding: 0;
+}
+
+.reader-article .reader-answer p,
+.reader-article .lesson-optional p {
+  color: inherit;
+  margin: 0 0 1.1rem;
+}
+
+/* The Show / Hide word is a pseudo-element, so the flex gap would split it
+   from the summary text. Keep the words together and space only the badge. */
+.reader-article .reader-answer > summary {
+  gap: 0;
+}
+
+.reader-article .reader-answer > summary::before {
+  content: "Show\00a0";
+}
+
+.reader-article .reader-answer[open] > summary::before {
+  content: "Hide\00a0";
+}
+
+.reader-article .reader-answer > summary::after {
+  margin-left: auto;
+  padding-left: 0;
+}
+
+/* Phones: display math at desktop size overflowed the 358px column on many
+   pages. A slightly smaller size fits most equations, the rest scroll inside
+   their own block. */
+@media (max-width: 640px) {
+  .reader-article .reader-math-display .katex-display,
+  .reader-article .reader-math-display > .katex {
+    font-size: 0.9em;
+  }
+
+  .reader-article .reader-math-display {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+}
+
+/* KaTeX keeps an absolutely positioned accessibility copy of each formula.
+   Inside a table that scrolls sideways, that copy escaped the scroll box and
+   widened the whole page on phones. A positioned wrapper contains it. */
+.reader-article .reader-table-wrap,
+.reader-article .reader-math-display,
+.theory-paper .reader-table-wrap {
+  position: relative;
+}
+
+/* Phones: wide tables were cut off at the frame edge and read as broken.
+   Smaller cells fit most of them, and the rest still scroll inside the frame. */
+@media (max-width: 640px) {
+  .reader-article .reader-table {
+    font-size: 0.82rem;
+  }
+
+  .reader-article .reader-table th,
+  .reader-article .reader-table td {
+    padding: 0.45rem 0.55rem;
+  }
+
+  .reader-article .reader-table .katex {
+    font-size: 1em;
+  }
+}
+
+/* Phones: a header like "Attention weight" kept on one line set the width of
+   its whole column, so a table that fits by its numbers still ran past the
+   frame. Headers wrap on a phone, cells already do. */
+@media (max-width: 640px) {
+  .reader-article .reader-table th {
+    white-space: normal;
+  }
+}
+
+/* Phones: at 0.85rem with a wide line-number gutter a code line showed about
+   34 characters before it had to scroll. A smaller font and a narrower gutter
+   show about 43, and longer lines still scroll inside their own frame. */
+@media (max-width: 640px) {
+  .reader-article .reader-code-block pre,
+  .reader-article .reader-output pre {
+    font-size: 0.76rem;
+  }
+
+  .reader-article .reader-code-block pre > span {
+    grid-template-columns: 1.4rem minmax(0, 1fr);
+    gap: 0.5rem;
+    padding: 0.02rem 0.75rem 0.02rem 0.45rem;
+  }
+
+  .reader-article .reader-output pre {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+/* With the sidebar closed, the round button that reopens it is fixed in the
+   top-left corner, where it sat on top of "Prev" on narrow screens. */
+@media (max-width: 900px) {
+  .usaco-reader.nav-collapsed .reader-topbar {
+    padding-left: 3rem;
+  }
+}
+
+/* A choice made of one long piece of code, such as
+   df["y"].shift(1).rolling(7).mean(), has no space to break at and was cut off
+   at the card edge on a phone. It breaks anywhere instead. */
+.mcq-text code {
+  overflow-wrap: anywhere;
+}
+
+/* Code with its output (owner, 2026-10-12): one frame laid out like a runnable
+   cell. The code sits on the frame's surface and the output in an inset white
+   panel below it, the same shape the Run button's output takes. */
+.reader-article .reader-run {
+  margin: 1.75rem 0;
+  border: 1px solid #cfd4dc;
+  border-left: 4px solid var(--navy);
+  border-radius: var(--radius);
+  background: #f4f6f9;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.reader-article .reader-run > .reader-code-block {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+.reader-article .reader-run > .reader-code-block:has(+ .reader-output) {
+  margin-bottom: 0;
+}
+
+.reader-article .reader-run > .reader-output,
+.reader-article .reader-run > .reader-code-block + .reader-output {
+  margin: 0 0.85rem 0.85rem;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  box-shadow: none;
+}
+
+.reader-article .reader-run > .reader-output .reader-output-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.reader-article .reader-run > .reader-output pre {
+  padding: 0.75rem 1rem;
+  color: var(--ink-2);
+}
+
+/* --- module head (owner, 2026-10-12) --------------------------------------- */
+
+/* The problem meter runs from the level label to the right edge, with room
+   before its count. */
+.reader-article .reader-progress-row {
+  gap: 1.25rem;
+}
+
+.reader-article .reader-progress {
+  flex: 1 1 auto;
+  gap: 0.9rem;
+}
+
+.reader-article .reader-progress-track {
+  flex: 1 1 auto;
+  width: auto;
+  height: 0.55rem;
+}
+
+.reader-article .reader-progress-fill {
+  height: 0.55rem;
+}
+
+.reader-article .reader-progress-count {
+  flex: none;
+  min-width: 3.5rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Title alone on its row, then the stage line with the page actions on the
+   right, so the right side of the head is used instead of left empty. */
+.reader-article .reader-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  margin: 0.4rem 0 1rem;
+}
+
+.reader-article .reader-meta-row .reader-meta {
+  margin: 0;
+}
+
+.reader-article .reader-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.reader-article .reader-head-actions .definition-bank-button {
+  margin: 0;
+}
+
+.reader-article .reader-head-actions .reader-head-status {
+  margin: 0;
+}
+
+/* The status select and the sign-in button stand as tall as Definition bank
+   beside them. */
+.reader-article .reader-head-actions .reader-status-select,
+.reader-article .reader-head-actions .reader-status-login {
+  min-height: 2.6rem;
+}
+
+/* The current page in the breadcrumb was a size smaller than the links
+   before it, so it sat off their line. */
+.reader-article .reader-crumbs [aria-current="page"] {
+  font-size: 1rem;
+}
+
+/* --- previous and next at the foot ----------------------------------------- */
+
+/* At the start or end of a stage the missing step is a muted card that cannot
+   be clicked, so the row stays balanced. */
+.reader-article .reader-pagenav-card.is-disabled {
+  border-style: dashed;
+  background: var(--surface-2);
+  color: var(--muted-2);
+  cursor: default;
+  box-shadow: none;
+}
+
+.reader-article .reader-pagenav-card.is-disabled small,
+.reader-article .reader-pagenav-card.is-disabled strong {
+  color: var(--muted-2);
+}
+
+.reader-article .reader-pagenav-card.is-disabled:hover {
+  border-color: var(--line);
+  background: var(--surface-2);
+}
+
+/* --- found an error -------------------------------------------------------- */
+
+/* One slim bar: the note on the left, a small button on the right. */
+.reader-article .reader-help {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1.5rem 0 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--brand);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+}
+
+.reader-article .reader-help p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.reader-article .reader-help p strong {
+  margin-right: 0.35rem;
+  color: var(--ink);
+}
+
+.reader-article .reader-help .reader-help-link {
+  flex: none;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--brand-strong);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.reader-article .reader-help .reader-help-link:hover,
+.reader-article .reader-help .reader-help-link:focus-visible {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+}
+
+@media (max-width: 640px) {
+  .reader-article .reader-help {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* The module's problem count is a pill so it reads as a status, not a stray
+   number: neutral at zero, green once problems are solved, filled when done. */
+.reader-article .reader-progress-count {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.15rem;
+  min-width: 0;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.reader-article .reader-progress-count b {
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.reader-article .reader-progress-count span {
+  margin-left: 0.2rem;
+  font-weight: 600;
+}
+
+.reader-article .reader-progress-count.is-started {
+  border-color: color-mix(in srgb, var(--green) 45%, var(--line));
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.reader-article .reader-progress-count.is-started b {
+  color: var(--green);
+}
+
+.reader-article .reader-progress-count.is-done {
+  border-color: var(--green);
+  background: var(--green);
+  color: #fff;
+}
+
+.reader-article .reader-progress-count.is-done b {
+  color: #fff;
+}
+
+.reader-article .reader-progress-count.is-done::before {
+  content: "✓";
+  margin-right: 0.3rem;
+  font-weight: 800;
+}

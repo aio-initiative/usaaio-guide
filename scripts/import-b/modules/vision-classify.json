@@ -1,0 +1,20 @@
+{
+  "aModule": "vision-classify",
+  "stage": "Round 2",
+  "fixes": [],
+  "parts": {
+    "cv-a-gray-line": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "cv-a-gray-line": "The running example's vertical line is redrawn in mid-gray, with every pixel of its column at 0.5 instead of 1 and the background still 0. Work the network's forward pass for a line of brightness b and answer two questions: what probability does it give the class vertical at b = 0.5, and what brightness makes that probability exactly 0.9?"
+  }
+}

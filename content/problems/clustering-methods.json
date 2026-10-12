@@ -1,0 +1,87 @@
+{
+  "module": "clustering-methods",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "generative-modeling-implementation-task",
+      "moduleId": "clustering-methods",
+      "title": "Gaussian Mixture EM Practice",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=generative-modeling",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "The Expectation-Maximization algorithm with full covariances (NumPy). Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Adjusted Rand Index vs the hidden truth must be ≥ 0.70."
+    },
+    {
+      "id": "ml11-elliptical-clusters",
+      "moduleId": "clustering-methods",
+      "title": "Clusters That Are Not Round",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ml11-elliptical-clusters",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "On two elongated diagonal clusters, compare k-means, a full-covariance Gaussian mixture, and a spherical one by adjusted Rand index to isolate what actually fails.",
+      "answer": "Auto-graded inside the notebook. All three scores must match to 1e-6, with the full-covariance mixture well ahead of both spherical methods."
+    },
+    {
+      "id": "ml12-linkage-chaining",
+      "moduleId": "clustering-methods",
+      "title": "One Bridge Ruins Single Linkage",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ml12-linkage-chaining",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Two blobs joined by a 12-point bridge: measure how single linkage chains them into one cluster while complete linkage keeps them apart.",
+      "answer": "Auto-graded inside the notebook. Both Rand indices and cluster sizes must match to 1e-6, with complete linkage recovering the blobs and single linkage failing."
+    },
+    {
+      "id": "ml12-dendrogram-cut",
+      "moduleId": "clustering-methods",
+      "title": "Build the Merge Tree Yourself",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=ml12-dendrogram-cut",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Implement average-linkage agglomerative clustering from scratch, record every merge height, and cut your own dendrogram at four clusters.",
+      "answer": "Auto-graded inside the notebook. Merge heights, the cut labelling and best_k must match to 1e-6 and the cut must recover the four planted groups exactly."
+    },
+    {
+      "id": "ml13-dbscan-knee",
+      "moduleId": "clustering-methods",
+      "title": "Choosing eps from the k-Distance Curve",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ml13-dbscan-knee",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Pick DBSCAN's eps from the knee of the sorted k-distance curve using the chord method, then recover two crescents and separate the noise.",
+      "answer": "Auto-graded inside the notebook. eps, cluster and noise counts, and the adjusted Rand index must match to 1e-6, with exactly two clusters found."
+    }
+  ],
+  "theory": []
+}

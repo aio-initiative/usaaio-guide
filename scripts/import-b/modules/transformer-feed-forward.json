@@ -1,0 +1,16 @@
+{
+  "aModule": "transformer-feed-forward",
+  "stage": "Round 2",
+  "order": [
+    "tf-weights-that-learn-from-cat"
+  ],
+  "fixes": [],
+  "parts": {
+    "tf-weights-that-learn-from-cat": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."}
+    }
+  },
+  "indexPrompt": {
+    "tf-weights-that-learn-from-cat": "Training on the loss at the second position sends a gradient back into the feed-forward network of one token, whose input has no zero entries. Count how many of the 32 weights in the first weight table get a nonzero gradient from this loss."
+  }
+}

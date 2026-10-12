@@ -1,0 +1,1250 @@
+/* UI overhaul: pages area. Owned by lane ui-pages.
+ *
+ * ui.css pulls this file in on every page, so every selector below is pinned
+ * to a page body ([data-page]) or to a container id that only this lane owns.
+ * That keeps these rules off the lesson, problem, glossary and home pages,
+ * which reuse several of the same class names (card-kicker, filter-chip,
+ * search-field, panel). The pages lane owns the dashboard, planner, resources,
+ * official, theory index (the page with no ?id=) and search bodies.
+ *
+ * Refine, do not redesign: same terracotta brand, Outfit chrome, warm neutrals,
+ * 1.5px card borders, larger and higher-contrast controls, sentence case. */
+
+/* ================================ dashboard =============================== */
+
+[data-page="dashboard"] .dashboard-shell,
+[data-page="dashboard"] .signin-notice {
+  width: min(100% - 2 * var(--page-gutter), 1200px);
+  max-width: none;
+}
+
+[data-page="dashboard"] .dashboard-shell {
+  padding: 0 0 3rem;
+}
+
+[data-page="dashboard"] .signin-notice {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "title button" "text button";
+  align-items: center;
+  gap: 0.1rem 1.5rem;
+  margin: 1.75rem auto 1.25rem;
+  padding: 0.85rem 1.25rem;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--brand);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  box-shadow: none;
+  text-align: left;
+}
+
+[data-page="dashboard"] .signin-notice h2 {
+  grid-area: title;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+[data-page="dashboard"] .signin-notice p {
+  grid-area: text;
+  margin: 0;
+  max-width: none;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+[data-page="dashboard"] .signin-notice .button {
+  grid-area: button;
+  min-height: 38px;
+  margin: 0;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink-2);
+  box-shadow: none;
+  font-size: 0.85rem;
+  backdrop-filter: none;
+}
+
+[data-page="dashboard"] .signin-notice .button:hover {
+  border-color: var(--brand);
+  color: var(--brand);
+}
+
+[data-page="dashboard"] .signin-notice[hidden] + .dashboard-shell {
+  padding-top: 2rem;
+}
+
+[data-page="dashboard"] .dash-hero {
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 1.6rem 1.8rem;
+  border-radius: var(--radius);
+  background: var(--brand-soft);
+  border-color: color-mix(in srgb, var(--brand) 18%, var(--line));
+  box-shadow: none;
+}
+
+[data-page="dashboard"] .dash-eyebrow {
+  color: var(--brand-strong);
+  font-size: 0.77rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+[data-page="dashboard"] .dash-hero h1 {
+  margin-top: 0.25rem;
+  color: var(--ink);
+  font-size: clamp(1.9rem, 3vw, 2.4rem);
+  line-height: 1.2;
+}
+
+[data-page="dashboard"] .dash-hero p {
+  margin-top: 0.6rem;
+  font-size: 0.98rem;
+  font-weight: 400;
+}
+
+[data-page="dashboard"] .dashboard-continue {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  width: auto;
+  min-height: 46px;
+  padding: 0.75rem 1.25rem;
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+[data-page="dashboard"] .dashboard-continue:hover {
+  background: var(--brand-strong);
+  border-color: var(--brand-strong);
+}
+
+[data-page="dashboard"] .kpi-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.15rem;
+  margin-top: 1.15rem;
+}
+
+[data-page="dashboard"] .dashboard-card {
+  min-width: 0;
+  border-radius: var(--radius);
+  box-shadow: none;
+}
+
+[data-page="dashboard"] .kpi-tile {
+  gap: 0.7rem;
+  padding: 1.15rem 1.4rem;
+}
+
+[data-page="dashboard"] .kpi-tile > span {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+[data-page="dashboard"] .kpi-tile strong {
+  font-size: 2rem;
+  font-variant-numeric: tabular-nums;
+}
+
+[data-page="dashboard"] .kpi-tile strong small {
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+[data-page="dashboard"] .kpi-tile p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+[data-page="dashboard"] .kpi-tile .meter-track {
+  height: 5px;
+  align-self: center;
+}
+
+[data-page="dashboard"] .kpi-tile .meter-fill {
+  display: block;
+}
+
+[data-page="dashboard"] .dash-overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  grid-template-areas: "stages next" "types next";
+  gap: 1.15rem;
+  margin-top: 1.15rem;
+}
+
+[data-page="dashboard"] .dash-stages { grid-area: stages; }
+[data-page="dashboard"] .dash-problems { grid-area: types; }
+[data-page="dashboard"] .dash-next { grid-area: next; }
+
+[data-page="dashboard"] .dash-overview > .dashboard-card,
+[data-page="dashboard"] .activity-card {
+  padding: 1.35rem 1.5rem;
+}
+
+[data-page="dashboard"] .dash-card-head h2 {
+  font-size: 1.12rem;
+  font-weight: 650;
+}
+
+[data-page="dashboard"] .dash-card-head p {
+  margin: 0.3rem 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+[data-page="dashboard"] .dash-card-head-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+[data-page="dashboard"] .dash-text-link {
+  color: var(--brand-strong);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+[data-page="dashboard"] .dash-text-link:hover {
+  text-decoration: underline;
+}
+
+[data-page="dashboard"] .dash-stage-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.35rem 1.8rem;
+  margin-top: 1.5rem;
+}
+
+[data-page="dashboard"] .dash-stage-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+}
+
+[data-page="dashboard"] .dash-stage-heading a {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+[data-page="dashboard"] .dash-stage-heading a:hover {
+  color: var(--brand);
+}
+
+[data-page="dashboard"] .dash-stage-number {
+  color: var(--muted);
+  font-size: 0.73rem;
+  font-weight: 400;
+}
+
+[data-page="dashboard"] .dash-stage-arrow {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+[data-page="dashboard"] .pprog-count {
+  white-space: nowrap;
+}
+
+[data-page="dashboard"] .dash-stage .pprog-fill {
+  background: var(--brand);
+}
+
+[data-page="dashboard"] .pprog-types {
+  margin-top: 1.25rem;
+  padding-top: 0;
+  border-top: 0;
+}
+
+[data-page="dashboard"] .dash-card-note {
+  margin: 1.1rem 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+[data-page="dashboard"] .dash-module-list {
+  list-style: none;
+  margin: 0.8rem 0 0;
+  padding: 0;
+}
+
+[data-page="dashboard"] .dash-module-list li + li {
+  border-top: 1px solid var(--line-soft);
+}
+
+[data-page="dashboard"] .dash-module-row {
+  display: grid;
+  grid-template-columns: 68px minmax(0, 1fr) 16px;
+  align-items: center;
+  gap: 0.9rem;
+  min-height: 106px;
+  padding: 1rem 0;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+[data-page="dashboard"] .dash-module-row .topic-illustration {
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+}
+
+[data-page="dashboard"] .dash-module-row .topic-illustration img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+[data-page="dashboard"] .dash-module-copy {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+[data-page="dashboard"] .dash-module-copy small {
+  color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+
+[data-page="dashboard"] .dash-module-copy strong {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+[data-page="dashboard"] .dash-module-copy > span {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+[data-page="dashboard"] .dash-row-arrow {
+  color: var(--brand);
+}
+
+[data-page="dashboard"] .dash-module-row:hover strong {
+  color: var(--brand);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+[data-page="dashboard"] .dash-complete {
+  display: grid;
+  justify-items: start;
+  align-content: center;
+  gap: 0.8rem;
+  min-height: 290px;
+}
+
+[data-page="dashboard"] .dash-complete > span {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  background: var(--green-soft);
+  color: var(--green);
+  font-size: 1.5rem;
+}
+
+[data-page="dashboard"] .dash-complete h3,
+[data-page="dashboard"] .dash-complete p {
+  margin: 0;
+}
+
+[data-page="dashboard"] .dash-complete p {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+[data-page="dashboard"] .activity-card {
+  margin-top: 1.15rem;
+  overflow: hidden;
+}
+
+[data-page="dashboard"] .activity-legend {
+  font-size: 0.78rem;
+}
+
+[data-page="dashboard"] .activity-scroll {
+  margin-top: 1.25rem;
+}
+
+[data-page="dashboard"] .activity-months,
+[data-page="dashboard"] .activity-heatmap {
+  display: grid;
+  width: 100%;
+  min-width: 620px;
+  grid-template-columns: repeat(52, minmax(0, 1fr));
+  gap: 4px;
+  padding: 0;
+}
+
+[data-page="dashboard"] .activity-months {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 400;
+}
+
+[data-page="dashboard"] .activity-heatmap {
+  grid-template-rows: repeat(7, auto);
+  grid-auto-columns: auto;
+  margin-top: 0.5rem;
+}
+
+[data-page="dashboard"] .activity-square {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: 2px;
+}
+
+[data-page="dashboard"] .activity-legend .activity-square {
+  width: 11px;
+  height: 11px;
+}
+
+[data-page="dashboard"] .activity-square.level-1 { background: #edc2b4; }
+[data-page="dashboard"] .activity-square.level-2 { background: #db947c; }
+[data-page="dashboard"] .activity-square.level-3 { background: #c7694b; }
+[data-page="dashboard"] .activity-square.level-4 { background: var(--brand-strong); }
+
+@media (max-width: 1000px) {
+  [data-page="dashboard"] .dash-overview {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  [data-page="dashboard"] .dash-stage-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  [data-page="dashboard"] .pprog-types {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 700px) {
+  [data-page="dashboard"] .signin-notice {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "title" "text" "button";
+    gap: 0.35rem;
+    margin-top: 1rem;
+    padding: 0.9rem 1rem;
+  }
+
+  [data-page="dashboard"] .signin-notice .button {
+    justify-self: start;
+    margin-top: 0.3rem;
+  }
+
+  [data-page="dashboard"] .dash-hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.1rem;
+    padding: 1.35rem 1.25rem;
+  }
+
+  [data-page="dashboard"] .dashboard-continue {
+    width: 100%;
+  }
+
+  [data-page="dashboard"] .kpi-grid {
+    gap: 0.55rem;
+  }
+
+  [data-page="dashboard"] .kpi-tile {
+    padding: 0.9rem 0.7rem;
+    gap: 0.7rem;
+  }
+
+  [data-page="dashboard"] .kpi-tile > span {
+    font-size: 0.76rem;
+  }
+
+  [data-page="dashboard"] .kpi-tile strong {
+    font-size: 1.65rem;
+    white-space: nowrap;
+  }
+
+  [data-page="dashboard"] .kpi-tile strong small {
+    margin-left: 0.15rem;
+    font-size: 0.78rem;
+  }
+
+  [data-page="dashboard"] .kpi-tile p {
+    font-size: 0.72rem;
+  }
+
+  [data-page="dashboard"] .dash-overview {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "stages" "types" "next";
+  }
+
+  [data-page="dashboard"] .dash-overview > .dashboard-card,
+  [data-page="dashboard"] .activity-card {
+    padding: 1.2rem;
+  }
+
+  [data-page="dashboard"] .dash-module-row {
+    grid-template-columns: 56px minmax(0, 1fr) 16px;
+    gap: 0.75rem;
+  }
+
+  [data-page="dashboard"] .dash-module-row .topic-illustration {
+    width: 56px;
+    height: 56px;
+  }
+
+  [data-page="dashboard"] .dash-module-row .topic-illustration img {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+/* ================================= planner ================================= */
+
+[data-page="planner"] .planner-layout {
+  gap: 1.25rem;
+}
+
+[data-page="planner"] .panel {
+  border-radius: var(--radius-xl);
+}
+
+[data-page="planner"] .filter-chip {
+  min-height: 42px;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.95rem;
+  border-width: 1.5px;
+}
+
+[data-page="planner"] .filter-chip:focus-visible {
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+[data-page="planner"] .search-field {
+  border-width: 1.5px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Larger blocks and 38px add buttons so each row is an easy target on touch. */
+[data-page="planner"] .plan-block {
+  min-height: 56px;
+  gap: 0.85rem;
+  padding: 0.7rem 0.9rem;
+  border-width: 1.5px;
+}
+
+[data-page="planner"] .plan-block-copy strong {
+  font-size: 0.98rem;
+}
+
+[data-page="planner"] .plan-block-copy small {
+  font-size: 0.82rem;
+}
+
+[data-page="planner"] .plan-grip {
+  width: 12px;
+  height: 22px;
+}
+
+[data-page="planner"] .plan-add {
+  width: 38px;
+  height: 38px;
+  font-size: 1.05rem;
+  border-width: 1.5px;
+}
+
+[data-page="planner"] .plan-add:focus-visible {
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+[data-page="planner"] .planner-board {
+  border-width: 2px;
+  border-radius: var(--radius-xl);
+  padding: 0.8rem;
+}
+
+[data-page="planner"] .plan-order {
+  width: 30px;
+  height: 30px;
+  font-size: 0.82rem;
+}
+
+[data-page="planner"] .plan-tool {
+  min-width: 38px;
+  height: 38px;
+  font-size: 0.88rem;
+}
+
+[data-page="planner"] .plan-tool:focus-visible {
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+/* The block count reads as a caption, so give it a pill shape like the chips. */
+[data-page="planner"] .time-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.2rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface-2);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+/* The count is empty while the plan is empty. Hide it rather than show a
+   hollow pill. */
+[data-page="planner"] .time-pill:empty {
+  display: none;
+}
+
+/* ================================ resources ================================ */
+
+[data-page="resources"] .panel {
+  border-radius: var(--radius-xl);
+}
+
+/* The plain-text type label becomes a pill so a card's category is visible at
+   a glance instead of read as small caps noise. */
+[data-page="resources"] .resource-card small {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 0.26rem 0.7rem;
+  border-radius: 999px;
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* The season is a table of dated phases: When, Phase, What happens. */
+[data-page="resources"] .season-table-wrap {
+  overflow: hidden;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-page="resources"] .season-table {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-collapse: collapse;
+  font-size: 0.98rem;
+}
+
+[data-page="resources"] .season-table th,
+[data-page="resources"] .season-table td {
+  padding: 0.95rem 1.15rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+[data-page="resources"] .season-table thead th {
+  background: var(--surface-2);
+  color: var(--ink-2);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  border-bottom: 1.5px solid var(--line);
+}
+
+[data-page="resources"] .season-table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+[data-page="resources"] .season-table tbody tr:hover > * {
+  background: var(--surface-2);
+}
+
+[data-page="resources"] .season-table tbody th {
+  color: var(--ink);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+[data-page="resources"] .season-table tbody td:last-child {
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+
+[data-page="resources"] .season-date {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.24rem 0.7rem;
+  border-radius: 999px;
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+  font-size: 0.84rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+[data-page="resources"] .season-step {
+  display: inline-grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-right: 0.6rem;
+  border-radius: 50%;
+  background: var(--brand);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 800;
+  vertical-align: 0.05em;
+}
+
+/* Under 760px each row stacks into a small card so nothing scrolls sideways.
+   The labels come from each cell's data-label. */
+@media (max-width: 760px) {
+  [data-page="resources"] .season-table-wrap {
+    overflow: visible;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  [data-page="resources"] .season-table thead {
+    display: none;
+  }
+
+  [data-page="resources"] .season-table tbody tr {
+    display: grid;
+    gap: 0.55rem;
+    padding: 1rem 1.05rem;
+    margin-bottom: 0.75rem;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--paper);
+    box-shadow: var(--shadow-sm);
+  }
+
+  [data-page="resources"] .season-table tbody tr:hover > * {
+    background: transparent;
+  }
+
+  [data-page="resources"] .season-table th,
+  [data-page="resources"] .season-table td {
+    padding: 0;
+    border-bottom: 0;
+    white-space: normal;
+  }
+
+  [data-page="resources"] .season-table td[data-label="When"] {
+    order: -1;
+  }
+}
+
+/* Resource and official cards: a heavier border, more room, darker body text,
+   and the open button pinned to the bottom so a row of cards lines up. */
+[data-page="resources"] .resource-grid,
+[data-page="official"] .resource-grid {
+  gap: 1.1rem;
+}
+
+[data-page="resources"] .resource-card,
+[data-page="official"] .resource-card {
+  padding: 1.4rem 1.45rem;
+  border-width: 1.5px;
+  border-radius: var(--radius-xl);
+  background: var(--paper);
+}
+
+[data-page="resources"] .resource-card h3,
+[data-page="official"] .resource-card h3 {
+  font-size: 1.12rem;
+}
+
+[data-page="resources"] .resource-card p,
+[data-page="official"] .resource-card p {
+  color: var(--ink-2);
+  font-size: 0.97rem;
+  line-height: 1.6;
+}
+
+[data-page="resources"] .resource-card .resource-open,
+[data-page="official"] .resource-card .resource-open {
+  margin-top: auto;
+}
+
+/* A shared "open" button for the resource and official cards. */
+[data-page="resources"] .resource-open,
+[data-page="official"] .resource-open {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0.55rem 1.15rem;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 120ms ease, background 120ms ease, color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+[data-page="resources"] .resource-open:hover,
+[data-page="official"] .resource-open:hover,
+[data-page="resources"] .resource-open:focus-visible,
+[data-page="official"] .resource-open:focus-visible {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+[data-page="resources"] .resource-open:focus-visible,
+[data-page="official"] .resource-open:focus-visible {
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+[data-page="resources"] .link-list a:focus-visible {
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+/* The FAQ reads as three collapsed rows. Give each one a tall summary bar with
+   a rotating chevron badge, the same toggle pattern the lesson pages use. */
+#faq details {
+  padding: 0;
+  border-width: 1.5px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+#faq details + details {
+  margin-top: 0.8rem;
+}
+
+#faq summary {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 3.1rem;
+  padding: 0.85rem 1.15rem;
+  background: var(--surface-2);
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 600;
+  list-style: none;
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease;
+}
+
+#faq summary::-webkit-details-marker {
+  display: none;
+}
+
+#faq summary::after {
+  content: "";
+  flex: none;
+  width: 1.9rem;
+  height: 1.9rem;
+  margin-left: auto;
+  border-radius: 50%;
+  background: var(--brand-soft)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 7.75 10 12.25l4.5-4.5' fill='none' stroke='%23a8442a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    center / 1.1rem no-repeat;
+  transition: transform 160ms ease;
+}
+
+#faq details[open] > summary::after {
+  transform: rotate(180deg);
+}
+
+#faq summary:hover {
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+#faq summary:focus-visible {
+  outline: 3px solid var(--brand-ring);
+  outline-offset: -3px;
+}
+
+#faq details[open] > summary {
+  border-bottom: 1.5px solid var(--line);
+  color: var(--brand-strong);
+}
+
+#faq details p {
+  margin: 0;
+  padding: 1rem 1.25rem 1.15rem;
+  color: var(--ink-2);
+  font-size: 0.97rem;
+  line-height: 1.65;
+}
+
+/* ================================= official ================================ */
+
+[data-page="official"] .resource-card {
+  gap: 0.85rem;
+}
+
+/* ================================== search ================================= */
+
+[data-page="search"] .panel {
+  border-radius: var(--radius-xl);
+}
+
+[data-page="search"] .search-field {
+  border-width: 1.5px;
+  box-shadow: var(--shadow-sm);
+}
+
+[data-page="search"] .filter-chip {
+  min-height: 42px;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.95rem;
+  border-width: 1.5px;
+}
+
+[data-page="search"] .filter-chip:focus-visible {
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+[data-page="search"] .search-results {
+  gap: 0.9rem;
+}
+
+[data-page="search"] .search-result-card {
+  padding: 1.15rem 1.3rem;
+  border-width: 1.5px;
+  border-radius: var(--radius-xl);
+}
+
+[data-page="search"] .search-result-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+[data-page="search"] .card-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.24rem 0.7rem;
+  border-radius: 999px;
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+[data-page="search"] .search-result-source {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+[data-page="search"] .search-result-card h3 {
+  margin-top: 0.45rem;
+  font-size: 1.05rem;
+}
+
+[data-page="search"] .search-result-open {
+  min-height: 42px;
+  padding: 0.55rem 1.15rem;
+  border-width: 1.5px;
+  font-size: 0.92rem;
+  white-space: nowrap;
+}
+
+[data-page="search"] .search-result-open:focus-visible {
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+@media (max-width: 560px) {
+  [data-page="search"] .search-result-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  [data-page="search"] .search-result-open {
+    width: 100%;
+  }
+}
+
+/* ============================= theory index ============================== */
+/* Without a ?id= the theory page shows #theoryEmptyState: a hero and a table
+   of every theory problem. The id is what src/theory.js toggles, so it stays.
+   Scoped to the theory body so nothing reaches the problem reader. */
+
+[data-page="theory"] .theory-index {
+  border-width: 1.5px;
+  border-radius: var(--radius-xl);
+}
+
+[data-page="theory"] .theory-index-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+[data-page="theory"] .theory-index-toolbar .search-field {
+  flex: 1 1 22rem;
+  border-width: 1.5px;
+  box-shadow: var(--shadow-sm);
+}
+
+[data-page="theory"] .theory-index-count {
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+[data-page="theory"] .theory-index-table-wrap {
+  overflow-x: auto;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-page="theory"] .theory-table {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-collapse: collapse;
+  font-size: 0.97rem;
+}
+
+[data-page="theory"] .theory-table th,
+[data-page="theory"] .theory-table td {
+  padding: 0.8rem 1rem;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+[data-page="theory"] .theory-table thead th {
+  background: var(--surface-2);
+  color: var(--ink-2);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  border-bottom: 1.5px solid var(--line);
+}
+
+[data-page="theory"] .theory-table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+[data-page="theory"] .theory-table tbody tr:hover > * {
+  background: var(--surface-2);
+}
+
+[data-page="theory"] .theory-table tbody th a {
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+[data-page="theory"] .theory-table tbody th a:hover,
+[data-page="theory"] .theory-table tbody th a:focus-visible {
+  color: var(--brand-strong);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+[data-page="theory"] .theory-table td {
+  color: var(--ink-2);
+}
+
+[data-page="theory"] .theory-table td[data-label="Parts"] {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+[data-page="theory"] .theory-difficulty {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.22rem 0.7rem;
+  border-radius: 999px;
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+[data-page="theory"] #theoryIndexEmpty {
+  margin-top: 1rem;
+}
+
+[data-page="theory"] .theory-index-note {
+  margin: 1rem 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+[data-page="theory"] .theory-index-note a {
+  color: var(--brand-strong);
+  font-weight: 700;
+}
+
+/* Under 760px the table would scroll sideways, so each row stacks into a
+   small card. The labels come from each cell's data-label. */
+@media (max-width: 760px) {
+  [data-page="theory"] .theory-index-table-wrap {
+    overflow: visible;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  [data-page="theory"] .theory-table thead {
+    display: none;
+  }
+
+  [data-page="theory"] .theory-table tbody tr:not([hidden]) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem 1rem;
+    padding: 1rem 1.05rem;
+    margin-bottom: 0.75rem;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--paper);
+    box-shadow: var(--shadow-sm);
+  }
+
+  [data-page="theory"] .theory-table tbody tr:hover > * {
+    background: transparent;
+  }
+
+  [data-page="theory"] .theory-table th,
+  [data-page="theory"] .theory-table td {
+    padding: 0;
+    border-bottom: 0;
+  }
+
+  [data-page="theory"] .theory-table tbody th {
+    grid-column: 1 / -1;
+    font-size: 1.02rem;
+  }
+
+  [data-page="theory"] .theory-table td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 0.15rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+}
+
+/* ============================ narrow screens ============================= */
+/* Once the planner stacks, cap the library so the plan stays in reach. */
+
+@media (max-width: 1080px) {
+  [data-page="planner"] .planner-library {
+    max-height: 52svh;
+  }
+}
+
+
+/* USAAIO links (owner, 2026-10-12): the header link uses the footer's square
+   outline button, and a short last row of cards is centred instead of hanging
+   on the left. */
+[data-page="official"] .official-site-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 40px;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--ink-2);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+[data-page="official"] .official-site-link svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+[data-page="official"] .official-site-link:hover,
+[data-page="official"] .official-site-link:focus-visible {
+  border-color: var(--brand);
+  color: var(--brand-strong);
+}
+
+[data-page="official"] .resource-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+[data-page="official"] .resource-grid > .resource-card {
+  flex: 0 1 calc((100% - 2 * 1.1rem) / 3);
+}
+
+@media (max-width: 900px) {
+  [data-page="official"] .resource-grid > .resource-card {
+    flex-basis: calc((100% - 1.1rem) / 2);
+  }
+}
+
+@media (max-width: 600px) {
+  [data-page="official"] .resource-grid > .resource-card {
+    flex-basis: 100%;
+  }
+}

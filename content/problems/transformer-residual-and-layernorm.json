@@ -1,0 +1,75 @@
+{
+  "module": "transformer-residual-and-layernorm",
+  "stage": "Round 2",
+  "index": [
+    {
+      "id": "tf-pre-norm-for-the-first-token",
+      "moduleId": "transformer-residual-and-layernorm",
+      "title": "Pre-Norm Attention for the First Token",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=tf-pre-norm-for-the-first-token",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "Rebuild the running example's transformer block as pre-norm, with the same weights: attention reads the LayerNorm of H and its output is added to H itself, with no LayerNorm after the addition. What is the length, to three decimal places, of the vector for the first token after the attention part and its residual addition? 1 part.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    }
+  ],
+  "theory": [
+    {
+      "id": "tf-pre-norm-for-the-first-token",
+      "moduleId": "transformer-residual-and-layernorm",
+      "title": "Pre-Norm Attention for the First Token",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "Rebuild the running example's block as pre-norm, with the same weights: attention reads $\\text{LayerNorm}(H)$, and its output is added to $H$ itself, with no LayerNorm after the addition.",
+        "In the running example the causal mask lets the first token attend only to itself, and $W_V$ and $W_O$ leave a vector unchanged."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the vector of \"the\" after the attention part and its residual addition? Give its length to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "\"the\" is the first token, so the mask leaves it only itself to look at, with weight 1 in both heads. Its attention output is therefore its own value, and in pre-norm the values are made from the normalized copy. $W_V$ and $W_O$ both leave a vector unchanged, so the output is $\\text{LayerNorm}$ of the row of \"the\", $(1, 1, 0, 1)$:"
+            },
+            {
+              "tex": "\\begin{array}{cc}\n\\text{Step} & \\text{Values} \\\\ \\hline\n\\text{Average} & 0.75 \\\\\n\\text{Subtract it} & \\text{0.25, 0.25, −0.75, 0.25} \\\\\n\\text{Average of the squares} & \\text{(0.0625 × 3 + 0.5625) / 4 = 0.1875} \\\\\n\\text{Standard deviation} & 0.433 \\\\\n\\text{Divide by it} & \\text{0.577, 0.577, −1.732, 0.577}\n\\end{array}"
+            },
+            {
+              "p": "The residual adds this to $H$ itself:"
+            },
+            {
+              "tex": "(1, 1, 0, 1) + (0.577, 0.577, -1.732, 0.577) = (1.577, 1.577, -1.732, 1.577),"
+            },
+            {
+              "p": "whose length is"
+            },
+            {
+              "tex": "\\sqrt{3 (1 + 1/\\sqrt{3})^2 + (\\sqrt{3})^2} = \\sqrt{7 + 2\\sqrt{3}} = 3.235 ."
+            },
+            {
+              "p": "In the post-norm block of this page, \"the\" leaves the same step with length 2, because a LayerNorm follows every addition. In pre-norm nothing normalizes the sum, so the vector carried to the next part is longer, and each later part adds to it again. That is why GPT-2 ends with a final LayerNorm."
+            },
+            {
+              "p": "Three slips give other lengths. Normalizing after the addition, as in post-norm, gives 2. Adding the output to the normalized copy instead of to $H$ gives $2 \\times (0.577, 0.577, -1.732, 0.577)$, of length 4. Letting attention read $H$ itself gives $2H$, of length 3.464."
+            },
+            {
+              "result": "3.235"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

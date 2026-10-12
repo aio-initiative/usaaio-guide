@@ -1,0 +1,902 @@
+/* Coding problem page (UI overhaul 2026-10-12). The third problem page, next
+   to multiple choice and text answers: the same header card and action bar
+   (problem-page.css), then the notebook. Code cells are framed cards with a
+   labelled head and a Run button, output hangs under its cell with a green
+   edge, and each part of a guided notebook sits in its own card.
+   Rules that start with :not(.editor-embed) are page chrome. The Mock Arena
+   frames this page with ?embed=1 and keeps its own chrome (mock.css). */
+
+body[data-page="editor"] {
+  --code-font-size: 13.5px;
+  --code-line-height: 1.6;
+  --cell-edge: color-mix(in srgb, var(--ink) 14%, var(--line));
+  --cell-head: color-mix(in srgb, var(--fill-shape) 62%, var(--paper));
+  --out-edge: color-mix(in srgb, var(--green) 30%, var(--line));
+  --out-bg: color-mix(in srgb, var(--green-soft) 60%, var(--paper));
+  --err-edge: color-mix(in srgb, var(--coral) 35%, var(--line));
+}
+
+/* --- page column ----------------------------------------------------------- */
+
+/* Narrower than the old 1220px sheet so the text cells read at a line length
+   close to the other two problem pages, and centred the same way. */
+body[data-page="editor"]:not(.editor-embed) .editor-shell {
+  width: min(100% - var(--page-gutter), 1080px);
+  margin-top: 2rem;
+}
+
+body.editor-embed .editor-head {
+  display: none;
+}
+
+/* --- header card ----------------------------------------------------------- */
+
+.pp-type--code {
+  background: color-mix(in srgb, var(--brand) 11%, var(--paper));
+  color: var(--brand-strong);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand) 38%, transparent);
+}
+
+.editor-head.pp-head h1 {
+  margin-bottom: 1rem;
+}
+
+.editor-head .pp-facts[hidden],
+.editor-head .pp-fact[hidden],
+.editor-head .editor-subtitle[hidden],
+.editor-head .pp-actions[hidden],
+.editor-head .pp-action[hidden] {
+  display: none;
+}
+
+/* Same split as the other problem pages: lesson and download on the left,
+   the Definition bank as a quiet button at the far end. */
+body[data-page="editor"] .pp-head .pp-actions {
+  justify-content: space-between;
+  gap: 0.6rem 1rem;
+}
+
+/* The count of parts whose self-checks passed. Green once all of them have. */
+.editor-head .editor-checks {
+  color: var(--ink-2);
+}
+
+.editor-head .editor-checks.is-done {
+  color: var(--green);
+}
+
+.editor-head .editor-checks.is-done::before {
+  content: "✓";
+  margin-right: 0.35rem;
+  font-weight: 800;
+}
+
+.editor-head .pp-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+/* --- notebook panel and toolbar -------------------------------------------- */
+
+/* The cells sit on the page, as the parts of a text problem do. The frame
+   that used to wrap the whole notebook would put every card inside a card. */
+body[data-page="editor"]:not(.editor-embed) .editor-panel {
+  gap: 1.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+body[data-page="editor"]:not(.editor-embed) .editor-toolbar {
+  gap: 0.6rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--paper) 90%, transparent);
+  box-shadow: var(--shadow-md);
+}
+
+body[data-page="editor"] .editor-toolbar .button {
+  min-height: var(--ctl-h);
+}
+
+body[data-page="editor"] .editor-split {
+  min-height: var(--ctl-h-sm);
+  padding: 0.4rem 0.6rem;
+  color: var(--ink);
+  font-size: 0.92rem;
+  font-weight: 650;
+}
+
+body[data-page="editor"] .editor-split-track {
+  width: 42px;
+  height: 24px;
+  background: color-mix(in srgb, var(--ink) 24%, var(--fill-shape));
+}
+
+body[data-page="editor"] .editor-split-track span {
+  width: 18px;
+  height: 18px;
+}
+
+body[data-page="editor"] .editor-split[aria-checked="true"] .editor-split-track {
+  background: var(--brand);
+}
+
+body[data-page="editor"] .editor-split[aria-checked="true"] .editor-split-track span {
+  transform: translateX(18px);
+}
+
+body[data-page="editor"]:not(.editor-embed) .editor-kernel {
+  min-height: 2.25rem;
+  padding: 0.4rem 0.95rem;
+  border-color: var(--cell-edge);
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+body[data-page="editor"] .editor-kernel::before {
+  width: 9px;
+  height: 9px;
+}
+
+body[data-page="editor"] .editor-kernel.busy,
+body[data-page="editor"] .editor-kernel.is-warning {
+  color: var(--amber);
+}
+
+body[data-page="editor"] .editor-kernel.is-failed {
+  color: var(--coral);
+}
+
+/* --- notes above the cells ------------------------------------------------- */
+
+body[data-page="editor"] .editor-note {
+  padding: 0.85rem 1.1rem;
+  border-left-width: 4px;
+  border-radius: var(--radius);
+  color: var(--ink-2);
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+body[data-page="editor"] .editor-notice {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--amber) 40%, transparent);
+  border-left: 4px solid var(--amber);
+  border-radius: var(--radius);
+  background: var(--amber-soft);
+  color: var(--amber);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+body[data-page="editor"] .editor-notice[hidden],
+body[data-page="editor"] .editor-note[hidden] {
+  display: none;
+}
+
+/* --- cells ----------------------------------------------------------------- */
+
+body[data-page="editor"] .editor-cells {
+  gap: 1.25rem;
+}
+
+body[data-page="editor"] .editor-cell {
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+body[data-page="editor"] .editor-cell[hidden] {
+  display: none;
+}
+
+body[data-page="editor"] .cell-main {
+  gap: 0;
+}
+
+/* --- text cells ------------------------------------------------------------ */
+
+body[data-page="editor"] .editor-cell-markdown .editor-md {
+  padding: 0;
+  color: var(--ink-2);
+  font-size: 1.03rem;
+  line-height: 1.65;
+}
+
+body[data-page="editor"] .editor-md > :first-child {
+  margin-top: 0;
+}
+
+body[data-page="editor"] .editor-md > :last-child {
+  margin-bottom: 0;
+}
+
+body[data-page="editor"] .editor-md p {
+  margin: 0 0 0.9rem;
+  line-height: 1.65;
+}
+
+body[data-page="editor"] .editor-md h2,
+body[data-page="editor"] .editor-md h3,
+body[data-page="editor"] .editor-md h4,
+body[data-page="editor"] .editor-md h5 {
+  margin: 1.5rem 0 0.65rem;
+  color: var(--ink);
+  line-height: 1.25;
+}
+
+body[data-page="editor"] .editor-md h2 {
+  font-size: 1.5rem;
+}
+
+body[data-page="editor"] .editor-md h3 {
+  font-size: 1.25rem;
+}
+
+body[data-page="editor"] .editor-md h4,
+body[data-page="editor"] .editor-md h5 {
+  font-size: 1.08rem;
+}
+
+body[data-page="editor"] .editor-md ul,
+body[data-page="editor"] .editor-md ol {
+  margin: 0 0 0.9rem 1.4rem;
+  padding: 0;
+  line-height: 1.65;
+}
+
+body[data-page="editor"] .editor-md li + li {
+  margin-top: 0.3rem;
+}
+
+body[data-page="editor"] .editor-md code {
+  padding: 0.1rem 0.36rem;
+  border-color: var(--line);
+  font-size: 0.86em;
+}
+
+/* Code quoted in the text is read, not run: the navy edge of a lesson's code
+   block. The cells the reader runs carry the terracotta edge. */
+body[data-page="editor"] .editor-md .md-code,
+body[data-page="editor"] .editor-solution-body .md-code {
+  margin: 0 0 1rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--cell-edge);
+  border-left: 4px solid var(--navy);
+  border-radius: var(--radius);
+  background: var(--code-bg);
+  box-shadow: var(--shadow-sm);
+}
+
+body[data-page="editor"] .editor-md .md-code code {
+  padding: 0;
+  font-size: inherit;
+}
+
+body[data-page="editor"] .editor-md-table {
+  margin: 0 0 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+body[data-page="editor"] .editor-md-table table {
+  width: 100%;
+  font-size: 0.96rem;
+}
+
+body[data-page="editor"] .editor-md-table th,
+body[data-page="editor"] .editor-md-table td {
+  padding: 0.55rem 0.85rem;
+  border: 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+body[data-page="editor"] .editor-md-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+body[data-page="editor"] .editor-md-table th {
+  border-bottom: 1.5px solid var(--line);
+  background: var(--surface-2);
+  color: var(--ink);
+  font-weight: 650;
+}
+
+body[data-page="editor"] .editor-md .reader-math-display {
+  margin: 0.9rem 0 1rem;
+  overflow-x: auto;
+}
+
+/* --- code cells ------------------------------------------------------------ */
+
+body[data-page="editor"] .cell-frame {
+  overflow: hidden;
+  border: 1px solid var(--cell-edge);
+  border-left: 4px solid var(--brand);
+  border-radius: var(--radius);
+  background: var(--code-bg);
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--t-mid) var(--ease), box-shadow var(--t-mid) var(--ease);
+}
+
+body[data-page="editor"] .editor-cell-code:focus-within {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+body[data-page="editor"] .editor-cell-code:focus-within .cell-frame {
+  border-color: color-mix(in srgb, var(--brand) 60%, var(--line));
+  border-left-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+body[data-page="editor"] .cell-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 3rem;
+  padding: 0.3rem 0.4rem 0.3rem 0.95rem;
+  border-bottom: 1px solid var(--cell-edge);
+  background: var(--cell-head);
+}
+
+body[data-page="editor"] .cell-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ink-2);
+  font-size: 0.9rem;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+body[data-page="editor"] .cell-label::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--brand);
+}
+
+body[data-page="editor"] .cell-count {
+  color: var(--muted);
+  font-size: 0.82rem;
+  letter-spacing: 0;
+}
+
+body[data-page="editor"] .cell-tag {
+  padding: 0.16rem 0.6rem;
+  border-radius: 999px;
+  background: var(--navy-soft);
+  color: var(--navy);
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--navy) 30%, transparent);
+}
+
+body[data-page="editor"] .cell-run {
+  position: relative;
+  gap: 0.4rem;
+  width: auto;
+  height: auto;
+  min-height: 2.4rem;
+  margin-left: auto;
+  padding: 0.35rem 1rem 0.35rem 0.8rem;
+  border: 1.5px solid var(--brand);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--brand-strong);
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+body[data-page="editor"] .cell-run svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  margin-left: 0;
+}
+
+body[data-page="editor"] .cell-run:hover:not(:disabled),
+body[data-page="editor"] .cell-run:focus-visible {
+  background: var(--brand);
+  color: #fff;
+  transform: none;
+  box-shadow: none;
+}
+
+body[data-page="editor"] .cell-run:focus-visible {
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+body[data-page="editor"] .cell-run:disabled {
+  border-color: var(--cell-edge);
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+body[data-page="editor"] .cell-run:disabled:hover {
+  background: var(--paper);
+  color: var(--muted);
+  transform: none;
+  box-shadow: none;
+}
+
+/* The cell that is running keeps its colour and swaps the arrow for a spinner. */
+body[data-page="editor"] .editor-cell.running .cell-run {
+  border-color: color-mix(in srgb, var(--brand) 45%, var(--line));
+  background: var(--paper);
+  color: var(--brand-strong);
+}
+
+body[data-page="editor"] .editor-cell.running .cell-run svg {
+  display: none;
+}
+
+body[data-page="editor"] .editor-cell.running .cell-run::after {
+  position: static;
+  inset: auto;
+  order: -1;
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+body[data-page="editor"] .cell-editor {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+body[data-page="editor"] .editor-highlight,
+body[data-page="editor"] .editor-code {
+  padding: 0.85rem 1rem;
+}
+
+body[data-page="editor"] .editor-code {
+  min-height: 3rem;
+}
+
+/* --- output ---------------------------------------------------------------- */
+
+/* Output hangs under its cell: the same frame, a dashed join, a green edge. */
+body[data-page="editor"] .editor-output {
+  max-height: none;
+  overflow: visible;
+  padding: 0;
+  border: 1px solid var(--out-edge);
+  border-top-style: dashed;
+  border-left: 4px solid var(--green);
+  border-radius: 0 0 var(--radius) var(--radius);
+  background: var(--out-bg);
+}
+
+body[data-page="editor"] .editor-output[hidden] {
+  display: none;
+}
+
+body[data-page="editor"] .cell-frame:has(+ .editor-output:not([hidden])) {
+  border-bottom: 0;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+body[data-page="editor"] .editor-output-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 2.25rem;
+  padding: 0.45rem 1rem 0.1rem;
+}
+
+body[data-page="editor"] .editor-output-label {
+  color: var(--green);
+  font-size: 0.86rem;
+  font-weight: 650;
+}
+
+body[data-page="editor"] .editor-output-status {
+  padding: 0.14rem 0.65rem;
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1px var(--cell-edge);
+}
+
+body[data-page="editor"] .editor-output-body {
+  padding: 0.2rem 1rem 0.85rem;
+}
+
+body[data-page="editor"] .editor-output pre {
+  margin: 0.15rem 0;
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+/* Long printed text scrolls in its own box. A figure is shown whole. */
+body[data-page="editor"] .editor-output-text,
+body[data-page="editor"] .editor-traceback pre {
+  max-height: 440px;
+  overflow: auto;
+}
+
+body[data-page="editor"] .editor-output-note {
+  margin: 0.15rem 0;
+  font-size: 0.84rem;
+}
+
+body[data-page="editor"] .editor-output-figure {
+  margin: 0.6rem auto;
+  border-radius: var(--radius-sm);
+  background: #fff;
+}
+
+body[data-page="editor"] .editor-output[data-state="passed"] .editor-output-status {
+  background: var(--green);
+  color: #fff;
+  box-shadow: none;
+}
+
+body[data-page="editor"] .editor-output[data-state="passed"] .editor-output-status::before {
+  content: "✓ ";
+}
+
+body[data-page="editor"] .editor-output[data-state="running"] .editor-output-status {
+  background: var(--amber-soft);
+  color: var(--amber);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--amber) 40%, transparent);
+}
+
+body[data-page="editor"] .editor-output[data-state="error"] {
+  border-color: var(--err-edge);
+  border-left-color: var(--coral);
+  background: color-mix(in srgb, var(--coral-soft) 60%, var(--paper));
+}
+
+body[data-page="editor"] .editor-output[data-state="error"] .editor-output-label {
+  color: var(--coral);
+}
+
+body[data-page="editor"] .editor-output[data-state="error"] .editor-output-status {
+  background: var(--coral);
+  color: #fff;
+  box-shadow: none;
+}
+
+body[data-page="editor"] .editor-output[data-state="stopped"] {
+  border-color: var(--cell-edge);
+  border-left-color: var(--muted-2);
+  background: var(--surface-2);
+}
+
+body[data-page="editor"] .editor-output[data-state="stopped"] .editor-output-label {
+  color: var(--muted);
+}
+
+body[data-page="editor"] .editor-output .editor-output-error {
+  margin: 0.4rem 0 0.1rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--err-edge);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+}
+
+body[data-page="editor"] .editor-error-line {
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+body[data-page="editor"] .editor-error-hint {
+  margin-top: 0.4rem;
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+/* main.css frames and pads every <details>. This one is a link inside the
+   error box, not a second box. */
+body[data-page="editor"] .editor-traceback {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+body[data-page="editor"] .editor-traceback pre {
+  margin: 0.4rem 0 0;
+  padding: 0.7rem 0.85rem;
+  overflow-x: auto;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+body[data-page="editor"] .editor-traceback summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  margin-top: 0.4rem;
+  color: var(--ink-2);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+body[data-page="editor"] .editor-traceback summary:hover {
+  color: var(--brand-strong);
+}
+
+/* --- parts as cards -------------------------------------------------------- */
+
+body[data-page="editor"] .editor-part-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  min-width: 0;
+  padding: 1.4rem 1.5rem 1.3rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+
+body[data-page="editor"] .editor-part[data-check="passed"] {
+  border-color: color-mix(in srgb, var(--green) 55%, var(--line));
+}
+
+body[data-page="editor"] .editor-part-status {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0.6rem 0.95rem;
+  border-radius: var(--radius);
+  font-size: 0.96rem;
+  font-weight: 650;
+}
+
+body[data-page="editor"] .editor-part-status[hidden] {
+  display: none;
+}
+
+body[data-page="editor"] .editor-part-status::before {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+body[data-page="editor"] .editor-part[data-check="passed"] > .editor-part-status {
+  background: var(--green-soft);
+  color: var(--green);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--green) 40%, transparent);
+}
+
+body[data-page="editor"] .editor-part[data-check="passed"] > .editor-part-status::before {
+  content: "✓";
+  background: var(--green);
+}
+
+body[data-page="editor"] .editor-part[data-check="failed"] > .editor-part-status {
+  background: var(--coral-soft);
+  color: var(--coral);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--coral) 35%, transparent);
+}
+
+body[data-page="editor"] .editor-part[data-check="failed"] > .editor-part-status::before {
+  content: "!";
+  background: var(--coral);
+}
+
+/* --- split view ------------------------------------------------------------ */
+
+body[data-page="editor"] .editor-cells.is-split {
+  gap: 1.25rem;
+}
+
+body[data-page="editor"] .editor-row,
+body[data-page="editor"] .editor-row + .editor-row {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+body[data-page="editor"] .editor-row-text,
+body[data-page="editor"] .editor-row-code {
+  gap: 1.25rem;
+}
+
+body[data-page="editor"] .editor-row.editor-part {
+  padding: 1.4rem 1.5rem 1.3rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+
+body[data-page="editor"] .editor-row.editor-part[data-check="passed"] {
+  border-color: color-mix(in srgb, var(--green) 55%, var(--line));
+}
+
+body[data-page="editor"] .editor-row > .editor-part-status {
+  grid-column: 1 / -1;
+}
+
+body[data-page="editor"] .editor-row.is-text-only .editor-row-text {
+  max-width: 860px;
+}
+
+/* --- solution -------------------------------------------------------------- */
+
+/* The same large toggle the lessons use: a full-width bar with a round
+   chevron badge on the right that turns when it opens. */
+body[data-page="editor"] .editor-solution-fold {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+
+body[data-page="editor"] .editor-solution-fold > summary {
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 3.1rem;
+  margin: 0;
+  padding: 0.8rem 1.1rem;
+  border-radius: 0;
+  background: var(--surface-2);
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 650;
+  transition: background 120ms ease, color 120ms ease;
+}
+
+body[data-page="editor"] .editor-solution-fold > summary svg {
+  order: 2;
+  flex: none;
+  width: 1.9rem;
+  height: 1.9rem;
+  padding: 0.4rem;
+  border-radius: 50%;
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+body[data-page="editor"] .editor-solution-fold > summary:hover {
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+body[data-page="editor"] .editor-solution-fold > summary:hover svg {
+  background: var(--paper);
+}
+
+body[data-page="editor"] .editor-solution-fold > summary:focus-visible {
+  outline: 3px solid var(--brand-ring);
+  outline-offset: -3px;
+}
+
+body[data-page="editor"] .editor-solution-fold[open] > summary {
+  border-bottom: 1.5px solid var(--line);
+  color: var(--brand-strong);
+}
+
+body[data-page="editor"] .editor-solution-body {
+  gap: 1rem;
+  padding: 1.2rem 1.25rem 1.25rem;
+  border-top: 0;
+}
+
+body[data-page="editor"] .editor-solution-body .editor-md {
+  color: var(--ink-2);
+  font-size: 1.03rem;
+  line-height: 1.65;
+}
+
+body[data-page="editor"] .editor-solution-body .md-code {
+  margin: 0;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: var(--code-font-size);
+  line-height: var(--code-line-height);
+}
+
+/* --- small screens --------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  body[data-page="editor"]:not(.editor-embed) .editor-shell {
+    width: min(100% - 1.5rem, 1080px);
+    margin-top: 1rem;
+  }
+
+  body[data-page="editor"] {
+    --code-font-size: 12.5px;
+  }
+
+  body[data-page="editor"] .editor-cell {
+    padding: 0;
+  }
+
+  body[data-page="editor"] .editor-part-card {
+    padding: 1.1rem 0.9rem;
+  }
+
+  body[data-page="editor"] .cell-head {
+    gap: 0.45rem;
+    padding-left: 0.7rem;
+  }
+
+  body[data-page="editor"] .editor-highlight,
+  body[data-page="editor"] .editor-code {
+    padding: 0.75rem 0.8rem;
+  }
+
+  body[data-page="editor"] .editor-output-head {
+    padding-inline: 0.8rem;
+  }
+
+  body[data-page="editor"] .editor-output-body {
+    padding-inline: 0.8rem;
+  }
+
+  body[data-page="editor"] .cell-run {
+    width: auto;
+    height: auto;
+  }
+
+  body[data-page="editor"] .editor-head .pp-action {
+    flex: 1 1 calc(50% - 0.6rem);
+  }
+
+  /* A one-row bar that scrolls sideways cut the Python status off at the
+     edge. The three buttons share the first row and the status gets a slim
+     second row of its own. */
+  body[data-page="editor"]:not(.editor-embed) .editor-toolbar {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    gap: 0.5rem;
+  }
+
+  body[data-page="editor"]:not(.editor-embed) .editor-toolbar .button {
+    flex: 1 1 0;
+    min-width: 0;
+    padding-inline: 0.6rem;
+  }
+
+  body[data-page="editor"]:not(.editor-embed) .editor-kernel {
+    flex: 1 1 100%;
+    min-height: 2rem;
+    margin-left: 0;
+    padding-block: 0.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-page="editor"] .cell-frame,
+  body[data-page="editor"] .editor-solution-fold > summary {
+    transition: none;
+  }
+}

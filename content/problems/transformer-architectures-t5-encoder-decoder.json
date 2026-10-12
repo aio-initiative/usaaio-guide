@@ -1,0 +1,645 @@
+{
+  "module": "transformer-architectures-t5-encoder-decoder",
+  "stage": "Round 2",
+  "index": [
+    {
+      "id": "t5-pad-columns",
+      "moduleId": "transformer-architectures-t5-encoder-decoder",
+      "title": "Which Scores to Hide in a Padded Batch",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=t5-pad-columns",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A batch holds two English to German pairs, each sequence padded to the longest one of its kind in the batch: pair 1 has 8 input tokens and 7 decoder positions, and pair 2 has 5 input tokens padded to 8 and 4 decoder positions padded to 7. Numbering rows and columns from 1, which entries of pair 2's 7 by 8 cross-attention score grid should be set to minus infinity before the softmax?",
+      "answer": "Columns 6, 7 and 8, in every row. The keys and values come from the encoder output, one row per input token, so the 8 columns are pair 2's input positions, and columns 6 to 8 hold pads. Every decoder position must give them weight 0. Otherwise its output mixes in vectors that exist only because pair 1 is longer, and pair 2's translation changes with whatever it was batched with. The rows of the decoder's own pads still see the 5 real input tokens, so no row is left empty, and their predictions are dropped from the loss."
+    },
+    {
+      "id": "t5-who-sees-the-input",
+      "moduleId": "transformer-architectures-t5-encoder-decoder",
+      "title": "What Each Model Lets a Token See",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=t5-who-sees-the-input",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "An encoder-decoder and a decoder-only model translate the same 12-token English sentence into 5 German tokens, and the decoder-only one reads both as a single stream under one causal mask. Count the ordered pairs of tokens the encoder-decoder lets attend that the decoder-only model does not, then say whether the two give a German token the same information about the English. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "t5-typo-in-the-target",
+      "moduleId": "transformer-architectures-t5-encoder-decoder",
+      "title": "A Typo in the Target",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=t5-typo-in-the-target",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A fine-tuned T5 trains on an English to German pair whose German target is seven tokens, and a typo in the data changes the fifth one. Say which of the seven cross-entropy loss terms can differ from the same training step on the clean pair.",
+      "answer": "The terms for the fifth, sixth and seventh tokens. The decoder reads the start token followed by Der Zug fährt um neun ab, so the changed word sits at decoder position 6, the input of the positions that predict the sixth and seventh tokens. The causal mask keeps it out of positions 1 to 5, and the encoder never sees the target, so position 5 computes the same probabilities as before. Its label is now nein, though, so its term changes too. Terms 1 to 4 come out exactly as on the clean pair."
+    },
+    {
+      "id": "t5-greedy-label",
+      "moduleId": "transformer-architectures-t5-encoder-decoder",
+      "title": "The Label Greedy Decoding Writes",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=t5-greedy-label",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A fine-tuned T5 routes support tickets to one of four labels, and the decoder's next-token probabilities are given for its first two steps. Work out what greedy decoding writes, which label the model rates most likely, and a way to read a label that always picks the most likely one. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "t5-passage-for-a-fixed-input",
+      "moduleId": "transformer-architectures-t5-encoder-decoder",
+      "title": "How Long a Passage Fills the Input",
+      "source": "USAAIO-style",
+      "difficulty": "Easy",
+      "url": "/theory/?id=t5-passage-for-a-fixed-input",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A team pretrains a T5-style model with span corruption and every encoder input must be exactly 288 tokens: 15% of each passage's tokens are hidden in 3-token spans, one sentinel replaces each span in the input, and the target holds each sentinel followed by its span plus one closing sentinel. How many tokens long must each passage be, and how many tokens long is each target? 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "t5-scores-as-text",
+      "moduleId": "transformer-architectures-t5-encoder-decoder",
+      "title": "Ratings Written as Text",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=t5-scores-as-text",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A fine-tuned T5 rates how well a summary covers its article on a scale from 1 to 5 and writes the rating as text, and two checkpoints give different probabilities to the same whole output strings. Work out what each writes by greedy decoding, compare the two cross-entropy losses on the target, and explain why the loss prefers the checkpoint whose rating is further off. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "t5-translator-ignores-input",
+      "moduleId": "transformer-architectures-t5-encoder-decoder",
+      "title": "A Translator That Ignores Its Input",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=t5-translator-ignores-input",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A small English to German encoder-decoder trains to a loss that levels off at what a German-only language model of the same size reaches on the same German sentences, and at test time changing the English does not change the German at all. Which one-line slip in the training code explains both?",
+      "answer": "The cross-attention line reads h = h + cross_attn(q=h, k=h, v=h, mask=causal). With this line every decoder block attends only to its own positions, and the causal mask still keeps each position from seeing the tokens after it. No layer ever reads the encoder output, so nothing connects the English to the German, and the model can do no better than learn German on its own: a language model's loss in training, and the same output for every input at test time."
+    },
+    {
+      "id": "t5-span-sampler",
+      "moduleId": "transformer-architectures-t5-encoder-decoder",
+      "title": "Sampling the Spans to Hide",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=t5-span-sampler",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Write a sampler that hides an exact number of tokens in an exact number of spans, at random places, with no two spans touching.",
+      "answer": "Auto-graded inside the notebook. random_split must return k positive integers adding up to total, with every such split equally likely, checked by sampling. span_mask must hide exactly the required number of tokens in exactly the required number of spans, never at the first or last token, with both the span lengths and the final kept run varying between calls. Both check cells print their Part N passed line."
+    },
+    {
+      "id": "t5-batched-cross-attention",
+      "moduleId": "transformer-architectures-t5-encoder-decoder",
+      "title": "Cross-Attention for a Padded Batch",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=t5-batched-cross-attention",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Write cross-attention for a whole batch at once, with the input's pads hidden.",
+      "answer": "Auto-graded inside the notebook. masked_attention must divide the scores by sqrt(d), give the hidden keys exactly zero weight, stay finite on large scores, and match a hand-computed example exactly. cross_attention must give every decoder position weight only on its own example's real input tokens, be unchanged when the pad vectors are replaced, and reproduce each example's alone-run output. Both check cells print their Part N passed line."
+    },
+    {
+      "id": "nl5-attention-alignment",
+      "moduleId": "transformer-architectures-t5-encoder-decoder",
+      "title": "Attention Learns the Alignment You Never Labelled",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=nl5-attention-alignment",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Train additive attention by gradient descent on a copy-with-offset task, using the true alignment only as the training target, and check that the learned attention recovers it.",
+      "answer": "Auto-graded inside the notebook. Final loss, argmax accuracy, mean attention mass on the true source position, and mean attention entropy must all match the reference to a relative tolerance of 1e-5, with at least 90% of positions aligned correctly and mean entropy under 1.5 bits."
+    }
+  ],
+  "theory": [
+    {
+      "id": "t5-pad-columns",
+      "moduleId": "transformer-architectures-t5-encoder-decoder",
+      "title": "Which Scores to Hide in a Padded Batch",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A batch holds two English to German pairs, and every sequence is padded to the longest one of its kind in the batch:"
+            },
+            {
+              "tex": "\\begin{array}{ccc}\n\\text{} & \\text{Input tokens} & \\text{Decoder positions} \\\\ \\hline\n\\text{Pair 1} & 8 & 7 \\\\\n\\text{Pair 2} & \\text{5, padded to 8} & \\text{4, padded to 7}\n\\end{array}"
+            },
+            {
+              "p": "Number rows and columns from 1. In one head, pair 2's cross-attention scores form a $7 \\times 8$ grid. Which entries should be set to $-\\infty$ before the softmax?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Rows 5, 6 and 7 in full, and columns 6, 7 and 8",
+                  "explain": "Columns 6 to 8 are right, but rows 5 to 7 would then have every entry at minus infinity. The softmax of such a row divides 0 by 0 and gives NaN, and one NaN spreads to every weight of the model in a single training step. Those rows are the decoder's pad positions, whose predictions are left out of the loss, so they need no hiding."
+                },
+                {
+                  "text": "Columns 6, 7 and 8, in every row",
+                  "correct": true,
+                  "explain": "The keys and values come from the encoder output, one row per input token, so the 8 columns are pair 2's input positions, and columns 6 to 8 hold pads. Every decoder position must give them weight 0. Otherwise its output mixes in vectors that exist only because pair 1 is longer, and pair 2's translation changes with whatever it was batched with. The rows of the decoder's own pads still see the 5 real input tokens, so no row is left empty, and their predictions are dropped from the loss."
+                },
+                {
+                  "text": "Columns 5, 6 and 7, in every row",
+                  "explain": "Positions 5 to 7 are the decoder's pads, but the columns of this grid are input tokens. This hides the fifth input word, a real token, and leaves the pad in column 8 visible. The decoder's pads are keys only in its own self-attention grid."
+                },
+                {
+                  "text": "Every entry above the diagonal",
+                  "explain": "That is the decoder's causal mask, copied onto a grid that is not square. Row 1 could then see only the first input word, although the whole input is known before the decoder starts, and rows 6 and 7 would still see pads. The grid needs no causal mask, only the input's padding hidden."
+                },
+                {
+                  "text": "No entries",
+                  "explain": "Cross-attention needs no causal mask, since the input is complete before decoding starts, but padding is a separate matter. With nothing hidden, every decoder position puts some weight on the three pad vectors, so pair 2's output depends on how long the other inputs in its batch were."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The keys and values come from the encoder output, one row per input token, so the 8 columns are pair 2's input positions, and columns 6 to 8 hold pads. Every decoder position must give them weight 0. Otherwise its output mixes in vectors that exist only because pair 1 is longer, and pair 2's translation changes with whatever it was batched with. The rows of the decoder's own pads still see the 5 real input tokens, so no row is left empty, and their predictions are dropped from the loss."
+            },
+            {
+              "result": "Columns 6, 7 and 8, in every row"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "t5-who-sees-the-input",
+      "moduleId": "transformer-architectures-t5-encoder-decoder",
+      "title": "What Each Model Lets a Token See",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "Two models translate a 12-token English sentence into 5 German tokens."
+      ],
+      "setup": [
+        {
+          "list": [
+            "**Model E** is an encoder-decoder.",
+            "**Model D** is decoder-only. It reads the 12 English tokens and then the German ones as a single stream, under one causal mask."
+          ]
+        },
+        {
+          "p": "Leave out the start and end tokens, so there are 17 tokens in all. Say that token $a$ can attend to token $b$ when, in some layer, the position holding $a$ can put weight on the position holding $b$. In model E, a German token is held by the decoder position that reads it."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Count the ordered pairs $(a, b)$ of different tokens for which $a$ can attend to $b$ in model E but not in model D."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Sort the pairs by where $a$ and $b$ sit:"
+            },
+            {
+              "tex": "\\begin{array}{cccc}\na & b & \\text{Model E} & \\text{Model D} \\\\ \\hline\n\\text{English} & \\text{English} & \\text{all $12 \\times 11 = 132$ (encoder, both ways)} & \\text{only $b$ before $a$: $66$} \\\\\n\\text{English} & \\text{German} & \\text{none: the encoder never sees the output} & \\text{none: the German comes later} \\\\\n\\text{German} & \\text{English} & \\text{all $5 \\times 12 = 60$ (cross-attention)} & \\text{all $60$: the English comes first} \\\\\n\\text{German} & \\text{German} & \\text{$b$ before $a$: $10$ (causal mask)} & \\text{$b$ before $a$: $10$}\n\\end{array}"
+            },
+            {
+              "p": "Only the first row differs. Model E allows $132 - 66 = 66$ pairs that model D does not, and each of them is an English token attending to a later English token. Model D allows nothing that model E does not, so model E allows 202 pairs in all and model D 136."
+            },
+            {
+              "result": "66"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "So every German token can attend to the same 12 English tokens in both models. Does that mean both models give it the same information about the English? Use an input such as \"The bank of the river flooded\", where \"bank\" only makes sense once \"river\" has been read."
+            }
+          ],
+          "answer": [
+            {
+              "p": "No. The tokens it can reach are the same, but the vectors it reads at those positions are built differently."
+            },
+            {
+              "p": "In model E, the encoder lets every English token look at the whole sentence in every layer, so by the top of the encoder the vector at \"bank\" already carries \"river\". Cross-attention then hands the decoder vectors in which each word has been read in its full context."
+            },
+            {
+              "p": "In model D, the vector at \"bank\" is built from \"The bank\" alone, in every layer, because the causal mask hides every later token from it. The sentence can still be understood: the position of \"river\" can look back at \"bank\", and a German token can put weight on both. But the meaning has to be put together at later positions. The vector at \"bank\" itself never learns what kind of bank it is. Those 66 hidden pairs are exactly the places where an earlier English word would have looked ahead."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "t5-typo-in-the-target",
+      "moduleId": "transformer-architectures-t5-encoder-decoder",
+      "title": "A Typo in the Target",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A T5 model is being fine-tuned on English to German pairs. One pair is"
+            },
+            {
+              "list": [
+                "input: `translate English to German: The train leaves at nine.`",
+                "target: `Der Zug fährt um neun ab .`"
+              ]
+            },
+            {
+              "p": "Count each German word and the period as one token, so the target has 7 tokens, and the loss on this pair adds up 7 cross-entropy terms, one for each target token. A typo in the data set turns \"neun\" (nine) into \"nein\" (no). Compare one training step on the pair with the typo against the same step on the clean pair, with the same weights and dropout turned off. Which of the 7 terms can come out different?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Only the term for the fifth token",
+                  "explain": "The fifth term does change, since its label is now nein. But the decoder also reads the target as its input, shifted right by one, so the positions that predict ab and the period read the typo and compute different probabilities."
+                },
+                {
+                  "text": "The terms for the sixth and seventh tokens",
+                  "explain": "Those two positions do read the typo. But the fifth term changes as well. The position that predicts the fifth token reads only up to um, so its probabilities stay the same, yet the loss now scores them against nein instead of neun."
+                },
+                {
+                  "text": "The terms for the fifth, sixth and seventh tokens",
+                  "correct": true,
+                  "explain": "The decoder reads the start token followed by Der Zug fährt um neun ab, so the changed word sits at decoder position 6, the input of the positions that predict the sixth and seventh tokens. The causal mask keeps it out of positions 1 to 5, and the encoder never sees the target, so position 5 computes the same probabilities as before. Its label is now nein, though, so its term changes too. Terms 1 to 4 come out exactly as on the clean pair."
+                },
+                {
+                  "text": "All seven terms",
+                  "explain": "Teacher forcing feeds the whole target in one run, but the decoder's causal mask still keeps every position from seeing the target tokens after it. Cross-attention reads only the encoder output, which the target never reaches. So positions 1 to 4 compute exactly what they computed on the clean pair, with the same labels."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The decoder reads the start token followed by Der Zug fährt um neun ab, so the changed word sits at decoder position 6, the input of the positions that predict the sixth and seventh tokens. The causal mask keeps it out of positions 1 to 5, and the encoder never sees the target, so position 5 computes the same probabilities as before. Its label is now nein, though, so its term changes too. Terms 1 to 4 come out exactly as on the clean pair."
+            },
+            {
+              "result": "The terms for the fifth, sixth and seventh tokens"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "t5-greedy-label",
+      "moduleId": "transformer-architectures-t5-encoder-decoder",
+      "title": "The Label Greedy Decoding Writes",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "A support team fine-tunes T5 to route tickets. The input is `route:` followed by the ticket's text, and the target is one of four labels: `refund`, `replace`, `repair` or `cancel`. The tokenizer splits the first three into two pieces each, `re` followed by `fund`, `place` or `pair`, and keeps `cancel` as one token."
+      ],
+      "setup": [
+        {
+          "p": "For one ticket, the decoder gives these probabilities for the next token:"
+        },
+        {
+          "tex": "\\begin{array}{cc}\n\\text{Decoder has read} & \\text{Next token} \\\\ \\hline\n\\text{start} & \\text{`re` 0.56, `cancel` 0.40, all other tokens together 0.04} \\\\\n\\text{start, `re`} & \\text{`turn` 0.36, `place` 0.30, `fund` 0.18, `pair` 0.12, others 0.04}\n\\end{array}"
+        },
+        {
+          "p": "After `cancel`, and after `re` and any second piece, the next token is the end token with probability 1."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A short justification is required.",
+          "prompt": [
+            {
+              "p": "What does greedy decoding write for this ticket?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "At the first step `re` (0.56) beats `cancel` (0.40). After `re` the most likely piece is `turn` (0.36), and then the end token follows. Greedy decoding writes **return**, which is not one of the four labels. The T5 paper scored any output that matched no label as wrong."
+            },
+            {
+              "result": "return"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Which of the four labels does the model rate most likely?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "A label's probability is the product of the probabilities of its tokens, each given the tokens before it, and the end token adds a factor of 1:"
+            },
+            {
+              "tex": "\\begin{array}{cc}\n\\text{Label} & \\text{Probability} \\\\ \\hline\n\\text{`refund`} & 0.56 \\times 0.18 = 0.1008 \\\\\n\\text{`replace`} & 0.56 \\times 0.30 = 0.168 \\\\\n\\text{`repair`} & 0.56 \\times 0.12 = 0.0672 \\\\\n\\text{`cancel`} & 0.40\n\\end{array}"
+            },
+            {
+              "p": "**cancel** is the most likely label, and it is more likely than the three `re` labels together, $0.56 \\times 0.60 = 0.336$. Greedy decoding never reached it because `re` won the first step on the strength of all its continuations together: the three labels, the word \"return\", which alone gets $0.56 \\times 0.36 = 0.2016$, and the rest. Once `re` was chosen, `cancel` was out of reach."
+            },
+            {
+              "result": "cancel"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Describe a way to read a label from this model that always gives one of the four labels and picks the one the model rates most likely. What does it pick here, and how many runs of the encoder and the decoder does it take?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Score each label in full instead of generating. Feed each label, followed by the end token, to the decoder with teacher forcing, as in training: one decoder run gives the probability of every token of that label at once. Multiply them (or add their logarithms) and pick the label with the largest total. Here that is `cancel`, at 0.40."
+            },
+            {
+              "p": "The encoder runs once, since its output depends only on the ticket. The decoder runs once per label, four times. The two pieces of a label like `refund` come out of the same run, and the end token's probability has to be read after each complete label, which is why every label needs its own run. This costs more than greedy decoding when there are many labels, but it can only ever answer with a label."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "t5-passage-for-a-fixed-input",
+      "moduleId": "transformer-architectures-t5-encoder-decoder",
+      "title": "How Long a Passage Fills the Input",
+      "difficulty": "Easy",
+      "minutes": 8,
+      "overview": [
+        "A team pretrains a T5-style model with span corruption, and every example's encoder input must be exactly 288 tokens long. So the data pipeline cuts passages of one fixed length from the corpus and corrupts each of them. It hides 15% of a passage's tokens, in spans of exactly 3 tokens, and writes the pairs in this lesson's format: in the input, one sentinel in place of each span, and in the target, each sentinel followed by its span, then one closing sentinel. Every sentinel is one token, and there is no end token."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "How many tokens long must each passage be?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Take a passage of $L$ tokens. It loses $0.15L$ hidden tokens, in $0.15L / 3 = 0.05L$ spans. The input keeps the other $0.85L$ tokens and adds one sentinel per span:"
+            },
+            {
+              "tex": "L - 0.15L + 0.05L = 0.9L = 288, \\qquad L = 320."
+            },
+            {
+              "p": "Check: 320 tokens, 48 of them hidden in 16 spans, leave $320 - 48 + 16 = 288$ input tokens. Forgetting the sentinels gives $0.85L = 288$, which has no whole-number solution."
+            },
+            {
+              "result": "320"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "How many tokens long is each target?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The target holds the 48 hidden tokens, one sentinel before each of the 16 spans, and the closing sentinel: $48 + 16 + 1 = 65$."
+            },
+            {
+              "p": "With teacher forcing the decoder then reads 65 positions, where rewriting the whole passage would take 320. That is about a fifth as many rows in the cross-attention grid, and about a 24th as many entries in the decoder's self-attention grid, since $(320/65)^2 \\approx 24$."
+            },
+            {
+              "result": "65"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "t5-scores-as-text",
+      "moduleId": "transformer-architectures-t5-encoder-decoder",
+      "title": "Ratings Written as Text",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A team fine-tunes T5 to rate how well a summary covers its article, on a scale from 1 to 5. The T5 paper handled a similarity score between 1 and 5 in the same way: round each average rating to the nearest 0.2 and write it as text. An article rated 3.43 gets the target `3.4`, which the tokenizer splits into three tokens, `3`, `.` and `4`."
+      ],
+      "setup": [
+        {
+          "p": "For this article, two checkpoints of the model give these probabilities to whole output strings. Each is the product of the string's token probabilities, and every string not listed gets 0."
+        },
+        {
+          "tex": "\\begin{array}{ccc}\n\\text{String} & \\text{Checkpoint P} & \\text{Checkpoint Q} \\\\ \\hline\n\\text{`1.2`} & 0 & 0.25 \\\\\n\\text{`1.4`} & 0 & 0.17 \\\\\n\\text{`1.6`} & 0 & 0.13 \\\\\n\\text{`3.2`} & 0.36 & 0 \\\\\n\\text{`3.4`} & 0.30 & 0.45 \\\\\n\\text{`3.6`} & 0.34 & 0\n\\end{array}"
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Greedy decoding writes the rating one token at a time. What rating does each checkpoint write, and how far from the target, 3.4, is each one?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The first token is the first digit, and its probability is the sum of every string that starts with it. Checkpoint Q gives `1` the sum $0.25 + 0.17 + 0.13 = 0.55$, and `3` gets 0.45, so greedy decoding writes `1`. Of the three strings beginning `1.`, `1.2` is the most likely, so Q writes 1.2, which is **2.2** below the target."
+            },
+            {
+              "p": "Notice what greedy decoding did not do. The single most likely string is `3.4`, at 0.45, and that string is the target itself. Greedy decoding compares one token at a time, so it never sets `1.2` against `3.4` as whole strings. Scoring the strings instead of decoding them would have graded Q as the better checkpoint."
+            },
+            {
+              "p": "Checkpoint P puts all its probability on strings starting with `3`, then `.`. At the last digit it compares `2` (0.36), `6` (0.34) and `4` (0.30), so it writes 3.2, which is 0.2 off."
+            },
+            {
+              "result": "P writes `3.2`, 0.2 off, and Q writes `1.2`, 2.2 off"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Take the loss on this article to be the sum of the cross-entropy terms of the target's three tokens, with natural logarithms. Which checkpoint has the lower loss, and by how much?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each token's term is minus the log of its probability given the tokens before it. The probabilities multiply to the string's probability, so the three terms add up to minus the log of the string's probability:"
+            },
+            {
+              "tex": "\\text{P: } -\\ln 0.30 = 1.204, \\qquad \\text{Q: } -\\ln 0.45 = 0.799 ."
+            },
+            {
+              "p": "Checkpoint Q has the lower loss, by $\\ln(0.45 / 0.30) = \\ln 1.5 = 0.405$. Averaging the three terms instead, as a training loop usually reports it, divides both losses and the gap by 3, and Q still comes out lower. So training would move the model from P toward Q, although Q's rating is 11 times further off."
+            },
+            {
+              "result": "0.405"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Why does the loss prefer the checkpoint whose rating is so much worse? From checkpoint P's probabilities, how could you read a rating that is closer to 3.4 than its greedy output?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The loss looks only at the probability of the exact target string. It never asks where the rest of the probability went, so P's 0.70 on `3.2` and `3.6` costs it as much as 0.70 on `1.0` and `5.0` would. To the loss, the 21 strings from `1.0` to `5.0` are 21 unrelated classes, and nothing tells it that `3.2` is a near miss. A regression head trained with squared error would see the difference at once: $0.2^2 = 0.04$ for P's greedy rating against $2.2^2 = 4.84$ for Q's. T5 accepts this cost to keep every task in one format with one loss."
+            },
+            {
+              "p": "To read a better rating, score every string, as you would score every label of a classifier, and take the probability-weighted average of the numbers:"
+            },
+            {
+              "tex": "0.36 \\times 3.2 + 0.30 \\times 3.4 + 0.34 \\times 3.6 = 3.396,"
+            },
+            {
+              "p": "which is 0.004 from the target. For Q the same average is $0.25 \\times 1.2 + 0.17 \\times 1.4 + 0.13 \\times 1.6 + 0.45 \\times 3.4 = 2.276$, still far off: no way of reading the probabilities repairs a model that has put most of them on the wrong number."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "t5-translator-ignores-input",
+      "moduleId": "transformer-architectures-t5-encoder-decoder",
+      "title": "A Translator That Ignores Its Input",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A student builds a small English to German encoder-decoder from scratch. The data and the model are meant to work like this:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "dec_in = shift_right(target)               # start token in front, last token dropped",
+                  "enc = encoder(src, mask=src_pad)           # src_pad hides the input's pads as keys",
+                  "",
+                  "def decoder_block(h, enc):",
+                  "    h = h + self_attn(q=h, k=h, v=h, mask=causal)",
+                  "    h = h + cross_attn(q=h, k=enc, v=enc, mask=src_pad)",
+                  "    return h + feed_forward(h)"
+                ]
+              }
+            },
+            {
+              "p": "Training runs, and the loss falls, then levels off close to what a German-only language model of the same size reaches on the same German sentences. At test time every English sentence comes back as fluent German, and changing the English does not change the German at all. Which one-line slip explains this?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "The cross-attention line reads `h = h + cross_attn(q=h, k=h, v=h, mask=causal)`",
+                  "correct": true,
+                  "explain": "With this line every decoder block attends only to its own positions, and the causal mask still keeps each position from seeing the tokens after it. No layer ever reads the encoder output, so nothing connects the English to the German, and the model can do no better than learn German on its own: a language model's loss in training, and the same output for every input at test time."
+                },
+                {
+                  "text": "The data line reads `dec_in = target`",
+                  "explain": "Then every position reads the token it must predict, so the model learns to copy and its training loss falls far below a language model's, close to 0. At test time it breaks down because the token it learned to copy is not there yet. A loss that levels off at a language model's level points elsewhere."
+                },
+                {
+                  "text": "The encoder line reads `enc = encoder(src, mask=src_causal)`",
+                  "explain": "Each encoder vector then sees only the input tokens before it, but the decoder still cross-attends to all of them, and the last one has read the whole sentence. Translations may get worse, but changing the English still changes the output."
+                },
+                {
+                  "text": "The cross-attention line reads `h = h + cross_attn(q=h, k=h, v=h, mask=None)`",
+                  "explain": "This line also cuts the decoder off from the encoder, so the German would ignore the English. But with no mask, each position can attend to the later positions of its own input, and the next one holds exactly the token it must predict. The training loss would fall far below a language model's, toward 0, and generation would break down at test time because those later tokens do not exist yet. A loss that levels off at a language model's level rules it out."
+                },
+                {
+                  "text": "The cross-attention line reads `h = h + cross_attn(q=h, k=enc, v=enc, mask=None)`",
+                  "explain": "Every decoder position then puts a little weight on the pad vectors, so an output depends slightly on what else was in its batch. The real input tokens still reach every position, so changing the English changes the German."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "With this line every decoder block attends only to its own positions, and the causal mask still keeps each position from seeing the tokens after it. No layer ever reads the encoder output, so nothing connects the English to the German, and the model can do no better than learn German on its own: a language model's loss in training, and the same output for every input at test time."
+            },
+            {
+              "result": "The cross-attention line reads `h = h + cross_attn(q=h, k=h, v=h, mask=causal)`"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

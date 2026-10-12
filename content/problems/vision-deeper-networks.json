@@ -1,0 +1,99 @@
+{
+ "module": "vision-deeper-networks",
+ "stage": "Round 2",
+ "index": [
+  {
+   "id": "cv-first-block-of-stage-2",
+   "moduleId": "vision-deeper-networks",
+   "title": "The First Block of Stage 2",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=cv-first-block-of-stage-2",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "Stage 2 of ResNet-50 has 4 bottleneck blocks that work with 128 channels in the middle and give 512 out, and its first block also halves the maps with a stride of 2. Count the parameters of that first block and of the whole stage, including the batch normalization after every convolution. 2 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "modern-cnn-architectures-implementation-task",
+   "moduleId": "vision-deeper-networks",
+   "title": "Residual CNN Practice",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=modern-cnn-architectures",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "A small ResNet-style CNN (residual blocks) in PyTorch is the intended route, but any method is allowed. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+   "answer": "Auto-graded inside the notebook. Test accuracy must reach the target shown in the evaluation cell."
+  }
+ ],
+ "theory": [
+  {
+   "id": "cv-first-block-of-stage-2",
+   "moduleId": "vision-deeper-networks",
+   "title": "The First Block of Stage 2",
+   "difficulty": "Medium",
+   "minutes": 15,
+   "overview": [
+    "Stage 2 of ResNet-50 has 4 bottleneck blocks. Each works with 128 channels in the middle and gives 512 channels out, 4 times 128. The first block takes stage 1's 256 channels as its input and halves the height and the width, from 56 × 56 to 28 × 28, with a stride of 2. Count as the page does: no offsets on the convolutions, and a batch normalization after every convolution."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "How many parameters does the first block of stage 2 have?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Stage 1 gives 256 channels, so the block takes 256 channels of 56 × 56 in and gives 512 channels of 28 × 28 out. Its input and output differ in both, so the shortcut cannot be a plain addition: it carries a 1 × 1 convolution from 256 to 512 channels with a stride of 2, and that convolution has its own batch normalization. A stride changes where a filter is applied, not how many weights it has."
+      },
+      {
+       "tex": "\\begin{array}{ccc}\n\\text{Layer} & \\text{Weights} & \\text{Batch normalization} \\\\ \\hline\n\\text{1  \\times  1, 256 to 128} & \\text{1  \\times  1  \\times  256  \\times  128 = 32,768} & \\text{2  \\times  128 = 256} \\\\\n\\text{3  \\times  3, 128 to 128} & \\text{3  \\times  3  \\times  128  \\times  128 = 147,456} & 256 \\\\\n\\text{1  \\times  1, 128 to 512} & \\text{1  \\times  1  \\times  128  \\times  512 = 65,536} & \\text{2  \\times  512 = 1,024} \\\\\n\\text{Shortcut, 1  \\times  1, 256 to 512} & \\text{1  \\times  1  \\times  256  \\times  512 = 131,072} & \\text{1,024}\n\\end{array}"
+      },
+      {
+       "p": "That is 376,832 weights and 2,560 for batch normalization, 379,392 in all, about 5 times the 75,008 of stage 1's first block. The 3 × 3 convolution alone grows 4 times, from 36,864 to 147,456, because both of its channel numbers doubled."
+      },
+      {
+       "result": "379392"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "How many parameters does the whole of stage 2 have?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The other three blocks take the 512 channels of 28 × 28 that the block before gives and return the same shape, so their shortcut is a plain addition with no parameters. Each has"
+      },
+      {
+       "tex": "\\underbrace{65{,}536 + 256}_{1 \\times 1,\\ 512 \\to 128} +\n\\underbrace{147{,}456 + 256}_{3 \\times 3,\\ 128 \\to 128} +\n\\underbrace{65{,}536 + 1{,}024}_{1 \\times 1,\\ 128 \\to 512} = 280{,}064 ,"
+      },
+      {
+       "p": "and the stage has $379{,}392 + 3 \\times 280{,}064 = 1{,}219{,}584$, about 5.7 times stage 1's 215,808. Counting four copies of the first block would give 1,517,568: the shortcut convolution only exists where the shape changes. These are the numbers torchvision's `resnet50` reports for `layer2[0]` and `layer2`."
+      },
+      {
+       "result": "1219584"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

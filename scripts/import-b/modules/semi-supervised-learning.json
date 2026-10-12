@@ -1,0 +1,101 @@
+{
+  "aModule": "semi-supervised-learning",
+  "stage": "Round 2",
+  "fixes": [
+    {
+      "file": "ssl-propagation-on-a-long-chain",
+      "find": "since both\nvectors are positive at every point.",
+      "replace": "since $f^\\ast_U$ and $v_1$\nare both positive at every point."
+    },
+    {
+      "file": "ssl-every-row-clears-the-bar",
+      "find": "On this data about 80% of the 637 rows are right.",
+      "replace": "In the run these counts come from, about 80% of the 637 rows are right."
+    },
+    {
+      "file": "ssl-every-row-clears-the-bar",
+      "find": "on this data 388 rows clear 0.999",
+      "replace": "in the same run 388 rows clear 0.999"
+    }
+  ],
+  "parts": {
+    "ssl-fixmatch-batch-loss": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "ssl-propagation-on-a-long-chain": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.4": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "ssl-self-training-an-svm": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "ssl-spreading-outvotes-a-label": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "ssl-when-unlabeled-points-hurt": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "ssl-every-row-clears-the-bar": "A 4-class tabular problem has 40 features, 24 labeled rows and 1,476 unlabeled rows. Two self-training runs, one with almost no penalty on the weights and one with a strong penalty, both fit the 24 labeled rows, yet the first absorbs 637 unlabeled rows at confidence 0.99 and the second absorbs none. Which reading of the two runs is right?",
+    "ssl-fixmatch-batch-loss": "A 3-class image model is trained with the FixMatch recipe and a confidence threshold of 0.9. One batch holds four unlabeled images, and each image's strongly augmented copy is scored against the pseudo-label taken from its weakly augmented copy. The unlabeled loss is the mean of the per-image cross-entropy terms over the whole batch, with an image that clears no threshold contributing zero.",
+    "ssl-propagation-on-a-long-chain": "Readings taken along a pipeline form a chain graph with the two ends labeled and the m points between them unlabeled, and label propagation repeats a sweep in which every unlabeled point takes the average of its neighbors. Find the fixed point, show the error decay is governed by sine eigenvectors of the sweep matrix, and count the sweeps that shrink the slowest error component by a factor of a million for a chain of 9 and of 99 unlabeled points.",
+    "ssl-self-training-an-svm": "A hard-margin linear SVM on a line is fitted to two inspected parts and then self-trained on eleven unlabeled readings, pseudo-labeling every reading inside its margin. Find the boundary after the first refit, show the loop stops there, and count how many pseudo-labels come out wrong.",
+    "ssl-spreading-outvotes-a-label": "Three photos of the same bird form a triangle in a similarity graph with every edge of weight 1. Two are labeled A and the third, by a slip, is labeled B. Label spreading iterates F toward alpha S F plus (1 - alpha) Y on the one-hot label matrix Y with the symmetrically normalized weights S, starting from F = Y. How large must alpha get before the third photo carries more weight on A than on B, and what does every row settle on as alpha approaches 1?",
+    "ssl-when-unlabeled-points-hurt": "Two round blobs of sensor readings sit far apart with almost no points between them, and only four readings are labeled. Four variants change the classes or the spread of the blobs. Pick the variant where the unlabeled readings add nothing or make things worse than using the four labels alone."
+  },
+  "order": [
+    "ssl-when-unlabeled-points-hurt",
+    "ssl-spreading-outvotes-a-label",
+    "ssl-fixmatch-batch-loss",
+    "ssl-every-row-clears-the-bar",
+    "ssl-self-training-an-svm",
+    "ssl-propagation-on-a-long-chain"
+  ]
+}

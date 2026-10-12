@@ -1,0 +1,24 @@
+{
+  "aModule": "efficient-sharing-keys-and-values",
+  "stage": "Advanced",
+  "order": [
+    "eff-two-schemes-four-numbers"
+  ],
+  "fixes": [
+    {
+      "file": "eff-two-schemes-four-numbers",
+      "find": "With the largest subtracted the terms are 0.272,\n1.000 and 0.120, which total 1.392, giving weights 0.195, 0.719 and 0.086.",
+      "replace": "With the largest subtracted the terms are 0.272,\n1.000 and 0.120, which total 1.392, giving weights 0.195, 0.719 and 0.086 when each is worked out before rounding."
+    }
+  ],
+  "parts": {
+    "eff-two-schemes-four-numbers": {
+      "1.1": { "kind": "computation", "requirement": "Reasoning is not required." },
+      "1.2": { "kind": "computation", "requirement": "Reasoning is not required." },
+      "1.3": { "kind": "derivation", "requirement": "A complete derivation is required." }
+    }
+  },
+  "indexPrompt": {
+    "eff-two-schemes-four-numbers": "The running example's 2 heads cost 8 numbers of cache per token, and both multi-query attention and multi-head latent attention bring that down to 4. Compute what head 2 returns for \"cat\" under each scheme, and say which one changes the head's answer and what each gives up in return."
+  }
+}

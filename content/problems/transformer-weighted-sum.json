@@ -1,0 +1,67 @@
+{
+ "module": "transformer-weighted-sum",
+ "stage": "Round 2",
+ "index": [
+  {
+   "id": "tf-which-value-takes-the-blame",
+   "moduleId": "transformer-weighted-sum",
+   "title": "Which Value Takes the Blame",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=tf-which-value-takes-the-blame",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 2"
+   ],
+   "prompt": "Change the loss of the head 1 example: it is now the sum of the first numbers of all three head 1 outputs, those of \"the\", \"cat\" and \"sat\". In head 1, \"the\" puts weight 1.000 on itself, \"cat\" puts 0.250 on \"the\" and 0.750 on itself, and \"sat\" puts 0.115 on \"the\", 0.709 on \"cat\" and 0.175 on itself. Training passes the gradient back to the three values of head 1. Which value gets the largest gradient on its first number?",
+   "answer": "The value of \"cat\". Here dO has a 1 in the first column of every row, so dV = $A^\\top dO$ puts in each value's first column the sum of the weights that all three tokens put on it, a column sum of A: 1.000 + 0.250 + 0.115 = 1.365 for \"the\", 0.750 + 0.709 = 1.459 for \"cat\" and 0.175 for \"sat\". A value is blamed for every output it feeds, in proportion to the weight each output gives it, and two tokens put large weights on \"cat\"."
+  }
+ ],
+ "theory": [
+  {
+   "id": "tf-which-value-takes-the-blame",
+   "moduleId": "transformer-weighted-sum",
+   "title": "Which Value Takes the Blame",
+   "difficulty": "Medium",
+   "minutes": 10,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "Change the loss of the head 1 example: it is now the sum of the first numbers of all three head 1 outputs, those of \"the\", \"cat\" and \"sat\". In head 1, \"the\" puts weight 1.000 on itself, \"cat\" puts 0.250 on \"the\" and 0.750 on itself, and \"sat\" puts 0.115 on \"the\", 0.709 on \"cat\" and 0.175 on itself. Training passes the gradient back to the three values of head 1. Which value gets the largest gradient on its first number?"
+      },
+      {
+       "choices": [
+        {
+         "text": "All three get the same gradient",
+         "explain": "Each row of the weights adds up to 1, but a row sum is what A times dO would give. The gradient of a value is $A^\\top dO$: look at what each value collects from all the tokens that use it, which is a column of A, not a row."
+        },
+        {
+         "text": "The value of \"the\"",
+         "explain": "Every token attends to \"the\", but counting the tokens that use a value is not enough. The gradient adds up the weights those tokens put on it, and two of the three weights on \"the\" are small. Add up each column of the weights before comparing."
+        },
+        {
+         "text": "The value of \"cat\"",
+         "correct": true,
+         "explain": "Here dO has a 1 in the first column of every row, so dV = $A^\\top dO$ puts in each value's first column the sum of the weights that all three tokens put on it, a column sum of A: 1.000 + 0.250 + 0.115 = 1.365 for \"the\", 0.750 + 0.709 = 1.459 for \"cat\" and 0.175 for \"sat\". A value is blamed for every output it feeds, in proportion to the weight each output gives it, and two tokens put large weights on \"cat\"."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Here dO has a 1 in the first column of every row, so dV = $A^\\top dO$ puts in each value's first column the sum of the weights that all three tokens put on it, a column sum of A: 1.000 + 0.250 + 0.115 = 1.365 for \"the\", 0.750 + 0.709 = 1.459 for \"cat\" and 0.175 for \"sat\". A value is blamed for every output it feeds, in proportion to the weight each output gives it, and two tokens put large weights on \"cat\"."
+      },
+      {
+       "result": "The value of \"cat\""
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

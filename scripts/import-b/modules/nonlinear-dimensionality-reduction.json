@@ -1,0 +1,112 @@
+{
+  "aModule": "nonlinear-dimensionality-reduction",
+  "stage": "Round 2",
+  "fixes": [
+    {
+      "file": "ndr-matching-distance",
+      "find": "\\sqrt{89.02 - 1}",
+      "replace": "\\sqrt{90.02 - 1}",
+      "why": "The 89.02 is already exp(4.5) - 1 rounded, so subtracting 1 again gives sqrt(88.02) = 9.3819, not the boxed 9.435. exp(4.5) = 90.0171, so the middle radical should read sqrt(90.02 - 1), which is 9.43504 and keeps B's boxed answer. Confirmed by the platform governor."
+    },
+    {
+      "file": "ndr-pair-on-its-own",
+      "find": "The default curve stays near 1 for longer at short range,",
+      "replace": "The default curve falls from 1 faster at short range,"
+    },
+    {
+      "file": "ndr-tied-nearest-neighbors",
+      "find": "approaches $\\boxed{3}$, not\n1. The three near points are tied",
+      "replace": "approaches $\\boxed{3}$, not 1. The three near points are tied"
+    }
+  ],
+  "parts": {
+    "ndr-appended-column": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "ndr-matching-distance": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "ndr-outlier-keeps-its-pull": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "ndr-pair-on-its-own": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "ndr-squared-kernel-line": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "ndr-tied-nearest-neighbors": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "ndr-tsne-gradient": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "ndr-appended-column": "A t-SNE map of 500 vibration readings gets one extra column that is 3 for reading 17 and 0 for every other reading, and every bandwidth is held at its old value. What happens to reading 17's own neighbor distribution over the other readings?",
+    "ndr-matching-distance": "The data gives a pair at distance r the Gaussian similarity exp(-r^2/2), and the plane gives a pair at distance d the Student-t similarity 1/(1 + d^2). Solve for the plane distance that keeps the similarity equal, evaluate it at r = 3, and find the r where the plane distance equals the data distance.",
+    "ndr-outlier-keeps-its-pull": "t-SNE builds its pair similarities by symmetrizing a Gaussian conditional around each point, and a simpler design would instead use one Gaussian over all pairs at once. Show that the symmetrized design keeps every point's total similarity strictly above 1/(2n), then compute an outlier's total under both designs for four points on a line with bandwidth 1.",
+    "ndr-pair-on-its-own": "In UMAP's neighbor graph one point gives another the directed weight 0.75 and receives 0.2 back. Find the distance at which this pair's cross-entropy term is smallest under the plain similarity curve and under umap-learn's default curve, and say where a pair that is not neighbors in the graph gets pushed, compared with t-SNE.",
+    "ndr-scaled-copy-cluster": "A dataset in 20 dimensions has two groups of 300 points, and one group is an exact copy of the other stretched ten times wider about its own center, with the two centers 1,000 units apart. Say how the two groups compare in a t-SNE plot at perplexity 30 and why the bandwidth search removes the factor of ten.",
+    "ndr-squared-kernel-line": "Four points sit on a line at x = -2, -1, 1 and 2; the two at plus or minus 2 are labeled outer and the two at plus or minus 1 inner, so no threshold on a linear PCA score separates them. Kernel PCA with the kernel k(x, x') = (x x')^2 is used instead: build and center the kernel matrix, find its top eigenvalue and the four training scores, then find where a new point scores exactly halfway between the inner and outer points.",
+    "ndr-tied-nearest-neighbors": "A point has three other points at distance 2 and six at distance 3, so its t-SNE neighbor distribution has three tied nearest neighbors and its perplexity cannot drop below 3 at any bandwidth. The problem finds the two perplexity limits, the bandwidth where a far point carries half the weight of a near one, and what the bandwidth search does when the target perplexity is 2.",
+    "ndr-tsne-gradient": "The t-SNE cost is a KL divergence between fixed high-dimensional similarities and Student-t similarities in the embedding plane. The problem derives the gradient of that cost with respect to each embedded point, then evaluates it for three points on a line, both before and during early exaggeration, to see which neighbours pull a point and which push it."
+  }
+}

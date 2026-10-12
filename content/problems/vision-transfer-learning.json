@@ -1,0 +1,107 @@
+{
+ "module": "vision-transfer-learning",
+ "stage": "Round 2",
+ "index": [
+  {
+   "id": "cv-two-lines-through-a-frozen-backbone",
+   "moduleId": "vision-transfer-learning",
+   "title": "Two Lines Through a Frozen Backbone",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=cv-two-lines-through-a-frozen-backbone",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "A fourth class, two lines, is added to the running example. Its image has vertical lines in columns 2 and 5 and every other pixel is 0. The running example's images are 6 x 6 with 1 for the line and 0 elsewhere, the vertical filter's three rows are each (-1, 2, -1), ReLU drops negatives, and 2 x 2 max pooling halves each map. The filters, ReLU and pooling stay frozen, and the features are again the totals of the two pooled maps. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  }
+ ],
+ "theory": [
+  {
+   "id": "cv-two-lines-through-a-frozen-backbone",
+   "moduleId": "vision-transfer-learning",
+   "title": "Two Lines Through a Frozen Backbone",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "The team wants a fourth class, \"two lines\". Its example image has vertical lines in columns 2 and 5, and every other pixel is 0. The running example's images are 6 x 6 with 1 for the line and 0 elsewhere, the vertical filter's three rows are each (-1, 2, -1), ReLU drops negatives, and 2 x 2 max pooling halves each map. The filters, ReLU and pooling stay frozen, and the features are again the totals of the two pooled maps."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What probability does the page's three-class new layer give the two-line image for \"vertical\"? Give it to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "A convolution only multiplies and adds, so the map of the two lines together is the sum of their maps. One row of each, from the four positions of the filter:"
+      },
+      {
+       "tex": "\\begin{array}{ccccc}\n\\text{} & \\text{Map col 1} & \\text{Map col 2} & \\text{Map col 3} & \\text{Map col 4} \\\\ \\hline\n\\text{Line in column 2} & 6 & \\text{−3} & 0 & 0 \\\\\n\\text{Line in column 5} & 0 & 0 & \\text{−3} & 6 \\\\\n\\text{Both} & 6 & \\text{−3} & \\text{−3} & 6 \\\\\n\\text{After ReLU} & 6 & 0 & 0 & 6\n\\end{array}"
+      },
+      {
+       "p": "Max pooling gives 6, 6 in each pooled row, so the vertical total is 24. The horizontal map is 0 everywhere, so the features are (24, 0), exactly twice the single line's (12, 0). The page's rounded weights, 0.32 and −0.42 on the two totals and 0.10 for the cross class, turn those features into the scores"
+      },
+      {
+       "tex": "0.32 \\times 24 = 7.68, \\qquad -0.42 \\times 24 = -10.08, \\qquad\n0.10 \\times 24 = 2.4,"
+      },
+      {
+       "p": "and the softmax over the three of them gives 0.995 for \"vertical\", 0.000 for \"horizontal\" and 0.005 for \"cross\". One line, on features (12, 0), gives 0.934 with the unrounded weights, or 0.933 with the rounded ones above. The features carry no count of lines, only a brightness, and the head reads the larger total as the stronger vertical line."
+      },
+      {
+       "result": "0.995"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What would the vertical total be for two lines in the neighboring columns 2 and 3?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The maps still add, but now the lines share windows:"
+      },
+      {
+       "tex": "\\begin{array}{ccccc}\n\\text{} & \\text{Map col 1} & \\text{Map col 2} & \\text{Map col 3} & \\text{Map col 4} \\\\ \\hline\n\\text{Line in column 2} & 6 & \\text{−3} & 0 & 0 \\\\\n\\text{Line in column 3} & \\text{−3} & 6 & \\text{−3} & 0 \\\\\n\\text{Both} & 3 & 3 & \\text{−3} & 0 \\\\\n\\text{After ReLU} & 3 & 3 & 0 & 0\n\\end{array}"
+      },
+      {
+       "p": "Each line sits under an edge of the window that centers on the other, so each takes 3 off the other's 6. Pooling gives 3, 0 in each pooled row, and the vertical total is 6, half that of one line. Doubling the single line's 12 works for columns 2 and 5 only because their windows never overlap: ReLU acts after the maps add, and lines in neighboring columns cancel part of each other first."
+      },
+      {
+       "result": "6"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "The new layer has 2 × 4 = 8 weights, one per feature for each of the four classes, and no offsets, like the running example's layer. Can training make it label the single line \"vertical\" and the two-line image \"two lines\"? If not, what would make it possible?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "No. Without offsets each score is a weighted sum of the two features, so for every class the score of (24, 0) is exactly twice its score of (12, 0), whatever the weights. Doubling every score keeps their order, so the class that scores highest on one line also scores highest on two. Training can change how sure the layer is, not which class it picks, and the two cases of Part 1 show it: the page's three-class head answers 0.934 for one line and 0.995 for two, more of the same answer."
+      },
+      {
+       "p": "Offsets fix it, 4 more parameters. A score of the form $w \\cdot \\text{total} + b$ can lose at 12 and win at 24. For example, with \"vertical\" scoring the vertical total and \"two lines\" scoring twice the vertical total minus 18, one line scores 12 against 6 and two lines score 24 against 30. The frozen backbone was never the problem: its features do tell the two images apart, by size. A layer without offsets can only read their direction, and (12, 0) and (24, 0) point the same way."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

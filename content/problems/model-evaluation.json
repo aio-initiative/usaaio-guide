@@ -1,0 +1,1279 @@
+{
+  "module": "model-evaluation",
+  "stage": "Round 2",
+  "index": [
+    {
+      "id": "past-problems-implementation-task",
+      "moduleId": "model-evaluation",
+      "title": "End-to-End Tabular Contest Practice",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=past-problems",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Full contest workflow: clean \u2192 validate \u2192 model \u2192 predict. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Test accuracy must reach the target shown in the evaluation cell."
+    },
+    {
+      "id": "model-evaluation-implementation-task",
+      "moduleId": "model-evaluation",
+      "title": "Class Imbalance and F1 Optimization Practice",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=model-evaluation",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Class imbalance handling + decision-threshold tuning for F1. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. The evaluation cell reports precision, recall, and F1 on the test set. F1 must reach the target. Accuracy is shown only to make a point."
+    },
+    {
+      "id": "contest-strategy-implementation-task",
+      "moduleId": "model-evaluation",
+      "title": "Contest Baseline Workflow Practice",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=contest-strategy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Time-boxed workflow: majority baseline \u2192 simple model \u2192 one upgrade. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Test accuracy must reach the target shown in the evaluation cell."
+    },
+    {
+      "id": "theory-classification-metrics",
+      "moduleId": "model-evaluation",
+      "title": "Confusion Matrices, Precision, Recall, and F1",
+      "source": "USAAIO-style",
+      "difficulty": "Easy",
+      "url": "/theory/?id=theory-classification-metrics",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Includes code",
+        "Round 2"
+      ],
+      "prompt": "Compute accuracy, precision, recall, and F1 from one confusion matrix, and show why accuracy is the wrong metric on imbalanced data. 7 parts, each with its own grading instruction. Solutions revealed part by part.",
+      "answer": "Worked solutions are given part by part on the problem page: full derivations, not just final values. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ml17-roc-vs-pr",
+      "moduleId": "model-evaluation",
+      "title": "ROC-AUC Says 0.95 and the Model Is Unusable",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ml17-roc-vs-pr",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Compute ROC-AUC and average precision from scratch at a 0.5% base rate, and quantify how many false alarms hide behind a good-looking ROC curve.",
+      "answer": "Auto-graded inside the notebook. Both areas and the operating-point statistics must match to 1e-6, and the two areas are additionally cross-checked against sklearn.metrics."
+    },
+    {
+      "id": "ml18-calibration-ece",
+      "moduleId": "model-evaluation",
+      "title": "Confident and Wrong",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ml18-calibration-ece",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Measure expected calibration error on overconfident scores, fix it with Platt scaling, and confirm AUC does not move because calibration is what ranking metrics discard.",
+      "answer": "Auto-graded inside the notebook. Both ECEs, both AUCs and the mean raw confidence must match to 1e-6, with calibration more than 2x better and AUC unchanged."
+    },
+    {
+      "id": "classification-metrics",
+      "moduleId": "model-evaluation",
+      "title": "Every Metric from One Set of Scores",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=classification-metrics",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "The lesson's screening test flagged 130 of 1,000 patients, and the four counts behind that gave every metric. Here the same kind of screen comes with the risk score behind each decision, so you can build the confusion matrix at any threshold, compute precision, recall and F1, sweep the threshold, and draw the ROC and precision-recall curves with the AUC. By the end you will see why the everyone-healthy test's 95% accuracy means nothing.",
+      "answer": "Auto-graded inside the notebook. Each check cell prints \"Part N passed\" when that part function is right."
+    },
+    {
+      "id": "cm-classification-report-numpy",
+      "moduleId": "model-evaluation",
+      "title": "A Classification Report in NumPy",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=cm-classification-report-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Compute the same numbers from two label arrays with NumPy alone, on twelve photos of three animals.",
+      "answer": "Auto-graded inside the notebook. Each check cell prints \"Part N passed\" when that part function is right."
+    },
+    {
+      "id": "cm-ranking-metrics-numpy",
+      "moduleId": "model-evaluation",
+      "title": "Ranking Metrics in NumPy",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=cm-ranking-metrics-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "A wafer inspection camera scores every chip for how likely it is to be defective, and reports the score to two decimals, so many chips share a score. Before anyone picks a threshold, the scores can be judged by how they rank the chips. You will compute ROC-AUC with tied scores, the points of the precision-recall curve, average precision, and the best precision available when the line must catch 90% of the defective chips.",
+      "answer": "Auto-graded inside the notebook. Each check cell prints \"Part N passed\" when that part function is right."
+    },
+    {
+      "id": "cm-f1-vs-f2-threshold",
+      "moduleId": "model-evaluation",
+      "title": "The Threshold F2 Picks",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cm-f1-vs-f2-threshold",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "Ten welds from a validation batch, four of them faulty, are sorted by model score and flagged when the score meets a threshold. Using only the ten scores as candidate thresholds, which threshold maximizes F1 and which maximizes F2? 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "cm-flags-a-lower-threshold-adds",
+      "moduleId": "model-evaluation",
+      "title": "The Flags a Lower Threshold Adds",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cm-flags-a-lower-threshold-adds",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A streaming service sends a retention offer to every subscriber whose cancellation score reaches a threshold t, and last month 400 of its 10,000 subscribers cancelled, with precision and recall measured at t = 0.8, 0.5 and 0.3. The parts ask what fraction of the offers a lower threshold adds reach someone who cancels, which threshold has the lowest cost when a wasted offer costs 1 unit and a missed canceller costs 2, and how costly a missed canceller must be for that lowest-cost threshold to change. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "cm-ignored-rare-class",
+      "moduleId": "model-evaluation",
+      "title": "Macro-F1 When a Class Is Never Predicted",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cm-ignored-rare-class",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A model sorts 100 support tickets into billing, technical and legal. Its confusion matrix predicts 50 billing tickets as billing, 40 technical tickets as technical, and all 10 legal tickets as billing, so legal is never predicted. What is the model's macro-F1?",
+      "answer": "0.636. Billing has 50 true positives and the 10 legal tickets as false positives, so its F1 is 2(50) / (2(50) + 10) = 10/11 = 0.909. Technical is perfect, F1 = 1. Legal has no true positives, so its F1 is 0 / (0 + 10/2) = 0. The macro average gives each class a third: (0.909 + 1 + 0) / 3 = 7/11 = 0.636."
+    },
+    {
+      "id": "cm-one-point-roc-curve",
+      "moduleId": "model-evaluation",
+      "title": "The ROC Curve of Hard Predictions",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=cm-one-point-roc-curve",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A classifier that outputs only hard 0/1 labels still gets an ROC curve out of roc_auc_score, made of three points joined by straight segments. The problem works out the area of that curve for 40 positives and 160 negatives, then shows the same area equals the balanced accuracy and the share of correctly ordered positive-negative pairs. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "cm-pick-model-for-grader",
+      "moduleId": "model-evaluation",
+      "title": "The Model a Macro-F1 Grader Picks",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cm-pick-model-for-grader",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A grader scores a binary task by macro-F1 and you must choose between two candidate models on a validation split with 100 positives and 900 negatives. Decide which model to submit and say what evidence backs the choice.",
+      "answer": "Model B: its macro-F1 is 0.794 against 0.748. For class 0 the roles swap: TN are its true positives, FN its false positives and FP its false negatives. Model A: class 1 F1 = 40 / (40 + 35) = 0.533, class 0 F1 = 890 / (890 + 35) = 0.962, macro 0.748. Model B: 80 / (80 + 45) = 0.640 and 830 / (830 + 45) = 0.949, macro 0.794. B gives up two points of accuracy to catch twice as many positives, and the grader rewards that. Accuracy would have picked A, 0.930 against 0.910, so the metric the grader uses changes the choice."
+    },
+    {
+      "id": "cm-precision-at-new-base-rate",
+      "moduleId": "model-evaluation",
+      "title": "Same Operating Point, Rarer Positives",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cm-precision-at-new-base-rate",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A model flags counterfeit listings on a marketplace. On a validation set of 1,000 counterfeit and 1,000 genuine listings, its chosen threshold gives a true positive rate of 0.90 and a false positive rate of 0.05. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "cm-precision-for-the-other-class",
+      "moduleId": "model-evaluation",
+      "title": "Precision for the Other Class",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cm-precision-for-the-other-class",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A bank's model scores 1,000 past loans, of which 800 were repaid and 200 defaulted, and the label codes a repaid loan as 1, so its reported precision 0.96 and recall 0.9 treat repaid as the positive class. The risk team treats a default as the positive case instead, where the model flags a loan by refusing it: what is the model's precision on defaults?",
+      "answer": "0.68. Rebuild the counts from the repaid side. Recall 0.90 on the 800 repaid loans means the model would have approved 720 of them and refused 80. Precision 0.96 means those 720 are 96% of the loans it would have approved, so it would have approved 750, and 30 of those defaulted. It would have refused the other 250, and they hold the other 170 defaults, so the precision on defaults is 170 / 250 = 0.68. The 80 good borrowers it would turn away are about a third of its refusals, while the 30 defaults it would let through are only 4% of its approvals."
+    },
+    {
+      "id": "cm-ranking-a-week-of-claims",
+      "moduleId": "model-evaluation",
+      "title": "Ranking a Week of Claims",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cm-ranking-a-week-of-claims",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "Nine claims arrive in one week and four of them turn out to be fraudulent, and two models rank the batch from most to least suspicious. One team opens only the top two claims and another opens claims from the top until it reaches the last fraud, so each job cares about a different spot in the ranking. For each job, say which model it should use and whether the AUC, which averages all twenty fraud/genuine pairs, agrees with it. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "cm-which-fix-raises-f1",
+      "moduleId": "model-evaluation",
+      "title": "Which Fix Raises F1 More",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cm-which-fix-raises-f1",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A classifier has TP = 40, FP = 40 and FN = 20 on a validation set. Fix A turns ten false negatives into true positives and fix B turns ten false positives into true negatives. Which of the two raises F1 more?",
+      "answer": "Fix A, because its ten corrected predictions become true positives, which F1 counts in its numerator as well as its denominator. Both fixes cut the error term (FP + FN) / 2 from 30 to 25. Fix A also adds 10 true positives, and TP sits in the numerator of F1 = TP / (TP + (FP + FN) / 2) as well as the denominator, while the true negatives fix B creates never enter F1. So fix A gives 50 / (50 + 25) = 0.667 against 40 / (40 + 25) = 0.615 for fix B, both up from 40 / 70 = 0.571. Fix B raises precision further (0.571 against 0.556), but fix A also lifts recall from 0.667 to 0.833."
+    },
+    {
+      "id": "ml3-threshold-tuning",
+      "moduleId": "model-evaluation",
+      "title": "Accuracy Says 99%, and the Model Is Useless",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ml3-threshold-tuning",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "At a 1.2% base rate the default 0.5 threshold catches fewer than half the frauds. Keep the logistic model, sweep the threshold for F1, and watch accuracy fall as the model becomes useful.",
+      "answer": "Auto-graded inside the notebook. All five quantities must match to 1e-6, with tuned F1 above the default and accuracy no higher than it."
+    }
+  ],
+  "theory": [
+    {
+      "id": "theory-classification-metrics",
+      "moduleId": "model-evaluation",
+      "title": "Confusion Matrices, Precision, Recall, and F1",
+      "difficulty": "Easy",
+      "minutes": 40,
+      "overview": [
+        "Compute accuracy, precision, recall, and F1 from one confusion matrix, and show why accuracy is the wrong metric on imbalanced data."
+      ],
+      "setup": [
+        {
+          "p": "A binary classifier is evaluated on $1000$ examples, producing the confusion matrix"
+        },
+        {
+          "tex": "\\begin{array}{c|cc} & \\hat{y} = 1 & \\hat{y} = 0 \\\\ \\hline y = 1 & \\text{TP} = 40 & \\text{FN} = 10 \\\\ y = 0 & \\text{FP} = 90 & \\text{TN} = 860 \\end{array}"
+        }
+      ],
+      "parts": [
+        {
+          "id": "15.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Compute the accuracy, precision, and recall of this classifier."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Substituting the four counts:"
+            },
+            {
+              "tex": "\\text{Accuracy} = \\frac{\\text{TP} + \\text{TN}}{N} = \\frac{40 + 860}{1000} = 0.90."
+            },
+            {
+              "tex": "\\text{Precision} = \\frac{\\text{TP}}{\\text{TP} + \\text{FP}} = \\frac{40}{40 + 90} = 0.308, \\qquad \\text{Recall} = \\frac{\\text{TP}}{\\text{TP} + \\text{FN}} = \\frac{40}{40 + 10} = 0.80."
+            },
+            {
+              "p": "The mnemonic for which denominator is which: precision is measured over everything the model *flagged* (the predicted-positive column), recall over everything that actually *is* positive (the true-positive row). Precision answers \"when it fires, how often is it right?\" Recall answers \"of the things it should have caught, how many did it?\""
+            },
+            {
+              "result": "Accuracy $= 0.90$, Precision $= 0.308$, Recall $= 0.80$."
+            }
+          ]
+        },
+        {
+          "id": "15.2",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "The classifier above is $90\\%$ accurate. Compute the accuracy of the trivial classifier that predicts $\\hat{y} = 0$ for every example, and explain what this shows."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The positive class has $\\text{TP} + \\text{FN} = 50$ members out of $1000$, so it is $5\\%$ of the data. Predicting $0$ always gets every negative right and every positive wrong:"
+            },
+            {
+              "tex": "\\text{Accuracy}_{\\text{trivial}} = \\frac{950}{1000} = 0.95 > 0.90."
+            },
+            {
+              "p": "The trivial classifier is *more accurate* than the trained one, while being completely useless: it has recall $0$ and precision undefined. This shows that accuracy on imbalanced data is dominated by the majority class and can be maximized by ignoring the minority class entirely."
+            },
+            {
+              "p": "The trained classifier is genuinely better at the task that matters: it catches $80\\%$ of the positives. Accuracy simply cannot see that, because the $40$ true positives it adds are outnumbered by the $90$ false positives it introduces, and accuracy weights both equally."
+            },
+            {
+              "p": "The lesson is to always compare against the majority-class baseline. If your accuracy does not beat it by a meaningful margin, your model has learned nothing useful, and the official USAAIO problems' use of macro-$F_1$ rather than accuracy is precisely to close this loophole."
+            }
+          ]
+        },
+        {
+          "id": "15.3",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "The $F_1$ score is the harmonic mean of precision $P$ and recall $R$:"
+            },
+            {
+              "tex": "F_1 = \\frac{2PR}{P + R}."
+            },
+            {
+              "p": "Compute $F_1$ for this classifier, and explain why the harmonic mean is used rather than the arithmetic mean."
+            }
+          ],
+          "answer": [
+            {
+              "p": "With $P = \\tfrac{40}{130}$ and $R = \\tfrac{40}{50} = 0.80$:"
+            },
+            {
+              "tex": "F_1 = \\frac{2 \\cdot \\tfrac{40}{130} \\cdot \\tfrac{40}{50}}{\\tfrac{40}{130} + \\tfrac{40}{50}} = \\frac{2 \\cdot 40}{2 \\cdot 40 + 90 + 10} = \\frac{80}{180} \\approx 0.444."
+            },
+            {
+              "p": "Why harmonic. The harmonic mean is dominated by the smaller of the two values, so it punishes imbalance between precision and recall. The arithmetic mean here would be $0.554$, noticeably more flattering."
+            },
+            {
+              "p": "The difference matters most at the extremes. A classifier that predicts positive for everything has $R = 1$ and, on this data, $P = 0.05$. Its arithmetic mean is a respectable-looking $0.525$. Its $F_1$ is"
+            },
+            {
+              "tex": "F_1 = \\frac{2(1)(0.05)}{1.05} \\approx 0.095,"
+            },
+            {
+              "p": "correctly identifying it as useless. Since either metric can be trivially maxed out alone (predict everything positive for perfect recall, or predict only your single most confident example for near-perfect precision), a summary metric must refuse to reward one at the total expense of the other, and the harmonic mean does that."
+            },
+            {
+              "result": "$F_1 \\approx 0.444$."
+            }
+          ]
+        },
+        {
+          "id": "15.4",
+          "kind": "mcq",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Under which circumstances is the $F_1$ score generally preferred over classification accuracy?"
+            },
+            {
+              "choices": [
+                "A. When the dataset is very large.",
+                "B. When the classes are well balanced.",
+                "C. When the model is linear.",
+                "D. When the dataset is highly imbalanced.",
+                "E. When the number of features is large."
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Part 2 is the argument: on imbalanced data, accuracy is dominated by the majority class and a degenerate classifier can beat a useful one. $F_1$ depends only on TP, FP, and FN. It never uses TN, the count that the majority class inflates, so it cannot be gamed by predicting the majority everywhere."
+            },
+            {
+              "p": "The other options are irrelevant to the choice. Dataset size affects the *variance* of any metric, not which one is appropriate. Balanced classes are the case where accuracy is fine, and neither model family nor feature count bears on the question. Note also that $F_1$ is asymmetric by design, swapping which class you call positive changes it, so you must define the positive class as the one you care about detecting."
+            },
+            {
+              "result": "D. When the dataset is highly imbalanced."
+            }
+          ]
+        },
+        {
+          "id": "15.5",
+          "kind": "derivation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Relate precision to the Bayes computation of a diagnostic test's positive predictive value by expressing it in terms of the prevalence $\\pi = P(y = 1)$, the true positive rate $\\text{TPR}$, and the false positive rate $\\text{FPR}$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Precision is exactly the posterior $P(y = 1 \\mid \\hat{y} = 1)$. Applying Bayes' rule with the law of total probability in the denominator,"
+            },
+            {
+              "tex": "\\text{Precision} = \\frac{P(\\hat{y} = 1 \\mid y = 1)P(y=1)}{P(\\hat{y}=1)} = \\frac{\\text{TPR}\\cdot \\pi}{\\text{TPR}\\cdot\\pi + \\text{FPR}\\cdot(1 - \\pi)}."
+            },
+            {
+              "p": "Check against the data: $\\text{TPR} = 40/50 = 0.8$, $\\text{FPR} = 90/950 \\approx 0.0947$, $\\pi = 0.05$, giving"
+            },
+            {
+              "tex": "\\frac{0.8(0.05)}{0.8(0.05) + \\frac{90}{950}\\cdot(0.95)} = \\frac{0.04}{0.04 + 0.09} = 0.308 \\ \\checkmark"
+            },
+            {
+              "p": "The important structural fact is that TPR and FPR are properties of the *classifier* alone, they condition on the true label and are invariant to prevalence, whereas precision depends on $\\pi$ as well. This is the same phenomenon as a base-rate shift: the test did not change, only the population did."
+            },
+            {
+              "p": "Two practical consequences. A model with excellent precision in a balanced development set can have terrible precision in deployment where the positive class is rare, with no change to the model. And ROC curves (TPR against FPR) are prevalence-invariant, whereas precision-recall curves are not, which is why PR curves are the more informative choice for rare-event detection, and ROC-AUC can look deceptively good there."
+            }
+          ]
+        },
+        {
+          "id": "15.6",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Explain what macro-averaged $F_1$ means for a $C$-class problem, why the official USAAIO problems use it, and how it differs from micro-averaging."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Macro-$F_1$ computes $F_1$ separately for each class, treating that class as positive and all others as negative, then takes the unweighted mean:"
+            },
+            {
+              "tex": "F_1^{\\text{macro}} = \\frac{1}{C}\\sum_{c=0}^{C-1} F_1^{(c)}."
+            },
+            {
+              "p": "Micro-averaging instead pools the counts across classes first, summing all TP, FP, and FN, and computes a single $F_1$ from the totals. In single-label multiclass classification, micro-$F_1$ equals accuracy."
+            },
+            {
+              "p": "The difference is the weighting. Micro-averaging weights each *example* equally, so large classes dominate. Macro-averaging weights each *class* equally, so a class with $20$ examples counts as much as one with $20{,}000$. A model that ignores a rare class entirely gets $F_1^{(c)} = 0$ for it, which drags the macro average down hard, while barely moving the micro average."
+            },
+            {
+              "p": "That is exactly why the official problems grade on macro-$F_1$: it removes the incentive to optimize the majority class and forces contestants to handle every class. It is also why the baseline for a balanced binary task is quoted at about $0.5$: random guessing achieves roughly that."
+            }
+          ]
+        },
+        {
+          "id": "15.7",
+          "kind": "coding",
+          "requirement": "Do not use scikit-learn and do not use any loop.",
+          "prompt": [
+            {
+              "p": "Run the following starter code:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "import numpy as np",
+                  "",
+                  "y_true = np.array([1, 1, 0, 0, 1, 0, 1, 0, 0, 0])",
+                  "y_pred = np.array([1, 0, 0, 1, 1, 0, 1, 1, 0, 0])"
+                ]
+              }
+            },
+            {
+              "p": "Compute TP, FP, FN, TN and then precision, recall, and $F_1$ without any library metric function. Guard against division by zero."
+            }
+          ],
+          "answer": [
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "tp = np.sum((y_true == 1) & (y_pred == 1))",
+                  "fp = np.sum((y_true == 0) & (y_pred == 1))",
+                  "fn = np.sum((y_true == 1) & (y_pred == 0))",
+                  "tn = np.sum((y_true == 0) & (y_pred == 0))",
+                  "",
+                  "precision = tp / (tp + fp) if tp + fp else 0.0",
+                  "recall = tp / (tp + fn) if tp + fn else 0.0",
+                  "f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0.0"
+                ]
+              }
+            },
+            {
+              "p": "The boolean masks combine with $\\texttt{\\&}$ (elementwise), not $\\texttt{and}$ (which would try to evaluate whole arrays as truth values and raise). Summing a boolean array counts the $\\texttt{True}$ entries, so all four cells come out in four vectorized passes."
+            },
+            {
+              "p": "For this data: $\\text{TP} = 3$, $\\text{FP} = 2$, $\\text{FN} = 1$, $\\text{TN} = 4$, giving"
+            },
+            {
+              "tex": "P = \\tfrac{3}{5} = 0.6, \\qquad R = \\tfrac{3}{4} = 0.75, \\qquad F_1 = \\frac{2(0.6)(0.75)}{1.35} \\approx 0.667."
+            },
+            {
+              "p": "The zero guards are not pedantry. A model that predicts no positives at all gives $\\text{TP} + \\text{FP} = 0$ and an undefined precision. Without the guard you get a $\\texttt{nan}$ that silently propagates into a macro average and destroys the whole score. The convention of returning $0$ matches scikit-learn's $\\texttt{zero\\_division=0}$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cm-f1-vs-f2-threshold",
+      "moduleId": "model-evaluation",
+      "title": "The Threshold F2 Picks",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A model inspects welds on a production line and flags the ones it scores as faulty. A weld is flagged when its score is at least the threshold $t$. Ten welds from a validation batch, four of them faulty, sorted by score:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{ccccccccccc}\n\\text{Weld} & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\\\ \\hline\n\\text{Score} & 0.94 & 0.87 & 0.78 & 0.71 & 0.63 & 0.55 & 0.46 & 0.38 & 0.29 & 0.17 \\\\\n\\text{Faulty} & \\text{yes} & \\text{no} & \\text{yes} & \\text{yes} & \\text{no} & \\text{no} & \\text{no} & \\text{yes} & \\text{no} & \\text{no}\n\\end{array}"
+        },
+        {
+          "p": "Use only the ten scores as candidate thresholds. Recall that $F_\\beta = (1 + \\beta^2) PR / (\\beta^2 P + R)$, where $P$ is precision and $R$ is recall."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Which threshold maximizes $F_1$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Setting $t$ to the $k$-th score flags the top $k$ welds. With $TP_k$ faulty welds among them, $FP = k - TP_k$ and $FN = 4 - TP_k$, so the denominator of the count form collapses:"
+            },
+            {
+              "tex": "F_1 = \\frac{2\\,TP_k}{2\\,TP_k + FP + FN} = \\frac{2\\,TP_k}{k + 4} ."
+            },
+            {
+              "tex": "\\begin{array}{ccccccccccc}\nk & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\\\ \\hline\nTP_k & 1 & 1 & 2 & 3 & 3 & 3 & 3 & 4 & 4 & 4 \\\\\nF_1 & 0.400 & 0.333 & 0.571 & 0.750 & 0.667 & 0.600 & 0.545 & 0.667 & 0.615 & 0.571\n\\end{array}"
+            },
+            {
+              "p": "The maximum is $6/8 = 0.75$ at $k = 4$, so $t = 0.71$: three of the four faulty welds caught with one false alarm."
+            },
+            {
+              "result": "0.71"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Which threshold maximizes $F_2$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Substitute $P = TP_k / k$ and $R = TP_k / 4$ into $F_2 = 5PR / (4P + R)$ and multiply the top and bottom by $4k / TP_k$:"
+            },
+            {
+              "tex": "F_2 = \\frac{5\\,TP_k}{k + 16} ."
+            },
+            {
+              "tex": "\\begin{array}{ccccccccccc}\nk & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\\\ \\hline\nF_2 & 0.294 & 0.278 & 0.526 & 0.750 & 0.714 & 0.682 & 0.652 & 0.833 & 0.800 & 0.769\n\\end{array}"
+            },
+            {
+              "p": "The maximum is $20/24 = 0.833$ at $k = 8$, so $t = 0.38$: all four faulty welds caught with four false alarms."
+            },
+            {
+              "result": "0.38"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Explain, using the two formulas in terms of $k$, why $F_2$ chose the lower threshold, and say when a grader would rather compute $F_2$ than $F_1$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Both formulas have the form $(1 + \\beta^2)\\,TP_k / (k + \\beta^2 \\cdot 4)$. Each extra flag adds 1 to the denominator in both, but the fixed part of the denominator is 4 for $F_1$ and 16 for $F_2$, so one more flag costs $F_2$ a smaller fraction of its value. Going from $k = 4$ to $k = 8$ adds one true positive and four flags: $F_1$ falls from $6/8$ to $8/12$, while $F_2$ rises from $15/20$ to $20/24$."
+            },
+            {
+              "p": "$\\beta = 2$ weights recall four times as much as precision, so $F_2$ is the grader's choice when a miss costs much more than a false alarm. A faulty weld that ships is far more expensive than a sound weld inspected twice."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cm-flags-a-lower-threshold-adds",
+      "moduleId": "model-evaluation",
+      "title": "The Flags a Lower Threshold Adds",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A streaming service scores every subscriber by how likely they are to cancel next month, and sends a retention offer to each subscriber scoring at least $t$. Last month 400 of its 10,000 subscribers cancelled, and the team measured three thresholds on that month:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{ccc}\n\\text{Threshold $t$} & \\text{Precision} & \\text{Recall} \\\\ \\hline\n0.8 & 0.90 & 0.45 \\\\\n0.5 & 0.80 & 0.70 \\\\\n0.3 & 0.64 & 0.80\n\\end{array}"
+        },
+        {
+          "p": "Count only the two kinds of mistake. An offer sent to a subscriber who would have stayed wastes 1 unit, and a subscriber who cancels without having had an offer costs 2 units. An offer sent to a subscriber who would have cancelled keeps them and costs nothing."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Lowering the threshold from 0.5 to 0.3 adds an offer for every subscriber who scores at least 0.3 but below 0.5. What fraction of those subscribers cancelled? Give it to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Turn each row into counts. Recall times the 400 cancellers gives the true positives, and the true positives divided by the precision give the number of offers. At $t = 0.5$, for example, $TP = 0.70 \\times 400 = 280$ and there are $280 / 0.80 = 350$ offers. The wasted offers are the offers minus TP, and the missed cancellers are 400 minus TP:"
+            },
+            {
+              "tex": "\\begin{array}{ccccc}\nt & \\text{TP} & \\text{Offers} & \\text{Wasted (FP)} & \\text{Missed (FN)} \\\\ \\hline\n0.8 & 180 & 200 & 20 & 220 \\\\\n0.5 & 280 & 350 & 70 & 120 \\\\\n0.3 & 320 & 500 & 180 & 80\n\\end{array}"
+            },
+            {
+              "p": "The move from 0.5 to 0.3 adds $500 - 350 = 150$ offers and $320 - 280 = 40$ true positives, so"
+            },
+            {
+              "tex": "\\frac{40}{150} = \\frac{4}{15} \\approx 0.267 ."
+            },
+            {
+              "p": "The 0.64 at $t = 0.3$ averages two groups: the first 350 offers, right 280 times, and the new 150, right 40 times, $(280 + 40) / 500$. The same subtraction for the move from 0.8 to 0.5 gives 100 cancellers among 150 new offers, $0.667$, so each step down the threshold reaches subscribers the model is less sure of."
+            },
+            {
+              "result": "0.267"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Which of the three thresholds gives the lowest total cost?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The total is $1 \\cdot FP + 2 \\cdot FN$, with the counts from Part 1:"
+            },
+            {
+              "tex": "\\begin{array}{cc}\nt & \\text{Cost} \\\\ \\hline\n0.8 & 20 + 2 \\times 220 = 460 \\\\\n0.5 & 70 + 2 \\times 120 = 310 \\\\\n0.3 & 180 + 2 \\times 80 = 340\n\\end{array}"
+            },
+            {
+              "p": "The lowest is 310, at $t = 0.5$. Going down from 0.8 to 0.5 catches 100 more cancellers, saving 200 units, for 50 more wasted offers, costing 50. Going down from 0.5 to 0.3 catches only 40 more, saving 80 units, for 110 more wasted offers, costing 110."
+            },
+            {
+              "result": "0.5"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "A teammate argues for $t = 0.3$: its precision is still 0.64, so nearly two of every three extra offers reach a subscriber who would have cancelled, and a missed canceller costs twice a wasted offer. Say what is wrong with the argument. Then find the cost of a missed canceller, in units, above which moving from 0.5 to 0.3 does lower the total."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The 0.64 is the precision of all 500 offers made at $t = 0.3$. The decision is about the 150 offers that the move adds, and Part 1 showed that only 40 of them reach a subscriber who would cancel. The cumulative precision hides how poor the new offers are, because the 350 offers kept from $t = 0.5$ make up most of it."
+            },
+            {
+              "p": "With a missed canceller costing $c$ units, the move catches 40 more cancellers, saving $40c$, and wastes 110 more units on offers, so it pays when"
+            },
+            {
+              "tex": "40c > 110 \\quad\\Longleftrightarrow\\quad c > \\frac{110}{40} = 2.75 ."
+            },
+            {
+              "p": "At $c = 2$ the move loses 30 units, as Part 2 found. The teammate's reading would put the break-even point at $0.36 / 0.64 \\approx 0.56$, nearly five times too low. To judge a move of the threshold, compare the true and false positives that the move adds, not the precision at the new threshold."
+            },
+            {
+              "result": "2.75"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cm-ignored-rare-class",
+      "moduleId": "model-evaluation",
+      "title": "Macro-F1 When a Class Is Never Predicted",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A model sorts 100 support tickets into billing, technical and legal. Its confusion matrix, with true classes on rows and predictions on columns, is"
+            },
+            {
+              "tex": "\\begin{array}{cccc}\n\\text{} & \\text{Predicted billing} & \\text{Predicted technical} & \\text{Predicted legal} \\\\ \\hline\n\\text{Billing} & 50 & 0 & 0 \\\\\n\\text{Technical} & 0 & 40 & 0 \\\\\n\\text{Legal} & 10 & 0 & 0\n\\end{array}"
+            },
+            {
+              "p": "It never predicts legal. What is its macro-F1?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$0.900$",
+                  "explain": "That is the micro average. Pooling the counts gives 90 true positives, 10 false positives and 10 false negatives, so micro-F1 = 90 / 100, the accuracy. The 10 legal tickets are only a tenth of that score, while macro-F1 hands legal a full third."
+                },
+                {
+                  "text": "$0.855$",
+                  "explain": "That is the weighted average, which weights each class F1 by its 50, 40 and 10 tickets: 0.5(0.909) + 0.4(1) + 0.1(0) = 0.855. Macro-F1 weights the three classes equally."
+                },
+                {
+                  "text": "$0.667$",
+                  "explain": "This scores billing as perfect. Its recall is 1, but the 10 legal tickets it received are false positives for billing, so its precision is 50/60 and its F1 is 0.909, not 1. With that fixed the average is 0.636."
+                },
+                {
+                  "text": "$0.636$",
+                  "correct": true,
+                  "explain": "Billing has 50 true positives and the 10 legal tickets as false positives, so its F1 is 2(50) / (2(50) + 10) = 10/11 = 0.909. Technical is perfect, F1 = 1. Legal has no true positives, so its F1 is 0 / (0 + 10/2) = 0. The macro average gives each class a third: (0.909 + 1 + 0) / 3 = 7/11 = 0.636."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Billing has 50 true positives and the 10 legal tickets as false positives, so its F1 is 2(50) / (2(50) + 10) = 10/11 = 0.909. Technical is perfect, F1 = 1. Legal has no true positives, so its F1 is 0 / (0 + 10/2) = 0. The macro average gives each class a third: (0.909 + 1 + 0) / 3 = 7/11 = 0.636."
+            },
+            {
+              "result": "$0.636$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cm-one-point-roc-curve",
+      "moduleId": "model-evaluation",
+      "title": "The ROC Curve of Hard Predictions",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "A classifier outputs only hard labels, 0 or 1. On a test set of 40 positives and 160 negatives it flags 32 of the positives and 48 of the negatives. Passed to `roc_auc_score` in place of scores, the labels still produce a number. Treated as scores they allow only three distinct thresholds, so the ROC curve joins three points with straight segments: $(0, 0)$ when nothing is flagged, the classifier's own $(\\text{FPR}, \\text{TPR})$, and $(1, 1)$ when everything is flagged."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Compute the area under this ROC curve."
+            }
+          ],
+          "answer": [
+            {
+              "p": "$\\text{TPR} = 32/40 = 0.8$ and $\\text{FPR} = 48/160 = 0.3$, so the curve runs $(0, 0) \\to (0.3, 0.8) \\to (1, 1)$. Split the area at $x = 0.3$: a triangle on the left and a trapezoid on the right."
+            },
+            {
+              "tex": "\\text{area} = \\tfrac12 (0.3)(0.8) + (0.7)\\,\\frac{0.8 + 1}{2} = 0.12 + 0.63 = 0.75 ."
+            },
+            {
+              "result": "0.75"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "For a hard classifier with true positive rate $a$ and false positive rate $b$, show that the area under this three-point curve equals the balanced accuracy, $\\tfrac12(\\text{TPR} + \\text{TNR})$, where $\\text{TNR} = 1 - \\text{FPR}$ is the specificity."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The same split at $x = b$ gives a triangle of area $\\tfrac12 ab$ and a trapezoid of width $1 - b$ between heights $a$ and $1$:"
+            },
+            {
+              "tex": "\\begin{aligned}\n\\text{area} &= \\tfrac12 ab + (1 - b)\\,\\frac{a + 1}{2} \\\\[4pt]\n&= \\tfrac12\\big(ab + a + 1 - ab - b\\big) \\\\[4pt]\n&= \\tfrac12\\big(a + (1 - b)\\big) = \\tfrac12(\\text{TPR} + \\text{TNR}) .\n\\end{aligned}"
+            },
+            {
+              "p": "For the classifier above, $\\tfrac12(0.8 + 0.7) = 0.75$, as in Part 1. $\\qquad\\blacksquare$"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "The AUC also equals the share of positive-negative pairs that the scores put in the right order, with a tied pair counting one half. Compute that fraction for the hard classifier with rates $a$ and $b$, and show that it agrees with Part 2."
+            }
+          ],
+          "answer": [
+            {
+              "p": "A pair is one positive and one negative. The positive is flagged in a fraction $a$ of pairs and the negative in a fraction $b$, independently, since every positive meets every negative. That gives three kinds of pair:"
+            },
+            {
+              "list": [
+                "Right when the positive is flagged and the negative is not: $a(1 - b)$.",
+                "Tied when both are flagged or neither is: $ab + (1 - a)(1 - b)$.",
+                "Wrong when the negative is flagged and the positive is not: $(1 - a)b$."
+              ]
+            },
+            {
+              "p": "So the pair fraction is"
+            },
+            {
+              "tex": "\\begin{aligned}\na(1 - b) + \\tfrac12\\big[ab + (1 - a)(1 - b)\\big]\n&= a - ab + \\tfrac12\\big[2ab + 1 - a - b\\big] \\\\[4pt]\n&= \\tfrac12(1 + a - b) ,\n\\end{aligned}"
+            },
+            {
+              "p": "which is the area from Part 2. With the counts above: of the $40 \\times 160 = 6400$ pairs, $32 \\times 112 = 3584$ are right and $32 \\times 48 + 8 \\times 112 = 2432$ are tied, giving $(3584 + 1216) / 6400 = 0.75$. $\\qquad\\blacksquare$"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "A grader scores submitted 0/1 labels by balanced accuracy. A teammate reports AUC 0.75 for this classifier and AUC 0.86 for a logistic regression, computed from its predicted probabilities, and concludes that the logistic regression will score higher with the grader. Explain why the two AUCs do not support that conclusion, and say what to compute instead."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The grader sees labels, so the logistic regression will be judged at one threshold, exactly like the first classifier. By Part 2, the AUC of a set of 0/1 labels is its balanced accuracy, so the first classifier's 0.75 is already the score the grader would give it on this data."
+            },
+            {
+              "p": "The 0.86 is the area under the logistic regression's full curve, swept over every threshold. It gives credit for ordering examples within what will become its 0s and within what will become its 1s, and the grader never sees that ordering once a threshold has turned probabilities into labels. The logistic regression's balanced accuracy at the threshold it submits can be well below 0.86, and nothing in the two AUCs says whether it will beat 0.75."
+            },
+            {
+              "p": "Put both models in the form the grader sees. Choose the logistic regression's threshold on validation, turn its probabilities into 0/1 labels, and compute the balanced accuracy of both sets of labels on the same validation data. Those two numbers estimate the two scores the grader will give."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cm-pick-model-for-grader",
+      "moduleId": "model-evaluation",
+      "title": "The Model a Macro-F1 Grader Picks",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A grader scores a binary task by macro-F1: the mean of the F1 of class 1 and the F1 of class 0, each computed with that class as the positive one. Your validation split has 100 positives and 900 negatives, and two candidate models give these counts, with class 1 as positive:"
+            },
+            {
+              "tex": "\\begin{array}{ccccc}\n\\text{Model} & \\text{TP} & \\text{FN} & \\text{FP} & \\text{TN} \\\\ \\hline\n\\text{A} & 40 & 60 & 10 & 890 \\\\\n\\text{B} & 80 & 20 & 70 & 830\n\\end{array}"
+            },
+            {
+              "p": "Which model do you submit, and on what evidence?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Model A: its macro-F1 is 0.930 against 0.910",
+                  "explain": "These are the accuracies, 930 / 1000 and 910 / 1000. Pooling the counts of both classes before computing F1 gives the micro average, and in a single-label task every error is one false positive and one false negative, so micro-F1 equals accuracy. Macro-F1 computes an F1 for each class first and then averages them, so the 100 positives count as much as the 900 negatives."
+                },
+                {
+                  "text": "Model A: its macro-F1 is 0.919 against 0.918",
+                  "explain": "This weights each class F1 by its number of rows, 0.9 for class 0 and 0.1 for class 1: 0.1(0.533) + 0.9(0.962) = 0.919 for A against 0.1(0.640) + 0.9(0.949) = 0.918 for B. That is the weighted average, printed on the line under the macro average in classification_report. Macro-F1 gives the two classes equal weight."
+                },
+                {
+                  "text": "Model B: its macro-F1 is 0.794 against 0.748",
+                  "correct": true,
+                  "explain": "For class 0 the roles swap: TN are its true positives, FN its false positives and FP its false negatives. Model A: class 1 F1 = 40 / (40 + 35) = 0.533, class 0 F1 = 890 / (890 + 35) = 0.962, macro 0.748. Model B: 80 / (80 + 45) = 0.640 and 830 / (830 + 45) = 0.949, macro 0.794. B gives up two points of accuracy to catch twice as many positives, and the grader rewards that. Accuracy would have picked A, 0.930 against 0.910, so the metric the grader uses changes the choice."
+                },
+                {
+                  "text": "Model B: its macro-F1 is 0.640 against 0.533",
+                  "explain": "These are the F1 scores of class 1 alone, 80 / (80 + 45) and 40 / (40 + 35), which is what f1_score returns with its default average='binary'. They leave out class 0, whose F1 is the other half of the macro average."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "For class 0 the roles swap: TN are its true positives, FN its false positives and FP its false negatives. Model A: class 1 F1 = 40 / (40 + 35) = 0.533, class 0 F1 = 890 / (890 + 35) = 0.962, macro 0.748. Model B: 80 / (80 + 45) = 0.640 and 830 / (830 + 45) = 0.949, macro 0.794. B gives up two points of accuracy to catch twice as many positives, and the grader rewards that. Accuracy would have picked A, 0.930 against 0.910, so the metric the grader uses changes the choice."
+            },
+            {
+              "result": "Model B: its macro-F1 is 0.794 against 0.748"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cm-precision-at-new-base-rate",
+      "moduleId": "model-evaluation",
+      "title": "Same Operating Point, Rarer Positives",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A model flags counterfeit listings on a marketplace. On a validation set of 1,000 counterfeit and 1,000 genuine listings, its chosen threshold gives a true positive rate of 0.90 and a false positive rate of 0.05."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is its precision on the validation set? Give it to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The threshold flags $0.90 \\times 1000 = 900$ counterfeit listings and $0.05 \\times 1000 = 50$ genuine ones, so"
+            },
+            {
+              "tex": "\\text{precision} = \\frac{900}{900 + 50} = \\frac{18}{19} \\approx 0.947 ."
+            },
+            {
+              "result": "0.947"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The model goes live with the same threshold. On the live site, for every counterfeit listing there are 450 genuine ones. Each class looks the same as it did in validation, so the true and false positive rates stay at 0.90 and 0.05. What is the precision now? Give it to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Count per counterfeit listing. It contributes $0.90$ true positives, and its 450 genuine companions contribute $0.05 \\times 450 = 22.5$ false positives:"
+            },
+            {
+              "tex": "\\text{precision} = \\frac{0.90}{0.90 + 22.5} = \\frac{0.90}{23.4} = \\frac{1}{26} \\approx 0.038 ."
+            },
+            {
+              "p": "In general, with a fraction $\\pi$ of positives,"
+            },
+            {
+              "tex": "\\text{precision} = \\frac{\\text{TPR}\\,\\pi}{\\text{TPR}\\,\\pi + \\text{FPR}\\,(1 - \\pi)} ,"
+            },
+            {
+              "p": "which gives $18/19$ at $\\pi = 1/2$ and $1/26$ at $\\pi = 1/451$. The model and the threshold are unchanged, yet about 25 of every 26 flags are now genuine listings."
+            },
+            {
+              "result": "0.038"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Keeping the true positive rate at 0.90, what false positive rate would the model need on the live site for half of its flags to be counterfeit?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Half the flags are right when false positives equal true positives. Per counterfeit listing that means $450 \\cdot \\text{FPR} = 0.90$, so"
+            },
+            {
+              "tex": "\\text{FPR} = \\frac{0.90}{450} = 0.002 ,"
+            },
+            {
+              "p": "25 times lower than 0.05. On an ROC plot the operating point moves from $(0.05, 0.90)$ to $(0.002, 0.90)$, a shift of 0.048, under 5% of the width of the plot. In precision the same move takes 0.038 to 0.5."
+            },
+            {
+              "result": "0.002"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "The model's ROC curve is the same on the validation set and on the live site, and its precision-recall curve is not. Explain why in two or three sentences, and say which curve describes the work of the reviewers who check every flagged listing."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each ROC coordinate is a rate within one class: the true positive rate divides by the counterfeit listings and the false positive rate by the genuine ones. Changing how many listings of each class there are leaves both rates alone, provided each class scores the way it did in validation."
+            },
+            {
+              "p": "Precision divides by the flags, and the flags mix the two classes in a proportion the base rate sets. With 450 genuine listings per counterfeit one, a false positive rate of 0.05 already produces 22.5 false flags for every 0.9 true ones."
+            },
+            {
+              "p": "The reviewers open flags, so the precision-recall curve describes their work: at recall 0.90 they find a counterfeit in about 1 flag in 26."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cm-precision-for-the-other-class",
+      "moduleId": "model-evaluation",
+      "title": "Precision for the Other Class",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A bank's model predicts whether a loan will be repaid, and the bank plans to refuse every loan the model expects to default. To test it, the team runs it on 1,000 past loans, all of which were made: 800 were repaid and 200 defaulted. The label column codes a repaid loan as 1, and scikit-learn's `precision_score` and `recall_score` take label 1 as the positive class unless told otherwise, so the team's report reads"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  ">>> print(precision_score(y_test, pred), recall_score(y_test, pred))",
+                  "0.96 0.9"
+                ]
+              }
+            },
+            {
+              "p": "The risk team treats a default as the positive case. What is the model's precision with default as the positive class?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$0.04$",
+                  "explain": "1 \u2212 0.96 is the share of defaults among the loans the model would have approved, 30 out of 750. Precision on defaults divides by a different group, the 250 loans it would have refused, so it is not the complement of the precision on repaid loans."
+                },
+                {
+                  "text": "$0.68$",
+                  "correct": true,
+                  "explain": "Rebuild the counts from the repaid side. Recall 0.90 on the 800 repaid loans means the model would have approved 720 of them and refused 80. Precision 0.96 means those 720 are 96% of the loans it would have approved, so it would have approved 750, and 30 of those defaulted. It would have refused the other 250, and they hold the other 170 defaults, so the precision on defaults is 170 / 250 = 0.68. The 80 good borrowers it would turn away are about a third of its refusals, while the 30 defaults it would let through are only 4% of its approvals."
+                },
+                {
+                  "text": "$0.85$",
+                  "explain": "That is the recall on defaults, 170 / 200: the share of the 200 defaults that the model would have refused. Precision divides the same 170 by the 250 loans it would have refused."
+                },
+                {
+                  "text": "$0.96$",
+                  "explain": "That is the printed precision, and it is about label 1: of the 750 loans the model would have approved, 720 were repaid. With default as the positive class the flags are the refusals, so precision divides by the 250 loans the model would have refused, of which 170 defaulted."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Rebuild the counts from the repaid side. Recall 0.90 on the 800 repaid loans means the model would have approved 720 of them and refused 80. Precision 0.96 means those 720 are 96% of the loans it would have approved, so it would have approved 750, and 30 of those defaulted. It would have refused the other 250, and they hold the other 170 defaults, so the precision on defaults is 170 / 250 = 0.68. The 80 good borrowers it would turn away are about a third of its refusals, while the 30 defaults it would let through are only 4% of its approvals."
+            },
+            {
+              "result": "$0.68$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cm-ranking-a-week-of-claims",
+      "moduleId": "model-evaluation",
+      "title": "Ranking a Week of Claims",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "An insurer receives nine claims in one week, and two models rank that batch. Investigation later shows that four of the nine were fraudulent. From the top of each ranking down:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{ccc}\n\\text{Rank} & \\text{Model A} & \\text{Model B} \\\\ \\hline\n1 & \\text{genuine} & \\text{fraud} \\\\\n2 & \\text{fraud} & \\text{fraud} \\\\\n3 & \\text{fraud} & \\text{genuine} \\\\\n4 & \\text{fraud} & \\text{genuine} \\\\\n5 & \\text{fraud} & \\text{fraud} \\\\\n6 & \\text{genuine} & \\text{genuine} \\\\\n7 & \\text{genuine} & \\text{genuine} \\\\\n8 & \\text{genuine} & \\text{fraud} \\\\\n9 & \\text{genuine} & \\text{genuine}\n\\end{array}"
+        },
+        {
+          "p": "Two teams use the ranking of each week's batch. A fraud investigator opens only the two claims ranked highest in the batch. A review team must catch every fraud in the batch, so it opens claims from the top until it reaches the last fraudulent one, and the number of claims it opens is what the review costs."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Which model should the investigator use, and does the AUC agree?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "In its top two, model A has one fraud, since its first claim is genuine, and model B has two. The investigator should use model B."
+            },
+            {
+              "p": "For the AUC, pair each of the 4 frauds with each of the 5 genuine claims: 20 pairs, each worth $1/20$."
+            },
+            {
+              "list": [
+                "Model A: the genuine claim at rank 1 sits above all four frauds, and each fraud sits above the four genuine claims at ranks 6 to 9. $\\text{AUC} = 16/20 = 0.80$.",
+                "Model B: the frauds at ranks 1, 2, 5 and 8 sit above 5, 5, 3 and 1 genuine claims. $\\text{AUC} = 14/20 = 0.70$."
+              ]
+            },
+            {
+              "p": "The AUC prefers model A, so it disagrees. Every pair counts the same $1/20$, wherever the two claims sit. All four of model A's wrong pairs involve its rank 1 claim, the first claim the investigator opens. Model B has six wrong pairs: the genuine claims at ranks 3 and 4 each sit above the frauds at ranks 5 and 8, and the genuine claims at ranks 6 and 7 each sit above the fraud at rank 8. None of them involves the top two claims, so none changes what the investigator sees. The investigator's own number is the count of frauds in the top two."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Suppose the investigator could open the top $k$ claims of the batch, for any $k$ from 1 to 9. For how many values of $k$ does model A find more frauds than model B? What does the pattern say about choosing between the two models when the budget is fixed?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Count the frauds among the top $k$ claims of each ranking:"
+            },
+            {
+              "tex": "\\begin{array}{cccc}\nk & \\text{A} & \\text{B} & \\text{Ahead} \\\\ \\hline\n1 & 0 & 1 & \\text{B} \\\\\n2 & 1 & 2 & \\text{B} \\\\\n3 & 2 & 2 & \\text{tie} \\\\\n4 & 3 & 2 & \\text{A} \\\\\n5 & 4 & 3 & \\text{A} \\\\\n6 & 4 & 3 & \\text{A} \\\\\n7 & 4 & 3 & \\text{A} \\\\\n8 & 4 & 4 & \\text{tie} \\\\\n9 & 4 & 4 & \\text{tie}\n\\end{array}"
+            },
+            {
+              "p": "Model A finds more for $k = 4$ to $7$, four values. Model B is ahead at $k = 1$ and $2$, and the two tie at 3, 8 and 9."
+            },
+            {
+              "p": "So neither model is better at every budget. With $k$ claims opened, precision is the frauds found over $k$ and recall is the frauds found over 4, so at a fixed $k$ the model with more frauds is better on both, and the choice comes down to one count at that $k$. Fix the budget first, then compare the models there: model B for one or two claims a week, model A for four to seven. The AUC is one number for the whole ranking and does not say which $k$ it describes."
+            },
+            {
+              "result": "4"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Which model should the review use? Does a higher AUC always mean a cheaper review? Show that it does, or give two rankings of nine claims, four of them fraudulent, where the ranking with the higher AUC makes the review open more claims."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The review stops at the last fraud: rank 5 in model A's list, 5 claims of which 1 is genuine, and rank 8 in model B's, 8 claims of which 4 are genuine. The review should use model A, which also has the higher AUC."
+            },
+            {
+              "p": "That agreement is not guaranteed. The cost of the review is the rank of the last fraud, which depends on one claim, while the AUC averages all 20 pairs. Write F for a fraud and G for a genuine claim, from rank 1 down, so model A is G\u00a0F\u00a0F\u00a0F\u00a0F\u00a0G\u00a0G\u00a0G\u00a0G. Take the ranking F\u00a0F\u00a0F\u00a0G\u00a0G\u00a0F\u00a0G\u00a0G\u00a0G. The frauds at ranks 1, 2 and 3 each sit above all 5 genuine claims and the fraud at rank 6 above 3, so its AUC is $18/20 = 0.90$, higher than model A's 0.80. Its review opens 6 claims, more than model A's 5. In the same way, F\u00a0F\u00a0F\u00a0G\u00a0G\u00a0G\u00a0G\u00a0G\u00a0F has an AUC of $15/20 = 0.75$, above model B's 0.70, with a review of all 9 claims against model B's 8."
+            },
+            {
+              "p": "Each job has its own number: the frauds in the top two for the investigator, and the rank of the last fraud for the review. The AUC averages all 20 pairs and answers neither question directly. Here it agrees with the review and disagrees with the investigator."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cm-which-fix-raises-f1",
+      "moduleId": "model-evaluation",
+      "title": "Which Fix Raises F1 More",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A classifier has $TP = 40$, $FP = 40$ and $FN = 20$ on a validation set. You can make one of two fixes, and each changes ten predictions."
+            },
+            {
+              "list": [
+                "**Fix A.** Ten of the missed positives are now flagged: ten false negatives become true positives.",
+                "**Fix B.** Ten of the false alarms are no longer flagged: ten false positives become true negatives."
+              ]
+            },
+            {
+              "p": "Which fix raises F1 more?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Fix B, because precision is the smaller of the two numbers and F1 leans toward the smaller one",
+                  "explain": "Precision, 40 / 80 = 0.50, is indeed the smaller number, and the harmonic mean leans toward it. But fix A raises precision too, to 50 / 90 = 0.556, while lifting recall from 0.667 to 0.833. Fix B lifts only precision, to 0.571, so fix A ends higher: 0.667 against 0.615."
+                },
+                {
+                  "text": "Neither: they give the same F1, because F1 weights false positives and false negatives equally",
+                  "explain": "False positives and false negatives do carry equal weight in the denominator, so both fixes cut the error term from 30 to 25. The difference is where the ten predictions go: fix A turns them into true positives, which F1 counts, and fix B into true negatives, which F1 never uses. So fix A ends higher, 0.667 against 0.615."
+                },
+                {
+                  "text": "Fix A, because its ten corrected predictions become true positives, which F1 counts in its numerator as well as its denominator",
+                  "correct": true,
+                  "explain": "Both fixes cut the error term (FP + FN) / 2 from 30 to 25. Fix A also adds 10 true positives, and TP sits in the numerator of F1 = TP / (TP + (FP + FN) / 2) as well as the denominator, while the true negatives fix B creates never enter F1. So fix A gives 50 / (50 + 25) = 0.667 against 40 / (40 + 25) = 0.615 for fix B, both up from 40 / 70 = 0.571. Fix B raises precision further (0.571 against 0.556), but fix A also lifts recall from 0.667 to 0.833."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Both fixes cut the error term (FP + FN) / 2 from 30 to 25. Fix A also adds 10 true positives, and TP sits in the numerator of F1 = TP / (TP + (FP + FN) / 2) as well as the denominator, while the true negatives fix B creates never enter F1. So fix A gives 50 / (50 + 25) = 0.667 against 40 / (40 + 25) = 0.615 for fix B, both up from 40 / 70 = 0.571. Fix B raises precision further (0.571 against 0.556), but fix A also lifts recall from 0.667 to 0.833."
+            },
+            {
+              "result": "Fix A, because its ten corrected predictions become true positives, which F1 counts in its numerator as well as its denominator"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

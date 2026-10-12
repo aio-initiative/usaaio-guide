@@ -1,0 +1,93 @@
+{
+  "module": "vision-convolution",
+  "stage": "Round 2",
+  "index": [
+    {
+      "id": "cv-vertical-filter-on-a-cross",
+      "moduleId": "vision-convolution",
+      "title": "The Vertical Filter on a Cross",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cv-vertical-filter-on-a-cross",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A bright row is added through the running example's bright column, so the image becomes a cross, and the same vertical filter is slid over it. Decide which rows of the 4 by 4 feature map change and what they become.",
+      "answer": "Rows 1 to 3 of the map become −2, 4, −2, 0, and row 4 stays −3, 6, −3, 0. Map row i covers image rows i to i + 2, so map rows 1, 2 and 3 take in image row 3 and map row 4, over rows 4 to 6, does not. Over columns 2 to 4, two rows of the window read 0, 1, 0 and give 2 each, and the bright row reads 1, 1, 1 and gives 0, so the total is 4 where it was 6. Over columns 1 to 3 the bright row gives 0 where the line's row gave −1, so −3 becomes −2, and the same over columns 3 to 5. The filter answers a column brighter than its neighbors, and where the bright row crosses its window the neighbors are bright too."
+    },
+    {
+      "id": "cv-conv-layer-and-patches-numpy",
+      "moduleId": "vision-convolution",
+      "title": "A Convolution Layer and a Patch Embedding in NumPy",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=cv-conv-layer-and-patches-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "A real convolution layer takes several input channels and several filters, and it has a stride and padding. A Vision Transformer's patch embedding is the same layer with the stride equal to the filter size, computed as one matrix product. Write both in NumPy, in PyTorch's layout: an image is channels x height x width and a stack of filters is output channels x input channels x k x k. The filter is not flipped, so this is what PyTorch's Conv2d computes. 2 parts.",
+      "answer": "Auto-graded inside the notebook. On the chapter's 6 by 6 line image with the two 3 by 3 filters, conv2d must give 2 maps of 4 by 4 with the vertical map -3, 6, -3, 0 in every row and the horizontal map 0 everywhere. On a 2-channel 4 by 5 image with a 3 by 3 filter it must give 4, 5, 6 over 13, 7, -2 at stride 1 with no padding and 8, -3, -2 over 6, 7, -4 at stride 2 with padding 1, and patches on a 2 by 4 by 6 array must give 6 rows of 8 values, one row per patch with channel 0 row by row then channel 1, the rows running along the top row of patches first. patch_embed must agree with conv2d at a stride equal to the patch size."
+    }
+  ],
+  "theory": [
+    {
+      "id": "cv-vertical-filter-on-a-cross",
+      "moduleId": "vision-convolution",
+      "title": "The Vertical Filter on a Cross",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "The running example gets a second stroke: row 3 is made bright as well, so the image is a cross. Column 3 and row 3 are 1, and every other pixel is 0."
+            },
+            {
+              "tex": "\\begin{array}{ccccccc}\n\\text{Row} & \\text{Col 1} & \\text{Col 2} & \\text{Col 3} & \\text{Col 4} & \\text{Col 5} & \\text{Col 6} \\\\ \\hline\n1 & 0 & 0 & 1 & 0 & 0 & 0 \\\\\n2 & 0 & 0 & 1 & 0 & 0 & 0 \\\\\n3 & 1 & 1 & 1 & 1 & 1 & 1 \\\\\n4 & 0 & 0 & 1 & 0 & 0 & 0 \\\\\n5 & 0 & 0 & 1 & 0 & 0 & 0 \\\\\n6 & 0 & 0 & 1 & 0 & 0 & 0\n\\end{array}"
+            },
+            {
+              "p": "The vertical filter, with the row −1, 2, −1 three times, slides over it one pixel at a time with no padding, as in the running example. For the line alone, every row of the 4 × 4 feature map was −3, 6, −3, 0. What does the bright row do to that map?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Nothing: a full row of 1s under the filter adds −1 + 2 − 1 = 0, so every row of the map stays −3, 6, −3, 0",
+                  "explain": "This treats the bright row as a full row of 1s laid on top of the line. Its pixel in column 3 was already 1 and already counted in the line's total, so the row adds only the pixels on either side of the line. Look at which filter weights those new pixels meet."
+                },
+                {
+                  "text": "Rows 1 to 3 of the map become −2, 4, −2, 0, and row 4 stays −3, 6, −3, 0",
+                  "correct": true,
+                  "explain": "Map row i covers image rows i to i + 2, so map rows 1, 2 and 3 take in image row 3 and map row 4, over rows 4 to 6, does not. Over columns 2 to 4, two rows of the window read 0, 1, 0 and give 2 each, and the bright row reads 1, 1, 1 and gives 0, so the total is 4 where it was 6. Over columns 1 to 3 the bright row gives 0 where the line's row gave −1, so −3 becomes −2, and the same over columns 3 to 5. The filter answers a column brighter than its neighbors, and where the bright row crosses its window the neighbors are bright too."
+                },
+                {
+                  "text": "Only row 3 of the map changes, to −2, 4, −2, 0, and the other rows stay −3, 6, −3, 0",
+                  "explain": "This changes only the map row that sits level with image row 3. A map row is named by the top row of its window, so map row 3 covers image rows 3 to 5. Count every window, from the top row of the map down, that has image row 3 inside it."
+                },
+                {
+                  "text": "All four rows of the map become −2, 4, −2, 0, since every row of the map sees part of the cross",
+                  "explain": "This assumes every window sees part of the bright row because every window sees part of the cross. Map row i covers image rows i to i + 2. Check that range for each map row against image row 3."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Map row i covers image rows i to i + 2, so map rows 1, 2 and 3 take in image row 3 and map row 4, over rows 4 to 6, does not. Over columns 2 to 4, two rows of the window read 0, 1, 0 and give 2 each, and the bright row reads 1, 1, 1 and gives 0, so the total is 4 where it was 6. Over columns 1 to 3 the bright row gives 0 where the line's row gave −1, so −3 becomes −2, and the same over columns 3 to 5. The filter answers a column brighter than its neighbors, and where the bright row crosses its window the neighbors are bright too."
+            },
+            {
+              "result": "Rows 1 to 3 of the map become −2, 4, −2, 0, and row 4 stays −3, 6, −3, 0"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "aModule": "generative-removing-noise",
+  "stage": "Camp",
+  "fixes": [
+    {
+      "file": "gen-the-weight-of-the-two-images",
+      "find": "The factor is a signal to noise ratio: $\\sqrt{\\bar\\alpha_t}$ is how much of the\nclean image survives, and $1 - \\bar\\alpha_t$ is the variance of the noise added\nalongside it. The product with the contrast is therefore the number of standard\ndeviations by which the noisy image leans LEFT, and the logistic turns that into\na weight.",
+      "replace": "The factor grows with the surviving signal and shrinks with the added\nnoise: $\\sqrt{\\bar\\alpha_t}$ is how much of the clean image survives, and\n$1 - \\bar\\alpha_t$ is the variance of the noise added alongside it. The\nproduct with the contrast is therefore the log-odds in favour of LEFT, the log\nof the ratio of the noisy image's likelihood under LEFT to its likelihood under\nRIGHT, and the logistic turns a log-odds into a weight.",
+      "why": "sC/(1 - abar_t) is exactly log p(x|L)/p(x|R), not a z-score: a student reading 3.16 as standard deviations computes Phi(3.16) = 0.999, not the printed 0.959, and the amplitude SNR sqrt(abar/(1-abar)) is 1.386 at step 200, not the factor 2.381. bprv-27, confirmed."
+    },
+    {
+      "file": "gen-the-weight-of-the-two-images",
+      "find": "so the\ncontrast is worth only 0.052 standard deviations and the weight is 0.513",
+      "replace": "so the\ncontrast gives a log-odds of only 0.052 and the weight is 0.513",
+      "why": "log-odds is the name of the quantity the paragraph computes. bprv-27, confirmed."
+    },
+    {
+      "file": "gen-the-weight-of-the-two-images",
+      "find": "so the contrast\nis worth 3.16 standard deviations, the logistic has saturated, and the weight\n0.959 is nearly all on LEFT. Step 500 sits between them at 0.404 standard\ndeviations.",
+      "replace": "so the contrast\ngives a log-odds of 3.16, the logistic has saturated, and the weight\n0.959 is nearly all on LEFT. Step 500 sits between them at a log-odds\nof 0.404.",
+      "why": "log-odds is the name of the quantity the paragraph computes. bprv-27, confirmed."
+    },
+    {
+      "file": "gen-the-weight-of-the-two-images",
+      "find": "the noise spread is 0.584 and the signal factor 0.812, so the contrast\ngives a log-odds of 3.16",
+      "replace": "the factor is 0.812 / 0.584\u00b2 = 2.381, so the contrast gives a\nlog-odds of 2.381 \u00d7 1.329 = 3.16",
+      "why": "L0 decision 10:39 PM. The sentence named the noise spread and the surviving signal but never said the factor is their quotient, so a student could not reach the 3.16 it asserts. Now the step is stated and the name matches the part's own definition of 'the factor' as sqrt(abar)/(1-abar). Arithmetic: 0.812/0.584^2 = 2.380841 -> 2.381, and 2.381 x 1.329 = 3.16435 -> 3.16, which gives the printed weight 0.959."
+    },
+    {
+      "file": "gen-the-weight-of-the-two-images",
+      "find": "the noise spread is 0.999 and the signal factor 0.039, so the\ncontrast gives a log-odds of only 0.052",
+      "replace": "the factor is 0.039 / 0.999\u00b2 = 0.039, so the contrast gives a log-odds\nof only 0.039 \u00d7 1.329 = 0.052",
+      "why": "L0 decision 10:39 PM. Same gap in the step 800 sentence, given the same shape. Arithmetic: 0.039/0.999^2 = 0.039078 -> 0.039, and 0.039 x 1.329 = 0.051831 -> 0.052, which gives the printed weight 0.513."
+    }
+  ],
+  "parts": {
+    "gen-the-weight-of-the-two-images": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "gen-the-weight-of-the-two-images": "The best possible network for the two training images returns a weighted average of LEFT and RIGHT, and one number, the weight on LEFT, describes it. Derive that weight, compute it when the same noisy image is read at a different step, and read what the printed weights say about when a sampling run commits to an image."
+  }
+}

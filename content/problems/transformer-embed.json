@@ -1,0 +1,73 @@
+{
+  "module": "transformer-embed",
+  "stage": "Round 2",
+  "index": [
+    {
+      "id": "tf-a-token-used-twice",
+      "moduleId": "transformer-embed",
+      "title": "A Token Used Twice",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=tf-a-token-used-twice",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "The model trains on the text \"the cat sat on the\". The token \"the\" is looked up at positions 1 and 5, and its row in the embedding table is (1, 0, 0, 0). The backward pass gives the gradient (0.5, -1.0, 0.0, 2.0) for position 1 and (-1.5, 0.0, 1.0, 1.0) for position 5. With a learning rate of 0.1, what is the row of \"the\" after this step?",
+      "answer": "(1.1, 0.1, -0.1, -0.3). Each row of the input is a one-hot vector times the table, so the gradient for a row of the table adds the gradients of every position that looked it up. The token \"the\" is looked up at positions 1 and 5, so its gradient is (0.5, -1.0, 0.0, 2.0) + (-1.5, 0.0, 1.0, 1.0) = (-1.0, -1.0, 1.0, 3.0), and the row becomes (1, 0, 0, 0) - 0.1 * (-1.0, -1.0, 1.0, 3.0) = (1.1, 0.1, -0.1, -0.3)."
+    }
+  ],
+  "theory": [
+    {
+      "id": "tf-a-token-used-twice",
+      "moduleId": "transformer-embed",
+      "title": "A Token Used Twice",
+      "difficulty": "Medium",
+      "minutes": 8,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "The model trains on the text \"the cat sat on the\", whose five tokens are looked up in the running example's table $E$. The row of \"the\" is (1, 0, 0, 0). The forward and backward pass give these gradients for the rows of $X$, one row per position:"
+            },
+            {
+              "tex": "\\begin{array}{ccc}\n\\text{Position} & \\text{Token} & \\text{Gradient} \\\\ \\hline\n1 & \\text{the} & \\text{(0.5, −1.0, 0.0, 2.0)} \\\\\n2 & \\text{cat} & \\text{(1.0, 0.5, −0.5, 0.0)} \\\\\n3 & \\text{sat} & \\text{(0.0, 1.5, 0.5, −1.0)} \\\\\n4 & \\text{on} & \\text{(−0.5, 0.0, 1.0, 0.5)} \\\\\n5 & \\text{the} & \\text{(−1.5, 0.0, 1.0, 1.0)}\n\\end{array}"
+            },
+            {
+              "p": "With a learning rate of 0.1, what is the row of \"the\" in $E$ after this step?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$(1.1,\\ 0.1,\\ -0.1,\\ -0.3)$",
+                  "correct": true,
+                  "explain": "Each row of X is a one-hot vector times E, so the gradient for a row of E adds the gradients of every position that looked it up. The token \"the\" is looked up at positions 1 and 5, so its gradient is (0.5, −1.0, 0.0, 2.0) + (−1.5, 0.0, 1.0, 1.0) = (−1.0, −1.0, 1.0, 3.0), and the row becomes (1, 0, 0, 0) − 0.1 × (−1.0, −1.0, 1.0, 3.0) = (1.1, 0.1, −0.1, −0.3). Applying the two updates one after the other gives the same row."
+                },
+                {
+                  "text": "$(1.15,\\ 0,\\ -0.1,\\ -0.1)$",
+                  "explain": "This uses only the gradient of position 5. It is what `E[ids] -= 0.1 * dX` does in NumPy when an ID repeats: each position's update is computed, but the two writes to the same row overwrite each other and the last one stays. `np.add.at(E, ids, -0.1 * dX)` adds both. Both uses of the token changed the loss, so both count."
+                },
+                {
+                  "text": "$(1.05,\\ 0.05,\\ -0.05,\\ -0.15)$",
+                  "explain": "This averages the two gradients. A row used twice reaches the loss along two paths, and the chain rule adds the contributions of the paths, so the gradients are summed. If the loss is an average over positions, that division is already inside each position's gradient."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each row of X is a one-hot vector times E, so the gradient for a row of E adds the gradients of every position that looked it up. The token \"the\" is looked up at positions 1 and 5, so its gradient is (0.5, −1.0, 0.0, 2.0) + (−1.5, 0.0, 1.0, 1.0) = (−1.0, −1.0, 1.0, 3.0), and the row becomes (1, 0, 0, 0) − 0.1 × (−1.0, −1.0, 1.0, 3.0) = (1.1, 0.1, −0.1, −0.3). Applying the two updates one after the other gives the same row."
+            },
+            {
+              "result": "$(1.1,\\ 0.1,\\ -0.1,\\ -0.3)$"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

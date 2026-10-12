@@ -1,0 +1,74 @@
+{
+  "cv4-residual": {
+    "title": "ResNet block.svg",
+    "author": "Aston Zhang, Zachary C. Lipton, Mu Li, Alexander J. Smola",
+    "lic": "CC BY-SA 4.0",
+    "lic_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:ResNet_block.svg",
+    "module": "CV4",
+    "changed": "Rendered from the source SVG to 1280x811 px PNG; any transparency flattened onto white; no other change."
+  },
+  "tf2-families": {
+    "title": "Encoder self-attention, block diagram.png",
+    "author": "dvgodoy",
+    "lic": "CC BY 4.0",
+    "lic_url": "https://creativecommons.org/licenses/by/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Encoder_self-attention,_block_diagram.png",
+    "module": "TF2",
+    "changed": "Re-rendered to 1426x520 px PNG; any transparency flattened onto white; no other change."
+  },
+  "tf3-families": {
+    "title": "Decoder self-attention with causal masking, detailed diagram.png",
+    "author": "dvgodoy",
+    "lic": "CC BY 4.0",
+    "lic_url": "https://creativecommons.org/licenses/by/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Decoder_self-attention_with_causal_masking,_detailed_diagram.png",
+    "module": "TF3",
+    "changed": "Re-rendered to 1426x1000 px PNG; any transparency flattened onto white; no other change."
+  },
+  "tf4-families": {
+    "title": "The Transformer model architecture",
+    "author": "Yuening Jia",
+    "lic": "CC BY-SA 3.0",
+    "lic_url": "https://creativecommons.org/licenses/by-sa/3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:The-Transformer-model-architecture.png",
+    "module": "TF4",
+    "changed": "Re-rendered to 850x765 px PNG, the original file's size; any transparency flattened onto white; no other change."
+  },
+  "rp1-latent": {
+    "title": "Autoencoder structure.png",
+    "author": "Chervinskii",
+    "lic": "CC BY-SA 4.0",
+    "lic_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Autoencoder_structure.png",
+    "module": "RP1",
+    "changed": "Re-rendered to 677x506 px PNG; any transparency flattened onto white; no other change."
+  },
+  "rp3-latent": {
+    "title": "Reparameterized Variational Autoencoder.png",
+    "author": "EugenioTL",
+    "lic": "CC BY-SA 4.0",
+    "lic_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Reparameterized_Variational_Autoencoder.png",
+    "module": "RP3",
+    "changed": "Re-rendered to 1264x524 px PNG; any transparency flattened onto white; no other change."
+  },
+  "nl2-bottleneck": {
+    "title": "The LSTM cell.png",
+    "author": "Guillaume Chevalier",
+    "lic": "CC BY 4.0",
+    "lic_url": "https://creativecommons.org/licenses/by/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:The_LSTM_cell.png",
+    "module": "NL2",
+    "changed": "Re-rendered to 1280x840 px PNG; any transparency flattened onto white; no other change."
+  },
+  "cv6-patches": {
+    "title": "Vision Transformer.svg",
+    "author": "Aston Zhang, Zachary C. Lipton, Mu Li, Alexander J. Smola",
+    "lic": "CC BY-SA 4.0",
+    "lic_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Vision_Transformer.svg",
+    "module": "CV6",
+    "changed": "Rendered from the source SVG to 1280x1215 px PNG; any transparency flattened onto white; no other change."
+  }
+}

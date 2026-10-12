@@ -1,0 +1,1006 @@
+{
+  "module": "kernel-methods-svms",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "ml3-problems-notebook",
+      "moduleId": "kernel-methods-svms",
+      "title": "ML3 Problems Notebook",
+      "source": "USAAIO Guide",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ml3-problems",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Problem Set",
+        "Round 1"
+      ],
+      "problemList": [
+        "Explain why a max-margin boundary may generalize better than an arbitrary separating line.",
+        "Derive the hinge loss from the soft-margin constraint.",
+        "Train linear SVMs with C = 0.01, 0.1, 1, 10, 100. Plot the decision boundaries.",
+        "Train RBF SVMs with different gamma values. Explain when the boundary underfits or overfits.",
+        "Use GridSearchCV to tune C and gamma on the two moons dataset.",
+        "Compare logistic regression, linear SVM, and RBF SVM on the same dataset. Explain which model you would choose and why."
+      ],
+      "prompt": "Problems-only notebook for SVMs and kernel methods, including margin reasoning, hinge loss, linear SVMs, RBF kernels, grid search, and model comparison.",
+      "answer": "Open the notebook and work the problems in order. Problems 1 and 2 are answered in the notebook's text or on paper. Problems 3, 4, 5 and 6 have code cells to complete, each followed by a check cell. A worked solution follows the problems. Use the Download .ipynb button in the editor to export this notebook."
+    },
+    {
+      "id": "ml6-hinge-subgradient",
+      "moduleId": "kernel-methods-svms",
+      "title": "A Loss with a Corner in It",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ml6-hinge-subgradient",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Train a linear SVM by subgradient descent on the hinge loss, handling the non-differentiable corner at the margin, and check the result against sklearn's solver.",
+      "answer": "Auto-graded inside the notebook. Weights, bias, objective, accuracy and the margin-violation count must match to 1e-6, and accuracy must land within 3 points of LinearSVC."
+    },
+    {
+      "id": "ml6-support-vectors",
+      "moduleId": "kernel-methods-svms",
+      "title": "Throw Away 99% of the Data, Keep the Same Model",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ml6-support-vectors",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Fit a linear SVM, keep only the support vectors, refit, and verify the decision function is unchanged: the solution depends on a small fraction of the data.",
+      "answer": "Auto-graded inside the notebook. Support counts and the largest decision-function difference must match the reference values to within 1e-6, and same_predictions must equal 1.0."
+    },
+    {
+      "id": "ml7-kernel-ridge-median",
+      "moduleId": "kernel-methods-svms",
+      "title": "Picking the RBF Bandwidth Without a Grid Search",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ml7-kernel-ridge-median",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Implement kernel ridge regression from the normal equations and set the RBF bandwidth with the median heuristic, checking it against a full grid search.",
+      "answer": "Auto-graded inside the notebook. The bandwidth and all RMSEs must match to 1e-6 and the heuristic must land within a factor of two of the best grid value."
+    },
+    {
+      "id": "ml7-random-features",
+      "moduleId": "kernel-methods-svms",
+      "title": "Faking a Kernel with 400 Random Frequencies",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=ml7-random-features",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Approximate an RBF kernel with 400 random Fourier features and measure the Gram-matrix error, getting the sqrt(2/D) normalization right.",
+      "answer": "Auto-graded inside the notebook. Errors and the diagonal mean must match the reference to 1e-6, with mean error below 0.05."
+    },
+    {
+      "id": "svm-margin-of-two-lines",
+      "moduleId": "kernel-methods-svms",
+      "title": "The Margin of Two Candidate Lines",
+      "difficulty": "Medium",
+      "url": "/theory/?id=svm-margin-of-two-lines",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Four labeled points: (-2, 4) and (4, 5) in class +1, and (1, 1) and (3, 0) in class -1. Two linear classifiers are proposed, each predicting +1 where its score is positive: line A has score 3x1 + 4x2 - 20 and line B has score 10x2 - 25. Which of the two lines has the wider margin on these four points, and how far is that line from the nearest of them? 1 part.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "svm-width-of-the-widest-strip",
+      "moduleId": "kernel-methods-svms",
+      "title": "The Width of the Widest Strip",
+      "difficulty": "Medium",
+      "url": "/theory/?id=svm-width-of-the-widest-strip",
+      "source": "Custom",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "Five training points in the plane: (0, 0), (6, 3) and (-2, -4) in class -1, and (0, 5) and (3, 8) in class +1. A hard-margin SVM is trained on them. How wide is its margin, the distance 2 / ‖w‖ between its two edges?",
+      "answer": "2sqrt5 approx 4.47. The negatives (0, 0) and (6, 3) lie on the line x₁ − 2x₂ = 0, and the foot of the perpendicular from (0, 5) to that line is (2, 1), between them, at distance 10/√5 = 2√5. Any separating line has (0, 5) on one side and the whole segment from (0, 0) to (6, 3), including (2, 1), on the other, so no strip can be wider. A strip of that width exists: w = (−0.2, 0.4) and b = −1 give scores −1, −1 and +1 at (0, 0), (6, 3) and (0, 5), and −2.2 and 1.6 at the other two points. Every constraint holds, and 2/‖w‖ = 2√5."
+    },
+    {
+      "id": "svm-two-lines-one-price",
+      "moduleId": "kernel-methods-svms",
+      "title": "Two Lines and the Price of Slack",
+      "difficulty": "Medium",
+      "url": "/theory/?id=svm-two-lines-one-price",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Five points with one feature: class -1 at x = -3 and x = -1, and class +1 at x = -0.5, x = 1 and x = 3. Two soft-margin classifiers without a bias are on the table, line A with score f_A(x) = 0.5x and line B with score f_B(x) = x. Each is judged by the soft-margin objective (1/2) w^2 + C times the sum over points of max(0, 1 - y_i f(x_i)). 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "svm-read-the-multipliers",
+      "moduleId": "kernel-methods-svms",
+      "title": "Read a Soft-Margin SVM from Its Multipliers",
+      "difficulty": "Medium",
+      "url": "/theory/?id=svm-read-the-multipliers",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A soft-margin linear SVM with C = 2 is trained on five points with one feature, with score f(x) = wx + b. The points are x = -2, 0, 0.5, 1.5, 2 with labels -1, -1, +1, -1, +1, and the solver returns the dual multipliers 0, 1.5, 2, 2, 1.5. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "svm-curved-boundary-on-a-line",
+      "moduleId": "kernel-methods-svms",
+      "title": "A Curved Boundary on a Line",
+      "difficulty": "Medium",
+      "url": "/theory/?id=svm-curved-boundary-on-a-line",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Three points with one feature: $x = -2$ and $x = 2$ in class $-1$, and $x = 0$ in class $+1$. No single threshold on $x$ separates them. A hard-margin SVM is trained on them with the kernel $k(x, z) = (xz + 1)^2$. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "svm-which-is-a-kernel",
+      "moduleId": "kernel-methods-svms",
+      "title": "Which of These Is a Kernel",
+      "difficulty": "Medium",
+      "url": "/theory/?id=svm-which-is-a-kernel",
+      "source": "Custom",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "Each function below takes two real numbers x and z. Which one is a valid kernel?",
+      "answer": "cos(x - z). It takes negative values, which a kernel may do. By the angle difference formula, cos(x − z) = cos x cos z + sin x sin z, the dot product of φ(x) = (cos x, sin x) with φ(z). Every Gram matrix is then ΦΦᵀ, which is positive semidefinite."
+    },
+    {
+      "id": "svm-same-model-in-new-units",
+      "moduleId": "kernel-methods-svms",
+      "title": "The Same Model in New Units",
+      "difficulty": "Medium",
+      "url": "/theory/?id=svm-same-model-in-new-units",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A team trains an SVM with the RBF kernel, $\\gamma = 0.8$ and $C = 5$, on two features measured in meters. A teammate converts both features to centimeters, so every value is multiplied by 100, and wants a model that gives exactly the old predictions on every point converted the same way. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "svm-five-classes-two-schemes",
+      "moduleId": "kernel-methods-svms",
+      "title": "Five Classes, Two Schemes",
+      "difficulty": "Medium",
+      "url": "/theory/?id=svm-five-classes-two-schemes",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A data set has 5 classes with 2,000 points in each. Training a binary SVM on $m$ points costs about $m^2$ operations, times a constant that is the same for every training run. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "svm-score-from-support-vectors-numpy",
+      "moduleId": "kernel-methods-svms",
+      "title": "Score New Points from the Support Vectors",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=svm-score-from-support-vectors-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "A trained kernel SVM keeps no weight vector: it scores a new point with a sum over the support vectors. Rebuild that score from what scikit-learn's SVC stores, then recover the bias b yourself from the training points, without reading it from the model.",
+      "answer": "Auto-graded inside the notebook. Part 1's scores must match svc.decision_function within numpy's allclose band, atol 1e-6 plus rtol 1e-5 times the score, and Part 2's bias, averaged over every usable support vector, must match svc.intercept_ to 1e-4."
+    },
+    {
+      "id": "svm-far-from-every-point",
+      "moduleId": "kernel-methods-svms",
+      "title": "Far from Every Training Point",
+      "difficulty": "Hard",
+      "url": "/theory/?id=svm-far-from-every-point",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Ten training points lie in the plane, seven in class $+1$ and three in class $-1$, and no two are closer than 1 to each other. An SVM with the RBF kernel, $\\gamma = 50$ and $C = 10$, is trained on them. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "svm-build-and-break-a-kernel",
+      "moduleId": "kernel-methods-svms",
+      "title": "Build a Kernel, Break a Kernel",
+      "difficulty": "Hard",
+      "url": "/theory/?id=svm-build-and-break-a-kernel",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A function $k$ is a valid kernel when every Gram matrix $K_{ij} = k(\\mathbf{x}_i, \\mathbf{x}_j)$ it produces is symmetric and positive semidefinite. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "svm-leave-one-out-bound",
+      "moduleId": "kernel-methods-svms",
+      "title": "Leave One Out, Count the Support Vectors",
+      "difficulty": "Hard",
+      "url": "/theory/?id=svm-leave-one-out-bound",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Leave-one-out validation trains a model $n$ times, each time on all the training points but one, and tests it on the point left out. The error rate is the fraction of the $n$ left-out points it gets wrong. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "svm-dual-coordinate-ascent-numpy",
+      "moduleId": "kernel-methods-svms",
+      "title": "Solve the Dual One Multiplier at a Time",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=svm-dual-coordinate-ascent-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "The SVM dual has one unknown per training point, each held in the box [0, C]. Change a single alpha_i and keep the others fixed and the dual objective is a parabola in that one number, with a maximum you can write down. Build that solver for a linear SVM, measure how close it gets with the duality gap, and check the optimality conditions point by point.",
+      "answer": "Auto-graded inside the notebook. The duality gap must never go negative for an alpha in the box, 100 sweeps of coordinate ascent must drive it below 1e-8, and the largest KKT violation at the solution must be below 1e-6, while moving one free multiplier by 0.05 breaks the conditions again."
+    }
+  ],
+  "theory": [
+    {
+      "id": "svm-margin-of-two-lines",
+      "moduleId": "kernel-methods-svms",
+      "title": "The Margin of Two Candidate Lines",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "Four labeled points: $(-2, 4)$ and $(4, 5)$ in class $+1$, and $(1, 1)$ and $(3, 0)$ in class $-1$. Two linear classifiers are proposed. Each predicts $+1$ where its score is positive."
+      ],
+      "setup": [
+        {
+          "list": [
+            "Line A has score $3x_1 + 4x_2 - 20$.",
+            "Line B has score $10x_2 - 25$."
+          ]
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Which of the two lines has the wider margin on these four points, and how far is that line from the nearest of them?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The margin of a line is the empty strip around it that reaches the closest point on each side, with each class on its own side. So start by checking which points each line puts on the correct side, with the signed distance $r = (\\text{score}) / \\lVert\\mathbf{w}\\rVert$ times the label."
+            },
+            {
+              "p": "For line A the weights are $(3, 4)$, of length 5, and the bias is $-20$."
+            },
+            {
+              "tex": "\\begin{array}{ccccc}\n\\text{Point} & \\text{Label} & \\text{Score} & r & \\text{label $\\times\\ r$} \\\\ \\hline\n(-2, 4) & +1 & -10 & -2 & -2 \\\\\n(4, 5) & +1 & 12 & 2.4 & 2.4 \\\\\n(1, 1) & -1 & -13 & -2.6 & 2.6 \\\\\n(3, 0) & -1 & -11 & -2.2 & 2.2\n\\end{array}"
+            },
+            {
+              "p": "The point $(-2, 4)$ is in class $+1$ but has a negative score: line A puts it on the wrong side. Line A does not separate the classes, so it has no margin on these points, although every point is at least 2 away from it."
+            },
+            {
+              "p": "For line B the weights are $(0, 10)$, of length 10. The scores are $15$, $25$, $-15$ and $-25$, so the signed distances times the labels are $1.5$, $2.5$, $1.5$ and $2.5$. Every point is on its correct side, and the nearest, $(-2, 4)$ and $(1, 1)$, are 1.5 away, one on each side. Line B has the wider margin, and it is $\\boxed{1.5}$ from the nearest point (the strip is 3 wide)."
+            },
+            {
+              "p": "Two shortcuts give the wrong answer. Taking the smallest distance and ignoring which side the points are on picks line A, at 2. Taking the smallest score picks line B but reads 15, because B's weight vector is 10 long: a score is a distance only after dividing by $\\lVert\\mathbf{w}\\rVert$."
+            },
+            {
+              "result": "1.5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "svm-width-of-the-widest-strip",
+      "moduleId": "kernel-methods-svms",
+      "title": "The Width of the Widest Strip",
+      "difficulty": "Medium",
+      "minutes": 8,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Five training points in the plane: $(0, 0)$, $(6, 3)$ and $(-2, -4)$ in class $-1$, and $(0, 5)$ and $(3, 8)$ in class $+1$. A hard-margin SVM is trained on them. How wide is its margin, the distance $2 / \\lVert\\mathbf{w}\\rVert$ between its two edges?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$\\sqrt5 \\approx 2.24$",
+                  "explain": "That is the distance from the boundary to the nearest points, 1/‖w‖. The margin reaches the nearest point on each side, so it is twice that."
+                },
+                {
+                  "text": "$2\\sqrt5 \\approx 4.47$",
+                  "correct": true,
+                  "explain": "The negatives (0, 0) and (6, 3) lie on the line x₁ − 2x₂ = 0, and the foot of the perpendicular from (0, 5) to that line is (2, 1), between them, at distance 10/√5 = 2√5. Any separating line has (0, 5) on one side and the whole segment from (0, 0) to (6, 3), including (2, 1), on the other, so no strip can be wider. A strip of that width exists: w = (−0.2, 0.4) and b = −1 give scores −1, −1 and +1 at (0, 0), (6, 3) and (0, 5), and −2.2 and 1.6 at the other two points. Every constraint holds, and 2/‖w‖ = 2√5."
+                },
+                {
+                  "text": "$5$",
+                  "explain": "That is the distance from (0, 0) to (0, 5), the closest pair of opposite labels. The line halfway between them is x₂ = 2.5, and it puts (6, 3) on the positive side, so it does not separate the classes. The nearest part of class −1 to (0, 5) is the point (2, 1) on the segment between two negatives, not a training point."
+                },
+                {
+                  "text": "$10$",
+                  "explain": "That is the size of the score of (0, 5) under x₁ − 2x₂, the line through (0, 0) and (6, 3), taken as a distance. A score becomes a distance only after dividing by the length of the weight vector, here ‖(1, −2)‖ = √5."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The negatives (0, 0) and (6, 3) lie on the line x₁ − 2x₂ = 0, and the foot of the perpendicular from (0, 5) to that line is (2, 1), between them, at distance 10/√5 = 2√5. Any separating line has (0, 5) on one side and the whole segment from (0, 0) to (6, 3), including (2, 1), on the other, so no strip can be wider. A strip of that width exists: w = (−0.2, 0.4) and b = −1 give scores −1, −1 and +1 at (0, 0), (6, 3) and (0, 5), and −2.2 and 1.6 at the other two points. Every constraint holds, and 2/‖w‖ = 2√5."
+            },
+            {
+              "result": "$2\\sqrt5 \\approx 4.47$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "svm-two-lines-one-price",
+      "moduleId": "kernel-methods-svms",
+      "title": "Two Lines and the Price of Slack",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "Five points with one feature: class $-1$ at $x = -3$ and $x = -1$, and class $+1$ at $x = -0.5$, $x = 1$ and $x = 3$. Two soft-margin classifiers without a bias are on the table, line A with score $f_A(x) = 0.5x$ and line B with score $f_B(x) = x$. Each is judged by the soft-margin objective"
+      ],
+      "setup": [
+        {
+          "tex": "\\tfrac12 w^2 + C\\sum_i \\max\\big(0,\\ 1 - y_i f(x_i)\\big)."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Compute the total hinge loss of line A on the five points."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Line A gives $y_i f_A(x_i) = 1.5,\\ 0.5,\\ -0.25,\\ 0.5,\\ 1.5$ for the points in the order listed. The hinge losses are $0,\\ 0.5,\\ 1.25,\\ 0.5,\\ 0$, which add up to $2.25$. Two correctly classified points sit inside the margin, and the point at $-0.5$ is on the wrong side."
+            },
+            {
+              "result": "2.25"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Find the value of $C$ at which the objective rates the two lines equally. Which line does it prefer for larger $C$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Line B gives $y_i f_B(x_i) = 3,\\ 1,\\ -0.5,\\ 1,\\ 3$, so only the point at $-0.5$ pays, $1.5$. The two objectives are"
+            },
+            {
+              "tex": "\\text{A: } 0.125 + 2.25\\,C, \\qquad \\text{B: } 0.5 + 1.5\\,C ."
+            },
+            {
+              "p": "They are equal when $0.75\\,C = 0.375$, at $C = 0.5$. Above it B is cheaper, for example $2.0$ against $2.375$ at $C = 1$. Below it A is."
+            },
+            {
+              "p": "Line B has the narrower margin (its edges are at $\\pm1$, against $\\pm2$ for A) and pays $0.375$ more for its longer $w$. In return it removes the hinge loss of the two points that were inside A's margin. A larger $C$ makes violations dearer, so it buys that trade. The misclassified point costs B more than A ($1.5$ against $1.25$): a longer $w$ magnifies every score, wrong ones included."
+            },
+            {
+              "result": "0.5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "svm-read-the-multipliers",
+      "moduleId": "kernel-methods-svms",
+      "title": "Read a Soft-Margin SVM from Its Multipliers",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A soft-margin linear SVM with $C = 2$ is trained on five points with one feature, with score $f(x) = wx + b$. The solver returns the dual multipliers below."
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{cccccc}\nx & -2 & 0 & 0.5 & 1.5 & 2 \\\\ \\hline\n\\text{label $y$} & -1 & -1 & +1 & -1 & +1 \\\\\n\\alpha & 0 & 1.5 & 2 & 2 & 1.5\n\\end{array}"
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Find $w$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "$w = \\sum_i \\alpha_i y_i x_i$. The terms are $0$, $-1.5 \\cdot 0 = 0$, $2 \\cdot 0.5 = 1$, $-2 \\cdot 1.5 = -3$ and $1.5 \\cdot 2 = 3$, so $w = 1$. As a check, $\\sum_i \\alpha_i y_i = -1.5 + 2 - 2 + 1.5 = 0$, as the dual requires."
+            },
+            {
+              "result": "1"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Find $b$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "$b$ comes from a point that lies exactly on the edge of the margin, where $y_i(wx_i + b) = 1$. The points with $0 < \\alpha_i < C$ are the ones known to be there: $x = 0$ and $x = 2$, each with $\\alpha = 1.5$. From $x = 2$, $2 + b = 1$, so $b = -1$. The point at $x = 0$ agrees: $0 + b = -1$."
+            },
+            {
+              "p": "The points with $\\alpha = C$ are no use for this. Taking $x = 0.5$ as if it were on the margin gives $0.5 + b = 1$ and $b = 0.5$, which is wrong. With $b = -1$ its score is $-0.5$: it sits on the wrong side, which is why its multiplier is held at $C$."
+            },
+            {
+              "result": "$-1$"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Compute the primal objective $\\tfrac12 w^2 + C\\sum_i \\max\\big(0,\\ 1 - y_i f(x_i)\\big)$ at this solution, and check it against the dual objective. With one feature, the dual objective is $\\sum_i \\alpha_i - \\tfrac12\\big(\\sum_i \\alpha_i y_i x_i\\big)^2$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "With $f(x) = x - 1$ the values of $y_i f(x_i)$ are $3$, $1$, $-0.5$, $-0.5$ and $1$. Only the two points with $\\alpha = C$ pay hinge loss, $1.5$ each, so the primal objective is"
+            },
+            {
+              "tex": "\\tfrac12 \\cdot 1^2 + 2\\,(1.5 + 1.5) = 0.5 + 6 = 6.5 ."
+            },
+            {
+              "p": "The squared sum in the dual is $w^2 = 1$, so the dual objective is $(0 + 1.5 + 2 + 2 + 1.5) - \\tfrac12 = 6.5$. The two agree, so these multipliers are optimal: by weak duality no $w$, $b$ can score below any dual value, and this one reaches it."
+            },
+            {
+              "result": "6.5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "svm-curved-boundary-on-a-line",
+      "moduleId": "kernel-methods-svms",
+      "title": "A Curved Boundary on a Line",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "Three points with one feature: $x = -2$ and $x = 2$ in class $-1$, and $x = 0$ in class $+1$. No single threshold on $x$ separates them. A hard-margin SVM is trained on them with the kernel $k(x, z) = (xz + 1)^2$."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Find the multiplier $\\alpha$ of the point at $x = 0$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Expand the kernel: $(xz + 1)^2 = 1 + 2xz + x^2z^2$, the dot product of $\\phi(x) = (1, \\sqrt2\\,x, x^2)$ with $\\phi(z)$. The SVM is a linear SVM on these three features."
+            },
+            {
+              "p": "The problem is symmetric under $x \\to -x$, so the two negatives get the same multiplier $a$, and $\\sum_i \\alpha_i y_i = 0$ gives the positive $2a$. Then"
+            },
+            {
+              "tex": "\\mathbf{w} = 2a\\,\\phi(0) - a\\,\\phi(-2) - a\\,\\phi(2)\n= 2a(1, 0, 0) - a(2, 0, 8) = (0, 0, -8a),"
+            },
+            {
+              "p": "and the score is $f(x) = \\mathbf{w}^\\top\\phi(x) + b = -8a\\,x^2 + b$. All three points are support vectors: the lone positive must be, and by symmetry both negatives touch the margin together. So $f(0) = b = 1$ and $f(\\pm2) = -32a + 1 = -1$, which gives $a = \\tfrac1{16}$. The point at $0$ has $\\alpha = 2a = \\tfrac18 = 0.125$."
+            },
+            {
+              "result": "0.125"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The SVM predicts $+1$ for $-t < x < t$ and $-1$ outside. Find $t$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "$f(x) = 1 - \\tfrac12 x^2$ is zero at $x^2 = 2$, so $t = \\sqrt2 \\approx 1.414$."
+            },
+            {
+              "p": "Halfway between $0$ and $2$ would be $1$, but the margin is measured in the feature space. There the only coordinate $\\mathbf{w}$ uses is $x^2$, which is $0$ for the positive and $4$ for the negatives, and the boundary sits halfway between those, at $x^2 = 2$. A point at $x = 1.2$ is therefore classified $+1$ ($f = 0.28$), although it is closer to $2$ than to $0$."
+            },
+            {
+              "result": "1.414"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "svm-which-is-a-kernel",
+      "moduleId": "kernel-methods-svms",
+      "title": "Which of These Is a Kernel",
+      "difficulty": "Medium",
+      "minutes": 8,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Each function below takes two real numbers $x$ and $z$. Which one is a valid kernel?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$(xz - 1)^2$",
+                  "explain": "It is never negative, but a kernel needs every Gram matrix to be positive semidefinite, which is a different property. On the points 0 and 1 the Gram matrix has rows (1, 1) and (1, 0), and v = (1, −1) gives vᵀKv = 1 − 2 + 0 = −1. Expanded, it is x²z² − 2xz + 1, and the negative coefficient on the kernel xz falls outside the rules for building kernels."
+                },
+                {
+                  "text": "$x^2 + z^2$",
+                  "explain": "It is a sum, but the sum rule needs each term to be a kernel, and x² alone depends on one point only. On the points 0 and 1 the Gram matrix has rows (0, 1) and (1, 2), and v = (2, −1) gives 0 + 2 − 4 = −2."
+                },
+                {
+                  "text": "$\\cos(x - z)$",
+                  "correct": true,
+                  "explain": "It takes negative values, which a kernel may do. By the angle difference formula, cos(x − z) = cos x cos z + sin x sin z, the dot product of φ(x) = (cos x, sin x) with φ(z). Every Gram matrix is then ΦΦᵀ, which is positive semidefinite."
+                },
+                {
+                  "text": "$\\sin(x + z)$",
+                  "explain": "It is symmetric in x and z, but its expansion sin x cos z + cos x sin z pairs different functions of the two points, so it is not one map dotted with itself. A diagonal entry k(x, x) = φ(x)ᵀφ(x) can never be negative, and here k(x, x) = sin 2x is −1 at x = −π/4."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "It takes negative values, which a kernel may do. By the angle difference formula, cos(x − z) = cos x cos z + sin x sin z, the dot product of φ(x) = (cos x, sin x) with φ(z). Every Gram matrix is then ΦΦᵀ, which is positive semidefinite."
+            },
+            {
+              "result": "$\\cos(x - z)$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "svm-same-model-in-new-units",
+      "moduleId": "kernel-methods-svms",
+      "title": "The Same Model in New Units",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A team trains an SVM with the RBF kernel, $\\gamma = 0.8$ and $C = 5$, on two features measured in meters. A teammate converts both features to centimeters, so every value is multiplied by 100, and wants a model that gives exactly the old predictions on every point converted the same way."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Which $\\gamma$ should the model on centimeters use? (It keeps $C = 5$.)"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Every distance grows by a factor of 100, so a squared distance $d^2$ becomes $10^4 d^2$. Dividing $\\gamma$ by $10^4$ keeps every kernel value, since $(\\gamma / 10^4)(10^4 d^2) = \\gamma d^2$."
+            },
+            {
+              "p": "The dual sees the data only through kernel values, so with the same $C$ it has the same solution, the same $\\alpha_i$ and $b$, and the same score at every point. The answer is $\\gamma = 0.8 / 10^4 = 8 \\times 10^{-5}$."
+            },
+            {
+              "result": "0.00008"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "A second model on the same data uses the linear kernel with $C = 5$. Which $C$ gives exactly its old predictions after the conversion?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The score $\\mathbf{w}^\\top\\mathbf{x} + b$ stays the same at every converted point when the weights shrink to $\\mathbf{w}' = \\mathbf{w}/100$ and $b$ stays. Every hinge loss depends only on a score, so it stays too, but the penalty shrinks:"
+            },
+            {
+              "tex": "\\tfrac12\\lVert\\mathbf{w}'\\rVert^2 + C'\\sum_i \\xi_i\n= 10^{-4}\\Big(\\tfrac12\\lVert\\mathbf{w}\\rVert^2 + 10^4\\,C'\\sum_i \\xi_i\\Big)."
+            },
+            {
+              "p": "A positive factor in front does not move the minimum, so the new problem is the old one with price $10^4 C'$ on slack. It reproduces the old model when $10^4 C' = 5$, that is $C' = 5 \\times 10^{-4}$."
+            },
+            {
+              "p": "Keeping $C = 5$ instead acts like $C = 50{,}000$ in meters: a nearly hard margin. The kernel values here are $10^4$ times larger after the conversion, and nothing else in the dual changes to absorb them except the box $0 \\le \\alpha_i \\le C$."
+            },
+            {
+              "result": "0.0005"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "svm-five-classes-two-schemes",
+      "moduleId": "kernel-methods-svms",
+      "title": "Five Classes, Two Schemes",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "A data set has 5 classes with 2,000 points in each. Training a binary SVM on $m$ points costs about $m^2$ operations, times a constant that is the same for every training run."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "How many times more work does one-vs-rest take than one-vs-one?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "One-vs-rest trains 5 classifiers, and each sees all 10,000 points: $5 \\times 10{,}000^2 = 5 \\times 10^8$."
+            },
+            {
+              "p": "One-vs-one trains $\\binom52 = 10$ classifiers, and each sees only the points of its two classes, 4,000: $10 \\times 4{,}000^2 = 1.6 \\times 10^8$."
+            },
+            {
+              "p": "The ratio is $5 \\times 10^8 / 1.6 \\times 10^8 = 3.125$. Twice as many classifiers, but each on 0.4 of the data, and the square makes the small ones cheap. Counting one-vs-one as 10 runs on all 10,000 points would make it look twice as expensive as one-vs-rest."
+            },
+            {
+              "result": "3.125"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "With $K$ classes of $n$ points each, and the same $m^2$ cost, what is the smallest $K$ for which one-vs-one is at least 10 times cheaper to train than one-vs-rest?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "One-vs-rest costs $K\\,(Kn)^2 = K^3 n^2$. One-vs-one costs $\\tfrac{K(K - 1)}{2}\\,(2n)^2 = 2K(K - 1)\\,n^2$. The ratio is"
+            },
+            {
+              "tex": "\\frac{K^3 n^2}{2K(K - 1)\\,n^2} = \\frac{K^2}{2(K - 1)},"
+            },
+            {
+              "p": "which is $3.125$ at $K = 5$, as in Part 1, and does not depend on $n$. It is at least 10 when $K^2 \\ge 20(K - 1)$, that is $K^2 - 20K + 20 \\ge 0$. The roots of $K^2 - 20K + 20$ are $10 \\pm \\sqrt{80}$, about $1.06$ and $18.94$, so the smallest whole $K$ above them is $\\boxed{19}$. Check: $19^2 / 36 \\approx 10.03$, while $18^2 / 34 \\approx 9.53$."
+            },
+            {
+              "p": "The ratio grows about like $K/2$. The number of classifiers is the wrong thing to count. What matters is the total of $m^2$ over them."
+            },
+            {
+              "result": "19"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "svm-far-from-every-point",
+      "moduleId": "kernel-methods-svms",
+      "title": "Far from Every Training Point",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "Ten training points lie in the plane, seven in class $+1$ and three in class $-1$, and no two are closer than 1 to each other. An SVM with the RBF kernel, $\\gamma = 50$ and $C = 10$, is trained on them."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Find the bias $b$ of the trained SVM."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Two distinct training points have a kernel value of at most $e^{-50} \\approx 2 \\times 10^{-22}$, so the Gram matrix is the identity to twenty digits. The score of training point $i$ is then $f(\\mathbf{x}_i) = \\alpha_i y_i + b$, and the dual becomes"
+            },
+            {
+              "tex": "\\max_{\\boldsymbol{\\alpha}}\\ \\sum_i \\alpha_i - \\tfrac12\\sum_i \\alpha_i^2\n\\quad\\text{subject to}\\quad \\sum_i \\alpha_i y_i = 0,\\ \\ 0 \\le \\alpha_i \\le 10 ."
+            },
+            {
+              "p": "Ignore the box for a moment. With a multiplier $\\lambda$ for the equality constraint, setting the derivative in $\\alpha_i$ to zero gives $1 - \\alpha_i - \\lambda y_i = 0$, so $\\alpha_i = 1 - \\lambda$ for every positive and $1 + \\lambda$ for every negative. The constraint $7(1 - \\lambda) = 3(1 + \\lambda)$ gives $\\lambda = 0.4$, so the positives have $\\alpha = 0.6$ and the negatives $\\alpha = 1.4$. Both lie strictly inside $(0, 10)$, so the box does not bind and this is the solution."
+            },
+            {
+              "p": "Every point has $0 < \\alpha_i < C$, so every point sits on the edge of the margin: $\\alpha_i y_i + b = y_i$. For a positive, $0.6 + b = 1$, and for a negative, $-1.4 + b = -1$. Both give $b = 0.4$. The same steps give $b = (n_+ - n_-)/(n_+ + n_-)$ for any counts, as long as the box does not bind. No multiplier here can exceed $1 + |\\lambda| < 2$, so that holds whenever $C \\ge 2$."
+            },
+            {
+              "result": "0.4"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Near a class $-1$ training point, and far from the others, the SVM predicts $-1$ inside a small disk. Find its radius."
+            }
+          ],
+          "answer": [
+            {
+              "p": "At distance $d$ from that point the other kernel values are negligible, so the score is"
+            },
+            {
+              "tex": "f = -1.4\\,e^{-50 d^2} + 0.4 ."
+            },
+            {
+              "p": "It is negative while $e^{-50 d^2} > 0.4 / 1.4 = 2/7$, that is while $d^2 < \\ln(3.5)/50$. The radius is $\\sqrt{\\ln 3.5 / 50} \\approx 0.158$."
+            },
+            {
+              "result": "0.158"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "What does this SVM predict on most of the plane, and what does that say about a very large $\\gamma$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Away from the training points every kernel value is close to 0, so the score is close to $b = 0.4$ and the prediction is $+1$. The SVM predicts $-1$ only on three disks of radius 0.158, and $+1$ everywhere else, including at points much closer to a negative than to any positive."
+            },
+            {
+              "p": "It fits the training set perfectly, and what it learned is a lookup table: each training point's own label in a small disk around it, and the majority class everywhere else. That is the island picture of a very large $\\gamma$. The cure is a smaller $\\gamma$, so that each point's influence reaches its neighbors, chosen by cross-validation."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "svm-build-and-break-a-kernel",
+      "moduleId": "kernel-methods-svms",
+      "title": "Build a Kernel, Break a Kernel",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "A function $k$ is a valid kernel when every Gram matrix $K_{ij} = k(\\mathbf{x}_i, \\mathbf{x}_j)$ it produces is symmetric and positive semidefinite."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Let $k$ be a valid kernel and $f$ any real function. Prove that $g(\\mathbf{x}, \\mathbf{z}) = f(\\mathbf{x})\\,k(\\mathbf{x}, \\mathbf{z})\\,f(\\mathbf{z})$ is a valid kernel."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Take any points $\\mathbf{x}_1, \\dots, \\mathbf{x}_n$ and let $K$ be their Gram matrix under $k$. Their Gram matrix under $g$ is $G = DKD$, where $D$ is the diagonal matrix with entries $f(\\mathbf{x}_i)$. It is symmetric because $K$ is. For any vector $\\mathbf{v}$, put $\\mathbf{u} = D\\mathbf{v}$, the vector with entries $v_i f(\\mathbf{x}_i)$. Then"
+            },
+            {
+              "tex": "\\mathbf{v}^\\top G\\,\\mathbf{v} = (D\\mathbf{v})^\\top K\\,(D\\mathbf{v}) = \\mathbf{u}^\\top K\\mathbf{u} \\ge 0,"
+            },
+            {
+              "p": "because $K$ is positive semidefinite. $\\qquad\\blacksquare$"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Assume that $\\exp(2\\gamma\\,\\mathbf{x}^\\top\\mathbf{z})$ is a valid kernel for $\\gamma > 0$ (it is a power series in the kernel $\\mathbf{x}^\\top\\mathbf{z}$ with positive coefficients). Prove that the RBF kernel $\\exp(-\\gamma\\lVert\\mathbf{x} - \\mathbf{z}\\rVert^2)$ is valid."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Expand the squared distance, $\\lVert\\mathbf{x} - \\mathbf{z}\\rVert^2 = \\lVert\\mathbf{x}\\rVert^2 - 2\\mathbf{x}^\\top\\mathbf{z} + \\lVert\\mathbf{z}\\rVert^2$, and split the exponential:"
+            },
+            {
+              "tex": "e^{-\\gamma\\lVert\\mathbf{x} - \\mathbf{z}\\rVert^2}\n= e^{-\\gamma\\lVert\\mathbf{x}\\rVert^2}\\; e^{2\\gamma\\,\\mathbf{x}^\\top\\mathbf{z}}\\; e^{-\\gamma\\lVert\\mathbf{z}\\rVert^2} ."
+            },
+            {
+              "p": "This is Part 1 with $f(\\mathbf{x}) = e^{-\\gamma\\lVert\\mathbf{x}\\rVert^2}$ and $k(\\mathbf{x}, \\mathbf{z}) = e^{2\\gamma\\,\\mathbf{x}^\\top\\mathbf{z}}$, so it is a valid kernel. $\\qquad\\blacksquare$"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "A teammate measures how alike two numbers are with $s(x, z) = 1$ when $|x - z| \\le 1$ and $s(x, z) = 0$ otherwise. Find the smallest eigenvalue of its Gram matrix on the points $0$, $1$ and $2$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The points 0 and 2 are 2 apart and every other pair is within 1, so"
+            },
+            {
+              "tex": "K = \\begin{pmatrix} 1 & 1 & 0 \\\\ 1 & 1 & 1 \\\\ 0 & 1 & 1 \\end{pmatrix}\n= I + A, \\qquad\nA = \\begin{pmatrix} 0 & 1 & 0 \\\\ 1 & 0 & 1 \\\\ 0 & 1 & 0 \\end{pmatrix}."
+            },
+            {
+              "p": "$A$ has characteristic polynomial $-\\lambda^3 + 2\\lambda$, so its eigenvalues are $0$ and $\\pm\\sqrt2$, and those of $K$ are $1$ and $1 \\pm \\sqrt2$. The smallest is $1 - \\sqrt2 \\approx -0.414$, with eigenvector $(1, -\\sqrt2, 1)$."
+            },
+            {
+              "p": "So $s$ is not a kernel, although it is symmetric, never above 1 and equal to 1 on the diagonal. A simpler witness is $\\mathbf{v} = (1, -1, 1)$: $\\mathbf{v}^\\top K\\mathbf{v} = 3 + 2(-1 - 1 + 0) = -1$. An SVM given this similarity has a dual that is not concave, and its solver has no guarantee of returning the optimum."
+            },
+            {
+              "result": "$-0.414$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "svm-leave-one-out-bound",
+      "moduleId": "kernel-methods-svms",
+      "title": "Leave One Out, Count the Support Vectors",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "Leave-one-out validation trains a model $n$ times, each time on all the training points but one, and tests it on the point left out. The error rate is the fraction of the $n$ left-out points it gets wrong."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "A hard-margin SVM is trained on $n$ separable points. Prove that leaving out a point $j$ with $\\alpha_j = 0$ gives the same $\\mathbf{w}$ and $b$, and that the model then classifies point $j$ correctly."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Let $(\\mathbf{w}, b)$ and $\\boldsymbol{\\alpha}$ be the solution on all $n$ points. Drop point $j$ and keep the other multipliers. They satisfy every optimality condition of the smaller problem:"
+            },
+            {
+              "list": [
+                "$\\mathbf{w} = \\sum_{i \\ne j} \\alpha_i y_i \\mathbf{x}_i$, because the dropped term had $\\alpha_j = 0$.",
+                "$\\sum_{i \\ne j} \\alpha_i y_i = 0$, for the same reason.",
+                "Each remaining point still has $y_i f(\\mathbf{x}_i) \\ge 1$, where $f$ is the trained score, and $\\alpha_i \\ge 0$, and complementary slackness still holds point by point."
+              ]
+            },
+            {
+              "p": "For a convex problem these conditions are enough for optimality, and the objective $\\tfrac12\\lVert\\mathbf{w}\\rVert^2$ is strictly convex in $\\mathbf{w}$, so $\\mathbf{w}$ is the solution of the smaller problem too. Its support vectors with $\\alpha_i > 0$ still lie on the margin and fix $b$ as before."
+            },
+            {
+              "p": "The point left out satisfied its constraint in the full problem: $y_j f(\\mathbf{x}_j) \\ge 1 > 0$. The model trained without it is the same model, so it classifies point $j$ correctly. $\\qquad\\blacksquare$"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A hard-margin SVM on 250 separable points has 15 support vectors. What is the highest leave-one-out error rate it can have?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "By Part 1, every left-out point with $\\alpha = 0$ is classified correctly, so only the 15 support vectors can be leave-one-out errors. The error rate is at most $15/250 = 0.06$, and that bound needs no extra training runs: one fit gives it."
+            },
+            {
+              "result": "0.06"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "The same argument works for a soft-margin SVM, where a point with $\\alpha = 0$ also clears its side of the margin. One RBF model on 400 points keeps 270 of them as support vectors and another keeps 330. What does the bound say about these two models?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The bounds are $270/400 \\approx 0.68$ and $330/400 \\approx 0.83$. Both are true and both are useless: a coin does better. The bound is informative only when the support vectors are a small fraction of the data, as with a well-separated set and a moderate $C$."
+            },
+            {
+              "p": "Many support vectors can mean two opposite things. A small $C$ and a small $\\gamma$ give a wide margin that holds most points inside it (underfitting). A large $\\gamma$ gives every point its own island (overfitting). The count alone cannot tell them apart, so the choice between such models needs cross-validation."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

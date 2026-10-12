@@ -1,0 +1,51 @@
+{
+  "aModule": "generative-guidance-and-stable-diffusion",
+  "stage": "Camp",
+  "order": [
+    "gen-the-guided-value-at-step-500",
+    "gen-reweighting-an-imperfect-prompt",
+    "gen-two-starts-with-the-same-contrast"
+  ],
+  "fixes": [],
+  "parts": {
+    "gen-reweighting-an-imperfect-prompt": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "gen-the-guided-value-at-step-500": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "gen-two-starts-with-the-same-contrast": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "gen-reweighting-an-imperfect-prompt": "The page turns guidance into reweighting: sampling with weight w follows ln p(x_t) plus w times ln p(prompt given x_t), which reweights the noisy images by p(prompt given x_t) raised to w. Keep the chapter's two training images, LEFT and RIGHT, each with half the data; the prompt asks for left, and an imperfect classifier scores a noisy image from LEFT at 0.9 and one from RIGHT at 0.2. How much of the reweighted mass sits on LEFT when w is 3?",
+    "gen-the-guided-value-at-step-500": "A prompted run holds a different noisy image at step 500 than the unguided run, so its unprompted estimate is different too. Give the weight on LEFT and the guided estimate for the prompted run's own step 500 image, and say which of the two a sampler uses.",
+    "gen-two-starts-with-the-same-contrast": "The running example's ten-jump sampler turns a start from pure noise into one of its two training images, and with only two training images the whole run depends on the start through one number, the contrast of its pixels. Show why, then use it to say what two starts that share a contrast have in common and what becomes of a start that barely leans either way."
+  }
+}

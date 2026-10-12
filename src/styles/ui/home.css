@@ -1,0 +1,899 @@
+/* Home and section pages (UI overhaul 2026-10-11). Keeps the existing look and
+   refines it: larger and clearer controls, cards and tables, more air between
+   blocks, and the module illustrations prominent. Loaded after main.css, so
+   these rules win at equal weight. */
+
+/* --- shared shell ---------------------------------------------------------- */
+
+.home-shell {
+  width: min(100% - var(--page-gutter), 1080px);
+  margin: 0 auto;
+}
+
+.home-section-head {
+  max-width: 46rem;
+  margin: 0 0 1.9rem;
+}
+
+.home-section-head h2 {
+  margin: 0 0 0.55rem;
+  color: var(--ink);
+  font-size: clamp(1.55rem, 3vw, 2.05rem);
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+
+.home-section-head p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.6;
+}
+
+/* --- home splash: larger, clearer, higher contrast ------------------------- */
+
+/* The home page is the hero alone (owner, 2026-10-12). The header is fixed over
+   the top of the page, so the hero is one full screen with the header's height
+   as extra top padding: the content then centres in the visible area below the
+   header, with equal space above and below. */
+body[data-page="home"] .splash {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: calc(var(--header-h, 68px) + 1.5rem) 1.5rem 1.5rem;
+}
+
+.splash-content {
+  gap: 1.85rem;
+  padding: 1.5rem 0 3rem;
+}
+
+.splash-logo {
+  width: 108px;
+  height: 108px;
+}
+
+.splash-title {
+  letter-spacing: 0.02em;
+  text-wrap: balance;
+}
+
+body[data-page="home"] .splash-copy {
+  max-width: min(40rem, 100%);
+  color: var(--ink-2);
+  font-size: clamp(1.08rem, 2.6vw, 1.32rem);
+  line-height: 1.6;
+}
+
+body[data-page="home"] .splash-button {
+  min-height: 3.4rem;
+  padding: 0.85rem 2.4rem;
+  border-radius: 999px;
+  font-size: 1.1rem;
+  letter-spacing: 0.01em;
+}
+
+body[data-page="home"] .splash-foot {
+  bottom: 1.8rem;
+  font-size: 0.92rem;
+}
+
+.splash-foot a {
+  border-bottom: 1px solid color-mix(in srgb, var(--brand) 45%, transparent);
+}
+
+/* --- home stage cards ------------------------------------------------------ */
+
+.home-overview {
+  padding: clamp(2.5rem, 5vw, 3.75rem) 0 clamp(2rem, 4vw, 3rem);
+  background: var(--surface-2);
+  border-top: 1px solid var(--line-soft);
+}
+
+.stage-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.stage-card {
+  --card-accent: var(--brand);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--card-accent);
+  border-radius: var(--radius-xl);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+  color: var(--ink);
+  text-decoration: none;
+  transition: transform var(--t-mid) var(--ease), box-shadow var(--t-mid) var(--ease),
+    border-color var(--t-mid) var(--ease);
+}
+
+.stage-card[data-stage="round1"] {
+  --card-accent: var(--stage-round1);
+}
+
+.stage-card[data-stage="round2"] {
+  --card-accent: var(--stage-round2);
+}
+
+.stage-card[data-stage="camp"] {
+  --card-accent: var(--stage-camp);
+}
+
+.stage-card[data-stage="advanced"] {
+  --card-accent: var(--stage-advanced);
+}
+
+.stage-card:hover,
+.stage-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--card-accent) 45%, var(--line));
+  border-top-color: var(--card-accent);
+  box-shadow: var(--shadow-md);
+  outline: none;
+}
+
+.stage-card-art {
+  display: block;
+  box-sizing: border-box;
+  height: 184px;
+  overflow: hidden;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--paper);
+}
+
+.stage-card-art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.stage-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.25rem 1.4rem 1.4rem;
+}
+
+.stage-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.stage-card-kicker {
+  color: var(--card-accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+.stage-card-progress {
+  padding: 0.2rem 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--card-accent) 40%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--card-accent) 8%, var(--paper));
+  color: var(--card-accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.stage-card-title {
+  color: var(--ink);
+  font-size: 1.45rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.stage-card-desc {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.98rem;
+  font-style: normal;
+  line-height: 1.55;
+}
+
+.stage-card-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+  margin: 0.35rem 0 0.55rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--line-soft);
+}
+
+.stage-card-fact {
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.stage-card-fact b {
+  margin-right: 0.3rem;
+  color: var(--ink);
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.stage-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: auto;
+  color: var(--card-accent);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.stage-card:hover .stage-card-cta span,
+.stage-card:focus-visible .stage-card-cta span {
+  transform: translateX(3px);
+}
+
+.stage-card-cta span {
+  transition: transform var(--t-mid) var(--ease);
+}
+
+/* --- home glance table ----------------------------------------------------- */
+
+.home-glance {
+  padding: clamp(2.5rem, 5vw, 3.75rem) 0 clamp(3rem, 6vw, 4.5rem);
+  background: var(--paper);
+}
+
+.glance-table-wrap {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+}
+
+.glance-table,
+.chapter-table {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.glance-table caption,
+.chapter-table caption {
+  padding: 1.05rem 1.25rem 0.85rem;
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 650;
+  text-align: left;
+  caption-side: top;
+}
+
+.glance-table thead th,
+.chapter-table thead th {
+  padding: 0.7rem 1.25rem;
+  border-bottom: 2px solid var(--line);
+  background: var(--surface-2);
+  color: var(--ink-2);
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-align: left;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.glance-table tbody th,
+.glance-table tbody td,
+.chapter-table tbody th,
+.chapter-table tbody td {
+  padding: 0.9rem 1.25rem;
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.glance-table tbody th,
+.chapter-table tbody th {
+  color: var(--ink);
+  font-weight: 650;
+}
+
+.glance-table tbody th a,
+.chapter-table tbody th a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.glance-table tbody th a:hover,
+.chapter-table tbody th a:hover {
+  color: var(--brand-strong);
+}
+
+.glance-table tbody tr:last-child td,
+.glance-table tbody tr:last-child th,
+.chapter-table tbody tr:last-child td,
+.chapter-table tbody tr:last-child th {
+  border-bottom: 0;
+}
+
+.glance-table tbody tr:hover td,
+.glance-table tbody tr:hover th,
+.chapter-table tbody tr:hover td,
+.chapter-table tbody tr:hover th {
+  background: var(--surface-2);
+}
+
+.glance-total th,
+.glance-total td {
+  border-top: 2px solid var(--line);
+  background: var(--surface-2);
+}
+
+.glance-total th {
+  color: var(--ink);
+}
+
+.chapter-table-name {
+  color: var(--ink);
+  font-size: 0.98rem;
+  font-weight: 650;
+}
+
+.chapter-table-link {
+  color: var(--brand);
+  font-size: 0.84rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.glance-bar {
+  display: inline-block;
+  width: 7rem;
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--fill-shape);
+  vertical-align: middle;
+}
+
+.glance-bar i {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--division-accent, var(--brand));
+}
+
+.glance-pct {
+  display: inline-block;
+  min-width: 2.8rem;
+  margin-left: 0.6rem;
+  color: var(--ink-2);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-align: right;
+  vertical-align: middle;
+}
+
+.glance-table tbody tr:hover .glance-bar i,
+.chapter-table tbody tr:hover .glance-bar i {
+  background: var(--brand-strong);
+}
+
+/* --- section hero --------------------------------------------------------- */
+
+.division-hero {
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+}
+
+.division-hero-inner {
+  width: min(100% - var(--page-gutter), 1080px);
+  padding: clamp(2rem, 4vw, 2.9rem) 0 clamp(1.8rem, 3vw, 2.4rem);
+}
+
+/* Larger pill tabs with a filled active state, so the current stage is
+   unambiguous. */
+.stage-switch {
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-bottom: 1.9rem;
+  padding-bottom: 1.15rem;
+}
+
+.stage-switch a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.6rem 1.15rem;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink-2);
+  font-size: 0.98rem;
+  font-weight: 650;
+  line-height: 1.2;
+  transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease);
+}
+
+.stage-switch a:hover,
+.stage-switch a:focus-visible {
+  border-color: var(--division-accent);
+  background: color-mix(in srgb, var(--division-accent) 8%, var(--paper));
+  color: var(--division-accent);
+  outline: none;
+}
+
+.stage-switch a:focus-visible,
+.stage-card:focus-visible,
+.chapter-table tbody th a:focus-visible,
+.glance-table tbody th a:focus-visible {
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+.stage-switch a.active {
+  border-color: var(--division-accent);
+  background: var(--division-accent);
+  color: #fff;
+}
+
+.stage-switch a.active::after {
+  display: none;
+}
+
+.division-hero h1 {
+  margin: 0;
+  font-size: clamp(2.35rem, 5vw, 3.35rem);
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.division-hero p {
+  max-width: 720px;
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* Two meter cards side by side, larger type and a taller track. */
+.stage-progress {
+  margin-top: 1.9rem;
+}
+
+.stage-progress-card {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 0;
+  border-top: 0;
+  border-bottom: 0;
+  background: transparent;
+}
+
+.stage-meter-card {
+  padding: 1.15rem 1.35rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+
+.stage-meter {
+  padding: 0;
+}
+
+.stage-meter + .stage-meter {
+  padding: 0;
+  border-left: 0;
+}
+
+.stage-meter-head {
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.stage-meter-head span {
+  color: var(--ink);
+  font-size: 0.98rem;
+  font-weight: 650;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.stage-meter-head b {
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  font-weight: 650;
+}
+
+.stage-meter .meter-track {
+  height: 9px;
+  margin-top: 0.75rem;
+  border-radius: 999px;
+  background: var(--fill-shape);
+}
+
+.stage-meter .meter-fill {
+  border-radius: 999px;
+}
+
+.stage-meter-count {
+  margin-top: 0.45rem;
+  color: var(--division-accent);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.stage-meter-detail {
+  gap: 1rem;
+  margin-top: 0.6rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+/* --- section chapter table ------------------------------------------------ */
+
+.chapter-table-wrap {
+  margin-top: 1.9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+}
+
+.chapter-table-wrap .chapter-table {
+  border: 0;
+}
+
+.chapter-table thead th {
+  border-radius: 0;
+}
+
+/* --- section roadmap ------------------------------------------------------ */
+
+.division-roadmap-wrap {
+  background: var(--surface-2);
+  border-top: 1px solid var(--line-soft);
+}
+
+.division-roadmap {
+  width: min(100% - var(--page-gutter), 1080px);
+  padding: clamp(2.25rem, 4vw, 3.1rem) 0 4.5rem;
+  gap: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+/* Chapters become real cards. */
+.chapter-card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-top: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+
+.chapter-card-head {
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 1.25rem 1.5rem 1.1rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.chapter-kicker {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--division-accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+.chapter-card-title h2 {
+  font-size: 1.4rem;
+}
+
+.chapter-card-title p {
+  max-width: 640px;
+  font-size: 0.95rem;
+}
+
+.chapter-card-head .chapter-meter {
+  margin-top: 0.5rem;
+}
+
+.chapter-meter > span {
+  width: 88px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--fill-shape);
+}
+
+.chapter-meter b {
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+/* Modules are a numbered list inside each chapter, the main.css layout: index,
+   title and summary, and the module picture on the right (owner, 2026-10-12:
+   list order, not a grid of cards). */
+.chapter-topics {
+  padding: 0 1.25rem;
+}
+
+.topic-row {
+  grid-template-columns: 32px minmax(0, 1fr) 112px;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.topic-row .topic-illustration {
+  width: 112px;
+  height: 74px;
+}
+
+/* Title with its level right after it, the summary on the next line. */
+.topic-row .topic-copy {
+  display: block;
+}
+
+.topic-row .topic-copy small {
+  margin-left: 0.6rem;
+  padding: 0.1rem 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  vertical-align: 0.1rem;
+}
+
+.topic-row .topic-copy em {
+  display: block;
+  margin-top: 0.3rem;
+}
+
+/* --- module cards (grids elsewhere on the site) --------------------------- */
+
+.module-card {
+  gap: 0.85rem;
+  padding: 1.35rem;
+  border-radius: var(--radius-lg);
+}
+
+.card-kicker,
+.resource-card small {
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.module-card h3 {
+  font-size: 1.15rem;
+}
+
+.module-card p,
+.resource-card p {
+  font-size: 0.95rem;
+}
+
+.module-prereq {
+  font-size: 0.86rem;
+}
+
+.module-actions .complete-button {
+  min-height: 2.6rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: var(--radius);
+  font-size: 0.94rem;
+}
+
+/* --- small screens -------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .stage-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .stage-card {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .stage-card-art {
+    flex: none;
+    width: 168px;
+    height: auto;
+    min-height: 132px;
+    padding: 0.75rem 1rem;
+    border-bottom: 0;
+    border-right: 1px solid var(--line-soft);
+  }
+}
+
+/* Phones: a smaller picture keeps the row readable. */
+@media (max-width: 640px) {
+  .topic-row {
+    grid-template-columns: 26px minmax(0, 1fr) 76px;
+    gap: 0.75rem;
+  }
+
+  .topic-row .topic-illustration {
+    width: 76px;
+    height: 52px;
+  }
+}
+
+@media (max-width: 640px) {
+  .division-hero-inner,
+  .division-roadmap,
+  .home-shell {
+    width: min(100% - 1.5rem, 1080px);
+  }
+
+  .stage-switch {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .stage-switch a {
+    justify-content: center;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .stage-progress-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .stage-meter + .stage-meter {
+    border-top: 1px solid var(--line-soft);
+    padding-top: 1.1rem;
+    margin-top: 1.1rem;
+  }
+
+  .chapter-card-head {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.1rem 1.15rem 1rem;
+  }
+
+  .chapter-card-head .chapter-meter {
+    justify-content: flex-start;
+    margin-top: 0;
+  }
+
+  .chapter-topics {
+    padding: 0 0.9rem;
+  }
+
+  .stage-card {
+    flex-direction: column;
+  }
+
+  .stage-card-art {
+    width: auto;
+    height: 132px;
+    min-height: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  /* Tables stack into one labelled block per row, so nothing scrolls sideways. */
+  .glance-table thead,
+  .chapter-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .glance-table tbody tr,
+  .chapter-table tbody tr {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.35rem 1rem;
+    padding: 0.95rem 1.1rem;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .glance-table tbody tr:last-child,
+  .chapter-table tbody tr:last-child {
+    border-bottom: 0;
+  }
+
+  .glance-table tbody th,
+  .glance-table tbody td,
+  .chapter-table tbody th,
+  .chapter-table tbody td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .glance-table tbody th,
+  .chapter-table tbody th,
+  .glance-table tbody td[data-label="Progress"],
+  .chapter-table tbody td[data-label="Progress"] {
+    grid-column: 1 / -1;
+  }
+
+  .glance-table tbody th,
+  .chapter-table tbody th {
+    margin-bottom: 0.2rem;
+    font-size: 1.02rem;
+  }
+
+  .chapter-table tbody th a {
+    flex-wrap: wrap;
+  }
+
+  .glance-table tbody td::before,
+  .chapter-table tbody td::before {
+    content: attr(data-label);
+    color: var(--muted);
+    font-size: 0.86rem;
+    font-weight: 600;
+  }
+
+  .glance-table tbody td[data-label="Progress"]::before,
+  .chapter-table tbody td[data-label="Progress"]::before {
+    content: none;
+  }
+
+  .glance-table tbody td[data-label="Progress"] .glance-bar,
+  .chapter-table tbody td[data-label="Progress"] .glance-bar {
+    flex: 1;
+    width: auto;
+  }
+
+  .glance-total {
+    border-top: 2px solid var(--line);
+    background: var(--surface-2);
+  }
+
+  .glance-total th,
+  .glance-total td {
+    border-top: 0;
+  }
+}
+
+.topic-row .mini-status {
+  margin-top: 0;
+}
+
+/* A chapter with no modules yet keeps its header but no empty grid. */
+.chapter-topics:empty {
+  display: none;
+}
+
+.chapter-card:has(.chapter-topics:empty) .chapter-card-head {
+  border-bottom: 0;
+}

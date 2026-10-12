@@ -1,0 +1,568 @@
+{
+  "module": "colab-markdown-notebooks",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "cn-a-loop-that-failed-halfway",
+      "moduleId": "colab-markdown-notebooks",
+      "title": "A Loop That Failed Halfway",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cn-a-loop-that-failed-halfway",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "You are choosing k for a nearest-neighbor model. On a fresh kernel you run three cells in order: Cell 3 stops with a ValueError raised inside fit_knn(7). You fix the bug in Cell 1 and run Cell 1. Then you run Cell 3 again, and this time every call succeeds. What does Cell 3 print?",
+      "answer": "8. The first run appended the accuracies for k = 1, 3 and 5. Then fit_knn(7) raised, and the cell stopped there. Nothing rolls those three appends back, so accs still holds them, and the second run adds five more: 3 + 5 = 8. Run Cell 2 again before Cell 3 to start from an empty list."
+    },
+    {
+      "id": "cn-timeit-repeats-the-update",
+      "moduleId": "colab-markdown-notebooks",
+      "title": "Timing a Function That Changes Its Input",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cn-timeit-repeats-the-update",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A notebook times a function that updates an array in place: On a fresh kernel you run the four cells in order. What does Cell 4 print?",
+      "answer": "[ 0. -0.  0.]. %time runs decay once, which leaves [3, -1, 2]. %timeit then runs the same call over and over, thousands or millions of times, until it has a steady average, and every call halves the same array again. After about 1,080 halvings the entries are too small for a float64 and become 0. The -2 keeps its sign as -0. To time a function like this, time it on a copy, for example %timeit decay(w.copy())."
+    },
+    {
+      "id": "cn-which-edit-moves-the-split",
+      "moduleId": "colab-markdown-notebooks",
+      "title": "Which Edit Moves the Split",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cn-which-edit-moves-the-split",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A notebook splits 500 examples into training and test sets: Restart session and run all prints the same accuracy every time. You make one of the edits below and then restart and run all again. Which edit can change the printed accuracy?",
+      "answer": "Add a cell between Cells 2 and 3 that prints split_rng.random(). split_rng hands out one fixed sequence of numbers. Printing split_rng.random() takes the first number of that sequence, so Cell 3's permutation is built from numbers further along it and gives a different split. A different training set gives a different model and test accuracy. To look at a random number without moving the split, draw it from a generator of its own."
+    },
+    {
+      "id": "cn-outputs-an-edit-makes-stale",
+      "moduleId": "colab-markdown-notebooks",
+      "title": "Which Outputs an Edit Makes Stale",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=cn-outputs-an-edit-makes-stale",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "A notebook does not record which cells depend on which. After you edit a cell and run it, the outputs below it still come from the old version, and nothing marks the ones that are now out of date. Here you work that out from a summary of each cell: the names it assigns and the names it reads.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "cn-audit-before-you-submit",
+      "moduleId": "colab-markdown-notebooks",
+      "title": "Audit a Notebook Before You Hand It In",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cn-audit-before-you-submit",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A notebook was built over one afternoon on a single runtime and never restarted, so the cell that defines a helper sits below the cell that calls it. Say which cell fails first after a restart, which fails first on a grader's fresh runtime, and how to reorder and test the notebook so both runs work. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "cn-read-the-counts-backward",
+      "moduleId": "colab-markdown-notebooks",
+      "title": "Which Definition the Kernel Is Using",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cn-read-the-counts-backward",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Four code cells show the execution counts of their latest runs, the outputs are cleared, and the kernel is still running. Work out what Cell 2 printed when it last ran, what the kernel returns now, and what a fresh run from the top prints. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "cn-replay-a-kernel-history",
+      "moduleId": "colab-markdown-notebooks",
+      "title": "Replay a Kernel's History",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=cn-replay-a-kernel-history",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "A saved notebook shows, beside each cell, a count and an output, and both come from the history of runs, not from the code as it reads now. Here you replay a history of runs the way a kernel would, and then find the cells whose shown output a restart and run all would not give back.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+    }
+  ],
+  "theory": [
+    {
+      "id": "cn-a-loop-that-failed-halfway",
+      "moduleId": "colab-markdown-notebooks",
+      "title": "A Loop That Failed Halfway",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "You are choosing $k$ for a nearest-neighbor model. On a fresh kernel you run three cells in order:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "# Cell 1",
+                  "def fit_knn(k):",
+                  "    ...   # trains on the training split, returns the validation accuracy",
+                  "",
+                  "# Cell 2",
+                  "accs = []",
+                  "",
+                  "# Cell 3",
+                  "for k in [1, 3, 5, 7, 9]:",
+                  "    accs.append(fit_knn(k))",
+                  "print(len(accs))"
+                ]
+              }
+            },
+            {
+              "p": "Cell 3 stops with a `ValueError` raised inside `fit_knn(7)`. You fix the bug in Cell 1 and run Cell 1. Then you run Cell 3 again, and this time every call succeeds. What does Cell 3 print?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "`5`",
+                  "explain": "This treats the failed run as if it never happened. The kernel does not undo a cell that raises: the accuracies for k = 1, 3 and 5 were already appended to accs, and they are still there when the second run appends five more."
+                },
+                {
+                  "text": "`8`",
+                  "correct": true,
+                  "explain": "The first run appended the accuracies for k = 1, 3 and 5. Then fit_knn(7) raised, and the cell stopped there. Nothing rolls those three appends back, so accs still holds them, and the second run adds five more: 3 + 5 = 8. Run Cell 2 again before Cell 3 to start from an empty list."
+                },
+                {
+                  "text": "`9`",
+                  "explain": "This counts k = 7 as appended. In accs.append(fit_knn(7)), Python calls fit_knn(7) first and only then append, so the error came before the fourth value was added. The first run left three values, and 3 + 5 = 8."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The first run appended the accuracies for k = 1, 3 and 5. Then fit_knn(7) raised, and the cell stopped there. Nothing rolls those three appends back, so accs still holds them, and the second run adds five more: 3 + 5 = 8. Run Cell 2 again before Cell 3 to start from an empty list."
+            },
+            {
+              "result": "`8`"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cn-timeit-repeats-the-update",
+      "moduleId": "colab-markdown-notebooks",
+      "title": "Timing a Function That Changes Its Input",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A notebook times a function that updates an array in place:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "# Cell 1",
+                  "import numpy as np",
+                  "w = np.array([6.0, -2.0, 4.0])",
+                  "def decay(v):",
+                  "    v *= 0.5          # halves every entry of v, in place",
+                  "",
+                  "# Cell 2",
+                  "%time decay(w)",
+                  "",
+                  "# Cell 3",
+                  "%timeit decay(w)",
+                  "",
+                  "# Cell 4",
+                  "print(w)"
+                ]
+              }
+            },
+            {
+              "p": "On a fresh kernel you run the four cells in order. What does Cell 4 print?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "`[ 0. -0.  0.]`",
+                  "correct": true,
+                  "explain": "%time runs decay once, which leaves [3, -1, 2]. %timeit then runs the same call over and over, thousands or millions of times, until it has a steady average, and every call halves the same array again. After about 1,080 halvings the entries are too small for a float64 and become 0. The -2 keeps its sign as -0. To time a function like this, time it on a copy, for example %timeit decay(w.copy())."
+                },
+                {
+                  "text": "`[ 3. -1.  2.]`",
+                  "explain": "This counts only the %time run. %timeit calls the statement too, many times over, and each call halves the array that w names."
+                },
+                {
+                  "text": "`[ 1.5 -0.5  1. ]`",
+                  "explain": "This runs each timing magic once. %time does run decay once, but %timeit repeats the call many times to average its time, and each repeat halves w again."
+                },
+                {
+                  "text": "`[ 6. -2.  4.]`",
+                  "explain": "This treats timing as if it ran on a copy of w. Both magics run decay on the array that w names, so both change it."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "%time runs decay once, which leaves [3, -1, 2]. %timeit then runs the same call over and over, thousands or millions of times, until it has a steady average, and every call halves the same array again. After about 1,080 halvings the entries are too small for a float64 and become 0. The -2 keeps its sign as -0. To time a function like this, time it on a copy, for example %timeit decay(w.copy())."
+            },
+            {
+              "result": "`[ 0. -0.  0.]`"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cn-which-edit-moves-the-split",
+      "moduleId": "colab-markdown-notebooks",
+      "title": "Which Edit Moves the Split",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A notebook splits 500 examples into training and test sets:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "# Cell 1",
+                  "import numpy as np",
+                  "split_rng = np.random.default_rng(1)",
+                  "np.random.seed(0)",
+                  "",
+                  "# Cell 2",
+                  "jitter = np.random.normal(0, 0.02, size=8)     # spreads overlapping points in a plot",
+                  "",
+                  "# Cell 3",
+                  "order = split_rng.permutation(500)",
+                  "train_idx, test_idx = order[:400], order[400:]",
+                  "",
+                  "# Cell 4",
+                  "# fits a model on train_idx (no randomness of its own) and prints its test accuracy"
+                ]
+              }
+            },
+            {
+              "p": "Restart session and run all prints the same accuracy every time. You make one of the edits below and then restart and run all again. Which edit can change the printed accuracy?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Draw 80 numbers in Cell 2 instead of 8",
+                  "explain": "Cell 2 draws from the global generator that np.random.seed set. split_rng is a separate generator with its own seed, so the number of values Cell 2 draws never reaches Cell 3's permutation."
+                },
+                {
+                  "text": "Move the line that creates `split_rng` to the top of Cell 3",
+                  "explain": "A generator made with a seed starts from that seed wherever it is created, and no cell between Cell 1 and Cell 3 draws from it. Cell 3 gets the same permutation either way."
+                },
+                {
+                  "text": "Add a cell between Cells 2 and 3 that prints `split_rng.random()`",
+                  "correct": true,
+                  "explain": "split_rng hands out one fixed sequence of numbers. Printing split_rng.random() takes the first number of that sequence, so Cell 3's permutation is built from numbers further along it and gives a different split. A different training set gives a different model and test accuracy. To look at a random number without moving the split, draw it from a generator of its own."
+                },
+                {
+                  "text": "Change `np.random.seed(0)` to `np.random.seed(5)` in Cell 1",
+                  "explain": "np.random.seed sets only the global generator behind functions such as np.random.normal. It does not touch a generator made by default_rng, so the split stays the same and only the jitter changes."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "split_rng hands out one fixed sequence of numbers. Printing split_rng.random() takes the first number of that sequence, so Cell 3's permutation is built from numbers further along it and gives a different split. A different training set gives a different model and test accuracy. To look at a random number without moving the split, draw it from a generator of its own."
+            },
+            {
+              "result": "Add a cell between Cells 2 and 3 that prints `split_rng.random()`"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cn-audit-before-you-submit",
+      "moduleId": "colab-markdown-notebooks",
+      "title": "Audit a Notebook Before You Hand It In",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "You built this notebook over one afternoon on a single runtime and never restarted it. You wrote Cells 1 and 2 and the cell that trains word vectors and saves them (now Cell 5), and ran them. Later, to skip that slow step, you added Cells 3 and 4 above it and ran them. Every cell ran without an error."
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "# Cell 1",
+              "%pip install -q gensim",
+              "import numpy as np, pandas as pd",
+              "np.random.seed(11)",
+              "",
+              "# Cell 2",
+              "!wget -q https://example.org/contest/reviews.zip",
+              "!unzip -q -o reviews.zip           # extracts reviews.csv, overwriting without asking",
+              "reviews = pd.read_csv(\"reviews.csv\")",
+              "",
+              "# Cell 3",
+              "vectors = np.load(\"vectors.npy\")",
+              "print(vectors.shape)",
+              "",
+              "# Cell 4",
+              "X = embed(reviews[\"text\"], vectors)",
+              "",
+              "# Cell 5",
+              "from gensim.models import Word2Vec",
+              "def embed(texts, vectors):",
+              "    ...                             # averages the word vectors of each text",
+              "model = Word2Vec(...)               # trains word vectors on the reviews",
+              "vectors = model.wv.vectors",
+              "np.save(\"vectors.npy\", vectors)",
+              "",
+              "# Cell 6",
+              "...                                 # fits a classifier on X and prints its accuracy"
+            ]
+          }
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "You choose **Runtime → Restart session and run all**. Which cell is the first to stop with an error? Give its number."
+            }
+          ],
+          "answer": [
+            {
+              "p": "A restart empties the kernel's memory, but the runtime's disk keeps its files and the packages installed on it. Go down the cells with that in mind:"
+            },
+            {
+              "list": [
+                "Cell 1 runs. gensim is already installed, and the install line would install it anyway.",
+                "Cell 2 runs. It downloads and unpacks its own data.",
+                "Cell 3 runs. `vectors.npy` is still on the disk from the afternoon's run of Cell 5, so it loads and prints its shape.",
+                "Cell 4 stops with `NameError: name 'embed' is not defined`. All afternoon `embed` sat in the kernel's memory, because Cell 5 had defined it before you wrote Cell 4. The restart cleared that memory, and in a run from the top Cell 5 has not run yet when Cell 4 needs `embed`."
+              ]
+            },
+            {
+              "p": "The first error is in Cell **4**."
+            },
+            {
+              "result": "4"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "You move the definition of `embed` from Cell 5 to the end of Cell 1, and now Restart session and run all finishes. The grader runs the notebook on a fresh runtime. Which cell is now the first to stop with an error? Give its number."
+            }
+          ],
+          "answer": [
+            {
+              "p": "A fresh runtime has none of your files and none of the packages you added."
+            },
+            {
+              "list": [
+                "Cell 1 installs gensim, imports, and now defines `embed`.",
+                "Cell 2 downloads and reads the reviews, as it did for you.",
+                "Cell 3 stops with `FileNotFoundError` for `vectors.npy`. Only Cell 5 writes that file, and in a run from the top Cell 5 comes after Cell 3."
+              ]
+            },
+            {
+              "p": "The first error is in Cell **3**. Your restart could not show it, because the file from the afternoon was still on your disk. The two cells that looked risky, the install and the download, are fine, because each makes what it needs on any machine."
+            },
+            {
+              "result": "3"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Change the notebook so that the grader's run works and still trains the vectors, and say how you would test it before submitting."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The notebook has to make `vectors.npy` before anything reads it, or not read it at all. The simplest fix deletes Cell 3 and moves the training cell above the cell that uses the vectors:"
+            },
+            {
+              "list": [
+                "Cell 1: install, imports, seed, and the definition of `embed`.",
+                "Cell 2: download and read the reviews.",
+                "Cell 5: train the word vectors (saving them is now optional).",
+                "Cell 4: `X = embed(reviews[\"text\"], vectors)`.",
+                "Cell 6: fit the classifier and print the accuracy."
+              ]
+            },
+            {
+              "p": "If you keep a shortcut for your own runs, such as loading `vectors.npy` when it exists and training otherwise, your runs and the grader's take different branches. Your restarts would then keep testing the branch the grader never sees."
+            },
+            {
+              "p": "To test, get a new machine with **Runtime → Disconnect and delete runtime** and press **Runtime → Run all** on it. The new machine has no `vectors.npy` and no gensim, the same as the grader's, so the run goes through the cells the way the grader's will. It has to finish without you clicking anything and print the accuracy you report."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cn-read-the-counts-backward",
+      "moduleId": "colab-markdown-notebooks",
+      "title": "Which Definition the Kernel Is Using",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A notebook has four code cells. Beside each is the execution count of its latest run:"
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "[4]  def price(p): return p * 2      # Cell 1",
+              "[6]  print(price(10))                # Cell 2",
+              "[5]  def price(p): return p * 3      # Cell 3",
+              "[8]  def price(p): return p + 5      # Cell 4"
+            ]
+          }
+        },
+        {
+          "p": "The outputs have been cleared, and the kernel that ran these cells is still running. No cell has been edited since its latest run. Executions 1, 2, 3 and 7 do not appear beside any cell."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What did Cell 2 print when it last ran?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Put the visible runs in the order of their counts:"
+            },
+            {
+              "tex": "\\begin{array}{ccc}\n\\text{Count} & \\text{Cell} & \\text{Effect} \\\\ \\hline\n4 & \\text{Cell 1} & \\text{`price` doubles} \\\\\n5 & \\text{Cell 3} & \\text{`price` triples} \\\\\n6 & \\text{Cell 2} & \\text{prints `price(10)`} \\\\\n8 & \\text{Cell 4} & \\text{`price` adds 5}\n\\end{array}"
+            },
+            {
+              "p": "Executions 1, 2 and 3 come before execution 4, which defines `price` from scratch, so nothing earlier can be live. Execution 7 falls between Cell 2's run and Cell 4's, and Cell 4 also defines `price` from scratch, so whatever execution 7 did is overwritten. At execution 6 the live definition was Cell 3's, and Cell 2 printed **30**."
+            },
+            {
+              "result": "30"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What does `price(10)` return if you call it in the kernel right now?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The last run was execution 8, Cell 4, which redefined `price` to add 5. The kernel keeps the most recent definition, so `price(10)` returns $10 + 5 = $ **15**, not the 30 Cell 2 printed."
+            },
+            {
+              "result": "15"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "You restart the session and run every cell from the top. What does Cell 2 print this time?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "From the top, `price` first doubles, and Cell 2 runs before either later definition, so it prints $2 \\times 10 = $ **20**. Cells 3 and 4 redefine `price` afterwards, but Cell 2 has already run."
+            },
+            {
+              "p": "So the same call gives three different numbers: 30 from its last run, 15 in the running kernel, and 20 in a fresh run of the code as written. Only the 20 is what a grader gets."
+            },
+            {
+              "result": "20"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Explain why the missing executions cannot change your answers to the first two parts. Then change one cell's count, keeping all four counts different, so that the return value of `price(10)` in the kernel can no longer be worked out."
+            }
+          ],
+          "answer": [
+            {
+              "p": "A count is missing when its cell ran again later, since a cell shows only its latest count, or when it belonged to a cell that has since been deleted. Either way the missing runs could have redefined `price`. But executions 1, 2 and 3 all come before execution 4, which defines `price` from scratch, and execution 7 comes before execution 8, which does the same. A definition that ignores the old function cannot be affected by anything that ran before it, so both gaps are harmless."
+            },
+            {
+              "p": "For example, change Cell 4's count from 8 to 3. Cell 4 now runs before Cell 1, and the last visible run is execution 6, which only prints. Executions 7 and 8 come after it and are missing, and either could have redefined `price`, so the kernel's `price` could double, triple, add 5, or something else entirely. In general, the counts pin down a definition only when every execution after the last from-scratch definition is visible."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

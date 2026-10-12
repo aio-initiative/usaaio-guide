@@ -1,0 +1,19 @@
+{
+  "aModule": "transformer-embed",
+  "stage": "Round 2",
+  "fixes": [],
+  "parts": {
+    "tf-a-token-used-twice": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "tf-a-token-used-twice": "The model trains on the text \"the cat sat on the\". The token \"the\" is looked up at positions 1 and 5, and its row in the embedding table is (1, 0, 0, 0). The backward pass gives the gradient (0.5, -1.0, 0.0, 2.0) for position 1 and (-1.5, 0.0, 1.0, 1.0) for position 5. With a learning rate of 0.1, what is the row of \"the\" after this step?"
+  },
+  "indexAnswer": {
+    "tf-a-token-used-twice": "(1.1, 0.1, -0.1, -0.3). Each row of the input is a one-hot vector times the table, so the gradient for a row of the table adds the gradients of every position that looked it up. The token \"the\" is looked up at positions 1 and 5, so its gradient is (0.5, -1.0, 0.0, 2.0) + (-1.5, 0.0, 1.0, 1.0) = (-1.0, -1.0, 1.0, 3.0), and the row becomes (1, 0, 0, 0) - 0.1 * (-1.0, -1.0, 1.0, 3.0) = (1.1, 0.1, -0.1, -0.3)."
+  }
+}

@@ -1,0 +1,453 @@
+{
+  "module": "convolutional-neural-networks",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "cnn-receptive-field",
+      "moduleId": "convolutional-neural-networks",
+      "title": "Receptive Field Arithmetic",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cnn-receptive-field",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "The receptive field of a unit is the patch of input pixels that can change its value. Write r_l for the side of that patch for a unit of layer l, and j_l for the layer's jump: the distance, in input pixels, between two neighboring units of layer l. The input itself has r_0 = 1 and j_0 = 1. Layer l is square, with a k_l by k_l kernel and a stride of s_l, and padding plays no part in the count. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "cnn-1x1-convolution",
+      "moduleId": "convolutional-neural-networks",
+      "title": "What a 1x1 Convolution Is For",
+      "source": "USAAIO-style",
+      "difficulty": "Easy",
+      "url": "/theory/?id=cnn-1x1-convolution",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A feature map is 28 by 28 pixels with 256 channels. Count the cost of a convolution in multiply-adds: one for each weight at each output position, with the biases left out. Every convolution here keeps the map 28 by 28. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "cnn-the-flip-frameworks-skip",
+      "moduleId": "convolutional-neural-networks",
+      "title": "The Flip That Frameworks Skip",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/theory/?id=cnn-the-flip-frameworks-skip",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "Textbook convolution turns the kernel by a half turn before sliding it over the image. The convolution layers of PyTorch and the other deep learning libraries leave that turn out: they lay the kernel on each patch as it is, multiply, and sum, which is cross-correlation. Why does skipping the flip change nothing about what a convolutional network can learn?",
+      "answer": "The kernel's entries are learned, so training arrives at whatever weights it needs with either operation. A flipped kernel is another kernel of the same size, and training can reach it as easily. Whatever weights true convolution would settle on, cross-correlation settles on the same weights, each moved to the cell a half turn sends it to. The layer can represent the same set of functions either way."
+    },
+    {
+      "id": "cnn-shift-the-image-one-pixel",
+      "moduleId": "convolutional-neural-networks",
+      "title": "Shift the Image One Pixel",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/theory/?id=cnn-shift-the-image-one-pixel",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "An image goes through a convolutional layer, which produces a feature map. The image is then moved one pixel to the right and sent through the same layer again. Away from the borders, how does the second feature map compare with the first?",
+      "answer": "Every activation moves one pixel to the right and keeps its value, because one kernel is applied at every position. This is translation equivariance. The kernel that fired on a patch fires on the same patch at its new place, so the whole map shifts with the image. A detector learned in one corner works in every other corner for the same reason."
+    },
+    {
+      "id": "cnn-where-the-saving-comes-from",
+      "moduleId": "convolutional-neural-networks",
+      "title": "Where the Parameter Saving Comes From",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/theory/?id=cnn-where-the-saving-comes-from",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A 28 by 28 grayscale image is to be turned into 8 feature maps of the same size. A dense layer that does this has about 4.9 million parameters. A convolutional layer with eight 3 by 3 kernels does it with 80. Where does the saving come from?",
+      "answer": "One kernel, 9 weights and a bias, serves every position of the image, so the count depends on the kernel size and the channel counts and not on the size of the image. One kernel per output channel, used at every position: 8 kernels of 9 weights plus 8 biases is 80. Double the image's width and height and the convolutional layer still has 80 parameters, while the dense layer's count grows about 16 times."
+    },
+    {
+      "id": "cnn-train-pytorch",
+      "moduleId": "convolutional-neural-networks",
+      "title": "Train a Tiny CNN in PyTorch",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=cnn-train-pytorch",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Write convolution and max-pooling by hand and check them against PyTorch, build two small CNNs and test how their feature maps respond when the input shifts, then find out which networks still recognize a bar in a position no training image used.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "computer-vision-round2-implementation-task",
+      "moduleId": "convolutional-neural-networks",
+      "title": "Data Augmentation Practice",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=computer-vision-round2",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Data augmentation (random shifts) for distribution shift. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Test accuracy must reach the target shown in the evaluation cell."
+    },
+    {
+      "id": "foundations-13-image-mlp",
+      "moduleId": "convolutional-neural-networks",
+      "title": "AI Foundations 13: Image Classification with MLPs: Facial Expressions",
+      "source": "AI Foundations",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=foundations-13-image-mlp",
+      "tags": [
+        "Coding",
+        "Course",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Course notebook, about 4 h end to end. Read it top to bottom, then do the exercises marked with a pencil icon - each one checks itself - and finish with the exam-style quiz.",
+      "answer": "Self-checking: every exercise has a checker cell that prints a verdict, and the quiz answers are explained at the end of the notebook."
+    }
+  ],
+  "theory": [
+    {
+      "id": "cnn-receptive-field",
+      "moduleId": "convolutional-neural-networks",
+      "title": "Receptive Field Arithmetic",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "The **receptive field** of a unit is the patch of input pixels that can change its value. Write $r_l$ for the side of that patch for a unit of layer $l$, and $j_l$ for the layer's **jump**: the distance, in input pixels, between two neighboring units of layer $l$. The input itself has $r_0 = 1$ and $j_0 = 1$. Layer $l$ is square, with a $k_l \\times k_l$ kernel and a stride of $s_l$, and padding plays no part in the count."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Show that"
+            },
+            {
+              "tex": "j_l = s_l\\, j_{l-1}, \\qquad r_l = r_{l-1} + (k_l - 1)\\, j_{l-1} ."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Jump first. Two neighboring units of layer $l$ read windows of layer $l - 1$ that start $s_l$ units apart, and each unit of layer $l - 1$ is $j_{l-1}$ input pixels from the next. So the two windows start $s_l\\, j_{l-1}$ input pixels apart, which is $j_l$."
+            },
+            {
+              "p": "Now the receptive field. One unit of layer $l$ reads $k_l$ units of layer $l - 1$ in a row. Their centers are spread over $(k_l - 1)\\, j_{l-1}$ input pixels, from the first center to the last. Each of them sees $r_{l-1}$ input pixels around its own center. The patch the unit can see runs from the left edge of the first patch to the right edge of the last one, so its side is $(k_l - 1)\\, j_{l-1} + r_{l-1}$."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A network stacks five layers: a $3 \\times 3$ convolution with stride 1, a $2 \\times 2$ max-pool with stride 2, a second $3 \\times 3$ convolution with stride 1, a second $2 \\times 2$ max-pool with stride 2, and a last $3 \\times 3$ convolution with stride 1. How many input pixels wide is the receptive field of a unit of the last layer?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Run the two recursions down the stack, jump before receptive field at each layer, since $r_l$ uses the jump of the layer before:"
+            },
+            {
+              "tex": "\\begin{array}{ccccc}\n\\text{Layer} & k & s & \\text{$j$ after it} & \\text{$r$ after it} \\\\ \\hline\n\\text{conv $3 \\times 3$} & 3 & 1 & 1 & 1 + 2 \\times 1 = 3 \\\\\n\\text{pool $2 \\times 2$} & 2 & 2 & 2 & 3 + 1 \\times 1 = 4 \\\\\n\\text{conv $3 \\times 3$} & 3 & 1 & 2 & 4 + 2 \\times 2 = 8 \\\\\n\\text{pool $2 \\times 2$} & 2 & 2 & 4 & 8 + 1 \\times 2 = 10 \\\\\n\\text{conv $3 \\times 3$} & 3 & 1 & 4 & 10 + 2 \\times 4 = 18\n\\end{array}"
+            },
+            {
+              "p": "A unit of the last layer sees an $18 \\times 18$ patch. The three convolutions have the same kernel, but they add 2, 4 and 8 pixels, since each pool doubled the jump before the next one. That doubling is what lets a deep layer cover a large part of the image with small kernels."
+            },
+            {
+              "result": "18"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "You test the number by experiment. Pick one unit of the last layer, run a backward pass from it to the input, and mark the input pixels whose gradient is not zero. The marked patch comes out smaller than $18 \\times 18$. Why, and what change to the experiment makes the marked patch exactly $18 \\times 18$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "A max-pool passes gradient to one pixel per window, the one that held the maximum. A pixel that was never the maximum of its window, at either pool, gets a gradient of exactly zero, however much it could have changed the output had its value been larger. The backward pass marks the pixels that affect the output right now, for this input, and that is a subset of the pixels that can affect it."
+            },
+            {
+              "p": "Replace both max-pools by average-pools, which spread the gradient over every pixel of the window, and run the same probe. Every pixel of the $18 \\times 18$ patch now gets a nonzero gradient, and the experiment matches the arithmetic. A second way keeps the max-pools and repeats the probe on many random images, marking a pixel once its gradient is nonzero for any of them. The maximum lands in different places for different images, and over enough of them every pixel of the patch wins some window."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cnn-1x1-convolution",
+      "moduleId": "convolutional-neural-networks",
+      "title": "What a 1x1 Convolution Is For",
+      "difficulty": "Easy",
+      "minutes": 10,
+      "overview": [
+        "A feature map is $28 \\times 28$ pixels with 256 channels. Count the cost of a convolution in multiply-adds: one for each weight at each output position, with the biases left out. Every convolution here keeps the map $28 \\times 28$."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "A $1 \\times 1$ convolution takes the 256 channels to 64. What does it do at one pixel, and how many parameters does it have, biases included?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "At each pixel it reads the 256 channel values there and mixes them into 64 new values with one fixed linear map, the same map at every pixel. It never looks at a neighboring pixel. It is a fully connected layer from 256 to 64 run on every pixel on its own, and its two jobs are to change the channel count and, with a ReLU after it, to add a cheap nonlinearity."
+            },
+            {
+              "p": "Its weight tensor has shape $64 \\times 256 \\times 1 \\times 1$, which is $16{,}384$ weights, plus one bias per output channel: $16{,}384 + 64 = 16{,}448$ parameters."
+            },
+            {
+              "result": "16448"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "How many multiply-adds does a $3 \\times 3$ convolution from 256 channels to 256 channels cost on this map, in millions?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The layer has $3 \\cdot 3 \\cdot 256 \\cdot 256 = 589{,}824$ weights, and each of them is used once at each of the $28 \\cdot 28 = 784$ output positions:"
+            },
+            {
+              "tex": "589{,}824 \\times 784 = 462{,}422{,}016 ,"
+            },
+            {
+              "p": "about 462 million multiply-adds for one layer on one image."
+            },
+            {
+              "result": "462.4"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The bottleneck does the same job with three convolutions in a row: $1 \\times 1$ from 256 channels to 64, $3 \\times 3$ from 64 to 64, and $1 \\times 1$ from 64 back to 256. How many multiply-adds do the three cost together, in millions?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Weights first, then times 784 positions:"
+            },
+            {
+              "list": [
+                "$1 \\times 1$, 256 to 64: $16{,}384$ weights, $12{,}845{,}056$ multiply-adds.",
+                "$3 \\times 3$, 64 to 64: $3 \\cdot 3 \\cdot 64 \\cdot 64 = 36{,}864$ weights, $28{,}901{,}376$ multiply-adds.",
+                "$1 \\times 1$, 64 to 256: $16{,}384$ weights, $12{,}845{,}056$ multiply-adds."
+              ]
+            },
+            {
+              "p": "Together: $69{,}632$ weights and $54{,}591{,}488$ multiply-adds, about 54.6 million. More than half of the cost is the $3 \\times 3$ layer, which now runs on 64 channels in place of 256."
+            },
+            {
+              "result": "54.6"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "How many times cheaper is the bottleneck than the single $3 \\times 3$ convolution?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "$462{,}422{,}016 / 54{,}591{,}488 = 8.47$. The ratio of the weight counts, $589{,}824 / 69{,}632$, is the same 8.47, since every layer runs over the same 784 positions. The $3 \\times 3$ layer's cost grows with the product of its two channel counts, so shrinking both from 256 to 64 divides it by 16, and the two $1 \\times 1$ layers that do the shrinking and the widening cost less than that saving. ResNet's bottleneck block is exactly this, and it is what lets ResNet-50 afford fifty layers."
+            },
+            {
+              "result": "8.47"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cnn-the-flip-frameworks-skip",
+      "moduleId": "convolutional-neural-networks",
+      "title": "The Flip That Frameworks Skip",
+      "difficulty": "Easy",
+      "minutes": 4,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Textbook convolution turns the kernel by a half turn before sliding it over the image. The convolution layers of PyTorch and the other deep learning libraries leave that turn out: they lay the kernel on each patch as it is, multiply, and sum, which is cross-correlation. Why does skipping the flip change nothing about what a convolutional network can learn?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "The two operations produce the same feature map for every kernel, so there is nothing to flip.",
+                  "explain": "They differ for any kernel that is not the same after a half turn. Take the 3 by 3 kernel whose left column is ones, middle column zeros and right column minus ones. The half turn swaps its outer columns, so every nonzero value of its feature map changes sign."
+                },
+                {
+                  "text": "The kernel's entries are learned, so training arrives at whatever weights it needs with either operation.",
+                  "correct": true,
+                  "explain": "A flipped kernel is another kernel of the same size, and training can reach it as easily. Whatever weights true convolution would settle on, cross-correlation settles on the same weights, each moved to the cell a half turn sends it to. The layer can represent the same set of functions either way."
+                },
+                {
+                  "text": "Learned kernels come out the same after a half turn, so flipping one gives it back.",
+                  "explain": "Nothing in training pushes a kernel toward symmetry, and useful kernels are not symmetric. An edge detector has a positive column and a negative column, and a half turn swaps them."
+                },
+                {
+                  "text": "The flip only moves the entries of a kernel with an even number of rows and columns, and networks use odd sizes such as 3 by 3.",
+                  "explain": "A half turn moves the entries of a kernel of any size. In a 3 by 3 kernel it fixes the center cell and moves the other eight. The flip is harmless because the kernel is learned, not because of its size."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "A flipped kernel is another kernel of the same size, and training can reach it as easily. Whatever weights true convolution would settle on, cross-correlation settles on the same weights, each moved to the cell a half turn sends it to. The layer can represent the same set of functions either way."
+            },
+            {
+              "result": "The kernel's entries are learned, so training arrives at whatever weights it needs with either operation."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cnn-shift-the-image-one-pixel",
+      "moduleId": "convolutional-neural-networks",
+      "title": "Shift the Image One Pixel",
+      "difficulty": "Easy",
+      "minutes": 4,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "An image goes through a convolutional layer, which produces a feature map. The image is then moved one pixel to the right and sent through the same layer again. Away from the borders, how does the second feature map compare with the first?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "The same. Convolution is translation invariant, so the feature map does not change.",
+                  "explain": "A convolutional layer is equivariant to shifts, not invariant. The pattern the kernel responds to has moved, so the response moves with it. Some invariance comes later, from pooling, and global pooling over the whole map gives it in full."
+                },
+                {
+                  "text": "The activations stay where they were, but every value changes, because the kernel now sees a different patch at each position.",
+                  "explain": "Each position does see a new patch, but that patch is the one its left neighbor saw the first time, and the same kernel is applied to it. So the values are the old values moved over by one, not new values."
+                },
+                {
+                  "text": "Every activation moves one pixel to the right and keeps its value, because one kernel is applied at every position.",
+                  "correct": true,
+                  "explain": "This is translation equivariance. The kernel that fired on a patch fires on the same patch at its new place, so the whole map shifts with the image. A detector learned in one corner works in every other corner for the same reason."
+                },
+                {
+                  "text": "The activations change in a way that cannot be predicted, since each position has its own weights.",
+                  "explain": "A position with weights of its own is a dense layer, which would have to learn the pattern again at the new place. A convolutional layer uses one kernel everywhere, so moving the input moves the response and nothing else."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "This is translation equivariance. The kernel that fired on a patch fires on the same patch at its new place, so the whole map shifts with the image. A detector learned in one corner works in every other corner for the same reason."
+            },
+            {
+              "result": "Every activation moves one pixel to the right and keeps its value, because one kernel is applied at every position."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cnn-where-the-saving-comes-from",
+      "moduleId": "convolutional-neural-networks",
+      "title": "Where the Parameter Saving Comes From",
+      "difficulty": "Easy",
+      "minutes": 4,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A $28 \\times 28$ grayscale image is to be turned into 8 feature maps of the same size. A dense layer that does this has about 4.9 million parameters. A convolutional layer with eight $3 \\times 3$ kernels does it with 80. Where does the saving come from?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "One kernel, 9 weights and a bias, serves every position of the image, so the count depends on the kernel size and the channel counts and not on the size of the image.",
+                  "correct": true,
+                  "explain": "One kernel per output channel, used at every position: 8 kernels of 9 weights plus 8 biases is 80. Double the image's width and height and the convolutional layer still has 80 parameters, while the dense layer's count grows about 16 times."
+                },
+                {
+                  "text": "The convolutional layer has fewer outputs to produce, because its 8 channels replace the dense layer's thousands of units.",
+                  "explain": "The two layers produce the same block of 8 by 28 by 28 outputs. The channel count is a design choice, and the saving is in how each output is computed, not in how many there are."
+                },
+                {
+                  "text": "Most of a network's weights live in its pooling layers, and a convolutional stack has only a few of those.",
+                  "explain": "Pooling has no weights at all. It keeps the largest value in each window and learns nothing."
+                },
+                {
+                  "text": "Each kernel reads a single input channel, so it needs only 9 weights however many channels the input has.",
+                  "explain": "A kernel reads every input channel. On a one-channel image that is 9 weights, but a kernel in the next layer, reading 8 channels, holds 72. The count is still free of the image size, and that is the saving."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "One kernel per output channel, used at every position: 8 kernels of 9 weights plus 8 biases is 80. Double the image's width and height and the convolutional layer still has 80 parameters, while the dense layer's count grows about 16 times."
+            },
+            {
+              "result": "One kernel, 9 weights and a bias, serves every position of the image, so the count depends on the kernel size and the channel counts and not on the size of the image."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

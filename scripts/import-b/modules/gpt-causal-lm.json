@@ -1,0 +1,34 @@
+{
+  "aModule": "gpt-causal-lm",
+  "stage": "Round 2",
+  "order": [
+    "gpt-one-text-two-tokenizations",
+    "gpt-pooled-perplexity",
+    "gpt-window-cuts-what-gets-trained",
+    "gpt-temperature-without-logits",
+    "gpt-perplexity-across-tokenizers"
+  ],
+  "fixes": [],
+  "indexPrompt": {
+    "gpt-one-text-two-tokenizations": "Two tokenizers of the same model cut the text \"the mat is red\" differently, and the model gives each cut its own list of next-token probabilities. What probability does each cut give the whole text, and what mean loss per token would a training loop report for each?",
+    "gpt-pooled-perplexity": "A language model scores a perplexity of 8 on a 300-token news article and 2 on a 100-token block of license text. Find its perplexity over the two documents taken together as one 400-token test set, and how many tokens of license text at the same perplexity 2 must be added to bring the combined perplexity down to 4.",
+    "gpt-window-cuts-what-gets-trained": "A GPT whose context holds 512 tokens trains on documents of exactly 2,000 tokens. Count how many of a document's tokens are scored when it is fed as consecutive windows with no overlap, then when consecutive windows overlap by one token, and say what the overlap still cannot repair.",
+    "gpt-perplexity-across-tokenizers": "Two models test on the same 2,000-word essays: one tokenizer makes one token per word for 2,000 tokens and scores perplexity 160, the other splits into 2,500 tokens and scores 64. Work out which model gives the essays the higher probability, model B's perplexity per word, and the perplexity a byte-level model must score to tie model A."
+  },
+  "parts": {
+    "gpt-pooled-perplexity": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is not required."}
+    },
+    "gpt-window-cuts-what-gets-trained": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.3": {"kind": "derivation", "requirement": "A short justification is required."}
+    },
+    "gpt-perplexity-across-tokenizers": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.3": {"kind": "computation", "requirement": "Reasoning is not required."}
+    }
+  }
+}

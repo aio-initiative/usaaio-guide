@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "USAAIO Guide Problem Bank",
+  "type": "object",
+  "required": ["MODULE_ID", "practice"],
+  "properties": {
+    "MODULE_ID": {
+      "type": "string"
+    },
+    "practice": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["uniqueId", "name", "source", "difficulty", "tags", "solutionMetadata"],
+        "properties": {
+          "uniqueId": { "type": "string" },
+          "name": { "type": "string" },
+          "url": { "type": "string" },
+          "source": { "type": "string" },
+          "difficulty": { "type": "string" },
+          "isStarred": { "type": "boolean" },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "solutionMetadata": {
+            "type": "object",
+            "required": ["kind"],
+            "properties": {
+              "kind": { "type": "string" },
+              "summary": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

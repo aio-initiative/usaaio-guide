@@ -1,0 +1,474 @@
+{
+  "module": "optimization-adam-sgd",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "dl4-early-stopping",
+      "moduleId": "optimization-adam-sgd",
+      "title": "Stop Before It Memorizes",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=dl4-early-stopping",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Train an overfitting network and implement early stopping with patience and best-weight restoration, then measure what restoration is worth on test.",
+      "answer": "Auto-graded inside the notebook. The validation curve, best epoch, best validation MSE, and both test errors must match to 1e-6, with restoration beating the final weights."
+    },
+    {
+      "id": "opt-adam-bias",
+      "moduleId": "optimization-adam-sgd",
+      "title": "What Bias Correction Actually Corrects",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=opt-adam-bias",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Adam's two moving averages both start at zero, so their first values are biased small. Show what the bias-correction denominators fix exactly, and measure how much longer the uncorrected first step is. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "opt-he-init",
+      "moduleId": "optimization-adam-sgd",
+      "title": "Derive He Initialization",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=opt-he-init",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Derive the variance that flows through one linear layer, then through a ReLU, and solve for the weight variance that keeps activation sizes steady layer after layer. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "opt-momentum-in-a-ravine",
+      "moduleId": "optimization-adam-sgd",
+      "title": "What Momentum Does in a Ravine",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=opt-momentum-in-a-ravine",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "Near the current parameters the loss surface is a long narrow valley: steep across, nearly flat along, with the minimum far down the floor. Plain SGD with a large learning rate bounces from wall to wall, and with a small one it creeps along the floor. Momentum replaces the gradient step by a step along a velocity, with beta = 0.9. How does that help?",
+      "answer": "The gradient across the valley flips sign every step, so those terms cancel inside the velocity, while the gradient along the valley points the same way each step and the terms add up. The velocity is a weighted sum of past gradients. The part that flips sign adds up to almost nothing, so the bounce dies out, while the steady part along the floor grows to as much as 10 times one gradient at beta 0.9. The run speeds up in the direction that matters."
+    },
+    {
+      "id": "opt-lower-rate-with-momentum",
+      "moduleId": "optimization-adam-sgd",
+      "title": "A Lower Rate to Go with Momentum",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/theory/?id=opt-lower-rate-with-momentum",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A network trains with plain SGD at learning rate eta. You switch on momentum, v_t = beta v_{t-1} + g_t with beta = 0.9, and step along v_t instead of g_t. Why is the usual advice to lower eta at the same time, often to a tenth of its value?",
+      "answer": "On a steady gradient g the velocity settles at g / (1 - beta) = 10g, so momentum multiplies the effective step by about 10, and dividing eta by 10 keeps the long-run step the same. Each step keeps 0.9 of the old velocity and adds the whole new gradient, so on a gradient that holds still the sum 1 + 0.9 + 0.81 + ... reaches 10. Along any direction the gradient keeps pointing in, the step is up to ten times the plain step, and lowering the rate by that factor puts it back."
+    },
+    {
+      "id": "opt-l2-decay-inside-adam",
+      "moduleId": "optimization-adam-sgd",
+      "title": "L2 Decay Inside Adam",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=opt-l2-decay-inside-adam",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "Weight decay is usually written as an L2 penalty on the loss, which adds lambda times theta to the gradient. Under SGD that multiplies every weight by 1 - eta lambda before the ordinary step, the same factor for all of them. The same penalty term is handed to Adam by adding it to the gradient. Why does the decay stop acting the same way on every parameter?",
+      "answer": "The penalty term is divided by the root of the squared-gradient average along with the rest of the gradient, so a parameter with large recent gradients hardly decays and a quiet one decays fast. Adam scales each parameter's whole gradient, penalty included, by the typical size of that parameter's recent gradients. A weight with large gradients has its penalty divided by that large size and barely decays, while a weight whose only steady gradient is the penalty has it divided by its own size and shrinks by close to the full learning rate on every step. AdamW adds the decay after the division, so every parameter shrinks by the same factor again."
+    },
+    {
+      "id": "opt-ravine-race",
+      "moduleId": "optimization-adam-sgd",
+      "title": "Optimizer Race on a Ravine",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=opt-ravine-race",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Write three optimizers in NumPy, plain gradient descent, gradient descent with momentum, and Adam, run each for 100 steps from the same start, and see how far each one gets.",
+      "answer": "Self-checking: each part ends with a check cell that asserts the exact losses step by step and prints \"Part N passed\" when they match. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "calculus-optimization-implementation-task",
+      "moduleId": "optimization-adam-sgd",
+      "title": "Adam Optimizer from Scratch",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=calculus-optimization",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Momentum / Adam optimizer implemented from scratch. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. The evaluation cell checks that f(w_opt) < 0.01 (plain GD at a conservative safe rate such as 1e-4 stalls far above this)."
+    },
+    {
+      "id": "dl3-warmup-cosine",
+      "moduleId": "optimization-adam-sgd",
+      "title": "Build the Schedule Everyone Uses",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/editor/?nb=dl3-warmup-cosine",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Implement linear warmup into cosine decay and verify the properties that matter: continuity at the handoff, a peak at the right step, and a monotone tail.",
+      "answer": "Auto-graded inside the notebook. The full schedule and its summary values must match to 1e-6, rising through warmup and falling monotonically after."
+    },
+    {
+      "id": "dl3-lr-range-test",
+      "moduleId": "optimization-adam-sgd",
+      "title": "Find the Largest Learning Rate That Does Not Explode",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=dl3-lr-range-test",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Sweep 60 learning rates on a quadratic to find the empirical stability limit, and check it against the theoretical 2/L bound from the largest Hessian eigenvalue.",
+      "answer": "Auto-graded inside the notebook. The loss sweep and both learning rates must match to 1e-6, with the empirical limit sitting below 2/L."
+    }
+  ],
+  "theory": [
+    {
+      "id": "opt-adam-bias",
+      "moduleId": "optimization-adam-sgd",
+      "title": "What Bias Correction Actually Corrects",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "Adam keeps two moving averages for each parameter, both starting at zero:"
+      ],
+      "setup": [
+        {
+          "tex": "m_t = \\beta_1 m_{t-1} + (1 - \\beta_1)\\, g_t, \\qquad\nv_t = \\beta_2 v_{t-1} + (1 - \\beta_2)\\, g_t^2 ,"
+        },
+        {
+          "p": "and divides them by $1 - \\beta_1^t$ and $1 - \\beta_2^t$ before the update, giving $\\hat{m}_t$ and $\\hat{v}_t$. Suppose the gradient's statistics hold still, so that at every step $t$ the gradient has mean $\\mu$ and mean square $c$: $\\mathbb{E}[g_t] = \\mu$, $\\mathbb{E}[g_t^2] = c$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Show that the first average has expectation $(1 - \\beta_1^t)\\,\\mu$ and the second $(1 - \\beta_2^t)\\,c$, so that after the division $\\hat{m}_t$ and $\\hat{v}_t$ have expectations $\\mu$ and $c$ at every step."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Unroll the first average back to $m_0 = 0$. Each past gradient $g_i$ enters once, with the weight $(1 - \\beta_1)\\beta_1^{\\,t-i}$:"
+            },
+            {
+              "tex": "m_t = (1 - \\beta_1) \\sum_{i=1}^{t} \\beta_1^{\\,t-i}\\, g_i ."
+            },
+            {
+              "p": "Expectation is linear, and every $g_i$ has expectation $\\mu$, so"
+            },
+            {
+              "tex": "\\mathbb{E}[m_t] = (1 - \\beta_1)\\,\\mu \\sum_{i=1}^{t} \\beta_1^{\\,t-i}\n= (1 - \\beta_1)\\,\\mu \\cdot \\frac{1 - \\beta_1^t}{1 - \\beta_1}\n= (1 - \\beta_1^t)\\,\\mu ,"
+            },
+            {
+              "p": "by the sum of a geometric series. The weights add up to $1 - \\beta_1^t$, not to 1, because the zero start took the share $\\beta_1^t$ that a true average would have given to gradients before step 1. So $\\hat{m}_t = m_t / (1 - \\beta_1^t)$ has expectation $\\mu$. Repeating the unrolling with $\\beta_2$ and $g_i^2$ shows $\\mathbb{E}[v_t] = (1 - \\beta_2^t)\\,c$, and so $\\mathbb{E}[\\hat{v}_t] = c$."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Now leave the division out. With $\\beta_1 = 0.9$, $\\beta_2 = 0.999$ and $\\varepsilon = 0$, the first update is $\\eta\\, m_1 / \\sqrt{v_1}$. Express it through $\\eta$ and the sign of $g_1$, and compare it with the corrected first update. The uncorrected first step is how many times as long as the corrected one?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "After one step the averages are $m_1 = 0.1\\, g_1$ and $v_1 = 0.001\\, g_1^2$. Without the correction,"
+            },
+            {
+              "tex": "\\eta\\,\\frac{m_1}{\\sqrt{v_1}}\n= \\eta\\,\\frac{0.1\\, g_1}{\\sqrt{0.001}\\,|g_1|}\n= \\frac{0.1}{0.03162}\\,\\eta\\,\\operatorname{sign}(g_1)\n= 3.162\\,\\eta\\,\\operatorname{sign}(g_1) ."
+            },
+            {
+              "p": "The corrected averages are $\\hat{m}_1 = g_1$ and $\\hat{v}_1 = g_1^2$, which make the first update $\\eta\\,\\operatorname{sign}(g_1)$ exactly, so every parameter moves by $\\eta$. That is the step Adam is designed to take."
+            },
+            {
+              "p": "Both uncorrected averages come out too small, and the errors do not cancel. The numerator is scaled by $0.1$, but the denominator by $\\sqrt{0.001} = 0.0316$, since $v$ sits under a square root. The uncorrected step is $\\sqrt{10} = 3.162$ times too long, in the right direction. On a network with the usual $\\eta = 10^{-3}$ that is a first step of size $0.003$ on every weight, which is why the first few steps without bias correction can throw a fresh network far from its initialization."
+            },
+            {
+              "result": "3.162"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "opt-he-init",
+      "moduleId": "optimization-adam-sgd",
+      "title": "Derive He Initialization",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "A linear layer computes $y = Wx$ from an input $x$ with $n$ coordinates, its fan-in. Each weight $W_{ij}$ is drawn independently, from a distribution of mean 0 and variance $\\sigma^2$. Each input coordinate $x_j$ is drawn independently too, with mean 0 and variance $s^2$, and the weights are independent of the input."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Show that every output $y_i$ has mean 0 and variance $n\\,\\sigma^2 s^2$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Output $i$ is the sum $y_i = \\sum_{j=1}^{n} W_{ij} x_j$. Take one term, $W_{ij} x_j$. Independence lets the expectation of a product split into a product of expectations, so its mean is $\\mathbb{E}[W_{ij}] \\cdot \\mathbb{E}[x_j] = 0 \\cdot 0 = 0$, and its mean square is $\\mathbb{E}[W_{ij}^2] \\cdot \\mathbb{E}[x_j^2] = \\sigma^2 s^2$, each factor being a variance because its variable has mean 0. A term with mean 0 has variance equal to its mean square, $\\sigma^2 s^2$."
+            },
+            {
+              "p": "The $n$ terms are uncorrelated. For $j \\neq k$ the four factors $W_{ij}, x_j, W_{ik}, x_k$ are independent, so the expectation of the product $W_{ij} x_j W_{ik} x_k$ splits into four factors, one of which is $\\mathbb{E}[W_{ij}] = 0$. The variance of a sum of uncorrelated terms is the sum of their variances, $n\\,\\sigma^2 s^2$, and $y_i$ has mean 0 because each of its terms does."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Let $z$ be a random variable with mean 0 whose distribution is symmetric about 0, and let $a = \\max(z, 0)$ be its ReLU. Show that $\\mathbb{E}[a^2] = \\tfrac{1}{2} \\operatorname{Var}(z)$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "$a^2$ equals $z^2$ when $z > 0$ and $0$ otherwise, so $\\mathbb{E}[a^2]$ is the part of $\\mathbb{E}[z^2]$ that comes from positive $z$. Symmetry says $z$ and $-z$ have the same distribution, so the part from positive $z$ equals the part from negative $z$. The two parts add up to $\\mathbb{E}[z^2]$ (the single value $z = 0$ contributes nothing), so each is half of it, and $\\mathbb{E}[z^2] = \\operatorname{Var}(z)$ because $z$ has mean 0. Hence $\\mathbb{E}[a^2] = \\tfrac{1}{2}\\operatorname{Var}(z)$."
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A network stacks pairs of a linear layer and a ReLU. Use the two results to find the weight variance $\\sigma^2$ that keeps the mean square of the activations the same from one pair to the next, and enter its value for a fan-in of 500."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Feed a pair activations with mean square $s^2$. By the first part the linear layer gives outputs with variance $n\\,\\sigma^2 s^2$, and these outputs have mean 0 and a symmetric distribution when the weights do. By the second part the ReLU then halves the mean square, to $\\tfrac{1}{2} n\\,\\sigma^2 s^2$. One pair multiplies the mean square by $n\\,\\sigma^2 / 2$, and the scale holds steady from pair to pair when that factor is 1:"
+            },
+            {
+              "tex": "\\sigma^2 = \\frac{2}{n} ."
+            },
+            {
+              "p": "For $n = 500$ that is $\\sigma^2 = 0.004$, a standard deviation of about $0.063$. This is He initialization, `nn.init.kaiming_normal_` in PyTorch, and the 2 is the ReLU's half."
+            },
+            {
+              "result": "0.004"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Fifty such pairs are initialized with $\\sigma^2 = 1/n$ instead, the choice that preserves variance through a linear layer alone. By what factor has the typical size of an activation, the square root of its mean square, shrunk by the output of the fiftieth pair?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "With $\\sigma^2 = 1/n$ each pair multiplies the mean square by $n\\,\\sigma^2 / 2 = \\tfrac{1}{2}$. After fifty pairs it is $2^{-50} \\approx 8.9 \\times 10^{-16}$ of what it was, and the typical size, its square root, is $2^{-25} \\approx 2.98 \\times 10^{-8}$ of what it was. The signal reaching the output is gone to round-off, the gradients that flow back are scaled by the same vanishing activations, and no optimizer recovers a network that starts there. A factor of 2 per layer compounds too fast for the constant in the initialization to be left to guesswork."
+            },
+            {
+              "result": "2.98e-8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "opt-momentum-in-a-ravine",
+      "moduleId": "optimization-adam-sgd",
+      "title": "What Momentum Does in a Ravine",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Near the current parameters the loss surface is a long narrow valley: steep across, nearly flat along, with the minimum far down the floor. Plain SGD with a large learning rate bounces from wall to wall, and with a small one it creeps along the floor. Momentum replaces the gradient step by a step along a velocity,"
+            },
+            {
+              "tex": "v_t = \\beta\\, v_{t-1} + g_t, \\qquad \\theta_{t+1} = \\theta_t - \\eta\\, v_t,"
+            },
+            {
+              "p": "with $\\beta = 0.9$. How does that help?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "It cuts the step whenever the gradient reverses direction, so each bounce between the walls is shorter than the last.",
+                  "explain": "Momentum has no rule that watches the gradient's sign. The bounce shrinks because opposite gradients cancel when they are added into one velocity, not because any step is cut short."
+                },
+                {
+                  "text": "It divides each coordinate of the gradient by the size of that coordinate's recent gradients, which evens out the steep and flat directions.",
+                  "explain": "That is RMSProp's update, not momentum's. Momentum keeps a weighted sum of past gradients and steps along it. It never divides by anything."
+                },
+                {
+                  "text": "The gradient across the valley flips sign every step, so those terms cancel inside the velocity, while the gradient along the valley points the same way each step and the terms add up.",
+                  "correct": true,
+                  "explain": "The velocity is a weighted sum of past gradients. The part that flips sign adds up to almost nothing, so the bounce dies out, while the steady part along the floor grows to as much as 10 times one gradient at beta 0.9. The run speeds up in the direction that matters."
+                },
+                {
+                  "text": "It smooths the loss by averaging it over recent batches, so the valley walls look less steep to the optimizer.",
+                  "explain": "Momentum never touches the loss or its curvature. The valley is as steep as before. What changes is the direction and size of the step, because past gradients are added into it."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The velocity is a weighted sum of past gradients. The part that flips sign adds up to almost nothing, so the bounce dies out, while the steady part along the floor grows to as much as 10 times one gradient at beta 0.9. The run speeds up in the direction that matters."
+            },
+            {
+              "result": "The gradient across the valley flips sign every step, so those terms cancel inside the velocity, while the gradient along the valley points the same way each step and the terms add up."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "opt-lower-rate-with-momentum",
+      "moduleId": "optimization-adam-sgd",
+      "title": "A Lower Rate to Go with Momentum",
+      "difficulty": "Easy",
+      "minutes": 4,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A network trains with plain SGD at learning rate $\\eta$. You switch on momentum, $v_t = \\beta\\, v_{t-1} + g_t$ with $\\beta = 0.9$, and step along $v_t$ instead of $g_t$. Why is the usual advice to lower $\\eta$ at the same time, often to a tenth of its value?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "On a steady gradient $g$ the velocity settles at $g / (1 - \\beta) = 10g$, so momentum multiplies the effective step by about 10, and dividing $\\eta$ by 10 keeps the long-run step the same.",
+                  "correct": true,
+                  "explain": "Each step keeps 0.9 of the old velocity and adds the whole new gradient, so on a gradient that holds still the sum 1 + 0.9 + 0.81 + ... reaches 10. Along any direction the gradient keeps pointing in, the step is up to ten times the plain step, and lowering the rate by that factor puts it back."
+                },
+                {
+                  "text": "The velocity is a running average of recent gradients, so it is about the size of one gradient, and the lower rate is a habit carried over from Adam.",
+                  "explain": "The new gradient enters with weight 1, not 1 minus beta, so the velocity is a sum rather than an average. On a steady gradient it grows to ten times the gradient's size, and the lower rate answers that growth."
+                },
+                {
+                  "text": "Momentum makes each step noisier, and a smaller rate is what keeps the noisier steps stable.",
+                  "explain": "Adding past gradients cancels the parts that change sign from step to step, so the velocity is smoother than one batch gradient, not rougher. The rate comes down because the velocity is larger than a gradient."
+                },
+                {
+                  "text": "On a steady gradient the velocity keeps growing without limit, so a lower rate is needed to put off the divergence.",
+                  "explain": "The velocity does grow at first, but the factor 0.9 on the old velocity caps the sum at ten times the gradient. It converges to a finite multiple of the gradient rather than running away."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each step keeps 0.9 of the old velocity and adds the whole new gradient, so on a gradient that holds still the sum 1 + 0.9 + 0.81 + ... reaches 10. Along any direction the gradient keeps pointing in, the step is up to ten times the plain step, and lowering the rate by that factor puts it back."
+            },
+            {
+              "result": "On a steady gradient $g$ the velocity settles at $g / (1 - \\beta) = 10g$, so momentum multiplies the effective step by about 10, and dividing $\\eta$ by 10 keeps the long-run step the same."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "opt-l2-decay-inside-adam",
+      "moduleId": "optimization-adam-sgd",
+      "title": "L2 Decay Inside Adam",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Weight decay is usually written as an L2 penalty on the loss, which adds $\\lambda\\, \\theta$ to the gradient. Under SGD that multiplies every weight by $1 - \\eta \\lambda$ before the ordinary step, the same factor for all of them. The same penalty term is handed to Adam by adding it to the gradient. Why does the decay stop acting the same way on every parameter?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Adam's running average of the gradient delays the penalty by a few steps, so the decay arrives late but with the same strength on every parameter.",
+                  "explain": "The momentum average does hold back every part of the gradient by a few steps, but the delay is the same for all parameters and leaves the strength alone. The uneven decay comes from the division that follows the averaging."
+                },
+                {
+                  "text": "The penalty term is divided by the root of the squared-gradient average along with the rest of the gradient, so a parameter with large recent gradients hardly decays and a quiet one decays fast.",
+                  "correct": true,
+                  "explain": "Adam scales each parameter's whole gradient, penalty included, by the typical size of that parameter's recent gradients. A weight with large gradients has its penalty divided by that large size and barely decays, while a weight whose only steady gradient is the penalty has it divided by its own size and shrinks by close to the full learning rate on every step. AdamW adds the decay after the division, so every parameter shrinks by the same factor again."
+                },
+                {
+                  "text": "Adam scales every gradient to the same size, so the penalty's share drops out and no decay happens at all.",
+                  "explain": "The penalty stays in the gradient and still pulls every weight toward zero. Adam rescales it by a different amount for each parameter, but it does not remove it. On a weight with small gradients the decay is stronger than under SGD, not weaker."
+                },
+                {
+                  "text": "Adam applies the learning rate to the penalty twice, once in each running average, so the decay comes out far stronger than under SGD.",
+                  "explain": "The penalty enters the two averages as part of one gradient, and the learning rate multiplies the update once. Nothing doubles the decay. What changes is that the division by the gradient's size makes the decay's strength depend on each parameter's history."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Adam scales each parameter's whole gradient, penalty included, by the typical size of that parameter's recent gradients. A weight with large gradients has its penalty divided by that large size and barely decays, while a weight whose only steady gradient is the penalty has it divided by its own size and shrinks by close to the full learning rate on every step. AdamW adds the decay after the division, so every parameter shrinks by the same factor again."
+            },
+            {
+              "result": "The penalty term is divided by the root of the squared-gradient average along with the rest of the gradient, so a parameter with large recent gradients hardly decays and a quiet one decays fast."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

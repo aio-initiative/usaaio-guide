@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Ada the circuit owl mascot">
+  <defs>
+    <linearGradient id="owl-body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#4f46e5"/>
+    </linearGradient>
+  </defs>
+  <!-- antenna -->
+  <line x1="120" y1="72" x2="120" y2="44" stroke="#4338ca" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="120" cy="38" r="7" fill="#f59e0b"/>
+  <!-- ear tufts -->
+  <path d="M82 88 L92 46 L114 72 Z" fill="#4338ca"/>
+  <path d="M158 88 L148 46 L126 72 Z" fill="#4338ca"/>
+  <!-- wings -->
+  <ellipse cx="54" cy="152" rx="18" ry="36" fill="#4338ca" transform="rotate(16 54 152)"/>
+  <ellipse cx="186" cy="152" rx="18" ry="36" fill="#4338ca" transform="rotate(-16 186 152)"/>
+  <!-- body -->
+  <ellipse cx="120" cy="140" rx="66" ry="72" fill="url(#owl-body)"/>
+  <!-- belly circuit panel -->
+  <ellipse cx="120" cy="174" rx="38" ry="28" fill="#eef2ff"/>
+  <g stroke="#8b5cf6" stroke-width="2.4" fill="none" stroke-linecap="round">
+    <path d="M106 163 v9 h9"/>
+    <path d="M134 185 v-9 h-9"/>
+  </g>
+  <g fill="#8b5cf6">
+    <circle cx="106" cy="161" r="3"/>
+    <circle cx="117" cy="172" r="3"/>
+    <circle cx="134" cy="187" r="3"/>
+    <circle cx="123" cy="176" r="3"/>
+  </g>
+  <!-- glasses + eyes -->
+  <line x1="118" y1="112" x2="122" y2="112" stroke="#f59e0b" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="98" cy="112" r="23" fill="#ffffff" stroke="#f59e0b" stroke-width="5"/>
+  <circle cx="142" cy="112" r="23" fill="#ffffff" stroke="#f59e0b" stroke-width="5"/>
+  <circle cx="102" cy="115" r="8.5" fill="#0f172a"/>
+  <circle cx="138" cy="115" r="8.5" fill="#0f172a"/>
+  <circle cx="105" cy="112" r="2.8" fill="#ffffff"/>
+  <circle cx="141" cy="112" r="2.8" fill="#ffffff"/>
+  <!-- beak -->
+  <path d="M111 138 Q120 132 129 138 Q126 150 120 152 Q114 150 111 138 Z" fill="#f59e0b"/>
+  <!-- feet -->
+  <ellipse cx="100" cy="211" rx="12" ry="7" fill="#f59e0b"/>
+  <ellipse cx="140" cy="211" rx="12" ry="7" fill="#f59e0b"/>
+</svg>

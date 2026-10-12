@@ -1,0 +1,20 @@
+{
+  "aModule": "vision-relu-and-pooling",
+  "stage": "Round 2",
+  "fixes": [],
+  "parts": {
+    "cv-every-column-the-line-can-take": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "cv-every-column-the-line-can-take": "A 6 by 6 image holds a single vertical line, and the line could be in any of its six columns. For each column apply the vertical filter, ReLU and 2 by 2 max pooling, add up all 24 pooled values, and say which columns lose the line altogether and what change to the convolution would let the vertical filter find them."
+  }
+}

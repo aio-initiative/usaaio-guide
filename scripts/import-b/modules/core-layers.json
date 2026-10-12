@@ -1,0 +1,22 @@
+{
+  "aModule": "neural-network-regularization-dropout-batchnorm",
+  "stage": "Round 1",
+  "order": [
+    "cl-fold-batchnorm",
+    "cl-batchnorm-parameter-count",
+    "cl-eval-mode-statistics",
+    "cl-dropout-without-the-rescale"
+  ],
+  "fixes": [],
+  "parts": {
+    "cl-fold-batchnorm": {
+      "1.1": {"kind": "derivation", "requirement": "A complete derivation is required."},
+      "1.2": {"kind": "derivation", "requirement": "A complete derivation is required."},
+      "1.3": {"kind": "derivation", "requirement": "A complete derivation is required."},
+      "1.4": {"kind": "computation", "requirement": "Reasoning is not required."}
+    }
+  },
+  "indexPrompt": {
+    "cl-fold-batchnorm": "A trained linear layer followed by an eval-mode BatchNorm1d is replaced by one linear layer that gives the same outputs. Express the fold's scale and shift, find the new weight matrix and bias, say why the same fold fails in training mode, and compute the folded bias for a one-feature case."
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "aModule": "contrastive-learning",
+  "stage": "Round 2",
+  "fixes": [
+    {
+      "file": "cl-best-infonce-noisy-captions",
+      "find": "<Part answer=\"0.397\" tolerance={0.002}>",
+      "replace": "<Part answer=\"0.396\" tolerance={0.002}>",
+      "why": "Part 4's stored answer rounds the wrong way. The expected loss 1.683 is right (recomputed 1.682990), and ln 8 - 1.682990 = 0.396451, which rounds to 0.396, not 0.397."
+    },
+    {
+      "file": "cl-best-infonce-noisy-captions",
+      "find": "so the bound is $\\ln 8 - 1.683 = 0.397$",
+      "replace": "so the bound is $\\ln 8 - 1.683 = 0.396$",
+      "why": "The same number in the Part 4 solution text, two lines of math above the answer block. Left alone it would contradict the stored answer."
+    },
+    {
+      "file": "cl-best-infonce-noisy-captions",
+      "find": "| Bound $\\ln N - \\mathcal{L}$ | 0.207 | 0.331 | 0.397 | 0.452 | 0.459 |",
+      "replace": "| Bound $\\ln N - \\mathcal{L}$ | 0.207 | 0.331 | 0.396 | 0.452 | 0.459 |",
+      "why": "The same N = 8 bound in the Part 4 table (recomputed 0.396451). Changed for consistency with the answer and the text."
+    }
+  ],
+  "parts": {
+    "cl-best-infonce-noisy-captions": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.4": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "cl-collapsed-caption-encoder": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "cl-mean-pooling-padded-batch": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "cl-push-on-the-negatives": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.4": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "cl-recall-on-five-captions": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "cl-ripeness-from-simclr": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "cl-temperature-floor": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.4": {
+        "kind": "computation",
+        "requirement": "Reasoning is required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "cl-best-infonce-noisy-captions": "A weather camera takes photos of three kinds, equally often, and each photo comes with a one-word caption from a volunteer who names the right kind with probability 0.8 and each of the two wrong kinds with probability 0.1. A contrastive model trains on batches of N photo-caption pairs with a free score for every pair of a kind and a word; find the scores that minimize the expected loss, the loss at small batch sizes, and the mutual-information bound they deliver.",
+    "cl-collapsed-caption-encoder": "A bug makes a CLIP text tower emit the same unit vector for every caption while the image tower still works. With four image embeddings at cosine similarities 0.3, 0.1, 0.1 and -0.1 to that vector and temperature 0.1, compute the text-to-image loss and the full CLIP loss, then find the lowest loss the image tower can reach on its own.",
+    "cl-infonce-from-raw-vectors": "A retrieval model is trained with the InfoNCE loss at temperature 0.1. For one query the batch holds its matching key and two keys that do not match, so what is the loss for that query?",
+    "cl-mean-pooling-padded-batch": "A CLIP text tower averages token states without the attention mask, so padding positions drag on the average. With the padding state (0, 0, 3) and two captions whose real states average to (3, 0, 0) and (0, 3, 0), find the cosine similarity of the pooled vectors in a batch padded to 8 tokens, then for the same caption in a batch padded to 4.",
+    "cl-push-on-the-negatives": "One query has a positive and ten negatives, with cosine similarity 0.8 to the positive, 0.5 to one close negative and 0.1 to the other nine. Compute how the gradient push on the negatives is split between the close negative and the easy ones, and how the temperature moves that split.",
+    "cl-recall-on-five-captions": "A test set has 1,000 images with five captions each, and a retrieval evaluation builds one row per caption. Work out what the reported image-to-text and text-to-image scores are, then rewrite the evaluation so it measures what the model actually does.",
+    "cl-ripeness-from-simclr": "A fruit packing plant pretrains an image encoder with SimCLR on two million unlabeled conveyor-belt photos, building each view with a random crop covering 30 to 100% of it, a random horizontal flip, a hue shift of up to half the color wheel in either direction, and a conversion to grayscale with probability 0.5. A linear classifier trained on the frozen features then scores 94% at telling apples, pears and plums apart but only 61% at telling ripe bananas from unripe ones, which differ mainly in color; which change to the pretraining is most likely to raise the ripeness score?",
+    "cl-sixteen-micro-batches": "A team wants to train a CLIP model on batches of 4,096 image-caption pairs, but only 256 pairs fit in GPU memory, so they run 16 micro-batches of 256 pairs, add the 16 gradients, and take one optimizer step. How does that compare with training on full batches of 4,096 pairs, where each row's softmax sees every caption in the batch?",
+    "cl-temperature-floor": "A CLIP-style model with a fixed temperature tau trains on batches of N pairs, and its encoders are perfect, so every caption embeds at the point of its own image and only the arrangement of the N embeddings is left to choose. Find the loss for 16 mutually perpendicular pairs at tau = 0.5, prove the lowest loss any arrangement can reach along with the arrangement that reaches it, and apply that floor at CLIP's batch size of 32,768 to the largest workable fixed temperature and to what too high a fixed temperature does to training.",
+    "cl-zero-shot-dropped-step": "A zero-shot CLIP classifier labels an image as cat, dog or fox in four steps: scale the image embedding to length 1, scale each prompt embedding to length 1, multiply the dot products by the learned scale of 100, then take a softmax. For one photo the cosines with the three prompts are 0.29, 0.27 and 0.24 and the prompt embeddings have lengths 9.0, 10.0 and 11.5. Which single step, if dropped, changes the class the classifier reports?"
+  },
+  "order": [
+    "cl-infonce-from-raw-vectors",
+    "cl-ripeness-from-simclr",
+    "cl-push-on-the-negatives",
+    "cl-collapsed-caption-encoder",
+    "cl-sixteen-micro-batches",
+    "cl-zero-shot-dropped-step",
+    "cl-mean-pooling-padded-batch",
+    "cl-recall-on-five-captions",
+    "cl-temperature-floor",
+    "cl-best-infonce-noisy-captions"
+  ]
+}

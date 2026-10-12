@@ -1,0 +1,6 @@
+# Everything the deck builders need. Install into the repo virtualenv:
+#   npm run slides:setup
+matplotlib>=3.8
+numpy>=1.26
+pymupdf>=1.24
+python-pptx>=1.0

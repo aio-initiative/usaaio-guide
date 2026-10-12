@@ -1,0 +1,1212 @@
+{
+  "module": "principal-component-analysis",
+  "stage": "Round 2",
+  "index": [
+    {
+      "id": "pca-uncentered-rectangle",
+      "moduleId": "principal-component-analysis",
+      "title": "The Component a Skipped Mean Finds",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pca-uncentered-rectangle",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A logger records four readings, (-2, 2), (2, 2), (-2, 4) and (2, 4), and a script runs PCA on them without subtracting the column means, taking the top eigenvector of the raw Gram matrix over n minus 1. Which component does the script report as the first one, and what fraction of the variance does it print?",
+      "answer": "First component (0, 1), explaining 5/7 ~ 0.714. From the raw rows, the cross terms cancel, (\u22124) + 4 + (\u22128) + 8 = 0, and the diagonal is (4 + 4 + 4 + 4) / 3 = 16/3 and (4 + 4 + 16 + 16) / 3 = 40/3. So M = diag(16/3, 40/3), its top eigenvector is (0, 1), and the printed share is 40 / 56 = 5/7. In general M is the covariance plus n / (n \u2212 1) times the outer product of the mean with itself. Here the mean (0, 3) adds 12 to the second diagonal entry, more than the 16/3 of real spread along the first channel, so the script reports the direction in which the readings vary least."
+    },
+    {
+      "id": "pca-best-single-column",
+      "moduleId": "principal-component-analysis",
+      "title": "The Best Single Column",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pca-best-single-column",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A centered dataset of three features has covariance matrix with diagonal entries 5, 2 and 3, and the only nonzero off-diagonal entries are the pair of 2s between the first two features. The parts ask what fraction of the total variance the first principal component explains, how much more of it the first two components keep than the two widest original columns, and whether a single original column can ever beat the first component. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pca-two-new-readings",
+      "moduleId": "principal-component-analysis",
+      "title": "Two Readings, One Residual",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pca-two-new-readings",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "PCA on three machine measurements keeps two components, and each new reading is compared with its two-component reconstruction. For two readings, find the residual length and say what the whitened scores add that the residual does not. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pca-components-for-noise",
+      "moduleId": "principal-component-analysis",
+      "title": "What a 95% Target Keeps",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pca-components-for-noise",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A dataset has 100 features whose covariance is a rank-five signal of variance 8 on each of its directions plus independent noise of variance 0.6 in every coordinate. Find the share of the variance the first five principal components explain, how many components a 95 percent variance target keeps, and what reconstructing a row from few components does to its noise. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pca-rain-and-river",
+      "moduleId": "principal-component-analysis",
+      "title": "Rainfall in Millimeters, River Level in Meters",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pca-rain-and-river",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A dataset pairs daily rainfall in millimeters (standard deviation 5) with river level in meters (standard deviation 1), and their correlation is 0.7. Give the fraction of the variance the first principal component explains on the raw columns, and the fraction after standardizing both columns.",
+      "answer": "Raw 0.981, standardized 0.85. On the raw columns the variances are 25 and 1 and the covariance is 0.7 \u00d7 5 \u00d7 1 = 3.5. The trace is 26 and the determinant 25 \u2212 12.25 = 12.75, so the eigenvalues solve x\u00b2 \u2212 26x + 12.75 = 0: 25.5 and 0.5. The first component explains 25.5 / 26 = 0.981 and points along (7, 1) / \u221a50, almost pure rainfall. Standardized, the covariance matrix is the correlation matrix [[1, 0.7], [0.7, 1]], with eigenvectors (1, 1) / \u221a2 and (1, \u22121) / \u221a2 and eigenvalues 1.7 and 0.3, so the first component explains 0.85. Most of the raw 0.981 reports that a millimeter is a small unit."
+    },
+    {
+      "id": "pca-twenty-faces",
+      "moduleId": "principal-component-analysis",
+      "title": "Twenty Faces, Ten Thousand Pixels",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=pca-twenty-faces",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "Twenty centered face images of ten thousand pixels each form a 20 by 10,000 matrix, and the covariance matrix would be 10,000 by 10,000. Find how many principal components can have nonzero variance, build one from an eigenvector of the 20 by 20 Gram matrix, and compare the cost of that route with forming the covariance matrix. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pca-points-on-a-parabola",
+      "moduleId": "principal-component-analysis",
+      "title": "Five Points on a Parabola",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pca-points-on-a-parabola",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "Five points lie on the curve y = x squared. Run PCA on them and keep one component: what fraction of the variance does the first component explain, how many distinct values do the five scores take, and why does PCA not pick the axis that would keep the points in order along the curve? 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pca-duplicated-column",
+      "moduleId": "principal-component-analysis",
+      "title": "A Column That Appears More than Once",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pca-duplicated-column",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A weather dataset has uncorrelated temperature and humidity columns, and a join brings in identical copies of humidity so it appears m times. Find the variance fraction of the first component at m = 2, the smallest m for which the first component stops being temperature, and what changes after standardizing. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pca-line-between-regressions",
+      "moduleId": "principal-component-analysis",
+      "title": "The PCA Line Between Two Regressions",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=pca-line-between-regressions",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "Five points centered at the origin give three candidate lines through them: the two least-squares regression lines and the line of the first principal component. Compute the first-component slope, prove it always lands between the two regression slopes when the two columns are positively correlated, and recompute it after changing the unit one column is recorded in. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pca-class-from-eigh",
+      "moduleId": "principal-component-analysis",
+      "title": "PCA from the Covariance Matrix",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=pca-class-from-eigh",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Build PCA from the sample covariance matrix and the eigendecomposition, the route the derivation starts from rather than the SVD route the lesson's class takes, and add the three things a usable PCA needs: a fixed sign for every component so two runs agree, a number of components given as a fraction of the variance, and whitened scores that turn back into rows. The data is a week of readings from six strain gauges on a bridge. NumPy is allowed, including its symmetric eigensolver, but not its SVD or scikit-learn.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right, and a worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "pca-power-iteration-numpy",
+      "moduleId": "principal-component-analysis",
+      "title": "Principal Components by Power Iteration",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=pca-power-iteration-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Find the principal components with no eigenvalue routine at all: neither the general nor the symmetric eigensolver from NumPy, nor its SVD, nor anything from scikit-learn. Every component comes from matrix-vector products alone, with power iteration turning a starting vector toward the top eigenvector and deflation removing what is already found. The data is a year of daily temperatures at eight weather stations.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right, and a worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "theory-pca-variance",
+      "moduleId": "principal-component-analysis",
+      "title": "PCA from Variance Maximization",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=theory-pca-variance",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Includes code",
+        "Round 2"
+      ],
+      "prompt": "Derive the first principal component two ways, by maximizing variance and by minimizing reconstruction error, then prove the two agree. 6 parts, each with its own grading instruction. Solutions revealed part by part.",
+      "answer": "Worked solutions are given part by part on the problem page (full derivations, not just final values). Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ml14-whitening-blowup",
+      "moduleId": "principal-component-analysis",
+      "title": "Whitening Makes the Noise as Loud as the Signal",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ml14-whitening-blowup",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Whiten a rank-deficient dataset three ways and measure how much of the total variance naive whitening hands to directions made of pure rounding error.",
+      "answer": "Auto-graded inside the notebook. Eigenvalues and all three variance fractions must match to 1e-6, with naive whitening giving the noise most of the variance."
+    },
+    {
+      "id": "unsupervised-implementation-task",
+      "moduleId": "principal-component-analysis",
+      "title": "Unsupervised Anomaly Detection Practice",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=unsupervised",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Unsupervised anomaly detection (PCA reconstruction / IsolationForest / distances). Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. F1 score on the anomaly class must be \u2265 0.6."
+    }
+  ],
+  "theory": [
+    {
+      "id": "pca-uncentered-rectangle",
+      "moduleId": "principal-component-analysis",
+      "title": "The Component a Skipped Mean Finds",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A logger records two channels, and four readings come in: $(-2, 2)$, $(2, 2)$, $(-2, 4)$ and $(2, 4)$. A script meant to run PCA on them never subtracts the column means. It forms $M = X^\\top X / (n - 1)$ from the raw rows, takes the eigenvector of $M$ with the largest eigenvalue as the first component, and prints that eigenvalue's share of the sum of the eigenvalues as the fraction of variance explained."
+            },
+            {
+              "p": "What does the script print?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "First component $(1, 0)$, explaining $0.8$",
+                  "explain": "That is the answer PCA gives on the centered rows, where the covariance is diag(16, 4) / 3 and the readings spread most along the first channel. The script never centers. The second channel's values sit around a mean of 3, and without centering the square of that mean lands on the diagonal of M, which becomes diag(16, 40) / 3."
+                },
+                {
+                  "text": "First component $(0, 1)$, explaining $5/7 \\approx 0.714$",
+                  "correct": true,
+                  "explain": "From the raw rows, the cross terms cancel, (\u22124) + 4 + (\u22128) + 8 = 0, and the diagonal is (4 + 4 + 4 + 4) / 3 = 16/3 and (4 + 4 + 16 + 16) / 3 = 40/3. So M = diag(16/3, 40/3), its top eigenvector is (0, 1), and the printed share is 40 / 56 = 5/7. In general M is the covariance plus n / (n \u2212 1) times the outer product of the mean with itself. Here the mean (0, 3) adds 12 to the second diagonal entry, more than the 16/3 of real spread along the first channel, so the script reports the direction in which the readings vary least."
+                },
+                {
+                  "text": "First component $(0, 1)$, explaining $0.2$",
+                  "explain": "The direction is the one this script finds, but 0.2 is the share of the true variance along (0, 1): 4/3 out of 20/3, taken from the centered covariance. The script divides the eigenvalues of the uncentered M, 40/3 out of 56/3, so it prints 5/7."
+                },
+                {
+                  "text": "First component $(1, 0)$, explaining $2/7 \\approx 0.286$",
+                  "explain": "That is the first column and the first eigenvalue that np.linalg.eigh returns for M. eigh lists the eigenvalues in ascending order, so its first column, (1, 0), belongs to the smaller one, 16/3 out of 56/3. The script takes the eigenvector with the largest eigenvalue."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "From the raw rows, the cross terms cancel, (\u22124) + 4 + (\u22128) + 8 = 0, and the diagonal is (4 + 4 + 4 + 4) / 3 = 16/3 and (4 + 4 + 16 + 16) / 3 = 40/3. So M = diag(16/3, 40/3), its top eigenvector is (0, 1), and the printed share is 40 / 56 = 5/7. In general M is the covariance plus n / (n \u2212 1) times the outer product of the mean with itself. Here the mean (0, 3) adds 12 to the second diagonal entry, more than the 16/3 of real spread along the first channel, so the script reports the direction in which the readings vary least."
+            },
+            {
+              "result": "First component $(0, 1)$, explaining $5/7 \\approx 0.714$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pca-best-single-column",
+      "moduleId": "principal-component-analysis",
+      "title": "The Best Single Column",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "Three features of a centered dataset have the sample covariance matrix"
+      ],
+      "setup": [
+        {
+          "tex": "\\Sigma = \\begin{bmatrix} 5 & 2 & 0 \\\\ 2 & 2 & 0 \\\\ 0 & 0 & 3 \\end{bmatrix} ."
+        },
+        {
+          "p": "A teammate proposes to skip PCA: keep the original column with the largest variance, or, if two numbers per row are allowed, the two columns with the largest variances."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What fraction of the total variance does the first principal component explain?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The third feature has zero covariance with the other two, so $\\mathbf{e}_3$ is an eigenvector with eigenvalue 3, and the other two eigenvalues belong to the upper left $2 \\times 2$ block, with entries 5, 2, 2 and 2. The block's trace is 7 and its determinant $10 - 4 = 6$, so its eigenvalues solve $\\lambda^2 - 7\\lambda + 6 = 0$: 6 and 1. Check the top one:"
+            },
+            {
+              "tex": "\\Sigma\\,(2, 1, 0)^\\top = (12, 6, 0)^\\top = 6\\,(2, 1, 0)^\\top ."
+            },
+            {
+              "p": "The eigenvalues are 6, 3 and 1, adding to the trace, 10. The first component is $(2, 1, 0)/\\sqrt{5}$ and explains $6/10 = 0.6$. The teammate's single column, the first feature, explains $5/10 = 0.5$."
+            },
+            {
+              "result": "0.6"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "With two numbers per row allowed, how much more of the total variance do the first two principal components keep than the teammate's two columns? Give the difference as a fraction of the total variance."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The first two components keep $(6 + 3)/10 = 0.9$. The teammate keeps the first and third columns, with variances 5 and 3, so $8/10 = 0.8$. The difference is $0.1$."
+            },
+            {
+              "p": "The second component is the third column itself, $\\mathbf{e}_3$, so both choices keep it. The whole gap comes from the first slot: the column with variance 5 against the direction $(2, 1, 0)/\\sqrt5$ with variance 6, which also collects the part of the second column's variance that it shares with the first."
+            },
+            {
+              "result": "0.1"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Can a single original column ever explain more variance than the first principal component, for some covariance matrix? Prove your answer, and say exactly when the two are equal."
+            }
+          ],
+          "answer": [
+            {
+              "p": "No. Column $j$ is the projection of the data onto the unit vector $\\mathbf{e}_j$, so its variance is $\\mathbf{e}_j^\\top \\Sigma\\,\\mathbf{e}_j = \\Sigma_{jj}$. The first component maximizes $\\mathbf{w}^\\top \\Sigma\\,\\mathbf{w}$ over all unit vectors, and $\\mathbf{e}_j$ is one of them, so"
+            },
+            {
+              "tex": "\\Sigma_{jj} = \\mathbf{e}_j^\\top \\Sigma\\,\\mathbf{e}_j \\le \\lambda_1\n\\quad \\text{for every } j ."
+            },
+            {
+              "p": "Equality holds when $\\mathbf{e}_j$ is itself a top eigenvector: $\\Sigma\\,\\mathbf{e}_j = \\lambda_1 \\mathbf{e}_j$. The left side is column $j$ of $\\Sigma$, so the condition is that column $j$ has zero covariance with every other column and its variance equals $\\lambda_1$. In this problem the third column passes the first test, which is why it is a principal component, but its variance 3 is the second eigenvalue, not the first. Any covariance between the top column and the others lets a tilted direction do strictly better. $\\qquad\\blacksquare$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pca-two-new-readings",
+      "moduleId": "principal-component-analysis",
+      "title": "Two Readings, One Residual",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A plant monitors each machine with three measurements. PCA fitted on 401 rows of normal operation gives the mean $\\boldsymbol{\\mu} = (40, 25, 60)$, the components"
+      ],
+      "setup": [
+        {
+          "tex": "\\mathbf{w}_1 = \\tfrac13 (1, 2, 2), \\qquad\n\\mathbf{w}_2 = \\tfrac13 (2, 1, -2), \\qquad\n\\mathbf{w}_3 = \\tfrac13 (2, -2, 1),"
+        },
+        {
+          "p": "and the variances along them, the eigenvalues of the sample covariance matrix, $\\lambda_1 = 9$, $\\lambda_2 = 4$ and $\\lambda_3 = 0.25$. The monitor keeps two components. For each new reading it computes the two scores, the reconstruction from them, and the residual, the reading minus its reconstruction. Two readings arrive:"
+        },
+        {
+          "tex": "A = (43, 25, 63), \\qquad B = (40, 28, 66) ."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the length of reading $A$'s residual?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Subtract the mean, $A - \\boldsymbol{\\mu} = (3, 0, 3)$, and take the two scores:"
+            },
+            {
+              "tex": "z_1 = \\mathbf{w}_1^\\top (A - \\boldsymbol{\\mu}) = \\tfrac13(3 + 0 + 6) = 3,\n\\qquad\nz_2 = \\mathbf{w}_2^\\top (A - \\boldsymbol{\\mu}) = \\tfrac13(6 + 0 - 6) = 0 ."
+            },
+            {
+              "p": "The reconstruction is $\\boldsymbol{\\mu} + 3\\mathbf{w}_1 = (41, 27, 62)$, and the residual is $(43, 25, 63) - (41, 27, 62) = (2, -2, 1)$, of length $\\sqrt{4 + 4 + 1} = 3$."
+            },
+            {
+              "p": "A shorter route: the three components are orthonormal, so the residual is the part of $A - \\boldsymbol{\\mu}$ along $\\mathbf{w}_3$, with $z_3 = \\tfrac13(6 - 0 + 3) = 3$, and its squared length is $\\lVert A - \\boldsymbol{\\mu} \\rVert^2 - z_1^2 - z_2^2 = 18 - 9 - 0 = 9$."
+            },
+            {
+              "result": "3"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Over the 401 training rows, what is the mean squared length of the residual? How many times larger is $A$'s squared residual? Give the ratio to the nearest whole number."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Keeping two of three components, the total squared residual over the training rows is $(n - 1)$ times the discarded eigenvalue: $400 \\times 0.25 = 100$. The mean over the 401 rows is $100/401 \\approx 0.249$, and"
+            },
+            {
+              "tex": "\\frac{9}{100/401} = 36.09 \\approx 36 ."
+            },
+            {
+              "p": "The training data varies off the plane of the two components with a standard deviation of $\\sqrt{0.25} = 0.5$, and $A$ sits $3/0.5 = 6$ of those off it."
+            },
+            {
+              "result": "36"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Reading $B$ is farther from the mean than $A$. Find $B$'s residual, and explain why a residual-based monitor rates $B$ as normal. Then divide each of $B$'s two scores by $\\sqrt{\\lambda_j}$ and say what the result shows that the residual does not."
+            }
+          ],
+          "answer": [
+            {
+              "p": "$B - \\boldsymbol{\\mu} = (0, 3, 6)$, at distance $\\sqrt{45} \\approx 6.71$ from the mean against $\\sqrt{18} \\approx 4.24$ for $A$. Its scores are"
+            },
+            {
+              "tex": "z_1 = \\tfrac13(0 + 6 + 12) = 6, \\qquad\nz_2 = \\tfrac13(0 + 3 - 12) = -3, \\qquad\nz_3 = \\tfrac13(0 - 6 + 6) = 0 ,"
+            },
+            {
+              "p": "so $6\\mathbf{w}_1 - 3\\mathbf{w}_2 = (0, 3, 6)$ rebuilds it exactly and the residual is zero. $B$ lies in the plane the machine normally moves in. Its offset is large, but it is a combination of the two patterns the training data already shows."
+            },
+            {
+              "p": "Dividing by $\\sqrt9 = 3$ and $\\sqrt4 = 2$ gives the whitened scores $(2, -1.5)$, of length 2.5: $B$ is two standard deviations out along the first pattern and one and a half along the second. $A$'s whitened scores are $(1, 0)$, unremarkable. So the two numbers measure different things. The residual flags readings that break the pattern, as $A$ does, and the whitened scores flag readings that follow the pattern to an unusual extent, as $B$ does. A monitor that should catch both kinds tracks both."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pca-components-for-noise",
+      "moduleId": "principal-component-analysis",
+      "title": "What a 95% Target Keeps",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A dataset has 100 features, and its covariance matrix is the sum of two parts. The signal varies only inside a 5-dimensional subspace, with variance 8 along each of 5 orthonormal directions that span it. The noise has variance 0.6 in each of the 100 coordinates, independent across coordinates and of the signal. Treat the sample covariance matrix as equal to this one."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What fraction of the total variance do the first five principal components explain?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write the covariance as $\\Sigma = \\Sigma_s + 0.6\\,I$. If $\\Sigma_s \\mathbf{v} = \\lambda \\mathbf{v}$, then $\\Sigma\\mathbf{v} = (\\lambda + 0.6)\\mathbf{v}$: adding $0.6\\,I$ keeps every eigenvector and raises every eigenvalue by 0.6. $\\Sigma_s$ has eigenvalue 8 on the five signal directions and 0 on the 95 directions orthogonal to them, so $\\Sigma$ has"
+            },
+            {
+              "tex": "\\underbrace{8.6, \\dots, 8.6}_{5}, \\;\\; \\underbrace{0.6, \\dots, 0.6}_{95} ,"
+            },
+            {
+              "p": "with total $43 + 57 = 100$, which is also $5 \\times 8 + 100 \\times 0.6$, the trace. The first five explain $43/100 = 0.43$."
+            },
+            {
+              "result": "0.43"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "`PCA(n_components=0.95)` keeps the smallest number of components whose cumulative fraction of variance reaches 0.95. How many does it keep here?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "After the first five, each component adds $0.006$ to the cumulative fraction. Reaching $0.95$ needs $0.43 + 0.006\\,m \\ge 0.95$, so $m \\ge 86.7$ and $m = 87$. That is $5 + 87 = 92$ components: 91 reach $0.946$ and 92 reach $0.952$."
+            },
+            {
+              "result": "92"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Sketch the cumulative curve, say how many components you would keep, and say what reconstructing a row from that many components does to its noise."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The curve climbs $0.086$ per component for five components, then turns into a straight line climbing $0.006$ per component up to 1. The bend at $k = 5$ is where the signal ends, and every component after it is noise."
+            },
+            {
+              "p": "Keep five. The reconstruction from them discards $57\\%$ of the variance, and all of it is noise: the 95 discarded directions carry $95 \\times 0.6 = 57$ of the 60 units of noise and none of the 40 units of signal. Projecting onto the five components removes all but 3 units of noise and keeps the signal whole, which is how PCA denoises."
+            },
+            {
+              "p": "The 95% target instead keeps 87 noise components, with $87 \\times 0.6 = 52.2$ units of noise in them, more than the signal's 40. A variance target treats noise variance as data to keep. With a finite sample the 95 noise eigenvalues spread around 0.6 instead of being equal (between about 0.52 and 0.68 for 20,000 rows), so the bend is slightly rounded, but it stays at five."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pca-rain-and-river",
+      "moduleId": "principal-component-analysis",
+      "title": "Rainfall in Millimeters, River Level in Meters",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A hydrology dataset has two columns: daily rainfall in millimeters, with standard deviation 5, and river level in meters, with standard deviation 1. Their correlation is 0.7. You run PCA twice, once on the raw columns and once after standardizing both."
+            },
+            {
+              "p": "What fraction of the variance does the first component explain in each run?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Raw $0.85$, standardized $0.85$",
+                  "explain": "Equal fractions would mean that PCA ignores units, and it does not. On the raw columns the covariance matrix is [[25, 3.5], [3.5, 1]], whose eigenvalues 25.5 and 0.5 give 25.5 / 26 = 0.981. Only the standardized run, which works on the correlation matrix, gives 0.85."
+                },
+                {
+                  "text": "Raw $0.962$, standardized $0.85$",
+                  "explain": "0.962 is 25 / 26, rainfall's share of the total variance, read off the diagonal. The covariance of 3.5 between the columns pushes the top eigenvalue above 25: the eigenvalues of [[25, 3.5], [3.5, 1]] are 25.5 and 0.5, so the first component explains 0.981."
+                },
+                {
+                  "text": "Raw $0.981$, standardized $0.85$",
+                  "correct": true,
+                  "explain": "On the raw columns the variances are 25 and 1 and the covariance is 0.7 \u00d7 5 \u00d7 1 = 3.5. The trace is 26 and the determinant 25 \u2212 12.25 = 12.75, so the eigenvalues solve x\u00b2 \u2212 26x + 12.75 = 0: 25.5 and 0.5. The first component explains 25.5 / 26 = 0.981 and points along (7, 1) / \u221a50, almost pure rainfall. Standardized, the covariance matrix is the correlation matrix [[1, 0.7], [0.7, 1]], with eigenvectors (1, 1) / \u221a2 and (1, \u22121) / \u221a2 and eigenvalues 1.7 and 0.3, so the first component explains 0.85. Most of the raw 0.981 reports that a millimeter is a small unit."
+                },
+                {
+                  "text": "Raw $0.981$, standardized $0.5$",
+                  "explain": "The raw fraction is right. Standardizing gives each column variance 1, but the correlation survives it: the correlation matrix has eigenvalues 1 + 0.7 and 1 \u2212 0.7, so the first component explains 0.85. Equal variance in every direction is what whitening the scores produces, not what standardizing the columns produces."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "On the raw columns the variances are 25 and 1 and the covariance is 0.7 \u00d7 5 \u00d7 1 = 3.5. The trace is 26 and the determinant 25 \u2212 12.25 = 12.75, so the eigenvalues solve x\u00b2 \u2212 26x + 12.75 = 0: 25.5 and 0.5. The first component explains 25.5 / 26 = 0.981 and points along (7, 1) / \u221a50, almost pure rainfall. Standardized, the covariance matrix is the correlation matrix [[1, 0.7], [0.7, 1]], with eigenvectors (1, 1) / \u221a2 and (1, \u22121) / \u221a2 and eigenvalues 1.7 and 0.3, so the first component explains 0.85. Most of the raw 0.981 reports that a millimeter is a small unit."
+            },
+            {
+              "result": "Raw $0.981$, standardized $0.85$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pca-twenty-faces",
+      "moduleId": "principal-component-analysis",
+      "title": "Twenty Faces, Ten Thousand Pixels",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "You have $n = 20$ grayscale face images of $100 \\times 100$ pixels. Flattened and centered, they form $X_c \\in \\mathbb{R}^{20 \\times 10{,}000}$. The covariance matrix $X_c^\\top X_c / (n - 1)$ would be $10{,}000 \\times 10{,}000$. The $20 \\times 20$ matrix $G = X_c X_c^\\top$ holds the dot products between pairs of centered images."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "At most how many principal components have nonzero variance?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The covariance matrix has the same rank as $X_c$, and $\\operatorname{rank} X_c \\le \\min(20, 10{,}000) = 20$. Centering lowers the bound by one: every column of $X_c$ sums to zero, so the 20 rows add up to the zero vector and are linearly dependent. Hence $\\operatorname{rank} X_c \\le 19$, the covariance matrix has at most 19 nonzero eigenvalues, and the other 9,981 are zero. Twenty images in general position reach 19."
+            },
+            {
+              "result": "19"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Let $\\mathbf{u}$ be a unit eigenvector of $G$ with eigenvalue $\\mu > 0$. Using only $X_c$, $\\mathbf{u}$ and $\\mu$, find a unit principal component $\\mathbf{v}$ and the variance of the data along it."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Multiply $G\\mathbf{u} = \\mu\\mathbf{u}$ on the left by $X_c^\\top$:"
+            },
+            {
+              "tex": "X_c^\\top X_c \\,(X_c^\\top \\mathbf{u}) = \\mu\\,(X_c^\\top \\mathbf{u}) ."
+            },
+            {
+              "p": "So $X_c^\\top\\mathbf{u}$ is an eigenvector of $X_c^\\top X_c$ with eigenvalue $\\mu$, provided it is not zero. Its squared length is"
+            },
+            {
+              "tex": "\\lVert X_c^\\top \\mathbf{u} \\rVert^2 = \\mathbf{u}^\\top X_c X_c^\\top \\mathbf{u}\n= \\mathbf{u}^\\top G\\,\\mathbf{u} = \\mu > 0 ,"
+            },
+            {
+              "p": "so the unit component is"
+            },
+            {
+              "tex": "\\mathbf{v} = \\frac{X_c^\\top \\mathbf{u}}{\\sqrt{\\mu}} ,"
+            },
+            {
+              "p": "and the covariance matrix $X_c^\\top X_c/(n-1)$ has eigenvalue $\\mu/(n-1)$ along it: that is the variance. In terms of the SVD $X_c = USV^\\top$, $G = US^2U^\\top$, so $\\mathbf{u}$ is a column of $U$, $\\mu = s^2$, and $\\mathbf{v}$ is the matching column of $V$."
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "What are the scores of the 20 training images on $\\mathbf{v}$? Compare the work of this route with forming the covariance matrix."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The scores are"
+            },
+            {
+              "tex": "X_c \\mathbf{v} = \\frac{X_c X_c^\\top \\mathbf{u}}{\\sqrt\\mu}\n= \\frac{G\\mathbf{u}}{\\sqrt\\mu} = \\sqrt{\\mu}\\,\\mathbf{u} ,"
+            },
+            {
+              "p": "so they come free with the eigenvector of $G$, and the $10{,}000$-dimensional $\\mathbf{v}$ is needed only to score new images or to reconstruct."
+            },
+            {
+              "p": "Forming $G$ takes $20 \\times 20 \\times 10{,}000 = 4 \\times 10^6$ multiply-adds, and its eigenproblem is $20 \\times 20$. The covariance matrix has $10^8$ entries, 800 MB in 64-bit floats, takes $20 \\times 10^8$ multiply-adds to form, and needs a $10{,}000 \\times 10{,}000$ eigenproblem whose answer has at most 19 nonzero eigenvalues anyway. When $n \\ll d$, work with the $n \\times n$ matrix, or take the SVD of $X_c$ directly, which does the same thing."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pca-points-on-a-parabola",
+      "moduleId": "principal-component-analysis",
+      "title": "Five Points on a Parabola",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "Five points lie on the curve $y = x^2$:"
+      ],
+      "setup": [
+        {
+          "tex": "(-2, 4), \\quad (-1, 1), \\quad (0, 0), \\quad (1, 1), \\quad (2, 4) ."
+        },
+        {
+          "p": "One number, the position along the curve, describes each point exactly. You run PCA on them and keep one component."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What fraction of the variance does the first component explain?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The mean is $(0, 2)$. The centered $x$ values are $-2, -1, 0, 1, 2$ and the centered $y$ values $2, -1, -2, -1, 2$. Dividing by $n - 1 = 4$:"
+            },
+            {
+              "tex": "\\operatorname{var}(x) = \\frac{10}{4} = 2.5, \\qquad\n\\operatorname{var}(y) = \\frac{14}{4} = 3.5, \\qquad\n\\operatorname{cov}(x, y) = \\frac{-4 + 1 + 0 - 1 + 4}{4} = 0 ."
+            },
+            {
+              "p": "The covariance is zero because the centered $y$ is an even function of $x$ and $x$ is symmetric about 0. With a diagonal covariance matrix the components are the axes, and the larger variance is along $y$. The first component is $(0, 1)$, explaining $3.5/6 = 7/12 \\approx 0.583$."
+            },
+            {
+              "result": "0.583"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "How many distinct values do the five scores on the first component take?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The scores are the centered $y$ values, $2, -1, -2, -1, 2$: three distinct values. The points at $x = -2$ and $x = 2$ get the same score, and so do the points at $x = -1$ and $x = 1$. The one-number summary cannot tell the two arms of the curve apart."
+            },
+            {
+              "result": "3"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Projecting onto the $x$ axis would give five distinct scores in the order of the curve. Why does PCA not choose that axis? Describe the reconstruction PCA does produce, and say what kind of method would recover the position along the curve."
+            }
+          ],
+          "answer": [
+            {
+              "p": "PCA chooses the axis that keeps the most variance, which is the same as the axis that leaves the smallest total squared residual. Keeping $y$ leaves $(n - 1)\\lambda_2 = 4 \\times 2.5 = 10$, the sum of the squared $x$ values. Keeping $x$ would leave $4 \\times 3.5 = 14$. Distinct scores are not part of the objective."
+            },
+            {
+              "p": "The reconstruction from the first component sets every $x$ to its mean, 0: the five points land on $(0, 4)$, $(0, 1)$, $(0, 0)$, $(0, 1)$ and $(0, 4)$, the two arms folded onto one segment of the $y$ axis."
+            },
+            {
+              "p": "Neither straight axis is right here. The $x$ axis keeps the order but leaves a residual of 14, and the $y$ axis leaves 10 but merges the arms. A summary that keeps the order with zero residual has to follow the curve, which a straight axis cannot. Methods that unroll a curved set, such as kernel PCA or a method built on nearest-neighbor distances, can."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pca-duplicated-column",
+      "moduleId": "principal-component-analysis",
+      "title": "A Column That Appears More than Once",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A weather dataset has two uncorrelated columns, temperature with variance 5 and humidity with variance 2. Before PCA, a join of several tables brings in identical copies of the humidity column, so humidity appears $m$ times."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "With humidity appearing twice ($m = 2$), what fraction of the variance does the first component explain?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The covariance matrix of (temperature, humidity, humidity) is"
+            },
+            {
+              "tex": "\\begin{bmatrix} 5 & 0 & 0 \\\\ 0 & 2 & 2 \\\\ 0 & 2 & 2 \\end{bmatrix} ."
+            },
+            {
+              "p": "The humidity block is $2\\,\\mathbf{1}\\mathbf{1}^\\top$, with eigenvalue $2 \\times 2 = 4$ along $(0, 1, 1)/\\sqrt2$ and 0 along $(0, 1, -1)/\\sqrt2$. The eigenvalues are 5, 4 and 0. The first component is still temperature, explaining $5/9 \\approx 0.556$, down from $5/7 \\approx 0.714$ before the join. The two copies act as one direction with twice the variance."
+            },
+            {
+              "result": "0.556"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the smallest $m$ for which the first component is no longer temperature?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "With $m$ copies the humidity block is $2\\,\\mathbf{1}\\mathbf{1}^\\top$ of size $m$, with top eigenvalue $2m$ along $\\mathbf{1}/\\sqrt{m}$. Temperature keeps eigenvalue 5. The copies win when $2m > 5$, so at $m = 3$: eigenvalue 6 against 5, and the first component is $(0, 1, 1, 1)/\\sqrt3$, explaining $6/11$. Nothing about humidity changed except how many columns carry it."
+            },
+            {
+              "result": "3"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Standardize every column first and take $m = 2$. What fraction does the first component explain now?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "After standardizing, every column has variance 1 and the two copies have correlation 1, so the covariance matrix is"
+            },
+            {
+              "tex": "\\begin{bmatrix} 1 & 0 & 0 \\\\ 0 & 1 & 1 \\\\ 0 & 1 & 1 \\end{bmatrix} ,"
+            },
+            {
+              "p": "with eigenvalues 2, 1 and 0. The first component is the humidity pair, $(0, 1, 1)/\\sqrt2$, explaining $2/3 \\approx 0.667$. Standardizing made the copies win already at $m = 2$, where on the raw columns temperature still led."
+            },
+            {
+              "result": "0.667"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Why does standardizing not protect against duplicated columns, and what should be done before PCA?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Standardizing equalizes the variance of each column, not the number of columns that carry the same information. $m$ standardized copies of one signal add $m$ to the trace and form a single direction with eigenvalue $m$, so any group of strongly correlated columns gets weight in proportion to its size."
+            },
+            {
+              "p": "Remove exact duplicates before PCA, and look at the correlation matrix for near duplicates: the same quantity in two units, a total next to its parts, several sensors on one point. Where a group should stay, divide each of its $m$ columns by $\\sqrt{m}$. The block becomes $(2/m)\\,\\mathbf{1}\\mathbf{1}^\\top$, with eigenvalue 2, so the group counts as one column again."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pca-line-between-regressions",
+      "moduleId": "principal-component-analysis",
+      "title": "The PCA Line Between Two Regressions",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "Five points:"
+      ],
+      "setup": [
+        {
+          "tex": "(-2, -1), \\quad (-1, -1), \\quad (0, 0), \\quad (1, 1), \\quad (2, 1) ."
+        },
+        {
+          "p": "Their mean is the origin. Three lines through it are candidates for \"the line through the data\": the least squares line of $y$ on $x$, the least squares line of $x$ on $y$ rewritten as $y = mx$, and the line along the first principal component."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the slope of the first-component line?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The sums of products are $S_{xx} = 10$, $S_{xy} = 6$ and $S_{yy} = 4$. The covariance matrix is these divided by $n - 1$, which does not change its eigenvectors, so work with"
+            },
+            {
+              "tex": "S = \\begin{bmatrix} 10 & 6 \\\\ 6 & 4 \\end{bmatrix}, \\qquad\n\\lambda^2 - 14\\lambda + 4 = 0, \\qquad\n\\lambda = 7 \\pm 3\\sqrt5 ."
+            },
+            {
+              "p": "The top eigenvalue is $\\lambda_1 = 7 + 3\\sqrt5 \\approx 13.708$. An eigenvector $(1, m)$ satisfies $10 + 6m = \\lambda_1$, so"
+            },
+            {
+              "tex": "m = \\frac{\\lambda_1 - 10}{6} = \\frac{3\\sqrt5 - 3}{6} = \\frac{\\sqrt5 - 1}{2}\n\\approx 0.618 ."
+            },
+            {
+              "p": "For comparison, $y$ on $x$ has slope $S_{xy}/S_{xx} = 0.6$, and $x$ on $y$ is $x = (S_{xy}/S_{yy})\\,y = 1.5\\,y$, which is $y = 0.667\\,x$."
+            },
+            {
+              "result": "0.618"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "In Part 1 the first-component slope landed between the two regression slopes. Does that happen for every dataset with $S_{xy} > 0$? Prove it or give a counterexample."
+            }
+          ],
+          "answer": [
+            {
+              "p": "It always happens. Write $a = S_{xx}$, $b = S_{xy} > 0$, $c = S_{yy}$. The two regression slopes, both as $y = mx$, are $b/a$ and $c/b$. An eigenvector $(1, m)$ for $\\lambda_1$ satisfies both rows of the eigenvector equation:"
+            },
+            {
+              "tex": "a + bm = \\lambda_1, \\qquad b + cm = \\lambda_1 m ,"
+            },
+            {
+              "p": "so $m = (\\lambda_1 - a)/b$ and also $m = b/(\\lambda_1 - c)$. Two facts about $\\lambda_1$ bound these:"
+            },
+            {
+              "list": [
+                "$\\lambda_1 \\ge a$ and $\\lambda_1 \\ge c$, since $\\lambda_1$ is the largest value of $\\mathbf{w}^\\top S\\,\\mathbf{w}$ over unit vectors and $a$ and $c$ are its values at $(1, 0)$ and $(0, 1)$. In fact $\\lambda_1 > c$, since $\\lambda_1 = c$ would make the second equation read $b = 0$.",
+                "$\\lambda_1 \\le a + c$, since $\\lambda_1 + \\lambda_2 = a + c$ and $\\lambda_2 \\ge 0$."
+              ]
+            },
+            {
+              "p": "From the first form and $\\lambda_1 - a \\le c$: $m \\le c/b$. From the second form and $0 < \\lambda_1 - c \\le a$: $m \\ge b/a$. So"
+            },
+            {
+              "tex": "\\frac{b}{a} \\le m \\le \\frac{c}{b} ,"
+            },
+            {
+              "p": "with equality only when $\\lambda_2 = 0$, that is when all the points lie on one line and the three lines coincide. $\\qquad\\blacksquare$"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Record $y$ in a unit ten times smaller, so every $y$ value is multiplied by 10. What is the new first-component slope? Compare it with the two regression slopes in the new unit, and say when each of the three lines is the right one to report."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Now $S_{xy} = 60$ and $S_{yy} = 400$:"
+            },
+            {
+              "tex": "\\lambda^2 - 410\\lambda + 400 = 0, \\qquad\n\\lambda_1 = \\frac{410 + \\sqrt{166{,}500}}{2} \\approx 409.022, \\qquad\nm = \\frac{\\lambda_1 - 10}{60} \\approx 6.650 ."
+            },
+            {
+              "p": "Ten times the old slope would be 6.180. The regression slopes become exactly $6$ and $6.667$, ten times their old values, but the first-component line turns toward the $y$ axis, because stretching $y$ gives it more of the variance. The PCA line depends on the units of the two columns. The regression lines do not."
+            },
+            {
+              "p": "The three lines answer different questions. Least squares of $y$ on $x$ minimizes vertical distances, which is right for predicting $y$ from an $x$ measured without error. Least squares of $x$ on $y$ minimizes horizontal distances and fits the reverse prediction. The first-component line minimizes perpendicular distances: on the original points its total squared perpendicular distance is $\\lambda_2 \\approx 0.292$, against $0.294$ for the line of $y$ on $x$ and $0.308$ for the line of $x$ on $y$. That is right when both coordinates carry errors of similar size in the same units, which is also why it changes when one unit does."
+            },
+            {
+              "result": "6.650"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "theory-pca-variance",
+      "moduleId": "principal-component-analysis",
+      "title": "PCA from Variance Maximization",
+      "difficulty": "Hard",
+      "minutes": 50,
+      "overview": [
+        "Derive the first principal component two ways, by maximizing variance and by minimizing reconstruction error, then prove the two agree."
+      ],
+      "setup": [
+        {
+          "p": "Let $x_0, \\dots, x_{N-1} \\in \\mathbb{R}^d$ be data points that have already been centered, so $\\sum_n x_n = 0$. Collect them as the rows of $X \\in \\mathbb{R}^{N \\times d}$ and define the sample covariance"
+        },
+        {
+          "tex": "C = \\frac{1}{N}X^\\top X \\in \\mathbb{R}^{d \\times d}."
+        },
+        {
+          "p": "A unit vector $w \\in \\mathbb{R}^d$ defines the projection $t_n = w^\\top x_n$ of each point onto the direction $w$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "19.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Prove that the projections $t_n = w^\\top x_n$ have mean zero, and that their variance is $w^\\top C w$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Mean. Linearity of the sum and the centring assumption give"
+            },
+            {
+              "tex": "\\frac{1}{N}\\sum_{n} t_n = \\frac{1}{N}\\sum_n w^\\top x_n = w^\\top \\left( \\frac{1}{N}\\sum_n x_n \\right) = w^\\top 0 = 0."
+            },
+            {
+              "p": "Variance. Since the mean is zero, the variance is the mean square:"
+            },
+            {
+              "tex": "\\frac{1}{N}\\sum_n t_n^2 = \\frac{1}{N}\\sum_n \\big( w^\\top x_n \\big)\\big( x_n^\\top w \\big) = w^\\top \\left( \\frac{1}{N}\\sum_n x_n x_n^\\top \\right) w = w^\\top C w,"
+            },
+            {
+              "p": "using that $\\frac{1}{N}\\sum_n x_n x_n^\\top = \\frac{1}{N}X^\\top X = C$."
+            },
+            {
+              "p": "Centring is not optional. If the data have a nonzero mean $\\bar{x}$, then $w^\\top C w$ measures the second moment rather than the variance, and the leading \"principal component\" will simply point toward $\\bar{x}$, capturing where the data are rather than how they vary. This is the most common PCA implementation bug, and it also explains why $C$ is positive semidefinite: $w^\\top C w$ is a variance, hence non-negative for every $w$."
+            }
+          ]
+        },
+        {
+          "id": "19.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "The first principal component is the unit vector maximizing the projected variance:"
+            },
+            {
+              "tex": "w_1 = \\arg\\max_{\\lVert w \\rVert_2 = 1} \\ w^\\top C w."
+            },
+            {
+              "p": "Using Lagrange multipliers, prove that $w_1$ is the eigenvector of $C$ with the largest eigenvalue, and that the maximum value is that eigenvalue."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Form the Lagrangian with the constraint $w^\\top w = 1$:"
+            },
+            {
+              "tex": "\\mathcal{L}(w, \\lambda) = w^\\top C w - \\lambda\\big( w^\\top w - 1 \\big)."
+            },
+            {
+              "p": "Setting the gradient with respect to $w$ to zero, using $\\nabla_w (w^\\top C w) = 2Cw$ for symmetric $C$ (Part 5 of [Matrix Calculus: Derivatives, Gradients, and Hessians](/theory/?id=theory-matrix-calculus-gradients)):"
+            },
+            {
+              "tex": "\\nabla_w \\mathcal{L} = 2Cw - 2\\lambda w = 0 \\ \\Longrightarrow \\ Cw = \\lambda w."
+            },
+            {
+              "p": "So every stationary point is an eigenvector of $C$, and $\\lambda$ is the corresponding eigenvalue: the Lagrange multiplier turns out to *be* the eigenvalue rather than an artefact."
+            },
+            {
+              "p": "To identify which eigenvector maximizes, evaluate the objective at a stationary point:"
+            },
+            {
+              "tex": "w^\\top C w = w^\\top(\\lambda w) = \\lambda\\, w^\\top w = \\lambda."
+            },
+            {
+              "p": "The objective value at each candidate is exactly its eigenvalue, so the maximum is attained at the largest eigenvalue $\\lambda_1$, with $w_1$ its unit eigenvector, and $\\max_{\\lVert w\\rVert = 1} w^\\top C w = \\lambda_1$."
+            },
+            {
+              "p": "Subsequent components follow by the same argument with the added constraint $w^\\top w_1 = 0$, which restricts the search to the orthogonal complement and yields $w_2$ as the eigenvector of the second-largest eigenvalue, and so on. Orthogonality of the components comes for free from the spectral theorem, since $C$ is symmetric: a real symmetric matrix has an orthonormal eigenbasis. The general statement is the Rayleigh quotient characterization: $\\lambda_{\\min} \\le \\frac{w^\\top C w}{w^\\top w} \\le \\lambda_{\\max}$ for every nonzero $w$."
+            }
+          ]
+        },
+        {
+          "id": "19.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "An alternative derivation minimizes reconstruction error: find the unit $w$ minimizing"
+            },
+            {
+              "tex": "E(w) = \\sum_{n=0}^{N-1} \\big\\lVert x_n - (w^\\top x_n)w \\big\\rVert_2^2,"
+            },
+            {
+              "p": "the total squared length of the residuals after projecting onto $w$. Prove that this gives the same $w_1$ as Part 2."
+            }
+          ],
+          "answer": [
+            {
+              "p": "By Part 5 of [Vectors, Norms, and Orthogonal Projection](/theory/?id=theory-vectors-norms-projections), applied to each $x_n$ with the unit vector $w$, the squared residual is"
+            },
+            {
+              "tex": "\\big\\lVert x_n - (w^\\top x_n)w \\big\\rVert_2^2 = \\lVert x_n \\rVert_2^2 - \\big( w^\\top x_n \\big)^2."
+            },
+            {
+              "p": "Summing over $n$:"
+            },
+            {
+              "tex": "E(w) = \\sum_n \\lVert x_n \\rVert_2^2 - \\sum_n \\big(w^\\top x_n\\big)^2 = \\underbrace{\\sum_n \\lVert x_n \\rVert_2^2}_{\\text{does not depend on } w} - N\\, w^\\top C w,"
+            },
+            {
+              "p": "where the last step uses Part 1."
+            },
+            {
+              "p": "The first term is a constant, so minimizing $E(w)$ is identical to maximizing $w^\\top C w$, the same problem solved in Part 2. Therefore the minimizer is $w_1$, and the minimum reconstruction error is $\\sum_n \\lVert x_n\\rVert^2 - N\\lambda_1$."
+            },
+            {
+              "p": "The two views are one identity: total variance is fixed, so every unit of variance you capture in the projection is a unit of squared error you remove from the residual. \"Maximize variance explained\" and \"minimize reconstruction error\" are literally the same objective read from opposite ends, which is what the Pythagorean identity of Part 5 of [Vectors, Norms, and Orthogonal Projection](/theory/?id=theory-vectors-norms-projections) says."
+            },
+            {
+              "p": "This equivalence also explains the linear-autoencoder result: an autoencoder with a linear bottleneck of width $r$ trained on squared reconstruction loss recovers exactly the subspace spanned by the top $r$ principal components (though not necessarily the individual axes, since any basis of that subspace achieves the same loss)."
+            }
+          ]
+        },
+        {
+          "id": "19.4",
+          "kind": "derivation",
+          "requirement": "Reasoning is required. Coding is not needed.",
+          "prompt": [
+            {
+              "p": "Relate the eigenvalues of $C$ to the singular values of $X$, and explain why implementations compute the SVD of $X$ rather than eigendecomposing $C$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Let $X = U\\Sigma V^\\top$. Then"
+            },
+            {
+              "tex": "C = \\frac{1}{N}X^\\top X = \\frac{1}{N}V\\Sigma^2 V^\\top,"
+            },
+            {
+              "p": "so the eigenvectors of $C$ are the right singular vectors $v_i$ of $X$, and the eigenvalues are $\\lambda_i = \\sigma_i^2/N$. The principal components are the columns of $V$, and the projections (scores) are $XV = U\\Sigma$."
+            },
+            {
+              "p": "Why the SVD is preferred: forming $X^\\top X$ squares the condition number, $\\kappa(X^\\top X) = \\kappa(X)^2$, exactly as in Part 7 of [Linear Regression: Normal Equations and Geometry](/theory/?id=theory-linear-regression-ols). Small singular values, precisely the trailing components, lose their precision entirely, and if $\\sigma_i$ falls below the square root of machine epsilon relative to $\\sigma_1$, the corresponding $\\lambda_i$ is numerically indistinguishable from zero. Rounding can even make it slightly negative, which is impossible for a true covariance eigenvalue and will break any code that takes a square root of it."
+            },
+            {
+              "p": "There is also a cost argument. Forming $C$ costs $O(Nd^2)$ and eigendecomposing it $O(d^3)$, which is prohibitive when $d \\gg N$: for $10{,}000$-pixel images with $500$ samples, $C$ is $10^8$ entries. A thin or truncated SVD of $X$ avoids ever materializing $C$, and randomized SVD extracts the top $r$ components in $O(Ndr)$."
+            }
+          ]
+        },
+        {
+          "id": "19.5",
+          "kind": "mcq",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Which statement correctly describes Uniform Manifold Approximation and Projection (UMAP), a nonlinear alternative to PCA?"
+            },
+            {
+              "choices": [
+                "A. UMAP preserves all pairwise distances exactly.",
+                "B. UMAP prioritizes preserving local neighborhood structure over global distances.",
+                "C. UMAP guarantees linear projections of the data.",
+                "D. UMAP minimizes reconstruction error like PCA.",
+                "E. UMAP forces all clusters to have equal size."
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "UMAP builds a weighted graph of each point's nearest neighbors and then optimizes a low-dimensional layout whose neighborhood graph matches it. Its objective is therefore about *who is near whom*, not about metric distances, so local structure is preserved at the expense of global geometry."
+            },
+            {
+              "p": "The others are all false and each names a property of a different method. A is impossible in general: no dimension reduction can preserve all pairwise distances (that is classical MDS's goal, achieved only approximately). C describes PCA, which is linear, but UMAP is explicitly nonlinear. D describes PCA and autoencoders, but UMAP has no decoder and no reconstruction term. E is simply not a property of any of these."
+            },
+            {
+              "p": "The practical consequence is a warning about reading UMAP plots: cluster *sizes* and inter-cluster *distances* in the embedding are largely artefacts of the algorithm and its hyperparameters ($\\texttt{n\\_neighbors}$, $\\texttt{min\\_dist}$), so they should not be interpreted quantitatively. What is trustworthy is which points group together. PCA is the opposite trade: it preserves global variance structure faithfully but cannot unfold a curved manifold at all."
+            },
+            {
+              "result": "B. UMAP prioritizes local neighborhood structure over global distances."
+            }
+          ]
+        },
+        {
+          "id": "19.6",
+          "kind": "coding",
+          "requirement": "You may use np.linalg.svd. Do not use scikit-learn and do not use any loop.",
+          "prompt": [
+            {
+              "p": "Run the following starter code:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "import numpy as np",
+                  "",
+                  "rng = np.random.default_rng(0)",
+                  "X_raw = rng.normal(size=(200, 5)) @ rng.normal(size=(5, 20)) + 10.0",
+                  "r = 3"
+                ]
+              }
+            },
+            {
+              "p": "Compute the top $r$ principal components and the projected scores, and report the fraction of total variance they explain."
+            }
+          ],
+          "answer": [
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "X = X_raw - X_raw.mean(axis=0)          # centring is mandatory (Part 1)",
+                  "U, s, Vt = np.linalg.svd(X, full_matrices=False)",
+                  "",
+                  "components = Vt[:r]                     # (r, d): the principal directions",
+                  "scores = U[:, :r] * s[:r]               # (N, r): equals X @ components.T",
+                  "",
+                  "var = s ** 2                            # proportional to the eigenvalues of C",
+                  "explained = var[:r].sum() / var.sum()",
+                  "print(explained)                        # not 1.0: X_raw has rank 5 and r = 3, so some variance is left behind"
+                ]
+              }
+            },
+            {
+              "p": "Three points. Centring with $\\texttt{mean(axis=0)}$ subtracts the per-feature mean, but skipping it makes the first component point at the offset $10.0$ and wastes a component on it. Computing the scores as $\\texttt{U[:, :r] * s[:r]}$ reuses factors already available rather than recomputing $\\texttt{X @ components.T}$, and the two are equal since $XV = U\\Sigma$. And the explained-variance ratio uses $\\sigma_i^2$. The $1/N$ from Part 4 cancels in the ratio, so it need not appear."
+            },
+            {
+              "p": "For this data $\\texttt{X\\_raw}$ was built as a $200 \\times 5$ matrix times a $5 \\times 20$ matrix, so it has rank $5$ and only five nonzero singular values. Taking $r = 3$ recovers most but not all of the variance, while taking $r = 5$ would give exactly $1.0$, with $\\sigma_6$ onward at the level of floating-point noise. Plotting the cumulative ratio against $r$ is the standard way to pick $r$."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

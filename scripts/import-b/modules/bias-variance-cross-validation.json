@@ -1,0 +1,104 @@
+{
+  "aModule": "bias-variance-cross-validation",
+  "stage": "Round 2",
+  "fixes": [],
+  "parts": {
+    "bv-copies-across-the-split": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "bv-cv-picks-for-the-fold-size": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.4": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "bv-loo-from-one-fit": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "bv-loo-of-the-mean": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is required."
+      }
+    },
+    "bv-shrink-the-average": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "bv-when-flexible-wins": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "bv-copies-across-the-split": "A payments team copies every fraudulent transaction twice before splitting train and validation, so identical rows land on both sides of the split. Compute how much of the reported fraud recall is memorized copies rather than real recognition, and rewrite the protocol so the validation score estimates recall on new transactions.",
+    "bv-cv-picks-for-the-fold-size": "Two regression models P and Q are candidates for a task with 500 labeled rows; each has expected test error sigma^2 + b + v/m after training on m rows, with noise sigma^2 = 0.25, P at b = 0.030 and v = 2, and Q at b = 0.005 and v = 13, and the winner is refit on all 500 rows. Compare the two at the full 500 rows and again under 5-fold cross-validation, find the smallest fold count that changes the pick, and say why leave-one-out is still not the default choice here.",
+    "bv-loo-from-one-fit": "Least squares fitted values are H times the targets, and the diagonal entry h_ii of H is a row's leverage. Show that the leave-one-out error at row i is the residual e_i divided by 1 minus h_ii, use it to get the leave-one-out mean squared error of a line through four given points from a single fit, and extend the identity to ridge regression.",
+    "bv-loo-of-the-mean": "A baseline regressor ignores its inputs and predicts the mean of its training targets. Six rows have targets 2, 4, 4, 5, 7 and 8, stored in that order sorted by target. Find its leave-one-out MSE, show how each row's leave-one-out error relates to its training residual, and report the MSE that unshuffled 3-fold cross-validation gives.",
+    "bv-noise-floor-from-repeats": "A lab measured each of 400 compounds twice, and the mean squared difference between the two measurements of one compound is 0.50. Work out the noise floor this sets on a validation MSE of 0.28 scored against single measurements, and how much of that error any better model could remove.",
+    "bv-shrink-the-average": "A field station averages four noisy readings of an unchanging soil moisture value and multiplies that average by a shrinkage factor between 0 and 1 to predict the next reading. The parts ask for the expected squared error as a function of the factor and the true value, the factor that minimizes it when the true value is 2, and how large the true value must be before a fixed factor of 0.8 does worse than the plain average.",
+    "bv-when-flexible-wins": "A team predicts delivery times with either a linear model on a few features or a boosted model on many, and has measured each model's squared bias and variance at 100 and 400 training rows, where the noise variance of a delivery time is 0.20. Find the smallest training size at which the boosted model has the lower expected test error, and work out what buying 300 more rows actually buys."
+  }
+}

@@ -1,0 +1,400 @@
+{
+  "module": "training-loop-in-pytorch",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "tl-backward-fills-grad",
+      "moduleId": "training-loop-in-pytorch",
+      "title": "What backward() Leaves Behind",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/theory/?id=tl-backward-fills-grad",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "In the five-line training step, loss.backward() sits between optimizer.zero_grad() and optimizer.step(). After it returns, what has changed?",
+      "answer": "Every parameter's .grad now holds the derivative of the loss with respect to that parameter, and the parameters themselves are unchanged. The call runs the chain rule back through the recorded graph and adds the derivative of the loss into the grad field of every parameter. The parameters themselves hold the same values as before."
+    },
+    {
+      "id": "tl-find-the-bugs",
+      "moduleId": "training-loop-in-pytorch",
+      "title": "Four Bugs in One Training Loop",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=tl-find-the-bugs",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A contestant's training function runs without an error and its logged loss falls, but it carries four defects. Name each one and what it does to the run, compute the loss the buggy batch average reports, and write the corrected function. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "tl-train-and-eval",
+      "moduleId": "training-loop-in-pytorch",
+      "title": "What the Mode Switch Does",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/theory/?id=tl-train-and-eval",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A contestant's loop calls model.train() at the top of each epoch and model.eval() before measuring validation accuracy. What do those two calls change?",
+      "answer": "Each sets one flag on every layer, which dropout and batch normalization read to pick their training or evaluation behavior. Each call sets the training flag on every module inside the model, and nothing else happens. Dropout reads the flag to decide whether to drop anything, and batch normalization reads it to choose between the statistics of the current batch and its running averages. Skip the eval call and dropout keeps zeroing activations at random, so the same evaluation gives a different accuracy each time it runs."
+    },
+    {
+      "id": "tlp-grad-accumulation",
+      "moduleId": "training-loop-in-pytorch",
+      "title": "Gradient Accumulation, Done Right",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=tlp-grad-accumulation",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A batch too large for memory is cut into k micro-batches, each loss is backpropagated in turn, and the optimizer steps once at the end. Prove why each micro-batch loss needs a 1/k factor first, say which learning rate the unscaled loop is effectively using, and compute the true gradient when the micro-batches are unequal sizes. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pytorch-basics-implementation-task",
+      "moduleId": "training-loop-in-pytorch",
+      "title": "PyTorch Training Loop Practice",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=pytorch-basics",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Torch tensors, nn.Sequential, an optimizer, and a training loop. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Test R² must reach the target shown in the evaluation cell."
+    },
+    {
+      "id": "foundations-11-pytorch-regression",
+      "moduleId": "training-loop-in-pytorch",
+      "title": "AI Foundations 11: PyTorch MLP for Regression (Auto MPG)",
+      "source": "AI Foundations",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=foundations-11-pytorch-regression",
+      "tags": [
+        "Coding",
+        "Course",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Course notebook, about ~4-5 h end to end. Read it top to bottom, then do the exercises marked with a pencil icon - each one checks itself - and finish with the exam-style quiz.",
+      "answer": "Self-checking: every exercise has a checker cell that prints a verdict, and the quiz answers are explained at the end of the notebook."
+    }
+  ],
+  "theory": [
+    {
+      "id": "tl-backward-fills-grad",
+      "moduleId": "training-loop-in-pytorch",
+      "title": "What backward() Leaves Behind",
+      "difficulty": "Easy",
+      "minutes": 3,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "In the five-line training step, `loss.backward()` sits between `optimizer.zero_grad()` and `optimizer.step()`. After it returns, what has changed?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Every parameter's `.grad` now holds the derivative of the loss with respect to that parameter, and the parameters themselves are unchanged.",
+                  "correct": true,
+                  "explain": "The call runs the chain rule back through the recorded graph and adds the derivative of the loss into the grad field of every parameter. The parameters themselves hold the same values as before."
+                },
+                {
+                  "text": "Every parameter has moved a small step against its gradient, using the learning rate.",
+                  "explain": "Moving the parameters is the job of the step call, which reads the grad fields and applies the update rule. The backward call computes gradients and applies none of them."
+                },
+                {
+                  "text": "The gradients left from the previous batch have been wiped, so the next step starts from zero.",
+                  "explain": "Clearing is the job of zero_grad. A backward call adds into the grad fields rather than replacing them, which is why the clear has to come before it."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The call runs the chain rule back through the recorded graph and adds the derivative of the loss into the grad field of every parameter. The parameters themselves hold the same values as before."
+            },
+            {
+              "result": "Every parameter's `.grad` now holds the derivative of the loss with respect to that parameter, and the parameters themselves are unchanged."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tl-find-the-bugs",
+      "moduleId": "training-loop-in-pytorch",
+      "title": "Four Bugs in One Training Loop",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A contestant's training function. `net` is an MLP with a dropout layer, `batches` and `val_batches` are `DataLoader`s, `loss_fn` is `nn.CrossEntropyLoss()`, and `opt` is an Adam optimizer over `net`'s parameters. It runs without an error, and the numbers it logs go down."
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "def fit(net, batches, val_batches, loss_fn, opt, epochs):",
+              "    net.train()",
+              "    log = []",
+              "    for epoch in range(epochs):",
+              "        for x, y in batches:",
+              "            loss = loss_fn(net(x), y)",
+              "            loss.backward()",
+              "            opt.step()",
+              "",
+              "        net.eval()",
+              "        total = 0",
+              "        for x, y in val_batches:",
+              "            total += loss_fn(net(x), y)",
+              "        log.append(total / len(val_batches))",
+              "    return log"
+            ]
+          }
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Find the four defects, and say what each one does to the run."
+            }
+          ],
+          "answer": [
+            {
+              "olist": [
+                "**The gradients are never cleared.** PyTorch adds each `backward()` into `.grad`, and nothing here zeros it, so the step after batch $t$ moves the parameters by the total of all the gradients so far. Adam's per-parameter scaling keeps the steps from exploding outright, so the loss can still fall for a while, which is why the bug goes unnoticed. The direction is wrong on every step after the first.",
+                "**`net.train()` runs once, before the loop.** The first validation pass switches the net to evaluation mode, and nothing switches it back, so from the second epoch on the dropout layer is off while the net trains. It trains as a different, undropped model from the one the code appears to describe, and nothing reports it.",
+                "**The validation pass records a graph and keeps it.** No `torch.no_grad()` surrounds it, so every forward pass builds a graph, and `total` is a tensor holding all of them. `log` then stores one such tensor per epoch, so the graph of every validation pass ever run stays in memory until the caller drops the `log` list that `fit` returns. The numbers are right, and memory climbs with every epoch.",
+                "**The average is over batches, not examples.** `total / len(val_batches)` is the mean of the per-batch means, which equals the mean per example only when every batch has the same size. The last batch of a loader usually does not, so the logged loss is off, by an amount Part 2 works out."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The validation set holds $1{,}050$ examples in batches of $100$, so the last batch has $50$. Suppose the per-batch mean losses come out as $0.5$ for every full batch and $1.5$ for the last one. What does `fit` log for that epoch?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "`fit` adds the eleven batch means and divides by the number of batches:"
+            },
+            {
+              "tex": "\\frac{10 \\cdot 0.5 + 1.5}{11} = \\frac{6.5}{11} = 0.5909 ,"
+            },
+            {
+              "p": "so it logs **0.591**. The mean loss per example weights each batch by its size,"
+            },
+            {
+              "tex": "\\frac{1000 \\cdot 0.5 + 50 \\cdot 1.5}{1050} = \\frac{575}{1050} = 0.5476 ,"
+            },
+            {
+              "p": "and the gap is the half-size last batch counting as much as a full one. The fix is to add `loss.item() * len(x)` per batch and divide by the number of examples at the end, which `len(val_batches.dataset)` gives."
+            },
+            {
+              "result": "0.591"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Write the corrected function."
+            }
+          ],
+          "answer": [
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "def fit(net, batches, val_batches, loss_fn, opt, epochs):",
+                  "    log = []",
+                  "    for epoch in range(epochs):",
+                  "        net.train()",
+                  "        for x, y in batches:",
+                  "            opt.zero_grad()",
+                  "            loss = loss_fn(net(x), y)",
+                  "            loss.backward()",
+                  "            opt.step()",
+                  "",
+                  "        net.eval()",
+                  "        total = 0.0",
+                  "        with torch.no_grad():",
+                  "            for x, y in val_batches:",
+                  "                total += loss_fn(net(x), y).item() * len(x)",
+                  "        log.append(total / len(val_batches.dataset))",
+                  "    return log"
+                ]
+              }
+            },
+            {
+              "p": "`net.train()` moved inside the epoch loop, so each epoch trains with dropout on and validates with it off. `opt.zero_grad()` runs before every backward pass. The validation pass runs under `torch.no_grad()`, `.item()` turns each batch loss into a plain number so that no graph outlives its batch, and the total is weighted by batch size and divided by the number of examples. The logged numbers are now the per-example validation loss, and the training is the training the code appeared to describe."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tl-train-and-eval",
+      "moduleId": "training-loop-in-pytorch",
+      "title": "What the Mode Switch Does",
+      "difficulty": "Easy",
+      "minutes": 3,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A contestant's loop calls `model.train()` at the top of each epoch and `model.eval()` before measuring validation accuracy. What do those two calls change?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "The first runs one pass of training over the data and the second runs one pass of evaluation.",
+                  "explain": "Neither call runs anything. The loop over the batches, the forward passes and the optimizer steps are all written out separately, and the two calls do not touch them."
+                },
+                {
+                  "text": "The first turns gradient recording on for every parameter and the second turns it off.",
+                  "explain": "Recording of the computation graph is controlled by torch.no_grad, not by the mode. A model in eval mode still records a graph on every forward pass unless that block is used."
+                },
+                {
+                  "text": "Each sets one flag on every layer, which dropout and batch normalization read to pick their training or evaluation behavior.",
+                  "correct": true,
+                  "explain": "Each call sets the training flag on every module inside the model, and nothing else happens. Dropout reads the flag to decide whether to drop anything, and batch normalization reads it to choose between the statistics of the current batch and its running averages. Skip the eval call and dropout keeps zeroing activations at random, so the same evaluation gives a different accuracy each time it runs."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each call sets the training flag on every module inside the model, and nothing else happens. Dropout reads the flag to decide whether to drop anything, and batch normalization reads it to choose between the statistics of the current batch and its running averages. Skip the eval call and dropout keeps zeroing activations at random, so the same evaluation gives a different accuracy each time it runs."
+            },
+            {
+              "result": "Each sets one flag on every layer, which dropout and batch normalization read to pick their training or evaluation behavior."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tlp-grad-accumulation",
+      "moduleId": "training-loop-in-pytorch",
+      "title": "Gradient Accumulation, Done Right",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A batch of $n$ examples does not fit in memory, so the loop cuts it into $k$ micro-batches of $n/k$ examples each, calls `backward()` on each one in turn, and calls `optimizer.step()` once at the end. PyTorch adds every backward pass into `.grad`, so the step sees the sum of the $k$ gradients. The loss is a mean over whatever it is given, as `nn.CrossEntropyLoss` and `nn.MSELoss` are by default."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Prove that the loop has to multiply each micro-batch loss by $1/k$ before its `backward()`, for `.grad` to end up holding the full-batch gradient and nothing else."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write $\\ell_i$ for the loss of example $i$. The full-batch loss is the mean over all $n$ examples,"
+            },
+            {
+              "tex": "L = \\frac{1}{n}\\sum_{i=1}^{n} \\ell_i ."
+            },
+            {
+              "p": "Micro-batch $j$ holds $n/k$ examples, and the loss the code computes on it is their mean, $L_j = \\frac{k}{n}\\sum_{i \\in j}\\ell_i$. Adding the $L_j$ over the $k$ micro-batches counts every example once, so"
+            },
+            {
+              "tex": "\\sum_{j=1}^{k} L_j = \\frac{k}{n}\\sum_{i=1}^{n}\\ell_i = k\\,L,\n\\qquad\\text{that is,}\\qquad\nL = \\frac{1}{k}\\sum_{j=1}^{k} L_j ."
+            },
+            {
+              "p": "Gradients add: the gradient of a sum of terms is the sum of their gradients, so $\\nabla L = \\sum_j \\nabla (L_j / k)$. Each call `(L_j / k).backward()` adds $\\nabla(L_j / k)$ into `.grad`, and after the $k$ calls `.grad` holds $\\nabla L$. The match is exact, not an average over runs."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A contestant writes the loop without the $1/k$, with $k = 4$ micro-batches and plain SGD at learning rate $0.05$. The run does not crash, and the loss falls. What learning rate is it effectively using?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Without the factor, `.grad` holds $\\sum_j \\nabla L_j = k\\,\\nabla L$, every gradient $4$ times too large. A plain SGD step moves each parameter by $-\\eta$ times `.grad`, so a step of $0.05 \\cdot 4\\,\\nabla L$ is a correct step at learning rate **0.2**. The code runs at four times the rate it was tuned for, which sometimes trains fine and sometimes diverges."
+            },
+            {
+              "p": "With Adam the bug is quieter still. Adam divides each gradient by a running estimate of its own size, so a constant factor of $k$ mostly cancels and the run looks nearly normal. Nothing in either case prints a warning: the loss falls, and only the rate at which it falls is wrong."
+            },
+            {
+              "result": "0.2"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Now $n = 100$ examples are cut into micro-batches of $32$, $32$ and $36$, and for one particular weight the three micro-batch mean losses have gradients $1.0$, $1.0$ and $4.0$. The loop scales each by $1/k$ with $k = 3$ and adds them. What is the true gradient of the full-batch loss for that weight?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The $1/k$ rule assumes micro-batches of one size, and these are not. The full-batch loss is a mean over examples, so each micro-batch mean counts in proportion to the examples it holds, $n_j / n$:"
+            },
+            {
+              "tex": "L = \\frac{32}{100}L_1 + \\frac{32}{100}L_2 + \\frac{36}{100}L_3 ,"
+            },
+            {
+              "p": "and the gradient for the weight is $0.32 \\cdot 1.0 + 0.32 \\cdot 1.0 + 0.36 \\cdot 4.0 =$ **2.08**. The loop's $(1.0 + 1.0 + 4.0)/3 = 2.0$ is short by about $4\\%$, because the last micro-batch, which holds the most examples and the largest gradient, is weighted like the others. Weight each micro-batch loss by its own size over $n$ instead of by $1/k$, and the two agree again for any cut, equal or not."
+            },
+            {
+              "p": "The other way the match fails has nothing to do with weights. A model with batch normalization computes its batch statistics from the $32$ or $36$ examples in front of it, not from all $100$, so the forward passes themselves differ from the full-batch ones, and no scaling of the losses can repair that."
+            },
+            {
+              "result": "2.08"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

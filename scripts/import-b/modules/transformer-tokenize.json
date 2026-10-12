@@ -1,0 +1,16 @@
+{
+  "aModule": "transformer-tokenize",
+  "stage": "Round 2",
+  "fixes": [],
+  "parts": {
+    "tf-tokenize-a-new-word": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "tf-tokenize-a-new-word": "A byte-pair encoding tokenizer trained on the words low, lower, newest and widest learned six joins, then meets the word nest, which never appeared in its training text. Which tokens does it turn nest into?"
+  }
+}

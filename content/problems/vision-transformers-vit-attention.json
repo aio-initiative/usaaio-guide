@@ -1,0 +1,74 @@
+{
+ "module": "vision-transformers-vit-attention",
+ "stage": "Camp",
+ "index": [
+  {
+   "id": "cv-attention-with-smaller-patches",
+   "moduleId": "vision-transformers-vit-attention",
+   "title": "Attention with Smaller Patches",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=cv-attention-with-smaller-patches",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Camp"
+   ],
+   "prompt": "The running example is cut into 2 by 2 patches instead of 3 by 3, so the 6 by 6 image becomes a 3 by 3 grid of nine patches and each patch flattens to four numbers. With the patches used directly as queries and keys and each dot product divided by the square root of the vector length, what attention weight does the top-middle patch give to itself?",
+   "answer": "0.192. The 9 patches form a 3 × 3 grid. Column 3 of the image is the left column of the three middle patches, so each of them flattens to 1, 0, 1, 0 and every other patch to zeros. The top-middle patch scores 2 against each of the three line patches, itself included, and 0 against the other six. Divided by the square root of 4, that is 1 and 0, so its weight on itself is e / (3e + 6) = 2.718 / 14.154 = 0.192. The three line patches get 0.576 together, less than the 0.731 the two line patches get with 3 × 3 patches, because six empty patches share the rest instead of two."
+  }
+ ],
+ "theory": [
+  {
+   "id": "cv-attention-with-smaller-patches",
+   "moduleId": "vision-transformers-vit-attention",
+   "title": "Attention with Smaller Patches",
+   "difficulty": "Medium",
+   "minutes": 6,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "Cut the running example into patches of 2 × 2 pixels instead of 3 × 3. As on the page, flatten each patch row by row, use the flattened patches directly as queries and keys, and divide each dot product by the square root of the vector length before the softmax."
+      },
+      {
+       "p": "What attention weight does the top-middle patch, rows 1 and 2 of columns 3 and 4, give to itself?"
+      },
+      {
+       "choices": [
+        {
+         "text": "0.164",
+         "explain": "This divides by the square root of 9, the vector length of a 3 × 3 patch. A 2 × 2 patch flattens to 4 numbers, so the scores should be divided by 2, but this option divides them by 3 instead, giving e^(2/3) / (3 e^(2/3) + 6) = 0.164."
+        },
+        {
+         "text": "0.262",
+         "explain": "This leaves out the division, so the scores of 2 enter the softmax as e² instead of e: e² / (3e² + 6) = 0.262. Dividing by the square root of the length keeps the scores from growing with the size of the vectors."
+        },
+        {
+         "text": "0.333",
+         "explain": "This shares the weight among the three patches that hold the line and gives the six empty patches nothing. Their scores are 0, and e⁰ = 1, so each empty patch still takes a share: 6 of the 9 terms in the softmax's denominator."
+        },
+        {
+         "text": "0.192",
+         "correct": true,
+         "explain": "The 9 patches form a 3 × 3 grid. Column 3 of the image is the left column of the three middle patches, so each of them flattens to 1, 0, 1, 0 and every other patch to zeros. The top-middle patch scores 2 against each of the three line patches, itself included, and 0 against the other six. Divided by the square root of 4, that is 1 and 0, so its weight on itself is e / (3e + 6) = 2.718 / 14.154 = 0.192. The three line patches get 0.576 together, less than the 0.731 the two line patches get with 3 × 3 patches, because six empty patches share the rest instead of two."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "The 9 patches form a 3 × 3 grid. Column 3 of the image is the left column of the three middle patches, so each of them flattens to 1, 0, 1, 0 and every other patch to zeros. The top-middle patch scores 2 against each of the three line patches, itself included, and 0 against the other six. Divided by the square root of 4, that is 1 and 0, so its weight on itself is e / (3e + 6) = 2.718 / 14.154 = 0.192. The three line patches get 0.576 together, less than the 0.731 the two line patches get with 3 × 3 patches, because six empty patches share the rest instead of two."
+      },
+      {
+       "result": "0.192"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

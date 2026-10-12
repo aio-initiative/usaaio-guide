@@ -1,0 +1,1961 @@
+{
+  "module": "calculus-gradients",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "calculus-foundations-implementation-task",
+      "moduleId": "calculus-gradients",
+      "title": "Curve Fitting with Gradient Descent",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=calculus-foundations",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Batch gradient descent on MSE (no closed form, no sklearn). Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Test R² must reach the target shown in the evaluation cell."
+    },
+    {
+      "id": "theory-chain-rule-activations",
+      "moduleId": "calculus-gradients",
+      "title": "The Chain Rule, Softmax, and Cross-Entropy",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=theory-chain-rule-activations",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Includes code",
+        "Round 1"
+      ],
+      "prompt": "Derive the softmax Jacobian, show that softmax with cross-entropy collapses to predicted minus actual, and write a softmax that cannot overflow. 7 parts, each with its own grading instruction. Solutions revealed part by part.",
+      "answer": "Worked solutions are given part by part on the problem page: full derivations, not just final values. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ma3-step-size-sweet-spot",
+      "moduleId": "calculus-gradients",
+      "title": "The Finite Difference That Gets Worse as h Shrinks",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ma3-step-size-sweet-spot",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Sweep 40 step sizes to find where finite-difference error stops improving and roundoff takes over, and confirm the central difference's extra order of accuracy.",
+      "answer": "Auto-graded inside the notebook. Error curves must match to 2e-2, best_h_central and best_err_central to a relative tolerance of 1e-6, and the central difference's best error must beat the forward difference's best error."
+    },
+    {
+      "id": "ma3-safeguarded-newton",
+      "moduleId": "calculus-gradients",
+      "title": "Newton's Method Runs Away",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=ma3-safeguarded-newton",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Plain Newton diverges from this starting point because the function flattens out. Implement safeguarded Newton (Newton step inside the bracket, bisection when it escapes) and show the difference.",
+      "answer": "Auto-graded inside the notebook. The root must match to a relative tolerance of 1e-6 with |g(root)| under 1e-10 (which pins the root to about 3e-11), and plain Newton must be shown to diverge."
+    },
+    {
+      "id": "foundations-04-gradient-descent",
+      "moduleId": "calculus-gradients",
+      "title": "AI Foundations 04: Derivatives, Gradients and Gradient Descent",
+      "source": "AI Foundations",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=foundations-04-gradient-descent",
+      "tags": [
+        "Coding",
+        "Course",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Course notebook, about ~6 h end to end. Read it top to bottom, then do the exercises marked with a pencil icon - each one checks itself - and finish with the exam-style quiz.",
+      "answer": "Self-checking: every exercise has a checker cell that prints a verdict, and the quiz answers are explained at the end of the notebook."
+    },
+    {
+      "id": "cg-steepest-point-of-a-bump",
+      "moduleId": "calculus-gradients",
+      "title": "Where a Bump Is Steepest",
+      "source": "USAAIO-style",
+      "difficulty": "Easy",
+      "url": "/theory/?id=cg-steepest-point-of-a-bump",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A radial basis unit has center 3 and width 2, so its output is 1 at x = 3 and falls toward 0 on both sides. Training moves the input to this unit, so what matters is how fast the output changes, and that is not largest where the output is largest. Find where the slope is steepest and compare it with the sigmoid's. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "cg-silu-slope-below-zero",
+      "moduleId": "calculus-gradients",
+      "title": "The Slope of SiLU Below Zero",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cg-silu-slope-below-zero",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "Many recent networks use the SiLU activation, f(z) = z sigma(z), in place of ReLU. One SiLU unit receives the pre-activation z = -2, where sigma(-2) is about 0.1192, and the gradient arriving at its output is 1.5. What gradient does the unit pass back, to three decimals?",
+      "answer": "-0.136. By the product rule, f′(z) = σ(z) + z·σ(z)(1 − σ(z)) = σ(z)(1 + z(1 − σ(z))). At z = −2 this is 0.1192 × (1 − 2 × 0.8808) = 0.1192 × −0.7616 ≈ −0.0908, and the chain rule multiplies by 1.5 to give about −0.136. The slope of SiLU turns negative below about z = −1.28, so raising this input would lower the unit's output, something ReLU and sigmoid never do."
+    },
+    {
+      "id": "cg-gradient-from-two-probes",
+      "moduleId": "calculus-gradients",
+      "title": "A Gradient from Two Probes",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cg-gradient-from-two-probes",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A model has two weights and a loss that can only be evaluated, not differentiated by hand. You probe it at the current weights by moving a tiny step along two unit directions and dividing the change in loss by the step length. Read the gradient off the two rates, find the best step of a fixed length, and find a direction along which the loss does not change. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "cg-one-weight-three-steps",
+      "moduleId": "calculus-gradients",
+      "title": "One Weight Used at Three Steps",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cg-one-weight-three-steps",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A tiny recurrent model reads a sequence of three numbers and uses the same weight w at every step, starting from h0 = 1. The inputs are 1, -1 and 2, the weight is 0.5, and the loss is (h3 - 2)^2. Differentiate through the three steps, then redo it for a backward pass that treats h2 as a constant. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "cg-expected-cost-through-softmax",
+      "moduleId": "calculus-gradients",
+      "title": "Lowering an Expected Cost Through the Logits",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cg-expected-cost-through-softmax",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A model routes each support ticket to one of three teams. A softmax over its logits gives the probabilities of the three teams, and every team has a cost of handling the ticket: team 1 costs the most and team 3 is so well suited that its cost is negative, a gain. Compute the gradient of the expected cost with respect to the logits and show why the three entries always add up to 0. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "cg-weight-gradient-for-a-batch",
+      "moduleId": "calculus-gradients",
+      "title": "The Weight Gradient for a Whole Batch",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cg-weight-gradient-for-a-batch",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A linear layer maps each input of length 10 to an output of length 4, so W has shape 4 by 10. In NumPy a batch of 32 inputs is stored one example per row and the layer computes Z = X @ W.T + b. Backpropagation has already produced G, of shape (32, 4), whose row n is the gradient of the mean loss with respect to that example's output. Which line computes the gradient with respect to W?",
+      "answer": "dW = G.T @ X. For one example the lesson's rule gives (∇z L) x^T, a 4 × 10 outer product. W is used by every example, so its gradient is the sum of these outer products over the batch, and the sum over n of row n of G times row n of X is exactly G.T @ X, of shape (4, 10). L is the mean, so example n's loss enters it with weight 1/32, and that 1/32 is already inside row n of G: nothing more is divided. The bias is also used by every example: db = G.sum(axis=0)."
+    },
+    {
+      "id": "cg-product-of-two-linear-forms",
+      "moduleId": "calculus-gradients",
+      "title": "The Gradient of a Product of Two Scores",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cg-product-of-two-linear-forms",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "Two linear scores of the same input, a x and b x, are multiplied together, as in a gated unit with no nonlinearity: f(x) = (a x)(b x) with a = (1, 2) and b = (3, -1). What is the gradient of f at x = (2, 1)?",
+      "answer": "(17, 6). Both factors depend on x. Differentiating a·x gives a, multiplied by the other factor b·x = 5, and differentiating b·x gives b, multiplied by a·x = 4. The product rule adds the two: 5(1, 2) + 4(3, −1) = (17, 6). Writing f as the quadratic form x^T (a b^T) x and using the table's (A + A^T)x gives the same, because a b^T is not symmetric."
+    },
+    {
+      "id": "cg-duplicate-row-as-weight",
+      "moduleId": "calculus-gradients",
+      "title": "A Duplicate Row as a Weight",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cg-duplicate-row-as-weight",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A sensor logged three readings, at t = 0, 1 and 3, and the reading at t = 3 was logged twice. Rather than store the duplicate you give that row the weight 2. Write the weighted mean squared error's gradient in matrix form, compute one entry by hand, and write it as one loop-free NumPy expression. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "cg-squared-error-on-a-sigmoid",
+      "moduleId": "calculus-gradients",
+      "title": "Squared Error on a Sigmoid Output",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cg-squared-error-on-a-sigmoid",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A binary classifier outputs p = sigma(s) from a logit s. Compare training it on an example with label y = 1 under cross-entropy and under squared error: which gradient with respect to the logit is larger, where the squared-error gradient peaks, and what happens to each as the model becomes confidently wrong? 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "cg-two-weight-chain-hessian",
+      "moduleId": "calculus-gradients",
+      "title": "Stationary Points of a Two-Weight Chain",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cg-two-weight-chain-hessian",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "The smallest deep network multiplies its input by two weights in a row, y = b (a x). Trained on the single example x = 1, y = 1 with squared error, its loss is (ab - 1)^2. Find its stationary points, compute the Hessian at two of them, and read the second-derivative test. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "cg-check-fails-at-one-weight",
+      "moduleId": "calculus-gradients",
+      "title": "A Gradient Check That Fails at One Weight",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cg-check-fails-at-one-weight",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "You check the backward pass of a small ReLU network with central differences, h = 1e-5, in float64. Every weight passes with a relative error below 1e-9 except one. That weight feeds a unit that computes z = w x + b and then max(0, z). On the example used for the check, the unit's input is x = 2 and its pre-activation is z = 3e-7. The relative error for that weight is 0.33. What is the most likely explanation?",
+      "answer": "The step in w moves z across the corner of ReLU at 0, so the difference mixes the slopes on both sides. Nudging w by ±h moves z by ±2h = ±2 × 10^−5, far more than the 3 × 10^−7 between z and the corner. At w + h the unit is on (z = 2.03 × 10^−5) and at w − h it is off, so the estimate is u × 2.03 × 10^−5 / (2 × 10^−5) ≈ 1.015u against the true 2u, a relative error of 0.985 / 3.015 ≈ 0.33. The backward pass is probably right. Check this weight on an example whose pre-activations sit farther from 0, or with h below 1.5 × 10^−7."
+    },
+    {
+      "id": "cg-two-estimates-beat-one",
+      "moduleId": "calculus-gradients",
+      "title": "Two Difference Estimates Beat One",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=cg-two-estimates-beat-one",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A colleague's script estimates the slope of a smooth function with a difference formula at three step sizes, printing 2.5116731 at h = 0.2, 2.4827070 at h = 0.1 and 2.4754868 at h = 0.05. It prints only the estimates, not the function, the point or which formula it used. Work out which formula it used and combine two estimates into a better one. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "cg-softmax-temperature-gradients",
+      "moduleId": "calculus-gradients",
+      "title": "Gradients Through a Softmax Temperature",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=cg-softmax-temperature-gradients",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A classifier scales its logits down by a temperature T and only then applies softmax. Raising T flattens the probabilities and lowering it sharpens them. With three classes, logits (ln 4, 0, 0), T = 2 and true class 2, differentiate through the temperature and say when raising T lowers the loss. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "cg-cubic-fit-stable-step",
+      "moduleId": "calculus-gradients",
+      "title": "The Largest Stable Step for a Cubic Fit",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=cg-cubic-fit-stable-step",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "A thermistor's response is measured at twenty settings, scaled to run from -1 to 1, and a cubic is to be fitted to the readings by gradient descent on the mean squared error. The model is linear in the coefficients, so the loss is a quadratic bowl, and its Hessian decides how large a learning rate can be before the steps start to grow instead of shrink.",
+      "answer": "Auto-graded inside the notebook. The checks compare the Vandermonde features (column j holds t**j), the stable rate 2 divided by the largest eigenvalue of (2/N) X^T X, and the fit's losses: convergence to the least-squares solution below the limit and a blow-up at 105% of it."
+    },
+    {
+      "id": "cg-softmax-regression-backward",
+      "moduleId": "calculus-gradients",
+      "title": "Backward Pass of a Softmax Classifier",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=cg-softmax-regression-backward",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "A softmax classifier is one linear layer followed by a softmax and the mean cross-entropy loss. You write its forward pass in a form that cannot overflow, a finite-difference checker for arrays of any shape, and the gradients of the loss with respect to the weights and the bias for a whole batch, in NumPy alone.",
+      "answer": "Auto-graded inside the notebook. The checks compare the softmax probabilities (each row sums to 1 and stays finite for large logits by subtracting that row's maximum), the central-difference gradient against the analytic one to 1e-8 on any shape, and the batch gradients against finite differences to 1e-6, finite at large weights, with db summing to 0."
+    },
+    {
+      "id": "theory-matrix-calculus-gradients",
+      "moduleId": "calculus-gradients",
+      "title": "Matrix Calculus: Derivatives, Gradients, and Hessians",
+      "source": "Original",
+      "difficulty": "Medium",
+      "url": "/theory/?id=theory-matrix-calculus-gradients",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Includes code",
+        "Round 1"
+      ],
+      "prompt": "Differentiate the SiLU activation and the sigmoid, derive the gradient and Hessian of the mean squared error, then implement that gradient with no loops and no np.linalg. 8 parts, each with its own grading instruction. Solutions revealed part by part.",
+      "answer": "Worked solutions are given part by part on the problem page: full derivations, not just final values. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ma4-jacobian-tricks",
+      "moduleId": "calculus-gradients",
+      "title": "Three Jacobians You Should Never Build",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=ma4-jacobian-tricks",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Implement Jacobian-vector products for tanh, a linear map, and softmax at width 2000 without ever forming the 4-million-entry Jacobian.",
+      "answer": "Auto-graded inside the notebook. Each JVP is checked against reference values (its sum and a fixed random projection) to a relative tolerance of 1e-6, and the tanh JVP must also match a central-difference directional derivative to 1e-5."
+    }
+  ],
+  "theory": [
+    {
+      "id": "theory-chain-rule-activations",
+      "moduleId": "calculus-gradients",
+      "title": "The Chain Rule, Softmax, and Cross-Entropy",
+      "difficulty": "Medium",
+      "minutes": 50,
+      "overview": [
+        "Derive the softmax Jacobian, show that softmax with cross-entropy collapses to predicted minus actual, and write a softmax that cannot overflow."
+      ],
+      "setup": [
+        {
+          "p": "Let $z \\in \\mathbb{R}^C$ be a vector of logits for $C$ classes. The softmax function produces"
+        },
+        {
+          "tex": "p_i = \\operatorname{softmax}(z)_i = \\frac{e^{z_i}}{\\sum_{k=0}^{C-1} e^{z_k}}, \\qquad i = 0, \\dots, C-1."
+        },
+        {
+          "p": "Let $y \\in \\{0,1\\}^C$ be a one-hot label vector with $y_c = 1$ for the true class $c$. The cross-entropy loss is"
+        },
+        {
+          "tex": "L = -\\sum_{i=0}^{C-1} y_i \\log p_i = -\\log p_c."
+        }
+      ],
+      "parts": [
+        {
+          "id": "6.1",
+          "kind": "derivation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Show that $p$ is a valid probability distribution: $p_i > 0$ for all $i$ and $\\sum_i p_i = 1$. Then prove the shift-invariance property"
+            },
+            {
+              "tex": "\\operatorname{softmax}(z + c\\mathbf{1}) = \\operatorname{softmax}(z) \\quad \\text{for any } c \\in \\mathbb{R}."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Positivity is immediate: $e^{z_i} > 0$ for every real $z_i$, and the denominator is a sum of positive terms. Normalization is by construction,"
+            },
+            {
+              "tex": "\\sum_{i} p_i = \\frac{\\sum_i e^{z_i}}{\\sum_k e^{z_k}} = 1."
+            },
+            {
+              "p": "For shift-invariance, add $c$ to every logit:"
+            },
+            {
+              "tex": "\\frac{e^{z_i + c}}{\\sum_k e^{z_k + c}} = \\frac{e^{c} e^{z_i}}{e^{c}\\sum_k e^{z_k}} = \\frac{e^{z_i}}{\\sum_k e^{z_k}} = p_i."
+            },
+            {
+              "p": "Two consequences. Mathematically, softmax is not injective: the logits are identifiable only up to a constant shift, so a $C$-class model has $C - 1$ effective degrees of freedom per example. Numerically, you are free to subtract $\\max_k z_k$ before exponentiating, which is what Part 7 exploits."
+            }
+          ]
+        },
+        {
+          "id": "6.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Compute the Jacobian of the softmax, that is, $\\dfrac{\\partial p_i}{\\partial z_j}$ for all $i, j$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write $Z = \\sum_k e^{z_k}$, so $p_i = e^{z_i} / Z$ and $\\partial Z / \\partial z_j = e^{z_j}$. Apply the quotient rule:"
+            },
+            {
+              "tex": "\\frac{\\partial p_i}{\\partial z_j} = \\frac{\\frac{\\partial e^{z_i}}{\\partial z_j} \\cdot Z - e^{z_i} \\cdot e^{z_j}}{Z^2}."
+            },
+            {
+              "p": "Case $i = j$: the first term is $e^{z_i} Z$, giving"
+            },
+            {
+              "tex": "\\frac{\\partial p_i}{\\partial z_i} = \\frac{e^{z_i}}{Z} - \\frac{e^{z_i}e^{z_i}}{Z^2} = p_i - p_i^2 = p_i(1 - p_i)."
+            },
+            {
+              "p": "Case $i \\ne j$: the first term vanishes, giving"
+            },
+            {
+              "tex": "\\frac{\\partial p_i}{\\partial z_j} = -\\frac{e^{z_i}e^{z_j}}{Z^2} = -p_i p_j."
+            },
+            {
+              "p": "Both cases combine into the compact form"
+            },
+            {
+              "tex": "\\frac{\\partial p_i}{\\partial z_j} = p_i\\big(\\delta_{ij} - p_j\\big), \\qquad \\delta_{ij} = \\begin{cases} 1 & i = j \\\\ 0 & i \\ne j\\end{cases},"
+            },
+            {
+              "p": "or in matrix form $J = \\operatorname{diag}(p) - pp^\\top$, which is symmetric and positive semidefinite. Note the two-class case ($C = 2$): with $p_0 = \\sigma(z_0 - z_1)$, the diagonal entry $p_0(1 - p_0)$ is the sigmoid derivative, because sigmoid is the two-class softmax."
+            }
+          ]
+        },
+        {
+          "id": "6.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Using Part 2, prove that the gradient of the cross-entropy loss with respect to the logits is"
+            },
+            {
+              "tex": "\\frac{\\partial L}{\\partial z_j} = p_j - y_j, \\qquad \\text{i.e.} \\qquad \\nabla_z L = p - y."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Start from $L = -\\sum_i y_i \\log p_i$ and apply the chain rule through every $p_i$:"
+            },
+            {
+              "tex": "\\frac{\\partial L}{\\partial z_j} = -\\sum_{i} \\frac{y_i}{p_i} \\frac{\\partial p_i}{\\partial z_j} = -\\sum_i \\frac{y_i}{p_i} \\, p_i(\\delta_{ij} - p_j)."
+            },
+            {
+              "p": "The $p_i$ cancels, which is the key simplification:"
+            },
+            {
+              "tex": "\\frac{\\partial L}{\\partial z_j} = -\\sum_i y_i (\\delta_{ij} - p_j) = -y_j + p_j \\sum_i y_i."
+            },
+            {
+              "p": "Because $y$ is one-hot, $\\sum_i y_i = 1$, leaving"
+            },
+            {
+              "tex": "\\frac{\\partial L}{\\partial z_j} = p_j - y_j."
+            },
+            {
+              "p": "So the gradient is simply \"predicted minus actual\". Everything the softmax Jacobian contributed cancelled against the $1/p_i$ from the logarithm: the two functions are designed for each other. This is why frameworks fuse them into one operator ($\\texttt{cross\\_entropy}$ in PyTorch takes raw logits, not probabilities): the fused backward pass is a single subtraction, and it never divides by a small $p_i$."
+            }
+          ]
+        },
+        {
+          "id": "6.4",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Suppose instead you implement the model as softmax followed by mean squared error, $L_{\\text{MSE}} = \\lVert p - y \\rVert_2^2$."
+            },
+            {
+              "p": "Explain why this trains much more slowly than cross-entropy when the model is confidently wrong."
+            }
+          ],
+          "answer": [
+            {
+              "p": "With MSE the chain rule keeps the softmax Jacobian instead of cancelling it:"
+            },
+            {
+              "tex": "\\nabla_z L_{\\text{MSE}} = J^\\top \\cdot 2(p - y) = 2\\big(\\operatorname{diag}(p) - pp^\\top\\big)(p - y)."
+            },
+            {
+              "p": "Now consider being confidently wrong: the true class is $c$ but $p_c \\approx 0$. The factor multiplying the error in that coordinate is roughly $p_c(1 - p_c) \\approx 0$, so"
+            },
+            {
+              "tex": "\\frac{\\partial L_{\\text{MSE}}}{\\partial z_c} \\approx 0 \\quad \\text{even though the prediction is as wrong as possible.}"
+            },
+            {
+              "p": "Cross-entropy has gradient $p_c - 1 \\approx -1$ in the same situation: a full-strength correction signal. Equivalently, $L = -\\log p_c$ diverges as $p_c \\to 0$, so the loss itself punishes confident errors without bound, whereas MSE saturates at a finite value."
+            },
+            {
+              "p": "The general lesson is to match the loss to the output nonlinearity. Cross-entropy is the negative log-likelihood of a categorical distribution, and its gradient is well behaved precisely because the $\\log$ inverts the $\\exp$ inside softmax."
+            }
+          ]
+        },
+        {
+          "id": "6.5",
+          "kind": "derivation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "The ReLU activation is $\\operatorname{ReLU}(x) = \\max(0, x)$."
+            },
+            {
+              "p": "Give its derivative where it exists, explain what happens at $x = 0$, and state what implementations do there."
+            }
+          ],
+          "answer": [
+            {
+              "p": "For $x \\ne 0$ the function is locally linear, so"
+            },
+            {
+              "tex": "\\operatorname{ReLU}'(x) = \\begin{cases} 1 & x > 0 \\\\ 0 & x < 0. \\end{cases}"
+            },
+            {
+              "p": "At $x = 0$ the one-sided derivatives disagree, the limit from the right is $1$ and from the left is $0$, so the derivative does not exist. ReLU is continuous but not differentiable at the origin."
+            },
+            {
+              "p": "It is still convex, so it has a *subdifferential* there: any value in $[0, 1]$ is a valid subgradient, and gradient descent using any of them still converges. Implementations simply pick one: PyTorch and TensorFlow both return $0$ at exactly $x = 0$."
+            },
+            {
+              "p": "In practice the choice never matters, because hitting $x = 0$ exactly has probability zero with floating-point inputs. What does matter is that the derivative is exactly $1$ on the positive side: unlike sigmoid's $1/4$ ceiling derived in the lesson, ReLU does not attenuate the gradient as it flows back, which is the main reason it made very deep networks trainable. The cost is the \"dying ReLU\" failure mode: a unit stuck at $x < 0$ for all inputs receives zero gradient forever."
+            }
+          ]
+        },
+        {
+          "id": "6.6",
+          "kind": "mcq",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A network computes $L = g(f(w))$ where $f$ and $g$ are scalar functions. At the current $w$: $f(w) = 3$, $f'(w) = -2$, $g'(3) = 0.5$. What is $\\dfrac{dL}{dw}$?"
+            },
+            {
+              "choices": [
+                "A. $-1$.",
+                "B. $-4$.",
+                "C. $1.5$.",
+                "D. $-2.5$.",
+                "E. $0.25$."
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The chain rule multiplies the outer derivative, evaluated at the inner value, by the inner derivative:"
+            },
+            {
+              "tex": "\\frac{dL}{dw} = g'\\big(f(w)\\big) \\cdot f'(w) = g'(3) \\cdot (-2) = 0.5 \\times (-2) = -1."
+            },
+            {
+              "p": "The trap is evaluating $g'$ at $w$ instead of at $f(w) = 3$. This is exactly why a backward pass needs the forward activations cached: the outer derivative can only be evaluated once you know what the inner function produced."
+            },
+            {
+              "result": "A. $-1$."
+            }
+          ]
+        },
+        {
+          "id": "6.7",
+          "kind": "coding",
+          "requirement": "Do not use scipy or any loop. Your implementation must not overflow.",
+          "prompt": [
+            {
+              "p": "Run the following starter code:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "import numpy as np",
+                  "",
+                  "z = np.array([1000.0, 1001.0, 1002.0])"
+                ]
+              }
+            },
+            {
+              "p": "Explain what $\\texttt{np.exp(z) / np.exp(z).sum()}$ produces for this input, then write a numerically stable softmax and report the result."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The naive expression overflows. A double-precision float tops out near $1.8 \\times 10^{308}$, and $e^{1000} \\approx 10^{434}$, so every $\\texttt{np.exp(z)}$ entry becomes $\\texttt{inf}$. The division is then $\\texttt{inf/inf}$, which evaluates to $\\texttt{nan}$. You get $\\texttt{[nan, nan, nan]}$ plus an overflow warning, and the $\\texttt{nan}$ silently poisons every downstream gradient."
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "def softmax(z):",
+                  "    shifted = z - z.max()          # largest entry becomes 0",
+                  "    e = np.exp(shifted)",
+                  "    return e / e.sum()"
+                ]
+              }
+            },
+            {
+              "p": "Correctness follows from the shift-invariance proved in Part 1: subtracting the constant $\\max_k z_k$ leaves the output unchanged. Numerically it is now safe, because the largest exponent is $e^0 = 1$ and every other is in $(0, 1]$, so nothing overflows. Underflow is harmless: a term that rounds to $0$ was negligible anyway."
+            },
+            {
+              "p": "For the given $z$ the shifted logits are $(-2, -1, 0)$, so"
+            },
+            {
+              "tex": "p = \\frac{(e^{-2},\\, e^{-1},\\, 1)}{e^{-2} + e^{-1} + 1} \\approx (0.0900,\\ 0.2447,\\ 0.6652)."
+            },
+            {
+              "p": "Only the *differences* between logits matter: the shared magnitude of $1000$ is irrelevant, exactly as Part 1 predicts."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cg-steepest-point-of-a-bump",
+      "moduleId": "calculus-gradients",
+      "title": "Where a Bump Is Steepest",
+      "difficulty": "Easy",
+      "minutes": 8,
+      "overview": [
+        "A radial basis unit responds most to inputs near its center. This one has center 3 and width 2:"
+      ],
+      "setup": [
+        {
+          "tex": "\\phi(x) = e^{-(x - 3)^2/8} ."
+        },
+        {
+          "p": "Its output is 1 at $x = 3$ and falls toward 0 on both sides. Training moves the input to this unit, so what matters is how fast the output changes, $\\phi'(x)$, and that is not largest where the output is largest."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Find the two inputs where the output changes fastest, that is, where $|\\phi'(x)|$ is largest. Enter the larger one."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The chain rule, with outer function $e^u$ and inner $u = -(x - 3)^2/8$, gives"
+            },
+            {
+              "tex": "\\phi'(x) = e^{u}\\cdot\\left(-\\frac{2(x - 3)}{8}\\right) = -\\frac{x - 3}{4}\\,\\phi(x) ."
+            },
+            {
+              "p": "The slope is largest in size where its own derivative is 0. The product rule on $-\\tfrac{x - 3}{4}$ times $\\phi(x)$ gives"
+            },
+            {
+              "tex": "\\phi''(x) = -\\frac14\\,\\phi(x) - \\frac{x - 3}{4}\\,\\phi'(x) = \\left(\\frac{(x - 3)^2}{16} - \\frac14\\right)\\phi(x) ."
+            },
+            {
+              "p": "Since $\\phi(x) > 0$, this is 0 exactly when $(x - 3)^2 = 4$, so at $x = 1$ and $x = 5$, one width either side of the center. At $x = 3$ itself the slope is 0."
+            },
+            {
+              "result": "5"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is $\\phi'(5)$? Compare it with the steepest slope of the sigmoid."
+            }
+          ],
+          "answer": [
+            {
+              "tex": "\\phi'(5) = -\\frac{5 - 3}{4}\\,e^{-4/8} = -\\tfrac12 e^{-1/2} \\approx -0.303 ."
+            },
+            {
+              "p": "It is negative because the output falls as the input moves away from the center, and $\\phi'(1) = +0.303$ by symmetry. The sigmoid's steepest slope is $\\tfrac14$, at its middle. The bump is steepest on its two flanks instead, and an input sitting exactly at the center passes back no gradient at all."
+            },
+            {
+              "result": "$-0.303$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cg-silu-slope-below-zero",
+      "moduleId": "calculus-gradients",
+      "title": "The Slope of SiLU Below Zero",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Many recent networks use the SiLU activation (also called swish) in place of ReLU:"
+            },
+            {
+              "tex": "f(z) = z\\,\\sigma(z), \\qquad \\sigma(z) = \\frac{1}{1 + e^{-z}} ."
+            },
+            {
+              "p": "One SiLU unit receives the pre-activation $z = -2$, where $\\sigma(-2) \\approx 0.1192$. During backpropagation the gradient arriving at its output is $\\partial\\mathcal{L}/\\partial f = 1.5$. What is $\\partial\\mathcal{L}/\\partial z$, to three decimals?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$0$",
+                  "explain": "That is what a ReLU unit would pass back, since its slope is 0 for every negative input. SiLU is smooth and has a nonzero slope at z = −2: by the product rule it is σ(−2) + (−2)·σ(−2)(1 − σ(−2)) ≈ −0.091, so the unit passes back 1.5 × −0.091 ≈ −0.136."
+                },
+                {
+                  "text": "$0.157$",
+                  "explain": "This uses the sigmoid's slope σ(−2)(1 − σ(−2)) ≈ 0.105 as the slope of SiLU, which drops the factor z and the first term of the product rule. With f = z·σ(z), f′ = 1·σ(z) + z·σ′(z) = 0.119 − 2 × 0.105 ≈ −0.091, and 1.5 × −0.091 ≈ −0.136."
+                },
+                {
+                  "text": "$0.179$",
+                  "explain": "This keeps only the first term of the product rule, the derivative of z times σ(z). The second term, z·σ′(z) = −2 × 0.105 = −0.210, is larger and negative, so the slope is 0.119 − 0.210 ≈ −0.091 and the answer is 1.5 × −0.091 ≈ −0.136."
+                },
+                {
+                  "text": "$-0.136$",
+                  "correct": true,
+                  "explain": "By the product rule, f′(z) = σ(z) + z·σ(z)(1 − σ(z)) = σ(z)(1 + z(1 − σ(z))). At z = −2 this is 0.1192 × (1 − 2 × 0.8808) = 0.1192 × −0.7616 ≈ −0.0908, and the chain rule multiplies by 1.5 to give about −0.136. The slope of SiLU turns negative below about z = −1.28, so raising this input would lower the unit's output, something ReLU and sigmoid never do."
+                },
+                {
+                  "text": "$-0.358$",
+                  "explain": "This uses the output f(−2) = −2 × 0.1192 ≈ −0.238 as if it were the slope. Backpropagation needs f′(−2) = σ(−2)(1 − 2(1 − σ(−2))) ≈ −0.091, so the answer is 1.5 × −0.091 ≈ −0.136."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "By the product rule, f′(z) = σ(z) + z·σ(z)(1 − σ(z)) = σ(z)(1 + z(1 − σ(z))). At z = −2 this is 0.1192 × (1 − 2 × 0.8808) = 0.1192 × −0.7616 ≈ −0.0908, and the chain rule multiplies by 1.5 to give about −0.136. The slope of SiLU turns negative below about z = −1.28, so raising this input would lower the unit's output, something ReLU and sigmoid never do."
+            },
+            {
+              "result": "$-0.136$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cg-gradient-from-two-probes",
+      "moduleId": "calculus-gradients",
+      "title": "A Gradient from Two Probes",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A model has two weights, $\\mathbf{w} = (w_1, w_2)$, and its loss can only be evaluated, not differentiated by hand. You probe it at the current weights by moving a tiny step along two unit directions and dividing the change in loss by the step length:"
+      ],
+      "setup": [
+        {
+          "list": [
+            "Along $\\mathbf{u}_1 = (1, 0)$ the loss changes at rate $-3$.",
+            "Along $\\mathbf{u}_2 = (0.6, 0.8)$ it changes at rate $1.4$."
+          ]
+        },
+        {
+          "p": "Treat these two rates as exact."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is $\\partial\\mathcal{L}/\\partial w_2$ at the current weights?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The rate along a unit direction $\\mathbf{u}$ is the directional derivative $\\nabla\\mathcal{L}\\cdot\\mathbf{u}$. Write $\\nabla\\mathcal{L} = (g_1, g_2)$."
+            },
+            {
+              "list": [
+                "Along $\\mathbf{u}_1$: $g_1 = -3$.",
+                "Along $\\mathbf{u}_2$: $0.6\\,g_1 + 0.8\\,g_2 = 1.4$, so $0.8\\,g_2 = 1.4 + 1.8 = 3.2$ and $g_2 = 4$."
+              ]
+            },
+            {
+              "p": "So $\\nabla\\mathcal{L} = (-3, 4)$. Two probes in independent directions are enough to recover a two-entry gradient. The second probe mixes both entries, so it cannot be read as $g_2$ directly."
+            },
+            {
+              "result": "4"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "You may now move the weights by a step of length $0.05$ in any direction. To first order, what is the largest decrease in loss you can get? Enter the predicted change in loss."
+            }
+          ],
+          "answer": [
+            {
+              "p": "To first order the change is $\\nabla\\mathcal{L}\\cdot\\mathbf{v}$ for a step $\\mathbf{v}$. With $\\lVert\\mathbf{v}\\rVert = 0.05$ this equals $0.05\\,\\lVert\\nabla\\mathcal{L}\\rVert\\cos\\alpha$, which is most negative when $\\mathbf{v}$ points along $-\\nabla\\mathcal{L}$, at angle $\\alpha = \\pi$. Here $\\lVert\\nabla\\mathcal{L}\\rVert = \\sqrt{9 + 16} = 5$, so the best step is $\\mathbf{v} = 0.05\\,(0.6, -0.8)$ and the change is $-0.05 \\cdot 5 = -0.25$."
+            },
+            {
+              "p": "The best single-weight steps do worse: moving only $w_1$ by $+0.05$ changes the loss by $-0.15$, and moving only $w_2$ by $-0.05$ changes it by $-0.20$."
+            },
+            {
+              "result": "$-0.25$"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Find a unit direction along which the loss does not change, to first order. How is it related to the gradient?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "We need $\\nabla\\mathcal{L}\\cdot\\mathbf{u} = -3u_1 + 4u_2 = 0$, so $\\mathbf{u}$ is a multiple of $(4, 3)$. Scaled to length 1, $\\mathbf{u} = (0.8, 0.6)$ or its negative $(-0.8, -0.6)$."
+            },
+            {
+              "p": "This direction is perpendicular to $(-3, 4)$. It is the direction of the level curve of the loss through the current weights, and the gradient crosses that curve at a right angle. A step along it changes the loss only through second-order terms."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cg-one-weight-three-steps",
+      "moduleId": "calculus-gradients",
+      "title": "One Weight Used at Three Steps",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A tiny recurrent model reads a sequence of three numbers and uses the same weight $w$ at every step:"
+      ],
+      "setup": [
+        {
+          "tex": "h_t = w\\,h_{t-1} + x_t, \\qquad t = 1, 2, 3 ,"
+        },
+        {
+          "p": "starting from $h_0 = 1$. The inputs are $x_1 = 1$, $x_2 = -1$ and $x_3 = 2$, the weight is $w = 0.5$, and the loss is $\\mathcal{L} = (h_3 - 2)^2$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is $\\partial h_3/\\partial w$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Run the model forward first: $h_1 = 0.5 + 1 = 1.5$, $h_2 = 0.75 - 1 = -0.25$ and $h_3 = -0.125 + 2 = 1.875$."
+            },
+            {
+              "p": "The weight reaches $h_3$ along three paths, one for each step that uses it. At step $t$, $\\partial h_t/\\partial w = h_{t-1}$ if everything earlier is held fixed, and $\\partial h_t/\\partial h_{t-1} = w$. Multiply the slopes along each path and add the paths:"
+            },
+            {
+              "tex": "\\frac{\\partial h_3}{\\partial w} = h_2 + w\\,h_1 + w^2 h_0 = -0.25 + 0.75 + 0.25 = 0.75 ."
+            },
+            {
+              "p": "Substituting first gives the same: $h_3 = w^3 h_0 + w^2 x_1 + w x_2 + x_3$, whose derivative is $3w^2 h_0 + 2w x_1 + x_2 = 0.75 + 1 - 1 = 0.75$."
+            },
+            {
+              "result": "0.75"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is $\\partial\\mathcal{L}/\\partial w$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "$\\partial\\mathcal{L}/\\partial h_3 = 2(h_3 - 2) = 2 \\times (-0.125) = -0.25$, and the chain rule multiplies the two slopes:"
+            },
+            {
+              "tex": "\\frac{\\partial\\mathcal{L}}{\\partial w} = -0.25 \\times 0.75 = -0.1875 ."
+            },
+            {
+              "p": "It is negative, so a descent step raises $w$. That makes sense: $h_3 = 1.875$ is just below its target of 2, and $h_3$ grows with $w$."
+            },
+            {
+              "result": "$-0.1875$"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A buggy backward pass treats $h_2$ as a constant input to the last step, so it keeps only the path through step 3. What value of $\\partial\\mathcal{L}/\\partial w$ does it report, and what does a descent step with that value do to the loss?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "With $h_2$ frozen, $\\partial h_3/\\partial w = h_2 = -0.25$, so the reported value is $-0.25 \\times (-0.25) = 0.0625$."
+            },
+            {
+              "p": "It has the wrong sign. The last step's path alone says that raising $w$ lowers $h_3$, because $h_2$ is negative, but the two earlier paths push the other way and outweigh it. A descent step with the buggy value lowers $w$ and raises the loss: with a learning rate of 0.1 the loss goes from $0.0156$ to about $0.0168$, while the true gradient takes it down to about $0.0121$. When a weight is shared, its gradient is the sum over every place it is used."
+            },
+            {
+              "result": "0.0625"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cg-expected-cost-through-softmax",
+      "moduleId": "calculus-gradients",
+      "title": "Lowering an Expected Cost Through the Logits",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A model routes each support ticket to one of three teams. A softmax over its logits $\\mathbf{z}$ gives the probabilities $\\mathbf{p}$ of the three teams, and every team has a cost of handling the ticket, $\\mathbf{c} = (1, 0, -2)$: team 1 costs the most, and team 3 is so well suited that its cost is negative, a gain. The model is trained to lower its expected cost"
+      ],
+      "setup": [
+        {
+          "tex": "\\mathcal{L} = \\sum_k c_k\\,p_k ."
+        },
+        {
+          "p": "For the current ticket, $\\mathbf{p} = (0.5, 0.3, 0.2)$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Compute the gradient of $\\mathcal{L}$ with respect to the logits, and enter $\\partial\\mathcal{L}/\\partial z_3$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write $S = \\sum_k e^{z_k}$, so $\\mathcal{L} = \\big(\\sum_k c_ke^{z_k}\\big)/S$. The logit $z_j$ appears once in the numerator, with slope $c_je^{z_j}$, and once in $S$, with slope $e^{z_j}$. The quotient rule gives"
+            },
+            {
+              "tex": "\\frac{\\partial\\mathcal{L}}{\\partial z_j} = \\frac{c_je^{z_j}\\,S - \\big(\\sum_k c_ke^{z_k}\\big)\\,e^{z_j}}{S^2} = c_jp_j - \\mathcal{L}\\,p_j = p_j\\,(c_j - \\mathcal{L}) ."
+            },
+            {
+              "p": "Each logit's gradient is its probability times how far its cost sits from the current expected cost. The lesson's route gives the same: the softmax Jacobian has entries $p_i(\\delta_{ij} - p_j)$, and the $J^\\top$ rule sums $c_ip_i(\\delta_{ij} - p_j)$ over $i$, which is $p_jc_j - p_j\\mathcal{L}$. The direct form never builds the $C \\times C$ Jacobian."
+            },
+            {
+              "p": "Here $\\mathcal{L} = 0.5 - 0.4 = 0.1$, so"
+            },
+            {
+              "tex": "\\nabla_{\\mathbf{z}}\\mathcal{L} = \\big(0.5 \\times 0.9,\\ 0.3 \\times (-0.1),\\ 0.2 \\times (-2.1)\\big) = (0.45,\\ -0.03,\\ -0.42) ,"
+            },
+            {
+              "p": "and $\\partial\\mathcal{L}/\\partial z_3 = -0.42$. A descent step raises $z_3$, the team with the gain, and lowers $z_1$. It also raises $z_2$ slightly: team 2 costs 0, less than the current average of 0.1, so moving probability onto it helps too."
+            },
+            {
+              "result": "$-0.42$"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "The three entries add up to 0. Show that this holds for any cost vector $\\mathbf{c}$ and any $\\mathbf{p}$, and explain why it must."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Adding the entries,"
+            },
+            {
+              "tex": "\\sum_j p_j\\,(c_j - \\mathcal{L}) = \\sum_j c_jp_j - \\mathcal{L}\\sum_j p_j = \\mathcal{L} - \\mathcal{L} = 0 ,"
+            },
+            {
+              "p": "because the $p_j$ add up to 1."
+            },
+            {
+              "p": "The reason is that softmax ignores a shift: adding the same number $t$ to every logit multiplies every $e^{z_k}$ by $e^t$, which cancels in the division, so $\\mathbf{p}$ and the loss do not change. The rate of change of $\\mathcal{L}$ in the direction $(1, 1, 1)$ is therefore 0, and that rate is the dot product of the gradient with $(1, 1, 1)$, the sum of its entries. The same holds for any loss computed from $\\mathbf{p}$, and it is a quick check on a hand-written softmax backward pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cg-weight-gradient-for-a-batch",
+      "moduleId": "calculus-gradients",
+      "title": "The Weight Gradient for a Whole Batch",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A linear layer maps each input $\\mathbf{x}_n$ of length 10 to $\\mathbf{z}_n = W\\mathbf{x}_n + \\mathbf{b}$ of length 4, so $W$ has shape $4 \\times 10$. In NumPy a batch of 32 inputs is stored one example per row, and the layer computes"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "Z = X @ W.T + b        # X: (32, 10), W: (4, 10), b: (4,), Z: (32, 4)"
+                ]
+              }
+            },
+            {
+              "p": "The loss is the mean over the batch of a per-example loss. Backpropagation has already produced `G`, of shape `(32, 4)`, whose row $n$ is $\\nabla_{\\mathbf{z}_n}\\mathcal{L}$, the gradient of that mean loss with respect to $\\mathbf{z}_n$. Which line computes $\\partial\\mathcal{L}/\\partial W$?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "`dW = X.T @ G`",
+                  "explain": "This array has shape (10, 4), the transpose of W, so the update `W -= lr * dW` fails with a shape error. Its entry [j, k] is the right number for W[k, j]: the single-example rule puts the output gradient first, (∇z L) x^T, so the batch sum is G.T @ X."
+                },
+                {
+                  "text": "`dW = G.T @ X`",
+                  "correct": true,
+                  "explain": "For one example the lesson's rule gives (∇z L) x^T, a 4 × 10 outer product. W is used by every example, so its gradient is the sum of these outer products over the batch, and the sum over n of row n of G times row n of X is exactly G.T @ X, of shape (4, 10). L is the mean, so example n's loss enters it with weight 1/32, and that 1/32 is already inside row n of G: nothing more is divided. The bias is also used by every example: db = G.sum(axis=0)."
+                },
+                {
+                  "text": "`dW = G.T @ X / 32`",
+                  "explain": "The shape is right, but the mean is taken twice. Row n of G is the gradient of the mean loss, in which example n's loss has weight 1/32, so it already carries that 1/32, and summing the 32 outer products gives the gradient of the mean. Dividing again makes every step 32 times too small."
+                },
+                {
+                  "text": "`dW = np.outer(G.mean(axis=0), X.mean(axis=0))`",
+                  "explain": "The shape is right, but this pairs every example's gradient with every example's input. The gradient sums g_n x_n^T over n, pairing each g_n with its own x_n, and a sum of products is not the product of the averages. Even when every example has the same input, it comes out 32 times too small, because G.mean divides by 32 again."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "For one example the lesson's rule gives (∇z L) x^T, a 4 × 10 outer product. W is used by every example, so its gradient is the sum of these outer products over the batch, and the sum over n of row n of G times row n of X is exactly G.T @ X, of shape (4, 10). L is the mean, so example n's loss enters it with weight 1/32, and that 1/32 is already inside row n of G: nothing more is divided. The bias is also used by every example: db = G.sum(axis=0)."
+            },
+            {
+              "result": "`dW = G.T @ X`"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cg-product-of-two-linear-forms",
+      "moduleId": "calculus-gradients",
+      "title": "The Gradient of a Product of Two Scores",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Two linear scores of the same input, $\\mathbf{a}^\\top\\mathbf{x}$ and $\\mathbf{b}^\\top\\mathbf{x}$, are multiplied together, as in a gated unit with no nonlinearity:"
+            },
+            {
+              "tex": "f(\\mathbf{x}) = (\\mathbf{a}^\\top\\mathbf{x})(\\mathbf{b}^\\top\\mathbf{x}),\n\\qquad \\mathbf{a} = (1, 2),\\quad \\mathbf{b} = (3, -1) ."
+            },
+            {
+              "p": "What is $\\nabla f$ at $\\mathbf{x} = (2, 1)$?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$(17, 6)$",
+                  "correct": true,
+                  "explain": "Both factors depend on x. Differentiating a·x gives a, multiplied by the other factor b·x = 5, and differentiating b·x gives b, multiplied by a·x = 4. The product rule adds the two: 5(1, 2) + 4(3, −1) = (17, 6). Writing f as the quadratic form x^T (a b^T) x and using the table's (A + A^T)x gives the same, because a b^T is not symmetric."
+                },
+                {
+                  "text": "$(10, 20)$",
+                  "explain": "This is 2(b·x) a: it treats the two terms of the product rule as equal and doubles the first, as one would for a square. They are equal only when a and b point the same way. Here the second term is (a·x) b = 4(3, −1) = (12, −4), not another (5, 10), so the sum is (17, 6)."
+                },
+                {
+                  "text": "$(12, -4)$",
+                  "explain": "This is (a·x) b alone: it differentiates the second score and holds the first fixed at 4. The first score changes with x too, which adds (b·x) a = 5(1, 2) = (5, 10), for (17, 6) in all."
+                },
+                {
+                  "text": "$(5, 10)$",
+                  "explain": "This is (b·x) a alone: it differentiates the first score and holds the second fixed at 5, as if f were linear in x. The second score changes with x too, which adds (a·x) b = 4(3, −1) = (12, −4), for (17, 6) in all."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Both factors depend on x. Differentiating a·x gives a, multiplied by the other factor b·x = 5, and differentiating b·x gives b, multiplied by a·x = 4. The product rule adds the two: 5(1, 2) + 4(3, −1) = (17, 6). Writing f as the quadratic form x^T (a b^T) x and using the table's (A + A^T)x gives the same, because a b^T is not symmetric."
+            },
+            {
+              "result": "$(17, 6)$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cg-duplicate-row-as-weight",
+      "moduleId": "calculus-gradients",
+      "title": "A Duplicate Row as a Weight",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A sensor logged three readings $(t, y)$: $(0, 1)$, $(1, 2)$ and $(3, 2)$. The reading at $t = 3$ was logged twice, and rather than store the duplicate you give that row the weight 2. The model predicts $\\hat{y}_n = \\theta_1 + \\theta_2 t_n$, the rows of $X$ are $\\mathbf{x}_n = (1, t_n)$, and the weighted mean squared error is"
+      ],
+      "setup": [
+        {
+          "tex": "\\mathcal{L}(\\boldsymbol\\theta) = \\frac{1}{\\sum_n w_n}\\sum_{n=1}^{3} w_n\\,(y_n - \\hat{y}_n)^2,\n\\qquad \\mathbf{w} = (1, 1, 2) ."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Write $\\nabla_{\\boldsymbol\\theta}\\mathcal{L}$ in matrix form, and check that it equals the plain mean squared error gradient on the four rows you would get by storing the duplicate."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write $r_n = y_n - \\hat{y}_n$. Since $\\hat{y}_n$ has gradient $\\mathbf{x}_n$, each term $w_n r_n^2$ has gradient $w_n \\cdot 2r_n \\cdot (-\\mathbf{x}_n)$, so"
+            },
+            {
+              "tex": "\\nabla_{\\boldsymbol\\theta}\\mathcal{L} = -\\frac{2}{\\sum_n w_n}\\sum_n w_n r_n\\,\\mathbf{x}_n = -\\frac{2}{\\sum_n w_n}\\,X^\\top(\\mathbf{w}\\odot\\mathbf{r}) ,"
+            },
+            {
+              "p": "where $\\odot$ multiplies entry by entry. With weights of 1 this is the lesson's $-\\tfrac{2}{N}X^\\top\\mathbf{r}$."
+            },
+            {
+              "p": "Storing the duplicate gives four rows with $N = 4$. The third reading then appears twice in $\\sum_n r_n\\mathbf{x}_n$, which is the same as weighting it by 2, and $N = 4 = \\sum_n w_n$. So the two gradients are equal for every $\\boldsymbol\\theta$. That is why the normalizer is $\\sum_n w_n$ and not the number of stored rows."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Compute $\\partial\\mathcal{L}/\\partial\\theta_2$ at $\\boldsymbol\\theta = (1, 0.5)$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "At this $\\boldsymbol\\theta$ the model predicts $1$, $1.5$ and $2.5$, which leaves $\\mathbf{r} = (0, 0.5, -0.5)$ and $\\mathbf{w}\\odot\\mathbf{r} = (0, 0.5, -1)$. Then"
+            },
+            {
+              "tex": "X^\\top(\\mathbf{w}\\odot\\mathbf{r}) = 0\\cdot(1, 0) + 0.5\\cdot(1, 1) - 1\\cdot(1, 3) = (-0.5,\\ -2.5) ,"
+            },
+            {
+              "p": "and $\\nabla\\mathcal{L} = -\\tfrac{2}{4}(-0.5, -2.5) = (0.25, 1.25)$. So $\\partial\\mathcal{L}/\\partial\\theta_2 = 1.25$."
+            },
+            {
+              "p": "Dividing by the three stored rows instead of $\\sum_n w_n = 4$ gives $1.667$, and dropping the weights gives $0.667$. The doubled reading lies below the line, and counting it twice is what makes the slope gradient this large: a descent step lowers $\\theta_2$."
+            },
+            {
+              "result": "1.25"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "coding",
+          "requirement": "Write one NumPy expression. Do not use any loop, and do not use the @ operator or .T.",
+          "prompt": [
+            {
+              "p": "Write the gradient as one NumPy expression with no loop, no `@` and no `.T`, given 1-D arrays `w`, `y` and `theta` and the 2-D array `X`."
+            }
+          ],
+          "answer": [
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "resid = y - np.sum(X * theta, axis=1)                   # one entry per row",
+                  "grad = -2 / np.sum(w) * np.sum((w * resid)[:, None] * X, axis=0)"
+                ]
+              }
+            },
+            {
+              "p": "`X * theta` scales column $j$ by $\\theta_j$, and adding along each row gives every prediction. `(w * resid)[:, None]` is a column of shape `(N, 1)`, so multiplying it into `X` weights row $n$ by $w_nr_n$, and adding down the columns gives the weighted sum of the rows. On the data above this prints `[0.25 1.25]`."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cg-squared-error-on-a-sigmoid",
+      "moduleId": "calculus-gradients",
+      "title": "Squared Error on a Sigmoid Output",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A binary classifier outputs $p = \\sigma(s)$ from a logit $s$. Compare two ways of training it on an example with label $y = 1$:"
+      ],
+      "setup": [
+        {
+          "list": [
+            "Binary cross-entropy, $\\mathcal{L}_{\\text{CE}} = -\\ln p$.",
+            "Squared error, $\\mathcal{L}_{\\text{SE}} = (p - y)^2$."
+          ]
+        },
+        {
+          "p": "What drives learning is the gradient with respect to the logit, $\\partial\\mathcal{L}/\\partial s$, since everything before the logit receives it through the chain rule."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "At $s = -\\ln 4$ the model gives the true class $p = 0.2$. How many times larger in size is $\\partial\\mathcal{L}_{\\text{CE}}/\\partial s$ than $\\partial\\mathcal{L}_{\\text{SE}}/\\partial s$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "For cross-entropy the sigmoid's slope cancels, as in the lesson: $\\partial\\mathcal{L}_{\\text{CE}}/\\partial s = p - y = -0.8$."
+            },
+            {
+              "p": "For squared error nothing cancels. The chain rule multiplies $\\partial\\mathcal{L}_{\\text{SE}}/\\partial p = 2(p - y)$ by $dp/ds = p(1 - p)$:"
+            },
+            {
+              "tex": "\\frac{\\partial\\mathcal{L}_{\\text{SE}}}{\\partial s} = 2(p - y)\\,p(1 - p) = 2(-0.8)(0.2)(0.8) = -0.256 ."
+            },
+            {
+              "p": "Both point the same way, but the ratio is $0.8/0.256 = 1/\\big(2p(1 - p)\\big) = 3.125$."
+            },
+            {
+              "result": "3.125"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Under squared error with $y = 1$, at what value of $p$ is $|\\partial\\mathcal{L}_{\\text{SE}}/\\partial s|$ largest?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "With $y = 1$, $|\\partial\\mathcal{L}_{\\text{SE}}/\\partial s| = 2(1 - p)\\,p(1 - p) = 2p(1 - p)^2$. Differentiate in $p$ with the product rule:"
+            },
+            {
+              "tex": "\\frac{d}{dp}\\,2p(1 - p)^2 = 2(1 - p)^2 - 4p(1 - p) = 2(1 - p)(1 - 3p) ,"
+            },
+            {
+              "p": "which is 0 at $p = 1$ (the minimum, where the gradient is 0) and at $p = \\tfrac13$. The largest size is $2\\cdot\\tfrac13\\cdot\\tfrac49 = \\tfrac{8}{27} \\approx 0.296$."
+            },
+            {
+              "result": "0.3333"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What happens to each gradient as the model becomes confidently wrong, $p \\to 0$? Which loss would you train a sigmoid output with, and why?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Under cross-entropy, $\\partial\\mathcal{L}/\\partial s = p - 1 \\to -1$: the more wrong the model is, the harder it is pushed, and the push never falls below 1 in size."
+            },
+            {
+              "p": "Under squared error, $2p(1 - p)^2 \\to 0$. Below $p = \\tfrac13$ the push gets weaker the more wrong the model is. At $p = 0.01$ it is about $0.0196$, fifty times weaker than cross-entropy's $0.99$. The sigmoid has saturated, and its small slope $p(1 - p)$ multiplies the gradient."
+            },
+            {
+              "p": "So train a sigmoid output with cross-entropy. Its $-\\tfrac{1}{p}$ grows exactly as fast as the sigmoid's slope shrinks, and the two cancel to leave prediction minus target."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cg-two-weight-chain-hessian",
+      "moduleId": "calculus-gradients",
+      "title": "Stationary Points of a Two-Weight Chain",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "The smallest deep network multiplies its input by two weights in a row, $\\hat{y} = b\\,(a\\,x)$. Trained on the single example $x = 1$, $y = 1$ with squared error, its loss is"
+      ],
+      "setup": [
+        {
+          "tex": "\\mathcal{L}(a, b) = (ab - 1)^2 ."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Find every stationary point. Then compute the Hessian at the origin and enter its smaller eigenvalue."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The gradient is"
+            },
+            {
+              "tex": "\\nabla\\mathcal{L} = \\big(2(ab - 1)\\,b,\\ \\ 2(ab - 1)\\,a\\big) ."
+            },
+            {
+              "p": "It is zero when $ab = 1$, which is a whole curve of points, or when $a = b = 0$. Nothing else works: if $ab \\ne 1$, both $a$ and $b$ must be 0."
+            },
+            {
+              "p": "Differentiating again, $\\partial^2\\mathcal{L}/\\partial a^2 = 2b^2$, $\\partial^2\\mathcal{L}/\\partial b^2 = 2a^2$, and $\\partial^2\\mathcal{L}/\\partial a\\,\\partial b = 2(ab - 1) + 2ab = 4ab - 2$. At the origin"
+            },
+            {
+              "tex": "H = \\begin{pmatrix} 0 & -2 \\\\ -2 & 0 \\end{pmatrix},"
+            },
+            {
+              "p": "with eigenvalues $2$ and $-2$, for the eigenvectors $(1, -1)$ and $(1, 1)$. Mixed signs make the origin a saddle point. Along $a = b = t$ the loss is $(t^2 - 1)^2$, which falls from 1 as $t$ leaves 0, and along $a = -b$ it rises."
+            },
+            {
+              "result": "$-2$"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Compute the Hessian at the stationary point $(a, b) = (2, 0.5)$ and enter its larger eigenvalue. What does the second-derivative test say there, and what kind of point is it?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "With $ab = 1$,"
+            },
+            {
+              "tex": "H = \\begin{pmatrix} 2b^2 & 4ab - 2 \\\\ 4ab - 2 & 2a^2 \\end{pmatrix} = \\begin{pmatrix} 0.5 & 2 \\\\ 2 & 8 \\end{pmatrix} ."
+            },
+            {
+              "p": "Its determinant is $4 - 4 = 0$ and its trace is $8.5$, so the eigenvalues are $0$ and $8.5$. One eigenvalue is 0 and the other is positive, so the test cannot decide."
+            },
+            {
+              "p": "The point is still a global minimum, for a reason the test does not use: $\\mathcal{L}$ is a square, so $\\mathcal{L} \\ge 0$ everywhere, and here $\\mathcal{L} = 0$."
+            },
+            {
+              "result": "8.5"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Find the direction of the zero eigenvalue at $(2, 0.5)$ and explain why the loss is flat along it."
+            }
+          ],
+          "answer": [
+            {
+              "p": "$H\\mathbf{v} = \\mathbf{0}$ gives $0.5v_1 + 2v_2 = 0$, so $\\mathbf{v}$ is a multiple of $(4, -1)$."
+            },
+            {
+              "p": "The curve of minima $b = 1/a$ has slope $-1/a^2 = -\\tfrac14$ at $a = 2$, so its tangent there is also along $(4, -1)$. The zero eigenvalue points along the valley floor, where $ab$ stays 1 and the loss stays 0. The flat direction comes from a symmetry: replacing $(a, b)$ by $(ca, b/c)$ leaves the network's output unchanged for every $c \\ne 0$. Deep networks have many such symmetries, which is one reason their Hessians often have eigenvalues at or near 0."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cg-check-fails-at-one-weight",
+      "moduleId": "calculus-gradients",
+      "title": "A Gradient Check That Fails at One Weight",
+      "difficulty": "Medium",
+      "minutes": 8,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "You check the backward pass of a small ReLU network with central differences, $h = 10^{-5}$, in float64. Every weight passes with a relative error below $10^{-9}$ except one. That weight, $w$, feeds a unit that computes $z = w\\,x + b$ and then $\\max(0, z)$. On the example used for the check, the unit's input is $x = 2$ and its pre-activation is $z = 3 \\times 10^{-7}$. The relative error for $w$ is $0.33$. What is the most likely explanation?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "The backward pass uses ReLU's convention of slope 0 at the corner, so it returned 0 for this weight",
+                  "explain": "Here z = 3 × 10^−7 is positive, so the backward pass uses the slope 1, not the convention for z = 0, and returns 2u, where u is the gradient arriving at the unit's output. Had it returned 0, the relative error would be $|0 - e| / (0 + |e|) = 1$ exactly for any nonzero estimate e, not 0.33."
+                },
+                {
+                  "text": "Round-off error, because $h = 10^{-5}$ is too small for float64 arithmetic",
+                  "explain": "For a loss of size about 1, round-off in a central difference is about the machine precision, 2 × 10^−16, divided by h, so about 10^−11 here. That cannot produce an error of 0.33, and the other weights, checked with the same h, show no sign of it."
+                },
+                {
+                  "text": "The step in $w$ moves $z$ across the corner of ReLU at 0, so the difference mixes the slopes on both sides",
+                  "correct": true,
+                  "explain": "Nudging w by ±h moves z by ±2h = ±2 × 10^−5, far more than the 3 × 10^−7 between z and the corner. At w + h the unit is on (z = 2.03 × 10^−5) and at w − h it is off, so the estimate is u × 2.03 × 10^−5 / (2 × 10^−5) ≈ 1.015u against the true 2u, a relative error of 0.985 / 3.015 ≈ 0.33. The backward pass is probably right. Check this weight on an example whose pre-activations sit farther from 0, or with h below 1.5 × 10^−7."
+                },
+                {
+                  "text": "Truncation error, because the central difference is only accurate to order $h^2$ and $h$ is too large",
+                  "explain": "For a smooth function the central difference errs by about h² times the third derivative, around 10^−10 here, which is why the other weights pass. An error of 0.33 is not a slightly inaccurate slope but a different one: the two evaluations sit on opposite sides of a point where the slope jumps."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Nudging w by ±h moves z by ±2h = ±2 × 10^−5, far more than the 3 × 10^−7 between z and the corner. At w + h the unit is on (z = 2.03 × 10^−5) and at w − h it is off, so the estimate is u × 2.03 × 10^−5 / (2 × 10^−5) ≈ 1.015u against the true 2u, a relative error of 0.985 / 3.015 ≈ 0.33. The backward pass is probably right. Check this weight on an example whose pre-activations sit farther from 0, or with h below 1.5 × 10^−7."
+            },
+            {
+              "result": "The step in $w$ moves $z$ across the corner of ReLU at 0, so the difference mixes the slopes on both sides"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cg-two-estimates-beat-one",
+      "moduleId": "calculus-gradients",
+      "title": "Two Difference Estimates Beat One",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "A colleague's script estimates the slope $f'(x_0)$ of some smooth function with a difference formula at three step sizes. It prints only the estimates, not $f$, not $x_0$ and not which formula it used:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{cc}\n\\text{Step $h$} & \\text{Estimate $D(h)$} \\\\ \\hline\n0.2 & 2.5116731 \\\\\n0.1 & 2.4827070 \\\\\n0.05 & 2.4754868\n\\end{array}"
+        },
+        {
+          "p": "Assume that at these step sizes the error of the formula behaves like $Ch^k$ for some constant $C$ and some whole number $k$, and that $f''(x_0) \\ne 0$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Find the order $k$ from the table. Which of the two difference formulas from the lesson did the script use?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The true slope is unknown, but it cancels in the differences between estimates. If $D(h) \\approx f'(x_0) + Ch^k$, then"
+            },
+            {
+              "tex": "D(0.2) - D(0.1) \\approx C\\,(0.2^k - 0.1^k), \\qquad D(0.1) - D(0.05) \\approx C\\,(0.1^k - 0.05^k),"
+            },
+            {
+              "p": "and their ratio is $2^k$. From the table the differences are $0.0289661$ and $0.0072202$, with ratio $4.012$, so $2^k = 4$ and $k = 2$: halving $h$ cuts the error by 4."
+            },
+            {
+              "p": "The forward difference $\\big(f(x_0 + h) - f(x_0)\\big)/h$ has error about $\\tfrac12 f''(x_0)\\,h$, which is of order 1 whenever $f''(x_0) \\ne 0$, and would give a ratio near 2. The central difference has error about $\\tfrac16 f'''(x_0)\\,h^2$, so the script used the central difference. The condition on $f''$ matters: where $f''(x_0) = 0$, a forward difference also shrinks like $h^2$ and the table could not tell the two apart."
+            },
+            {
+              "result": "2"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Combine $D(0.1)$ and $D(0.05)$ into a better estimate of $f'(x_0)$, one in which the $Ch^2$ term cancels."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write $D(0.1) \\approx f' + C(0.01)$ and $D(0.05) \\approx f' + C(0.0025)$. The second error is a quarter of the first, so $4D(0.05) - D(0.1) \\approx 3f'$, and"
+            },
+            {
+              "tex": "f'(x_0) \\approx \\frac{4D(0.05) - D(0.1)}{3} = \\frac{9.9019472 - 2.4827070}{3} \\approx 2.473080 ."
+            },
+            {
+              "p": "The data came from $f(x) = x e^x$ at $x_0 = 0.5$, whose slope is $(1 + x_0)e^{x_0} = 1.5\\sqrt{e} \\approx 2.473082$. The best single estimate, $D(0.05)$, is off by $0.0024$, and the combined one by about $2 \\times 10^{-6}$. The central difference's next error term is proportional to $h^4$, so once the $h^2$ term is gone the combination is far more accurate than either estimate. This trick is called Richardson extrapolation. Combining $D(0.2)$ and $D(0.1)$ the same way gives $2.473052$, also much closer than any single estimate."
+            },
+            {
+              "result": "2.4731"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Estimate $C$ from the table. How small would $h$ have to be for the plain central difference to have an error of $10^{-6}$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "From the second difference, $C \\approx 0.0072202 / (0.1^2 - 0.05^2) = 0.0072202 / 0.0075 \\approx 0.963$. An error of $Ch^2 = 10^{-6}$ needs $h^2 \\approx 1.04 \\times 10^{-6}$, so $h \\approx 0.00102$, about 50 times smaller than the smallest step in the table. (The exact constant is $f'''(x_0)/6 = 3.5\\sqrt{e}/6 \\approx 0.962$, which gives the same step.)"
+            },
+            {
+              "p": "Two estimates at coarse steps did the work of one at a much finer step. That matters when each evaluation of $f$ is expensive, and when a fine step would lose digits to round-off."
+            },
+            {
+              "result": "0.00102"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cg-softmax-temperature-gradients",
+      "moduleId": "calculus-gradients",
+      "title": "Gradients Through a Softmax Temperature",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "A classifier scales its logits down by a temperature $T > 0$ and only then applies softmax,"
+      ],
+      "setup": [
+        {
+          "tex": "\\mathbf{p} = \\operatorname{softmax}(\\mathbf{z}/T), \\qquad \\mathcal{L} = -\\ln p_y ,"
+        },
+        {
+          "p": "where $y$ is the true class. Raising $T$ flattens $\\mathbf{p}$, and lowering it sharpens $\\mathbf{p}$. Some models learn $T$ along with the logits. Take three classes with logits $\\mathbf{z} = (\\ln 4,\\ 0,\\ 0)$, temperature $T = 2$ and true class $y = 2$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Compute $\\mathbf{p}$ and $\\nabla_{\\mathbf{z}}\\mathcal{L}$. Enter $\\partial\\mathcal{L}/\\partial z_2$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write $\\mathbf{u} = \\mathbf{z}/T = (\\ln 2, 0, 0)$. Then $e^{\\mathbf{u}} = (2, 1, 1)$ and $\\mathbf{p} = (0.5, 0.25, 0.25)$."
+            },
+            {
+              "p": "By the lesson's result, the gradient with respect to $\\mathbf{u}$ is prediction minus target, $\\mathbf{p} - \\mathbf{y}$, where the target $\\mathbf{y} = (0, 1, 0)$ marks the true class. Each $u_i = z_i/T$ has $\\partial u_i/\\partial z_i = 1/T$, so"
+            },
+            {
+              "tex": "\\nabla_{\\mathbf{z}}\\mathcal{L} = \\frac{\\mathbf{p} - \\mathbf{y}}{T} = \\frac{(0.5,\\ -0.75,\\ 0.25)}{2} = (0.25,\\ -0.375,\\ 0.125) ."
+            },
+            {
+              "p": "Forgetting the $1/T$ gives $(0.5, -0.75, 0.25)$, twice too large. A high temperature shrinks every logit gradient."
+            },
+            {
+              "result": "$-0.375$"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Compute $\\partial\\mathcal{L}/\\partial T$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "$T$ reaches the loss through all three $u_i = z_i/T$, and $\\partial u_i/\\partial T = -z_i/T^2$. Adding the three paths,"
+            },
+            {
+              "tex": "\\frac{\\partial\\mathcal{L}}{\\partial T} = \\sum_i (p_i - y_i)\\left(-\\frac{z_i}{T^2}\\right) = \\frac{z_y - \\mathbf{p}\\cdot\\mathbf{z}}{T^2} ,"
+            },
+            {
+              "p": "using $\\sum_i y_iz_i = z_y$. Here $z_y = z_2 = 0$ and $\\mathbf{p}\\cdot\\mathbf{z} = 0.5\\ln 4 = \\ln 2$, so"
+            },
+            {
+              "tex": "\\frac{\\partial\\mathcal{L}}{\\partial T} = \\frac{0 - \\ln 2}{4} = -\\frac{\\ln 4}{8} \\approx -0.1733 ."
+            },
+            {
+              "result": "$-0.1733$"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "The derivative is negative, so a descent step raises $T$. Explain why that lowers the loss here, and state in general when raising $T$ lowers the loss."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The true class has logit 0, below class 1's $\\ln 4$. Raising $T$ shrinks the gap between the logits, so probability flows from class 1 to the others, and $p_2$ rises from 0.25 toward $\\tfrac13$."
+            },
+            {
+              "p": "In general, $\\partial\\mathcal{L}/\\partial T = (z_y - \\mathbf{p}\\cdot\\mathbf{z})/T^2$ is negative exactly when the true logit is below $\\mathbf{p}\\cdot\\mathbf{z}$, the probability-weighted average logit. Then a flatter softmax helps. If the true class had been class 1, then $z_y - \\mathbf{p}\\cdot\\mathbf{z} = \\ln 4 - \\ln 2$ and the derivative would be $+0.1733$: the model is right, so sharpening helps. Learned over a whole dataset, $T$ settles where these pushes balance, which is how temperature scaling calibrates a classifier's confidence."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "theory-matrix-calculus-gradients",
+      "moduleId": "calculus-gradients",
+      "title": "Matrix Calculus: Derivatives, Gradients, and Hessians",
+      "difficulty": "Medium",
+      "minutes": 45,
+      "overview": [
+        "Differentiate the SiLU activation and the sigmoid, derive the gradient and Hessian of the mean squared error, then implement that gradient with no loops and no np.linalg."
+      ],
+      "setup": [
+        {
+          "p": "Unless stated otherwise, $X \\in \\mathbb{R}^{N \\times d}$ is a data matrix whose $n$-th row is $X[n] \\in \\mathbb{R}^d$, $y \\in \\mathbb{R}^N$ is a label vector, and $\\theta \\in \\mathbb{R}^d$ is a parameter vector. Define the mean squared error"
+        },
+        {
+          "tex": "L(\\theta) = \\frac{1}{N} \\sum_{n=0}^{N-1} \\big( y[n] - \\theta^\\top X[n] \\big)^2."
+        },
+        {
+          "p": "We use the convention that $\\nabla_\\theta L$ is a column vector in $\\mathbb{R}^d$ with $(\\nabla_\\theta L)_j = \\partial L / \\partial \\theta_j$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "5.1",
+          "kind": "derivation",
+          "requirement": "Reasoning is required. Coding is not needed.",
+          "prompt": [
+            {
+              "p": "The SiLU (or swish) activation is"
+            },
+            {
+              "tex": "f(x) = \\frac{x}{1 + e^{-x}} = x\\,\\sigma(x), \\qquad \\text{where} \\qquad \\sigma(x) = \\frac{1}{1 + e^{-x}}."
+            },
+            {
+              "p": "Compute $f'(x)$, and express it in terms of $\\sigma(x)$ and $x$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Use the product rule, $f = x \\cdot \\sigma(x)$, together with the standard result $\\sigma'(x) = \\sigma(x)\\big(1 - \\sigma(x)\\big)$ from Part 2:"
+            },
+            {
+              "tex": "f'(x) = \\sigma(x) + x\\,\\sigma'(x) = \\sigma(x) + x\\,\\sigma(x)\\big(1 - \\sigma(x)\\big)."
+            },
+            {
+              "p": "The two terms have clean roles. The first is the sigmoid itself, so the derivative never goes to zero on the right: as $x \\to \\infty$ we have $\\sigma(x) \\to 1$ and $f'(x) \\to 1$, which is why a SiLU unit keeps passing gradient through when a ReLU would be dead. The second term vanishes at $x = 0$ and at $x \\to \\pm\\infty$."
+            },
+            {
+              "p": "Two useful values: $f'(0) = \\sigma(0) = \\tfrac{1}{2}$, and numerically $f'(-1) \\approx 0.0723$. The derivative is not always positive: it dips slightly below zero for $x$ near $-2.4$, reaching about $-0.0998$, because the $x\\,\\sigma(x)(1 - \\sigma(x))$ term dominates the sigmoid term there. That small negative band is what makes SiLU non-monotonic."
+            },
+            {
+              "result": "$f'(x) = \\sigma(x) + x\\,\\sigma(x)\\big(1 - \\sigma(x)\\big)$."
+            }
+          ]
+        },
+        {
+          "id": "5.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Let $\\sigma(x) = \\dfrac{1}{1 + e^{-x}}$ be the logistic sigmoid. Prove that"
+            },
+            {
+              "tex": "\\sigma'(x) = \\sigma(x)\\big(1 - \\sigma(x)\\big),"
+            },
+            {
+              "p": "and determine the maximum value of $\\sigma'$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write $\\sigma(x) = (1 + e^{-x})^{-1}$ and differentiate with the chain rule:"
+            },
+            {
+              "tex": "\\sigma'(x) = -(1 + e^{-x})^{-2} \\cdot \\frac{d}{dx}\\big(1 + e^{-x}\\big) = \\frac{e^{-x}}{(1 + e^{-x})^2}."
+            },
+            {
+              "p": "Now split the fraction, noting $1 - \\sigma(x) = \\dfrac{e^{-x}}{1 + e^{-x}}$:"
+            },
+            {
+              "tex": "\\sigma'(x) = \\frac{1}{1 + e^{-x}} \\cdot \\frac{e^{-x}}{1 + e^{-x}} = \\sigma(x)\\big(1 - \\sigma(x)\\big)."
+            },
+            {
+              "p": "Maximum: let $p = \\sigma(x) \\in (0, 1)$. The function $p(1-p)$ is a downward parabola peaking at $p = 1/2$, where it equals $1/4$. Since $\\sigma(0) = 1/2$, the maximum derivative is"
+            },
+            {
+              "tex": "\\max_x \\sigma'(x) = \\tfrac{1}{4} \\quad \\text{attained at } x = 0."
+            },
+            {
+              "p": "That $1/4$ ceiling is the arithmetic behind vanishing gradients: a chain of $L$ sigmoid layers multiplies at most $(1/4)^L$ into the gradient, so ten layers already attenuate by $10^{-6}$ before the weights are even considered."
+            }
+          ]
+        },
+        {
+          "id": "5.3",
+          "kind": "derivation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Prove the identity"
+            },
+            {
+              "tex": "f(x) - f(-x) = x,"
+            },
+            {
+              "p": "and use it together with Part 1 to give a second formula for $f'(x)$, this one involving $\\sigma(-x)$ rather than $\\sigma(x)$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "For the second term use $\\sigma(-x) = 1 - \\sigma(x)$:"
+            },
+            {
+              "tex": "f(-x) = (-x)\\,\\sigma(-x) = -x\\big(1 - \\sigma(x)\\big) = -x + x\\,\\sigma(x)."
+            },
+            {
+              "p": "Adding $f(x) = x\\,\\sigma(x)$ to both sides, the $x\\,\\sigma(x)$ pieces cancel and $f(x) - f(-x) = x$, as claimed. The identity has a geometric reading: $f$ is the sum of an even function and the line $x/2$ scaled, and its antisymmetric part is exactly the line."
+            },
+            {
+              "p": "Differentiate the identity with respect to $x$. The right-hand side gives $1$, and the chain rule turns $f(-x)$ into $-f'(-x)$:"
+            },
+            {
+              "tex": "f'(x) - f'(-x) = 1 \\qquad \\Longrightarrow \\qquad f'(x) = 1 - f'(-x)."
+            },
+            {
+              "p": "Now evaluate the Part 1 formula at $-x$, again using $\\sigma(-x) = 1 - \\sigma(x)$:"
+            },
+            {
+              "tex": "f'(-x) = \\sigma(-x) - x\\,\\sigma(-x)\\big(1 - \\sigma(-x)\\big),"
+            },
+            {
+              "p": "so"
+            },
+            {
+              "tex": "f'(x) = 1 - \\sigma(-x) + x\\,\\sigma(-x)\\big(1 - \\sigma(-x)\\big)."
+            },
+            {
+              "p": "As a check, $x = 0$ gives $f'(0) = 1 - \\sigma(0) = \\tfrac{1}{2}$, and $x = -1$ gives $1 - \\sigma(1) - \\sigma(1)\\big(1 - \\sigma(1)\\big) \\approx 0.0723$, both matching Part 1. The practical reading: because $f(x) - f(-x) = x$ exactly, SiLU is the sigmoid's answer to zero-centering, which is part of why it trains better than a plain sigmoid in deep stacks."
+            }
+          ]
+        },
+        {
+          "id": "5.4",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Compute $\\nabla_\\theta L(\\theta)$ for the mean squared error defined above. Express the answer both as a sum over $n$ and in matrix form."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Work one coordinate at a time. Write $r_n = y[n] - \\theta^\\top X[n]$, so $L = \\frac{1}{N}\\sum_n r_n^2$. Since $\\theta^\\top X[n] = \\sum_k \\theta_k X_{nk}$,"
+            },
+            {
+              "tex": "\\frac{\\partial r_n}{\\partial \\theta_j} = -X_{nj}."
+            },
+            {
+              "p": "By the chain rule,"
+            },
+            {
+              "tex": "\\frac{\\partial L}{\\partial \\theta_j} = \\frac{1}{N}\\sum_{n=0}^{N-1} 2 r_n \\frac{\\partial r_n}{\\partial \\theta_j} = -\\frac{2}{N} \\sum_{n=0}^{N-1} \\big( y[n] - \\theta^\\top X[n] \\big) X_{nj}."
+            },
+            {
+              "p": "Collecting the $d$ coordinates into a vector:"
+            },
+            {
+              "tex": "\\nabla_\\theta L = -\\frac{2}{N} \\sum_{n=0}^{N-1} \\big( y[n] - \\theta^\\top X[n] \\big) X[n] = -\\frac{2}{N} X^\\top (y - X\\theta)."
+            },
+            {
+              "p": "Sanity checks worth doing every time: the shapes work out as $(d \\times N)(N \\times 1) = d \\times 1$, matching $\\theta$, and setting the gradient to zero recovers the normal equations $X^\\top X \\theta = X^\\top y$. The residual $y - X\\theta$ is orthogonal to every column of $X$ at the optimum, which is the geometric statement of least squares."
+            }
+          ]
+        },
+        {
+          "id": "5.5",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Let $A \\in \\mathbb{R}^{d \\times d}$ be symmetric and let $b \\in \\mathbb{R}^d$. Prove that"
+            },
+            {
+              "tex": "\\nabla_\\theta \\big( \\theta^\\top A \\theta \\big) = 2A\\theta, \\qquad \\nabla_\\theta \\big( b^\\top \\theta \\big) = b."
+            },
+            {
+              "p": "State where symmetry of $A$ is used."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Expand in coordinates: $\\theta^\\top A \\theta = \\sum_k \\sum_l A_{kl}\\theta_k \\theta_l$. Differentiating with respect to $\\theta_j$, the terms that survive are those with $k = j$ or $l = j$:"
+            },
+            {
+              "tex": "\\frac{\\partial}{\\partial \\theta_j} \\sum_{k,l} A_{kl}\\theta_k\\theta_l = \\sum_{l} A_{jl}\\theta_l + \\sum_{k} A_{kj}\\theta_k = (A\\theta)_j + (A^\\top \\theta)_j."
+            },
+            {
+              "p": "(The $k = l = j$ term $A_{jj}\\theta_j^2$ contributes $2A_{jj}\\theta_j$, which is counted once by each sum, so the formula is uniform.) Hence in general $\\nabla_\\theta(\\theta^\\top A \\theta) = (A + A^\\top)\\theta$, and **symmetry** collapses this to $2A\\theta$."
+            },
+            {
+              "p": "For the linear form, $b^\\top \\theta = \\sum_k b_k \\theta_k$, so $\\partial/\\partial\\theta_j = b_j$, i.e. $\\nabla_\\theta(b^\\top\\theta) = b$."
+            },
+            {
+              "p": "These two rules plus the chain rule cover most gradients in the syllabus. For instance, expanding $\\lVert y - X\\theta \\rVert_2^2 = y^\\top y - 2 y^\\top X \\theta + \\theta^\\top (X^\\top X) \\theta$ and applying them term by term reproduces Part 4 in one line, since $X^\\top X$ is symmetric."
+            }
+          ]
+        },
+        {
+          "id": "5.6",
+          "kind": "derivation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Compute the Hessian $\\nabla^2_\\theta L$ of the mean squared error, and prove that it is positive semidefinite. What does that tell you about $L$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Differentiate the gradient from Part 4 once more. Writing $\\nabla_\\theta L = \\frac{2}{N}\\big(X^\\top X \\theta - X^\\top y\\big)$, the second term is constant in $\\theta$ and the first is linear, so"
+            },
+            {
+              "tex": "\\nabla^2_\\theta L = \\frac{2}{N} X^\\top X."
+            },
+            {
+              "p": "Positive semidefiniteness: for any $z \\in \\mathbb{R}^d$,"
+            },
+            {
+              "tex": "z^\\top \\left( \\frac{2}{N} X^\\top X \\right) z = \\frac{2}{N} (Xz)^\\top (Xz) = \\frac{2}{N}\\lVert Xz \\rVert_2^2 \\ \\ge \\ 0."
+            },
+            {
+              "p": "A function with a PSD Hessian everywhere is convex, so $L$ has no local minima that are not global, and gradient descent cannot get trapped. The Hessian is *strictly* positive definite exactly when $Xz = 0$ only for $z = 0$, i.e. when $X$ has full column rank. Otherwise there is a flat direction and infinitely many optimal $\\theta$, which is precisely the case ridge regularization fixes."
+            },
+            {
+              "p": "The Hessian is also constant, which is why the condition number $\\kappa(X^\\top X)$ alone determines the convergence rate of gradient descent here."
+            }
+          ]
+        },
+        {
+          "id": "5.7",
+          "kind": "mcq",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Let $f : \\mathbb{R}^d \\to \\mathbb{R}^m$ and let $J$ be its Jacobian, $J_{ij} = \\partial f_i / \\partial x_j$. Let $g : \\mathbb{R}^m \\to \\mathbb{R}$ with gradient $\\nabla g \\in \\mathbb{R}^m$. Which expression gives $\\nabla_x\\, g(f(x))$ with the correct shape?"
+            },
+            {
+              "choices": [
+                "A. $J \\nabla g$, of shape $m \\times 1$.",
+                "B. $J^\\top \\nabla g$, of shape $d \\times 1$.",
+                "C. $\\nabla g^\\top J$, of shape $d \\times d$.",
+                "D. $J^\\top J \\nabla g$, of shape $d \\times 1$.",
+                "E. $\\nabla g \\, J^\\top$, of shape $m \\times 1$."
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The vector chain rule reads $\\nabla_x (g \\circ f) = J^\\top \\nabla g$. Checking shapes: $J$ is $m \\times d$, so $J^\\top$ is $d \\times m$, and $J^\\top \\nabla g$ is $(d \\times m)(m \\times 1) = d \\times 1$, the same shape as $x$, as any gradient must be."
+            },
+            {
+              "p": "Option A has the right factors in the wrong order and produces the wrong shape. The transpose is not decoration: it is exactly what backpropagation implements. A framework never builds $J$ and transposes it. It implements the vector-Jacobian product $v \\mapsto J^\\top v$ directly, which is why reverse-mode autodiff costs about the same as the forward pass regardless of $d$."
+            },
+            {
+              "result": "B. $J^\\top \\nabla g$, of shape $d \\times 1$."
+            }
+          ]
+        },
+        {
+          "id": "5.8",
+          "kind": "coding",
+          "requirement": "This is a coding task. You are not allowed to (1) import any additional libraries, (2) use autograd in PyTorch, (3) use any method in np.linalg, including @ and .T, or (4) use any loop. You will receive 0 points if you violate any of these rules.",
+          "prompt": [
+            {
+              "p": "Run the following starter code:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "import numpy as np"
+                ]
+              }
+            },
+            {
+              "p": "Write a function called $\\texttt{my\\_fun\\_derivative}$:"
+            },
+            {
+              "olist": [
+                "Inputs: NumPy array $\\texttt{X}$ with shape $(N, d)$, NumPy array $\\texttt{y}$ with shape $(N,)$, and NumPy array $\\texttt{theta}$ with shape $(d,)$.",
+                "Output: $\\nabla_\\theta \\frac{1}{N}\\sum_{n=0}^{N-1}\\big(y[n] - \\theta^\\top X[n]\\big)^2$, a NumPy array with shape $(d,)$."
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "def my_fun_derivative(X, y, theta):",
+                  "    N = X.shape[0]",
+                  "    residual = y - (X * theta).sum(axis=1)      # shape (N,)",
+                  "    return -2.0 * (X * residual[:, None]).sum(axis=0) / N"
+                ]
+              }
+            },
+            {
+              "p": "This is the formula from Part 4, $\\nabla_\\theta L = -\\frac{2}{N}\\sum_n (y[n] - \\theta^\\top X[n])\\,X[n]$, written with broadcasting instead of matrix products."
+            },
+            {
+              "olist": [
+                "$\\texttt{(X * theta).sum(axis=1)}$ broadcasts $\\texttt{theta}$ of shape $(d,)$ across the $N$ rows and contracts the feature axis, giving the predictions $\\theta^\\top X[n]$ without $\\texttt{@}$.",
+                "$\\texttt{residual[:, None]}$ reshapes $(N,)$ to $(N, 1)$ so the scalar residual multiplies its whole row. Reshaping with $\\texttt{None}$ is not $\\texttt{.T}$ and not $\\texttt{np.linalg}$, so it satisfies the constraints.",
+                "$\\texttt{.sum(axis=0)}$ contracts the sample axis, leaving shape $(d,)$ as required."
+              ]
+            },
+            {
+              "p": "The sign is the part most people lose points on: the residual is $y - X\\theta$, and the inner derivative contributes a $-1$, so the gradient is negative-signed. If you drop it, gradient descent will ascend the loss. A cheap check is finite differences: $\\big(L(\\theta + \\varepsilon e_j) - L(\\theta - \\varepsilon e_j)\\big)/(2\\varepsilon)$ should match coordinate $j$ to about $10^{-6}$ with $\\varepsilon = 10^{-5}$."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

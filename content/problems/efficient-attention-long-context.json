@@ -1,0 +1,39 @@
+{
+ "module": "efficient-attention-long-context",
+ "stage": "Advanced",
+ "index": [
+  {
+   "id": "tf6-online-softmax",
+   "moduleId": "efficient-attention-long-context",
+   "title": "Softmax Without Ever Storing the Row",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=tf6-online-softmax",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Advanced"
+   ],
+   "prompt": "Implement the streaming softmax behind FlashAttention with running max and sum rescaling, and show it matches the two-pass version to machine precision.",
+   "answer": "Auto-graded inside the notebook. The difference, running statistics, and overflow flag must match the summary checks to 1e-6, with the online result exact to 1e-12."
+  },
+  {
+   "id": "tf10-attention-rank-floor",
+   "moduleId": "efficient-attention-long-context",
+   "title": "The Error No Low-Rank Method Can Beat",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=tf10-attention-rank-floor",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Advanced"
+   ],
+   "prompt": "Compute the Eckart-Young error floor for four attention patterns at five ranks, and predict which heads a low-rank method will destroy before implementing one.",
+   "answer": "Auto-graded inside the notebook. Floors, energy fractions, and required ranks must match to 1e-8, with the induction head showing an unavoidable rank-64 error above 0.8."
+  }
+ ],
+ "theory": []
+}

@@ -1,0 +1,1412 @@
+/* Mock Arena (UI overhaul 2026-10-11): the setup page and the sitting.
+   The sitting is laid out like the coding problem page: a title hero, then one
+   panel with a sticky toolbar and the problem under it. Linked after main.css,
+   so these rules win at equal weight. */
+
+/* --- shared: type pills ---------------------------------------------------- */
+
+/* The same pill the problems table uses for the three kinds: Code in the
+   terracotta brand, MCQ in navy, Text in plain ink. */
+.mock-type {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  padding: 0.26rem 0.6rem 0.26rem 0.48rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.mock-type-icon {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mock-type--code {
+  color: var(--brand-strong);
+  border-color: color-mix(in srgb, var(--brand) 45%, transparent);
+  background: color-mix(in srgb, var(--brand) 9%, var(--paper));
+}
+
+.mock-type--mcq {
+  color: var(--navy);
+  border-color: color-mix(in srgb, var(--navy) 40%, transparent);
+  background: var(--navy-soft);
+}
+
+.mock-type--text {
+  color: var(--ink-2);
+  border-color: var(--line);
+  background: var(--surface-2);
+}
+
+.mock-arena .problem-chip,
+.mock-run-shell .problem-chip {
+  padding: 0.24rem 0.7rem;
+  font-size: 0.8rem;
+  line-height: 1.2;
+}
+
+/* --- shared: tables -------------------------------------------------------- */
+
+.mock-table-wrap {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.mock-table {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.mock-table th {
+  padding: 0.75rem 0.95rem;
+  border-bottom: 2px solid var(--line);
+  background: var(--surface-2);
+  color: var(--ink-2);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.mock-table td {
+  padding: 0.8rem 0.95rem;
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--ink-2);
+  vertical-align: middle;
+}
+
+.mock-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.mock-table tbody tr:hover td {
+  background: var(--surface-2);
+}
+
+.mock-table .mock-col-num {
+  width: 3.2rem;
+  padding-right: 0;
+}
+
+.mock-table .mock-col-title {
+  width: 100%;
+}
+
+.mock-table .mock-col-action {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.mock-table .mock-chosen-copy,
+.mock-table .mock-run-copy {
+  gap: 0.2rem;
+}
+
+.mock-table .mock-chosen-copy strong,
+.mock-table .mock-run-copy strong {
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.mock-table .mock-chosen-copy small,
+.mock-table .mock-run-copy small {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.mock-chosen-index {
+  width: 1.9rem;
+  height: 1.9rem;
+  background: var(--fill-shape);
+  color: var(--ink-2);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* --- setup page ------------------------------------------------------------ */
+
+.page-hero.mock-hero {
+  align-items: center;
+}
+
+.mock-bank-link {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  min-height: 40px;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--ink-2);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.mock-bank-link:hover {
+  border-color: var(--brand);
+  color: var(--brand-strong);
+  text-decoration: none;
+}
+
+@media (max-width: 760px) {
+  .page-hero.mock-hero {
+    align-items: flex-start;
+  }
+}
+
+.mock-setup-shell {
+  width: min(100%, 940px);
+}
+
+.mock-arena .section-heading {
+  margin-bottom: 1.4rem;
+}
+
+.mock-card {
+  padding: 1.4rem 1.5rem 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+
+.mock-card.mock-block {
+  margin-top: 1.25rem;
+}
+
+.mock-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1.1rem;
+}
+
+.mock-card-head h3 {
+  flex: 1;
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.mock-step {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--brand);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.mock-label,
+.mock-label.subtle {
+  margin: 0 0 0.6rem;
+  color: var(--ink-2);
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* time limit */
+
+.mock-duration {
+  gap: 0.9rem 1.25rem;
+}
+
+.mock-minutes-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* The number sits in the middle of its box, and the box is as tall as the
+   quick picks beside it. */
+.mock-minutes {
+  width: 7rem;
+  height: 2.75rem;
+  padding: 0 0.85rem;
+  border: 1.5px solid var(--line);
+  font-size: 1.25rem;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.mock-minutes:hover {
+  border-color: var(--brand);
+}
+
+.mock-unit {
+  color: var(--ink-2);
+  font-size: 1rem;
+}
+
+.mock-quick-row {
+  gap: 0.5rem;
+}
+
+.mock-quick {
+  min-height: 2.75rem;
+  padding: 0.4rem 1.05rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+
+.mock-quick:hover {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+.mock-quick.active {
+  border-color: var(--brand);
+  background: var(--brand);
+  color: #fff;
+}
+
+.mock-quick:focus-visible,
+.mock-bank-link:focus-visible,
+.mock-size:focus-visible,
+.mock-generator:focus-visible,
+.mock-remove:focus-visible,
+.mock-result:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+/* add problems */
+
+.problems-search.mock-search {
+  width: 100%;
+  max-width: none;
+  min-height: 3.2rem;
+  margin-bottom: 0;
+  padding: 0.6rem 1.1rem;
+  border-width: 1.5px;
+  background: var(--paper);
+}
+
+.mock-results {
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.mock-result {
+  gap: 0.9rem;
+  min-height: 3.6rem;
+  padding: 0.65rem 0.75rem 0.65rem 1rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.mock-result:hover,
+.mock-result:focus-visible {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+}
+
+.mock-result-copy strong {
+  font-size: 1rem;
+}
+
+.mock-result-copy small {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.mock-result-tags {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.mock-result-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: auto;
+  height: auto;
+  min-height: 2.3rem;
+  padding: 0.3rem 0.9rem;
+  border: 1.5px solid var(--brand);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--brand-strong);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.mock-result:hover .mock-result-add {
+  background: var(--brand);
+  color: #fff;
+}
+
+.mock-result-count {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+}
+
+.mock-random {
+  margin-top: 1.4rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line-soft);
+}
+
+.mock-sizes {
+  min-width: 0;
+  margin: 0 0 1rem;
+  padding: 0;
+  border: 0;
+}
+
+.mock-sizes legend {
+  margin-bottom: 0.5rem;
+  padding: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.mock-size-options {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.mock-size {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.mock-size:hover {
+  border-color: var(--brand);
+  color: var(--brand-strong);
+}
+
+.mock-size[aria-pressed="true"] {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+.mock-generators {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.mock-generator {
+  gap: 0.2rem;
+  min-height: 4.2rem;
+  padding: 0.8rem 1.1rem;
+  border: 1.5px solid var(--line);
+  border-left-width: 4px;
+  border-radius: var(--radius-lg);
+  color: var(--ink);
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+}
+
+.mock-generator strong {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.mock-generator small {
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.mock-generator--easy {
+  border-left-color: var(--green);
+}
+
+.mock-generator--medium {
+  border-left-color: var(--ochre);
+}
+
+.mock-generator--hard {
+  border-left-color: var(--coral);
+}
+
+.mock-generator:hover:not([disabled]) {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+}
+
+.mock-hint,
+.mock-arena .helper-text {
+  margin-top: 0.75rem;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+/* your set */
+
+.mock-count {
+  padding: 0.25rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--ink-2);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.mock-empty {
+  font-size: 0.98rem;
+}
+
+.mock-empty-box {
+  margin: 0;
+  padding: 1.5rem 1.25rem;
+  border: 1.5px dashed var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+  text-align: center;
+}
+
+.mock-remove {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: auto;
+  height: auto;
+  min-height: 2.5rem;
+  padding: 0.3rem 0.8rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink-2);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.mock-remove svg {
+  width: 0.85rem;
+  height: 0.85rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+.mock-remove:hover {
+  border-color: var(--coral);
+  background: var(--coral-soft);
+  color: var(--coral);
+}
+
+.mock-actions {
+  gap: 0.75rem;
+  margin-top: 1.4rem;
+}
+
+.mock-actions .button {
+  min-height: 3rem;
+  border-radius: var(--radius);
+}
+
+.mock-actions .mock-start {
+  padding-inline: 1.75rem;
+  font-size: 1.05rem;
+}
+
+.mock-actions .button[disabled] {
+  box-shadow: none;
+  transform: none;
+}
+
+/* --- the sitting: shell and header --------------------------------------- */
+
+.mock-run-shell {
+  width: 100%;
+  max-width: none;
+}
+
+.mock-run-body {
+  margin-top: 2rem;
+}
+
+/* The header card of the problem pages (problem-page.css), with the step and
+   the button that ends the mock on its first row. */
+.theory-head.pp-head.mock-head {
+  margin-bottom: 1.25rem;
+}
+
+.mock-head-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.pp-head.mock-head .mock-head-top .pp-kicker {
+  margin: 0;
+}
+
+.mock-head-top h1 {
+  margin: 0;
+}
+
+.mock-head-step {
+  color: var(--ink-2);
+  font-weight: 700;
+}
+
+.pp-head.mock-head .theory-meta {
+  margin-bottom: 0;
+}
+
+.pp-head.mock-head .mock-head-note {
+  margin: 0 0 1.25rem;
+  color: var(--ink-2);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.pp-head .pp-action.mock-end svg {
+  color: var(--coral);
+}
+
+.pp-head .pp-action.mock-end:hover {
+  border-color: var(--coral);
+  background: var(--coral-soft);
+  color: var(--coral);
+}
+
+.mock-empty {
+  color: var(--muted);
+}
+
+/* --- the sitting: problem tabs --------------------------------------------- */
+
+.mock-switcher {
+  position: static;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 0.6rem;
+  margin-bottom: 1.1rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.mock-tab {
+  gap: 0.7rem;
+  min-height: 3.6rem;
+  padding: 0.6rem 0.8rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+
+.mock-tab:hover {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+}
+
+.mock-tab:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+.mock-tab.active {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  box-shadow: inset 0 -3px 0 var(--brand);
+}
+
+.mock-tab-num {
+  width: 2rem;
+  height: 2rem;
+  background: var(--fill-shape);
+  color: var(--ink-2);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.mock-tab-num svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.mock-tab.active .mock-tab-num {
+  background: var(--brand);
+  color: #fff;
+}
+
+.mock-tab.done .mock-tab-num {
+  background: var(--green);
+  color: #fff;
+}
+
+/* Up to two lines of title, so most problems can be told apart at a glance. */
+.mock-tab-copy strong {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: 0.95rem;
+  line-height: 1.25;
+  white-space: normal;
+}
+
+.mock-tab-copy small {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+/* A finished problem keeps a readable title. The green badge says it is done. */
+.mock-tab.done .mock-tab-copy strong {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+/* --- the sitting: toolbar -------------------------------------------------- */
+
+.mock-toolbar {
+  gap: 0.6rem 1rem;
+  padding: 0.6rem 0.7rem;
+  background: color-mix(in srgb, var(--panel) 94%, transparent);
+}
+
+.mock-tools,
+.mock-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mock-tools {
+  flex-wrap: wrap;
+}
+
+.mock-status {
+  margin-left: auto;
+  gap: 0.9rem;
+}
+
+.mock-toolbar .button {
+  position: static;
+  min-height: 2.75rem;
+  padding: 0.5rem 1.05rem;
+  border-width: 1.5px;
+  border-style: solid;
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.mock-toolbar .button svg {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+}
+
+.mock-toolbar .button-secondary {
+  border-color: var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: var(--shadow-sm);
+}
+
+.mock-toolbar .button-secondary:hover {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+.mock-toolbar .button:focus-visible,
+.mock-view-option:focus-visible,
+.mock-pager .button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+/* Mark as done is the main action: filled until done, then green. */
+.mock-toolbar .mock-mark {
+  border-color: var(--brand);
+  background: var(--brand);
+  color: #fff;
+}
+
+.mock-toolbar .mock-mark:hover {
+  border-color: var(--brand-strong);
+  background: var(--brand-strong);
+  color: #fff;
+}
+
+.mock-toolbar .mock-mark.done {
+  border-color: var(--green);
+  background: var(--green-soft);
+  color: var(--green);
+  box-shadow: none;
+}
+
+.mock-toolbar .mock-fullscreen[aria-pressed="true"] {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+/* Statement or Code: two halves of one control, the chosen half filled. */
+.mock-view {
+  display: inline-flex;
+  min-height: 2.75rem;
+  padding: 3px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+
+.mock-view-option {
+  min-width: 4.75rem;
+  padding: 0.3rem 0.85rem;
+  border: 0;
+  border-radius: calc(var(--radius) - 3px);
+  background: none;
+  color: var(--ink-2);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+
+.mock-view-option:hover {
+  color: var(--brand-strong);
+}
+
+.mock-view-option.active {
+  background: var(--ink);
+  color: #fff;
+}
+
+.mock-progress {
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.mock-progress strong {
+  font-size: 1.1rem;
+}
+
+/* The clock sits where the coding page shows the Python status, as the same
+   kind of pill, only larger. */
+.mock-clock {
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  margin-left: 0;
+  padding: 0.3rem 1rem 0.3rem 0.8rem;
+  border-width: 1.5px;
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.mock-clock::before {
+  display: none;
+}
+
+.mock-clock svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex: none;
+  color: var(--brand);
+}
+
+.mock-clock-label {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.mock-clock .mock-timer {
+  margin: 0;
+  color: inherit;
+  font-family: var(--font-mono);
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.mock-clock.is-warning,
+.mock-clock.is-warning svg,
+.mock-clock.is-warning .mock-clock-label {
+  color: var(--amber);
+}
+
+.mock-clock.is-failed,
+.mock-clock.is-failed svg,
+.mock-clock.is-failed .mock-clock-label {
+  color: var(--coral);
+}
+
+/* Split view: the coding page's switch, at the size of the bar it sits in. */
+.mock-toolbar .editor-split {
+  min-height: 2.75rem;
+  margin-left: 0;
+  padding: 0.4rem 0.6rem;
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.mock-toolbar .editor-split[hidden] {
+  display: none;
+}
+
+.mock-toolbar .editor-split-track {
+  width: 42px;
+  height: 24px;
+  background: color-mix(in srgb, var(--ink) 24%, var(--fill-shape));
+}
+
+.mock-toolbar .editor-split-track span {
+  width: 18px;
+  height: 18px;
+}
+
+.mock-toolbar .editor-split[aria-checked="true"] .editor-split-track {
+  background: var(--brand);
+}
+
+.mock-toolbar .editor-split[aria-checked="true"] .editor-split-track span {
+  transform: translateX(18px);
+}
+
+/* --- the sitting: the problem ---------------------------------------------- */
+
+.mock-panel {
+  gap: 1.25rem;
+}
+
+/* main.css set its own type for the old statement. The problem pages' own
+   classes set it now. */
+.mock-body {
+  margin-top: 0;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* A Text or MCQ problem reads at the width of its problem page, centred. */
+.mock-body > .mock-statement {
+  width: min(100%, 860px);
+  margin-inline: auto;
+}
+
+/* main.css strips the top edge of the first part. A card keeps all four. */
+.mock-statement .theory-part:first-child {
+  border-top: 1px solid var(--line);
+}
+
+/* main.css spaced the old statement's headings. A part heading opens its card. */
+.mock-statement .theory-part-head {
+  margin: 0 0 0.85rem;
+}
+
+/* A pick is marked in navy and never judged. */
+.mock-picks .mcq-option[data-picked="true"] {
+  border-color: var(--navy);
+  background: var(--navy-soft);
+  box-shadow: inset 0 0 0 1px var(--navy);
+}
+
+.mock-picks .mcq-option[data-picked="true"] .mcq-letter {
+  border-color: var(--navy);
+  background: var(--navy);
+  color: #fff;
+}
+
+.mock-statement p.mock-kept-note,
+.mock-answer .theory-check-result {
+  margin: 0.9rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.mock-answer .theory-check-result {
+  margin-top: 0.55rem;
+}
+
+/* A coding problem is the notebook editor, as tall as its content. */
+.mock-ide {
+  display: block;
+  width: 100%;
+  height: 70vh;
+  border: 0;
+  background: transparent;
+}
+
+/* The editor inside the frame: its bar sits at the top of the notebook with
+   the same control sizes as the bar above it, and the page behind it takes
+   the panel's colour. */
+body.editor-embed {
+  background: var(--panel);
+}
+
+body.editor-embed .editor-toolbar {
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+body.editor-embed .editor-toolbar .button {
+  min-height: 2.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+}
+
+body.editor-embed .editor-toolbar .button svg {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+body.editor-embed .editor-kernel {
+  padding: 0.45rem 0.9rem;
+  font-size: 0.8rem;
+}
+
+body.editor-embed .editor-cells {
+  padding: 0.75rem 0 0.25rem;
+}
+
+/* --- the sitting: previous and next ---------------------------------------- */
+
+.mock-pager {
+  align-items: center;
+  margin-top: 0.5rem;
+  padding-top: 1.25rem;
+}
+
+.mock-pager .button {
+  min-height: 2.75rem;
+  padding: 0.5rem 1.15rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+
+.mock-pager .button svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.mock-pager .button:hover:not([disabled]) {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+.mock-pager .button[disabled] {
+  box-shadow: none;
+  transform: none;
+}
+
+.mock-pager-where {
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+/* --- summary --------------------------------------------------------------- */
+
+.mock-summary {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0 0 1.5rem;
+}
+
+.mock-stat {
+  gap: 0.3rem;
+  padding: 1.2rem 1.35rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+
+.mock-stat span {
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.mock-stat strong {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+
+.mock-stat--solved {
+  border-left: 4px solid var(--green);
+}
+
+.mock-result-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.22rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.mock-result-pill svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.mock-result-pill.done {
+  border-color: color-mix(in srgb, var(--green) 45%, transparent);
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.mock-solution-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 2.5rem;
+  padding: 0.3rem 0.9rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--brand-strong);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.mock-solution-link svg {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.mock-solution-link:hover {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  text-decoration: none;
+}
+
+.mock-solution-link:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+/* --- full screen ----------------------------------------------------------- */
+
+.mock-run-shell.mock-fs {
+  padding: 0 0 1.5rem;
+}
+
+.mock-run-shell.mock-fs .page-shell {
+  width: calc(100% - 2 * var(--mock-fs-gutter));
+  max-width: none;
+}
+
+.mock-run-shell.mock-fs .mock-run-body {
+  margin-top: 0.9rem;
+  margin-bottom: 0;
+}
+
+.mock-run-shell.mock-fs .mock-head {
+  padding: 0.9rem 1.25rem;
+}
+
+.mock-run-shell.mock-fs .mock-head h1 {
+  margin-bottom: 0.4rem;
+  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+}
+
+.mock-run-shell.mock-fs .mock-head-top {
+  margin-bottom: 0.3rem;
+}
+
+.mock-run-shell.mock-fs .mock-panel {
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.mock-run-shell.mock-fs .mock-toolbar {
+  top: 0.5rem;
+}
+
+.mock-run-shell.mock-fs .mock-body {
+  max-width: none;
+}
+
+.mock-run-shell.mock-fs .mock-ide {
+  min-height: 0;
+}
+
+/* A coding problem's bar carries the view control and the Split view switch
+   as well. Below this width the clock drops its label so the bar keeps one
+   row for as long as it can. */
+@media (max-width: 1360px) {
+  .mock-clock-label {
+    display: none;
+  }
+}
+
+/* --- small screens --------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  /* The tabs become one row that scrolls inside its own box. */
+  .mock-switcher {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(200px, 1fr);
+    padding: 3px 3px 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+}
+
+@media (max-width: 760px) {
+  /* On a phone the bar splits in two. The clock row stays pinned under the
+     header, and the actions sit below it at full size and scroll away. */
+  .mock-toolbar {
+    display: contents;
+  }
+
+  .mock-status {
+    position: sticky;
+    top: calc(var(--header-h) + 8px);
+    z-index: 5;
+    order: -1;
+    justify-content: space-between;
+    margin-left: 0;
+    padding: 0.45rem 0.5rem 0.45rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--panel);
+    box-shadow: var(--shadow-md);
+  }
+
+  .mock-tools {
+    gap: 0.6rem;
+  }
+
+  .mock-toolbar .mock-mark,
+  .mock-view {
+    flex: 1 1 100%;
+  }
+
+  .mock-view-option {
+    flex: 1;
+  }
+
+  .mock-toolbar .mock-download,
+  .mock-toolbar .mock-fullscreen {
+    flex: 1 1 0;
+    padding-inline: 0.6rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  .mock-toolbar .mock-fullscreen span {
+    display: inline;
+  }
+
+  .mock-clock-label {
+    display: none;
+  }
+
+  .mock-run-shell.mock-fs .mock-status {
+    top: 0.5rem;
+  }
+
+  .mock-generators,
+  .mock-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .mock-card {
+    padding: 1.1rem 1rem 1.2rem;
+  }
+
+  .mock-quick-row {
+    margin-left: 0;
+  }
+
+  .mock-result {
+    flex-wrap: wrap;
+  }
+
+  .mock-result-copy {
+    flex: 1 1 100%;
+  }
+
+  .mock-result-add {
+    margin-left: auto;
+  }
+
+  .mock-actions .button {
+    flex: 1 1 100%;
+  }
+
+  .mock-pager-where {
+    display: none;
+  }
+
+  /* Tables stack: each row becomes a small card, the title on the first line
+     and its pills and action on the next. */
+  .mock-table,
+  .mock-table tbody {
+    display: block;
+  }
+
+  .mock-table thead {
+    display: none;
+  }
+
+  .mock-table tr {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem 0.45rem;
+    padding: 0.9rem;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .mock-table tbody tr:last-child {
+    border-bottom: 0;
+  }
+
+  .mock-table td,
+  .mock-table tbody tr:hover td {
+    display: block;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+
+  .mock-table .mock-col-num {
+    flex: none;
+    width: 1.9rem;
+  }
+
+  .mock-table .mock-col-title {
+    flex: 1 1 calc(100% - 2.5rem);
+    width: auto;
+    min-width: 0;
+  }
+
+  .mock-table td[data-label="Type"] {
+    margin-left: 2.35rem;
+  }
+
+  .mock-table .mock-col-action {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  /* Panel and part card each kept a full gutter, which left a phone a narrow
+     column. The panel gives most of its back. */
+  .mock-panel {
+    padding: 0.75rem;
+  }
+
+  .mock-statement .theory-part.theory-part-single {
+    padding: 1.1rem 1rem;
+  }
+}
+
+/* The editor inside the frame on a phone: the coding page's two-row bar, the
+   three buttons on one row and the Python status under them, not one row that
+   scrolls sideways and cuts the status off. */
+@media (max-width: 640px) {
+  body.editor-embed .editor-toolbar {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    gap: 0.5rem;
+  }
+
+  body.editor-embed .editor-toolbar .button {
+    flex: 1 1 0;
+    min-width: 0;
+    padding-inline: 0.6rem;
+  }
+
+  body.editor-embed .editor-kernel {
+    flex: 1 1 100%;
+    min-height: 2rem;
+    margin-left: 0;
+    padding-block: 0.25rem;
+  }
+}

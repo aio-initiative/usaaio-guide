@@ -1,0 +1,140 @@
+{
+ "aModule": "model-evaluation",
+ "stage": "Round 2",
+ "fixes": [
+  {
+   "file": "cm-ranking-a-week-of-claims",
+   "find": "Take the ranking\n\n<center>\n\nF F F G G F G G G\n\n</center>\n\nThe frauds",
+   "replace": "Take the ranking F F F G G F G G G. The frauds",
+   "why": "Format conversion only, no wording change: B centres the plain-text ranking F F F G G F G G G in the Part 3 solution, and the importer drops a <center> block that holds something other than a table, which leaves the next sentence ('The frauds at ranks 1, 2 and 3 ...') with no ranking to read. Inlining B's letters into the sentence keeps every word and keeps the same letterspacing as 'model A is G F F F F G G G G' two lines earlier."
+  },
+  {
+   "file": "cm-f1-vs-f2-threshold",
+   "find": "| **0.750** |",
+   "replace": "| 0.750 |",
+   "why": "Format conversion only: problems.py wraps each table cell raw in \\text{...} for the KaTeX array, so markdown bold survives as literal asterisks around the very number the table exists to point at (the F1 peak). The prose names the peak in the next sentence, so no information is lost."
+  },
+  {
+   "file": "cm-f1-vs-f2-threshold",
+   "find": "| **0.833** |",
+   "replace": "| 0.833 |",
+   "why": "Same as the F1 peak cell: the F2 peak would show as **0.833** on the theory page."
+  },
+  {
+   "file": "cm-ignored-rare-class",
+   "find": "**Billing**",
+   "replace": "Billing",
+   "why": "Format conversion only: problems.py wraps each table cell raw in \\text{...} for the KaTeX array, so the bold row labels would render as **Billing** etc. Label emphasis is the only thing lost; the confusion matrix's counts are unchanged."
+  },
+  {
+   "file": "cm-ignored-rare-class",
+   "find": "**Technical**",
+   "replace": "Technical",
+   "why": "Same as the Billing label."
+  },
+  {
+   "file": "cm-ignored-rare-class",
+   "find": "**Legal**",
+   "replace": "Legal",
+   "why": "Same as the Billing label."
+  }
+ ],
+ "parts": {
+  "cm-f1-vs-f2-threshold": {
+   "1.1": {
+    "kind": "computation",
+    "requirement": "Reasoning is not required."
+   },
+   "1.2": {
+    "kind": "computation",
+    "requirement": "Reasoning is not required."
+   },
+   "1.3": {
+    "kind": "derivation",
+    "requirement": "A complete derivation is required."
+   }
+  },
+  "cm-flags-a-lower-threshold-adds": {
+   "1.1": {
+    "kind": "computation",
+    "requirement": "Reasoning is not required."
+   },
+   "1.2": {
+    "kind": "computation",
+    "requirement": "Reasoning is not required."
+   },
+   "1.3": {
+    "kind": "derivation",
+    "requirement": "A complete derivation is required."
+   }
+  },
+  "cm-ignored-rare-class": {
+   "1.1": {
+    "kind": "mcq",
+    "requirement": "Reasoning is not required."
+   }
+  },
+  "cm-one-point-roc-curve": {
+   "1.1": {
+    "kind": "computation",
+    "requirement": "Reasoning is not required."
+   },
+   "1.2": {
+    "kind": "derivation",
+    "requirement": "A complete derivation is required."
+   },
+   "1.3": {
+    "kind": "derivation",
+    "requirement": "A complete derivation is required."
+   },
+   "1.4": {
+    "kind": "derivation",
+    "requirement": "A complete derivation is required."
+   }
+  },
+  "cm-pick-model-for-grader": {},
+  "cm-precision-at-new-base-rate": {
+   "1.1": {
+    "kind": "computation",
+    "requirement": "Reasoning is not required."
+   },
+   "1.2": {
+    "kind": "computation",
+    "requirement": "Reasoning is not required."
+   },
+   "1.3": {
+    "kind": "computation",
+    "requirement": "Reasoning is not required."
+   },
+   "1.4": {
+    "kind": "derivation",
+    "requirement": "A complete derivation is required."
+   }
+  },
+  "cm-ranking-a-week-of-claims": {
+   "1.1": {
+    "kind": "derivation",
+    "requirement": "A complete derivation is required."
+   },
+   "1.2": {
+    "kind": "computation",
+    "requirement": "Reasoning is required."
+   },
+   "1.3": {
+    "kind": "derivation",
+    "requirement": "A complete derivation is required."
+   }
+  }
+ },
+ "indexPrompt": {
+  "cm-f1-vs-f2-threshold": "Ten welds from a validation batch, four of them faulty, are sorted by model score and flagged when the score meets a threshold. Using only the ten scores as candidate thresholds, which threshold maximizes F1 and which maximizes F2?",
+  "cm-flags-a-lower-threshold-adds": "A streaming service sends a retention offer to every subscriber whose cancellation score reaches a threshold t, and last month 400 of its 10,000 subscribers cancelled, with precision and recall measured at t = 0.8, 0.5 and 0.3. The parts ask what fraction of the offers a lower threshold adds reach someone who cancels, which threshold has the lowest cost when a wasted offer costs 1 unit and a missed canceller costs 2, and how costly a missed canceller must be for that lowest-cost threshold to change.",
+  "cm-ignored-rare-class": "A model sorts 100 support tickets into billing, technical and legal; its confusion matrix predicts 50 billing tickets as billing, 40 technical tickets as technical, and all 10 legal tickets as billing, so legal is never predicted. What is the model's macro-F1?",
+  "cm-one-point-roc-curve": "A classifier that outputs only hard 0/1 labels still gets an ROC curve out of roc_auc_score, made of three points joined by straight segments. The problem works out the area of that curve for 40 positives and 160 negatives, then shows the same area equals the balanced accuracy and the share of correctly ordered positive-negative pairs.",
+  "cm-pick-model-for-grader": "A grader scores a binary task by macro-F1 and you must choose between two candidate models on a validation split with 100 positives and 900 negatives. Decide which model to submit and say what evidence backs the choice.",
+  "cm-precision-at-new-base-rate": "A model flags counterfeit listings on a marketplace. On a validation set of 1,000 counterfeit and 1,000 genuine listings, its chosen threshold gives a true positive rate of 0.90 and a false positive rate of 0.05.",
+  "cm-precision-for-the-other-class": "A bank's model scores 1,000 past loans, of which 800 were repaid and 200 defaulted, and the label codes a repaid loan as 1, so its reported precision 0.96 and recall 0.9 treat repaid as the positive class. The risk team treats a default as the positive case instead, where the model flags a loan by refusing it: what is the model's precision on defaults?",
+  "cm-ranking-a-week-of-claims": "Nine claims arrive in one week and four of them turn out to be fraudulent, and two models rank the batch from most to least suspicious. One team opens only the top two claims and another opens claims from the top until it reaches the last fraud, so each job cares about a different spot in the ranking. For each job, say which model it should use and whether the AUC, which averages all twenty fraud/genuine pairs, agrees with it.",
+  "cm-which-fix-raises-f1": "A classifier has TP = 40, FP = 40 and FN = 20 on a validation set. Fix A turns ten false negatives into true positives and fix B turns ten false positives into true negatives; which of the two raises F1 more?"
+ }
+}

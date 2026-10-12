@@ -1,0 +1,848 @@
+{
+  "module": "transformer-architectures-bert-mlm",
+  "stage": "Round 2",
+  "index": [
+    {
+      "id": "nl6-mlm-vs-clm-signal",
+      "moduleId": "transformer-architectures-bert-mlm",
+      "title": "Counting the Gradient Signal per Token",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/editor/?nb=nl6-mlm-vs-clm-signal",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Count the prediction targets per sequence under causal and masked language modeling, including the 80/10/10 corruption rule, and quantify the signal-density gap.",
+      "answer": "Auto-graded inside the notebook. All counts and fractions must match to 1e-6, reproducing the 80/10/10 split and a signal ratio near 7."
+    },
+    {
+      "id": "bert-hide-each-piece-from-itself",
+      "moduleId": "transformer-architectures-bert-mlm",
+      "title": "Hiding Each Piece from Its Own Position",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=bert-hide-each-piece-from-itself",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A teammate wants an encoder that sees the context on both sides without changing the input: she leaves the sentence as it is and sets each position's score against itself to minus infinity before the softmax, so no position attends to its own piece, then trains each position to predict the piece at that same position. Decide whether her plan keeps each piece out of its own prediction, and say where the leak first shows up.",
+      "answer": "No, it leaks in the first block: the residual connection and the query of position i both carry piece i into the output at position i. Each block computes its input plus what attention gathers, so the vector at position i after the first block still holds piece i, whatever the attention weights are. The weights themselves depend on piece i too, because the query of position i is computed from it. A deeper stack adds a third path, through neighbors that attended to piece i one block earlier. The prediction at position i can copy its own piece, which is why BERT hides the piece in the input with [MASK] instead of hiding it inside attention."
+    },
+    {
+      "id": "bert-five-predictions-two-inputs",
+      "moduleId": "transformer-architectures-bert-mlm",
+      "title": "Five Predictions in Two Inputs",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=bert-five-predictions-two-inputs",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A batch holds two inputs: input A has four masked positions and input B has one, for five losses in total. Two scripts turn them into one batch loss, one by averaging all five and one by averaging within each input first, and they disagree. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "bert-loss-at-three-kinds-of-target",
+      "moduleId": "transformer-architectures-bert-mlm",
+      "title": "A Masked Piece, a Swapped Piece and a Kept Piece",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=bert-loss-at-three-kinds-of-target",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A training sentence has three of its pieces chosen by BERT's masking recipe: one is replaced by the mask, one by a random piece, and one is left as it is. Given the model's output probabilities at the three chosen positions, what is the masked-LM loss for the sentence?",
+      "answer": "0.611. Every chosen position is asked for its original piece, whatever it shows. The three losses are −ln 0.4 = 0.916 for ferry, −ln 0.5 = 0.693 for left and −ln 0.8 = 0.223 for dawn, and their mean is 1.833 / 3 = 0.611. Position 3 is scored on left, not on the violin the model was shown, and position 7 counts although the model could see its answer."
+    },
+    {
+      "id": "bert-mask-and-segments-swapped",
+      "moduleId": "transformer-architectures-bert-mlm",
+      "title": "The Mask and the Segment ids in Each Other's Places",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=bert-mask-and-segments-swapped",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A reading-comprehension model is built on an encoder whose signature is encoder(input_ids, attention_mask, segment_ids). Both the training code and the test code call it as encoder(input_ids, segment_ids, attention_mask), so the two 0/1 arrays arrive in each other's places, and nothing raises an error. Each input is [CLS], a question, [SEP], a passage, [SEP], then [PAD]s. Its segment ids are 0 for [CLS], the question and the first [SEP], 1 for the passage and the last [SEP], and 0 for the padding. The model picks each answer from the outputs at the passage's positions. How does the swap change what those outputs can depend on?",
+      "answer": "They no longer depend on the question at all: in every layer, no position can attend to [CLS], the question or the first [SEP]. Used as the attention mask, the segment ids are 1 only at the passage and the last [SEP]. Every other position is hidden as a key in every layer, so the vectors at the passage's positions are built from the passage and the last [SEP] alone. The question still enters the input, but nothing at its positions ever reaches a passage position. Trained this way, the model can only learn a question-blind guess, such as the span that most often holds an answer in a passage like this one. The real mask, used as segment ids, also gives every real piece the same segment embedding, but with the question out of reach that changes little."
+    },
+    {
+      "id": "bert-tag-labels-for-word-pieces",
+      "moduleId": "transformer-architectures-bert-mlm",
+      "title": "Word Labels on Word Pieces",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=bert-tag-labels-for-word-pieces",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A tagger fine-tunes BERT to label whole words, but the scoring script reads each word's prediction from the output at that word's first piece. Given the piece layout of a padded sentence, which label array trains the layer for exactly what the script measures?",
+      "answer": "[-100, 1, 0, 0, 2, -100, -100, -100, -100, -100, -100]. Each word's label sits at its first piece: nadia at 1, flew at 2, to at 3 and reykjavik at 4, which is where the scoring script reads it. Everything else is −100: [CLS] and [SEP] are not words, the continuation pieces ##k, ##ja and ##vik would count reykjavik again, and the two [PAD]s are not text. The loss then averages exactly four terms, one per word."
+    },
+    {
+      "id": "bert-nan-on-short-titles",
+      "moduleId": "transformer-architectures-bert-mlm",
+      "title": "A nan Every Few Dozen Steps",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=bert-nan-on-short-titles",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A team pretrains a small BERT on short product titles, and the collator flips a 15% coin at each title piece, labeling every unchosen position as ignored. Every so often the logged loss is nan even though the weights never blow up. Explain where the nan comes from, how often it happens, and what a fixed target count per input would change. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "bert-scoring-whole-sentences",
+      "moduleId": "transformer-architectures-bert-mlm",
+      "title": "Scoring a Whole Sentence with a Masked Model",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=bert-scoring-whole-sentences",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "The pseudo-log-likelihood scores a whole sentence by hiding each word piece in turn and adding the log probabilities of the true pieces. Compute it for a toy language of two-piece sentences, prove two of its properties, and compare it with the chain rule a left-to-right model uses on a word the tokenizer splits into several pieces. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "bert-what-a-visible-piece-says",
+      "moduleId": "transformer-architectures-bert-mlm",
+      "title": "What a Visible Piece Tells the Model",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=bert-what-a-visible-piece-says",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "Under BERT's masking recipe a target position keeps its original piece a tenth of the time and gets a uniformly random piece a tenth of the time. Work out what the model should believe about the original piece at a position that shows a real piece, for a toy vocabulary and for two other masking recipes. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "bert-answer-spans-numpy",
+      "moduleId": "transformer-architectures-bert-mlm",
+      "title": "Answer Spans in a Long Passage",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=bert-answer-spans-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Build BERT's reading-comprehension input from a question and a passage with its special tokens, segments and padding, find the best valid answer span from start and end scores under a length limit, then cut a long passage into overlapping windows and return the best span over all of them.",
+      "answer": "Auto-graded inside the notebook. All three functions must reproduce the reference arrays exactly, including the span tie-breaking rule (smallest start, then smallest end) and the window offsets."
+    },
+    {
+      "id": "bert-whole-word-masking-numpy",
+      "moduleId": "transformer-architectures-bert-mlm",
+      "title": "Whole-Word Masking for a Padded Batch",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=bert-whole-word-masking-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Implement whole-word masking for a padded batch of pieces: number the words from the continuation markers, choose whole words up to a piece budget, then corrupt the chosen pieces under the 80/10/10 rule and build the labels.",
+      "answer": "Auto-graded inside the notebook. Part 1 must reproduce the expected word numbers exactly, Part 2 the per-row piece budgets over 300 random seeds for the chooser, and Part 3 the 80/10/10 shares (within 0.015 and 0.01) with the input batch left unchanged."
+    }
+  ],
+  "theory": [
+    {
+      "id": "bert-hide-each-piece-from-itself",
+      "moduleId": "transformer-architectures-bert-mlm",
+      "title": "Hiding Each Piece from Its Own Position",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A teammate wants an encoder that uses the context on both sides without changing the input. Her plan: give the encoder the sentence as it is, and in every attention layer set each position's score against itself to $-\\infty$ before the softmax, so that no position attends to its own piece. The output at every position $i$ is then trained to predict the piece at position $i$."
+            },
+            {
+              "p": "The encoder is a stack of ordinary Transformer blocks with no causal mask. Does her plan keep each piece out of its own prediction?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Yes, at any depth: with its own score at $-\\infty$, no position takes anything from its own piece.",
+                  "explain": "The diagonal score only removes position i's own value from the weighted average. Each block also adds its input back after attention, so the vector at position i after the first block still contains piece i. The weights in row i are not free of it either, since they come from the query of position i."
+                },
+                {
+                  "text": "Yes for a single block. It leaks only once a second block is stacked, through neighbors that attended to piece $i$ one block earlier.",
+                  "explain": "The path through neighbors is real: from the second block on, position i can attend to a position whose first-block output already used piece i. But the plan fails earlier. The residual connection adds position i's input to what its attention gathers, so piece i reaches the output of the very first block."
+                },
+                {
+                  "text": "No, it leaks in the first block: the residual connection and the query of position $i$ both carry piece $i$ into the output at position $i$.",
+                  "correct": true,
+                  "explain": "Each block computes its input plus what attention gathers, so the vector at position i after the first block still holds piece i, whatever the attention weights are. The weights themselves depend on piece i too, because the query of position i is computed from it. A deeper stack adds a third path, through neighbors that attended to piece i one block earlier. The prediction at position i can copy its own piece, which is why BERT hides the piece in the input with [MASK] instead of hiding it inside attention."
+                },
+                {
+                  "text": "No, because a row with a score of $-\\infty$ makes the softmax return NaN, so training breaks before anything is learned.",
+                  "explain": "A row needs every score at minus infinity before the softmax divides 0 by 0. Here each row loses only its diagonal entry and keeps a finite score for every other position, so the weights are well defined and training runs. The trouble is what the trained model can copy."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each block computes its input plus what attention gathers, so the vector at position i after the first block still holds piece i, whatever the attention weights are. The weights themselves depend on piece i too, because the query of position i is computed from it. A deeper stack adds a third path, through neighbors that attended to piece i one block earlier. The prediction at position i can copy its own piece, which is why BERT hides the piece in the input with [MASK] instead of hiding it inside attention."
+            },
+            {
+              "result": "No, it leaks in the first block: the residual connection and the query of position $i$ both carry piece $i$ into the output at position $i$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bert-five-predictions-two-inputs",
+      "moduleId": "transformer-architectures-bert-mlm",
+      "title": "Five Predictions in Two Inputs",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A batch holds two inputs. In input A, four positions were chosen for prediction, and the model gives their original pieces probabilities 0.5, 0.5, 0.25 and 0.25. In input B, one position was chosen, and the model gives its original piece probability 0.125. No other position has a loss."
+      ],
+      "setup": [
+        {
+          "p": "Two training scripts turn these into one batch loss."
+        },
+        {
+          "list": [
+            "**Script 1** averages the losses of all five predictions.",
+            "**Script 2** averages the losses within each input, then averages the two inputs."
+          ]
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What loss does script 1 report? Give it to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each loss is $-\\ln p$. The five probabilities are powers of $\\tfrac12$, so the losses are multiples of $\\ln 2 \\approx 0.693$:"
+            },
+            {
+              "tex": "\\begin{array}{cccccc}\n\\text{Prediction} & \\text{A1} & \\text{A2} & \\text{A3} & \\text{A4} & \\text{B1} \\\\ \\hline\np & 0.5 & 0.5 & 0.25 & 0.25 & 0.125 \\\\\n-\\ln p & \\ln 2 & \\ln 2 & 2 \\ln 2 & 2 \\ln 2 & 3 \\ln 2\n\\end{array}"
+            },
+            {
+              "p": "Script 1 divides their total by 5:"
+            },
+            {
+              "tex": "\\frac{(1 + 1 + 2 + 2 + 3)\\ln 2}{5} = \\frac{9 \\ln 2}{5} \\approx 1.248 ."
+            },
+            {
+              "result": "1.248"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What loss does script 2 report?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Input A averages to $6 \\ln 2 / 4 = 1.5 \\ln 2$, and input B is its one loss, $3 \\ln 2$. The mean of the two is"
+            },
+            {
+              "tex": "\\frac{1.5 \\ln 2 + 3 \\ln 2}{2} = 2.25 \\ln 2 \\approx 1.560 ."
+            },
+            {
+              "p": "The model and its predictions are the same, yet script 2 reports a loss 25% higher, because it counts B's poor prediction more heavily."
+            },
+            {
+              "result": "1.560"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Under script 2, how many times as much does B's prediction count as one of A's? Say which script gives every prediction the same weight, and what goes wrong with the other one when the number of chosen positions varies a lot from input to input."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Script 2 gives each input half of the loss, and splits that half among the input's predictions. Each of A's four predictions gets $\\tfrac12 \\cdot \\tfrac14 = \\tfrac18$ and B's single one gets $\\tfrac12$, four times as much. Script 1 gives all five $\\tfrac15$."
+            },
+            {
+              "p": "The weights show up in training. Raising B's probability from 0.125 to 0.5 lowers B's loss by $2 \\ln 2$, and script 1 falls by $2 \\ln 2 / 5 \\approx 0.277$ while script 2 falls by $2 \\ln 2 / 2 \\approx 0.693$. Raising one of A's 0.25 to 0.5 lowers that loss by $\\ln 2$, and the two scripts fall by $0.139$ and $0.087$. So script 2 pays 8 times as much for the first fix as for the second, where script 1 pays only the factor of 2 that the two losses differ by."
+            },
+            {
+              "p": "Script 1 is the average that `cross_entropy` with `ignore_index=-100` computes over the flattened batch, and BERT's own pretraining code also divides the summed loss by the number of predictions in the batch. When the number of chosen positions varies, an input with two predictions gets the same half of script 2's loss as an input with twenty. Each of its two predictions then pulls as hard as ten of the other input's, and the loss script 2 reports moves with how the positions happened to be chosen."
+            },
+            {
+              "result": "4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bert-loss-at-three-kinds-of-target",
+      "moduleId": "transformer-architectures-bert-mlm",
+      "title": "A Masked Piece, a Swapped Piece and a Kept Piece",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "The training sentence is \"the ferry left the harbor before dawn\". The collator chose three of its pieces and treated each by BERT's recipe: \"ferry\" was replaced by `[MASK]`, \"left\" was replaced by the random piece \"violin\", and \"dawn\" was left as it is. So the model reads"
+            },
+            {
+              "code": {
+                "language": "",
+                "lines": [
+                  "[CLS] the [MASK] violin the harbor before dawn [SEP]"
+                ]
+              }
+            },
+            {
+              "p": "At the three chosen positions its output includes these probabilities:"
+            },
+            {
+              "tex": "\\begin{array}{ccc}\n\\text{Position} & \\text{Shows} & \\text{Probabilities} \\\\ \\hline\n2 & \\text{`[MASK]`} & \\text{ferry 0.4} \\\\\n3 & \\text{violin} & \\text{left 0.5, violin 0.05} \\\\\n7 & \\text{dawn} & \\text{dawn 0.8}\n\\end{array}"
+            },
+            {
+              "p": "What is the masked-LM loss for this sentence?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$0.611$",
+                  "correct": true,
+                  "explain": "Every chosen position is asked for its original piece, whatever it shows. The three losses are −ln 0.4 = 0.916 for ferry, −ln 0.5 = 0.693 for left and −ln 0.8 = 0.223 for dawn, and their mean is 1.833 / 3 = 0.611. Position 3 is scored on left, not on the violin the model was shown, and position 7 counts although the model could see its answer."
+                },
+                {
+                  "text": "$1.378$",
+                  "explain": "This scores position 3 on violin, the piece it shows: −ln 0.05 = 2.996 in place of −ln 0.5 = 0.693. The label at a chosen position is always the original piece, so the model is rewarded for seeing through the swap to left, and a model that trusted violin would be penalized."
+                },
+                {
+                  "text": "$0.805$",
+                  "explain": "This leaves out position 7 and averages 0.916 and 0.693 over two positions. A piece left unchanged is still a target, with a loss of −ln 0.8 = 0.223. The model cannot tell it from the pieces nobody chose, and it is scored all the same."
+                },
+                {
+                  "text": "$0.916$",
+                  "explain": "This counts only the position that shows [MASK], −ln 0.4 = 0.916. The swapped piece and the kept piece are targets too: the recipe chose all three, and only how they were shown differs."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Every chosen position is asked for its original piece, whatever it shows. The three losses are −ln 0.4 = 0.916 for ferry, −ln 0.5 = 0.693 for left and −ln 0.8 = 0.223 for dawn, and their mean is 1.833 / 3 = 0.611. Position 3 is scored on left, not on the violin the model was shown, and position 7 counts although the model could see its answer."
+            },
+            {
+              "result": "$0.611$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bert-mask-and-segments-swapped",
+      "moduleId": "transformer-architectures-bert-mlm",
+      "title": "The Mask and the Segment ids in Each Other's Places",
+      "difficulty": "Medium",
+      "minutes": 7,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A reading-comprehension model is built on an encoder whose signature is `encoder(input_ids, attention_mask, segment_ids)`. Both the training code and the test code call it as `encoder(input_ids, segment_ids, attention_mask)`, so the two 0/1 arrays arrive in each other's places, and nothing raises an error."
+            },
+            {
+              "p": "Each input is `[CLS]`, a question, `[SEP]`, a passage, `[SEP]`, then `[PAD]`s. Its segment ids are 0 for `[CLS]`, the question and the first `[SEP]`, 1 for the passage and the last `[SEP]`, and 0 for the padding. The model picks each answer from the outputs at the passage's positions."
+            },
+            {
+              "p": "How does the swap change what those outputs can depend on?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Not at all: the two arrays have the same shape and values, so fine-tuning learns to read each one in its new place.",
+                  "explain": "Both arrays hold 0s and 1s in the same shape, but the encoder uses them in different places. The attention mask decides which positions every query may attend to, and the segment ids choose which learned vector is added to each input. Training can change weights, but no weight lets a position read a key that the mask hides."
+                },
+                {
+                  "text": "They now also depend on the padding, since the positions can attend to the `[PAD]`s and the outputs change with the padded length.",
+                  "explain": "The padding has segment id 0, so the array now standing in for the mask still hides every [PAD], as before. What the swap newly hides are the other positions with segment id 0: [CLS], the question and the first [SEP]."
+                },
+                {
+                  "text": "They still depend on the question, but the model can no longer tell the question from the passage, since every real piece gets the same segment embedding.",
+                  "explain": "That part is right: the real attention mask is 1 at every real piece, so as segment ids it gives the question and the passage the same segment embedding. But the larger change is in attention. The segment ids, used as the mask, are 0 at [CLS], the question and the first [SEP], so those positions are hidden as keys and the passage cannot read the question at all."
+                },
+                {
+                  "text": "They no longer depend on the question at all: in every layer, no position can attend to `[CLS]`, the question or the first `[SEP]`.",
+                  "correct": true,
+                  "explain": "Used as the attention mask, the segment ids are 1 only at the passage and the last [SEP]. Every other position is hidden as a key in every layer, so the vectors at the passage's positions are built from the passage and the last [SEP] alone. The question still enters the input, but nothing at its positions ever reaches a passage position. Trained this way, the model can only learn a question-blind guess, such as the span that most often holds an answer in a passage like this one. The real mask, used as segment ids, also gives every real piece the same segment embedding, but with the question out of reach that changes little."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Used as the attention mask, the segment ids are 1 only at the passage and the last [SEP]. Every other position is hidden as a key in every layer, so the vectors at the passage's positions are built from the passage and the last [SEP] alone. The question still enters the input, but nothing at its positions ever reaches a passage position. Trained this way, the model can only learn a question-blind guess, such as the span that most often holds an answer in a passage like this one. The real mask, used as segment ids, also gives every real piece the same segment embedding, but with the question out of reach that changes little."
+            },
+            {
+              "result": "They no longer depend on the question at all: in every layer, no position can attend to `[CLS]`, the question or the first `[SEP]`."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bert-tag-labels-for-word-pieces",
+      "moduleId": "transformer-architectures-bert-mlm",
+      "title": "Word Labels on Word Pieces",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A tagger fine-tunes BERT to mark names: label 0 for any other word, 1 for a person and 2 for a place. The training data labels whole words, and the scoring script reads each word's prediction from the output at the word's first piece, so every word counts once."
+            },
+            {
+              "p": "The sentence \"nadia flew to reykjavik\" has the word labels 1, 0, 0, 2. Its batch is padded to 11 positions:"
+            },
+            {
+              "tex": "\\begin{array}{cccccccccccc}\n\\text{Position} & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\\\ \\hline\n\\text{Piece} & \\text{`[CLS]`} & \\text{nadia} & \\text{flew} & \\text{to} & \\text{rey} & \\text{\\#\\#k} & \\text{\\#\\#ja} & \\text{\\#\\#vik} & \\text{`[SEP]`} & \\text{`[PAD]`} & \\text{`[PAD]`}\n\\end{array}"
+            },
+            {
+              "p": "A linear layer on every position's output gives three scores, and the loss is the cross-entropy averaged over the positions whose label is not $-100$. Which label array trains the layer for what the scoring script measures?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "`[-100, 1, 0, 0, 2, 2, 2, 2, -100, -100, -100]`",
+                  "explain": "This gives all four pieces of reykjavik the place label, so that one word counts four times in the loss while nadia, flew and to count once each. It also trains the outputs at ##k, ##ja and ##vik, which the scoring script never reads."
+                },
+                {
+                  "text": "`[-100, 1, 0, 0, 2, -100, -100, -100, -100, -100, -100]`",
+                  "correct": true,
+                  "explain": "Each word's label sits at its first piece: nadia at 1, flew at 2, to at 3 and reykjavik at 4, which is where the scoring script reads it. Everything else is −100: [CLS] and [SEP] are not words, the continuation pieces ##k, ##ja and ##vik would count reykjavik again, and the two [PAD]s are not text. The loss then averages exactly four terms, one per word."
+                },
+                {
+                  "text": "`[1, 0, 0, 2, -100, -100, -100, -100, -100, -100, -100]`",
+                  "explain": "These are the four word labels written from position 0, which forgets that [CLS] comes first. Every label lands one place early: [CLS] is trained as a person, nadia and flew as other words and to as a place, while rey gets no label at all."
+                },
+                {
+                  "text": "`[-100, 1, 0, 0, 2, -100, -100, -100, -100, 0, 0]`",
+                  "explain": "This pads the label array with 0, the [PAD] id, in place of −100. But 0 is also the label for an ordinary word, so both padding positions are trained as other words and enter the average. The loss then has six terms for four words, and the more padding an input gets, the more of its loss comes from padding."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each word's label sits at its first piece: nadia at 1, flew at 2, to at 3 and reykjavik at 4, which is where the scoring script reads it. Everything else is −100: [CLS] and [SEP] are not words, the continuation pieces ##k, ##ja and ##vik would count reykjavik again, and the two [PAD]s are not text. The loss then averages exactly four terms, one per word."
+            },
+            {
+              "result": "`[-100, 1, 0, 0, 2, -100, -100, -100, -100, -100, -100]`"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bert-nan-on-short-titles",
+      "moduleId": "transformer-architectures-bert-mlm",
+      "title": "A nan Every Few Dozen Steps",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A team pretrains a small BERT on product titles from an online shop. After tokenization every title is 6 pieces, so each input is `[CLS]`, 6 pieces and `[SEP]`, and a batch holds 4 titles. The collator works like Hugging Face's: it flips a 15% coin at each of the 24 title pieces in the batch, never at `[CLS]` or `[SEP]`, and gives every unchosen position the label $-100$. The loss is"
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "loss = F.cross_entropy(logits.view(-1, vocab_size), labels.view(-1))"
+            ]
+          }
+        },
+        {
+          "p": "with the default `ignore_index=-100`. Every so often the logged loss is `nan`. The training loop skips any step whose loss is not finite, and the weights never blow up."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Where does the `nan` come from?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "`cross_entropy` with `ignore_index=-100` adds up the losses at the labeled positions and divides by how many there are. When none of the 24 coins comes up, every label in the batch is $-100$, so the sum has no terms and the count is 0. The mean is $0/0$, which is `nan`. Nothing is wrong with the model or the learning rate: those steps have no prediction to learn from."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the probability that a given step logs `nan`? About how many of 5,000 steps will?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The 24 coins are independent and each comes up tails with probability 0.85, so"
+            },
+            {
+              "tex": "P(\\text{no target in the batch}) = 0.85^{24} \\approx 0.0202 ,"
+            },
+            {
+              "p": "about one step in 49, or roughly 100 of 5,000 steps."
+            },
+            {
+              "result": "0.0202"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "On a given step, what is the probability that one particular title gets no target at all? What does that mean for the steps that do run?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "A title has 6 coins, so it gets no target with probability"
+            },
+            {
+              "tex": "0.85^{6} \\approx 0.377 ."
+            },
+            {
+              "p": "On average $4 \\times 0.377 \\approx 1.5$ of the 4 titles in every batch contribute no prediction. The model still runs on them, but nothing in such a title reaches the loss, since the inputs of a batch never attend to each other. So more than a third of the work on title pieces trains nothing, and the `nan` steps are only the case where all four titles miss at once. The coin gives 15% of the pieces on average, $24 \\times 0.15 = 3.6$ targets per batch, but on inputs this short the count is often 0 per title."
+            },
+            {
+              "result": "0.377"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "BERT's original code instead chooses a fixed number of positions per input, $k = \\max(1, \\operatorname{round}(0.15\\,n))$, where $n$ is the length of the input. What does that give for these titles, and why can it never produce the `nan`? A teammate suggests raising the coin to 32% instead. What would that do?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each input has 6 choosable pieces (never `[CLS]` or `[SEP]`), and $0.15 \\cdot 6 = 0.9$ rounds to 1, so every title gets one target and every batch gets 4. The share hidden is $1/6 \\approx 17\\%$, close to the 15% aimed for, and no title or batch is ever left without a target, so the count in the mean is always 4 and never 0."
+            },
+            {
+              "p": "A 32% coin makes the `nan` rare, $0.68^{24} \\approx 10^{-4}$, about one step in 10,000. But it hides about a third of every title on average, more than twice as much context as the recipe intends, and a title still gets no target with probability $0.68^6 \\approx 0.10$. The fixed count fixes the cause, which is that the number of targets per input can be 0, without changing how much of each input is hidden."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bert-scoring-whole-sentences",
+      "moduleId": "transformer-architectures-bert-mlm",
+      "title": "Scoring a Whole Sentence with a Masked Model",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "BERT gives probabilities for a hidden piece, not for a whole sentence. A common way to score a sentence with it anyway is the **pseudo-log-likelihood** (PLL): hide each piece in turn, one forward pass per piece, and add up the log probabilities of the true pieces,"
+      ],
+      "setup": [
+        {
+          "tex": "\\text{PLL}(x_1, \\dots, x_T) = \\sum_{t=1}^{T} \\ln P(x_t \\mid \\text{every piece except } x_t) ."
+        },
+        {
+          "p": "Speech recognizers have used it to choose between candidate transcriptions. To see what it measures, take a toy language whose sentences are two pieces long, each piece $a$ or $b$, with these probabilities:"
+        },
+        {
+          "tex": "\\begin{array}{ccccc}\n\\text{Sentence} & aa & ab & ba & bb \\\\ \\hline\nP & 0.4 & 0.1 & 0.1 & 0.4\n\\end{array}"
+        },
+        {
+          "p": "Assume a perfect masked model: at a hidden position it gives the true conditional probability of each piece, given the other piece."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Compute $e^{\\text{PLL}}$ for each of the four sentences, and add them up."
+            }
+          ],
+          "answer": [
+            {
+              "p": "When the first piece is $a$, the second is $a$ with probability $0.4 / (0.4 + 0.1) = 0.8$, and by the symmetry of the table every conditional is 0.8 for a matching piece and 0.2 for a different one. The PLL of $aa$ adds the log probability of the first $a$ given the second and of the second $a$ given the first, so"
+            },
+            {
+              "tex": "e^{\\text{PLL}(aa)} = 0.8 \\cdot 0.8 = 0.64 ,"
+            },
+            {
+              "p": "and in the same way $bb$ gets $0.64$ while $ab$ and $ba$ get $0.2 \\cdot 0.2 = 0.04$. The total is"
+            },
+            {
+              "tex": "0.64 + 0.04 + 0.04 + 0.64 = 1.36 ."
+            },
+            {
+              "p": "So $e^{\\text{PLL}}$ is not a probability: it adds up to more than 1, and it gives $aa$ 0.64 where the true probability is 0.4."
+            },
+            {
+              "result": "1.36"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Prove two things."
+            },
+            {
+              "list": [
+                "**(a)** If the two pieces are independent, $e^{\\text{PLL}(x)} = P(x)$ for every sentence $x$.",
+                "**(b)** For the family $P(aa) = P(bb) = \\tfrac{1 + c}{4}$ and $P(ab) = P(ba) = \\tfrac{1 - c}{4}$, with $0 \\le c \\le 1$, the four values of $e^{\\text{PLL}}$ add up to $1 + c^2$."
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "**(a)** Write the sentence as its first piece $u$ and second piece $v$. Independence means that knowing $v$ does not change the probabilities of $u$, and the other way round, so each factor of $e^{\\text{PLL}}$ is a plain probability of one piece:"
+            },
+            {
+              "tex": "\\begin{aligned}\ne^{\\text{PLL}(uv)} &= P(\\text{first} = u \\mid \\text{second} = v)\\; P(\\text{second} = v \\mid \\text{first} = u) \\\\[4pt]\n&= P(\\text{first} = u)\\; P(\\text{second} = v) ,\n\\end{aligned}"
+            },
+            {
+              "p": "and by independence the last product is $P(uv)$."
+            },
+            {
+              "p": "**(b)** Each piece is $a$ with probability $\\tfrac{1+c}{4} + \\tfrac{1-c}{4} = \\tfrac12$. A matching piece then has conditional probability $\\tfrac{1+c}{4} / \\tfrac12 = \\tfrac{1+c}{2}$, and a different piece $\\tfrac{1-c}{2}$. Adding the four sentences,"
+            },
+            {
+              "tex": "2 \\left(\\frac{1+c}{2}\\right)^2 + 2 \\left(\\frac{1-c}{2}\\right)^2\n= \\frac{(1+c)^2 + (1-c)^2}{2} = \\frac{2 + 2c^2}{2} = 1 + c^2 ."
+            },
+            {
+              "p": "At $c = 0$ the pieces are independent and the total is 1, as in (a). The table above is $c = 0.6$, giving $1.36$. At $c = 1$ only $aa$ and $bb$ occur, each piece is certain given the other, and both sentences get $e^{\\text{PLL}} = 1$ though each has probability $\\tfrac12$. $\\qquad\\blacksquare$"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Explain how PLL scores a sentence that contains a rare word the tokenizer splits into several pieces, such as `rey`, `##k`, `##ja`, `##vik`, and compare it with the chain rule a left-to-right model uses."
+            }
+          ],
+          "answer": [
+            {
+              "p": "PLL hides one piece at a time, and the other pieces of the same word stay visible. With `##k`, `##ja` and `##vik` in view, `rey` is nearly certain, and the same holds for each of the others, so each of the four terms is close to $\\ln 1 = 0$. The word costs almost nothing in the PLL however rare it is, which is the $c = 1$ case of (b): pieces that determine each other."
+            },
+            {
+              "p": "A left-to-right model scores the same word by the chain rule: the log probability of `rey` given the words to its left, plus that of `##k` given those words and `rey`, and so on. Its first term is paid before any of the word is seen, and for a rare word that term is large and negative. Its later terms are near 0 as in PLL, but the first one charges for the word's rarity once. PLL never charges it, so it rates sentences with long, rare multi-piece words too highly. A fix that keeps BERT is to hide all the pieces of a word that lie to the right of the piece being scored, so that each word pays for its first piece the way the chain rule does."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bert-what-a-visible-piece-says",
+      "moduleId": "transformer-architectures-bert-mlm",
+      "title": "What a Visible Piece Tells the Model",
+      "difficulty": "Hard",
+      "minutes": 30,
+      "overview": [
+        "Under BERT's recipe a target shows `[MASK]` with probability 0.8, a random piece with probability 0.1 and its original piece with probability 0.1. Take a toy vocabulary of $V = 1{,}000$ pieces, and let the random piece be drawn uniformly from all $V$ of them, so that now and then it is the original."
+      ],
+      "setup": [
+        {
+          "p": "Fix one position. From every other position, the model can work out a probability $q_w$ that the original piece here is $w$, for each piece $w$. Assume these $q_w$ are the same whether or not the position was chosen."
+        },
+        {
+          "p": "The position shows a piece $s$, not `[MASK]`. Only targets have a loss, so the prediction that minimizes the expected loss here is the distribution of the original piece given that the position is a target showing $s$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Show that, given the position is a target showing $s$, the original piece is $s$ with probability"
+            },
+            {
+              "tex": "\\frac{q_s\\,(V + 1)}{q_s V + 1} ."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Among targets, the ones that show a piece are the 10% left unchanged and the 10% replaced at random, so given that a target shows a piece, each case has probability $\\tfrac12$. Write $O$ for the original piece and $S$ for the piece shown."
+            },
+            {
+              "list": [
+                "**Unchanged:** $S = O$, and $O = s$ with probability $q_s$.",
+                "**Random:** $S$ is uniform over the $V$ pieces whatever $O$ is, so $S = s$ with probability $1/V$, and $O$ keeps its probabilities $q_w$."
+              ]
+            },
+            {
+              "p": "Then"
+            },
+            {
+              "tex": "\\begin{aligned}\nP(O = s,\\ S = s) &= \\tfrac12\\, q_s + \\tfrac12\\, q_s \\cdot \\tfrac1V , \\\\[4pt]\nP(S = s) &= \\tfrac12\\, q_s + \\tfrac12 \\cdot \\tfrac1V ,\n\\end{aligned}"
+            },
+            {
+              "p": "where the second line adds, in the random case, $q_w / V$ over every $w$. Dividing, and multiplying the top and bottom by $2V$,"
+            },
+            {
+              "tex": "P(O = s \\mid S = s) = \\frac{q_s V + q_s}{q_s V + 1} = \\frac{q_s (V + 1)}{q_s V + 1} .\n\\qquad\\blacksquare"
+            },
+            {
+              "p": "The two cases compete with odds $q_s V : 1$. Keeping the original produces $s$ when the context already favored it, and a random draw produces $s$ only with probability $1/V$."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The context makes \"harbor\" the original piece with $q = 0.3$, and the position shows \"harbor\". What probability should the model give \"harbor\"?"
+            }
+          ],
+          "answer": [
+            {
+              "tex": "\\frac{0.3 \\cdot 1001}{0.3 \\cdot 1000 + 1} = \\frac{300.3}{301} \\approx 0.998 ."
+            },
+            {
+              "p": "The odds are $300 : 1$ that the piece was kept rather than drawn at random, so the model should nearly copy it."
+            },
+            {
+              "result": "0.998"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The context is the same, but the position shows \"giraffe\", which the context makes the original with $q = 0.0005$. What probability should the model give \"giraffe\"? What probability should it give \"harbor\"?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "For giraffe,"
+            },
+            {
+              "tex": "\\frac{0.0005 \\cdot 1001}{0.0005 \\cdot 1000 + 1} = \\frac{0.5005}{1.5} \\approx 0.334 ."
+            },
+            {
+              "p": "The odds that giraffe was kept are only $0.5 : 1$, so the piece was drawn at random with probability $1 / 1.5 = \\tfrac23$, and in that case the original follows the context. Harbor gets that share of its context probability,"
+            },
+            {
+              "tex": "P(O = \\text{harbor} \\mid S = \\text{giraffe}) = \\frac{\\tfrac12 \\cdot 0.3 \\cdot \\tfrac{1}{1000}}{\\tfrac12 \\cdot 0.0005 + \\tfrac12 \\cdot \\tfrac{1}{1000}} = \\frac{0.3}{1.5} = 0.2 ."
+            },
+            {
+              "p": "Giraffe, at 0.334, is still the single most likely original, though the context alone gave it 0.0005. With the real vocabulary of $30{,}522$ pieces the same $q$ gives $0.0005 \\cdot 30{,}523 / (0.0005 \\cdot 30{,}522 + 1) \\approx 0.94$: a random draw lands on any one piece so rarely that a visible piece counts as kept unless the context gives it less than about $1/V \\approx 3 \\times 10^{-5}$."
+            },
+            {
+              "result": "0.334"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Redo the first part for two other recipes: 80/0/20, with no random replacement, and 80/20/0, with nothing left unchanged. In each case, what does the model learn to output at a position that shows a piece, and why is the 10% of random pieces in BERT's recipe needed alongside the 10% kept?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "**80/0/20.** A target that shows a piece always shows its original, so $P(O = s \\mid S = s) = 1$ for every $q_s$. The best output at any visible position is the piece it shows, with certainty. Copying solves every kept target, so those targets teach nothing about language, and the model never needs the context to judge a visible piece."
+            },
+            {
+              "p": "**80/20/0.** A target that shows a piece shows a random one, so $P(O = s, S = s) = q_s / V$ and $P(S = s) = 1 / V$, which gives $P(O = s \\mid S = s) = q_s$. The shown piece carries no information, and the model learns to predict every visible position from the context alone, as if the piece were not there. After pretraining every input piece is real, so this teaches the model to distrust the one piece of evidence it will always have."
+            },
+            {
+              "p": "**80/10/10.** The formula from the first part sits between the two. A visible piece that the context finds plausible is almost surely real and is nearly copied. One the context finds very unlikely is mostly ignored. To make that call the model has to judge every visible piece against its context, which is the skill the 10% kept and the 10% random pieces teach together. Neither half does it alone."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

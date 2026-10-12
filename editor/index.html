@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Notebook Editor | USAAIO Guide</title>
+    <meta name="description" content="Edit and run USAAIO practice notebooks directly in your browser." />
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#b84e30" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Outfit:wght@100..900&family=JetBrains+Mono:wght@400;600&display=swap" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="../public/assets/logo.svg?v=20261012-review" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" crossorigin="anonymous" />
+    <link rel="stylesheet" href="../src/styles/main.css?v=20261012-review" />
+    <link rel="stylesheet" href="../src/styles/definitions.css?v=20261012-review" />
+    <link rel="stylesheet" href="../src/styles/polish.css?v=20261012-review" />
+    <link rel="stylesheet" href="../src/styles/ui.css?v=20261012-review" />
+  </head>
+  <body data-page="editor" data-root="../">
+    <a class="skip-link" href="#main">Skip to Content</a>
+    <header class="site-header">
+      <nav class="nav-shell" aria-label="Primary navigation">
+        <a class="brand" href="../" aria-label="USAAIO Guide home">
+          <img class="brand-mark" src="../public/assets/logo.svg?v=20261012-review" alt="" aria-hidden="true" width="40" height="40" />
+          <span><strong>USAAIO Guide</strong><small>AI Olympiad prep</small></span>
+        </a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Main menu">
+          <svg class="nav-toggle-icon nav-toggle-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+          <svg class="nav-toggle-icon nav-toggle-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+          <span class="nav-toggle-text" aria-hidden="true"></span>
+        </button>
+        <div class="nav-links" id="site-menu"></div>
+      </nav>
+    </header>
+    <main id="main">
+      <section class="page-shell editor-shell">
+        <header class="theory-head pp-head editor-head">
+          <div class="pp-head-top">
+            <a class="theory-back" id="editorBack" href="../problems/">← Back to problems</a>
+            <span class="pp-stepper-slot" id="editorStepper"></span>
+          </div>
+          <div class="pp-title-row">
+            <span class="pp-check-slot" id="editorCheck"></span>
+            <h1 id="editor-title">Loading Notebook...</h1>
+          </div>
+          <p class="editor-subtitle" id="editorSubtitle" hidden></p>
+          <dl class="pp-facts" id="editorMeta" hidden></dl>
+          <div class="theory-toolbar pp-actions" id="editorActions" hidden>
+            <div class="pp-actions-group">
+              <a class="button pp-action pp-action-primary theory-meta-link" id="editorModuleLink" hidden>Read the Module</a>
+              <button class="button pp-action" type="button" id="downloadBtn">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 2.25a.75.75 0 0 1 .75.75v5.19l1.72-1.72a.75.75 0 1 1 1.06 1.06l-3 3a.75.75 0 0 1-1.06 0l-3-3a.75.75 0 0 1 1.06-1.06l1.72 1.72V3A.75.75 0 0 1 8 2.25zM3.5 12a.75.75 0 0 0 0 1.5h9a.75.75 0 0 0 0-1.5z"/></svg>
+                Download .ipynb (Recommended)
+              </button>
+            </div>
+            <div class="pp-actions-group pp-actions-group--end">
+              <button class="button pp-action pp-action-quiet definition-bank-button" type="button" data-definition-bank aria-haspopup="dialog">Definition Bank</button>
+            </div>
+          </div>
+        </header>
+        <section class="panel editor-panel" aria-label="Notebook">
+          <div class="editor-toolbar" id="editorToolbar" hidden>
+            <button class="button button-primary" type="button" id="runAllBtn">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M4.5 2.9a.7.7 0 0 1 1.06-.6l8 5.1a.7.7 0 0 1 0 1.2l-8 5.1a.7.7 0 0 1-1.06-.6z"/></svg>
+              Run all
+            </button>
+            <button class="button button-secondary dark-text" type="button" id="stopBtn" disabled>
+              <svg viewBox="0 0 16 16" aria-hidden="true"><rect fill="currentColor" x="4" y="4" width="8" height="8" rx="1.2"/></svg>
+              Stop
+            </button>
+            <button class="button button-secondary dark-text" type="button" id="resetBtn">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 3a5 5 0 1 0 4.9 6h-1.55A3.5 3.5 0 1 1 8 4.5c.97 0 1.85.4 2.48 1.02L8.75 7.25H13V3l-1.46 1.46A4.98 4.98 0 0 0 8 3z"/></svg>
+              Reset
+            </button>
+            <button class="editor-split" type="button" id="splitBtn" role="switch" aria-checked="false" hidden>
+              Split view
+              <span class="editor-split-track" aria-hidden="true"><span></span></span>
+            </button>
+            <span class="editor-kernel" id="kernelStatus" role="status">Python: not started</span>
+          </div>
+          <p class="editor-notice" id="editorNotice" role="status" hidden></p>
+          <p class="editor-note" id="editorNote" hidden>
+            The first run downloads a browser-based Python runtime (Pyodide) with NumPy, pandas, and
+            scikit-learn, which can take a minute. Heavy cells may briefly freeze the tab while they
+            compute. Your edits autosave in this browser. PyTorch runs here as a NumPy-backed
+            stand-in, slower than the real thing. For a GPU or the full dataset, download the
+            notebook for Colab.
+          </p>
+          <div id="editorCells" class="editor-cells"></div>
+          <p class="empty-state" id="editorEmptyState" hidden>
+            Notebook not found. Head back to the <a href="../problems/">Problem Bank</a> and pick a problem.
+          </p>
+        </section>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a class="footer-brand-link" href="../" aria-label="USAAIO Guide home">
+            <img class="footer-brand-mark" src="../public/assets/logo.svg?v=20261012-review" alt="" aria-hidden="true" width="38" height="38" />
+            <span><strong>USAAIO Guide</strong><small>AI Olympiad prep</small></span>
+          </a>
+          <p class="footer-disclaimer">An unofficial, independent study guide. Not affiliated with, endorsed by, or sponsored by the USA Artificial Intelligence Olympiad (USAAIO).</p>
+          <p class="footer-official">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" /></svg>
+            <a href="https://usaaio.org">USAAIO Competition Website</a>
+          </p>
+          <a class="footer-contact" href="../contact/">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3.5 7.5 8.5 6 8.5-6" /></svg>
+            Contact Us
+          </a>
+        </div>
+
+        <nav class="footer-cols" aria-label="Footer links">
+          <section class="footer-col">
+            <h2 class="footer-col-title">Sections</h2>
+            <ul class="footer-col-list">
+              <li><a href="../round1/">Round 1</a></li>
+              <li><a href="../round2/">Round 2</a></li>
+              <li><a href="../camp/">Camp</a></li>
+              <li><a href="../advanced/">Advanced</a></li>
+            </ul>
+          </section>
+          <section class="footer-col">
+            <h2 class="footer-col-title">Practice</h2>
+            <ul class="footer-col-list">
+              <li><a href="../problems/">Problem Bank</a></li>
+              <li><a href="../mock/">Timed Mock</a></li>
+              <li><a href="../dashboard/">Dashboard</a></li>
+              <li><a href="../search/">Search</a></li>
+            </ul>
+          </section>
+          <section class="footer-col">
+            <h2 class="footer-col-title">References</h2>
+            <ul class="footer-col-list">
+              <li><a href="../resources/">Resource Shelf</a></li>
+              <li><a href="../glossary/">Glossary</a></li>
+              <li><a href="../official/">USAAIO Links</a></li>
+            </ul>
+          </section>
+          <section class="footer-col">
+            <h2 class="footer-col-title">About</h2>
+            <ul class="footer-col-list">
+              <li><a href="../about/">About This Guide</a></li>
+              <li><a href="../contact/">Contact Us</a></li>
+              <li><a href="../contact/#sponsors">Sponsors</a></li>
+            </ul>
+          </section>
+        </nav>
+      </div>
+
+      <div class="footer-bar">
+        <p class="footer-copyright">&copy; 2026 USAAIO Guide. All rights reserved.</p>
+        <p class="footer-disclaimer-full">This is an unofficial, independently written study guide. We are not affiliated with, endorsed by, sponsored by, or in any way officially connected to the USA Artificial Intelligence Olympiad (USAAIO), the International Olympiad in Artificial Intelligence, or the International Artificial Intelligence Olympiad. The names of those organisations and their contests are their trademarks. We use them here only to identify what our lessons prepare students for. Nothing on this site has been reviewed or approved by any of those organisations. For the official contest, its rules, its dates and its past papers, go to <a href="https://www.usaaio.org/">https://www.usaaio.org/</a>.</p>
+      </div>
+    </footer>
+    <script src="../content/ordering.js?v=20261012-review" defer></script>
+    <script src="../content/catalog.js?v=20261012-review" defer></script>
+    <script src="../content/problems.js?v=20261012-review" defer></script>
+    <script src="../src/data/site-data.js?v=20261012-review" defer></script>
+    <script src="../src/lib/progress.js?v=20261012-review" defer></script>
+    <script src="../src/components/renderers.js?v=20261012-review" defer></script>
+    <script src="../content/definitions.js?v=20261012-review" defer></script>
+    <script src="../src/components/definitions.js?v=20261012-review" defer></script>
+    <script src="../src/app.js?v=20261012-review" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js" crossorigin="anonymous" defer></script>
+    <script src="../src/editor.js?v=20261012-review" defer></script>
+  </body>
+</html>

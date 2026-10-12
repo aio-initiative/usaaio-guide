@@ -1,0 +1,931 @@
+{
+  "module": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "ma2-spectral-reconstruct",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "A Covariance Matrix with a Negative Eigenvalue",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ma2-spectral-reconstruct",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Repair a covariance matrix whose rounding left negative eigenvalues: use eigh, clip to the nearest PSD matrix, and build the rank-10 truncation.",
+      "answer": "Auto-graded inside the notebook. Matrices must match to 1e-6, the negative count exactly, and the repaired matrix must have no negative eigenvalues."
+    },
+    {
+      "id": "es-undo-two-updates",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "Undo Two Steps of a Linear Update",
+      "difficulty": "Medium",
+      "url": "/theory/?id=es-undo-two-updates",
+      "source": "Custom",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A recurrent cell with no activation updates its state by h_t = A h_{t-1}, with a 2 by 2 matrix A you cannot see. A debugging log shows that the state (2, 1) was followed by (6, 3), and the state (1, -1) by (-2, 2). After two updates the state is h_2 = (22, 5). What was the starting state h_0?",
+      "answer": "(3, 0). Both probes come back as multiples of themselves: (2, 1) is stretched by 3 and (1, -1) by -2. Write h_2 along them: 2a + b = 22 and a - b = 5 give a = 9 and b = 4, so (22, 5) = 9(2, 1) + 4(1, -1). Two updates multiplied the first part by 3^2 = 9 and the second by (-2)^2 = 4, so h_0 = (9/9)(2, 1) + (4/4)(1, -1) = (3, 0). Check: (3, 0) = (2, 1) + (1, -1) goes to 9(2, 1) + 4(1, -1) = (22, 5)."
+    },
+    {
+      "id": "es-a-matrix-with-a-dial",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "Turning One Entry from Real to Repeated to Complex",
+      "difficulty": "Medium",
+      "url": "/theory/?id=es-a-matrix-with-a-dial",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "One entry of a 2 by 2 matrix is a dial c. Say which c makes its two eigenvalues coincide, find the eigenvectors at that c, and give the eigenvalues at c = -4. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "es-ten-correlated-features",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "The Top Eigenvalue of Ten Correlated Features",
+      "difficulty": "Medium",
+      "url": "/theory/?id=es-ten-correlated-features",
+      "source": "Custom",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "Ten features each have variance 1, and every pair of them has correlation 0.3. Their 10 by 10 covariance matrix C has 1 on the diagonal and 0.3 everywhere else. Without an eigensolver, what fraction of the total variance tr(C) does the largest eigenvalue of C account for?",
+      "answer": "0.37. Write C = 0.7 I + 0.3 J, where J is the all-ones matrix. J is an outer product, so it has rank 1: its eigenvalues are 10 along (1, ..., 1) and 0 nine times. Then 0.3 J has 3 and nine 0s, and adding 0.7 I adds 0.7 to each: 3.7 once and 0.7 nine times. Check: 3.7 + 9(0.7) = 10 = tr(C). The fraction is 3.7 / 10 = 0.37."
+    },
+    {
+      "id": "es-a-server-up-or-down",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "How Fast a Two-State Chain Forgets Its Start",
+      "difficulty": "Medium",
+      "url": "/theory/?id=es-a-server-up-or-down",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A server is up or down each day with fixed switching chances. Write the probability of up as a + b mu^n and find the day it first comes within 1e-9 of its long-run value. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "es-psd-square-root",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "The Square Root of a Covariance Matrix",
+      "difficulty": "Medium",
+      "url": "/theory/?id=es-psd-square-root",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Find the symmetric square root of a covariance matrix, its off-diagonal entry, and every other symmetric matrix with the same square. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "es-smallest-possible-correlation",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "How Low the Third Correlation Can Go",
+      "difficulty": "Medium",
+      "url": "/theory/?id=es-smallest-possible-correlation",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Two features each correlate 0.9 with a third. Find the smallest their mutual correlation can be, and the smallest eigenvalue when a report says 0.5. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "es-the-longest-output-of-a-layer",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "The Largest Stretch of a Three by Two Layer",
+      "difficulty": "Medium",
+      "url": "/theory/?id=es-the-longest-output-of-a-layer",
+      "source": "Custom",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A layer maps 2 inputs to 3 outputs with A = [[2, 2], [1, 1], [2, -2]]. Over all unit inputs x, what is the largest length $\\lVert A x\\rVert$ can reach?",
+      "answer": "sqrt(10). Squared, the length is x^T A^T A x, and A^T A = [[9, 1], [1, 9]] (the columns have lengths 3 and 3 and dot product 1). Its eigenvalues are 10 and 8, with eigenvectors (1, 1)/sqrt(2) and (1, -1)/sqrt(2). By the Rayleigh quotient the largest value of x^T A^T A x over unit x is 10, so the largest length is the top singular value, sqrt(10), about 3.162, reached at x = (1, 1)/sqrt(2): A x = (4, 2, 0)/sqrt(2)."
+    },
+    {
+      "id": "es-variance-along-the-first-component",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "The Variance Along the First Principal Component",
+      "difficulty": "Medium",
+      "url": "/theory/?id=es-variance-along-the-first-component",
+      "source": "Custom",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "Four data points in the plane are the rows of X = [[1, 1], [5, 1], [7, 1], [7, 5]]. Over all unit directions w, what is the largest variance of the projections X w? Divide by n = 4, as the lesson does.",
+      "answer": "7. Center first: the mean is (5, 2), and the centered rows are (-4, -1), (0, -1), (2, -1) and (2, 3). Then C = X_c^T X_c / 4 = [[6, 2], [2, 3]]. Its eigenvalues solve lambda^2 - 9 lambda + 14 = 0, which factors as (lambda - 7)(lambda - 2). The largest variance is the top eigenvalue, 7, along the eigenvector (2, 1)/sqrt(5). Check: the centered rows project onto (2, 1) as -9, -1, 3 and 7, so onto the unit vector as those divided by sqrt(5), with mean 0 and mean square (81 + 1 + 9 + 49)/(5 · 4) = 7."
+    },
+    {
+      "id": "es-shift-power-iteration",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "Speeding Up Power Iteration with a Shift",
+      "difficulty": "Hard",
+      "url": "/theory/?id=es-shift-power-iteration",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Power iteration on a symmetric matrix with eigenvalues 10, 9 and 1. Find its convergence rate, the shift that speeds it up, and what a shift past the top eigenvalue finds. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "es-similarity-matrix-spectrum",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "The Spectrum of a Similarity Matrix from Three Features",
+      "difficulty": "Hard",
+      "url": "/theory/?id=es-similarity-matrix-spectrum",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "From a 3 by 3 Gram matrix, read off the top eigenvalue of a 1000 by 1000 similarity matrix and the rank-1 truncation errors of both matrices. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "es-random-surfer-numpy",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "Where a Random Surfer Spends Its Time",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=es-random-surfer-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Build a six-page web as a column-stochastic link matrix, iterate a random surfer until its scores settle, and predict how many steps that will take from the eigenvalues and one measured step, without running the loop.",
+      "answer": "Auto-graded inside the notebook. The scores must match the stationary distribution to 1e-8 and add up to 1, the step count must land in 30 to 50 from page 0, and the prediction must come within 3 of the actual count at d = 0.8 and at d = 0.5."
+    },
+    {
+      "id": "es-fill-missing-ratings-numpy",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "Fill in Missing Ratings and Choose the Rank",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=es-fill-missing-ratings-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Complete a partially observed ratings matrix by alternating projection: count how many singular values hold 90 percent of the energy, truncate to the best low-rank approximation, write the known ratings back every round, and choose the rank on ratings the completion never saw.",
+      "answer": "Auto-graded inside the notebook. The completed matrix must have no nan entries, give back every known rating exactly, and miss the hidden ones by less than 1e-3 at rank 3. The same must hold on a rank-2 matrix the completion has never seen, and the rank chosen on a holdout must be 3."
+    },
+    {
+      "id": "ma5-procrustes-reflection",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "The Rotation That Turned Out to Be a Mirror",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=ma5-procrustes-reflection",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Align two point clouds with the SVD Procrustes recipe, detect when it returns a reflection instead of a rotation, and constrain it to the proper-rotation component.",
+      "answer": "Auto-graded inside the notebook. All four alignment errors and the determinant must match to 1e-6, with the unconstrained mirror fit having determinant -1, and the proper-rotation fit must be worse than the unconstrained one by more than 10 times."
+    }
+  ],
+  "theory": [
+    {
+      "id": "es-undo-two-updates",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "Undo Two Steps of a Linear Update",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A recurrent cell with no activation updates its state by $\\mathbf{h}_t = A\\mathbf{h}_{t-1}$, with a $2 \\times 2$ matrix $A$ you cannot see. A debugging log shows that the state $(2, 1)$ was followed by $(6, 3)$, and the state $(1, -1)$ by $(-2, 2)$."
+            },
+            {
+              "p": "After two updates the state is $\\mathbf{h}_2 = (22, 5)$. What was the starting state $\\mathbf{h}_0$?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$(178, 65)$",
+                  "explain": "This runs the update two more times, A^2 h_2 = 9 · 9(2, 1) + 4 · 4(1, -1), instead of undoing it. Going back divides each part by lambda^2 instead of multiplying by it."
+                },
+                {
+                  "text": "$(4, 5)$",
+                  "explain": "This undoes one update, not two: dividing 9(2, 1) by 3 and 4(1, -1) by -2 gives h_1 = 3(2, 1) - 2(1, -1) = (4, 5). Check: A(4, 5) = A[3(2, 1) - 2(1, -1)] = 9(2, 1) + 4(1, -1) = (22, 5), which is h_2, so (4, 5) is the state after one update. Undo once more to reach h_0."
+                },
+                {
+                  "text": "$(2.44, 1.25)$",
+                  "explain": "This divides the entries of h_2 by 3^2 = 9 and (-2)^2 = 4, as if the stretches acted along (1, 0) and (0, 1). They act along (2, 1) and (1, -1), so first write h_2 as a mix of those two directions, then scale each part."
+                },
+                {
+                  "text": "$(3, 0)$",
+                  "correct": true,
+                  "explain": "Both probes come back as multiples of themselves: (2, 1) is stretched by 3 and (1, -1) by -2. Write h_2 along them: 2a + b = 22 and a - b = 5 give a = 9 and b = 4, so (22, 5) = 9(2, 1) + 4(1, -1). Two updates multiplied the first part by 3^2 = 9 and the second by (-2)^2 = 4, so h_0 = (9/9)(2, 1) + (4/4)(1, -1) = (3, 0). Check: (3, 0) = (2, 1) + (1, -1) goes to 9(2, 1) + 4(1, -1) = (22, 5)."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Both probes come back as multiples of themselves: (2, 1) is stretched by 3 and (1, -1) by -2. Write h_2 along them: 2a + b = 22 and a - b = 5 give a = 9 and b = 4, so (22, 5) = 9(2, 1) + 4(1, -1). Two updates multiplied the first part by 3^2 = 9 and the second by (-2)^2 = 4, so h_0 = (9/9)(2, 1) + (4/4)(1, -1) = (3, 0). Check: (3, 0) = (2, 1) + (1, -1) goes to 9(2, 1) + 4(1, -1) = (22, 5)."
+            },
+            {
+              "result": "$(3, 0)$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "es-a-matrix-with-a-dial",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "Turning One Entry from Real to Repeated to Complex",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "One entry of a $2 \\times 2$ matrix is a dial $c$:"
+      ],
+      "setup": [
+        {
+          "tex": "A = \\begin{pmatrix} 3 & c \\\\ 2 & 7 \\end{pmatrix} ."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "For which value of $c$ do the two eigenvalues of $A$ coincide?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The trace is 10 and the determinant is $21 - 2c$, so the characteristic polynomial is"
+            },
+            {
+              "tex": "\\lambda^2 - 10\\lambda + (21 - 2c) ."
+            },
+            {
+              "p": "Its two roots are $5 \\pm \\sqrt{25 - (21 - 2c)} = 5 \\pm \\sqrt{4 + 2c}$. They coincide when $4 + 2c = 0$, so $c = -2$, and the repeated eigenvalue is 5."
+            },
+            {
+              "result": "$-2$"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "At $c = -2$, find every eigenvector. Can $A$ be written as $V\\Lambda V^{-1}$?"
+            }
+          ],
+          "answer": [
+            {
+              "tex": "A - 5I = \\begin{pmatrix} -2 & -2 \\\\ 2 & 2 \\end{pmatrix} ."
+            },
+            {
+              "p": "Both rows say $v_1 + v_2 = 0$, one condition on two unknowns, so the null space is the line through $(1, -1)$ and nothing else. Check: $A(1, -1) = (3 + 2, 2 - 7) = (5, -5)$."
+            },
+            {
+              "p": "The eigenvectors fill only one line, so no $V$ with two independent eigenvector columns exists, and $A$ cannot be diagonalized. Two independent eigenvectors for the eigenvalue 5 would make $A - 5I$ the zero matrix, so $A = 5I$, and no value of $c$ can change the 2 below the diagonal. Powers of $A$ then pick up a factor of $k$, as the shear's do."
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Now set $c = -4$. Find the eigenvalues of $A$ and the largest absolute value $|\\lambda|$ among them."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The polynomial is $\\lambda^2 - 10\\lambda + 29$, and $4 + 2c = -4$ is negative, so the roots are $5 \\pm \\sqrt{-4} = 5 \\pm 2i$. No real vector stays on its own line."
+            },
+            {
+              "p": "For $a + bi$ the absolute value is $\\sqrt{a^2 + b^2}$, here $\\sqrt{25 + 4} = \\sqrt{29} \\approx 5.385$ for both. There is a shortcut: the two roots are conjugates, so their product is $|\\lambda|^2$, and the product of the eigenvalues is the determinant, $21 - 2c = 29$."
+            },
+            {
+              "p": "For a recurrent update $\\mathbf{h}_t = A\\mathbf{h}_{t-1}$ this is the number that matters: complex eigenvalues make the state turn as it goes, by the angle of $5 + 2i$ (about $21.8^\\circ$) per step, and $|\\lambda| = \\sqrt{29} > 1$ makes it grow by that factor per step on average while it turns."
+            },
+            {
+              "result": "5.385"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "es-ten-correlated-features",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "The Top Eigenvalue of Ten Correlated Features",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Ten features each have variance 1, and every pair of them has correlation 0.3. Their $10 \\times 10$ covariance matrix $C$ has 1 on the diagonal and 0.3 everywhere else. Without an eigensolver, what fraction of the total variance $\\operatorname{tr}(C)$ does the largest eigenvalue of $C$ account for?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$0.27$",
+                  "explain": "This keeps only the off-diagonal part, 0.3(J - I), whose top eigenvalue is 0.3 · 10 - 0.3 = 2.7. The 1s on the diagonal are part of C as well: C = 0.3(J - I) + I, and adding I adds 1 to every eigenvalue, so the top one is 3.7."
+                },
+                {
+                  "text": "$0.30$",
+                  "explain": "This uses only the 0.3 part. C is 0.7 I plus 0.3 times the all-ones matrix J, and 0.3 J has top eigenvalue 0.3 · 10 = 3. Adding 0.7 I adds 0.7 to every eigenvalue, so the top one is 3.7, not 3."
+                },
+                {
+                  "text": "$0.37$",
+                  "correct": true,
+                  "explain": "Write C = 0.7 I + 0.3 J, where J = 11^T is the all-ones matrix. J is an outer product, so it has rank 1: its eigenvalues are 1^T 1 = 10 along (1, ..., 1) and 0 nine times. Then 0.3 J has 3 and nine 0s, and adding 0.7 I adds 0.7 to each: 3.7 once and 0.7 nine times. Check: 3.7 + 9(0.7) = 10 = tr(C). The fraction is 3.7 / 10 = 0.37."
+                },
+                {
+                  "text": "$0.40$",
+                  "explain": "This writes C as I + 0.3 J, which would put 1.3 on the diagonal. The diagonal of 0.3 J is already 0.3, so the identity part is 0.7 I, and the top eigenvalue is 0.7 + 3 = 3.7, not 1 + 3."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write C = 0.7 I + 0.3 J, where J = 11^T is the all-ones matrix. J is an outer product, so it has rank 1: its eigenvalues are 1^T 1 = 10 along (1, ..., 1) and 0 nine times. Then 0.3 J has 3 and nine 0s, and adding 0.7 I adds 0.7 to each: 3.7 once and 0.7 nine times. Check: 3.7 + 9(0.7) = 10 = tr(C). The fraction is 3.7 / 10 = 0.37."
+            },
+            {
+              "result": "$0.37$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "es-a-server-up-or-down",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "How Fast a Two-State Chain Forgets Its Start",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "Each morning a server is either up or down. If it is up today, it is up tomorrow with probability 0.8 and down with probability 0.2. If it is down today, it is up tomorrow with probability 0.6. Write $\\mathbf{p}_n = (u_n, d_n)$ for the probabilities of up and down on day $n$, so that $\\mathbf{p}_{n} = A\\mathbf{p}_{n-1}$ with"
+      ],
+      "setup": [
+        {
+          "tex": "A = \\begin{pmatrix} 0.8 & 0.6 \\\\ 0.2 & 0.4 \\end{pmatrix} ."
+        },
+        {
+          "p": "Column $j$ of $A$ holds the chances of tomorrow's states given today's state $j$. (The lesson's Markov chain box writes the same step with a row vector, $\\mathbf{p}^\\top P$ with $P = A^\\top$, whose rows hold those chances.) The server is down on day 0, so $\\mathbf{p}_0 = (0, 1)$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "From the eigenvalues and eigenvectors of $A$, the probability of up has the form $u_n = a + b\\,\\mu^n$ for constants $a$, $b$ and $\\mu$. Find all three. What is $b$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "From the trace, 1.2, and the determinant, $0.32 - 0.12 = 0.2$, the eigenvalues are the roots of $\\lambda^2 - 1.2\\lambda + 0.2$, which factors as $(\\lambda - 1)(\\lambda - 0.2)$: 1 and 0.2."
+            },
+            {
+              "list": [
+                "For $\\lambda = 1$: $A - I$ has rows $(-0.2, 0.6)$ and $(0.2, -0.6)$, both saying $v_1 = 3v_2$, so $\\mathbf{v}_1 = (3, 1)$. Scaled to add up to 1 it is $(0.75, 0.25)$, the long-run split.",
+                "For $\\lambda = 0.2$: $A - 0.2I$ has rows $(0.6, 0.6)$ and $(0.2, 0.2)$, so $\\mathbf{v}_2 = (1, -1)$."
+              ]
+            },
+            {
+              "p": "Write the start along them: $(0, 1) = (0.75, 0.25) - 0.75\\,(1, -1)$. Each day multiplies the first part by 1 and the second by 0.2, so"
+            },
+            {
+              "tex": "\\mathbf{p}_n = (0.75, 0.25) - 0.75 \\cdot 0.2^n\\,(1, -1),\n\\qquad u_n = 0.75\\,(1 - 0.2^n) ."
+            },
+            {
+              "p": "So $a = 0.75$, $b = -0.75$ and $\\mu = 0.2$. Check by stepping: $u_1 = 0.6$ and $u_2 = 0.8(0.6) + 0.6(0.4) = 0.72$, while the formula gives $0.75(1 - 0.2) = 0.6$ and $0.75(1 - 0.04) = 0.72$."
+            },
+            {
+              "result": "$-0.75$"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "On which day does $u_n$ first come within $10^{-9}$ of its long-run value?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The gap is $0.75 - u_n = 0.75 \\cdot 0.2^n$, and it falls below $10^{-9}$ when"
+            },
+            {
+              "tex": "n > \\frac{\\ln(10^{-9}/0.75)}{\\ln 0.2} \\approx 12.7 ."
+            },
+            {
+              "p": "So day 13: the gap is $0.75 \\cdot 0.2^{12} \\approx 3.07 \\times 10^{-9}$ on day 12 and $0.75 \\cdot 0.2^{13} \\approx 6.14 \\times 10^{-10}$ on day 13. Stepping the chain would get there too, but only by carrying ten or more decimal places through 13 steps."
+            },
+            {
+              "p": "The eigenvalue 1 belongs to the split that never changes. The gap shrinks by the other eigenvalue, 0.2, per day, so 0.2 sets how fast the chain forgets where it started. The largest entry of $A$, 0.8, plays no such role: a chain that stays put with probability 0.8 and 0.4 still forgets its start by a factor of $0.8 + 0.4 - 1 = 0.2$ a day, the trace minus the eigenvalue 1."
+            },
+            {
+              "result": "13"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "es-psd-square-root",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "The Square Root of a Covariance Matrix",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "To draw samples with covariance"
+      ],
+      "setup": [
+        {
+          "tex": "S = \\begin{pmatrix} 13 & 36 \\\\ 36 & 109 \\end{pmatrix},"
+        },
+        {
+          "p": "a program multiplies vectors of independent standard normal numbers by a symmetric matrix $B$ with $B^2 = S$ and no negative eigenvalues."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Find $B$. What is its off-diagonal entry?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Work in the eigenvector basis, where squaring is easy. The eigenvalues of $S$ add up to 122 and multiply to $13 \\cdot 109 - 36^2 = 1417 - 1296 = 121$, so they are the roots of $\\lambda^2 - 122\\lambda + 121 = (\\lambda - 121)(\\lambda - 1)$. For 121, $S - 121I$ has first row $(-108, 36)$, which says $v_2 = 3v_1$, so $\\mathbf{q}_1 = (1, 3)/\\sqrt{10}$. Check: $S(1, 3) = (121, 363)$. Since $S$ is symmetric, $\\mathbf{q}_2 = (3, -1)/\\sqrt{10}$ is perpendicular to it and goes with the eigenvalue 1."
+            },
+            {
+              "p": "Call the projections onto the two eigenvector lines $P_1 = \\mathbf{q}_1\\mathbf{q}_1^\\top$ and $P_2 = \\mathbf{q}_2\\mathbf{q}_2^\\top$. By the spectral theorem $S = 121P_1 + P_2$. A projection squares to itself, and $P_1P_2 = 0$ because the two lines are perpendicular. So for any numbers $a$ and $b$,"
+            },
+            {
+              "tex": "(aP_1 + bP_2)^2 = a^2P_1 + b^2P_2 ."
+            },
+            {
+              "p": "To get $S$ we need $a^2 = 121$ and $b^2 = 1$, and no negative eigenvalues means $a = 11$ and $b = 1$, so $B = 11P_1 + P_2$. In entries, $P_1$ has rows $(0.1, 0.3)$ and $(0.3, 0.9)$, and $P_2 = I - P_1$ has rows $(0.9, -0.3)$ and $(-0.3, 0.1)$, so"
+            },
+            {
+              "tex": "B = 10P_1 + I = \\begin{pmatrix} 2 & 3 \\\\ 3 & 10 \\end{pmatrix} ."
+            },
+            {
+              "p": "Check: $B^2 = \\begin{pmatrix} 4 + 9 & 6 + 30 \\\\ 6 + 30 & 9 + 100 \\end{pmatrix} = S$. The off-diagonal entry is 3."
+            },
+            {
+              "p": "Two shortcuts give wrong answers here. Taking the square root of every entry gives 6 off the diagonal, but squaring a matrix mixes its entries, so that matrix squares to something else. And the diagonal matrix with 11 and 1 has the right eigenvalues but the wrong eigenvectors, $(1, 0)$ and $(0, 1)$: its square has 0 off the diagonal, not 36."
+            },
+            {
+              "result": "3"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Find every other symmetric matrix whose square is $S$. Would they work for drawing the samples too, and what singles out $B$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Any symmetric matrix with $C^2 = S$ has the same eigenvectors as $S$ here: if $C\\mathbf{v} = \\mu\\mathbf{v}$, then $S\\mathbf{v} = \\mu^2\\mathbf{v}$, and the eigenvalues 121 and 1 of $S$ each have a single line of eigenvectors. So $C$ is $aP_1 + bP_2$ with $a = \\pm 11$ and $b = \\pm 1$, four matrices in all: $B$, $-B$, and"
+            },
+            {
+              "tex": "\\pm(11P_1 - P_2) = \\pm(12P_1 - I) = \\pm\\begin{pmatrix} 0.2 & 3.6 \\\\ 3.6 & 9.8 \\end{pmatrix} ."
+            },
+            {
+              "p": "Any of them squares to $S$, so any of them produces samples with covariance $S$: for a standard normal $\\mathbf{z}$, the covariance of $C\\mathbf{z}$ is $CC^\\top = C^2$. The choice is a convention. The root with eigenvalues 11 and 1 is the one that does not flip any direction, and it is unique, which makes it a well-defined function of $S$, written $S^{1/2}$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "es-smallest-possible-correlation",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "How Low the Third Correlation Can Go",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "Three features are each scaled to mean 0 and variance 1. With the scaled data as the $n \\times 3$ matrix $X$, one example per row, their correlation matrix is $C = X^\\top X / n$:"
+      ],
+      "setup": [
+        {
+          "tex": "C = \\begin{pmatrix} 1 & 0.9 & 0.9 \\\\ 0.9 & 1 & r \\\\ 0.9 & r & 1 \\end{pmatrix} ,"
+        },
+        {
+          "p": "where $r$ is the correlation of features 2 and 3."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the smallest value $r$ can take when $C$ comes from real data?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "$C$ is $X^\\top X$ scaled by $1/n$, which forces it to be PSD: $\\mathbf{x}^\\top C\\mathbf{x} = \\lVert X\\mathbf{x} \\rVert^2 / n \\ge 0$. In words, $\\mathbf{x}^\\top C\\mathbf{x}$ is the variance of the combination $x_1 f_1 + x_2 f_2 + x_3 f_3$ of the features, and a variance cannot be negative. Features 2 and 3 both follow feature 1 closely, so try combinations that take them away from it, $\\mathbf{x} = (t, -1, -1)$:"
+            },
+            {
+              "tex": "\\mathbf{x}^\\top C\\mathbf{x} = t^2 + 1 + 1 + 2\\big(-0.9t - 0.9t + r\\big)\n= t^2 - 3.6t + 2 + 2r ."
+            },
+            {
+              "p": "This is smallest at $t = 1.8$, where it equals $-3.24 + 2 + 2r = 2r - 1.24$. So $r \\ge 0.62$ is needed."
+            },
+            {
+              "p": "It is also enough. The vector $(0, 1, -1)$ is an eigenvector with eigenvalue $1 - r \\ge 0$. The other two eigenvectors lie in the plane perpendicular to it, spanned by $(1, 0, 0)$ and $(0, 1, 1)/\\sqrt2$, where $C$ acts as $\\begin{pmatrix} 1 & 0.9\\sqrt2 \\\\ 0.9\\sqrt2 & 1 + r \\end{pmatrix}$. That block is PSD when its determinant $1 + r - 1.62$ is $\\ge 0$, again $r \\ge 0.62$. At $r = 0.62$ the eigenvalues are 0, 0.38 and 2.62."
+            },
+            {
+              "p": "The pairwise range $-1 \\le r \\le 1$ is far too loose. In angles: the features are vectors, a correlation is the cosine of the angle between two of them, and $\\arccos 0.9 \\approx 25.8^\\circ$. Features 2 and 3 are each within $25.8^\\circ$ of feature 1, so they are at most $51.7^\\circ$ apart, and $\\cos 51.7^\\circ \\approx 0.62$."
+            },
+            {
+              "result": "0.62"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A report built from different subsets of the data lists $r = 0.5$. What is the smallest eigenvalue of this $C$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Use the symmetry between features 2 and 3. The vector $(0, 1, -1)$ is an eigenvector: $C(0, 1, -1) = (0, 1 - r, r - 1) = 0.5\\,(0, 1, -1)$, so one eigenvalue is $1 - r = 0.5$."
+            },
+            {
+              "p": "The other two eigenvectors are perpendicular to it, so they lie in the plane spanned by the unit vectors $\\mathbf{e} = (1, 0, 0)$ and $\\mathbf{s} = (0, 1, 1)/\\sqrt2$. $C$ maps that plane into itself:"
+            },
+            {
+              "tex": "C\\mathbf{e} = (1, 0.9, 0.9) = \\mathbf{e} + 0.9\\sqrt2\\,\\mathbf{s}, \\qquad\nC\\mathbf{s} = \\tfrac{1}{\\sqrt2}(1.8, 1.5, 1.5) = 0.9\\sqrt2\\,\\mathbf{e} + 1.5\\,\\mathbf{s} ."
+            },
+            {
+              "p": "So on the plane $C$ acts as $\\begin{pmatrix} 1 & 0.9\\sqrt2 \\\\ 0.9\\sqrt2 & 1.5 \\end{pmatrix}$, with trace 2.5 and determinant $1.5 - 1.62 = -0.12$. Its eigenvalues are"
+            },
+            {
+              "tex": "\\frac{2.5 \\pm \\sqrt{2.5^2 + 4 \\cdot 0.12}}{2} = \\frac{2.5 \\pm \\sqrt{6.73}}{2} \\approx 2.547 \\text{ and } -0.0471 ."
+            },
+            {
+              "p": "The three eigenvalues add up to $3 = \\operatorname{tr} C$, as they should. The negative determinant of the block already shows that one eigenvalue is below 0. Its eigenvector is about $(1, -0.58, -0.58)$, so the combination $f_1 - 0.58 f_2 - 0.58 f_3$ would have a negative variance, which no data can produce. Matrices like this come up when each correlation is estimated from a different set of rows. They cannot be fed to anything that needs a valid covariance, such as sampling from a Gaussian or a Cholesky factorization, until they are repaired."
+            },
+            {
+              "result": "$-0.0471$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "es-the-longest-output-of-a-layer",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "The Largest Stretch of a Three by Two Layer",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A layer maps 2 inputs to 3 outputs with"
+            },
+            {
+              "tex": "A = \\begin{pmatrix} 2 & 2 \\\\ 1 & 1 \\\\ 2 & -2 \\end{pmatrix} ."
+            },
+            {
+              "p": "Over all unit inputs $\\mathbf{x}$, what is the largest length $\\lVert A\\mathbf{x} \\rVert$ can reach?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$3$",
+                  "explain": "This is the length of each column, so it is the most A stretches the inputs (1, 0) and (0, 1). A mix of the two can do better: the columns have a positive dot product, 1, so they partly add up. The input (1, 1)/sqrt2 gives (4, 2, 0)/sqrt2, of length sqrt10."
+                },
+                {
+                  "text": "$10$",
+                  "explain": "10 is the largest value of x^T A^T A x = $\\lVert Ax\\rVert^2$ over unit x, reached at x = (1, 1)/sqrt2. That is the squared length of Ax. The question asks for the length, which is sqrt10."
+                },
+                {
+                  "text": "$\\sqrt{18}$",
+                  "explain": "This is the Frobenius norm, the root of the sum of all squared entries, 9 + 9. Its square is sigma_1^2 + sigma_2^2 = 10 + 8, so it adds the stretch along the second direction too. No single unit input gets both."
+                },
+                {
+                  "text": "$\\sqrt{10}$",
+                  "correct": true,
+                  "explain": "Squared, the length is x^T A^T A x, and A^T A = [[9, 1], [1, 9]] (the columns have lengths 3 and 3 and dot product 1). Its eigenvalues are 10 and 8, with eigenvectors (1, 1)/sqrt2 and (1, -1)/sqrt2. By the Rayleigh quotient the largest value of x^T A^T A x over unit x is 10, so the largest length is sigma_1 = sqrt10, about 3.162, reached at x = (1, 1)/sqrt2: A x = (4, 2, 0)/sqrt2."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Squared, the length is x^T A^T A x, and A^T A = [[9, 1], [1, 9]] (the columns have lengths 3 and 3 and dot product 1). Its eigenvalues are 10 and 8, with eigenvectors (1, 1)/sqrt2 and (1, -1)/sqrt2. By the Rayleigh quotient the largest value of x^T A^T A x over unit x is 10, so the largest length is sigma_1 = sqrt10, about 3.162, reached at x = (1, 1)/sqrt2: A x = (4, 2, 0)/sqrt2."
+            },
+            {
+              "result": "$\\sqrt{10}$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "es-variance-along-the-first-component",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "The Variance Along the First Principal Component",
+      "difficulty": "Medium",
+      "minutes": 8,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Four data points in the plane are the rows of"
+            },
+            {
+              "tex": "X = \\begin{pmatrix} 1 & 1 \\\\ 5 & 1 \\\\ 7 & 1 \\\\ 7 & 5 \\end{pmatrix} ."
+            },
+            {
+              "p": "Over all unit directions $\\mathbf{w}$, what is the largest variance of the projections $X\\mathbf{w}$? Divide by $n = 4$, as the lesson does."
+            },
+            {
+              "choices": [
+                {
+                  "text": "$6$",
+                  "explain": "This is the variance of the first feature alone, the larger diagonal entry of the covariance matrix. The best axis gives 6, but the features move together (covariance 2), so a direction between the axes, tilted toward the first feature, does better."
+                },
+                {
+                  "text": "$7$",
+                  "correct": true,
+                  "explain": "Center first: the mean is (5, 2), and the centered rows are (-4, -1), (0, -1), (2, -1) and (2, 3). Then C = X_c^T X_c / 4 = [[6, 2], [2, 3]]. Its eigenvalues solve lambda^2 - 9 lambda + 14 = 0, which factors as (lambda - 7)(lambda - 2). The largest variance is the top eigenvalue, 7, along the eigenvector (2, 1)/sqrt5. Check: the centered rows project onto (2, 1) as -9, -1, 3 and 7, so onto the unit vector as those divided by sqrt5, with mean 0 and mean square (81 + 1 + 9 + 49)/(5 · 4) = 7."
+                },
+                {
+                  "text": "$9$",
+                  "explain": "This is the total variance, the trace of C, 6 + 3. It is the sum of the variances along both principal components, 7 + 2. A single direction keeps 7 of the 9."
+                },
+                {
+                  "text": "about $35.97$",
+                  "explain": "This is the top eigenvalue of X^T X / 4 = [[31, 12], [12, 7]] with X not centered, 19 + sqrt(288). That matrix measures the average squared distance from the origin, which is mostly the distance from the origin to the mean (5, 2). Variance is spread around the mean, so subtract it first."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Center first: the mean is (5, 2), and the centered rows are (-4, -1), (0, -1), (2, -1) and (2, 3). Then C = X_c^T X_c / 4 = [[6, 2], [2, 3]]. Its eigenvalues solve lambda^2 - 9 lambda + 14 = 0, which factors as (lambda - 7)(lambda - 2). The largest variance is the top eigenvalue, 7, along the eigenvector (2, 1)/sqrt5. Check: the centered rows project onto (2, 1) as -9, -1, 3 and 7, so onto the unit vector as those divided by sqrt5, with mean 0 and mean square (81 + 1 + 9 + 49)/(5 · 4) = 7."
+            },
+            {
+              "result": "$7$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "es-shift-power-iteration",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "Speeding Up Power Iteration with a Shift",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "The eigenvalues of a symmetric $3 \\times 3$ matrix $S$ are 10, 9 and 1, with unit eigenvectors $\\mathbf{q}_1$, $\\mathbf{q}_2$ and $\\mathbf{q}_3$. Power iteration starts from a vector with nonzero parts along all three and rescales to length 1 after each step. Measure its progress by the parts along the eigenvectors that lose, each relative to the part along the one that wins. The slowest of these ratios shrinks by some factor per step: call that factor the rate."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Power iteration on $S$ itself: find the rate. How many steps $k$ does it take until the rate to the power $k$ is below $10^{-6}$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write the start as $c_1\\mathbf{q}_1 + c_2\\mathbf{q}_2 + c_3\\mathbf{q}_3$. After $k$ steps, before rescaling, it is $10^k c_1\\mathbf{q}_1 + 9^k c_2\\mathbf{q}_2 + 1^k c_3\\mathbf{q}_3$. Rescaling changes all three parts by the same factor, so it does not change their ratios. The winner is $\\mathbf{q}_1$. The part along $\\mathbf{q}_2$ shrinks relative to it by $9/10$ per step, and the part along $\\mathbf{q}_3$ by $1/10$. The slowest of these sets the rate, 0.9."
+            },
+            {
+              "p": "We need $0.9^k < 10^{-6}$, so $k > 6\\ln 10 / \\ln(10/9) \\approx 131.1$. That is $k = 132$: $0.9^{131} \\approx 1.01 \\times 10^{-6}$ and $0.9^{132} \\approx 9.1 \\times 10^{-7}$. Two eigenvalues close together make power iteration slow."
+            },
+            {
+              "result": "132"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Power iteration can be run on $S - cI$ instead, for a number $c$. Which shift $c$ gives the smallest rate while $\\mathbf{q}_1$ still wins? How many steps does it need for $10^{-6}$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "If $S\\mathbf{q} = \\lambda\\mathbf{q}$ then $(S - cI)\\mathbf{q} = (\\lambda - c)\\mathbf{q}$, so $S - cI$ has the same eigenvectors with eigenvalues $10 - c$, $9 - c$ and $1 - c$. With $\\mathbf{q}_1$ winning, the rate is"
+            },
+            {
+              "tex": "\\frac{\\max\\big(|9 - c|,\\ |1 - c|\\big)}{|10 - c|} ."
+            },
+            {
+              "p": "For $c \\le 5$ the larger of the two is $9 - c$, and the rate $(9 - c)/(10 - c) = 1 - 1/(10 - c)$ falls as $c$ grows. For $c \\ge 5$ it is $c - 1$, and the rate $(c - 1)/(10 - c)$ rises as $c$ grows. So the best shift is $c = 5$, where both other eigenvalues have the same size: $S - 5I$ has eigenvalues 5, 4 and $-4$, and the rate is $4/5 = 0.8$."
+            },
+            {
+              "p": "Then $0.8^k < 10^{-6}$ needs $k > 6\\ln 10 / \\ln 1.25 \\approx 61.9$, so 62 steps instead of 132. The shift moves the competing eigenvalues toward 0 while keeping them smaller than the one we want. A shift past 5 makes $|1 - c|$ the competitor and the rate grows again."
+            },
+            {
+              "result": "5"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Now take $c = 12$. Which eigenvector of $S$ does power iteration on $S - 12I$ find, and what is the rate?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "$S - 12I$ has eigenvalues $-2$, $-3$ and $-11$. The largest in absolute value is $-11$, which belongs to $\\mathbf{q}_3$, the eigenvector of the smallest eigenvalue of $S$. So the iteration now finds the bottom eigenvector. The vector flips sign each step, because $-11$ is negative, so compare directions up to sign."
+            },
+            {
+              "p": "The competitors are $-3$ and $-2$, so the rate is $3/11 \\approx 0.273$, much faster than either run above, because the eigenvalue 1 sits far from the other two. This is how power iteration finds the smallest eigenvalue: shift by a number at least as large as $\\lambda_{\\max}$, so the bottom of the spectrum has the largest absolute value. Here $\\lambda_{\\min} = -11 + 12 = 1$."
+            },
+            {
+              "result": "0.273"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "es-similarity-matrix-spectrum",
+      "moduleId": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+      "title": "The Spectrum of a Similarity Matrix from Three Features",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "A dataset $X$ has 1000 examples as rows and 3 features as columns, and"
+      ],
+      "setup": [
+        {
+          "tex": "X^\\top X = \\begin{pmatrix} 5 & 2 & 0 \\\\ 2 & 2 & 0 \\\\ 0 & 0 & 2 \\end{pmatrix} ."
+        },
+        {
+          "p": "A kernel method needs the $1000 \\times 1000$ similarity matrix $K = XX^\\top$, which holds the dot product of examples $i$ and $j$ in row $i$, column $j$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the largest eigenvalue of $K$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The top-left $2 \\times 2$ block of $X^\\top X$ has characteristic polynomial $\\lambda^2 - 7\\lambda + 6 = (\\lambda - 6)(\\lambda - 1)$, and the 2 alone on the diagonal is the third eigenvalue. Take an eigenvector, $X^\\top X\\mathbf{v} = \\lambda\\mathbf{v}$ with $\\lambda \\ne 0$, and multiply both sides by $X$:"
+            },
+            {
+              "tex": "(XX^\\top)(X\\mathbf{v}) = \\lambda\\,(X\\mathbf{v}) ."
+            },
+            {
+              "p": "$X\\mathbf{v}$ is not zero: multiplying $X^\\top X\\mathbf{v} = \\lambda\\mathbf{v}$ on the left by $\\mathbf{v}^\\top$ gives $\\lVert X\\mathbf{v} \\rVert^2 = \\lambda \\lVert \\mathbf{v} \\rVert^2 > 0$. So every nonzero eigenvalue of $X^\\top X$ is an eigenvalue of $K$, with eigenvector $X\\mathbf{v}$. The argument runs the other way too, so the nonzero eigenvalues of $K$ are exactly 6, 2 and 1. $K$ has rank at most 3, so the other 997 are 0, and the largest is 6."
+            },
+            {
+              "p": "In SVD terms both matrices are built from $X = U\\Sigma V^\\top$: $X^\\top X = V\\Sigma^\\top\\Sigma V^\\top$ and $XX^\\top = U\\Sigma\\Sigma^\\top U^\\top$, which share the $\\sigma_i^2$. A $3 \\times 3$ eigenproblem answers a $1000 \\times 1000$ one."
+            },
+            {
+              "result": "6"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is $\\lVert X - X_1 \\rVert_F$, where $X_1$ is the best rank-1 approximation of $X$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each singular value of $X$ is $\\sqrt\\lambda$ for an eigenvalue $\\lambda$ of $X^\\top X$, so they are $\\sqrt6$, $\\sqrt2$ and 1. $X_1$ is the first term of the SVD, and by Eckart-Young its Frobenius error is the root of the sum of the dropped $\\sigma_i^2$:"
+            },
+            {
+              "tex": "\\lVert X - X_1 \\rVert_F = \\sqrt{2 + 1} = \\sqrt3 \\approx 1.732 ."
+            },
+            {
+              "p": "Squaring the dropped singular values twice, as if the eigenvalues 2 and 1 were singular values, would give $\\sqrt{4 + 1}$, which is the answer to the next part, not this one."
+            },
+            {
+              "result": "1.732"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is $\\lVert K - K_1 \\rVert_F$, where $K_1$ is the best rank-1 approximation of $K$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "$K$ is symmetric and PSD, so its singular values are its eigenvalues, 6, 2, 1 and 997 zeros. (For a symmetric matrix $\\sigma_i = |\\lambda_i|$, since $K^\\top K = K^2$ has eigenvalues $\\lambda_i^2$.) Dropping all but the first,"
+            },
+            {
+              "tex": "\\lVert K - K_1 \\rVert_F = \\sqrt{2^2 + 1^2} = \\sqrt5 \\approx 2.236 ."
+            },
+            {
+              "p": "Relative to the whole, the rank-1 version of $K$ keeps more: $\\lVert K \\rVert_F^2 = 36 + 4 + 1 = 41$, and $36/41 \\approx 88\\%$ is kept, against $6/9 \\approx 67\\%$ of $\\lVert X \\rVert_F^2 = 6 + 2 + 1$ for $X$. Squaring the singular values makes the top one dominate more, so a similarity matrix looks closer to low rank than the data that built it."
+            },
+            {
+              "result": "2.236"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

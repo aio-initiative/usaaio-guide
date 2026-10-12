@@ -1,0 +1,47 @@
+{
+  "aModule": "forward-propagation",
+  "stage": "Round 2",
+  "fixes": [],
+  "parts": {
+    "fp-cache-outgrows-weights": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "fp-copy-a-classifier": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "fp-diagnose-from-the-cache": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "fp-solve-for-the-input": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "fp-cache-outgrows-weights": "A tabular network with 64 inputs, three hidden layers of 512 ReLU units and 8 outputs keeps the input batch plus the pre-activation and the activation of every layer during training. Find the smallest batch size at which that cache holds more numbers than the network has parameters.",
+    "fp-copy-a-classifier": "A web service runs a linear softmax classifier with two input features and three classes and returns only the three probabilities, keeping its weights and biases secret. Three queries come back with their probabilities to four decimals, which is enough to answer questions about inputs never sent and to say exactly what the queries do and do not determine.",
+    "fp-diagnose-from-the-cache": "A teammate's forward pass for a three-class classifier runs without errors, but its probabilities disagree with a reference implementation. The logits in the cache match the reference, so the bug is in the line that turns them into probabilities. Which one of four softmax bugs reproduces the returned matrix exactly?",
+    "fp-loss-at-initialization": "A classifier for 10 classes prints a loss of 147.4 on the first batch of 64 images before any training, with every logit within 0.01 of zero. Pick the bug that explains that number.",
+    "fp-solve-for-the-input": "A small regression network with two inputs, three hidden ReLU units and one linear output returned 14 for one input, and the log kept only the fact that the second input is the constant 1. Recover the missing first input.",
+    "fp-weights-copied-from-pytorch": "A teammate trains a classifier in PyTorch with three linear layers of sizes 6 to 6 to 6 to 2 and ReLU between them, then ports it to NumPy by putting each layer's weight and bias in exactly as PyTorch stores them, with each layer running as A @ W + b on a batch of shape (32, 6). PyTorch stores each weight with shape (out_features, in_features) and computes x W transpose plus b, so what happens when the ported network runs?"
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "module": "sciml-derivatives",
+  "stage": "Camp",
+  "index": [
+    {
+      "id": "sm-two-derivatives-at-one-point",
+      "moduleId": "sciml-derivatives",
+      "title": "Two Derivatives at One Point",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=sm-two-derivatives-at-one-point",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "The chapter's network has one input, four hidden units and one output, built from a draw of 13 standard normal numbers. Parts 1 and 2 ask for the network's two derivatives at t = 1.75 by the chain rule, and part 3 asks for the smallest step a three-evaluation estimate can use. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    }
+  ],
+  "theory": [
+    {
+      "id": "sm-two-derivatives-at-one-point",
+      "moduleId": "sciml-derivatives",
+      "title": "Two Derivatives at One Point",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "The network of this chapter has one input, four hidden units and one output:"
+      ],
+      "setup": [
+        {
+          "tex": "y(t) = c + \\sum_{i=1}^{4} v_i \\tanh(w_i t + b_i)."
+        },
+        {
+          "p": "It starts from the chapter's draw of 13 standard normal numbers, printed here to four decimals:"
+        },
+        {
+          "tex": "\\begin{array}{cccc}\n\\text{Unit} & w & b & v \\\\ \\hline\n1 & 0.1257 & -0.5357 & -0.7037 \\\\\n2 & -0.1321 & 0.3616 & -1.2654 \\\\\n3 & 0.6404 & 1.3040 & -0.6233 \\\\\n4 & 0.1049 & 0.9471 & 0.0413\n\\end{array}"
+        },
+        {
+          "p": "with the output offset $c = -2.3250$. Every number in the solutions below is computed from these four decimals. Every part works at $t = 1.75$, one of the nine collocation points the network is trained on, where $y(1.75) = -2.854$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Write the slope at that point as a sum of four terms, one per unit. Enter the largest of them in absolute size, and say which unit gives it."
+            }
+          ],
+          "answer": [
+            {
+              "p": "A unit's argument at $t = 1.75$ is $1.75 w_i + b_i$, and its term in the slope is $v_i w_i (1 - a_i^2)$ with $a_i = \\tanh(1.75 w_i + b_i)$:"
+            },
+            {
+              "tex": "\\begin{array}{cccccc}\n\\text{Unit} & 1.75 w + b & a & 1 - a^2 & v w & v w (1 - a^2) \\\\ \\hline\n1 & -0.3157 & -0.3056 & 0.9066 & -0.0885 & -0.0802 \\\\\n2 & 0.1304 & 0.1297 & 0.9832 & 0.1672 & 0.1643 \\\\\n3 & 2.4247 & 0.9845 & 0.0308 & -0.3992 & -0.0123 \\\\\n4 & 1.1307 & 0.8113 & 0.3419 & 0.0043 & 0.0015\n\\end{array}"
+            },
+            {
+              "p": "The four terms add to 0.0733, which is the slope of the untrained network here, and unit 2 gives the largest one at 0.1643."
+            },
+            {
+              "p": "That unit is not the one with the largest $|v w|$. Unit 3's $|v w|$ is 0.3992, more than twice unit 2's 0.1672, yet its term is 0.0123 in size. Its argument has reached 2.4247, where $\\tanh$ is 0.9845 and the factor that keeps track of the input, $1 - a^2$, has fallen to 0.0308, a loss of 32 times. A unit whose step has already turned over can no longer follow its input, and a derivative reads only what follows the input. Ranking the units by $|v w|$ gets this wrong, and the output here would not have warned us: at -2.854 it is mostly the offset $c = -2.3250$."
+            },
+            {
+              "result": "0.1643"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Do the same for the second derivative at the same point. Enter its largest term in absolute size, say which unit gives it, and explain what moved that unit to the top."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The term of unit $i$ is $-2 v_i w_i^2 a_i (1 - a_i^2)$:"
+            },
+            {
+              "tex": "\\begin{array}{cccc}\n\\text{Unit} & w^2 & a & -2 v w^2 a (1 - a^2) \\\\ \\hline\n1 & 0.0158 & -0.3056 & -0.0062 \\\\\n2 & 0.0175 & 0.1297 & 0.0056 \\\\\n3 & 0.4101 & 0.9845 & 0.0155 \\\\\n4 & 0.0110 & 0.8113 & -0.0003\n\\end{array}"
+            },
+            {
+              "p": "The four terms add to 0.0147 (the rounded column above sums to 0.0146), and unit 3 now leads with 0.0155, the unit that was last but one for the slope."
+            },
+            {
+              "p": "Two factors that the slope does not have did it. The second derivative squares $w$, so unit 3's weight counts 0.4101 against 0.0175 for unit 2, a gain of more than 23. It also multiplies by $a$, and there unit 3 gains again, 0.9845 against 0.1297, a factor of 7.6, because unit 2's argument has barely left 0 while unit 3's has traveled to 2.4247. Those two gains outweigh the factor of 32 that unit 3 pays for its saturation, and its $v$ being half of unit 2's still leaves it ahead by 2.76. For the slope the saturation was pure loss, and for the second derivative the travel that caused it is what pays."
+            },
+            {
+              "p": "So the same four weights rank differently for the two derivatives, and a practitioner who carries one ranking over to the other gets the first answer wrong and the second one right by luck."
+            },
+            {
+              "result": "0.0155"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Suppose the code can only evaluate the network, with no chain rule and no autograd. Then the second derivative has to come from three evaluations of the network, at $1.75 - h$, $1.75$ and $1.75 + h$. Each of those values is stored as a double, so each one carries a rounding error of about one part in $10^{16}$ of its own size. The loss needs the second derivative right to within $0.00001$. What is the smallest step $h$ the code can use? Give it in units of $0.000001$, so 8 means $h = 0.000008$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The rounding does not stay put. The three values are added with weights 1, -2 and 1 and the result is divided by $h^2$, so the error each value carries is divided by $h^2$ as well. At this point the output is 2.854 in size, and one part in $10^{16}$ of that is $2.85 \\times 10^{-16}$. Three values of that order going into the numerator give a few times it, say $7 \\times 10^{-16}$, and"
+            },
+            {
+              "tex": "\\frac{7 \\times 10^{-16}}{h^2} < 10^{-5}\n\\quad \\Longrightarrow \\quad\nh^2 > 7 \\times 10^{-11}\n\\quad \\Longrightarrow \\quad\nh > 8.4 \\times 10^{-6}."
+            },
+            {
+              "p": "So the bound sits between 8 and 9 in the units the part asks for. The table below shows that 8 already clears the target, so 8 is the answer. Counting only one value's rounding instead of three gives $5.3 \\times 10^{-6}$, and the step that survives is the same order either way."
+            },
+            {
+              "p": "The other error is not the one that binds here. Truncating the second difference leaves an error of about $h^2 |y''''| / 12$, and $y''''$ at 1.75 is 0.0230, so at $h = 8 \\times 10^{-6}$ that error is $1.2 \\times 10^{-13}$, eight orders under the target. There is no need to compute the fourth derivative to see this: one unit contributes at most $8 |v| w^4 = 0.84$ to it, which bounds the whole sum, and $0.84 h^2/12$ stays under $10^{-9}$ for any step below $10^{-4}$. Truncation would have to climb all the way to $10^{-5}$ to matter, which takes $h$ above 0.01."
+            },
+            {
+              "p": "Evaluating the second difference at 1.75 for real agrees. The chain rule gives 0.0147428:"
+            },
+            {
+              "tex": "\\begin{array}{ccc}\nh & \\text{Second difference} & \\text{Error} \\\\ \\hline\n0.001 & 0.0147428 & 0.000000002 \\\\\n0.0001 & 0.0147427 & 0.00000003 \\\\\n0.00001 & 0.0147438 & 0.000001 \\\\\n0.000008 & 0.0147382 & 0.000005 \\\\\n0.000003 & 0.0147043 & 0.000038 \\\\\n0.000001 & 0.0142109 & 0.000532 \\\\\n0.0000001 & 0 & 0.0147428\n\\end{array}"
+            },
+            {
+              "p": "The last three rows are where the estimate stops being an answer at all, and their exact size is not worth trusting: down there the numerator is rounding, so the weights typed with more digits move these errors by a factor of several. What does not move is the floor. No step under about 0.000008 can be relied on, and nothing the method can do will fix it: the rounding bound alone is above the target there, even if a lucky step now and then lands inside it. The smallest usable step is not found by making $h$ smaller."
+            },
+            {
+              "p": "The two-sided slope reads the same three values and divides by $2h$. At $h = 0.000001$ here its error is $1.3 \\times 10^{-10}$, against $5.3 \\times 10^{-4}$ for the second difference on the same values. The second difference is the better of the two at the larger steps, and past the point where rounding takes over the gap grows fast in the other direction, because one denominator falls with $h$ and the other with $h^2$."
+            },
+            {
+              "result": "8"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

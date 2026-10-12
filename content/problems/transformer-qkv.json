@@ -1,0 +1,67 @@
+{
+ "module": "transformer-qkv",
+ "stage": "Round 2",
+ "index": [
+  {
+   "id": "tf-the-key-on-matches",
+   "moduleId": "transformer-qkv",
+   "title": "The Key the Next Token Matches",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=tf-the-key-on-matches",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 2"
+   ],
+   "prompt": "After predicting \"on\", the model runs again on \"the cat sat on\". The new token \"on\" has the embedding (−1, −1, 0, 1) and sits at position 3, and head 1 of this model copies dimensions 3 and 4 of a token's vector into its query and dimensions 2 and 3 into its key. The head 1 keys of the first three tokens are (1.000, 0.000) for \"the\", (1.540, 1.010) for \"cat\" and (−0.416, 1.020) for \"sat\". In head 1, the query of \"on\" is compared with the keys of all four tokens, its own included. Which key gives the largest dot product?",
+   "answer": "The key of \"cat\". Position 3 adds (sin 3, cos 3, sin 0.03, cos 0.03) = (0.14112, −0.98999, 0.03000, 0.99955), so the vector of \"on\" is (−0.85888, −1.98999, 0.03000, 1.99955). Head 1's query copies dimensions 3 and 4, (0.03000, 1.99955), and its key copies dimensions 2 and 3, (−1.98999, 0.03000). The dot products are 0.030 with \"the\", 0.03000 × 1.540 + 1.99955 × 1.010 = 2.066 with \"cat\", 0.03000 × (−0.416) + 1.99955 × 1.020 = 2.027 with \"sat\", and 0.0003 with itself. The key of \"cat\" wins by only about 0.04: the second number of the query is large, and the second numbers of the keys of \"cat\" and \"sat\" are almost equal."
+  }
+ ],
+ "theory": [
+  {
+   "id": "tf-the-key-on-matches",
+   "moduleId": "transformer-qkv",
+   "title": "The Key the Next Token Matches",
+   "difficulty": "Medium",
+   "minutes": 8,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "After predicting \"on\", the model runs again on \"the cat sat on\". The new token \"on\" has the embedding (−1, −1, 0, 1) and sits at position 3, and head 1 of this model copies dimensions 3 and 4 of a token's vector into its query and dimensions 2 and 3 into its key. The head 1 keys of the first three tokens are (1.000, 0.000) for \"the\", (1.540, 1.010) for \"cat\" and (−0.416, 1.020) for \"sat\". In head 1, the query of \"on\" is compared with the keys of all four tokens, its own included. Which key gives the largest dot product?"
+      },
+      {
+       "choices": [
+        {
+         "text": "The key of \"sat\"",
+         "explain": "This is what the query would be without the position. The embedding of \"on\" alone has 0 and 1 in dimensions 3 and 4, so its head 1 query would be (0, 1), and the dot products with the keys of \"cat\" and \"sat\" would be 1.010 and 1.020. At position 3 the slow pair adds sin 0.03 = 0.030 to dimension 3, and that 0.030 times the first numbers of the keys, 1.540 for \"cat\" and −0.416 for \"sat\", tips the result the other way."
+        },
+        {
+         "text": "The key of \"cat\"",
+         "correct": true,
+         "explain": "Position 3 adds (sin 3, cos 3, sin 0.03, cos 0.03) = (0.14112, −0.98999, 0.03000, 0.99955), so the vector of \"on\" is (−0.85888, −1.98999, 0.03000, 1.99955). Head 1's query copies dimensions 3 and 4, (0.03000, 1.99955), and its key copies dimensions 2 and 3, (−1.98999, 0.03000). The dot products are 0.030 with \"the\", 0.03000 × 1.540 + 1.99955 × 1.010 = 2.066 with \"cat\", 0.03000 × (−0.416) + 1.99955 × 1.020 = 2.027 with \"sat\", and 0.0003 with itself. The key of \"cat\" wins by only about 0.04: the second number of the query is large, and the second numbers of the keys of \"cat\" and \"sat\" are almost equal."
+        },
+        {
+         "text": "Its own key",
+         "explain": "A token tends to match itself when its query and key are made with the same weights, as in head 2, where the query and key of \"on\" are both (−1.990, 2.000) and its own dot product, 7.96, is by far the largest. Head 1's query copies dimensions 3 and 4 but its key copies dimensions 2 and 3, so the query of \"on\", (0.030, 2.000), against its own key, (−1.990, 0.030), gives only 0.0003."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Position 3 adds (sin 3, cos 3, sin 0.03, cos 0.03) = (0.14112, −0.98999, 0.03000, 0.99955), so the vector of \"on\" is (−0.85888, −1.98999, 0.03000, 1.99955). Head 1's query copies dimensions 3 and 4, (0.03000, 1.99955), and its key copies dimensions 2 and 3, (−1.98999, 0.03000). The dot products are 0.030 with \"the\", 0.03000 × 1.540 + 1.99955 × 1.010 = 2.066 with \"cat\", 0.03000 × (−0.416) + 1.99955 × 1.020 = 2.027 with \"sat\", and 0.0003 with itself. The key of \"cat\" wins by only about 0.04: the second number of the query is large, and the second numbers of the keys of \"cat\" and \"sat\" are almost equal."
+      },
+      {
+       "result": "The key of \"cat\""
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,23 @@
+{
+  "module": "preference-optimization-rlhf-and-dpo",
+  "stage": "Advanced",
+  "index": [
+    {
+      "id": "rf5-bradley-terry",
+      "moduleId": "preference-optimization-rlhf-and-dpo",
+      "title": "Turning Comparisons into a Reward Model",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=rf5-bradley-terry",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Advanced"
+      ],
+      "prompt": "Fit a Bradley-Terry reward model to 2,897 pairwise preferences, measure how well it recovers the latent rewards, and confirm the likelihood cannot identify the absolute level.",
+      "answer": "Auto-graded inside the notebook. Likelihood, correlation, and rank agreement must match to 1e-5, with the likelihood exactly invariant to shifting every reward."
+    }
+  ],
+  "theory": []
+}

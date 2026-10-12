@@ -1,0 +1,23 @@
+{
+ "module": "modern-vision-architectures-resnet-efficientnet-transfer",
+ "stage": "Round 2",
+ "index": [
+  {
+   "id": "rp4-probe-vs-finetune",
+   "moduleId": "modern-vision-architectures-resnet-efficientnet-transfer",
+   "title": "Sixteen Thousand Parameters That Buy Nothing",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=rp4-probe-vs-finetune",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "Compare a frozen linear probe against the same head with a 128x128 linear adapter beneath it, and show that 26x the parameters buys no accuracy at any training-set size.",
+   "answer": "Auto-graded inside the notebook. Both accuracy curves must match the reference solution to a relative tolerance of 1e-6, and the two curves must stay within 3 accuracy points of each other despite a 26x parameter difference."
+  }
+ ],
+ "theory": []
+}

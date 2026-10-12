@@ -1,0 +1,28 @@
+{
+  "name": "usaaio-guide",
+  "version": "0.2.0",
+  "private": true,
+  "description": "A content-first USA AI Olympiad guide for middle and high school students.",
+  "type": "module",
+  "scripts": {
+    "dev": "python3 -m http.server 4173",
+    "serve": "python3 -m http.server 4173",
+    "build:content": "node scripts/build-content.mjs",
+    "build:illustrations": "python3 scripts/module-illustrations-v2/build.py",
+    "validate": "node scripts/validate-content.mjs",
+    "check": "node scripts/validate-content.mjs",
+    "check:module": "node scripts/check-module.mjs",
+    "build:slides": "sh scripts/slides/run.sh scripts/slides/build_slides.py",
+    "build:slides:pptx": "sh scripts/slides/run.sh scripts/slides/build_pptx.py && sh scripts/slides/run.sh scripts/slides/make_manifest.py && sh scripts/slides/run.sh scripts/slides/make_apps_script.py",
+    "slides:setup": "python3 -m venv .venv && ./.venv/bin/pip install -q -r scripts/slides/requirements.txt && echo 'Slide builders ready.'",
+    "slides": "sh scripts/slides/view.sh"
+  },
+  "keywords": [
+    "usaaio",
+    "ai-olympiad",
+    "education",
+    "machine-learning",
+    "contest-prep"
+  ],
+  "license": "MIT"
+}

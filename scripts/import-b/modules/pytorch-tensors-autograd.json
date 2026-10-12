@@ -1,0 +1,70 @@
+{
+  "aModule": "pytorch-tensors-autograd",
+  "stage": "Round 1",
+  "fixes": [
+    {
+      "file": "pt-aliasing-forensics",
+      "find": "Indexing with a boolean mask copies. The entries the mask picks, `7` to\n`11`, sit at irregular gaps in `x`'s storage, which no view can express,\nso `big` is a new tensor holding its own copy of the five values.",
+      "replace": "Indexing with a boolean mask always copies: advanced indexing never returns a view, even when, as here, the five picked values happen to sit next to each other in `x`'s storage. `big` is a new tensor holding its own copy of them."
+    }
+  ],
+  "parts": {
+    "pt-aliasing-forensics": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.4": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "pta-broadcasting-then-reduction": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.4": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "pta-when-does-grad-flow": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "pt-aliasing-forensics": "Four short programs each start from the same 3 by 4 tensor holding the numbers 0 to 11, and each one either prints a number or stops with an error. Work out which happens in each, without running them: which writes travel back to the original tensor through a shared view, which land in a copy, and which in-place write autograd refuses.",
+    "pta-broadcasting-then-reduction": "Broadcasting lines two shapes up from the right and a reduction with dim= removes the axes it names. Work through four shape puzzles: a product bigger than either input, a mean that must keep its axes before you can subtract it, the one unsqueeze that lines a vector up with a table of scores, and a loss that broadcasts without a word of warning.",
+    "pta-copy-or-view": "Three expressions each build a second tensor from one 4 by 5 tensor. An in-place write into two of them changes the original tensor as well, and into one it cannot, because that result holds its own copy of the values. Pick the one that copies.",
+    "pta-logging-the-whole-graph": "A training loop stores the loss tensor itself in one version and the plain number it holds in the other, and both train the same model to the same accuracy. What is different about the first one?",
+    "pta-when-does-grad-flow": "Three short programs all start from the same leaf tensor with requires_grad switched on. Each one cuts the graph differently with detach or a no_grad block, so say what the last line of each prints, or name the exception a line raises first."
+  }
+}

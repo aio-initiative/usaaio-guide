@@ -1,0 +1,354 @@
+/* Site footer (UI overhaul 2026-10-12): one consistent footer on every page.
+   Brand block as a card, four columns of links to the pages that exist, then a
+   bottom bar with the copyright and the disclaimer. Owned by lane ui-footer.
+   Loaded after main.css, so these rules win at equal specificity. */
+
+.site-footer {
+  width: auto;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  border-top: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--muted);
+}
+
+.site-footer p {
+  max-width: none;
+}
+
+.site-footer a {
+  color: var(--ink-2);
+}
+
+.site-footer a:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.footer-inner {
+  width: min(100% - var(--page-gutter), var(--max));
+  margin: 0 auto;
+  padding: 2.5rem 0 2rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 2.7fr);
+  gap: clamp(1.5rem, 3.5vw, 3rem);
+  align-items: start;
+}
+
+/* --- brand card ------------------------------------------------------------ */
+
+.footer-brand {
+  padding: 1.35rem 1.4rem 1.3rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+
+.site-footer a.footer-brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.footer-brand-mark {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  box-shadow: var(--shadow-brand);
+}
+
+.footer-brand-link strong,
+.footer-brand-link small {
+  display: block;
+}
+
+.footer-brand-link strong {
+  font-size: 1.05rem;
+}
+
+.footer-brand-link small {
+  margin-top: -0.05rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.footer-brand .footer-disclaimer {
+  margin: 1rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.footer-official {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.7rem 0 0;
+  font-size: 0.9rem;
+}
+
+.footer-official svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex: none;
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.footer-official a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--brand-strong);
+  font-weight: 700;
+}
+
+.footer-official a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.site-footer a.footer-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 1.1rem;
+  min-height: 44px;
+  padding: 0.55rem 1.05rem;
+  border: 1px solid var(--brand);
+  border-radius: 999px;
+  background: var(--brand);
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: var(--shadow-brand);
+}
+
+.site-footer a.footer-contact svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.site-footer a.footer-contact:hover,
+.site-footer a.footer-contact:focus-visible {
+  background: var(--brand-strong);
+  border-color: var(--brand-strong);
+  color: #fff;
+}
+
+/* --- link columns ---------------------------------------------------------- */
+
+.footer-cols {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.75rem;
+}
+
+.footer-col-title {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.55rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.footer-col-title::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  flex: none;
+  border-radius: 50%;
+  background: var(--brand);
+}
+
+.footer-col-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-col-list a {
+  display: block;
+  padding: 0.35rem 0;
+  color: var(--ink-2);
+  font-size: 0.94rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer-col-list a:hover {
+  color: var(--brand-strong);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* --- bottom bar ------------------------------------------------------------ */
+
+.footer-bar {
+  width: min(100% - var(--page-gutter), var(--max));
+  margin: 0 auto;
+  padding: 1.35rem 0 2rem;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 2.7fr);
+  gap: 0.75rem clamp(1.5rem, 3.5vw, 3rem);
+  align-items: start;
+}
+
+.site-footer .footer-copyright {
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.site-footer .footer-disclaimer-full {
+  margin: 0;
+  max-width: 96ch;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+
+.footer-disclaimer-full a {
+  color: var(--brand-strong);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+/* --- responsive ------------------------------------------------------------ */
+
+@media (max-width: 1080px) {
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .footer-cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.4rem 1.75rem;
+  }
+
+  .footer-bar {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-inner,
+  .footer-bar {
+    width: min(100% - 2rem, var(--max));
+  }
+
+  .footer-inner {
+    padding: 2rem 0 1.5rem;
+  }
+
+  .footer-cols {
+    gap: 1.1rem 1.25rem;
+  }
+
+  .footer-bar {
+    padding: 1.1rem 0 1.6rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .footer-cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- brand block, refined (owner, 2026-10-12) -------------------------------
+   No card around it: a plain column like the link columns beside it. The
+   competition link and Contact us sit on one row as two equal, square buttons,
+   so there is no stray link, lone pill and empty space under it. */
+.footer-brand {
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.footer-brand .footer-official {
+  display: inline-flex;
+  margin: 1rem 0.5rem 0 0;
+  vertical-align: middle;
+}
+
+.footer-brand .footer-official svg {
+  display: none;
+}
+
+.footer-brand .footer-official a,
+.site-footer .footer-brand a.footer-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 38px;
+  margin: 0;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--ink-2);
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: none;
+  vertical-align: middle;
+}
+
+.site-footer .footer-brand a.footer-contact {
+  margin-top: 1rem;
+  border-color: var(--brand);
+  background: var(--brand);
+  color: #fff;
+}
+
+.footer-brand .footer-official a:hover {
+  border-color: var(--brand);
+  color: var(--brand-strong);
+  text-decoration: none;
+}
+
+.site-footer .footer-brand a.footer-contact:hover {
+  background: var(--brand-strong);
+}
+
+/* The two brand buttons stay on one line (owner, 2026-10-12): slightly tighter
+   sizing so "USAAIO Competition Website" and "Contact Us" fit side by side. */
+.footer-brand .footer-official a,
+.site-footer .footer-brand a.footer-contact {
+  min-height: 36px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+.footer-brand .footer-official {
+  margin-right: 0.4rem;
+}

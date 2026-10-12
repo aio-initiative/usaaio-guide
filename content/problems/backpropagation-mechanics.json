@@ -1,0 +1,1190 @@
+{
+  "module": "backpropagation-mechanics",
+  "order": 27,
+  "stage": "Round 2",
+  "index": [
+    {
+      "id": "matrix-calculus-implementation-task",
+      "moduleId": "backpropagation-mechanics",
+      "title": "Gradient Checking with Finite Differences",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=matrix-calculus",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Chain rule on matrices. Verify against finite differences. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. The evaluation cell runs a central-difference gradient check on every parameter. Maximum relative error must be below 1e-4."
+    },
+    {
+      "id": "backprop-mlp-implementation-task",
+      "moduleId": "backpropagation-mechanics",
+      "title": "Backpropagation from Scratch",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=backprop-mlp",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "A NumPy MLP with hand-written forward and backward passes. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Test accuracy must reach the target shown in the evaluation cell."
+    },
+    {
+      "id": "theory-mlp-backprop-init",
+      "moduleId": "backpropagation-mechanics",
+      "title": "MLPs: Parameter Counting, Backpropagation, and Initialization",
+      "source": "Original",
+      "difficulty": "Hard",
+      "url": "/theory/?id=theory-mlp-backprop-init",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Includes code",
+        "Round 2"
+      ],
+      "prompt": "Count an MLP's parameters, derive the backpropagation recursions, and derive the weight initialization that keeps signal variance stable with depth. 7 parts, each with its own grading instruction. Solutions revealed part by part.",
+      "answer": "Worked solutions are given part by part on the problem page: full derivations, not just final values. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ma4-two-layer-grads",
+      "moduleId": "backpropagation-mechanics",
+      "title": "Backprop by Hand, Checked Against a Reference Solution",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ma4-two-layer-grads",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Derive and implement every gradient of a two-layer tanh network with softmax cross-entropy, then have the notebook check each one against reference values.",
+      "answer": "Auto-graded inside the notebook. The loss and all four gradients are checked against reference values (each array's sum and a fixed random projection) to a relative tolerance of 1e-6."
+    },
+    {
+      "id": "dl1-xor-hidden-layer",
+      "moduleId": "backpropagation-mechanics",
+      "title": "One Layer Cannot Do XOR, and Two Can",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=dl1-xor-hidden-layer",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Train a linear logistic model and a 2-4-1 tanh network from scratch on XOR-structured data, and measure exactly how much the hidden layer buys.",
+      "answer": "Auto-graded inside the notebook. Both accuracies and the final loss must match the reference values to a relative tolerance of 1e-6, with the linear model near chance and the MLP above 0.9."
+    },
+    {
+      "id": "foundations-10-mlp-backprop",
+      "moduleId": "backpropagation-mechanics",
+      "title": "AI Foundations 10: MLPs and Backpropagation from Scratch",
+      "source": "AI Foundations",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=foundations-10-mlp-backprop",
+      "tags": [
+        "Coding",
+        "Course",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Course notebook, about 7 h end to end. Read it top to bottom, then do the exercises marked with a pencil icon - each one checks itself - and finish with the exam-style quiz.",
+      "answer": "Self-checking: every exercise has a checker cell that prints a verdict, and the quiz answers are explained at the end of the notebook."
+    },
+    {
+      "id": "bp-cost-of-the-backward-pass",
+      "moduleId": "backpropagation-mechanics",
+      "title": "What the Backward Pass Costs",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=bp-cost-of-the-backward-pass",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A digit classifier has layer widths 784, 256, 128 and 10, and the cost of a pass for one image is the number of multiply-adds in its matrices and outer products, with the biases and activations ignored. With the forward pass at 234,752, count what the backward pass costs when it computes only the training gradients, what it costs once you also need the gradient with respect to the input image, and how many forward passes a central-difference estimate of every gradient would take instead. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "bp-input-from-first-layer-gradient",
+      "moduleId": "backpropagation-mechanics",
+      "title": "What a Shared Gradient Gives Away",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=bp-input-from-first-layer-gradient",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A hospital backpropagates one patient's record through a 3-unit ReLU first layer and sends the server only that layer's weight and bias gradients. Recover the record from the outer-product shape of the gradient, then say what the server gets when the hospital averages the gradient over two records instead. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "bp-mean-and-variance-head",
+      "moduleId": "backpropagation-mechanics",
+      "title": "The Error at a Mean and Variance Head",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=bp-mean-and-variance-head",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A network predicts a parcel's delivery time with two outputs, a mean and a log-variance, and is trained on the Gaussian negative log-likelihood. Find the error at each output, the value the variance head settles on, and what a large predicted variance does to how hard the parcel pulls on the mean head's weights. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "bp-one-step-moves-the-logits",
+      "moduleId": "backpropagation-mechanics",
+      "title": "What One Step Does to the Logits",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=bp-one-step-moves-the-logits",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A three-class classifier ends in a linear layer and a softmax, and you take one gradient descent step on a single example with the earlier layers frozen. Work out how far each logit moves even though the weights are unknown, and what probability the updated layer then gives the true class. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "bp-rank-of-output-gradient",
+      "moduleId": "backpropagation-mechanics",
+      "title": "The Rank of the Last Layer's Gradient",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/theory/?id=bp-rank-of-output-gradient",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A ten-class image classifier ends in a linear layer with a 10 by 256 weight matrix, followed by a softmax and the mean cross-entropy loss over a batch of 32 images. What is the largest rank the weight gradient can have on one batch, and what property of the per-image output errors caps it there?",
+      "answer": "9. The batch gradient is the sum over the 32 images of the outer product of the output error with the hidden activations, so its columns are combinations of the 32 output errors. Each output error is predicted minus true probabilities, and both sum to 1 over the ten classes, so every error has entries summing to 0. All 32 errors lie in that 9-dimensional subspace of the 10 output directions, and so does every column of the gradient, which caps the rank at 9. Generic activations reach 9."
+    },
+    {
+      "id": "bp-residual-block-backward",
+      "moduleId": "backpropagation-mechanics",
+      "title": "Backward Through a Residual Block",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=bp-residual-block-backward",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A residual block adds a small two-layer branch to its input with no biases, and its output is scored against a target by a squared-error loss. Run the block forward, then find the gradient at the input and in both weight matrices, and say what changes when the second layer's weights are initialized to zero. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "bp-same-matrix-ten-layers",
+      "moduleId": "backpropagation-mechanics",
+      "title": "Ten Layers That Share One Matrix",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=bp-same-matrix-ten-layers",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "One weight matrix is applied as a ReLU layer ten times in a width-2 network with no biases, and an error arriving at the tenth layer is carried back to the input. Compute the input gradient for a given error, compare two errors of the same length, and decide whether a single constant scaling of the matrix can keep both from growing or shrinking. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "bp-tanh-layer-backward",
+      "moduleId": "backpropagation-mechanics",
+      "title": "The Error at a Tanh Unit",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=bp-tanh-layer-backward",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A regression network has three tanh hidden units and three linear outputs and is trained on half the squared error. On one example the hidden activations are 0.8, -0.6 and 0.5, the prediction is 2.5, -1, 1.5 against the target 2, 0, 1, and the rows of the output weight matrix are given. Working backward through the tanh, what is the error at the pre-activation of the second hidden unit?",
+      "answer": "0.96. The output units are linear and the loss is half the squared error, so the output error is ŷ − y = (0.5, −1, 0.5). Unit 2 feeds the outputs through column 2 of W2, (2, 0, 1), so the gradient at its activation is 1.0 + 0 + 0.5 = 1.5. The slope of tanh is 1 − tanh², which here is 1 − 0.36 = 0.64, so the error is 1.5 × 0.64 = 0.96."
+    },
+    {
+      "id": "bp-regression-network-backward",
+      "moduleId": "backpropagation-mechanics",
+      "title": "Backward Pass of a Regression Network",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=bp-regression-network-backward",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "A network predicts three numbers per house with leaky ReLU hidden layers and a linear output, and it is trained on the mean squared error as PyTorch computes it by default. You write the error at the output and the backward pass for any depth in NumPy, and check every gradient against central differences.",
+      "answer": "Auto-graded inside the notebook. The checks compare the output error with the numeric gradient of the mean squared error to 1e-7, and every layer's weight and bias gradients with central differences to 1e-6 on the three-layer network. The five-layer network re-checks the first layer's weight gradient."
+    },
+    {
+      "id": "bp-tied-autoencoder",
+      "moduleId": "backpropagation-mechanics",
+      "title": "Gradients of a Tied Autoencoder",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=bp-tied-autoencoder",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "An autoencoder squeezes each input through a few hidden units and rebuilds it. A tied one uses the same weight matrix for both halves, which halves the parameters. You derive and code its gradients in NumPy, check them against central differences, and train it on sensor readings.",
+      "answer": "Auto-graded inside the notebook. The checks compare the loss with the same network written untied, the tied weight gradient with the sum of the encoder's and decoder's numeric shares to 1e-6, the bias gradients with their numeric gradients, and the trained fit's final loss with 3% of the column-mean baseline."
+    }
+  ],
+  "theory": [
+    {
+      "id": "theory-mlp-backprop-init",
+      "moduleId": "backpropagation-mechanics",
+      "title": "MLPs: Parameter Counting, Backpropagation, and Initialization",
+      "difficulty": "Hard",
+      "minutes": 55,
+      "overview": [
+        "Count an MLP's parameters, derive the backpropagation recursions, and derive the weight initialization that keeps signal variance stable with depth."
+      ],
+      "setup": [
+        {
+          "p": "Consider a fully connected network with $L$ layers. Layer $\\ell$ maps an input of width $n_{\\ell-1}$ to an output of width $n_\\ell$ by"
+        },
+        {
+          "tex": "z^{(\\ell)} = W^{(\\ell)} a^{(\\ell-1)} + b^{(\\ell)}, \\qquad a^{(\\ell)} = \\phi\\big( z^{(\\ell)} \\big),"
+        },
+        {
+          "p": "with $a^{(0)} = x$ the input and $\\phi$ applied elementwise."
+        }
+      ],
+      "parts": [
+        {
+          "id": "20.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Give the shapes of $W^{(\\ell)}$ and $b^{(\\ell)}$, and the total number of learnable parameters of the network. Evaluate it for widths $(n_0, n_1, n_2, n_3) = (784, 256, 128, 10)$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "For the matrix product to be defined, $W^{(\\ell)} \\in \\mathbb{R}^{n_\\ell \\times n_{\\ell-1}}$ and $b^{(\\ell)} \\in \\mathbb{R}^{n_\\ell}$, so layer $\\ell$ has $n_\\ell n_{\\ell-1} + n_\\ell = n_\\ell(n_{\\ell-1} + 1)$ parameters and the total is"
+            },
+            {
+              "tex": "\\sum_{\\ell=1}^{L} n_\\ell\\big(n_{\\ell-1} + 1\\big)."
+            },
+            {
+              "p": "For the given widths:"
+            },
+            {
+              "list": [
+                "Layer 1: $256 \\times 784 + 256 = 200{,}704 + 256 = 200{,}960$.",
+                "Layer 2: $128 \\times 256 + 128 = 32{,}768 + 128 = 32{,}896$.",
+                "Layer 3: $10 \\times 128 + 10 = 1{,}280 + 10 = 1{,}290$."
+              ]
+            },
+            {
+              "tex": "\\text{Total} = 200{,}960 + 32{,}896 + 1{,}290 = 235{,}146."
+            },
+            {
+              "p": "Note where the parameters live: the first layer holds $85\\%$ of them, purely because the input is wide. This is the standard motivation for convolutional layers on image input: weight sharing replaces that dense $784 \\times 256$ block with a handful of small kernels. One variant of this question counts weights alone, so check the wording before answering: dropping the $394$ bias entries gives $234{,}752$."
+            }
+          ]
+        },
+        {
+          "id": "20.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Let $\\mathcal{L}$ be a scalar loss and write $\\delta^{(\\ell)} = \\partial \\mathcal{L} / \\partial z^{(\\ell)}$. Derive the backpropagation recursions for $\\delta^{(\\ell)}$, $\\partial \\mathcal{L}/\\partial W^{(\\ell)}$, and $\\partial \\mathcal{L}/\\partial b^{(\\ell)}$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Start at the output. For softmax with cross-entropy, Part 3 of [The Chain Rule, Softmax, and Cross-Entropy](/theory/?id=theory-chain-rule-activations) gives $\\delta^{(L)} = p - y$ directly."
+            },
+            {
+              "p": "Recursion. The loss depends on $z^{(\\ell)}$ only through $a^{(\\ell)} = \\phi(z^{(\\ell)})$ and then through $z^{(\\ell+1)} = W^{(\\ell+1)}a^{(\\ell)} + b^{(\\ell+1)}$. Applying the chain rule in two steps,"
+            },
+            {
+              "tex": "\\frac{\\partial \\mathcal{L}}{\\partial a^{(\\ell)}} = \\big(W^{(\\ell+1)}\\big)^\\top \\delta^{(\\ell+1)}, \\qquad \\delta^{(\\ell)} = \\frac{\\partial \\mathcal{L}}{\\partial a^{(\\ell)}} \\odot \\phi'\\big(z^{(\\ell)}\\big),"
+            },
+            {
+              "p": "where $\\odot$ is the elementwise product, appearing because $\\phi$ acts coordinatewise so its Jacobian is diagonal. Combining,"
+            },
+            {
+              "tex": "\\delta^{(\\ell)} = \\Big( \\big(W^{(\\ell+1)}\\big)^\\top \\delta^{(\\ell+1)} \\Big) \\odot \\phi'\\big(z^{(\\ell)}\\big)."
+            },
+            {
+              "p": "Parameter gradients. Since $z^{(\\ell)}_i = \\sum_j W^{(\\ell)}_{ij}a^{(\\ell-1)}_j + b^{(\\ell)}_i$, we have $\\partial z^{(\\ell)}_i/\\partial W^{(\\ell)}_{ij} = a^{(\\ell-1)}_j$ and $\\partial z^{(\\ell)}_i / \\partial b^{(\\ell)}_i = 1$, so"
+            },
+            {
+              "tex": "\\frac{\\partial \\mathcal{L}}{\\partial W^{(\\ell)}} = \\delta^{(\\ell)}\\big(a^{(\\ell-1)}\\big)^\\top, \\qquad \\frac{\\partial \\mathcal{L}}{\\partial b^{(\\ell)}} = \\delta^{(\\ell)}."
+            },
+            {
+              "p": "Check the shapes: $\\delta^{(\\ell)}$ is $n_\\ell \\times 1$ and $a^{(\\ell-1)}$ is $n_{\\ell-1} \\times 1$, so the outer product is $n_\\ell \\times n_{\\ell-1}$, the shape of $W^{(\\ell)}$, as it must be."
+            },
+            {
+              "p": "Two observations. The transpose $\\big(W^{(\\ell+1)}\\big)^\\top$ is the vector-Jacobian product of Part 7 of [Matrix Calculus: Derivatives, Gradients, and Hessians](/theory/?id=theory-matrix-calculus-gradients), confirming that backpropagation is just reverse-mode differentiation. And the forward activations $a^{(\\ell-1)}$ and pre-activations $z^{(\\ell)}$ both appear in the backward pass, which is why training requires storing them. That storage is the memory cost of a deep network, and the reason gradient checkpointing trades recomputation for memory."
+            }
+          ]
+        },
+        {
+          "id": "20.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Look at a single neuron in layer $\\ell$. Its pre-activation is"
+            },
+            {
+              "tex": "z = \\sum_{c=0}^{C-1} w_c x_c, \\qquad C = n_{\\ell-1},"
+            },
+            {
+              "p": "where the $C$ inputs $x_0, \\dots, x_{C-1}$ and the $C$ weights $w_0, \\dots, w_{C-1}$ are all independent random variables with $\\mathbb{E}[w_c] = \\mathbb{E}[x_c] = 0$, $\\operatorname{Var}[w_c] = \\sigma_w^2$, and $\\operatorname{Var}[x_c] = \\sigma^2$."
+            },
+            {
+              "p": "Find the value of $\\sigma_w$ that makes $\\operatorname{Var}[z] = \\sigma^2$, so the neuron passes downstream the same variance it received."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each product $w_c x_c$ pairs two independent mean-zero variables. Its expectation is $\\mathbb{E}[w_c]\\,\\mathbb{E}[x_c] = 0$, and its variance is"
+            },
+            {
+              "tex": "\\operatorname{Var}[w_c x_c] = \\mathbb{E}\\big[w_c^2 x_c^2\\big] - \\big(\\mathbb{E}[w_c x_c]\\big)^2 = \\mathbb{E}[w_c^2]\\,\\mathbb{E}[x_c^2] - 0 = \\sigma_w^2 \\sigma^2,"
+            },
+            {
+              "p": "where the second moment factorizes by independence and the squares become variances because both means are zero."
+            },
+            {
+              "p": "The $C$ products are mutually independent as well, so their variances add, with no cross terms appearing (Part 2 of [Expectation, Variance, and Maximum Likelihood](/theory/?id=theory-expectation-mle)):"
+            },
+            {
+              "tex": "\\operatorname{Var}[z] = \\sum_{c=0}^{C-1}\\operatorname{Var}[w_c x_c] = C\\sigma_w^2\\sigma^2."
+            },
+            {
+              "p": "Equate that to the incoming variance and solve:"
+            },
+            {
+              "tex": "C\\sigma_w^2 \\sigma^2 = \\sigma^2 \\ \\Longrightarrow \\ \\sigma_w^2 = \\frac{1}{C} \\ \\Longrightarrow \\ \\sigma_w = \\frac{1}{\\sqrt{C}}."
+            },
+            {
+              "p": "So the scale depends only on the fan-in, not on the depth or on the data. This is LeCun initialization: the weight scale is the inverse square root of the number of inputs. Errors compound with depth, because every layer multiplies the activation variance by its own factor $\\gamma$. After $L$ layers the variance has been scaled by $\\gamma^L$, so $\\gamma = 2$ explodes and $\\gamma = 0.5$ dies out exponentially."
+            },
+            {
+              "p": "ReLU networks need a different constant: the activation zeroes half of its inputs, which discards half the variance, so the compensation is $\\sigma_w^2 = 2/C$. That is He initialization, the default for modern ReLU architectures. Xavier (Glorot) initialization balances the backward pass as well and uses $\\sigma_w^2 = 2/(n_{\\text{in}} + n_{\\text{out}})$."
+            }
+          ]
+        },
+        {
+          "id": "20.4",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Explain why initializing all weights to zero prevents a network from learning, and why initializing all weights to the same nonzero constant fails in the same way."
+            }
+          ],
+          "answer": [
+            {
+              "p": "With all weights equal (and the biases equal too, for example all zero), every unit in a hidden layer computes the identical function of the input, so all pre-activations $z^{(\\ell)}_i$ within a layer are equal. In the backward pass of Part 2, $\\delta^{(\\ell)} = \\big((W^{(\\ell+1)})^\\top\\delta^{(\\ell+1)}\\big)\\odot\\phi'(z^{(\\ell)})$ is then also identical across units, so every row of the gradient $\\delta^{(\\ell)}(a^{(\\ell-1)})^\\top$ is the same."
+            },
+            {
+              "p": "Gradient descent therefore applies the identical update to every unit, and the units stay identical forever. A layer of width $n_\\ell$ has the expressive power of a single unit no matter how long you train. This is the symmetry-breaking problem, and it is why the constant's value is irrelevant."
+            },
+            {
+              "p": "The all-zeros case fails twice over: in addition to the symmetry, $a^{(\\ell)} = \\phi(0)$ is constant, so with $\\phi = \\tanh$ every activation is $0$ and the signal never propagates forward at all."
+            },
+            {
+              "p": "Random initialization breaks the symmetry, and Part 3 fixes the scale. Biases are the exception: they can safely be initialized to zero, because the weights already differ and that is enough to make the units distinct. This argument applies per layer: it is the units *within* a layer that must be made distinguishable."
+            }
+          ]
+        },
+        {
+          "id": "20.5",
+          "kind": "derivation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Define the threshold activation"
+            },
+            {
+              "tex": "\\Theta(x) = \\begin{cases} 1 & x \\ge 0 \\\\ 0 & x < 0. \\end{cases}"
+            },
+            {
+              "p": "Show how to build a two-layer network of threshold units that outputs $1$ exactly when a point $(x, y)$ lies inside the quadrilateral with vertices $(0,0)$, $(4,0)$, $(5,3)$, and $(1,4)$, taken in that order, and explain why such a network cannot be trained by gradient descent."
+            }
+          ],
+          "answer": [
+            {
+              "p": "A convex quadrilateral is the intersection of four half-planes, one per side, so layer 1 gets one threshold unit per side and layer 2 takes the AND of the four indicators."
+            },
+            {
+              "p": "The vertices are listed counter-clockwise, so the interior lies to the left of each directed side. For a side with direction $(\\Delta x, \\Delta y)$, the leftward normal is $(-\\Delta y, \\Delta x)$, and the half-plane is $n^\\top (x,y) \\ge n^\\top p$ through the side's starting point $p$."
+            },
+            {
+              "p": "Side $(0,0)$ to $(4,0)$ has direction $(4,0)$ and leftward normal $(0,4)$, so the interior satisfies $4y \\ge 0$. Side $(4,0)$ to $(5,3)$ has direction $(1,3)$ and leftward normal $(-3,1)$. Since $(-3,1)\\cdot(4,0) = -12$, the interior satisfies $-3x + y + 12 \\ge 0$. Side $(5,3)$ to $(1,4)$ has direction $(-4,1)$ and leftward normal $(-1,-4)$. Since $(-1,-4)\\cdot(5,3) = -17$, the interior satisfies $-x - 4y + 17 \\ge 0$. Side $(1,4)$ to $(0,0)$ has direction $(-1,-4)$ and leftward normal $(4,-1)$. Since $(4,-1)\\cdot(1,4) = 0$, the interior satisfies $4x - y \\ge 0$."
+            },
+            {
+              "p": "Layer 1 therefore uses four units, $h_i = \\Theta\\big(w_i^\\top (x,y) + b_i\\big)$ with"
+            },
+            {
+              "tex": "W^{(1)} = \\begin{bmatrix} 0 & 4 \\\\ -3 & 1 \\\\ -1 & -4 \\\\ 4 & -1 \\end{bmatrix}, \\qquad b^{(1)} = \\begin{bmatrix} 0 \\\\ 12 \\\\ 17 \\\\ 0 \\end{bmatrix}."
+            },
+            {
+              "p": "Each row is a normal vector, and each bias is the negated dot product of that normal with the side's starting point, which is why the two sides through the origin have bias $0$. Layer 2 computes the AND of the four indicators, which fires only when all four are $1$:"
+            },
+            {
+              "tex": "\\text{out} = \\Theta\\big( h_0 + h_1 + h_2 + h_3 - 4 \\big)."
+            },
+            {
+              "p": "As a check, the centroid $(2.5, 1.75)$ gives $h = (1,1,1,1)$, and a point far outside such as $(10, 10)$ gives $h = (1,0,0,1)$, so the AND outputs $0$. The same recipe works for any convex polygon, with one first-layer unit per side. Non-convex shapes need a unit per edge plus a layer that ORs the pieces."
+            },
+            {
+              "p": "Why gradient descent cannot train it: $\\Theta'(x) = 0$ for every $x \\ne 0$ and is undefined at $0$. In the backward recursion of Part 2, $\\delta^{(\\ell)}$ is multiplied elementwise by $\\phi'(z^{(\\ell)})$, so every gradient is identically zero and no weight ever moves. The loss surface is piecewise constant: flat everywhere, with jumps, so it carries no slope to descend."
+            },
+            {
+              "p": "That is why a network of this kind is posed as a hand-construction exercise: the weights are chosen by geometry and used for inference only, never fitted to data. It is also the historical reason sigmoid replaced the step function, since a smooth surrogate with a nonzero derivative is what makes backpropagation possible at all."
+            }
+          ]
+        },
+        {
+          "id": "20.6",
+          "kind": "mcq",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A network stacks three fully connected layers with no activation function between them: $z = W_3 W_2 W_1 x$. Which statement is correct?"
+            },
+            {
+              "choices": [
+                "A. It is strictly more expressive than a single linear layer because it has more parameters.",
+                "B. It computes a linear map and is no more expressive than a single layer $Wx$.",
+                "C. It can approximate any continuous function given enough width.",
+                "D. It is equivalent to a single layer only if all three matrices are square.",
+                "E. It becomes nonlinear once biases are added."
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Matrix multiplication is associative, so $W_3W_2W_1x = (W_3W_2W_1)x = Wx$ for the single matrix $W = W_3W_2W_1$. The composition of linear maps is linear, regardless of the shapes involved, so D is wrong too."
+            },
+            {
+              "p": "Extra parameters do not add expressive power here. By Part 7 of [Matrices as Linear Maps, Rank, and Outer-Product Decomposition](/theory/?id=theory-matrix-linear-maps), $\\operatorname{rank}(W) \\le \\min_i \\operatorname{rank}(W_i)$, so stacking can only *lose* rank relative to a single unconstrained layer. E fails as well: adding biases makes the map affine, $Wx + b$, which is still not nonlinear."
+            },
+            {
+              "p": "The activation is what does the work. The universal approximation theorem (option C) requires a nonlinearity. With one, a single sufficiently wide hidden layer can approximate any continuous function on a compact set. Without one, no depth helps."
+            },
+            {
+              "p": "The construction is not useless, though: a deliberate low-rank factorization $W \\approx BA$ with a narrow bottleneck is exactly the LoRA trick from Part 6 of [Matrices as Linear Maps, Rank, and Outer-Product Decomposition](/theory/?id=theory-matrix-linear-maps), where the point is to *restrict* capacity while cutting parameters."
+            },
+            {
+              "result": "B. It computes a linear map, no more expressive than a single layer."
+            }
+          ]
+        },
+        {
+          "id": "20.7",
+          "kind": "coding",
+          "requirement": "Do not use torch.nn.Linear, and do not use autograd for the backward pass.",
+          "prompt": [
+            {
+              "p": "Run the following starter code:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "import numpy as np",
+                  "",
+                  "rng = np.random.default_rng(0)",
+                  "X = rng.normal(size=(64, 20))      # batch of 64",
+                  "W1 = rng.normal(size=(32, 20)) * np.sqrt(2 / 20)   # He init",
+                  "b1 = np.zeros(32)"
+                ]
+              }
+            },
+            {
+              "p": "Implement one forward pass through a ReLU layer for the whole batch, then the backward pass computing $\\partial L/\\partial W_1$ given an incoming gradient $\\texttt{dA}$ of shape $(64, 32)$."
+            }
+          ],
+          "answer": [
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "# forward: rows are examples, so the layer is X @ W1.T (not W1 @ X)",
+                  "Z = X @ W1.T + b1          # (64, 32), b1 broadcasts across the batch",
+                  "A = np.maximum(Z, 0)       # ReLU",
+                  "",
+                  "dA = rng.normal(size=(64, 32))   # an example incoming gradient, dL/dA",
+                  "# backward, given dA = dL/dA of shape (64, 32)",
+                  "dZ = dA * (Z > 0)          # ReLU derivative: 1 where Z > 0, else 0",
+                  "dW1 = dZ.T @ X             # (32, 20), matching W1",
+                  "db1 = dZ.sum(axis=0)       # (32,), summed over the batch"
+                ]
+              }
+            },
+            {
+              "p": "The batch convention is the detail that trips people up. Part 2 wrote column vectors, giving $z = Wa$. With examples stored as *rows* the same computation is $Z = XW^\\top$, and the outer product $\\delta a^\\top$ becomes the matrix product $\\texttt{dZ.T @ X}$, which sums over the batch automatically. Checking shapes at every line is the fastest way to catch a misplaced transpose."
+            },
+            {
+              "p": "$\\texttt{(Z > 0)}$ is the ReLU derivative as a boolean mask, which NumPy promotes to $0/1$ on multiplication. Note it must be evaluated at the pre-activation $\\texttt{Z}$, not at $\\texttt{A}$. For ReLU the two masks always agree, since $\\texttt{A} = \\max(\\texttt{Z}, 0)$ is zero exactly where $\\texttt{Z} \\le 0$. The bias gradient sums over the batch axis because $b_1$ is added to every example, so it accumulates a contribution from each."
+            },
+            {
+              "p": "Whether $\\texttt{dW1}$ should be summed or averaged over the batch depends on whether your loss sums or averages over examples: the two differ by a factor of $1/64$, which silently rescales your effective learning rate if you get it wrong."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bp-cost-of-the-backward-pass",
+      "moduleId": "backpropagation-mechanics",
+      "title": "What the Backward Pass Costs",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A digit classifier has layer widths $784 \\to 256 \\to 128 \\to 10$, ReLU between layers, and a softmax with cross-entropy at the end. Count the cost of a pass for one image as the number of multiply-adds in its matrix and outer products. Ignore the biases, the activations, the softmax and the loss, which are small next to the products."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The forward pass costs $784 \\cdot 256 + 256 \\cdot 128 + 128 \\cdot 10 = 234{,}752$ multiply-adds. How many does the backward pass cost, when it computes the gradients of all weights and biases and nothing else?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "List the products the backward pass performs, layer by layer from the top."
+            },
+            {
+              "list": [
+                "**Weight gradients.** Each layer's is the outer product of its error with the activations coming into it, one multiply per weight, so together they cost the same as the forward pass: $234{,}752$.",
+                "**Moving the error back.** Going from layer $l$ to layer $l - 1$ multiplies by $(W^{(l)})^\\top$, one multiply-add per weight of layer $l$. This is needed for layers 3 and 2, to reach $\\boldsymbol{\\delta}^{(2)}$ and $\\boldsymbol{\\delta}^{(1)}$: $128 \\cdot 10 + 256 \\cdot 128 = 34{,}048$. It is not needed through layer 1, because nothing asks for $\\partial L/\\partial \\mathbf{x}$."
+              ]
+            },
+            {
+              "p": "The total is $234{,}752 + 34{,}048 = 268{,}800$, about 1.15 times the forward pass. The usual estimate of twice the forward pass assumes both products at every layer. Here the first layer holds 85% of the weights and needs only one of them."
+            },
+            {
+              "result": "268800"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "An attacker who wants to change the image to fool the classifier needs $\\partial L/\\partial \\mathbf{x}$ as well. How many more multiply-adds does that add to the backward pass?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "$\\partial L/\\partial \\mathbf{x} = (W^{(1)})^\\top\\boldsymbol{\\delta}^{(1)}$, the step back through layer 1 that the training pass skipped: one multiply-add per weight of layer 1, $784 \\cdot 256 = 200{,}704$. The backward pass grows to $469{,}504$, exactly twice the forward pass, since it now performs both products at every layer, each costing one multiply-add per weight."
+            },
+            {
+              "result": "200704"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Instead of backpropagation, you estimate the gradient of every weight and bias by central differences: two forward passes per parameter, one with the parameter nudged up and one nudged down. How many forward passes does one full gradient take? Compare the cost with one forward and one backward pass."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The network has $234{,}752$ weights and $256 + 128 + 10 = 394$ biases, so $P = 235{,}146$ parameters and $2P = 470{,}292$ forward passes, each of $234{,}752$ multiply-adds. One forward and one backward pass cost $234{,}752 + 268{,}800 = 503{,}552$, about 2.1 forward passes. Central differences cost about $470{,}292 / 2.1 \\approx 2 \\times 10^{5}$ times as much, and their answers are only approximate. That gap, a fixed small multiple of the forward pass against one forward pass per parameter, is the reason networks are trained by backpropagation, and why finite differences are used only to check a backward pass on a few entries."
+            },
+            {
+              "result": "470292"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bp-input-from-first-layer-gradient",
+      "moduleId": "backpropagation-mechanics",
+      "title": "What a Shared Gradient Gives Away",
+      "difficulty": "Hard",
+      "minutes": 15,
+      "overview": [
+        "A hospital helps train a shared model without sending out its records. For one patient it runs the record $\\mathbf{x} \\in \\mathbb{R}^4$ through the current network, backpropagates, and sends the server only the gradients of the first layer. That layer has three ReLU units and computes $\\mathbf{z}^{(1)} = W^{(1)}\\mathbf{x} + \\mathbf{b}^{(1)}$. The server receives"
+      ],
+      "setup": [
+        {
+          "tex": "\\frac{\\partial L}{\\partial W^{(1)}} =\n\\begin{bmatrix} 0 & 0 & 0 & 0 \\\\ 0.8 & -0.4 & 0.2 & 1.2 \\\\ -0.5 & 0.25 & -0.125 & -0.75 \\end{bmatrix},\n\\qquad\n\\frac{\\partial L}{\\partial \\mathbf{b}^{(1)}} = \\begin{bmatrix} 0 \\\\ 0.4 \\\\ -0.25 \\end{bmatrix}."
+        },
+        {
+          "p": "The server knows the architecture and the current weights, but not the label or the loss."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What was the patient's record $\\mathbf{x}$? Enter its fourth entry."
+            }
+          ],
+          "answer": [
+            {
+              "p": "For one example, $\\partial L/\\partial W^{(1)} = \\boldsymbol{\\delta}^{(1)}\\mathbf{x}^\\top$ and $\\partial L/\\partial \\mathbf{b}^{(1)} = \\boldsymbol{\\delta}^{(1)}$. So row $i$ of the weight gradient is $\\delta^{(1)}_i\\,\\mathbf{x}^\\top$, and $\\delta^{(1)}_i$ is entry $i$ of the bias gradient. Wherever that entry is not zero, dividing the row by it returns $\\mathbf{x}$:"
+            },
+            {
+              "tex": "\\frac{(0.8,\\ -0.4,\\ 0.2,\\ 1.2)}{0.4} = (2,\\ -1,\\ 0.5,\\ 3), \\qquad\n\\frac{(-0.5,\\ 0.25,\\ -0.125,\\ -0.75)}{-0.25} = (2,\\ -1,\\ 0.5,\\ 3)."
+            },
+            {
+              "p": "So $\\mathbf{x} = (2, -1, 0.5, 3)^\\top$, and the two rows agree, as they must. Row 1 is no use: its unit was off ($\\delta^{(1)}_1 = 0$), so the row is all zeros whatever $\\mathbf{x}$ was. One active unit is enough, and the server needs neither the label nor any later layer. Nothing about the weights mattered either: the outer product makes every row of the first-layer gradient a multiple of the input."
+            },
+            {
+              "result": "3"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "The hospital now averages the gradient over two patients, $\\mathbf{x}_A$ and $\\mathbf{x}_B$, before sending it. The server divides each row by its bias entry as before. What does it get, and when is that still one of the records exactly?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Row $i$ of the averaged gradient is $\\tfrac12\\big(\\delta^A_i\\,\\mathbf{x}_A + \\delta^B_i\\,\\mathbf{x}_B\\big)^\\top$ and its bias entry is $\\tfrac12(\\delta^A_i + \\delta^B_i)$, so the ratio is"
+            },
+            {
+              "tex": "\\lambda_i\\,\\mathbf{x}_A + (1 - \\lambda_i)\\,\\mathbf{x}_B, \\qquad\n\\lambda_i = \\frac{\\delta^A_i}{\\delta^A_i + \\delta^B_i}."
+            },
+            {
+              "p": "Each row gives a point on the line through the two records, with a weight $\\lambda_i$ the server does not know, and $\\lambda_i$ can lie outside $[0, 1]$ when the two errors have opposite signs. In general that is a blend of the two records, not either one."
+            },
+            {
+              "p": "It is exactly a record whenever a unit fired for one patient and not the other. If unit $i$ was off for patient A, then $\\delta^A_i = 0$, $\\lambda_i = 0$, and row $i$ divided by its bias entry is $\\mathbf{x}_B$ exactly. With ReLU units this is common, so averaging two examples is no guarantee. A server that knows what a real record looks like can often tell which rows those are."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bp-mean-and-variance-head",
+      "moduleId": "backpropagation-mechanics",
+      "title": "The Error at a Mean and Variance Head",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A network predicts tomorrow's delivery time for a parcel, in hours, and also says how unsure it is. Its last layer has two linear output units: a mean $\\mu$ and a log-variance $s$, so the predicted variance is $e^{s}$. It is trained on the Gaussian negative log-likelihood, with the constant dropped:"
+      ],
+      "setup": [
+        {
+          "tex": "L = \\frac{(y - \\mu)^2}{2e^{s}} + \\frac{s}{2}."
+        },
+        {
+          "p": "On one parcel the network outputs $\\mu = 3$ and $s = \\ln 2$, and the true time is $y = 5$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Find the output error, the pair $\\partial L/\\partial \\mu$ and $\\partial L/\\partial s$. Enter $\\partial L/\\partial s$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Both outputs are linear units, so their errors are the derivatives of $L$ with respect to $\\mu$ and $s$ themselves. The first term has $(y - \\mu)^2$ on top, whose derivative in $\\mu$ is $-2(y - \\mu)$, so"
+            },
+            {
+              "tex": "\\frac{\\partial L}{\\partial \\mu} = \\frac{\\mu - y}{e^{s}} = \\frac{3 - 5}{2} = -1 ."
+            },
+            {
+              "p": "In $s$ the first term is $\\tfrac12 (y - \\mu)^2 e^{-s}$, whose derivative is $-\\tfrac12 (y - \\mu)^2 e^{-s}$, and the second term gives $\\tfrac12$:"
+            },
+            {
+              "tex": "\\frac{\\partial L}{\\partial s} = \\frac12 - \\frac{(y - \\mu)^2}{2e^{s}} = \\frac12 - \\frac{4}{4} = -0.5 ."
+            },
+            {
+              "p": "A central difference with $h = 10^{-6}$ gives $-1.0000$ and $-0.5000$."
+            },
+            {
+              "result": "$-0.5$"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Suppose gradient descent could move only $s$ on this parcel. At what value of $s$ would it stop? Use natural logarithms."
+            }
+          ],
+          "answer": [
+            {
+              "p": "It stops where $\\partial L/\\partial s = 0$, that is where $e^{s} = (y - \\mu)^2 = 4$, so $s = \\ln 4 \\approx 1.3863$. At $s = \\ln 2$ the error is negative, so a step $s \\leftarrow s - \\eta\\,\\partial L/\\partial s$ raises $s$ toward $\\ln 4$. The variance head learns to predict the squared residual, which is what a variance is: the expected squared distance from the mean."
+            },
+            {
+              "result": "1.3863"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Another parcel has the same miss, $y - \\mu = 2$, but the network gives it $s = \\ln 8$. Compare its $\\partial L/\\partial \\mu$ with the first parcel's. What does that do to how much each parcel moves the mean head's weights, and what can a network that has not yet fit a hard parcel do to lower its loss without fitting it?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "With $s = \\ln 8$, $\\partial L/\\partial \\mu = -2/8 = -0.25$, a quarter of the first parcel's $-1$. Every weight gradient that reaches the mean head is this error times an activation, so this parcel pulls on those weights a quarter as hard. The loss weights each squared miss by $1/e^{s}$, the inverse of the predicted variance, and backpropagation passes that weight straight into the error."
+            },
+            {
+              "p": "That is the intended behavior for parcels that really are noisy, and also an escape route. On a parcel the mean head misses badly, raising $s$ lowers $(y - \\mu)^2 / (2e^{s})$ at the price of only $s/2$, and the larger $s$ shrinks the error at $\\mu$, so the network can stop trying to fit it. In practice people guard against this by training the mean on plain squared error for a while before the variance head is switched on, or by putting a floor under $s$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bp-one-step-moves-the-logits",
+      "moduleId": "backpropagation-mechanics",
+      "title": "What One Step Does to the Logits",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A three-class classifier ends in a linear layer, $\\mathbf{z} = W\\mathbf{a} + \\mathbf{b}$, followed by a softmax and the cross-entropy loss. On one training example of class 0, the last hidden layer outputs"
+      ],
+      "setup": [
+        {
+          "tex": "\\mathbf{a} = (3,\\ 0,\\ 1,\\ 2)^\\top"
+        },
+        {
+          "p": "and the softmax gives $\\hat{\\mathbf{y}} = (0.2,\\ 0.5,\\ 0.3)^\\top$. You take one gradient descent step on this example alone, with learning rate $\\eta = 0.05$, and update only $W$ and $\\mathbf{b}$: every earlier layer is frozen, so $\\mathbf{a}$ stays the same. You are not told $W$ or $\\mathbf{b}$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "By how much does each of the three logits change when the same example is run through the updated layer? Enter the change in $z_0$, the logit of the true class."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The output error is $\\boldsymbol{\\delta} = \\hat{\\mathbf{y}} - \\mathbf{y} = (-0.8,\\ 0.5,\\ 0.3)^\\top$. The step changes the parameters by"
+            },
+            {
+              "tex": "\\Delta W = -\\eta\\, \\boldsymbol{\\delta}\\mathbf{a}^\\top, \\qquad \\Delta\\mathbf{b} = -\\eta\\, \\boldsymbol{\\delta}."
+            },
+            {
+              "p": "On the same input the logits change by $\\Delta W\\,\\mathbf{a} + \\Delta\\mathbf{b}$. The outer product meets $\\mathbf{a}$ again, and $\\mathbf{a}^\\top\\mathbf{a}$ is a number:"
+            },
+            {
+              "tex": "\\Delta\\mathbf{z} = -\\eta\\,\\boldsymbol{\\delta}\\,(\\mathbf{a}^\\top\\mathbf{a}) - \\eta\\,\\boldsymbol{\\delta}\n= -\\eta\\,(\\lVert\\mathbf{a}\\rVert^2 + 1)\\,\\boldsymbol{\\delta}."
+            },
+            {
+              "p": "Here $\\lVert\\mathbf{a}\\rVert^2 = 9 + 0 + 1 + 4 = 14$, so $\\Delta\\mathbf{z} = -0.05 \\times 15 \\times \\boldsymbol{\\delta} = -0.75\\,\\boldsymbol{\\delta} = (0.6,\\ -0.375,\\ -0.225)^\\top$. The true logit rises by 0.6 and the other two fall."
+            },
+            {
+              "p": "$W$ and $\\mathbf{b}$ never enter: the change in the logits depends only on the error, the activations and $\\eta$. The logits move straight against the error, scaled by $\\lVert\\mathbf{a}\\rVert^2 + 1$, so the same learning rate moves the output more on examples with larger activations."
+            },
+            {
+              "result": "0.6"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What probability does the updated layer give the true class on this example?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Adding a constant to all three logits leaves the softmax unchanged, so the old logits can be taken as $\\ln \\hat y_k$, and the new probabilities are proportional to $\\hat y_k e^{\\Delta z_k}$:"
+            },
+            {
+              "tex": "0.2\\,e^{0.6} = 0.3644, \\qquad 0.5\\,e^{-0.375} = 0.3436, \\qquad 0.3\\,e^{-0.225} = 0.2396 ."
+            },
+            {
+              "p": "They sum to 0.9476, so the true class gets $0.3644 / 0.9476 \\approx 0.3846$, up from 0.2. The loss on this example falls from $-\\ln 0.2 = 1.609$ to $-\\ln 0.3846 = 0.956$."
+            },
+            {
+              "result": "0.3846"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bp-rank-of-output-gradient",
+      "moduleId": "backpropagation-mechanics",
+      "title": "The Rank of the Last Layer's Gradient",
+      "difficulty": "Hard",
+      "minutes": 8,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A ten-class image classifier ends in a linear layer with weight matrix $W$ of shape $10 \\times 256$, followed by a softmax and the mean cross-entropy loss. It is trained in batches of 32 images. On one batch the backward pass produces $\\partial L/\\partial W$, a $10 \\times 256$ matrix."
+            },
+            {
+              "p": "What is the largest rank this matrix can have, over all possible weights, images and labels in the batch?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "1",
+                  "explain": "Each image does contribute a rank-one outer product, but the batch gradient is the sum of 32 of them, and a sum of rank-one matrices pointing in different directions has a larger rank. Two outer products with independent left factors and independent right factors already give rank 2."
+                },
+                {
+                  "text": "9",
+                  "correct": true,
+                  "explain": "The batch gradient is the sum over the 32 images of the outer product of the output error with the hidden activations, so its columns are combinations of the 32 output errors. Each output error is predicted minus true probabilities, and both sum to 1 over the ten classes, so every error has entries summing to 0. All 32 errors lie in that 9-dimensional subspace of the 10 output directions, and so does every column of the gradient, which caps the rank at 9. Generic activations reach 9."
+                },
+                {
+                  "text": "10",
+                  "explain": "Ten is the number of rows, and an arbitrary 10 × 256 matrix can have rank 10. This one cannot: every column is a combination of output errors, and each output error has entries that sum to 0, so the all-ones direction is never reached and the column space has at most 9 dimensions."
+                },
+                {
+                  "text": "32",
+                  "explain": "The gradient is a sum of 32 rank-one terms, so 32 is an upper bound from the batch size. A 10 × 256 matrix cannot have rank above 10, and here the bound is lower still: every output error has entries summing to 0, so all of them lie in a 9-dimensional subspace."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The batch gradient is the sum over the 32 images of the outer product of the output error with the hidden activations, so its columns are combinations of the 32 output errors. Each output error is predicted minus true probabilities, and both sum to 1 over the ten classes, so every error has entries summing to 0. All 32 errors lie in that 9-dimensional subspace of the 10 output directions, and so does every column of the gradient, which caps the rank at 9. Generic activations reach 9."
+            },
+            {
+              "result": "9"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bp-residual-block-backward",
+      "moduleId": "backpropagation-mechanics",
+      "title": "Backward Through a Residual Block",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "A residual block adds a small two-layer branch to its input:"
+      ],
+      "setup": [
+        {
+          "tex": "\\mathbf{z} = W_1\\mathbf{x}, \\qquad \\mathbf{h} = \\operatorname{ReLU}(\\mathbf{z}), \\qquad\n\\mathbf{y} = \\mathbf{x} + W_2\\mathbf{h},"
+        },
+        {
+          "p": "with no biases. The branch's first layer has the weights"
+        },
+        {
+          "tex": "W_1 = \\begin{bmatrix} 1 & 1 \\\\ 1 & -1 \\end{bmatrix},"
+        },
+        {
+          "p": "its second layer has"
+        },
+        {
+          "tex": "W_2 = \\begin{bmatrix} 0.5 & -1 \\\\ 2 & 0.5 \\end{bmatrix},"
+        },
+        {
+          "p": "and the input is $\\mathbf{x} = (1, -2)^\\top$. The block's output is scored by $L = \\tfrac12\\lVert \\mathbf{y} - \\mathbf{t} \\rVert^2$ with target $\\mathbf{t} = (-1, -1)^\\top$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Run the block forward, then find $\\partial L/\\partial \\mathbf{x}$. Enter its second entry."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Forward: $\\mathbf{z} = (1 - 2,\\ 1 + 2) = (-1, 3)^\\top$, so $\\mathbf{h} = (0, 3)^\\top$, $W_2\\mathbf{h} = (-3, 1.5)^\\top$ and $\\mathbf{y} = (-2, -0.5)^\\top$. The error at the output is $\\mathbf{g} = \\mathbf{y} - \\mathbf{t} = (-1, 0.5)^\\top$."
+            },
+            {
+              "p": "$\\mathbf{x}$ reaches $\\mathbf{y}$ along two paths, directly and through the branch, and the chain rule adds the two contributions. The direct path passes $\\mathbf{g}$ through unchanged. The branch path is the usual backward pass through two layers, first back through $W_2$,"
+            },
+            {
+              "tex": "W_2^\\top\\mathbf{g} = (0.5 \\cdot (-1) + 2 \\cdot 0.5,\\ \\ (-1)(-1) + 0.5 \\cdot 0.5)^\\top = (0.5,\\ 1.25)^\\top,"
+            },
+            {
+              "p": "then through the ReLU, whose slopes are $(0, 1)$ because the first unit is off, giving $\\boldsymbol{\\delta} = (0, 1.25)^\\top$, and then $W_1^\\top\\boldsymbol{\\delta} = (1.25, -1.25)^\\top$. Adding the direct path,"
+            },
+            {
+              "tex": "\\frac{\\partial L}{\\partial \\mathbf{x}} = (-1,\\ 0.5)^\\top + (1.25,\\ -1.25)^\\top = (0.25,\\ -0.75)^\\top."
+            },
+            {
+              "p": "Dropping the direct path gives $(1.25, -1.25)^\\top$, and dropping the branch gives $(-1, 0.5)^\\top$. Both are wrong, and a central difference on each entry of $\\mathbf{x}$ confirms $(0.25, -0.75)^\\top$."
+            },
+            {
+              "result": "$-0.75$"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Find the gradients with respect to the two weight matrices. Enter the entry of the gradient for $W_1$ in row 2, column 2."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each is an outer product of the error at the layer's output with the layer's input:"
+            },
+            {
+              "tex": "\\frac{\\partial L}{\\partial W_2} = \\mathbf{g}\\,\\mathbf{h}^\\top = \\begin{bmatrix} 0 & -3 \\\\ 0 & 1.5 \\end{bmatrix}"
+            },
+            {
+              "p": "for the second layer, and for the first"
+            },
+            {
+              "tex": "\\frac{\\partial L}{\\partial W_1} = \\boldsymbol{\\delta}\\,\\mathbf{x}^\\top = \\begin{bmatrix} 0 & 0 \\\\ 1.25 & -2.5 \\end{bmatrix}."
+            },
+            {
+              "p": "The first column of $\\partial L/\\partial W_2$ and the first row of $\\partial L/\\partial W_1$ are zero because the first hidden unit is off. The direct path adds nothing to either: it has no weights."
+            },
+            {
+              "result": "$-2.5$"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "A common initialization sets $W_2 = 0$ in every residual block. With $W_2 = 0$ and the same $W_1$, $\\mathbf{x}$ and $\\mathbf{t}$, what are the gradients with respect to $\\mathbf{x}$, $W_1$ and $W_2$? What happens to the gradient reaching the input of a stack of 50 such blocks, and which weights move on the first step?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "With $W_2 = 0$ the block is the identity: $\\mathbf{y} = \\mathbf{x} = (1, -2)^\\top$ and $\\mathbf{g} = (2, -1)^\\top$. The branch path starts with $W_2^\\top\\mathbf{g} = \\mathbf{0}$, so the gradient at the input is $\\mathbf{g} = (2, -1)^\\top$ itself, the gradient for $W_1$ is zero, and the gradient for $W_2$ is still an outer product with $\\mathbf{h} = (0, 3)^\\top$:"
+            },
+            {
+              "tex": "\\frac{\\partial L}{\\partial W_2} = \\mathbf{g}\\,\\mathbf{h}^\\top = \\begin{bmatrix} 0 & 6 \\\\ 0 & -3 \\end{bmatrix}."
+            },
+            {
+              "p": "In a stack of 50 such blocks every block is the identity, so the error reaches the input of the stack exactly as it left the output, with no product of 50 matrices to shrink or grow it. On the first step only the $W_2$ matrices move. Once they are nonzero, the error flows into the branches and the $W_1$ matrices start to learn. A plain network of the same depth has no direct path: every route from the loss to the input goes through 50 weight matrices and activation slopes."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bp-same-matrix-ten-layers",
+      "moduleId": "backpropagation-mechanics",
+      "title": "Ten Layers That Share One Matrix",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "A network of width 2 applies the same ReLU layer ten times, with no biases:"
+      ],
+      "setup": [
+        {
+          "tex": "\\mathbf{a}^{(0)} = \\mathbf{x}, \\qquad\n\\mathbf{z}^{(k)} = W\\mathbf{a}^{(k-1)}, \\qquad\n\\mathbf{a}^{(k)} = \\operatorname{ReLU}\\big(\\mathbf{z}^{(k)}\\big), \\qquad k = 1, \\dots, 10,"
+        },
+        {
+          "tex": "W = \\begin{bmatrix} 1 & 0.5 \\\\ 0.5 & 1 \\end{bmatrix},"
+        },
+        {
+          "p": "on the input $\\mathbf{x} = (1, 2)^\\top$. Whatever comes after the tenth layer, the backward pass reaches $\\mathbf{z}^{(10)}$ with some error $\\boldsymbol{\\delta}^{(10)}$ and carries it on to the input."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Take $\\boldsymbol{\\delta}^{(10)} = (1, 0)^\\top$. Find $\\partial L/\\partial \\mathbf{x}$, and enter its first entry."
+            }
+          ],
+          "answer": [
+            {
+              "p": "First the slopes. $W$ has positive entries and $\\mathbf{x}$ is positive, so every $\\mathbf{z}^{(k)}$ is positive (the smallest entry along the way is the 2 in $\\mathbf{z}^{(1)} = (2, 2.5)^\\top$). Every ReLU slope is 1, and each step back is a multiplication by $W^\\top = W$:"
+            },
+            {
+              "tex": "\\boldsymbol{\\delta}^{(k)} = W^\\top\\boldsymbol{\\delta}^{(k+1)}, \\qquad\n\\frac{\\partial L}{\\partial \\mathbf{x}} = W^\\top\\boldsymbol{\\delta}^{(1)} = W^{10}\\boldsymbol{\\delta}^{(10)} ."
+            },
+            {
+              "p": "That is nine steps from layer 10 to layer 1 and one more into the input. $W$ is symmetric with eigenvectors $(1, 1)^\\top$, eigenvalue 1.5, and $(1, -1)^\\top$, eigenvalue 0.5. Split the error along them: $(1, 0)^\\top = \\tfrac12(1, 1)^\\top + \\tfrac12(1, -1)^\\top$. Then"
+            },
+            {
+              "tex": "W^{10}(1,\\ 0)^\\top\n= \\frac{1.5^{10}}{2}(1,\\ 1)^\\top + \\frac{0.5^{10}}{2}(1,\\ -1)^\\top\n= (28.8330,\\ 28.8320)^\\top,"
+            },
+            {
+              "p": "using $1.5^{10} = 57.665$ and $0.5^{10} = 0.000977$. The error came in pointing along the first axis and arrives about 41 times longer, pointing almost exactly along $(1, 1)^\\top$."
+            },
+            {
+              "result": "28.833"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Now compare $\\boldsymbol{\\delta}^{(10)} = (1, 1)^\\top$ with $\\boldsymbol{\\delta}^{(10)} = (1, -1)^\\top$, two errors of the same length. How many times longer is $\\partial L/\\partial \\mathbf{x}$ for the first than for the second?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each is an eigenvector, so ten multiplications by $W$ scale it by the eigenvalue to the tenth power: $(1, 1)^\\top$ comes back as $57.665\\,(1, 1)^\\top$ and $(1, -1)^\\top$ as $0.000977\\,(1, -1)^\\top$. The ratio of lengths is"
+            },
+            {
+              "tex": "\\left(\\frac{1.5}{0.5}\\right)^{10} = 3^{10} = 59049 ."
+            },
+            {
+              "p": "The same network, on the same input, explodes one error and makes the other vanish. Whether a gradient vanishes or explodes is decided per direction, by the factor $W^\\top$ applies along it, here its eigenvalues."
+            },
+            {
+              "result": "59049"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Can multiplying $W$ by one constant $c$ keep both errors from growing or shrinking over the ten layers? What would a matrix that does it look like?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "No. Scaling $W$ by $c$ scales both eigenvalues, to $1.5c$ and $0.5c$, and their ratio stays 3. With $c = 2/3$ the first direction keeps its length, but the second shrinks by $(1/3)^{10} \\approx 1.7 \\times 10^{-5}$. No $c$ makes both factors 1, and over ten layers their ratio is always 59049."
+            },
+            {
+              "p": "Every error keeps its length only if $W^\\top$ keeps the length of every vector, which makes $W$ orthogonal: all its singular values equal to 1, as for a rotation. That is the idea behind orthogonal initialization. ReLU complicates it in a real network, since units that are off zero out parts of the error, but the lesson stays: the scale of the weights decides the average growth per layer, and the spread of the singular values decides how differently the directions fare."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bp-tanh-layer-backward",
+      "moduleId": "backpropagation-mechanics",
+      "title": "The Error at a Tanh Unit",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A regression network has a hidden layer of three tanh units and an output layer of three linear units, $\\hat{\\mathbf{y}} = W^{(2)}\\mathbf{a}^{(1)} + \\mathbf{b}^{(2)}$, trained on $L = \\tfrac12 \\lVert \\hat{\\mathbf{y}} - \\mathbf{y} \\rVert^2$. On one example the forward pass gives"
+            },
+            {
+              "tex": "\\mathbf{a}^{(1)} = (0.8,\\ -0.6,\\ 0.5)^\\top, \\qquad\n\\hat{\\mathbf{y}} = (2.5,\\ -1,\\ 1.5)^\\top"
+            },
+            {
+              "p": "against the target $\\mathbf{y} = (2,\\ 0,\\ 1)^\\top$, and the output weights are"
+            },
+            {
+              "tex": "W^{(2)} = \\begin{bmatrix} 1 & 2 & 0 \\\\ -1 & 0 & 2 \\\\ 0 & 1 & 1 \\end{bmatrix}."
+            },
+            {
+              "p": "What is $\\delta^{(1)}_2 = \\partial L / \\partial z^{(1)}_2$, the error at the second hidden unit's pre-activation?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "0.32",
+                  "explain": "This uses row 2 of W2, the weights coming into output unit 2, giving 0.5 instead of 1.5 before the slope. Hidden unit 2 sends its activation to all three outputs through column 2 of W2, (2, 0, 1), so its error collects 2 × 0.5 + 0 × (−1) + 1 × 0.5 = 1.5. The transpose in the backward rule is what picks columns."
+                },
+                {
+                  "text": "1.5",
+                  "explain": "1.5 is the gradient at the activation a2, the sum over outputs of error times weight, (2, 0, 1) · (0.5, −1, 0.5). The question asks for the error at the pre-activation z2, one step further back, so the tanh slope 1 − 0.6² = 0.64 still multiplies it."
+                },
+                {
+                  "text": "0.96",
+                  "correct": true,
+                  "explain": "The output units are linear and the loss is half the squared error, so the output error is ŷ − y = (0.5, −1, 0.5). Unit 2 feeds the outputs through column 2 of W2, (2, 0, 1), so the gradient at its activation is 1.0 + 0 + 0.5 = 1.5. The slope of tanh is 1 − tanh², which here is 1 − 0.36 = 0.64, so the error is 1.5 × 0.64 = 0.96."
+                },
+                {
+                  "text": "−1.44",
+                  "explain": "This multiplies by a(1 − a) = −0.6 × 1.6 = −0.96, the sigmoid's slope written in terms of its output. For tanh the slope in terms of the output is 1 − a² = 0.64, which is never negative: tanh is increasing everywhere, so its slope cannot flip the sign of the error."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The output units are linear and the loss is half the squared error, so the output error is ŷ − y = (0.5, −1, 0.5). Unit 2 feeds the outputs through column 2 of W2, (2, 0, 1), so the gradient at its activation is 1.0 + 0 + 0.5 = 1.5. The slope of tanh is 1 − tanh², which here is 1 − 0.36 = 0.64, so the error is 1.5 × 0.64 = 0.96."
+            },
+            {
+              "result": "0.96"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

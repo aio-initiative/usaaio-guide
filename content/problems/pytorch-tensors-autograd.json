@@ -1,0 +1,571 @@
+{
+  "module": "pytorch-tensors-autograd",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "pt-tensor-drills",
+      "moduleId": "pytorch-tensors-autograd",
+      "title": "Tensor and Autograd Drills",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=pt-tensor-drills",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Four tasks on the two halves of the lesson. Parts 1 and 2 ban Python loops: a k-nearest-neighbor classifier and a padded-batch summary written with tensor operations alone, each checked against a slow loop that is obviously right. Parts 3 and 4 use autograd as a proof assistant: the backward pass of a small network by hand, confirmed by .backward(), and gradient accumulation that reproduces the full-batch gradient exactly.",
+      "answer": "Auto-graded inside the notebook. Parts 1 and 2 are checked against a loop-based reference and rejected if their bytecode contains a Python loop, Part 3 against .backward() and rejected if it calls autograd, and Part 4 against the full-batch gradient for three different chunkings."
+    },
+    {
+      "id": "pt-aliasing-forensics",
+      "moduleId": "pytorch-tensors-autograd",
+      "title": "Aliasing Forensics",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pt-aliasing-forensics",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Three of the four programs start from the same 3 by 4 tensor holding the numbers 0 to 11, and one starts from a leaf tensor that requires grad. Each one either prints a number or stops with an error. Work out which happens in each, without running them: which writes travel back to the original tensor through a shared view, which land in a copy, and which in-place write autograd refuses. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pta-when-does-grad-flow",
+      "moduleId": "pytorch-tensors-autograd",
+      "title": "Which Tensors Get Gradients?",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pta-when-does-grad-flow",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Three short programs all start from the same leaf tensor with requires_grad switched on. Each one cuts the graph differently with detach or a no_grad block, so say what the last line of each prints, or name the exception a line raises first. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pta-broadcasting-then-reduction",
+      "moduleId": "pytorch-tensors-autograd",
+      "title": "Where Did That Shape Come From?",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pta-broadcasting-then-reduction",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Broadcasting lines two shapes up from the right and a reduction with dim= removes the axes it names. Work through four shape puzzles: a product bigger than either input, a mean that must keep its axes before you can subtract it, the one unsqueeze that lines a vector up with a table of scores, and a loss that broadcasts without a word of warning. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pta-copy-or-view",
+      "moduleId": "pytorch-tensors-autograd",
+      "title": "Which One Copies?",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/theory/?id=pta-copy-or-view",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "Three expressions each build a second tensor from one 4 by 5 tensor. An in-place write into two of them changes the original tensor as well, and into one it cannot, because that result holds its own copy of the values. Pick the one that copies.",
+      "answer": "a[a > 0]. The entries a mask selects sit at irregular gaps in memory, and a view can only describe evenly spaced entries, so the selected values are copied into fresh storage. Writing into the result leaves a alone. NumPy follows the same rule, and so does indexing with a list of integers."
+    },
+    {
+      "id": "pta-logging-the-whole-graph",
+      "moduleId": "pytorch-tensors-autograd",
+      "title": "A Loss in a List",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/theory/?id=pta-logging-the-whole-graph",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A training loop stores the loss tensor itself in one version and the plain number it holds in the other, and both train the same model to the same accuracy. What is different about the first one?",
+      "answer": "Its memory use grows with every batch, because each stored tensor keeps the computation graph of its batch alive. A loss tensor still points back through the graph of the operations that produced it. Storing the tensor keeps that graph alive, batch after batch, so memory climbs for as long as the loop runs. A Python float carries no history at all."
+    }
+  ],
+  "theory": [
+    {
+      "id": "pt-aliasing-forensics",
+      "moduleId": "pytorch-tensors-autograd",
+      "title": "Aliasing Forensics",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "Four short programs. Each one either prints a number or stops with an error. Work out which, without running them. Three of the programs start from the same tensor. The fourth starts from a leaf tensor that requires grad:"
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "x = torch.arange(12).reshape(3, 4)   # [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11]]"
+            ]
+          }
+        },
+        {
+          "p": "For a program that prints, give the number. For one that raises, give the name of the exception."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "t = x.T",
+                  "t[0] += 100",
+                  "print(x.sum().item())"
+                ]
+              }
+            }
+          ],
+          "answer": [
+            {
+              "p": "`.T` returns a view: another way of reading the same twelve numbers, with no copy made. Row 0 of the transpose is column 0 of `x`, so `t[0]` is a view of the entries `0, 4, 8`, and `+=` adds in place, through that view, into the memory `x` owns. Column 0 of `x` becomes `100, 104, 108`."
+            },
+            {
+              "p": "The twelve numbers summed to $66$ before the write, and the write added $300$, so the program prints **366**. The same line through `x.T.clone()[0]` would leave `x` alone, since `clone` makes an independent copy."
+            },
+            {
+              "result": "366"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "w = torch.ones(3, requires_grad=True)",
+                  "with torch.no_grad():",
+                  "    w *= 2",
+                  "w[0] = 5.0",
+                  "print(w.sum().item())"
+                ]
+              }
+            }
+          ],
+          "answer": [
+            {
+              "p": "Autograd treats `w` as a leaf: a tensor made with `requires_grad=True`, whose history it tracks. The first write is allowed, because `torch.no_grad()` switches recording off for its block, which is how an optimizer updates the parameters it owns. The second write runs with recording on. Overwriting a tracked leaf in place would destroy a value that a later backward pass may need, so PyTorch refuses, with a `RuntimeError` whose message names the in-place operation on a leaf that requires grad."
+            },
+            {
+              "p": "The program never reaches the print, and the answer is **RuntimeError**. Written as `w = w * 2` with no `no_grad`, nothing would raise, but `w` would then be a computed tensor rather than a leaf, and its `.grad` would stay `None` after a backward pass."
+            },
+            {
+              "result": "RuntimeError"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "big = x[x > 6]",
+                  "big.zero_()",
+                  "print(x.sum().item())"
+                ]
+              }
+            }
+          ],
+          "answer": [
+            {
+              "p": "Indexing with a boolean mask always copies: advanced indexing never returns a view, even when, as here, the five picked values happen to sit next to each other in `x`'s storage. `big` is a new tensor holding its own copy of them. `zero_()` wipes that copy. `x` is untouched, and the program prints **66**, the sum of $0$ to $11$."
+            },
+            {
+              "p": "Integer-array indexing, `x[[0, 2]]`, copies for the same reason. Compare Part 1, where the transpose and the row taken from it were both views."
+            },
+            {
+              "result": "66"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "flat = x.T.reshape(-1)",
+                  "flat[0] = -1",
+                  "print(x[0, 0].item())"
+                ]
+              }
+            }
+          ],
+          "answer": [
+            {
+              "p": "`x.T` is a view, but reading it row by row visits `x`'s memory in the order `0, 4, 8, 1, 5, 9, ...`, which no single stride describes. `reshape(-1)` returns a view when the memory allows it and copies when it does not, and here it cannot, so `flat` is a copy. The write lands in the copy, `x[0, 0]` is still `0`, and the program prints **0**. `x.T.view(-1)` would have raised instead of copying, which is the one way to be told."
+            },
+            {
+              "p": "The rule behind the four programs: slices, `.T` and a `reshape` of contiguous memory share storage, while masks, integer arrays and a `reshape` that needs a new layout copy. A line that both picks entries and writes is worth trying on a tiny tensor before trusting it on a real one."
+            },
+            {
+              "result": "0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pta-when-does-grad-flow",
+      "moduleId": "pytorch-tensors-autograd",
+      "title": "Which Tensors Get Gradients?",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "Three programs, each starting from the same leaf:"
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "x = torch.tensor([3.0], requires_grad=True)"
+            ]
+          }
+        },
+        {
+          "p": "For each, say what the last line prints, or name the exception if a line raises first. The two tools under test are `detach()`, which returns a tensor cut out of the graph but sharing `x`'s memory, and `torch.no_grad()`, which stops the graph from being recorded inside its block."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "a = x ** 2",
+                  "b = (x ** 3).detach()",
+                  "with torch.no_grad():",
+                  "    c = 2 * x",
+                  "out = (a * b + c * x).sum()",
+                  "out.backward()",
+                  "print(x.grad.item())"
+                ]
+              }
+            }
+          ],
+          "answer": [
+            {
+              "p": "Follow which values autograd recorded as depending on `x`. `a = x ** 2` was recorded. `b` holds $27$, but `detach()` cut it from the graph, so to autograd it is a constant. `c` holds $6$ and was computed with recording off, so it is a constant too. What autograd differentiates is"
+            },
+            {
+              "tex": "\\text{out} = 27\\,x^2 + 6\\,x ,"
+            },
+            {
+              "p": "whose derivative at $x = 3$ is $54 \\cdot 3 + 6 = 168$. So `x.grad` holds **168**."
+            },
+            {
+              "p": "Treating every value as live would give the derivative of $x^5 + 2x^2$, which is $5 \\cdot 81 + 12 = 417$, and treating only `b` as a constant would give $27 \\cdot 2x + 4x = 174$. Neither is what the program prints: a detached value, or one computed under `no_grad`, contributes its number and never its derivative."
+            },
+            {
+              "result": "168"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "y = x.detach()",
+                  "y += 1.0",
+                  "out = (x ** 2).sum()",
+                  "out.backward()",
+                  "print(x.grad.item())"
+                ]
+              }
+            }
+          ],
+          "answer": [
+            {
+              "p": "`detach()` does not copy. `y` is a second name for the storage `x` uses, with the graph link removed, and since `y` does not require grad, writing into it in place is allowed. The write changes the shared number: `x` now holds $4$."
+            },
+            {
+              "p": "The square is recorded after the write, so `out` is $x^2$ at $x = 4$, and its derivative there is $2 \\cdot 4 =$ **8**, not the $6$ that the original $3$ would have given."
+            },
+            {
+              "p": "With the order reversed, `out` computed first and `y += 1.0` after, the backward pass would raise instead. Autograd saves `x` to differentiate the square and checks at `backward()` time that no saved tensor was modified in place. A detached copy that is safe to edit is `x.detach().clone()`."
+            },
+            {
+              "result": "8"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "with torch.no_grad():",
+                  "    out = (x ** 2).sum()",
+                  "out.backward()",
+                  "print(x.grad)"
+                ]
+              }
+            }
+          ],
+          "answer": [
+            {
+              "p": "Inside `torch.no_grad()` nothing is recorded, so `out` is a plain tensor with no `grad_fn` and `requires_grad` false. There is no graph to walk back through, and `backward()` raises at once with `RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn`. The answer is **RuntimeError**."
+            },
+            {
+              "p": "This is the error behind one common mistake: computing a loss under `no_grad()` to save memory and then calling `backward()` on it. The block is for passes that will never be differentiated, validation and manual parameter updates among them. A pass that will be differentiated must run with recording on, and `detach()` is the tool for cutting one branch out of it while the rest keeps recording."
+            },
+            {
+              "result": "RuntimeError"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pta-broadcasting-then-reduction",
+      "moduleId": "pytorch-tensors-autograd",
+      "title": "Where Did That Shape Come From?",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "Broadcasting lines two shapes up from the right. Two sizes agree when they are equal or one of them is 1, and a size of 1 is stretched to match the other. A reduction with `dim=` removes the axes it names. Work each question out on paper, by shape alone."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "`A` has shape `(40, 1, 64)` and `B` has shape `(25, 64)`. How many numbers does `A * B` hold?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Right-align the two shapes. `B` has only two axes, so it is read as `(1, 25, 64)`:"
+            },
+            {
+              "code": {
+                "language": "",
+                "lines": [
+                  "A    40    1   64",
+                  "B     1   25   64"
+                ]
+              }
+            },
+            {
+              "p": "Each column agrees: $64$ against $64$, $1$ against $25$, $40$ against $1$. The stretched result has shape `(40, 25, 64)`, which holds $40 \\cdot 25 \\cdot 64 =$ **64,000** numbers. Neither input is copied on the way, but the product is that big, and `(A * B).sum(dim=-1)` would be a $40 \\times 25$ table of dot products, every row of `A` against every row of `B`."
+            },
+            {
+              "result": "64000"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "A batch of images `x` has shape `(8, 3, 32, 32)`: image, channel, row, column. How many numbers does `x.mean(dim=(2, 3))` hold? Then explain why `x - x.mean(dim=(2, 3))` raises while `x - x.mean(dim=(2, 3), keepdim=True)` works."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The two named axes disappear, leaving one mean per image and channel, a tensor of shape `(8, 3)` holding **24** numbers."
+            },
+            {
+              "p": "Subtracting it from `x` right-aligns `(8, 3, 32, 32)` against `(8, 3)`. The mean's last axis, $3$, meets the last $32$ of the images, and its $8$ meets the other $32$. Neither pair is equal and neither side is 1, so the subtraction raises. With `keepdim=True` the result keeps its two axes as size 1, `(8, 3, 1, 1)`, which lines up with the images in every column, and the two 1s stretch over the rows and columns. That is the per-channel centering a normalization layer performs, and `keepdim` is what makes it one line."
+            },
+            {
+              "result": "24"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "`S` has shape `(32, 10)`, one row of class scores per example, and `v` has shape `(32,)`, one number per example. `S + v` raises. For which `k` does `S + v.unsqueeze(k)` add `v[i]` to every entry of row `i`?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "`(32,)` right-aligns as `(1, 32)`, so the $32$ meets the $10$ and the sum raises. The per-example vector has to stand in the first axis, with a 1 in the second, and `v.unsqueeze(1)` is exactly `(32, 1)`:"
+            },
+            {
+              "code": {
+                "language": "",
+                "lines": [
+                  "S    32   10",
+                  "v    32    1"
+                ]
+              }
+            },
+            {
+              "p": "So $k =$ **1**. The 1 stretches across the ten scores of each row, and `v[i]` reaches every entry of row $i$. `v.unsqueeze(0)` would be `(1, 32)`, the same failure as before, and `v[:, None]` is a shorter way to write the right one."
+            },
+            {
+              "result": "1"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A regression model outputs `pred` of shape `(3, 1)`, holding `[[1.0], [2.0], [3.0]]`, and the targets are `target = torch.tensor([1.0, 2.0, 3.0])`, of shape `(3,)`. Every prediction is exactly right. What does `((pred - target) ** 2).mean()` return?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Nothing raises. `(3, 1)` against `(1, 3)` broadcasts to `(3, 3)`, so `pred - target` is the table of every prediction minus every target, not the three per-example errors:"
+            },
+            {
+              "tex": "\\begin{bmatrix} 0 & -1 & -2 \\\\ 1 & 0 & -1 \\\\ 2 & 1 & 0 \\end{bmatrix} ."
+            },
+            {
+              "p": "Its squares add up to $0 + 1 + 4 + 1 + 0 + 1 + 4 + 1 + 0 = 12$, and the mean over nine entries is $12 / 9 =$ **1.333**, for a model that made no error at all. The loss is a real number, it has a gradient, and training runs on it without complaint, which is what makes a broadcast bug worse than a shape error. With $n$ examples the table has $n^2$ entries, and only the $n$ on its diagonal are errors."
+            },
+            {
+              "p": "The habit that prevents it is to check `pred.shape == target.shape` before any loss, or to remove the extra axis deliberately, with `pred.squeeze(1)`, before the subtraction. `nn.MSELoss` prints a warning about this exact mismatch, and it is worth reading."
+            },
+            {
+              "result": "1.333"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pta-copy-or-view",
+      "moduleId": "pytorch-tensors-autograd",
+      "title": "Which One Copies?",
+      "difficulty": "Easy",
+      "minutes": 3,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Start from `a = torch.randn(4, 5)`. Each expression below builds a second tensor from it. For two of them, an in-place write into the result also changes `a`. For one it cannot, because the result holds its own copy of the values. Which one?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "`a.T`",
+                  "explain": "Transposing swaps the two axes without moving any data. The result reads the same storage in a different order, so a write through it also changes a."
+                },
+                {
+                  "text": "`a.view(20)`",
+                  "explain": "A reshape through view keeps the same storage and only changes how it is read, as long as the entries sit in memory in reading order, which a freshly made tensor's do. A write through the result changes a."
+                },
+                {
+                  "text": "`a[a > 0]`",
+                  "correct": true,
+                  "explain": "The entries a mask selects sit at irregular gaps in memory, and a view can only describe evenly spaced entries, so the selected values are copied into fresh storage. Writing into the result leaves a alone. NumPy follows the same rule, and so does indexing with a list of integers."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The entries a mask selects sit at irregular gaps in memory, and a view can only describe evenly spaced entries, so the selected values are copied into fresh storage. Writing into the result leaves a alone. NumPy follows the same rule, and so does indexing with a list of integers."
+            },
+            {
+              "result": "`a[a > 0]`"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pta-logging-the-whole-graph",
+      "moduleId": "pytorch-tensors-autograd",
+      "title": "A Loss in a List",
+      "difficulty": "Easy",
+      "minutes": 3,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A training loop keeps a record of the loss on every batch. One contestant writes `history.append(loss)` and another writes `history.append(loss.item())`. Both loops train the same model to the same accuracy. What is different about the first one?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Its recorded values are rounded to whole numbers, because the tensor keeps more precision than a Python float.",
+                  "explain": "Nothing is rounded either way. The item call returns the exact float the tensor holds, as a Python number."
+                },
+                {
+                  "text": "Its memory use grows with every batch, because each stored tensor keeps the computation graph of its batch alive.",
+                  "correct": true,
+                  "explain": "A loss tensor still points back through the graph of the operations that produced it. Storing the tensor keeps that graph alive, batch after batch, so memory climbs for as long as the loop runs. A Python float carries no history at all."
+                },
+                {
+                  "text": "Its gradients no longer add up in `.grad` from one step to the next.",
+                  "explain": "The list has no effect on autograd. Every backward call still adds into each parameter's grad field, and the loop still needs its zero_grad."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "A loss tensor still points back through the graph of the operations that produced it. Storing the tensor keeps that graph alive, batch after batch, so memory climbs for as long as the loop runs. A Python float carries no history at all."
+            },
+            {
+              "result": "Its memory use grows with every batch, because each stored tensor keeps the computation graph of its batch alive."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

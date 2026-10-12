@@ -1,0 +1,51 @@
+{
+  "contests": [
+    {
+      "id": "round-1-foundations-sprint",
+      "title": "Round 1 Foundations Sprint",
+      "durationMinutes": 55,
+      "description": "A short set covering math foundations, data processing, and first ML models.",
+      "problemIds": [
+        "vectors-matrices-implementation-task",
+        "probability-statistics-implementation-task",
+        "linear-regression-implementation-task",
+        "model-training-implementation-task"
+      ]
+    },
+    {
+      "id": "round-2-modeling-check",
+      "title": "Round 2 Modeling Check",
+      "durationMinutes": 60,
+      "description": "Attention, evaluation, and implementation discipline.",
+      "problemIds": [
+        "attention-mechanisms-implementation-task",
+        "model-evaluation-implementation-task",
+        "pytorch-basics-implementation-task"
+      ]
+    },
+    {
+      "id": "camp-architecture-mix",
+      "title": "Camp Architecture Mix",
+      "durationMinutes": 70,
+      "description": "Modern neural architectures, information theory, contrastive learning, and generative modeling.",
+      "problemIds": [
+        "information-theory-implementation-task",
+        "contrastive-learning-implementation-task",
+        "transformer-architectures-implementation-task",
+        "generative-modeling-implementation-task"
+      ]
+    },
+    {
+      "id": "advanced-frontier-set",
+      "title": "Advanced Frontier Set",
+      "durationMinutes": 75,
+      "description": "Efficient attention, reinforcement learning, multimodal learning, and graph neural networks.",
+      "problemIds": [
+        "efficient-attention-implementation-task",
+        "rl-restocking-a-shelf-numpy",
+        "tf7-multimodal-attention-curated",
+        "graph-neural-networks-implementation-task"
+      ]
+    }
+  ]
+}

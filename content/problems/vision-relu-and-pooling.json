@@ -1,0 +1,80 @@
+{
+ "module": "vision-relu-and-pooling",
+ "stage": "Round 2",
+ "index": [
+  {
+   "id": "cv-every-column-the-line-can-take",
+   "moduleId": "vision-relu-and-pooling",
+   "title": "Every Column the Line Can Take",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=cv-every-column-the-line-can-take",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "A 6 by 6 image holds a single vertical line, and the line could be in any of its six columns. For each column apply the vertical filter, ReLU and 2 by 2 max pooling, add up all 24 pooled values, and say which columns lose the line altogether and what change to the convolution would let the vertical filter find them. 2 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  }
+ ],
+ "theory": [
+  {
+   "id": "cv-every-column-the-line-can-take",
+   "moduleId": "vision-relu-and-pooling",
+   "title": "Every Column the Line Can Take",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "The running example's line is in column 3, and moving it to column 2 leaves the pooled vertical map at 6, 0 in each row. The line could be in any of the six columns. For each one, apply the vertical filter (one pixel at a time, no padding), then ReLU, then 2 × 2 max pooling, as in Steps 2 and 3. The vertical filter's three rows are each −1, 2, −1."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Take all six columns together. Each gives a pooled vertical map of 4 numbers, so the six maps hold 24 values between them. What do they add up to?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The filter has 4 positions across a row, over image columns 1 to 3, 2 to 4, 3 to 5 and 4 to 6, so its middle column, the one with weight 2, sits over columns 2, 3, 4 and 5. A line under the middle gives 2 per row of the window, 6 in all. A line under either edge gives −1 per row, −3. All rows of the map are equal, so one row tells the whole story:"
+      },
+      {
+       "tex": "\\begin{array}{ccccc}\n\\text{Column of the line} & \\text{Row of the map} & \\text{After ReLU} & \\text{Row of the pooled map} & \\text{Pooled total} \\\\ \\hline\n1 & \\text{−3, 0, 0, 0} & \\text{0, 0, 0, 0} & \\text{0, 0} & 0 \\\\\n2 & \\text{6, −3, 0, 0} & \\text{6, 0, 0, 0} & \\text{6, 0} & 12 \\\\\n3 & \\text{−3, 6, −3, 0} & \\text{0, 6, 0, 0} & \\text{6, 0} & 12 \\\\\n4 & \\text{0, −3, 6, −3} & \\text{0, 0, 6, 0} & \\text{0, 6} & 12 \\\\\n5 & \\text{0, 0, −3, 6} & \\text{0, 0, 0, 6} & \\text{0, 6} & 12 \\\\\n6 & \\text{0, 0, 0, −3} & \\text{0, 0, 0, 0} & \\text{0, 0} & 0\n\\end{array}"
+      },
+      {
+       "p": "Every row of the map is the same, so each pooled map has two equal rows and its total is twice its row: 0, 12, 12, 12, 12, 0, and 48 over the six columns."
+      },
+      {
+       "p": "Each of the four middle columns keeps a 6, in columns 2 and 3 in the left block of the map and in columns 4 and 5 in the right one, so the pooled map has two forms, 6, 0 and 0, 6. Pooling absorbs a shift only within a block."
+      },
+      {
+       "result": "48"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Which columns lose the line altogether, and why? What change to the convolution would let the vertical filter find them?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Columns 1 and 6. A line in column 1 is only ever under the left edge of the window, where it meets a weight of −1, so its one response is −3, and ReLU turns that into 0. Column 6 is the same at the right edge. After ReLU nothing is left of the line, and the pooled map is the same as for an empty image."
+      },
+      {
+       "p": "A border of zeros (padding of 1, as in [Step 2](/module/?id=vision-convolution)) gives the filter 6 positions across, one centered on every column, and the map becomes 6 × 6. A line in column 1 then sits under the middle of the first window and gives 6, or 4 in the top and bottom rows of the map, where the window hangs over the border and covers only two pixels of the line. Sharing one filter across positions finds a pattern everywhere only where the filter can be centered."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

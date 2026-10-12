@@ -1,0 +1,1156 @@
+{
+ "module": "contrastive-learning",
+ "stage": "Round 2",
+ "index": [
+  {
+   "id": "contrastive-learning-implementation-task",
+   "moduleId": "contrastive-learning",
+   "title": "Contrastive Embedding Practice",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=contrastive-learning",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "Metric/contrastive embedding + nearest-neighbor classification. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+   "answer": "Auto-graded inside the notebook. Test accuracy must reach the target shown in the evaluation cell."
+  },
+  {
+   "id": "rp5-pretext-shortcut",
+   "moduleId": "contrastive-learning",
+   "title": "Your Pretext Task Has a Shortcut",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=rp5-pretext-shortcut",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "Show that a rotation-prediction pretext task can be solved from four border means alone, and confirm the center crop carries almost no rotation signal.",
+   "answer": "Auto-graded inside the notebook. All three accuracies and shortcut_strength must match to 1e-6, with the border features far above chance and the center crop near chance."
+  },
+  {
+   "id": "rp7-collapse-rank",
+   "moduleId": "contrastive-learning",
+   "title": "Detecting Collapse Before It Ruins the Run",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=rp7-collapse-rank",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "Compute effective rank and normalized per-dimension spread for four checkpoints, and identify three different ways a non-contrastive encoder can collapse.",
+   "answer": "Auto-graded inside the notebook. Effective ranks and spread values must match to 1e-6, correctly flagging the collapsed runs."
+  },
+  {
+   "id": "cl-clip-loss-numpy",
+   "moduleId": "contrastive-learning",
+   "title": "The CLIP Loss in NumPy",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=cl-clip-loss-numpy",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "A photo-sharing site trains a CLIP-style model on photos and the captions people wrote for them. A photo often has several captions, so a batch drawn by caption can hold the same photo twice. Write the symmetric loss so it gives the right answer at any temperature, extend it to batches in which a photo appears more than once, and work out its gradient with respect to the logits.",
+   "answer": "Auto-graded inside the notebook. Each part's check cell must pass: the loss at temperatures down to 0.001, the shared-photo targets agreeing with Part 1 when every photo is different, and the gradient matching how Part 2's loss actually changes."
+  },
+  {
+   "id": "cl-linear-clip-numpy",
+   "moduleId": "contrastive-learning",
+   "title": "Train a Linear CLIP in NumPy",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=cl-linear-clip-numpy",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "A toy world of colored shapes. Each photo is a feature vector built from its color, shape and size, and each caption is a bag of words such as a small red circle. Write the backward pass through scaling to length 1, the loss and its gradients for two linear encoders, a training loop that also learns the temperature, and a zero-shot classifier for held-out blue stars.",
+   "answer": "Auto-graded inside the notebook. Each part's check cell must pass, ending with at least 0.9 of the held-out blue stars labeled a blue star and 0.9 of test photos getting color and shape both right."
+  },
+  {
+   "id": "cl-infonce-from-raw-vectors",
+   "moduleId": "contrastive-learning",
+   "title": "InfoNCE from Raw Encoder Outputs",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=cl-infonce-from-raw-vectors",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 2"
+   ],
+   "prompt": "A retrieval model is trained with the InfoNCE loss at temperature 0.1. For one query the batch holds its matching key and two keys that do not match, so what is the loss for that query?",
+   "answer": "0.230. The lengths are 3, 7, 9 and 3, so the cosine similarities with q are 20/21 = 0.952 for the positive, 22/27 = 0.815 for the first negative and 4/9 = 0.444 for the second. Divided by 0.1 they give the logits 9.52, 8.15 and 4.44, and the loss is ln(e^9.52 + e^8.15 + e^4.44) − 9.52 = ln(1 + e^−1.38 + e^−5.08) ≈ 0.230. The softmax puts 0.79 on the positive and 0.20 on the first negative, so almost all of the remaining loss comes from that one close negative."
+  },
+  {
+   "id": "cl-ripeness-from-simclr",
+   "moduleId": "contrastive-learning",
+   "title": "Ripeness from a SimCLR Encoder",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=cl-ripeness-from-simclr",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 2"
+   ],
+   "prompt": "A fruit packing plant pretrains an image encoder with SimCLR on two million unlabeled conveyor-belt photos, building each view with a random crop covering 30 to 100% of it, a random horizontal flip, a hue shift of up to half the color wheel in either direction, and a conversion to grayscale with probability 0.5. A linear classifier trained on the frozen features then scores 94% at telling apples, pears and plums apart but only 61% at telling ripe bananas from unripe ones, which differ mainly in color. Which change to the pretraining is most likely to raise the ripeness score?",
+   "answer": "Remove the hue shift and the grayscale conversion, and keep the crops and flips. The encoder learns what the two views of a photo have in common, so every augmentation names a feature it is taught to ignore. The hue shift and the grayscale conversion tell it to ignore color, the one thing that separates ripe from unripe bananas. Without them, color is the same in both views and becomes useful for matching. The price is a risk: with crops alone, two views of a photo can be matched by their color histograms instead of their content. A mild hue shift is a reasonable middle ground, but a shift of half the wheel erases exactly what this task needs."
+  },
+  {
+   "id": "cl-push-on-the-negatives",
+   "moduleId": "contrastive-learning",
+   "title": "Where the Push on the Negatives Goes",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=cl-push-on-the-negatives",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "One query has a positive and ten negatives, with cosine similarity 0.8 to the positive, 0.5 to one close negative and 0.1 to the other nine. Compute how the gradient push on the negatives is split between the close negative and the easy ones, and how the temperature moves that split. 4 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "cl-collapsed-caption-encoder",
+   "moduleId": "contrastive-learning",
+   "title": "A Caption Encoder That Collapsed",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=cl-collapsed-caption-encoder",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "A bug makes a CLIP text tower emit the same unit vector for every caption while the image tower still works. With four image embeddings at cosine similarities 0.3, 0.1, 0.1 and -0.1 to that vector and temperature 0.1, compute the text-to-image loss and the full CLIP loss, then find the lowest loss the image tower can reach on its own. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "cl-sixteen-micro-batches",
+   "moduleId": "contrastive-learning",
+   "title": "Sixteen Micro-Batches in Place of One Batch",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=cl-sixteen-micro-batches",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 2"
+   ],
+   "prompt": "A team wants to train a CLIP model on batches of 4,096 image-caption pairs, but only 256 pairs fit in GPU memory, so they run 16 micro-batches of 256 pairs, add the 16 gradients, and take one optimizer step. How does that compare with training on full batches of 4,096 pairs, where each row's softmax sees every caption in the batch?",
+   "answer": "It optimizes a different objective: each row's softmax covers 256 captions instead of 4,096, so an untrained model starts near ln 256 = 5.55 rather than ln 4096 = 8.32. The batch is where the negatives come from, so cutting it into micro-batches cuts the task. Each row picks its caption out of 256, the mutual-information bound tops out at ln 256, and the loss curve cannot be compared with a run on full batches. The full-batch loss fits in the same memory with more compute: embed all 4,096 pairs without keeping activations, compute the loss and its gradient with respect to the embeddings, then rerun each micro-batch with activations kept and backpropagate those gradients into the encoders."
+  },
+  {
+   "id": "cl-zero-shot-dropped-step",
+   "moduleId": "contrastive-learning",
+   "title": "Dropping One Step of Zero-Shot Classification",
+   "source": "Custom",
+   "difficulty": "Easy",
+   "url": "/theory/?id=cl-zero-shot-dropped-step",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 2"
+   ],
+   "prompt": "A zero-shot CLIP classifier labels an image as cat, dog or fox in four steps: scale the image embedding to length 1, scale each prompt embedding to length 1, multiply the dot products by the learned scale of 100, then take a softmax. For one photo the cosines with the three prompts are 0.29, 0.27 and 0.24 and the prompt embeddings have lengths 9.0, 10.0 and 11.5. Which single step, if dropped, changes the class the classifier reports?",
+   "answer": "Step 2, scaling each prompt's embedding to length 1. Without step 2, each score is the cosine times the prompt's length: 0.29 × 9.0 = 2.61 for cat, 0.27 × 10.0 = 2.70 for dog and 0.24 × 11.5 = 2.76 for fox. The longest prompt embedding wins, although its cosine is the lowest, and the report becomes fox. The lengths differ from prompt to prompt, so they reorder the classes, and a prompt that happens to embed long gets a head start on every image."
+  },
+  {
+   "id": "cl-mean-pooling-padded-batch",
+   "moduleId": "contrastive-learning",
+   "title": "Mean Pooling over a Padded Batch",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=cl-mean-pooling-padded-batch",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "A CLIP text tower averages token states without the attention mask, so padding positions drag on the average. With the padding state (0, 0, 3) and two captions whose real states average to (3, 0, 0) and (0, 3, 0), find the cosine similarity of the pooled vectors in a batch padded to 8 tokens, then for the same caption in a batch padded to 4. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "cl-recall-on-five-captions",
+   "moduleId": "contrastive-learning",
+   "title": "Recall at 1 When Every Image Has Five Captions",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=cl-recall-on-five-captions",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "A test set has 1,000 images with five captions each, and a retrieval evaluation builds one row per caption. Work out what the reported image-to-text and text-to-image scores are, then rewrite the evaluation so it measures what the model actually does. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "cl-temperature-floor",
+   "moduleId": "contrastive-learning",
+   "title": "The Lowest Loss a Temperature Allows",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=cl-temperature-floor",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "A CLIP-style model with a fixed temperature tau trains on batches of N pairs, and its encoders are perfect, so every caption embeds at the point of its own image and only the arrangement of the N embeddings is left to choose. Find the loss for 16 mutually perpendicular pairs at tau = 0.5, prove the lowest loss any arrangement can reach along with the arrangement that reaches it, and apply that floor at CLIP's batch size of 32,768 to the largest workable fixed temperature and to what too high a fixed temperature does to training. 4 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "cl-best-infonce-noisy-captions",
+   "moduleId": "contrastive-learning",
+   "title": "The Best InfoNCE on Noisy Captions",
+   "source": "USAAIO-style",
+   "difficulty": "Very Hard",
+   "url": "/theory/?id=cl-best-infonce-noisy-captions",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "A weather camera takes photos of three kinds, equally often, and each photo comes with a one-word caption from a volunteer who names the right kind with probability 0.8 and each of the two wrong kinds with probability 0.1. A contrastive model trains on batches of N photo-caption pairs with a free score for every pair of a kind and a word. Find the scores that minimize the expected loss, the loss at small batch sizes, and the mutual-information bound they deliver. 4 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  }
+ ],
+ "theory": [
+  {
+   "id": "cl-infonce-from-raw-vectors",
+   "moduleId": "contrastive-learning",
+   "title": "InfoNCE from Raw Encoder Outputs",
+   "difficulty": "Medium",
+   "minutes": 6,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A retrieval model is trained with the InfoNCE loss at temperature $\\tau = 0.1$. For one query, the batch holds its matching key and two keys that do not match. The encoders output these vectors:"
+      },
+      {
+       "tex": "\\begin{array}{ccc}\n\\text{Vector} & \\text{Role} & \\text{Encoder output} \\\\ \\hline\nq & \\text{query} & (1, 2, 2) \\\\\nk^+ & \\text{positive} & (2, 3, 6) \\\\\nk^-_1 & \\text{negative} & (4, 8, 1) \\\\\nk^-_2 & \\text{negative} & (2, -1, 2)\n\\end{array}"
+      },
+      {
+       "p": "What is the InfoNCE loss for this query? Use natural logarithms."
+      },
+      {
+       "choices": [
+        {
+         "text": "$20.00$",
+         "explain": "This uses the raw dot products 20, 22 and 4 as the similarities. The first negative is the longest vector, so its dot product beats the positive's even though it points further from the query, and dividing by 0.1 turns that gap of 2 into a gap of 20 in the logits. InfoNCE compares cosine similarities, so each dot product has to be divided by the two lengths first."
+        },
+        {
+         "text": "$0.230$",
+         "correct": true,
+         "explain": "The lengths are 3, 7, 9 and 3, so the cosine similarities with q are 20/21 = 0.952 for the positive, 22/27 = 0.815 for the first negative and 4/9 = 0.444 for the second. Divided by 0.1 they give the logits 9.52, 8.15 and 4.44, and the loss is ln(e^9.52 + e^8.15 + e^4.44) − 9.52 = ln(1 + e^−1.38 + e^−5.08) ≈ 0.230. The softmax puts 0.79 on the positive and 0.20 on the first negative, so almost all of the remaining loss comes from that one close negative."
+        },
+        {
+         "text": "$0.906$",
+         "explain": "This leaves out the temperature. A softmax of the cosines 0.952, 0.815 and 0.444 themselves is nearly flat and gives the positive only 0.40. Dividing by 0.1 multiplies every gap between the logits by 10 before the softmax, and that is what lets a well-aligned pair score a small loss."
+        },
+        {
+         "text": "$-1.351$",
+         "explain": "This puts only the two negatives in the denominator. The loss is minus the log of a probability, so it can never be negative. The positive's own term belongs in the sum, which is what makes the fraction a softmax over all three keys and the loss a cross-entropy."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "The lengths are 3, 7, 9 and 3, so the cosine similarities with q are 20/21 = 0.952 for the positive, 22/27 = 0.815 for the first negative and 4/9 = 0.444 for the second. Divided by 0.1 they give the logits 9.52, 8.15 and 4.44, and the loss is ln(e^9.52 + e^8.15 + e^4.44) − 9.52 = ln(1 + e^−1.38 + e^−5.08) ≈ 0.230. The softmax puts 0.79 on the positive and 0.20 on the first negative, so almost all of the remaining loss comes from that one close negative."
+      },
+      {
+       "result": "$0.230$"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-ripeness-from-simclr",
+   "moduleId": "contrastive-learning",
+   "title": "Ripeness from a SimCLR Encoder",
+   "difficulty": "Medium",
+   "minutes": 5,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A fruit packing plant pretrains an image encoder with SimCLR on two million unlabeled photos from its conveyor belts. Each view of a photo is made with a random crop covering 30 to 100% of it, a random horizontal flip, a hue shift of up to half the color wheel in either direction, and a conversion to grayscale with probability 0.5."
+      },
+      {
+       "p": "A linear classifier trained on the frozen features then scores 94% at telling apples, pears and plums apart, but only 61% at telling ripe bananas from unripe ones, which differ mainly in color. Which change to the pretraining is most likely to raise the ripeness score?"
+      },
+      {
+       "choices": [
+        {
+         "text": "Double the batch size, so that every view is compared with twice as many negatives",
+         "explain": "More negatives make the matching task harder, but not in a way that needs color. The two views of one photo have different hues, so any feature that tracks color moves the two views apart and costs the loss on the positive pair. A harder version of the same task still rewards an encoder that ignores color."
+        },
+        {
+         "text": "Lower the temperature, so that the loss concentrates on the hardest negatives",
+         "explain": "The temperature decides how the penalty is spread over the negatives, not which features the positive pairs allow. The closest negatives may well be other bananas, but separating them by color would pull apart the two views of each photo, whose hues differ by design."
+        },
+        {
+         "text": "Widen the hue shift to the full color wheel, so that the encoder sees every color",
+         "explain": "Seeing many colors is not the same as learning to tell them apart. A wider shift makes color even less reliable for matching the two views of a photo, so it pushes the encoder harder to throw color away. The ripeness score would most likely fall."
+        },
+        {
+         "text": "Remove the hue shift and the grayscale conversion, and keep the crops and flips",
+         "correct": true,
+         "explain": "The encoder learns what the two views of a photo have in common, so every augmentation names a feature it is taught to ignore. The hue shift and the grayscale conversion tell it to ignore color, the one thing that separates ripe from unripe bananas. Without them, color is the same in both views and becomes useful for matching. The price is a risk: with crops alone, two views of a photo can be matched by their color histograms instead of their content. A mild hue shift is a reasonable middle ground, but a shift of half the wheel erases exactly what this task needs."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "The encoder learns what the two views of a photo have in common, so every augmentation names a feature it is taught to ignore. The hue shift and the grayscale conversion tell it to ignore color, the one thing that separates ripe from unripe bananas. Without them, color is the same in both views and becomes useful for matching. The price is a risk: with crops alone, two views of a photo can be matched by their color histograms instead of their content. A mild hue shift is a reasonable middle ground, but a shift of half the wheel erases exactly what this task needs."
+      },
+      {
+       "result": "Remove the hue shift and the grayscale conversion, and keep the crops and flips"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-push-on-the-negatives",
+   "moduleId": "contrastive-learning",
+   "title": "Where the Push on the Negatives Goes",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "One query in a contrastive batch has a positive and ten negatives. Its cosine similarity is $s_+ = 0.8$ with the positive, $0.5$ with one close negative, and $0.1$ with each of the other nine. Its loss is"
+   ],
+   "setup": [
+    {
+     "tex": "\\mathcal{L} = -\\ln \\frac{e^{s_+/\\tau}}{e^{s_+/\\tau} + \\sum_{j=1}^{10} e^{s_j/\\tau}} ,"
+    },
+    {
+     "p": "where $s_1, \\dots, s_{10}$ are the negatives' similarities. A gradient step lowers each $s_j$ by an amount proportional to $\\partial\\mathcal{L}/\\partial s_j$. Call the close negative's **share** its derivative divided by the sum of the derivatives of all ten negatives."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the close negative's share at $\\tau = 1$? Give it to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Write the loss as $-s_+/\\tau + \\ln\\big(e^{s_+/\\tau} + \\sum_k e^{s_k/\\tau}\\big)$ and differentiate with respect to one negative's similarity:"
+      },
+      {
+       "tex": "\\frac{\\partial\\mathcal{L}}{\\partial s_j} = \\frac{1}{\\tau}\\,\\frac{e^{s_j/\\tau}}{e^{s_+/\\tau} + \\sum_k e^{s_k/\\tau}} = \\frac{p_j}{\\tau} ,"
+      },
+      {
+       "p": "where $p_j$ is the softmax weight on negative $j$. In the share, the factor $1/\\tau$ and the whole denominator cancel, and so does $s_+$:"
+      },
+      {
+       "tex": "\\text{share} = \\frac{e^{s_1/\\tau}}{\\sum_{k=1}^{10} e^{s_k/\\tau}} ."
+      },
+      {
+       "p": "At $\\tau = 1$ that is"
+      },
+      {
+       "tex": "\\frac{e^{0.5}}{e^{0.5} + 9e^{0.1}} = \\frac{1.649}{1.649 + 9.947} = 0.142 ,"
+      },
+      {
+       "p": "hardly more than the $0.1$ an even split would give."
+      },
+      {
+       "result": "0.142"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the share at $\\tau = 0.1$?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The same formula with every similarity multiplied by 10:"
+      },
+      {
+       "tex": "\\frac{e^{5}}{e^{5} + 9e^{1}} = \\frac{148.4}{148.4 + 24.5} = 0.858 ."
+      },
+      {
+       "p": "The gap of 0.4 between the close negative and the others becomes a factor of $e^{4} \\approx 55$ in their weights, so the close negative now takes more than five sixths of the push and each easy negative about 1.6%."
+      },
+      {
+       "result": "0.858"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "At what temperature does the close negative take exactly half of the push?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Half means its weight equals the other nine together:"
+      },
+      {
+       "tex": "e^{0.5/\\tau} = 9\\,e^{0.1/\\tau}\n\\quad\\Longleftrightarrow\\quad\n\\frac{0.4}{\\tau} = \\ln 9\n\\quad\\Longleftrightarrow\\quad\n\\tau = \\frac{0.4}{\\ln 9} = 0.182 ."
+      },
+      {
+       "p": "Below this temperature the one close negative gets more of the gradient than all the easy ones combined."
+      },
+      {
+       "result": "0.182"
+      }
+     ]
+    },
+    {
+     "id": "1.4",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "The positive's similarity $s_+ = 0.8$ did not enter any answer. What does it control, and how does the total push on the ten negatives compare at the two temperatures?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "$s_+$ sets how much push there is, not how it is divided. The ten derivatives add up to $(1 - p_+)/\\tau$, where $p_+$ is the softmax weight on the positive, because the weights of all eleven candidates sum to 1."
+      },
+      {
+       "list": [
+        "At $\\tau = 1$: $p_+ = e^{0.8}/(e^{0.8} + e^{0.5} + 9e^{0.1}) = 0.1610$, so the total is $0.8390$, and the close negative gets $0.1422 \\times 0.8390 = 0.1193$.",
+        "At $\\tau = 0.1$: $p_+ = e^{8}/(e^{8} + e^{5} + 9e) = 0.94518$, so the total is $0.05482 / 0.1 = 0.5482$, and the close negative gets $0.8585 \\times 0.5482 = 0.4706$, which is $0.471$ to three decimals."
+       ]
+      },
+      {
+       "p": "The low temperature pushes four times harder on the close negative while pushing less in total: each easy negative's derivative falls from $0.080$ to $0.009$. A low temperature spends the gradient on the negatives the model still confuses with the positive and leaves the ones it already separates alone."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-collapsed-caption-encoder",
+   "moduleId": "contrastive-learning",
+   "title": "A Caption Encoder That Collapsed",
+   "difficulty": "Medium",
+   "minutes": 15,
+   "overview": [
+    "Partway through training a CLIP model, a bug in the text tower makes it output the same unit vector $t$ for every caption. The image tower still works. In one batch of four pairs, the four image embeddings have cosine similarities $0.3$, $0.1$, $0.1$ and $-0.1$ with $t$, and the temperature is $\\tau = 0.1$. Rows of the logit matrix are images and columns are captions. Use natural logarithms."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Compute the text-to-image term of the loss, the average of the four columns' cross-entropies."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Every caption embeds at $t$, so $S_{ij} = \\operatorname{sim}(I_i, t)/\\tau$ does not depend on $j$. Write $a = (3, 1, 1, -1)$ for the four values. Every column is this same vector $a$, and column $j$'s target is image $j$, so its cross-entropy is"
+      },
+      {
+       "tex": "\\ln\\Big(\\sum_i e^{a_i}\\Big) - a_j ."
+      },
+      {
+       "p": "Averaging over $j$ replaces $a_j$ by the mean of $a$, which is 1:"
+      },
+      {
+       "tex": "\\ln\\big(e^{3} + 2e + e^{-1}\\big) - 1 = \\ln 25.890 - 1 = 3.254 - 1 = 2.254 ."
+      },
+      {
+       "result": "2.254"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the full CLIP loss of the batch?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Each row is constant, since an image scores every caption the same, so each row's softmax is uniform and its cross-entropy is $\\ln 4 = 1.386$. The CLIP loss averages the two terms:"
+      },
+      {
+       "tex": "\\tfrac12\\,(1.386 + 2.254) = 1.820 ."
+      },
+      {
+       "p": "The column term is above the chance level of $\\ln 4$. The image that sits closest to $t$ wins every caption's softmax, so the three captions that do not belong to it lose."
+      },
+      {
+       "result": "1.820"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "The text tower stays broken while the image tower keeps training. What is the lowest CLIP loss the image tower can reach, and what does it have to do to the image embeddings to get there?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The row term stays at $\\ln 4$ whatever the images do, because every row is constant. The column term is $\\ln\\big(\\sum_i e^{a_i}\\big) - \\bar a$, and"
+      },
+      {
+       "tex": "\\ln\\Big(\\sum_i e^{a_i}\\Big) - \\bar a = \\ln 4 + \\ln\\Big(\\frac{1}{4}\\sum_i e^{a_i - \\bar a}\\Big) \\ge \\ln 4 ,"
+      },
+      {
+       "p": "since the average of $e^{a_i - \\bar a}$ is at least $e^{0} = 1$ by Jensen's inequality (the exponential is convex). Equality needs every $a_i$ equal."
+      },
+      {
+       "p": "So the lowest loss is $\\ln 4 = 1.386$, the chance level, and the image tower reaches it by giving every image the same similarity to $t$, erasing the differences between images along that direction. The gradient trains the working tower toward chance, not toward anything useful. Once one tower has collapsed, a falling loss says nothing good about the other, and a loss that settles at $\\ln N$ is the sign to look for."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-sixteen-micro-batches",
+   "moduleId": "contrastive-learning",
+   "title": "Sixteen Micro-Batches in Place of One Batch",
+   "difficulty": "Medium",
+   "minutes": 5,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A team wants to train a CLIP model on batches of 4,096 image-caption pairs, but only 256 pairs fit in GPU memory. For each batch of 4,096 they run 16 micro-batches of 256 pairs. Each micro-batch computes the symmetric CLIP loss over its own 256 pairs and backpropagates, the 16 gradients are added up, and the optimizer takes one step."
+      },
+      {
+       "p": "How does this compare with training on full batches of 4,096 pairs?"
+      },
+      {
+       "choices": [
+        {
+         "text": "It is the same training: the loss averages over the rows of the batch, and adding the micro-batch gradients adds up the rows' gradients",
+         "explain": "That holds for a loss that is a sum of separate terms, one per example, such as the cross-entropy of a classifier with a fixed set of classes. Here each row's term contains a softmax over every caption in its batch, so a row scored inside a micro-batch is a different term from the same row scored in the full batch. No way of adding up micro-batch gradients brings back the negatives that sat in the other micro-batches."
+        },
+        {
+         "text": "It is the same training up to a factor: the added gradient is 16 times too large, and dividing the learning rate by 16 corrects it",
+         "explain": "A constant factor would only change the size of the step, but the accumulated gradient also points in a different direction. Each row is pushed away from its 255 micro-batch neighbors only, so a hard negative that landed in another micro-batch never contributes. Whether the sum should be divided by 16 is a separate and minor question."
+        },
+        {
+         "text": "It optimizes a different objective: each row's softmax covers 256 captions instead of 4,096, so an untrained model starts near ln 256 = 5.55 rather than ln 4096 = 8.32",
+         "correct": true,
+         "explain": "The batch is where the negatives come from, so cutting it into micro-batches cuts the task. Each row picks its caption out of 256, the mutual-information bound tops out at ln 256, and the loss curve cannot be compared with a run on full batches. The full-batch loss fits in the same memory with more compute: embed all 4,096 pairs without keeping activations, compute the loss and its gradient with respect to the embeddings, then rerun each micro-batch with activations kept and backpropagate those gradients into the encoders."
+        },
+        {
+         "text": "It matches full batches for the image-to-text term, which compares each image only with its own caption, but not for the text-to-image term",
+         "explain": "Neither term compares an image with its own caption alone. In the image-to-text term, each image's softmax runs over every caption in its batch, just as each caption's softmax runs over every image in the text-to-image term. Both terms lose the negatives that sit in the other 15 micro-batches."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "The batch is where the negatives come from, so cutting it into micro-batches cuts the task. Each row picks its caption out of 256, the mutual-information bound tops out at ln 256, and the loss curve cannot be compared with a run on full batches. The full-batch loss fits in the same memory with more compute: embed all 4,096 pairs without keeping activations, compute the loss and its gradient with respect to the embeddings, then rerun each micro-batch with activations kept and backpropagate those gradients into the encoders."
+      },
+      {
+       "result": "It optimizes a different objective: each row's softmax covers 256 captions instead of 4,096, so an untrained model starts near ln 256 = 5.55 rather than ln 4096 = 8.32"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-zero-shot-dropped-step",
+   "moduleId": "contrastive-learning",
+   "title": "Dropping One Step of Zero-Shot Classification",
+   "difficulty": "Easy",
+   "minutes": 5,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A zero-shot classifier built on CLIP labels an image as cat, dog or fox in four steps:"
+      },
+      {
+       "olist": [
+        "scale the image's embedding to length 1,",
+        "scale each class prompt's embedding to length 1,",
+        "multiply each image-prompt dot product by CLIP's learned scale of 100,",
+        "apply a softmax over the three classes and report the class with the largest probability."
+       ]
+      },
+      {
+       "p": "For one photo, the cosine similarities with the three prompts are 0.29 (cat), 0.27 (dog) and 0.24 (fox), so the classifier reports cat with probability 0.88. Before step 2, the three prompt embeddings have lengths 9.0, 10.0 and 11.5. The image embedding has length 14.2 before step 1."
+      },
+      {
+       "p": "A teammate wants to drop one step to save time. Which step, if dropped, changes the reported class for this photo?"
+      },
+      {
+       "choices": [
+        {
+         "text": "Step 2, scaling each prompt's embedding to length 1",
+         "correct": true,
+         "explain": "Without step 2, each score is the cosine times the prompt's length: 0.29 × 9.0 = 2.61 for cat, 0.27 × 10.0 = 2.70 for dog and 0.24 × 11.5 = 2.76 for fox. The longest prompt embedding wins, although its cosine is the lowest, and the report becomes fox. The lengths differ from prompt to prompt, so they reorder the classes, and a prompt that happens to embed long gets a head start on every image."
+        },
+        {
+         "text": "Step 1, scaling the image's embedding to length 1",
+         "explain": "Every score for this photo gets multiplied by the same number, 14.2, which changes their size but not their order, so cat stays on top. It does change the probabilities, because the softmax then sees gaps 14.2 times as large."
+        },
+        {
+         "text": "Step 3, multiplying by the learned scale of 100",
+         "explain": "The scale is one positive number shared by all three classes, so it cannot reorder them. It sets how confident the output looks: without it the softmax of 0.29, 0.27 and 0.24 gives cat only 0.34, while at a scale of 100 the gap of 0.02 to dog is already odds of more than 7 to 1."
+        },
+        {
+         "text": "Step 4, the softmax over the three classes",
+         "explain": "The softmax is increasing in each score, so the largest probability always belongs to the largest score. The classifier needs it to report a probability, not to pick the class."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Without step 2, each score is the cosine times the prompt's length: 0.29 × 9.0 = 2.61 for cat, 0.27 × 10.0 = 2.70 for dog and 0.24 × 11.5 = 2.76 for fox. The longest prompt embedding wins, although its cosine is the lowest, and the report becomes fox. The lengths differ from prompt to prompt, so they reorder the classes, and a prompt that happens to embed long gets a head start on every image."
+      },
+      {
+       "result": "Step 2, scaling each prompt's embedding to length 1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-mean-pooling-padded-batch",
+   "moduleId": "contrastive-learning",
+   "title": "Mean Pooling over a Padded Batch",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "A CLIP text tower turns each caption into one vector by averaging BERT's token states, but its author left out the attention mask, so the average runs over every position of the padded batch. The tokenizer pads each batch to its longest caption."
+   ],
+   "setup": [
+    {
+     "p": "To see what that does, use three-dimensional states and suppose every padding position comes out of the encoder with the same state $p = (0, 0, 3)$. Two captions, A and B, have two real tokens each. The real token states of A average to $a = (3, 0, 0)$, and those of B to $b = (0, 3, 0)$."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "A and B are in the same batch, whose longest caption has 8 tokens. What is the cosine similarity of their pooled vectors?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Each caption has 2 real positions and 6 padding positions, so its average weights its real states by $2/8$ and the padding state by $6/8$:"
+      },
+      {
+       "tex": "\\tfrac{2}{8}\\,a + \\tfrac{6}{8}\\,p = (0.75,\\ 0,\\ 2.25), \\qquad\n\\tfrac{2}{8}\\,b + \\tfrac{6}{8}\\,p = (0,\\ 0.75,\\ 2.25) ."
+      },
+      {
+       "p": "Their cosine similarity is"
+      },
+      {
+       "tex": "\\frac{2.25^2}{0.75^2 + 2.25^2} = \\frac{5.0625}{5.625} = 0.9 ."
+      },
+      {
+       "p": "With the mask the pooled vectors would be $a$ and $b$ themselves, with cosine 0. Most of each pooled vector is padding, so two unrelated short captions look nearly the same."
+      },
+      {
+       "result": "0.9"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Caption A comes up again in a later batch whose longest caption has 4 tokens. What is the cosine similarity between A's pooled vector in that batch and in the first one?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Now A has 2 real positions and 2 padding positions:"
+      },
+      {
+       "tex": "\\tfrac{2}{4}\\,a + \\tfrac{2}{4}\\,p = (1.5,\\ 0,\\ 1.5) ."
+      },
+      {
+       "p": "Against the first batch's $(0.75, 0, 2.25)$:"
+      },
+      {
+       "tex": "\\frac{1.5 \\times 0.75 + 1.5 \\times 2.25}{\\sqrt{4.5}\\,\\sqrt{5.625}} = \\frac{4.5}{5.031} = 0.894 ."
+      },
+      {
+       "p": "The same caption gets a different embedding depending on which other captions share its batch."
+      },
+      {
+       "result": "0.894"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Say what these two numbers mean for training, and for zero-shot classification, where each prompt is tokenized on its own and gets no padding."
+      }
+     ],
+     "answer": [
+      {
+       "p": "In training, short captions all lean toward $p$, so they are similar to one another whatever they say. They become each other's hardest negatives, and the loss spends its effort pulling them apart along directions that have nothing to do with their content. The amount of padding also changes from batch to batch, so the model chases a target that moves with the batch's longest caption."
+      },
+      {
+       "p": "At test time the mismatch is larger. A prompt with no padding pools to its real states alone, $a$ for caption A, and the cosine between $a$ and A's training-time vector $(0.75, 0, 2.25)$ is only $0.75/2.372 = 0.316$. The projection was trained on vectors that are mostly padding and is now fed vectors with none."
+      },
+      {
+       "p": "Averaging only over positions where the attention mask is 1 gives $a$ in every batch and at test time, which is why the mask belongs in the pooling. Real padding states differ a little from position to position, but they share a large common part, so the effect is the same in kind."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-recall-on-five-captions",
+   "moduleId": "contrastive-learning",
+   "title": "Recall at 1 When Every Image Has Five Captions",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "A test set has 1,000 images with five captions each. To measure retrieval, a student builds one row per caption, 5,000 rows in all, sorted so that rows $5m$ to $5m + 4$ hold image $m$ and its five captions, and runs"
+   ],
+   "setup": [
+    {
+     "code": {
+      "language": "python",
+      "lines": [
+       "img = encode_images(images)        # (5000, d): image m fills rows 5m to 5m + 4",
+       "txt = encode_captions(captions)    # (5000, d): one caption per row",
+       "S = img @ txt.T",
+       "i2t = np.mean(S.argmax(axis=1) == np.arange(5000))",
+       "t2i = np.mean(S.argmax(axis=0) == np.arange(5000))"
+      ]
+     }
+    },
+    {
+     "p": "The model is good: every image is more similar to each of its own five captions than to any other caption, and every caption is more similar to its own image than to any other image. Distinct images and distinct captions never produce exactly equal similarities."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What value of `i2t` does the code report?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "`encode_images` gets the same image five times, so rows $5m$ to $5m + 4$ of `img` are the same vector, and so are those rows of `S`. All five rows have the same argmax: whichever of image $m$'s captions is closest to it, say row $5m + k$. Only one of the five rows has the index $5m + k$, so each image gives one hit out of five rows:"
+      },
+      {
+       "tex": "\\texttt{i2t} = \\frac{1000}{5000} = 0.2 ."
+      },
+      {
+       "p": "The model found a correct caption for every row, and the code counts four fifths of them as misses."
+      },
+      {
+       "result": "0.2"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What value of `t2i` does the code report, and which captions count as hits?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Column $5m + j$ holds caption $5m + j$'s similarity with every row. Its largest value appears five times, in the five identical rows of image $m$, and `argmax` returns the first of tied entries, row $5m$. So the column is a hit only when $j = 0$: the first caption of each image counts, the other four do not, and"
+      },
+      {
+       "tex": "\\texttt{t2i} = \\frac{1000}{5000} = 0.2 ."
+      },
+      {
+       "p": "The two directions land on the same number for different reasons. In `i2t` it depends on which caption the model ranks first. In `t2i` it comes from how `argmax` breaks ties, and reordering each image's captions would not change it."
+      },
+      {
+       "result": "0.2"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Rewrite the evaluation so that it measures what the model does, and say what this model scores."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Keep one row per image and record which image each caption belongs to:"
+      },
+      {
+       "code": {
+        "language": "python",
+        "lines": [
+         "img = encode_images(unique_images)                # (1000, d), each image once",
+         "image_of = np.repeat(np.arange(1000), 5)          # caption row -> its image",
+         "S = img @ txt.T                                   # (1000, 5000)",
+         "i2t = np.mean(image_of[S.argmax(axis=1)] == np.arange(1000))",
+         "t2i = np.mean(S.argmax(axis=0) == image_of)"
+        ]
+       }
+      },
+      {
+       "p": "An image scores a hit when its top caption is any of its own five, and a caption scores a hit when its top image is its own. This model gets 1.0 in both directions. It is the same problem as a training batch that holds an image twice: when several rows are correct matches, a check that accepts only the diagonal marks right answers wrong."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-temperature-floor",
+   "moduleId": "contrastive-learning",
+   "title": "The Lowest Loss a Temperature Allows",
+   "difficulty": "Hard",
+   "minutes": 30,
+   "overview": [
+    "A CLIP-style model is trained with a fixed temperature $\\tau$ on batches of $N$ pairs. Suppose its encoders are as good as they can be: every caption embeds at exactly the point of its own image. The batch is then described by $N$ unit vectors $u_1, \\dots, u_N$, one per pair, and the logits are $S_{ij} = u_i \\cdot u_j / \\tau$. The image-to-text loss is"
+   ],
+   "setup": [
+    {
+     "tex": "\\mathcal{L} = \\frac{1}{N}\\sum_{i=1}^{N}\\Big(\\ln \\sum_{j=1}^{N} e^{S_{ij}} - S_{ii}\\Big) ,"
+    },
+    {
+     "p": "and the text-to-image loss equals it, since $S$ is symmetric. Only the arrangement of the $u_i$ is left to choose. Use natural logarithms."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Take $N = 16$, $\\tau = 0.5$, and 16 mutually perpendicular unit vectors. What is the loss?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Each row has $S_{ii} = 1/0.5 = 2$ and fifteen off-diagonal logits of 0, so every row's term is"
+      },
+      {
+       "tex": "\\ln\\big(e^{2} + 15\\big) - 2 = \\ln\\big(1 + 15e^{-2}\\big) = \\ln 3.030 = 1.109 ,"
+      },
+      {
+       "p": "and so is the average. The encoders cannot be faulted, and the loss is still more than a third of the chance level $\\ln 16 = 2.773$."
+      },
+      {
+       "result": "1.109"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Show that no arrangement of $N$ unit vectors gives a loss below"
+      },
+      {
+       "tex": "\\mathcal{L}_{\\min} = \\ln\\Big(1 + (N - 1)\\,e^{-N/((N - 1)\\tau)}\\Big) ,"
+      },
+      {
+       "p": "and find an arrangement that reaches it. For $N = 16$ and $\\tau = 0.5$ this is $1.021$."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Write $c_{ij} = u_i \\cdot u_j$, so $c_{ii} = 1$, and row $i$'s term is"
+      },
+      {
+       "tex": "\\ln\\Big(1 + \\sum_{j \\ne i} e^{(c_{ij} - 1)/\\tau}\\Big) ."
+      },
+      {
+       "p": "**Step 1, inside a row.** The exponential is convex, so by Jensen's inequality the average of the $N - 1$ terms $e^{(c_{ij} - 1)/\\tau}$ is at least $e^{(m_i - 1)/\\tau}$, where $m_i$ is the average of $c_{ij}$ over $j \\ne i$. So row $i$'s term is at least $g(m_i)$, with"
+      },
+      {
+       "tex": "g(m) = \\ln\\big(1 + (N - 1)\\,e^{(m - 1)/\\tau}\\big) ."
+      },
+      {
+       "p": "**Step 2, across rows.** $g$ is increasing, and it is convex: it is the function $\\ln(1 + e^{x})$, whose second derivative $e^{x}/(1 + e^{x})^2$ is positive, applied to $x = (m - 1)/\\tau + \\ln(N - 1)$, a linear function of $m$. Jensen's inequality again gives $\\mathcal{L} \\ge g(\\bar m)$, where $\\bar m$ is the average of all $N(N - 1)$ off-diagonal $c_{ij}$."
+      },
+      {
+       "p": "**Step 3, how negative $\\bar m$ can be.** The squared length of the sum is never negative:"
+      },
+      {
+       "tex": "0 \\le \\Big\\lVert \\sum_i u_i \\Big\\rVert^2 = \\sum_{i, j} c_{ij} = N + N(N - 1)\\,\\bar m ,"
+      },
+      {
+       "p": "so $\\bar m \\ge -1/(N - 1)$. Since $g$ is increasing,"
+      },
+      {
+       "tex": "\\mathcal{L} \\ge g\\Big(-\\frac{1}{N - 1}\\Big) = \\ln\\Big(1 + (N - 1)\\,e^{-N/((N - 1)\\tau)}\\Big),"
+      },
+      {
+       "p": "because $-\\tfrac{1}{N - 1} - 1 = -\\tfrac{N}{N - 1}$."
+      },
+      {
+       "p": "**Reaching it.** Equality needs every $c_{ij}$ with $i \\ne j$ equal (for both uses of Jensen) and $\\sum_i u_i = 0$. The corners of a regular simplex centered at the origin do both: for example, take the $N$ standard basis vectors of $\\mathbb{R}^N$, subtract their average $\\tfrac{1}{N}(1, \\dots, 1)$ from each, and scale the results to length 1. Every pair then has cosine $-1/(N - 1)$, which needs at least $N - 1$ dimensions. For $N = 16$ and $\\tau = 0.5$, $\\ln(1 + 15e^{-32/15}) = 1.021$, a little below the perpendicular arrangement of Part 1. $\\qquad\\blacksquare$"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "CLIP trained on batches of $N = 32{,}768$. What is the largest fixed temperature at which a perfect model could bring the loss down to 0.01?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Set $\\mathcal{L}_{\\min} = 0.01$ and solve for $\\tau$:"
+      },
+      {
+       "tex": "(N - 1)\\,e^{-N/((N - 1)\\tau)} = e^{0.01} - 1\n\\quad\\Longrightarrow\\quad\n\\tau = \\frac{N/(N - 1)}{\\ln\\big((N - 1)/(e^{0.01} - 1)\\big)} ."
+      },
+      {
+       "p": "With $N - 1 = 32{,}767$ and $e^{0.01} - 1 = 0.01005$, the logarithm is $\\ln(3.260 \\times 10^{6}) = 14.997$, so $\\tau = 1.00003 / 14.997 = 0.0667$."
+      },
+      {
+       "p": "CLIP starts its learned temperature at 0.07, just above this value, and allows it to fall to 0.01."
+      },
+      {
+       "result": "0.0667"
+      }
+     ]
+    },
+    {
+     "id": "1.4",
+     "kind": "computation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "With $N = 32{,}768$ and a fixed $\\tau = 0.5$, what is the lowest loss any model can reach? Compare it with the chance level, and say what this means for training with a fixed temperature that is too high."
+      }
+     ],
+     "answer": [
+      {
+       "tex": "\\mathcal{L}_{\\min} = \\ln\\big(1 + 32{,}767\\,e^{-2.00006}\\big) = \\ln 4{,}435.3 = 8.397 ,"
+      },
+      {
+       "p": "against a chance level of $\\ln 32{,}768 = 10.397$. A perfect model would end only 2 nats below a model that has learned nothing."
+      },
+      {
+       "p": "The reason is that cosine similarity is bounded. The positive's logit is at most $1/\\tau = 2$, and by Part 2 the negatives cannot all sit far away: on average their cosine is at least $-1/32{,}767$, essentially 0. So each of the 32,767 negatives keeps a weight of about $e^{-2}$ against the positive's 1. The loss stays high, much of its gradient goes into spreading all the embeddings evenly apart rather than into telling close pairs apart, and the loss curve looks as if little had been learned. The same bound explains why weak and strong encoders score almost the same at high temperatures. Learning the temperature lets it fall as the embeddings improve, which is why CLIP does it."
+      },
+      {
+       "result": "8.397"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-best-infonce-noisy-captions",
+   "moduleId": "contrastive-learning",
+   "title": "The Best InfoNCE on Noisy Captions",
+   "difficulty": "Very Hard",
+   "minutes": 40,
+   "overview": [
+    "A weather camera takes photos of three kinds, *sunny*, *cloudy* and *rainy*, equally often. Each photo comes with a one-word caption from a volunteer, who names the right kind with probability 0.8 and each of the two wrong kinds with probability 0.1."
+   ],
+   "setup": [
+    {
+     "p": "A contrastive model trains on batches of $N$ photo-caption pairs drawn independently. For a photo of kind $x$ it scores every caption $y_i$ in the batch with a function $f(x, y_i)$ and pays"
+    },
+    {
+     "tex": "-\\ln \\frac{e^{f(x, y_+)}}{\\sum_{i=1}^{N} e^{f(x, y_i)}} ,"
+    },
+    {
+     "p": "where $y_+$ is the photo's own caption. Treat $f$ as free: any nine numbers, one for each pair of a kind and a word, are allowed. Use natural logarithms."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "A photo of kind $x$ arrives with the $N$ captions of its batch in random order. Find the probability that caption $i$ is the photo's own, given $x$ and all $N$ words. Use it to find the $f$ that minimizes the expected loss, and give its values here."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Let $q(y \\mid x)$ be the volunteer's distribution and $q(y)$ the overall share of each word, $\\tfrac13$ here. If caption $i$ is the photo's own, then $y_i$ was drawn from $q(\\cdot \\mid x)$ and every other caption, belonging to an independent photo, was drawn from $q(\\cdot)$. With every position equally likely a priori, Bayes' rule gives"
+      },
+      {
+       "tex": "P(i \\mid x, y_1, \\dots, y_N)\n= \\frac{q(y_i \\mid x)\\prod_{k \\ne i} q(y_k)}{\\sum_{j} q(y_j \\mid x)\\prod_{k \\ne j} q(y_k)}\n= \\frac{r(x, y_i)}{\\sum_j r(x, y_j)} ,\n\\qquad r(x, y) = \\frac{q(y \\mid x)}{q(y)} ,"
+      },
+      {
+       "p": "after dividing the top and bottom by $\\prod_k q(y_k)$."
+      },
+      {
+       "p": "The loss is the cross-entropy between this true posterior and the model's softmax over the $N$ captions, and a cross-entropy is smallest when the model's distribution equals the true one (it then equals the entropy, by Gibbs' inequality). So the best scores are $f(x, y) = \\ln r(x, y)$, plus any constant that depends only on $x$, which cancels in the softmax."
+      },
+      {
+       "p": "Here $r = 0.8 / \\tfrac13 = 2.4$ when the word names the photo's kind and $r = 0.1 / \\tfrac13 = 0.3$ when it does not. The best $f$ gives every matching word a score $\\ln(2.4/0.3) = \\ln 8$ above every other word."
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "With $N = 2$ and the best $f$, what is the expected loss?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The negative caption belongs to an independent photo, so its word is each kind with probability $\\tfrac13$. Work through the four cases with the ratios 2.4 and 0.3:"
+      },
+      {
+       "tex": "\\begin{array}{cccc}\n\\text{Own caption} & \\text{Other caption} & \\text{Probability} & \\text{Loss} \\\\ \\hline\n\\text{right word} & \\text{same word} & 0.8 \\times \\tfrac13 & \\ln 2 \\\\\n\\text{right word} & \\text{another word} & 0.8 \\times \\tfrac23 & \\ln(2.7/2.4) = \\ln\\tfrac98 \\\\\n\\text{wrong word} & \\text{the right word} & 0.2 \\times \\tfrac13 & \\ln(2.7/0.3) = \\ln 9 \\\\\n\\text{wrong word} & \\text{another wrong word, or the same one} & 0.2 \\times \\tfrac23 & \\ln 2\n\\end{array}"
+      },
+      {
+       "tex": "\\mathbb{E}[\\mathcal{L}] = 0.8\\Big(\\tfrac13\\ln 2 + \\tfrac23\\ln\\tfrac98\\Big) + 0.2\\Big(\\tfrac13\\ln 9 + \\tfrac23\\ln 2\\Big) = 0.2477 + 0.2389 = 0.487 ."
+      },
+      {
+       "p": "A model that ignores the captions pays $\\ln 2 = 0.693$."
+      },
+      {
+       "result": "0.487"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What lower bound on $I(x; y)$ does $I \\ge \\ln N - \\mathcal{L}$ give with the loss of Part 2? Compare it with the true mutual information."
+      }
+     ],
+     "answer": [
+      {
+       "tex": "\\ln 2 - 0.487 = 0.207 \\text{ nats} ."
+      },
+      {
+       "p": "The word is uniform over three kinds, so $H(y) = \\ln 3$, and given the kind it has entropy $H(y \\mid x) = -0.8\\ln 0.8 - 2 \\times 0.1\\ln 0.1 = 0.639$. So"
+      },
+      {
+       "tex": "I(x; y) = \\ln 3 - 0.639 = 1.099 - 0.639 = 0.460 \\text{ nats} ."
+      },
+      {
+       "p": "The bound holds, but it certifies less than half of the true value, and this is with the best possible scores. The cap $\\ln 2 = 0.693$ is not what holds it down, since it is well above 0.460. With only one negative, the loss is a noisy two-way guess, and the bound gives away that noise."
+      },
+      {
+       "result": "0.207"
+      }
+     ]
+    },
+    {
+     "id": "1.4",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Repeat for $N = 8$: what bound does the best $f$ give? What happens to the bound as $N$ grows?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Let $M$ be the number of the 7 negatives whose word names the photo's kind, so $M$ is binomial with 7 trials and probability $\\tfrac13$. With the best scores, the loss is"
+      },
+      {
+       "tex": "-\\ln\\frac{2.4}{2.4(1 + M) + 0.3(7 - M)} \\text{ when the own word is right,} \\qquad\n-\\ln\\frac{0.3}{2.4M + 0.3(8 - M)} \\text{ when it is wrong.}"
+      },
+      {
+       "p": "Weighting by $0.8$ and $0.2$ and by the binomial probabilities of $M$ gives $\\mathbb{E}[\\mathcal{L}] = 1.683$, so the bound is $\\ln 8 - 1.683 = 0.396$ nats. The same sum for other batch sizes gives:"
+      },
+      {
+       "tex": "\\begin{array}{cccccc}\nN & 2 & 4 & 8 & 64 & 1024 \\\\ \\hline\n\\text{Best expected loss} & 0.487 & 1.055 & 1.683 & 3.707 & 6.472 \\\\\n\\text{Bound $\\ln N - \\mathcal{L}$} & 0.207 & 0.331 & 0.396 & 0.452 & 0.459\n\\end{array}"
+      },
+      {
+       "p": "The bound climbs toward the true 0.460 and never passes it. More negatives make the guess less noisy, so the loss pins down the information more tightly, but no batch size makes the bound exceed the information that is really there. Read in reverse, a contrastive loss at a small batch size understates how much the two views share, even for a perfect model."
+      },
+      {
+       "result": "0.396"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

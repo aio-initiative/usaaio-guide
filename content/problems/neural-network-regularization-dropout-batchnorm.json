@@ -1,0 +1,237 @@
+{
+  "module": "neural-network-regularization-dropout-batchnorm",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "dl4-inverted-dropout",
+      "moduleId": "neural-network-regularization-dropout-batchnorm",
+      "title": "The Dropout Bug That Only Shows Up at Test Time",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=dl4-inverted-dropout",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Implement vanilla and inverted dropout, and measure the train/test activation mismatch that appears when the 1/(1-p) rescaling is left out.",
+      "answer": "Auto-graded inside the notebook. All four statistics must match to 1e-6, with inverted dropout matching its test-time mean and drift near 1/(1-p)."
+    },
+    {
+      "id": "dl5-batchnorm-modes",
+      "moduleId": "neural-network-regularization-dropout-batchnorm",
+      "title": "Batch Norm Behaves Differently When You Are Watching",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=dl5-batchnorm-modes",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Implement batch norm's training path, its inference path, and the running-statistics update, then measure how far the two modes drift apart on non-stationary data.",
+      "answer": "Auto-graded inside the notebook. Running statistics and both output modes must match to 1e-6, with training standardized and eval lagging the drift."
+    },
+    {
+      "id": "dl5-layernorm-batch-one",
+      "moduleId": "neural-network-regularization-dropout-batchnorm",
+      "title": "Batch Size One Breaks Batch Norm",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/editor/?nb=dl5-layernorm-batch-one",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Implement batch norm and layer norm, apply both to a batch of one, and show why only one of them survives, and why layer norm is batch-independent.",
+      "answer": "Auto-graded inside the notebook. All five quantities must match to 1e-6, with batch norm collapsing to zero and layer norm unchanged by batch size."
+    },
+    {
+      "id": "cl-batchnorm-parameter-count",
+      "moduleId": "neural-network-regularization-dropout-batchnorm",
+      "title": "Counting What BatchNorm Trains",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/theory/?id=cl-batchnorm-parameter-count",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A hidden layer has 64 output features and is followed by nn.BatchNorm1d(64). Compared with the same network without that layer, how many more numbers does the optimizer update?",
+      "answer": "128. Each feature has its own scale and its own shift, which is two learnable numbers per feature and 128 for 64 features. The layer also stores a running mean and a running variance per feature, but those are updated from the data during the forward pass, never by a gradient, so the optimizer does not see them."
+    },
+    {
+      "id": "cl-eval-mode-statistics",
+      "moduleId": "neural-network-regularization-dropout-batchnorm",
+      "title": "Normalizing One Example at a Time",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/theory/?id=cl-eval-mode-statistics",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A trained network with batch normalization is switched to eval mode and handed a single example. The layer still subtracts a mean and divides by a standard deviation. Where do those two numbers come from?",
+      "answer": "The running averages the layer collected over the training batches. In eval mode the layer uses the running mean and running variance it accumulated during training and treats them as constants. The result is one fixed scale and shift applied to every input, so a batch of one is no problem and an example gets the same output whatever else is in its batch."
+    },
+    {
+      "id": "cl-dropout-without-the-rescale",
+      "moduleId": "neural-network-regularization-dropout-batchnorm",
+      "title": "Dropout Without the Rescale",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=cl-dropout-without-the-rescale",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A contestant writes a dropout layer by hand. In training mode it sets each activation to zero with probability p and leaves the survivors as they are, with no division by 1 - p. In eval mode it returns its input untouched. The rest of the network is correct, and the training loss comes down to a good value. What happens when the trained model is used for prediction?",
+      "answer": "Each later layer now receives activations whose average is 1 / (1 - p) times what it saw during training, so the model's outputs come out at the wrong scale. In training the next layer learned on inputs whose average was (1 - p) times the undropped value. At eval it receives the undropped value, larger by 1 / (1 - p): double for p = 0.5. Stack two such layers and the scale is off by 4, three and it is off by 8. Softmax outputs come out overconfident and regression outputs too large, and the training loss never shows any of it. The standard fix is inverted dropout, which divides the survivors by 1 - p during training so that eval can be the identity."
+    }
+  ],
+  "theory": [
+    {
+      "id": "cl-batchnorm-parameter-count",
+      "moduleId": "neural-network-regularization-dropout-batchnorm",
+      "title": "Counting What BatchNorm Trains",
+      "difficulty": "Easy",
+      "minutes": 3,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A hidden layer has 64 output features and is followed by `nn.BatchNorm1d(64)`. Compared with the same network without that layer, how many more numbers does the optimizer update?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "64",
+                  "explain": "This counts the scale for each feature and forgets the shift. Every feature gets both, a gamma and a beta."
+                },
+                {
+                  "text": "128",
+                  "correct": true,
+                  "explain": "Each feature has its own scale and its own shift, which is two learnable numbers per feature and 128 for 64 features. The layer also stores a running mean and a running variance per feature, but those are updated from the data during the forward pass, never by a gradient, so the optimizer does not see them."
+                },
+                {
+                  "text": "256",
+                  "explain": "This counts the running mean and running variance as if they were trained. They are buffers: saved with the model and updated from each batch, but no gradient ever reaches them."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each feature has its own scale and its own shift, which is two learnable numbers per feature and 128 for 64 features. The layer also stores a running mean and a running variance per feature, but those are updated from the data during the forward pass, never by a gradient, so the optimizer does not see them."
+            },
+            {
+              "result": "128"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cl-eval-mode-statistics",
+      "moduleId": "neural-network-regularization-dropout-batchnorm",
+      "title": "Normalizing One Example at a Time",
+      "difficulty": "Easy",
+      "minutes": 3,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A trained network with batch normalization is switched to eval mode and handed a single example. The layer still subtracts a mean and divides by a standard deviation. Where do those two numbers come from?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "The running averages the layer collected over the training batches.",
+                  "correct": true,
+                  "explain": "In eval mode the layer uses the running mean and running variance it accumulated during training and treats them as constants. The result is one fixed scale and shift applied to every input, so a batch of one is no problem and an example gets the same output whatever else is in its batch."
+                },
+                {
+                  "text": "The mean and variance of whatever batch the example arrives in.",
+                  "explain": "That is what training mode does. A batch of one has no variance to divide by, and PyTorch refuses to run the layer in training mode on it. In any larger batch an example's output would change with its neighbors."
+                },
+                {
+                  "text": "Fresh values of gamma and beta, recomputed from the evaluation data.",
+                  "explain": "Gamma and beta are a scale and a shift, not a mean and a variance. They are learned by gradient descent during training and frozen afterward, and switching modes changes only where the statistics come from."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "In eval mode the layer uses the running mean and running variance it accumulated during training and treats them as constants. The result is one fixed scale and shift applied to every input, so a batch of one is no problem and an example gets the same output whatever else is in its batch."
+            },
+            {
+              "result": "The running averages the layer collected over the training batches."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cl-dropout-without-the-rescale",
+      "moduleId": "neural-network-regularization-dropout-batchnorm",
+      "title": "Dropout Without the Rescale",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A contestant writes a dropout layer by hand. In training mode it sets each activation to zero with probability $p$ and leaves the survivors as they are, with no division by $1 - p$. In eval mode it returns its input untouched. The rest of the network is correct, and the training loss comes down to a good value. What happens when the trained model is used for prediction?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Nothing goes wrong. Averaged over many random masks, the two modes already agree.",
+                  "explain": "The mask does average out, but to (1 - p) times the activation, not to the activation itself. The two modes agree on average only when one of them is rescaled, and nothing here is."
+                },
+                {
+                  "text": "Each later layer now receives activations whose average is $1 - p$ times what it saw during training, so every output is damped.",
+                  "explain": "The direction is backward. Training is the mode with the smaller signal, since zeroing a fraction p of the activations pulls their average down to (1 - p) of the full value. Evaluation hands the layers below the full value, which is the larger one."
+                },
+                {
+                  "text": "Each later layer now receives activations whose average is $\\frac{1}{1-p}$ times what it saw during training, so the model's outputs come out at the wrong scale.",
+                  "correct": true,
+                  "explain": "In training the next layer learned on inputs whose average was (1 - p) times the undropped value. At eval it receives the undropped value, larger by 1 / (1 - p): double for p = 0.5. Stack two such layers and the scale is off by 4, three and it is off by 8. Softmax outputs come out overconfident and regression outputs too large, and the training loss never shows any of it. The standard fix is inverted dropout, which divides the survivors by 1 - p during training so that eval can be the identity."
+                },
+                {
+                  "text": "Prediction becomes random, giving a different answer each time the same input is passed in.",
+                  "explain": "That would be the symptom of leaving the mask on in eval mode. Here the mask is correctly off, so the model gives the same answer on every call. The fault is a fixed bias in scale, and a steady bias is harder to spot than noise."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "In training the next layer learned on inputs whose average was (1 - p) times the undropped value. At eval it receives the undropped value, larger by 1 / (1 - p): double for p = 0.5. Stack two such layers and the scale is off by 4, three and it is off by 8. Softmax outputs come out overconfident and regression outputs too large, and the training loss never shows any of it. The standard fix is inverted dropout, which divides the survivors by 1 - p during training so that eval can be the identity."
+            },
+            {
+              "result": "Each later layer now receives activations whose average is $\\frac{1}{1-p}$ times what it saw during training, so the model's outputs come out at the wrong scale."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

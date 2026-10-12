@@ -1,0 +1,1752 @@
+/* Problem pages for multiple choice and text answers (UI overhaul 2026-10-11).
+   One header card with a clear action bar, each part as its own card, large
+   option cards for multiple choice, and a number checker on text parts. */
+
+/* --- header card ----------------------------------------------------------- */
+
+.theory-head.pp-head {
+  margin-bottom: 2rem;
+  padding: 1.6rem 1.75rem 1.4rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: var(--paper);
+  box-shadow: var(--shadow-md);
+}
+
+.pp-head .theory-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.pp-head .theory-back:hover {
+  color: var(--brand-strong);
+}
+
+.pp-head .pp-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 0.6rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.pp-type {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.pp-type::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.pp-type--mcq {
+  background: var(--navy-soft);
+  color: var(--navy);
+}
+
+.pp-type--text {
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+.pp-module::before {
+  content: "in ";
+  font-weight: 400;
+}
+
+.pp-head h1 {
+  margin: 0 0 0.9rem;
+  color: var(--ink);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  line-height: 1.15;
+}
+
+.pp-head .theory-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.pp-head .theory-meta .problem-chip,
+.pp-head .theory-meta-chip {
+  min-height: 1.9rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+/* --- action bar ------------------------------------------------------------ */
+
+.pp-head .pp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--line-soft);
+}
+
+.pp-actions-gap {
+  flex: 1 1 0;
+}
+
+.pp-head .pp-action,
+.pp-head .definition-bank-button.pp-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 2.75rem;
+  padding: 0.55rem 1.15rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 120ms ease, background 120ms ease, color 120ms ease, box-shadow 120ms ease;
+}
+
+.pp-head .pp-action svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.pp-head .pp-action:hover {
+  border-color: var(--brand);
+  color: var(--brand-strong);
+  background: var(--brand-soft);
+}
+
+.pp-head .pp-action:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+/* Mark completed is the main action: filled until done, then green. */
+.pp-head .pp-complete {
+  border-color: var(--brand);
+  background: var(--brand);
+  color: #fff;
+}
+
+.pp-head .pp-complete:hover {
+  border-color: var(--brand-strong);
+  background: var(--brand-strong);
+  color: #fff;
+}
+
+.pp-head .pp-complete[aria-pressed="true"] {
+  border-color: var(--green);
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.pp-head .theory-meta-link.pp-action::after {
+  content: "→";
+  font-weight: 700;
+}
+
+/* --- setup and overview ---------------------------------------------------- */
+
+.theory-overview {
+  margin-bottom: 1.75rem;
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.theory-setup {
+  margin-top: 1.25rem;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--navy);
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+}
+
+/* --- parts as cards -------------------------------------------------------- */
+
+.theory-parts {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.theory-part {
+  margin: 0;
+  padding: 1.4rem 1.5rem 1.3rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+
+.theory-part + .theory-part {
+  border-top: 1px solid var(--line);
+}
+
+.theory-part.theory-part-single {
+  padding: 1.5rem 1.6rem;
+}
+
+.theory-part-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 0.85rem;
+  color: var(--ink);
+  font-size: 1.15rem;
+}
+
+.theory-part-body {
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.theory-requirement {
+  display: inline-block;
+  margin: 0.25rem 0 0;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: var(--amber-soft);
+  color: var(--amber);
+  font-size: 0.88rem;
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* --- reveal ---------------------------------------------------------------- */
+
+.theory-reveal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.6rem;
+  margin-top: 1rem;
+  padding: 0.5rem 1.1rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.theory-reveal:hover,
+.theory-reveal.revealed {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+.theory-reveal svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.theory-answer {
+  margin-top: 1rem;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid #cfe3d8;
+  border-left: 4px solid var(--green);
+  border-radius: var(--radius-lg);
+  background: #f6fbf8;
+}
+
+.theory-answer-label {
+  margin: 0 0 0.6rem;
+  color: var(--green);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.theory-result {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--radius);
+  background: var(--paper);
+  border: 1px solid #cfe3d8;
+  font-weight: 600;
+}
+
+.theory-result > span {
+  color: var(--green);
+  font-size: 0.85rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* --- number checker -------------------------------------------------------- */
+
+.theory-check {
+  margin-top: 1.1rem;
+  padding: 1rem 1.1rem;
+  border: 1.5px dashed var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+}
+
+.theory-check-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--ink-2);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.theory-check-row {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.theory-check-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 18rem;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.85rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+}
+
+.theory-check-input:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+.theory-check-button {
+  min-height: 2.75rem;
+  padding: 0.5rem 1.3rem;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.theory-check-button:hover {
+  background: var(--brand-strong);
+}
+
+.theory-check-result {
+  margin: 0.55rem 0 0;
+  min-height: 1.3rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.theory-check.is-correct {
+  border-style: solid;
+  border-color: var(--green);
+  background: var(--green-soft);
+}
+
+.theory-check.is-correct .theory-check-result {
+  color: var(--green);
+}
+
+.theory-check.is-wrong {
+  border-style: solid;
+  border-color: var(--coral);
+  background: var(--coral-soft);
+}
+
+.theory-check.is-wrong .theory-check-result {
+  color: var(--coral);
+}
+
+/* --- multiple choice options ----------------------------------------------- */
+
+.mcq-card .mcq-options {
+  display: grid;
+  gap: 0.7rem;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mcq-card .mcq-option {
+  margin: 0;
+}
+
+.mcq-card .mcq-choice {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  width: 100%;
+  min-height: 3.4rem;
+  padding: 0.8rem 1.1rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1.02rem;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 120ms ease, background 120ms ease, transform 120ms ease;
+}
+
+.mcq-card .mcq-choice:hover {
+  border-color: var(--navy);
+  background: var(--navy-soft);
+}
+
+.mcq-card .mcq-choice:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(53, 80, 122, 0.25);
+}
+
+.mcq-card .mcq-letter {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border: 1.5px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--ink-2);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.mcq-card .mcq-option.is-correct .mcq-choice,
+.mcq-card .mcq-option[data-picked="true"][data-correct="true"] .mcq-choice {
+  border-color: var(--green);
+  background: var(--green-soft);
+}
+
+.mcq-card .mcq-option.is-correct .mcq-letter,
+.mcq-card .mcq-option[data-picked="true"][data-correct="true"] .mcq-letter {
+  border-color: var(--green);
+  background: var(--green);
+  color: #fff;
+}
+
+.mcq-card .mcq-option.is-wrong .mcq-choice,
+.mcq-card .mcq-option[data-picked="true"][data-correct="false"] .mcq-choice {
+  border-color: var(--coral);
+  background: var(--coral-soft);
+}
+
+.mcq-card .mcq-option.is-wrong .mcq-letter,
+.mcq-card .mcq-option[data-picked="true"][data-correct="false"] .mcq-letter {
+  border-color: var(--coral);
+  background: var(--coral);
+  color: #fff;
+}
+
+.mcq-card .mcq-verdict-body {
+  margin: 0.5rem 0 0.25rem;
+  padding: 0.85rem 1.1rem;
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+  border: 1px solid var(--line-soft);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.mcq-card .mcq-option[data-correct="true"] .mcq-verdict-body strong {
+  color: var(--green);
+}
+
+.mcq-card .mcq-option[data-correct="false"] .mcq-verdict-body strong {
+  color: var(--coral);
+}
+
+/* --- definition bank dialog ------------------------------------------------ */
+
+.definition-dialog,
+dialog.definition-bank {
+  width: min(720px, calc(100vw - 2rem));
+  border-radius: var(--radius-xl);
+}
+
+#definition-search {
+  min-height: 2.9rem;
+  font-size: 1rem;
+}
+
+/* --- footnote and small screens -------------------------------------------- */
+
+.theory-footnote {
+  margin-top: 2rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+@media (max-width: 640px) {
+  .theory-head.pp-head {
+    padding: 1.2rem 1.1rem;
+  }
+
+  .pp-head .pp-action {
+    flex: 1 1 calc(50% - 0.6rem);
+  }
+
+  .pp-actions-gap {
+    display: none;
+  }
+
+  .theory-part {
+    padding: 1.1rem 1rem;
+  }
+
+  .theory-check-row {
+    flex-direction: column;
+  }
+
+  .theory-check-input {
+    max-width: none;
+  }
+}
+
+/* A wider sheet so the action bar fits on one row at desktop widths. */
+.theory-paper {
+  width: min(100%, 920px);
+}
+
+/* main.css draws a rule under the old toolbar. The card already ends there. */
+.pp-head .pp-actions {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.theory-head.pp-head::after {
+  display: none;
+}
+
+/* --- header: previous and next, status circle (all three problem pages) ---- */
+
+/* The back link on the left, the problem's place in the list and its
+   previous and next buttons on the right. */
+.pp-head .pp-head-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.pp-head .pp-head-top .theory-back {
+  margin: 0;
+}
+
+.pp-stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.pp-step {
+  display: inline-grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--ink-2);
+  text-decoration: none;
+  transition: border-color 120ms ease, background 120ms ease, color 120ms ease;
+}
+
+.pp-step svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+a.pp-step:hover {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+a.pp-step:focus-visible {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+.pp-step.is-disabled {
+  border-color: var(--line-soft);
+  color: color-mix(in srgb, var(--ink) 25%, transparent);
+  cursor: default;
+}
+
+.pp-step-count {
+  min-width: 4.6rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+/* The status circle stands before the title like a box to tick, centred on
+   the title's first line. It takes the title's font size so it scales with it. */
+.pp-head .pp-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  margin-bottom: 0.9rem;
+}
+
+.theory-head.pp-head .pp-title-row h1 {
+  min-width: 0;
+  margin: 0;
+}
+
+.pp-head .pcheck.pp-check {
+  --pcheck-size: 0.8em;
+  margin-top: 0.175em;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+}
+
+.pp-head .pcheck.pp-check .pcheck-ring {
+  stroke-width: 1.6;
+}
+
+.editor-head.pp-head .pp-title-row {
+  margin-bottom: 0.45rem;
+}
+
+/* --- theory page: Text and MCQ problems (rework 2026-10-12) ---------------- */
+
+/* The header card stays, matching the code page. Under it the problem reads
+   as one sheet: no card per part, no box around the checker or the setup.
+   Parts are split by a rule, and each one ends in a single row of tools.
+   Scoped to the theory page, since the mock draws its paper from the same
+   classes. */
+body[data-page="theory"] .theory-head.pp-head {
+  margin-bottom: 2.25rem;
+}
+
+body[data-page="theory"] .theory-overview {
+  margin: 0 0 2rem;
+  color: var(--ink);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+body[data-page="theory"] .theory-overview > p:last-child {
+  margin-bottom: 0;
+}
+
+body[data-page="theory"] .theory-overview .theory-setup {
+  margin: 1.1rem 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+body[data-page="theory"] .theory-setup > :last-child,
+body[data-page="theory"] .theory-part-body > :last-child {
+  margin-bottom: 0;
+}
+
+body[data-page="theory"] .theory-parts {
+  display: block;
+}
+
+body[data-page="theory"] .theory-parts > .theory-part {
+  margin: 0;
+  padding: 1.9rem 0 2rem;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+body[data-page="theory"] .theory-parts > .theory-part:last-child {
+  padding-bottom: 0.5rem;
+}
+
+/* A one-question MCQ has no overview, so its question starts right under
+   the header with no rule above it. */
+body[data-page="theory"] .theory-parts > .theory-part.theory-part-single {
+  padding: 0;
+  border-top: 0;
+}
+
+body[data-page="theory"] .theory-part-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  margin-bottom: 0.8rem;
+}
+
+body[data-page="theory"] .theory-part-head {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.2rem;
+  letter-spacing: -0.01em;
+}
+
+body[data-page="theory"] .theory-requirement {
+  display: block;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-style: italic;
+  font-weight: 500;
+}
+
+body[data-page="theory"] .theory-part-body {
+  color: var(--ink);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+/* One row under the question: the number box and Check, then Reveal. */
+body[data-page="theory"] .theory-part-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+
+body[data-page="theory"] .theory-check {
+  flex: 0 1 23rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+body[data-page="theory"] .theory-check-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+body[data-page="theory"] .theory-check-input {
+  width: 100%;
+  max-width: none;
+  min-height: 2.6rem;
+}
+
+body[data-page="theory"] .theory-check-button {
+  min-height: 2.6rem;
+  padding: 0.45rem 1.15rem;
+  box-shadow: none;
+}
+
+body[data-page="theory"] .theory-check.is-correct .theory-check-input {
+  border-color: var(--green);
+}
+
+body[data-page="theory"] .theory-check.is-wrong .theory-check-input {
+  border-color: var(--coral);
+}
+
+body[data-page="theory"] .theory-reveal {
+  min-height: 2.6rem;
+  margin: 0;
+  padding: 0.45rem 1rem;
+  border: 1.5px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body[data-page="theory"] .theory-reveal:hover,
+body[data-page="theory"] .theory-reveal.revealed {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+body[data-page="theory"] .theory-check-result {
+  margin: 0.55rem 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+/* Darker than the state colours so the words keep 4.5:1 on white. */
+body[data-page="theory"] .theory-check-result.is-correct {
+  color: var(--green);
+}
+
+body[data-page="theory"] .theory-check-result.is-wrong {
+  color: #be123c;
+}
+
+/* The solution is set off by a green rule and a faint wash, not a box. */
+body[data-page="theory"] .theory-answer {
+  margin-top: 1.25rem;
+  padding: 1rem 1.2rem;
+  border: 0;
+  border-left: 3px solid var(--green);
+  border-radius: 0;
+  background: color-mix(in srgb, var(--green) 5%, var(--paper));
+}
+
+body[data-page="theory"] .theory-answer > :last-child {
+  margin-bottom: 0;
+}
+
+/* The final answer is one plain line at the foot of the solution. */
+body[data-page="theory"] .theory-answer .theory-result {
+  display: flex;
+  margin: 0.9rem 0 0 !important;
+  padding: 0.7rem 0 0;
+  border: 0;
+  border-top: 1px solid color-mix(in srgb, var(--green) 22%, transparent);
+  border-radius: 0;
+  background: none;
+}
+
+body[data-page="theory"] .theory-answer-label {
+  margin: 0 0 0.5rem !important;
+  font-size: 0.88rem;
+}
+
+/* Options: one plain frame each, no shadow, and the verdict under the pick. */
+body[data-page="theory"] .mcq-card.mcq-bare {
+  margin: 1.5rem 0 0;
+}
+
+body[data-page="theory"] .mcq-card .mcq-options {
+  gap: 0.6rem;
+  margin: 0;
+}
+
+body[data-page="theory"] .mcq-card .mcq-option {
+  border-width: 1.5px;
+  border-radius: var(--radius);
+  box-shadow: none;
+}
+
+body[data-page="theory"] .mcq-card .mcq-choice {
+  min-height: 3.25rem;
+  padding: 0.75rem 1rem;
+}
+
+body[data-page="theory"] .mcq-card:not(.is-solved) .mcq-option:not(.is-picked):hover {
+  border-color: var(--brand);
+  background: var(--paper);
+}
+
+body[data-page="theory"] .mcq-card:not(.is-solved) .mcq-option:not(.is-picked):hover .mcq-letter {
+  border-color: var(--brand);
+  color: var(--brand-strong);
+}
+
+body[data-page="theory"] .mcq-card .mcq-letter {
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+}
+
+body[data-page="theory"] .mcq-card .mcq-verdict-body {
+  margin: 0 1rem 0.9rem 3.9rem;
+  padding: 0.6rem 0 0;
+  border: 0;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+  border-radius: 0;
+  background: none;
+}
+
+@media (max-width: 640px) {
+  /* Narrower padding lets Definition bank and Read the module share a row. */
+  .pp-head .pp-action,
+  .pp-head .definition-bank-button.pp-action {
+    padding-inline: 0.65rem;
+  }
+
+  .pp-head .pp-head-top {
+    margin-bottom: 0.85rem;
+  }
+
+  .pp-step-count {
+    min-width: 3.6rem;
+  }
+
+  body[data-page="theory"] .theory-head.pp-head {
+    margin-bottom: 1.75rem;
+  }
+
+  body[data-page="theory"] .theory-parts > .theory-part {
+    padding: 1.5rem 0 1.6rem;
+  }
+
+  body[data-page="theory"] .theory-check {
+    flex: 1 1 100%;
+  }
+
+  body[data-page="theory"] .theory-check-row {
+    flex-direction: row;
+  }
+
+  body[data-page="theory"] .theory-check-input {
+    flex: 1 1 auto;
+  }
+
+  body[data-page="theory"] .mcq-card .mcq-verdict-body {
+    margin-left: 1rem;
+  }
+}
+
+/* --- theory page: header, question card, lesson panel (mcq3, 2026-10-12) --- */
+
+/* As wide as the code page, so the three problem pages share one frame. */
+body[data-page="theory"] .theory-paper {
+  width: min(100%, 1080px);
+}
+
+/* The facts sit on one line across the card: label then value, with a
+   rule between them, so the header reads left to right like a spec strip. */
+.pp-head .pp-facts {
+  display: flex;
+  align-items: stretch;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+
+.pp-head .pp-fact {
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-width: 0;
+  padding: 0.6rem 1rem;
+}
+
+.pp-head .pp-fact + .pp-fact {
+  border-left: 1px solid var(--line-soft);
+}
+
+.pp-head .pp-fact dt {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pp-head .pp-fact dd {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.pp-head .pp-fact .pp-type {
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.86rem;
+}
+
+.pp-head .pp-fact .problem-chip {
+  min-height: 1.75rem;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.pp-head .pp-fact-link {
+  overflow: hidden;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--brand) 45%, transparent);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  text-overflow: ellipsis;
+}
+
+.pp-head .pp-fact-link:hover {
+  color: var(--brand-strong);
+  text-decoration-color: currentColor;
+}
+
+/* Actions: what to do with this problem on the left, references on the
+   right, with the Definition bank as a quiet text button at the far end. */
+body[data-page="theory"] .pp-head .pp-actions {
+  justify-content: space-between;
+  gap: 0.6rem 1rem;
+}
+
+.pp-actions-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.pp-head .pp-action.pp-action-primary {
+  border-color: var(--brand);
+  background: var(--brand);
+  color: #fff;
+}
+
+.pp-head .pp-action.pp-action-primary:hover {
+  border-color: var(--brand-strong);
+  background: var(--brand-strong);
+  color: #fff;
+}
+
+.pp-head .pp-action.pp-action-quiet,
+.pp-head .definition-bank-button.pp-action.pp-action-quiet {
+  border-color: transparent;
+  background: transparent;
+  color: var(--muted);
+  box-shadow: none;
+}
+
+.pp-head .pp-action.pp-action-quiet:hover {
+  border-color: var(--line);
+  background: var(--surface-2);
+  color: var(--ink);
+}
+
+/* --- body and side panel ---------------------------------------------------- */
+
+body[data-page="theory"] .pp-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  align-items: start;
+  gap: 2.5rem;
+}
+
+body[data-page="theory"] .pp-main {
+  min-width: 0;
+}
+
+body[data-page="theory"] .pp-aside {
+  position: sticky;
+  top: 5.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.pp-panel {
+  padding: 1.1rem 1.15rem 1.15rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+
+.pp-panel-title {
+  margin: 0 0 0.8rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pp-source-module {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.pp-source-icon {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius);
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+.pp-source-icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.pp-source-module small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.pp-source-module strong {
+  display: block;
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
+
+.pp-source-module:hover strong {
+  color: var(--brand-strong);
+}
+
+.pp-source-part {
+  margin: 0.9rem 0 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line-soft);
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.pp-source-part > span {
+  display: block;
+  margin-bottom: 0.15rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.pp-source-part a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--brand) 45%, transparent);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+.pp-source-part a:hover {
+  color: var(--brand-strong);
+}
+
+.pp-panel-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  min-height: 2.5rem;
+  margin-top: 0.9rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 120ms ease, background 120ms ease, color 120ms ease;
+}
+
+.pp-panel-button:hover {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+.pp-similar-list {
+  display: grid;
+  margin: 0 -0.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.pp-similar-item {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.65rem 0.5rem;
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.pp-similar-list li + li .pp-similar-item {
+  border-top: 1px solid var(--line-soft);
+}
+
+.pp-similar-item:hover {
+  background: var(--surface-2);
+}
+
+.pp-similar-item:hover .pp-similar-title {
+  color: var(--brand-strong);
+}
+
+.pp-similar-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.pp-similar-done {
+  display: inline-grid;
+  place-items: center;
+  width: 1.05rem;
+  height: 1.05rem;
+  margin-left: 0.35rem;
+  border-radius: 50%;
+  background: var(--green);
+  color: #fff;
+  vertical-align: -0.15rem;
+}
+
+.pp-similar-done svg {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.pp-similar-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.pp-similar-meta .problem-chip {
+  min-height: 1.4rem;
+  padding: 0.05rem 0.5rem;
+  font-size: 0.78rem;
+}
+
+.pp-similar-module {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.pp-panel-more {
+  display: inline-block;
+  margin-top: 0.6rem;
+  color: var(--brand-strong);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.pp-panel-more:hover {
+  text-decoration: underline;
+}
+
+/* --- the question card (multiple choice) ------------------------------------ */
+
+body[data-page="theory"] .theory-parts > .theory-part.theory-part-single {
+  padding: 1.6rem 1.7rem 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: var(--paper);
+  box-shadow: var(--shadow-md);
+}
+
+body[data-page="theory"] .mcq-submit-card.mcq-bare {
+  margin: 1.4rem 0 0;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+.mcq-submit-card .mcq-fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.mcq-submit-card .mcq-legend {
+  margin: 0 0 0.7rem;
+  padding: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+body[data-page="theory"] .mcq-submit-card .mcq-options {
+  gap: 0.6rem;
+}
+
+body[data-page="theory"] .mcq-submit-card .mcq-option {
+  position: relative;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+
+body[data-page="theory"] .mcq-submit-card .mcq-choice {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  min-height: 3.4rem;
+  padding: 0.75rem 1rem;
+  font-size: 1.02rem;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+/* The radio stays in the page for the keyboard and screen readers, and the
+   whole card is its visible face. */
+.mcq-submit-card .mcq-radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+body[data-page="theory"] .mcq-submit-card .mcq-letter {
+  width: 2rem;
+  height: 2rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--ink-2);
+  font-size: 0.9rem;
+}
+
+.mcq-submit-card .mcq-tag {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.mcq-submit-card .mcq-tag:empty {
+  display: none;
+}
+
+body[data-page="theory"] .mcq-submit-card:not(.is-submitted) .mcq-option:not(.is-selected):hover {
+  border-color: color-mix(in srgb, var(--brand) 55%, var(--line));
+  background: var(--paper);
+}
+
+body[data-page="theory"] .mcq-submit-card:not(.is-submitted) .mcq-option:not(.is-selected):hover .mcq-letter {
+  border-color: var(--brand);
+  color: var(--brand-strong);
+}
+
+body[data-page="theory"] .mcq-submit-card .mcq-option:has(.mcq-radio:focus-visible) {
+  outline: 3px solid var(--brand-ring);
+  outline-offset: 1px;
+}
+
+body[data-page="theory"] .mcq-submit-card .mcq-option.is-selected {
+  border-color: var(--brand);
+  background: color-mix(in srgb, var(--brand) 6%, var(--paper));
+  box-shadow: 0 0 0 1px var(--brand);
+}
+
+body[data-page="theory"] .mcq-submit-card .mcq-option.is-selected .mcq-letter {
+  border-color: var(--brand);
+  background: var(--brand);
+  color: #fff;
+}
+
+/* After Submit: the answer is green, a wrong pick red, the rest step back. */
+body[data-page="theory"] .mcq-submit-card.is-submitted .mcq-choice {
+  cursor: default;
+}
+
+body[data-page="theory"] .mcq-submit-card.is-submitted .mcq-option {
+  border-color: var(--line-soft);
+  background: var(--surface-2);
+  box-shadow: none;
+}
+
+body[data-page="theory"] .mcq-submit-card.is-submitted .mcq-option.is-correct {
+  border-color: var(--green);
+  background: var(--green-soft);
+  box-shadow: 0 0 0 1px var(--green);
+}
+
+body[data-page="theory"] .mcq-submit-card.is-submitted .mcq-option.is-wrong {
+  border-color: var(--coral);
+  background: var(--coral-soft);
+  box-shadow: 0 0 0 1px var(--coral);
+}
+
+body[data-page="theory"] .mcq-submit-card.is-submitted .mcq-option.is-correct .mcq-letter {
+  border-color: var(--green);
+  background: var(--green);
+  color: #fff;
+}
+
+body[data-page="theory"] .mcq-submit-card.is-submitted .mcq-option.is-wrong .mcq-letter {
+  border-color: #be123c;
+  background: #be123c;
+  color: #fff;
+}
+
+.mcq-submit-card .mcq-option.is-correct .mcq-tag {
+  color: var(--green);
+}
+
+.mcq-submit-card .mcq-option.is-wrong .mcq-tag {
+  color: #be123c;
+}
+
+.mcq-submit-card .mcq-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  margin-top: 1.25rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--line-soft);
+}
+
+.mcq-submit-card .mcq-actions[hidden] {
+  display: none;
+}
+
+.mcq-submit-card .mcq-hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.mcq-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 2.75rem;
+  padding: 0.55rem 1.25rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 120ms ease, background 120ms ease, color 120ms ease, opacity 120ms ease;
+}
+
+.mcq-btn[hidden] {
+  display: none;
+}
+
+.mcq-btn:hover {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+.mcq-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+.mcq-btn.mcq-btn-primary {
+  min-width: 8.5rem;
+  border-color: var(--brand);
+  background: var(--brand);
+  color: #fff;
+}
+
+.mcq-btn.mcq-btn-primary:hover {
+  border-color: var(--brand-strong);
+  background: var(--brand-strong);
+  color: #fff;
+}
+
+.mcq-btn.mcq-btn-primary:disabled {
+  border-color: var(--line);
+  background: var(--surface-2);
+  color: color-mix(in srgb, var(--ink) 40%, transparent);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* The result card: a coloured band with the verdict, then why the pick is
+   right or wrong, the correct answer after a miss, and what to do next. */
+.mcq-submit-card .mcq-result {
+  margin-top: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  overflow: hidden;
+  outline: none;
+}
+
+.mcq-submit-card.is-solved .mcq-result {
+  border-color: color-mix(in srgb, var(--green) 45%, var(--line));
+}
+
+.mcq-submit-card.is-missed .mcq-result {
+  border-color: color-mix(in srgb, var(--coral) 40%, var(--line));
+}
+
+.mcq-result-head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.85rem 1.15rem;
+}
+
+.mcq-submit-card.is-solved .mcq-result-head {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.mcq-submit-card.is-missed .mcq-result-head {
+  background: var(--coral-soft);
+  color: #be123c;
+}
+
+.mcq-result-icon {
+  display: none;
+  flex: none;
+  width: 1.7rem;
+  height: 1.7rem;
+  padding: 0.25rem;
+  border-radius: 50%;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mcq-submit-card.is-solved .mcq-result-icon--right {
+  display: block;
+  background: var(--green);
+}
+
+.mcq-submit-card.is-missed .mcq-result-icon--wrong {
+  display: block;
+  background: #be123c;
+}
+
+.mcq-result-title {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.mcq-result-title strong {
+  font-size: 1.08rem;
+}
+
+.mcq-result-title span {
+  color: var(--ink-2);
+  font-weight: 500;
+}
+
+.mcq-result-body {
+  padding: 1rem 1.15rem 0.2rem;
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.mcq-explain-label {
+  margin: 0 0 0.25rem;
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.mcq-explain p:not(.mcq-explain-label) {
+  margin: 0 0 0.8rem;
+}
+
+.mcq-answer {
+  margin: 0.2rem 0 0.9rem;
+  padding: 0.8rem 0.95rem;
+  border-left: 3px solid var(--green);
+  background: color-mix(in srgb, var(--green) 6%, var(--paper));
+}
+
+.mcq-answer-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+}
+
+.mcq-answer-line > span:first-child {
+  color: var(--green);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+body[data-page="theory"] .mcq-answer-line .mcq-letter {
+  width: 1.7rem;
+  height: 1.7rem;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--green);
+  color: #fff;
+  font-size: 0.82rem;
+}
+
+.mcq-answer-text {
+  font-weight: 600;
+}
+
+.mcq-result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.15rem 1.1rem;
+  border-top: 1px solid var(--line-soft);
+}
+
+.mcq-result-actions .mcq-next {
+  margin-left: auto;
+}
+
+/* --- narrower screens ------------------------------------------------------- */
+
+@media (max-width: 1000px) {
+  body[data-page="theory"] .pp-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  body[data-page="theory"] .pp-aside {
+    position: static;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  }
+}
+
+/* On a phone the facts form a grid of two, the module on a row of its own.
+   The 1px gaps over the strip's line colour draw the rules between cells. */
+@media (max-width: 760px) {
+  .pp-head .pp-facts {
+    display: grid;
+    grid-auto-flow: row dense;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line-soft);
+    overflow: hidden;
+  }
+
+  .pp-head .pp-fact {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0.3rem;
+    padding: 0.6rem 0.8rem;
+    background: var(--surface-2);
+  }
+
+  .pp-head .pp-fact + .pp-fact {
+    border-left: 0;
+  }
+
+  .pp-head .pp-fact--module {
+    grid-column: 1 / -1;
+  }
+
+  .pp-head .pp-fact dt {
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 640px) {
+  body[data-page="theory"] .pp-head .pp-actions {
+    gap: 0.6rem;
+  }
+
+  /* The two groups melt into one grid of pairs: two buttons to a row. */
+  .pp-actions-group {
+    display: contents;
+  }
+
+  body[data-page="theory"] .pp-head .pp-actions-group .pp-action.pp-action,
+  body[data-page="editor"] .pp-head .pp-actions-group .pp-action.pp-action {
+    flex: 1 1 calc(50% - 0.6rem);
+    width: auto;
+  }
+
+  body[data-page="theory"] .theory-parts > .theory-part.theory-part-single {
+    padding: 1.15rem 1rem 1.1rem;
+  }
+
+  body[data-page="theory"] .mcq-submit-card .mcq-choice {
+    gap: 0.75rem;
+    padding: 0.7rem 0.8rem;
+  }
+
+  .mcq-submit-card .mcq-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .mcq-submit-card .mcq-hint {
+    text-align: center;
+  }
+
+  .mcq-result-actions .mcq-btn {
+    flex: 1 1 100%;
+  }
+
+  .mcq-result-actions .mcq-next {
+    margin-left: 0;
+    order: -1;
+  }
+}

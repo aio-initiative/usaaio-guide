@@ -1,0 +1,1431 @@
+{
+  "module": "pandas-data-cleaning-storing",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "numpy-pandas-implementation-task",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "Pandas GroupBy and Vectorization Practice",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=numpy-pandas",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Pandas groupby / value_counts / boolean masks (no Python loops over rows). Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. The evaluation cell recomputes the truth and checks all four answers."
+    },
+    {
+      "id": "orientation-implementation-task",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "Pandas Data Cleaning and Summary Statistics",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/editor/?nb=orientation",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Pandas data cleaning + summary statistics. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. The evaluation cell checks all three answers (floats are checked with a small tolerance). All three must be correct to pass."
+    },
+    {
+      "id": "py2-merge-audit",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "The Join That Lost the Orders",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=py2-merge-audit",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "pandas",
+        "Round 1"
+      ],
+      "prompt": "Rebuild a revenue report after a bad inner join dropped orders: left-join a partial price catalogue, count unpriced orders, and total revenue by region without turning missing prices into zeros.",
+      "answer": "Auto-graded inside the notebook. Order counts must match exactly and per-region revenue to 1e-6."
+    },
+    {
+      "id": "foundations-03-pandas",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "AI Foundations 03: Tabular Data with pandas",
+      "source": "AI Foundations",
+      "difficulty": "Easy",
+      "url": "/editor/?nb=foundations-03-pandas",
+      "tags": [
+        "Coding",
+        "Course",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Course notebook, about 5 h end to end. Read it top to bottom, then do the exercises marked with a pencil icon - each one checks itself - and finish with the exam-style quiz.",
+      "answer": "Self-checking: every exercise has a checker cell that prints a verdict, and each quiz answer is explained in a hidden block under its question."
+    },
+    {
+      "id": "pdc-what-describe-counts",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "What describe Counts",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/theory/?id=pdc-what-describe-counts",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A weather club logs three readings at each of its stations. The file readings.csv holds six rows of temperature, rain and gusts, with a dash where the thermometer failed and two empty rain cells. Which columns appear in the count row of describe, and with what counts?",
+      "answer": "rain_mm 4, gusts 6. The -- makes temp_c a text column, and describe() summarizes only the numeric columns by default, so temp_c is missing from the output without any warning. rain_mm is numeric with two empty cells read as NaN, and count is the number of values that are not missing: 4. gusts has all 6. Five good temperature readings sit in a column the summary never shows, which is why the dtypes are worth checking before describe()."
+    },
+    {
+      "id": "pdc-coerce-hides-fixable-prices",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "What coerce Throws Away",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pdc-coerce-hides-fixable-prices",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Sellers on a used bike site type their asking price into a free text box, and seven listings came in: 120, 90 with a dollar sign, 1,050 with a comma, 80, one that is not a number, 1,200 with a dollar sign and a comma, and 70. Converting with to_numeric and errors set to coerce turns whatever does not parse into NaN. Find the mean it reports, how many values go missing, and what changes once the dollar signs and commas are stripped first. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pdc-dedupe-before-or-after-cleaning",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "Deduplicate Before or After Cleaning",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pdc-dedupe-before-or-after-cleaning",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A chess club exports its sign-up form. Some members signed up more than once, and the email box accepts any spacing and capitals. After the emails are stripped and lowercased, the code prints three drop_duplicates row counts: the raw table, the cleaned table, and the cleaned table on the email column alone. What does it print?",
+      "answer": "6 4 3. Raw, only the omar/pro row labeled 5 repeats an earlier row exactly, so a is 6. After cleaning, lin/basic and rosa/pro also appear twice, and the three repeats go: b is 4, one row each for lin/basic, omar/pro, omar/basic and rosa/pro. With subset=['email'] the plan no longer counts, so omar keeps only his first row and c is 3, one per member. Which of b and c is right depends on whether a second plan is a change of plan or a separate sign-up."
+    },
+    {
+      "id": "pdc-averaging-with-gaps",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "Three Averages of a Column with Gaps",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pdc-averaging-with-gaps",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A study app logs 48, 25, 30, 42 and 100 minutes on the five days the phone was on, and nothing on the other two days of the week. Compare the plain mean, a hand-computed sum divided by the row count, and a median fill, and say which assumption about the two missing days each number makes. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pdc-labels-after-a-filter",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "Slicing a Filtered Table",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pdc-labels-after-a-filter",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A running app stores one row per run, labeled 0 to 5. Only runs longer than 5 km count toward a badge. The code filters the long runs, then sums a loc slice and an iloc slice of what is left. What does it print?",
+      "answer": "34 31. The filter keeps the rows labeled 1, 2, 4 and 5, with 12, 7, 15 and 9 km. A .loc slice runs over labels and includes its end, so loc[1:4] takes the labels 1, 2 and 4, which gives 34. The missing label 3 is no problem, because the labels are sorted. An .iloc slice runs over positions and stops before its end, so iloc[1:4] takes positions 1, 2 and 3, the rows labeled 2, 4 and 5, which gives 31."
+    },
+    {
+      "id": "pdc-a-fee-in-tiers",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "A Shipping Fee in Three Tiers",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/theory/?id=pdc-a-fee-in-tiers",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A shop charges 4 dollars to ship a parcel of up to 1 kg, 7 dollars above 1 kg and up to 5 kg, and 12 dollars above 5 kg. Its parcels weigh 0.5, 1.0, 3.0, 5.0 and 8.0 kg, so the fees should be 4, 4, 7, 7 and 12. Which line gives every parcel its fee?",
+      "answer": "df[\"fee\"] = np.where(w <= 1, 4, np.where(w <= 5, 7, 12)). The outer np.where gives 4 wherever w <= 1. Only the other parcels reach the inner np.where, and among them w <= 5 picks out exactly the ones above 1 kg and up to 5 kg. That gives 4, 4, 7, 7, 12, with both boundary parcels in the cheaper tier as the rule says."
+    },
+    {
+      "id": "pdc-above-own-branch-average",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "Above Its Own Branch's Average",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pdc-above-own-branch-average",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A café chain records the amount of each of ten orders at branches A, B and C, and branch B sells catering trays far larger than the others' orders. Find which orders were large for their own branch, what an overall average misses, and what happens if the branch average is compared as an aggregation instead of with transform. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pdc-left-join-audit",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "Revenue Through a Left Join",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pdc-left-join-audit",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A shop computes revenue by left-joining seven orders onto a price list where one product is priced twice, at 12 and at 10, and two products have no entry. Count the rows the join produces, the revenue it reports, and what a deduplicated price list and an audit of the unmatched orders would say instead. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pdc-pivot-table-default",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "There and Back Through a Pivot Table",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pdc-pivot-table-default",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A gym logs one row per visit, with the member, the day and the minutes spent, and Ana came twice on Tuesday. The code pivots the visits wide by member and day, then melts them back and drops the empty cells. What does it print?",
+      "answer": "5 205. With no aggfunc, pivot_table takes the mean of repeated entries, so Ana's Tuesday cell is (30 + 50) / 2 = 40. The wide table has 3 members and 3 days, 9 cells, of which 5 hold a value: Ana on Tuesday (40) and Thursday (45), Ben on Tuesday (60) and Saturday (20), and Cy on Thursday (40). melt gives 9 rows, and dropna keeps the 5 with a value, which add up to 205. The original log had 6 visits and 245 minutes: the round trip merged two visits into one row and lost 40 minutes. Pass aggfunc='sum' when the cells should keep totals."
+    },
+    {
+      "id": "pdc-dummies-on-each-split",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "One-Hot Columns Built Twice",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pdc-dummies-on-each-split",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A house price model is trained on four houses and used on three new ones, and the new houses include a city the training set never saw. get_dummies is called on each split separately, and a linear regression fitted on the training array predicts on the test array. What happens on the prediction line?",
+      "answer": "It runs, and the Boston house is scored with the weight the model learned for Austin. X_train has the columns size, city_Austin, city_Boston, city_Denver, and X_test has size, city_Boston, city_Denver, city_Erie. .to_numpy() drops the names, so the model reads the test array by position: the Boston house has its 1 in the second column, which the model learned as Austin, the Denver house gets Boston's weight and the Erie house gets Denver's. Nothing warns. Build the test columns from the training ones, for example X_test.reindex(columns=X_train.columns, fill_value=0), which drops city_Erie and gives the Erie house zeros in every city column."
+    },
+    {
+      "id": "pdc-clean-race-results",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "Clean a Fun Run's Results",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=pdc-clean-race-results",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "pandas",
+        "Round 1"
+      ],
+      "prompt": "The timing desk of a 5 km fun run exports its results as a CSV, and the export has the usual faults: club names typed several ways, an age written as ?, a runner who did not finish, a repeated row and a runner scanned twice at the finish line. Write clean_results to clean it into one row per finisher, then club_summary to summarize it by club, each with its own check cell.",
+      "answer": "Self-checking: each part ends with a check cell that prints 'Part N passed' when the code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "pdc-mean-of-group-means",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "The Mean of the Group Means",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pdc-mean-of-group-means",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A school gives one test to its three math rooms: two rooms have two students each and the third is a lecture section of six. Compare the mean of the room means with the mean of all ten scores, and say which one answers what the average student scored. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pdc-order-of-cleaning-steps",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "The Order of Five Cleaning Steps",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=pdc-order-of-cleaning-steps",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A rental site exports ten listings where one id appears twice with different spacing and capitals, another repeats exactly, one rent says ask and one listing has no bedroom count. An analyst cleans it in five steps: drop duplicates, lowercase the area, coerce the rent, fill the gaps with the median rent of the area, and drop the rows without bedrooms. Trace the row count and the medians, and what changes when the text is cleaned before the duplicates are dropped. 6 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pdc-split-pings-into-trips",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "Split a Van's Pings into Trips",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=pdc-split-pings-into-trips",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "pandas",
+        "Round 1"
+      ],
+      "prompt": "Two delivery vans send a GPS ping every few minutes while they drive, and stop sending while they are parked, and the server stores the pings in the order they arrive. Turn the log into trips, numbered per van, then into a table with one row per trip, all without a loop over the rows. Write add_trip_numbers, then trip_table, each with its own check cell.",
+      "answer": "Self-checking: each part ends with a check cell that prints 'Part N passed' when the code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "notebooks-markdown-implementation-task",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "Exploratory Data Analysis Practice",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/editor/?nb=notebooks-markdown",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Exploratory data analysis with pandas (correlation, group comparison). The Pearson correlation is defined in Expectation and Joint Distributions. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. The evaluation cell recomputes the ground truth and checks all three answers (the feature name exactly, and the two floats with tolerance)."
+    },
+    {
+      "id": "foundations-01-data-ingestion",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "AI Foundations 01: Data Sources, Ingestion & Data Lakes",
+      "source": "AI Foundations",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=foundations-01-data-ingestion",
+      "tags": [
+        "Coding",
+        "Course",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Course notebook (about 6 h): learn how professionals move data from its sources into a data lake, and build a small one that ingests papers, API records and partner files every day, safely and repeatably.",
+      "answer": "Self-checking: every exercise has a checker cell that prints a verdict, and each quiz answer is explained in a hidden block under its question."
+    },
+    {
+      "id": "foundations-02-orchestration-dagster",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "AI Foundations 02: Data Orchestration: DAGs, Assets & Dagster",
+      "source": "AI Foundations",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=foundations-02-orchestration-dagster",
+      "tags": [
+        "Coding",
+        "Course",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Course notebook (about 4 to 5 h): build graphs, topological order and a small asset orchestrator from scratch, then use Dagster to build a complete multi-category news pipeline that runs entirely inside the notebook.",
+      "answer": "Self-checking: every exercise has a checker cell that prints a verdict, and each quiz answer is explained in a hidden block under its question."
+    },
+    {
+      "id": "foundations-17-sql",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "AI Foundations 17: SQL Essentials: Grain, Joins, Aggregation & Safe Data Cleaning",
+      "source": "AI Foundations",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=foundations-17-sql",
+      "tags": [
+        "Coding",
+        "Course",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Course notebook (about 6 h): learn SQL from the ground up with SQLite and DuckDB running inside Python, and the habit that prevents most silent bugs, always knowing the grain of every table.",
+      "answer": "Self-checking: every exercise has a checker that runs your query and compares its result table with the correct one, and each exam-style question has its answer in a hidden block under it."
+    }
+  ],
+  "theory": [
+    {
+      "id": "pdc-what-describe-counts",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "What describe Counts",
+      "difficulty": "Easy",
+      "minutes": 4,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A weather club logs three readings at each of its stations. The file `readings.csv` holds"
+            },
+            {
+              "code": {
+                "language": "text",
+                "lines": [
+                  "station,temp_c,rain_mm,gusts",
+                  "North,14.2,0.0,3",
+                  "North,--,1.5,0",
+                  "South,16.8,,2",
+                  "South,15.1,4.0,1",
+                  "East,13.9,,0",
+                  "East,12.5,2.5,4"
+                ]
+              }
+            },
+            {
+              "p": "The logger writes `--` when the thermometer fails, and leaves a cell empty when the rain gauge is offline."
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "df = pd.read_csv(\"readings.csv\")",
+                  "print(df.describe().loc[\"count\"])"
+                ]
+              }
+            },
+            {
+              "p": "Which columns appear in the output, and with what counts?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "`temp_c` 5, `rain_mm` 4, `gusts` 6",
+                  "explain": "This reads the -- as a missing value. read_csv treats an empty cell as NaN, but -- is ordinary text, so temp_c becomes a text column, and describe() leaves text columns out unless told to include them."
+                },
+                {
+                  "text": "`rain_mm` 4, `gusts` 6",
+                  "correct": true,
+                  "explain": "The -- makes temp_c a text column, and describe() summarizes only the numeric columns by default, so temp_c is missing from the output without any warning. rain_mm is numeric with two empty cells read as NaN, and count is the number of values that are not missing: 4. gusts has all 6. Five good temperature readings sit in a column the summary never shows, which is why the dtypes are worth checking before describe()."
+                },
+                {
+                  "text": "`rain_mm` 6, `gusts` 6",
+                  "explain": "This counts every row, as size does. The count row of describe() counts only the values that are not missing, so rain_mm, with two empty cells, reports 4."
+                },
+                {
+                  "text": "`station` 6, `temp_c` 6, `rain_mm` 4, `gusts` 6",
+                  "explain": "That is what describe(include='all') reports, which adds the text columns and counts each one's non-missing strings, the -- included. The plain describe() keeps only the numeric columns, so neither station nor temp_c appears."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The -- makes temp_c a text column, and describe() summarizes only the numeric columns by default, so temp_c is missing from the output without any warning. rain_mm is numeric with two empty cells read as NaN, and count is the number of values that are not missing: 4. gusts has all 6. Five good temperature readings sit in a column the summary never shows, which is why the dtypes are worth checking before describe()."
+            },
+            {
+              "result": "`rain_mm` 4, `gusts` 6"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pdc-coerce-hides-fixable-prices",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "What coerce Throws Away",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "Sellers on a used bike site type their asking price into a free text box. Seven listings came in as"
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "price = pd.Series([\"120\", \"$90\", \"1,050\", \"80\", \"n/a\", \"$1,200\", \"70\"])"
+            ]
+          }
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What does `pd.to_numeric(price, errors=\"coerce\").mean()` print?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "`to_numeric` parses only plain numbers. \"\\$90\" and \"\\$1,200\" start with a dollar sign, `\"1,050\"` holds a comma, and `\"n/a\"` is not a number at all, so with `errors=\"coerce\"` all four become NaN. The result is"
+            },
+            {
+              "code": {
+                "language": "text",
+                "lines": [
+                  "[120.0, NaN, NaN, 80.0, NaN, NaN, 70.0]"
+                ]
+              }
+            },
+            {
+              "p": "`mean` skips NaN and averages the three survivors: $(120 + 80 + 70)/3 = 270/3 = 90$."
+            },
+            {
+              "result": "90"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "How many missing values does the converted column have? Only one listing really had no price."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Four: the `\"n/a\"` and the three prices with a `$` or a comma. Nothing warns, because `errors=\"coerce\"` is exactly the instruction to turn whatever does not parse into NaN. Counting with `isna().sum()` before and after a conversion shows how many entries it turned into NaN, here 4 where the raw text had 1 real gap."
+            },
+            {
+              "result": "4"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Remove the dollar signs and the commas first, then convert:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "fixed = pd.to_numeric(price.str.replace(\"$\", \"\").str.replace(\",\", \"\"),",
+                  "                      errors=\"coerce\")"
+                ]
+              }
+            },
+            {
+              "p": "What is `fixed.mean()`?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "After the two replacements the text reads `\"120\"`, `\"90\"`, `\"1050\"`, `\"80\"`, `\"n/a\"`, `\"1200\"` and `\"70\"`. Only `\"n/a\"` fails to parse, so six prices survive:"
+            },
+            {
+              "tex": "\\frac{120 + 90 + 1050 + 80 + 1200 + 70}{6} = \\frac{2610}{6} = 435 ."
+            },
+            {
+              "p": "The first conversion reported 90 because it silently dropped the two most expensive bikes. `errors=\"coerce\"` is the right tool for entries that truly are missing, like `\"n/a\"`, and only after the fixable ones are fixed."
+            },
+            {
+              "result": "435"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "A week later the `\"n/a\"` seller edits the listing, from a country that writes one thousand and fifty as `\"1.050\"`. The same cleaning runs on the new text. What value does `fixed` hold for that listing?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "`\"1.050\"` holds no `$` and no comma, so both replacements leave it alone, and `to_numeric` reads the dot as a decimal point: **1.05**. The bike is now listed at about one dollar."
+            },
+            {
+              "p": "This is worse than a NaN. The conversion succeeded, so `fixed.isna().sum()` drops to 0 and reports a clean column, and the mean falls to about 373 without any warning. A count of missing values cannot catch a value that parsed into the wrong number. A range check can: `fixed.describe()` shows a minimum of 1.05 for a used bike, and `price[fixed < 10]` lists the text behind it."
+            },
+            {
+              "result": "1.05"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pdc-dedupe-before-or-after-cleaning",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "Deduplicate Before or After Cleaning",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A chess club exports its sign-up form. Some members signed up more than once, and the email box accepts any spacing and capitals."
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "df = pd.DataFrame({",
+                  "    \"email\": [\"lin@mail.com\", \"Lin@mail.com \", \"omar@mail.com\", \"omar@mail.com\",",
+                  "              \"rosa@mail.com\", \"omar@mail.com\", \" ROSA@mail.com\"],",
+                  "    \"plan\":  [\"basic\", \"basic\", \"pro\", \"basic\", \"pro\", \"pro\", \"pro\"],",
+                  "})",
+                  "clean = df.copy()",
+                  "clean[\"email\"] = clean[\"email\"].str.strip().str.lower()",
+                  "",
+                  "a = len(df.drop_duplicates())",
+                  "b = len(clean.drop_duplicates())",
+                  "c = len(clean.drop_duplicates(subset=[\"email\"]))",
+                  "print(a, b, c)"
+                ]
+              }
+            },
+            {
+              "p": "What does it print?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "`4 4 3`",
+                  "explain": "This makes the raw drop_duplicates() ignore spaces and capitals. It compares the strings exactly, so 'Lin@mail.com ' and 'lin@mail.com' are different values and only the second omar/pro row goes, leaving 6."
+                },
+                {
+                  "text": "`5 1 0`",
+                  "explain": "This removes every copy of a repeated row, which is what keep=False does. The default, keep='first', keeps the first copy and removes only the later ones, so each repeated row still leaves one row behind: omar/pro survives in a, and every member keeps one row in c."
+                },
+                {
+                  "text": "`6 4 3`",
+                  "correct": true,
+                  "explain": "Raw, only the omar/pro row labeled 5 repeats an earlier row exactly, so a is 6. After cleaning, lin/basic and rosa/pro also appear twice, and the three repeats go: b is 4, one row each for lin/basic, omar/pro, omar/basic and rosa/pro. With subset=['email'] the plan no longer counts, so omar keeps only his first row and c is 3, one per member. Which of b and c is right depends on whether a second plan is a change of plan or a separate sign-up."
+                },
+                {
+                  "text": "`6 3 3`",
+                  "explain": "This treats b like c. Without subset, drop_duplicates() compares every column, and omar's pro and basic rows differ in plan, so both stay and b is 4."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Raw, only the omar/pro row labeled 5 repeats an earlier row exactly, so a is 6. After cleaning, lin/basic and rosa/pro also appear twice, and the three repeats go: b is 4, one row each for lin/basic, omar/pro, omar/basic and rosa/pro. With subset=['email'] the plan no longer counts, so omar keeps only his first row and c is 3, one per member. Which of b and c is right depends on whether a second plan is a change of plan or a separate sign-up."
+            },
+            {
+              "result": "`6 4 3`"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pdc-averaging-with-gaps",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "Three Averages of a Column with Gaps",
+      "difficulty": "Medium",
+      "minutes": 8,
+      "overview": [
+        "A study app logs the minutes a student studied each day of one week. On two days the phone was off and nothing was logged:"
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "minutes = pd.Series([48, 25, np.nan, 30, np.nan, 42, 100])"
+            ]
+          }
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What is `minutes.mean()`?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "`mean` skips NaN, so it averages the five logged days: $(48 + 25 + 30 + 42 + 100)/5 = 245/5 = 49$."
+            },
+            {
+              "result": "49"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "A classmate computes the average by hand as `minutes.sum() / len(minutes)`. What does that give?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "`sum` also skips NaN, so it is 245. But `len` counts all 7 rows, the two missing days included, so the result is $245/7 = 35$. Dividing a sum that skipped the gaps by a count that kept them treats each missing day as 0 minutes, the same as `minutes.fillna(0).mean()`. Use `count()`, which counts only the values present, if you divide by hand."
+            },
+            {
+              "result": "35"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Now fill the gaps with the median of the logged days and average again: `minutes.fillna(minutes.median()).mean()`. What does it give?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Sorted, the logged values are 25, 30, 42, 48 and 100, so the median is 42. Both gaps become 42, and the mean of the filled column is"
+            },
+            {
+              "tex": "\\frac{245 + 2 \\cdot 42}{7} = \\frac{329}{7} = 47 ."
+            },
+            {
+              "result": "47"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "The three numbers are 49, 35 and 47. Which assumption about the two missing days does each one make?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The plain mean, 49, assumes the missing days look like the logged ones on average. Filling with the mean would leave it at exactly 49."
+            },
+            {
+              "p": "The hand computation, 35, assumes the student studied 0 minutes on both days. That is a claim about the data, not a neutral default, and here it is probably false, since the phone was off, not the student."
+            },
+            {
+              "p": "The median fill, 47, assumes each missing day was a typical day. The median is not pulled up by the one 100-minute day, so the filled values sit below the mean and pull it down from 49 to 47."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pdc-labels-after-a-filter",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "Slicing a Filtered Table",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A running app stores one row per run, labeled 0 to 5. Only runs longer than 5 km count toward a badge:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "runs = pd.DataFrame({\"km\": [3, 12, 7, 0, 15, 9]})",
+                  "long = runs[runs[\"km\"] > 5]",
+                  "print(long.loc[1:4, \"km\"].sum(), long.iloc[1:4][\"km\"].sum())"
+                ]
+              }
+            },
+            {
+              "p": "What does it print?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "`34 31`",
+                  "correct": true,
+                  "explain": "The filter keeps the rows labeled 1, 2, 4 and 5, with 12, 7, 15 and 9 km. A .loc slice runs over labels and includes its end, so loc[1:4] takes the labels 1, 2 and 4, which gives 34. The missing label 3 is no problem, because the labels are sorted. An .iloc slice runs over positions and stops before its end, so iloc[1:4] takes positions 1, 2 and 3, the rows labeled 2, 4 and 5, which gives 31."
+                },
+                {
+                  "text": "`19 31`",
+                  "explain": "This stops the .loc slice before its end, as a Python slice would. A .loc slice includes the label it ends on, so loc[1:4] keeps the row labeled 4 and gives 12 + 7 + 15 = 34."
+                },
+                {
+                  "text": "`31 34`",
+                  "explain": "This swaps the two indexers. .loc reads 1:4 as labels, which keeps the run labeled 1, and .iloc reads it as positions, which starts at the second remaining row, the run labeled 2."
+                },
+                {
+                  "text": "It raises a `KeyError`, because the row labeled 3 is gone",
+                  "explain": "Label 3 was filtered out, but a .loc slice on sorted labels takes every label between its ends and needs neither end to exist. Only asking for a single missing label, as in long.loc[3], raises a KeyError."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The filter keeps the rows labeled 1, 2, 4 and 5, with 12, 7, 15 and 9 km. A .loc slice runs over labels and includes its end, so loc[1:4] takes the labels 1, 2 and 4, which gives 34. The missing label 3 is no problem, because the labels are sorted. An .iloc slice runs over positions and stops before its end, so iloc[1:4] takes positions 1, 2 and 3, the rows labeled 2, 4 and 5, which gives 31."
+            },
+            {
+              "result": "`34 31`"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pdc-a-fee-in-tiers",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "A Shipping Fee in Three Tiers",
+      "difficulty": "Easy",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A shop charges 4 dollars to ship a parcel of up to 1 kg, 7 dollars above 1 kg and up to 5 kg, and 12 dollars above 5 kg. Its parcels are"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "df = pd.DataFrame({\"kg\": [0.5, 1.0, 3.0, 5.0, 8.0]})",
+                  "w = df[\"kg\"]"
+                ]
+              }
+            },
+            {
+              "p": "so the fees should be 4, 4, 7, 7 and 12. Which line gives every parcel its fee?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "`df[\"fee\"] = np.where(w <= 5, 7, np.where(w <= 1, 4, 12))`",
+                  "explain": "np.where checks its condition first, and w <= 5 already holds for the 0.5 kg and 1 kg parcels, so they get 7. The inner w <= 1 test only ever sees parcels above 5 kg, where it is always False. The fees come out 7, 7, 7, 7, 12. Test the narrowest tier first."
+                },
+                {
+                  "text": "`df[\"fee\"] = np.where(w < 1, 4, np.where(w < 5, 7, 12))`",
+                  "explain": "Strict comparisons move the boundary parcels up a tier: the 1 kg parcel gets 7 and the 5 kg parcel gets 12, so the fees come out 4, 7, 7, 12, 12. The rule says up to 1 kg and up to 5 kg, which includes the boundary, so the tests need <=."
+                },
+                {
+                  "text": "`df[\"fee\"] = 4 * (w <= 1) + 7 * (w <= 5) + 12 * (w > 5)`",
+                  "explain": "The tiers overlap here: a parcel of up to 1 kg also passes w <= 5, so it is charged 4 + 7 = 11. Adding indicator columns works only when exactly one indicator is 1 for each row, as with `4 * (w <= 1) + 7 * ((w > 1) & (w <= 5)) + 12 * (w > 5)`."
+                },
+                {
+                  "text": "`df[\"fee\"] = np.where(w <= 1, 4, np.where(w <= 5, 7, 12))`",
+                  "correct": true,
+                  "explain": "The outer np.where gives 4 wherever w <= 1. Only the other parcels reach the inner np.where, and among them w <= 5 picks out exactly the ones above 1 kg and up to 5 kg. That gives 4, 4, 7, 7, 12, with both boundary parcels in the cheaper tier as the rule says."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The outer np.where gives 4 wherever w <= 1. Only the other parcels reach the inner np.where, and among them w <= 5 picks out exactly the ones above 1 kg and up to 5 kg. That gives 4, 4, 7, 7, 12, with both boundary parcels in the cheaper tier as the rule says."
+            },
+            {
+              "result": "`df[\"fee\"] = np.where(w <= 1, 4, np.where(w <= 5, 7, 12))`"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pdc-above-own-branch-average",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "Above Its Own Branch's Average",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "A café chain records the amount of each order, in dollars, at its three branches:"
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "orders = pd.DataFrame({",
+              "    \"branch\": [\"A\", \"B\", \"C\", \"A\", \"C\", \"A\", \"B\", \"C\", \"A\", \"C\"],",
+              "    \"amount\": [3, 22, 8, 5, 10, 7, 28, 12, 9, 16],",
+              "})"
+            ]
+          }
+        },
+        {
+          "p": "Branch B sits in an office tower and sells catering trays, so its orders are far larger than the others'. The manager wants to know which orders were large **for their own branch**."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "How many orders cost more than the average order of their own branch?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "`transform(\"mean\")` gives each row its branch's mean, so the comparison runs row by row:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "own_mean = orders.groupby(\"branch\")[\"amount\"].transform(\"mean\")",
+                  "print((orders[\"amount\"] > own_mean).sum())"
+                ]
+              }
+            },
+            {
+              "p": "The branch means are A $= (3 + 5 + 7 + 9)/4 = 6$, B $= (22 + 28)/2 = 25$ and C $= (8 + 10 + 12 + 16)/4 = 11.5$. Above them are A's 7 and 9, B's 28, and C's 12 and 16: **5** orders."
+            },
+            {
+              "result": "5"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "How many orders cost more than the average of all ten orders?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The overall mean is $120/10 = 12$. Only 22, 28 and 16 are above it: **3** orders. Two of them are B's, and B's 22 is below B's own average. The overall mean mostly separates branch B from the rest, which is not the question the manager asked."
+            },
+            {
+              "result": "3"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "A colleague writes the comparison with an aggregation instead:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "orders[\"amount\"] > orders.groupby(\"branch\")[\"amount\"].mean()"
+                ]
+              }
+            },
+            {
+              "p": "What happens, and why?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "It raises `ValueError: Can only compare identically-labeled Series objects`. The left side has one value per order, labeled 0 to 9. The aggregation has one value per branch, labeled A, B and C. pandas compares two Series label by label, and these two share no labels. `transform` returns a Series with the original row labels, which is why it lines up with `orders[\"amount\"]` and the aggregation does not."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pdc-left-join-audit",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "Revenue Through a Left Join",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A shop computes its revenue from an order log and a price list:"
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "orders = pd.DataFrame({\"sku\": [\"K1\", \"K2\", \"K2\", \"K3\", \"K4\", \"K1\", \"K5\"],",
+              "                       \"qty\": [2, 1, 3, 1, 2, 1, 4]})",
+              "prices = pd.DataFrame({\"sku\": [\"K1\", \"K2\", \"K3\", \"K3\"],",
+              "                       \"price\": [5, 8, 12, 10]})",
+              "",
+              "merged = orders.merge(prices, on=\"sku\", how=\"left\")",
+              "revenue = (merged[\"qty\"] * merged[\"price\"]).sum()"
+            ]
+          }
+        },
+        {
+          "p": "The price list was edited by hand. K3 was repriced from 12 to 10 and the new row was added below the old one instead of replacing it, and nobody has entered K4 or K5 yet."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "How many rows does `merged` have?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "A left join keeps every order and attaches every matching price row. K1, K2, K4 and K5 match at most one price row each, but the one K3 order matches two, so it appears twice: $7 + 1 = 8$ rows. K4 and K5 match nothing and stay with NaN prices."
+            },
+            {
+              "result": "8"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What is `revenue`?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Row by row: K1 gives $2 \\cdot 5 + 1 \\cdot 5 = 15$, K2 gives $1 \\cdot 8 + 3 \\cdot 8 = 32$, and the K3 order counts twice, $1 \\cdot 12 + 1 \\cdot 10 = 22$. The K4 and K5 rows give NaN, which `sum` skips. The total is $15 + 32 + 22 = 69$."
+            },
+            {
+              "result": "69"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Keep only the latest price of each product before merging, `prices.drop_duplicates(subset=[\"sku\"], keep=\"last\")`. What is the revenue now?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "K3 now matches one row, priced 10, and `merged` has 7 rows, one per order. The revenue is $15 + 32 + 10 = 57$. The first figure was 12 too high, because one order of K3 was counted twice at two different prices."
+            },
+            {
+              "result": "57"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Even 57 is not the shop's revenue. What is still missing from it, and what should the report say instead of a single total?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The two orders of K4 and K5, 6 units in all, have no price. `sum` skipped their NaN products without a word, which counts them as 0, the same as `fillna(0)` would. The report should give the priced revenue, 57, together with the unmatched orders: `merged[\"price\"].isna().sum()` gives 2 orders and `merged.loc[merged[\"price\"].isna(), \"qty\"].sum()` gives 6 units. Checking `len(merged)` against `len(orders)` would also have caught the doubled K3 row before any total was computed."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pdc-pivot-table-default",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "There and Back Through a Pivot Table",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A gym logs one row per visit, with the member, the day and the minutes spent. Ana came twice on Tuesday."
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "visits = pd.DataFrame({\"member\":  [\"Ana\", \"Ana\", \"Ana\", \"Ben\", \"Ben\", \"Cy\"],",
+                  "                       \"day\":     [\"Tue\", \"Tue\", \"Thu\", \"Tue\", \"Sat\", \"Thu\"],",
+                  "                       \"minutes\": [30, 50, 45, 60, 20, 40]})",
+                  "",
+                  "wide = visits.pivot_table(index=\"member\", columns=\"day\", values=\"minutes\")",
+                  "back = wide.reset_index().melt(id_vars=\"member\", value_name=\"minutes\").dropna()",
+                  "print(len(back), back[\"minutes\"].sum())"
+                ]
+              }
+            },
+            {
+              "p": "What does it print?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "`6 245`",
+                  "explain": "This treats the trip to wide and back as lossless. The two Tuesday visits of Ana share one cell of the wide table, so they come back as a single row, and with no aggfunc that cell holds their mean, 40, not their total."
+                },
+                {
+                  "text": "`5 245`",
+                  "explain": "5 rows is right: Ana's two Tuesday visits share one cell. But 245 would need that cell to hold 30 + 50 = 80, which is what aggfunc='sum' gives. With no aggfunc, pivot_table takes the mean of repeated entries, so the cell holds 40 and the total falls by 40."
+                },
+                {
+                  "text": "`9 205`",
+                  "explain": "melt does give 9 rows, one for each of the 3 members times 3 days, and four of them are NaN because those members never came on those days. dropna removes those four, leaving 5. The sum, 205, is the same either way, since sum skips NaN."
+                },
+                {
+                  "text": "`5 205`",
+                  "correct": true,
+                  "explain": "With no aggfunc, pivot_table takes the mean of repeated entries, so Ana's Tuesday cell is (30 + 50) / 2 = 40. The wide table has 3 members and 3 days, 9 cells, of which 5 hold a value: Ana on Tuesday (40) and Thursday (45), Ben on Tuesday (60) and Saturday (20), and Cy on Thursday (40). melt gives 9 rows, and dropna keeps the 5 with a value, which add up to 205. The original log had 6 visits and 245 minutes: the round trip merged two visits into one row and lost 40 minutes. Pass aggfunc='sum' when the cells should keep totals."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "With no aggfunc, pivot_table takes the mean of repeated entries, so Ana's Tuesday cell is (30 + 50) / 2 = 40. The wide table has 3 members and 3 days, 9 cells, of which 5 hold a value: Ana on Tuesday (40) and Thursday (45), Ben on Tuesday (60) and Saturday (20), and Cy on Thursday (40). melt gives 9 rows, and dropna keeps the 5 with a value, which add up to 205. The original log had 6 visits and 245 minutes: the round trip merged two visits into one row and lost 40 minutes. Pass aggfunc='sum' when the cells should keep totals."
+            },
+            {
+              "result": "`5 205`"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pdc-dummies-on-each-split",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "One-Hot Columns Built Twice",
+      "difficulty": "Medium",
+      "minutes": 8,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A house price model is trained on four houses and used on three new ones. The new houses include a city the training set never saw."
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "train = pd.DataFrame({\"size\": [80, 95, 120, 70],",
+                  "                      \"city\": [\"Austin\", \"Boston\", \"Denver\", \"Boston\"]})",
+                  "test = pd.DataFrame({\"size\": [90, 110, 60],",
+                  "                     \"city\": [\"Boston\", \"Erie\", \"Denver\"]})",
+                  "",
+                  "X_train = pd.get_dummies(train, columns=[\"city\"], dtype=float)",
+                  "X_test = pd.get_dummies(test, columns=[\"city\"], dtype=float)",
+                  "",
+                  "model = LinearRegression().fit(X_train.to_numpy(), [500, 560, 410, 520])",
+                  "pred = model.predict(X_test.to_numpy())"
+                ]
+              }
+            },
+            {
+              "p": "What happens on the last line?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "It raises an error, because `X_test` has a column `X_train` never had",
+                  "explain": "Both tables have 4 columns: size plus three city columns each, because each split happens to hold three cities. The arrays have matching shapes, so nothing raises. Passing the DataFrames instead would raise, because scikit-learn checks the column names of a model fitted on a DataFrame."
+                },
+                {
+                  "text": "It runs, and every house is scored correctly, because `get_dummies` sorts the city names the same way in both tables",
+                  "explain": "get_dummies does sort the categories, but within each table on its own. The training columns are Austin, Boston, Denver and the test columns are Boston, Denver, Erie, so the second column means Austin in one array and Boston in the other."
+                },
+                {
+                  "text": "It runs, and the Boston house is scored with the weight the model learned for Austin",
+                  "correct": true,
+                  "explain": "X_train has the columns size, city_Austin, city_Boston, city_Denver, and X_test has size, city_Boston, city_Denver, city_Erie. .to_numpy() drops the names, so the model reads the test array by position: the Boston house has its 1 in the second column, which the model learned as Austin, the Denver house gets Boston's weight and the Erie house gets Denver's. Nothing warns. Build the test columns from the training ones, for example X_test.reindex(columns=X_train.columns, fill_value=0), which drops city_Erie and gives the Erie house zeros in every city column."
+                },
+                {
+                  "text": "It runs, Boston and Denver houses are scored correctly, and the Erie house gets no city weight",
+                  "explain": "That is the result of the fix, reindexing X_test to the training columns with fill_value=0, which gives the Erie house a zero in every city column. Without it the arrays are matched by position, and each test city lands in a column the model learned for another one."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "X_train has the columns size, city_Austin, city_Boston, city_Denver, and X_test has size, city_Boston, city_Denver, city_Erie. .to_numpy() drops the names, so the model reads the test array by position: the Boston house has its 1 in the second column, which the model learned as Austin, the Denver house gets Boston's weight and the Erie house gets Denver's. Nothing warns. Build the test columns from the training ones, for example X_test.reindex(columns=X_train.columns, fill_value=0), which drops city_Erie and gives the Erie house zeros in every city column."
+            },
+            {
+              "result": "It runs, and the Boston house is scored with the weight the model learned for Austin"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pdc-mean-of-group-means",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "The Mean of the Group Means",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "A school gives one test to its three math rooms. Room B is a large lecture section:"
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "scores = pd.DataFrame({",
+              "    \"room\":  [\"A\", \"B\", \"B\", \"C\", \"B\", \"A\", \"B\", \"B\", \"C\", \"B\"],",
+              "    \"score\": [88, 60, 75, 85, 70, 92, 65, 80, 75, 70],",
+              "})",
+              "by_room = scores.groupby(\"room\")[\"score\"]"
+            ]
+          }
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What is `by_room.mean().mean()`?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The room means are A $= (88 + 92)/2 = 90$, B $= (60 + 75 + 70 + 65 + 80 + 70)/6 = 420/6 = 70$ and C $= (85 + 75)/2 = 80$. Their plain average is $(90 + 70 + 80)/3 = 80$."
+            },
+            {
+              "result": "80"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What is `by_room.transform(\"mean\").mean()`?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "`transform` gives every student their room's mean, so the column holds 90 twice, 70 six times and 80 twice. Its average weights each room by its size:"
+            },
+            {
+              "tex": "\\frac{2 \\cdot 90 + 6 \\cdot 70 + 2 \\cdot 80}{10} = \\frac{760}{10} = 76 ,"
+            },
+            {
+              "p": "which is the mean of all ten scores, `scores[\"score\"].mean()`. Replacing every value of a group with the group's mean keeps the group's total, so the overall mean cannot change."
+            },
+            {
+              "result": "76"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "The principal reports \"the average student scored 80\". Which number should the report use, and how would you get it back from this table of room sizes and room means?"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "t = scores.groupby(\"room\").agg(n=(\"score\", \"size\"), avg=(\"score\", \"mean\"))"
+                ]
+              }
+            }
+          ],
+          "answer": [
+            {
+              "p": "**76**. The mean of the room means gives each room one vote, so the 2 students of room A count as much as the 6 of room B, and the large, weaker room is underweighted. That answers \"what does the average room score\", not \"what does the average student score\"."
+            },
+            {
+              "p": "From the summary table, weight each room's mean by its size: `(t[\"n\"] * t[\"avg\"]).sum() / t[\"n\"].sum()` gives $760/10 = 76$. The two means always agree when every room has the same number of students, and in general they differ when the sizes differ."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pdc-order-of-cleaning-steps",
+      "moduleId": "pandas-data-cleaning-storing",
+      "title": "The Order of Five Cleaning Steps",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "A rental site exports its listings as `listings.csv`:"
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "text",
+            "lines": [
+              "id,area,rent,beds",
+              "1,north,1200,2",
+              "2,North ,1000,",
+              "3,south,900,1",
+              "4,south,ask,1",
+              "3, South,900,1",
+              "5,east,1500,3",
+              "2,North ,1000,",
+              "6,north,,3",
+              "7,south,1020,2",
+              "8,north,1500,2"
+            ]
+          }
+        },
+        {
+          "p": "Listing 4 says \"ask\" instead of a rent, and listing 2 never gave a number of bedrooms. An analyst cleans it with five steps:"
+        },
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "df = pd.read_csv(\"listings.csv\")",
+              "df = df.drop_duplicates()                                          # step 1",
+              "df[\"area\"] = df[\"area\"].str.strip().str.lower()                    # step 2",
+              "df[\"rent\"] = pd.to_numeric(df[\"rent\"], errors=\"coerce\")            # step 3",
+              "df[\"rent\"] = df[\"rent\"].fillna(",
+              "    df.groupby(\"area\")[\"rent\"].transform(\"median\"))                # step 4",
+              "df = df.dropna(subset=[\"beds\"])                                    # step 5"
+            ]
+          }
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "How many rows does `df` have at the end?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The file has 10 data rows. Step 1 removes only exact repeats: the second `2,North ,1000,` line. The two lines of listing 3 differ in their `area` text (`south` and ` South`), so both stay, and 9 rows remain. Steps 2 to 4 change values, not rows. Step 5 removes the row of listing 2, whose `beds` is missing, leaving **8** rows, with listing 3 still in twice."
+            },
+            {
+              "result": "8"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What rent does step 4 give listing 4?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "After step 3 the south rents are 900, NaN, 900 and 1020, because listing 3 is still in twice. Their median is the middle of 900, 900 and 1020, which is **900**. The repeated row counts as a second listing at 900 and drags the median down."
+            },
+            {
+              "result": "900"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What rent does step 4 give listing 6?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "At step 4 the north rows are listings 1, 2, 6 and 8, with rents 1200, 1000, NaN and 1500. Listing 2 is still there, because step 5 has not run yet. The median of 1000, 1200 and 1500 is **1200**."
+            },
+            {
+              "result": "1200"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "The analyst makes two changes: step 2 now runs before step 1, and step 5 runs before step 4. What rent does listing 4 get now?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "With the text cleaned first, the two lines of listing 3 become identical, and `drop_duplicates` keeps one. The south rents are now 900, NaN and 1020, with median $(900 + 1020)/2 = 960$."
+            },
+            {
+              "result": "960"
+            }
+          ]
+        },
+        {
+          "id": "1.5",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "With the same two changes, what rent does listing 6 get?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Step 5 now removes listing 2 before the medians are taken, so the north rents are 1200, NaN and 1500, with median $(1200 + 1500)/2 = 1350$. The table ends with 7 rows: one per listing, without listing 2."
+            },
+            {
+              "result": "1350"
+            }
+          ]
+        },
+        {
+          "id": "1.6",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "The two changes are of different kinds. Which one fixes a mistake, and which one is a choice that could go either way? Explain in two or three sentences."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Cleaning the text before removing duplicates fixes a mistake. Both lines of listing 3 carry the same id and the same values once the spacing and capitals are fixed, so they are one listing, and counting it twice changed both the row count and the south median."
+            },
+            {
+              "p": "Dropping listing 2 before the medians is a choice. Its rent of 1000 is a real price in the north even though its bedrooms are unknown, so using it in the median is fair, and removing it first moves listing 6 from 1200 to 1350. If the missing bedrooms make the whole listing doubtful, removing it first is the better choice. Either way, the analyst should decide it and say so, not let the order of the lines decide."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

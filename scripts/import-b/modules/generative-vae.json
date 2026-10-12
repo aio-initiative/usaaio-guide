@@ -1,0 +1,31 @@
+{
+  "aModule": "vae-encoder-decoder-generation",
+  "stage": "Camp",
+  "fixes": [
+    {
+      "file": "gen-the-range-a-kl-weight-picks",
+      "find": "so this range's ELBO is\n$-2.2895 - 1.44 - 0.0316 = -3.7611$, and the gap to $-3.1721$ is 0.5889.",
+      "replace": "so this range's ELBO is\n$-2.2895 - 1.44 - 0.0316 = -3.7611$, and the gap to $-3.1721$ is 0.5890.",
+      "why": "The sentence displays -3.7611 and -3.1721 and then states their difference; those two numbers differ by 0.5890, not 0.5889 (bprv-28: the KL at mu = 0.2, sigma^2 = 0.8 is 0.0315719, so the gap is 3.7610719 - 3.1721 = 0.5889719 = 0.5890 to four decimals). Low severity: it rounds to the part's stated answer of 0.589 and sits inside the tolerance of 0.003, so no answer or grading value changes."
+    }
+  ],
+  "parts": {
+    "gen-the-range-a-kl-weight-picks": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "gen-the-range-a-kl-weight-picks": "A training run puts a weight beta on the KL term, so the loss for one image is the average squared error plus beta times the KL, and nothing else changes. For the LEFT image the decoder's error at a code z is (1 - z) squared, and averaging over codes drawn from a range with mean mu and spread sigma gives the error at mu plus sigma squared. Find the mean and spread that make the weighted loss smallest, the average squared error the decoder pays at the range this run settles on and what a decoder that ignores the code would pay instead, and the gap between that range's ELBO and the log likelihood the page prints."
+  }
+}

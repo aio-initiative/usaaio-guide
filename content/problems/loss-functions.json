@@ -1,0 +1,892 @@
+{
+ "module": "loss-functions",
+ "stage": "Round 1",
+ "index": [
+  {
+   "id": "lf-bake-to-a-quantile",
+   "moduleId": "loss-functions",
+   "title": "How Many Loaves to Bake",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=lf-bake-to-a-quantile",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "A bakery bakes the same number of loaves every day and has nine days of demand: a loaf short of demand loses a sale worth 3 units of profit and an unsold loaf costs 1 unit. Pick the daily count that minimizes the mean cost, redo it when an unsold loaf costs 2, and show why the best count is the quantile of demand at the fraction a over a plus b. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "lf-convex-in-the-logits",
+   "moduleId": "loss-functions",
+   "title": "Cross-Entropy Is a Bowl, Squared Error Is Not",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=lf-convex-in-the-logits",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "For a softmax over K logits, show that the Hessian of the cross-entropy loss negative log p_c is the diagonal matrix of probabilities minus the outer product p p transpose, and that this makes the loss convex in the logits. Then test squared error on a sigmoid: compute how far the curve at the midpoint of a chord sits above the chord, and count how many gradient-descent steps squared error and cross-entropy each need to climb from z = -8 to z = -log 2. 5 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "lf-hinge-which-points-pull",
+   "moduleId": "loss-functions",
+   "title": "The Points a Hinge Step Uses",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=lf-hinge-which-points-pull",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 1"
+   ],
+   "prompt": "A linear classifier with labels +1 and -1 gives six training points the scores in the problem's table, and it is trained on the mean hinge loss by subgradient descent. Which of the six points contribute to the subgradient with respect to the weights at this step?",
+   "answer": "Points 2, 3, 5 and 6. A point contributes −yᵢxᵢ/6 to the subgradient of the mean loss when its margin yᵢŷᵢ is below 1 and nothing when it is above. The margins are 2.4, 0.7, −0.3, 1.6, −1.4 and 0.9, so points 2, 3, 5 and 6 contribute. Points 1 and 4 sit past the margin with zero loss and zero gradient."
+  },
+  {
+   "id": "lf-long-tailed-wait",
+   "moduleId": "loss-functions",
+   "title": "Predicting a Wait with a Long Tail",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=lf-long-tailed-wait",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "A support line's wait times are exponentially distributed with a 10-minute mean, so most waits are short and a few are very long. A model with no features predicts one number for every call: find the number that minimizes mean absolute error, compare the mean and the median under both MAE and RMSE, and then redo the comparison for a line whose calls come in two types with different mean waits. 5 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "lf-r2-of-a-shifted-model",
+   "moduleId": "loss-functions",
+   "title": "The R² of a Model That Is off by Three",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=lf-r2-of-a-shifted-model",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 1"
+   ],
+   "prompt": "A regressor scores five test targets, and every prediction is exactly 3 above its target, so the predictions rank the targets perfectly. Its total squared error is 45 while the targets' squared deviations from their own mean total 40. Decide what R-squared the grader reports.",
+   "answer": "-0.125. Every residual is −3, so the squared errors sum to 5 × 9 = 45. The targets' squared deviations from their mean 5 are 16, 4, 0, 4 and 16, which sum to 40. So R² = 1 − 45/40 = −0.125: predicting 5 for every row would have scored better. Subtracting 3 from every prediction gives R² = 1, so a perfect ranking with an offset is the model's whole problem, and R² is the metric that sees it."
+  },
+  {
+   "id": "lf-soft-label-entropy",
+   "moduleId": "loss-functions",
+   "title": "The Loss That Cannot Reach Zero",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=lf-soft-label-entropy",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "A four-class classifier trains on soft labels that put 0.85 on the true class and 0.05 on each of the other three. Show that the gradient of the cross-entropy loss with respect to the logits is the predicted probabilities minus the target, and find both the lowest value the loss can reach and how far the true class logit sits above the others at that point. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "lf-two-meters",
+   "moduleId": "loss-functions",
+   "title": "One Estimate from Two Meters",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=lf-two-meters",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "A lab measures one voltage four times: three readings from a bench meter whose noise is Gaussian with standard deviation 1 mV, and one from a handheld meter whose noise is Gaussian with standard deviation 2 mV. Neither meter is biased, and the readings are independent. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "lf-where-squared-error-pushes",
+   "moduleId": "loss-functions",
+   "title": "The Spam Squared Error Barely Moves",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=lf-where-squared-error-pushes",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 1"
+   ],
+   "prompt": "A spam filter turns each email into a logit and reports the spam probability p, and it is trained with squared error on that probability, so for a spam email the size of one gradient step's raise of the logit depends on p. At which value of p is that raise the largest, and how does squared error's step on a spam email it is surest is genuine compare with cross-entropy's step on the same email?",
+   "answer": "At p = 1/3. The chain rule gives ∂L/∂z = 2(p − 1) · p(1 − p), of size g(p) = 2p(1 − p)². Its derivative is 2(1 − p)(1 − 3p), zero at p = 1/3, where g = 8/27 = 0.296. Below 1/3 the raise shrinks with p: at p = 0.05 it is 0.0903, while cross-entropy would raise the same logit by 0.95, about 10.5 times as much. Squared error spends its largest steps on spam that is only moderately misjudged."
+  },
+  {
+   "id": "lf-huber-irls",
+   "moduleId": "loss-functions",
+   "title": "Taxi Fares with the Huber Loss",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=lf-huber-irls",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 1"
+   ],
+   "prompt": "Recover a taxi fare rule, a flag fee plus a rate per kilometre, from 45 recorded trips. Three fares came out far too high, all the same way, so least squares tilts the whole line toward them. Fit the line under the Huber loss instead, squared for small residuals and linear for large ones, by iteratively reweighted least squares in NumPy.",
+   "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+  }
+ ],
+ "theory": [
+  {
+   "id": "lf-bake-to-a-quantile",
+   "moduleId": "loss-functions",
+   "title": "How Many Loaves to Bake",
+   "difficulty": "Medium",
+   "minutes": 15,
+   "overview": [
+    "A bakery bakes the same number of loaves $c$ every day. Its demand over nine days, in loaves, was"
+   ],
+   "setup": [
+    {
+     "tex": "31,\\ 18,\\ 24,\\ 43,\\ 22,\\ 29,\\ 35,\\ 20,\\ 26 ."
+    },
+    {
+     "p": "On a day with demand $y$, every loaf short of demand loses a sale and costs 3 units of profit, and every unsold loaf costs 1 unit:"
+    },
+    {
+     "tex": "\\text{cost}(c, y) = 3\\max(0,\\ y - c) + 1 \\cdot \\max(0,\\ c - y)."
+    },
+    {
+     "p": "Choose $c$ to minimize the mean cost over the nine days."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What $c$ minimizes the mean cost?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Use the lesson's argument for the median, with the two sides weighted. Move $c$ up by a small amount $h$. Each day with demand below $c$ gets $h$ more unsold loaves, costing $1 \\cdot h$, and each day with demand above $c$ is short by $h$ less, saving $3h$. So the total cost changes at the rate"
+      },
+      {
+       "tex": "1 \\cdot \\#\\{y_i < c\\} - 3 \\cdot \\#\\{y_i > c\\} ."
+      },
+      {
+       "p": "The cost falls while this is negative and rises once it is positive. Sorted, the demands are 18, 20, 22, 24, 26, 29, 31, 35, 43. Just above the $k$-th of them the rate is $k - 3(9 - k) = 4k - 27$, which is negative up to $k = 6$ and positive from $k = 7$. So the cost falls until $c$ reaches the 7th demand and rises after it:"
+      },
+      {
+       "tex": "c^\\star = 31 ,"
+      },
+      {
+       "p": "with a mean cost of $95/9 \\approx 10.56$. The mean demand, 27.6, and the median, 26, both bake too few: running short costs three times as much as a leftover loaf, so the best $c$ sits high in the data."
+      },
+      {
+       "result": "31"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Flour gets dearer and an unsold loaf now costs 2 units, while a lost sale still costs 3. What $c$ minimizes the mean cost now?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The rate becomes $2 \\cdot \\#\\{y_i < c\\} - 3 \\cdot \\#\\{y_i > c\\}$. Just above the $k$-th sorted demand it is $2k - 3(9 - k) = 5k - 27$, negative up to $k = 5$ and positive from $k = 6$. The minimum is at the 6th demand,"
+      },
+      {
+       "tex": "c^\\star = 29 ,"
+      },
+      {
+       "p": "with a mean cost of $136/9 \\approx 15.11$. Leftovers cost more, so the bakery bakes fewer: 29 loaves cover six of the nine days instead of seven."
+      },
+      {
+       "result": "29"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "A lost sale costs $a$ and a leftover loaf costs $b$. Show that, with a large number of days, the best $c$ is the value that demand stays at or below on a fraction $a / (a + b)$ of days. What does this give when $a = b$?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Write $F$ for the fraction of days with demand below $c$. Per day, moving $c$ up changes the mean cost at the rate"
+      },
+      {
+       "tex": "b\\,F - a\\,(1 - F) ."
+      },
+      {
+       "p": "It is negative while $F < a / (a + b)$ and positive after, so the cost is smallest where $F = a / (a + b)$: the $a/(a+b)$ quantile of demand. For Part 1 that is $3/4$, and with nine days the 7th of nine values is where the running fraction first passes it. For Part 2 it is $3/5$."
+      },
+      {
+       "p": "With $a = b$ the fraction is $1/2$, the median, and the cost is $a$ times the absolute error. The mean absolute error of the lesson is the symmetric case of this loss, which is why it recovers the median, and tilting the two slopes moves the answer to any other quantile."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lf-convex-in-the-logits",
+   "moduleId": "loss-functions",
+   "title": "Cross-Entropy Is a Bowl, Squared Error Is Not",
+   "difficulty": "Hard",
+   "minutes": 30,
+   "overview": [
+    "The lesson says that cross-entropy on a softmax is convex in the logits and that squared error on a softmax is not. This problem proves the first claim and finds a counterexample for the second."
+   ],
+   "setup": [
+    {
+     "p": "Let $\\mathbf{p} = \\operatorname{softmax}(\\mathbf{z})$ for a vector of $K$ logits, and let $c$ be the true class. The loss is $\\mathcal{L}(\\mathbf{z}) = -\\log p_c$, whose gradient is $\\mathbf{p} - \\mathbf{y}$ for the one-hot $\\mathbf{y}$. Moving logit $z_j$ changes $p_i$ at the rate $p_i(\\delta_{ij} - p_j)$, where $\\delta_{ij}$ is 1 when $i = j$ and 0 otherwise."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Show that the Hessian of $\\mathcal{L}$ with respect to $\\mathbf{z}$ is $H = D - \\mathbf{p}\\mathbf{p}^\\top$, where $D$ is the diagonal matrix with $p_1, \\dots, p_K$ on its diagonal, and that $H$ does not depend on the true class."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Entry $i$ of the gradient is $p_i - y_i$, and $y_i$ does not move with the logits. Differentiating it with respect to $z_j$ gives"
+      },
+      {
+       "tex": "H_{ij} = p_i\\,\\delta_{ij} - p_i p_j ."
+      },
+      {
+       "p": "The first term is nonzero only on the diagonal, where it is $p_i$, which is the matrix $D$. The second is entry $(i, j)$ of $\\mathbf{p}\\mathbf{p}^\\top$. The label entered the gradient only through the constant $\\mathbf{y}$, so it drops out of the Hessian."
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Show that $\\mathbf{v}^\\top H \\mathbf{v} \\ge 0$ for every $\\mathbf{v} \\in \\mathbb{R}^K$, so $\\mathcal{L}$ is convex. (Hint: read $\\mathbf{p}$ as a probability distribution over the $K$ entries of $\\mathbf{v}$.)"
+      }
+     ],
+     "answer": [
+      {
+       "tex": "\\mathbf{v}^\\top H \\mathbf{v} = \\mathbf{v}^\\top D\\,\\mathbf{v} - (\\mathbf{p} \\cdot \\mathbf{v})^2\n= \\sum_{i=1}^{K} p_i v_i^2 - (\\mathbf{p} \\cdot \\mathbf{v})^2 ."
+      },
+      {
+       "p": "Let $V$ be a random variable equal to $v_i$ with probability $p_i$. The sum is $\\mathbb{E}[V^2]$ and $\\mathbf{p} \\cdot \\mathbf{v}$ is $\\mathbb{E}[V]$, so"
+      },
+      {
+       "tex": "\\mathbf{v}^\\top H \\mathbf{v} = \\operatorname{Var}(V) \\ge 0 ."
+      },
+      {
+       "p": "Every second directional derivative of the loss is therefore nonnegative, at every point, which is what convexity means for a twice differentiable function. The loss is a bowl in the logits, and gradient descent cannot get stuck in a local minimum that is not global. The variance is zero exactly when $V$ is constant, that is when $\\mathbf{v}$ is a multiple of $(1, \\dots, 1)$. Adding the same number to every logit leaves the softmax unchanged, so the bowl is flat in that one direction. $\\qquad\\blacksquare$"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Now take two classes written as one logit, $p = \\sigma(z)$, with label $y = 1$ and squared error $g(z) = (1 - \\sigma(z))^2$. A convex function satisfies $g\\big(\\tfrac{a + b}{2}\\big) \\le \\tfrac12\\big(g(a) + g(b)\\big)$. Compute $g(-2) - \\tfrac12\\big(g(-4) + g(0)\\big)$ to three decimal places. What does its sign say?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "With $\\sigma(-4) = 0.01799$, $\\sigma(-2) = 0.11920$ and $\\sigma(0) = 0.5$:"
+      },
+      {
+       "tex": "\\begin{aligned}\ng(-4) &= (1 - 0.01799)^2 = 0.96435, \\\\\ng(-2) &= (1 - 0.11920)^2 = 0.77580, \\\\\ng(0) &= 0.25 .\n\\end{aligned}"
+      },
+      {
+       "p": "So $g(-2) - \\tfrac12(0.96435 + 0.25) = 0.77580 - 0.60718 = 0.169$. It is positive: the curve at the midpoint lies above the chord, which a convex function never allows, so squared error on a sigmoid is not convex in $z$."
+      },
+      {
+       "p": "For comparison, cross-entropy $\\log(1 + e^{-z})$ at the same three points gives $2.127$ at the midpoint against a chord value of $2.356$, below the chord as convexity requires."
+      },
+      {
+       "result": "0.169"
+      }
+     ]
+    },
+    {
+     "id": "1.4",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "The chord test shows the curve is not a bowl. Now see what that costs. An example with $y = 1$ starts at $z = -8$, and gradient descent with learning rate 1 updates only this logit: $z \\leftarrow z - g'(z)$. How many steps does it take to reach $z = -\\log 2 \\approx -0.693$, where $p = 1/3$, under squared error? An estimate within about 10% is enough."
+      }
+     ],
+     "answer": [
+      {
+       "p": "With $p = \\sigma(z)$ and $dp/dz = p(1 - p)$, the slope is $g'(z) = -2(1 - p) \\cdot p(1 - p) = -2p(1 - p)^2$, so each step raises $z$ by $2p(1 - p)^2$. Far below zero, $p \\approx e^{z}$ and $1 - p \\approx 1$, so the raise is about $2e^{z}$: $0.00067$ at $z = -8$."
+      },
+      {
+       "p": "Treat the steps as a smooth flow, $dz/dt = 2e^{z}$. Then $e^{-z}\\,dz = 2\\,dt$, so $e^{-z}$ falls by 2 per step. It starts at $e^{8} = 2981$ and must fall to $e^{\\log 2} = 2$, which takes about"
+      },
+      {
+       "tex": "\\frac{2981 - 2}{2} \\approx 1490 \\text{ steps.}"
+      },
+      {
+       "p": "Running the update exactly gives 1505 steps. The flow estimate is a little low because the true raise, $2e^{z} / (1 + e^{z})^3$, is smaller than $2e^{z}$ once $z$ nears zero. Almost all of the time goes on the first few units of $z$: the raise doubles only when $z$ has climbed by $\\log 2$."
+      },
+      {
+       "p": "This is the concave region at work. Differentiating the slope once more gives $g''(z) = -2p(1 - p)^2(1 - 3p)$, negative for every $p < 1/3$, that is for $z < -\\log 2$. The whole climb lies in that region, where the slope grows as $z$ rises, so it is smallest at the start, exactly where the example is most wrong."
+      },
+      {
+       "result": "1505"
+      }
+     ]
+    },
+    {
+     "id": "1.5",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Same start, same learning rate, but the loss is cross-entropy, $\\log(1 + e^{-z})$. How many steps does it take to reach $z = -\\log 2$?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The cross-entropy slope is $p - 1$, so each step raises $z$ by $1 - p$. At $z = -8$ that is $0.9997$, and it stays close to 1 while $p$ is small. The logit climbs about one unit per step:"
+      },
+      {
+       "tex": "-8 \\to -7.000 \\to -6.001 \\to -5.004 \\to -4.010 \\to \\dots"
+      },
+      {
+       "p": "It needs to climb $8 - 0.693 = 7.3$ units, so 8 steps, against about 1,500 for squared error. The second derivative of cross-entropy, $p(1 - p)$, is positive everywhere, so there is no flat start to climb out of: the most wrong example gets the full step."
+      },
+      {
+       "result": "8"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lf-hinge-which-points-pull",
+   "moduleId": "loss-functions",
+   "title": "The Points a Hinge Step Uses",
+   "difficulty": "Medium",
+   "minutes": 6,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A linear classifier with labels $y \\in \\{-1, +1\\}$ gives six training points these scores $\\hat{y}_i = \\mathbf{w} \\cdot \\mathbf{x}_i + b$:"
+      },
+      {
+       "tex": "\\begin{array}{ccccccc}\n\\text{Point} & 1 & 2 & 3 & 4 & 5 & 6 \\\\ \\hline\n\\text{Label $y$} & +1 & +1 & +1 & -1 & -1 & -1 \\\\\n\\text{Score $\\hat{y}$} & 2.4 & 0.7 & -0.3 & -1.6 & 1.4 & -0.9\n\\end{array}"
+      },
+      {
+       "p": "It is trained on the mean hinge loss $\\frac16 \\sum_i \\max(0,\\ 1 - y_i\\hat{y}_i)$ by subgradient descent. Which points contribute to the subgradient with respect to $\\mathbf{w}$ at this step?"
+      },
+      {
+       "choices": [
+        {
+         "text": "Points 3 and 5",
+         "explain": "These are the misclassified points, the ones whose score has the wrong sign. That is the rule of the perceptron loss max(0, −yŷ), whose kink sits at a margin of 0. The hinge has its kink at a margin of 1, so points 2 and 6, correct but with margins 0.7 and 0.9, still cost 0.3 and 0.1 and still pull on w."
+        },
+        {
+         "text": "Points 2, 3 and 6",
+         "explain": "These are the points with $\\lvert\\hat y\\rvert < 1$, inside the band between the two margin lines. That test ignores the label. Point 5 has score 1.4, outside the band, but its label is −1, so its margin yŷ = −1.4 is the worst of the six and its hinge loss, 2.4, is the largest."
+        },
+        {
+         "text": "Points 2, 3, 5 and 6",
+         "correct": true,
+         "explain": "A point contributes −yᵢxᵢ/6 to the subgradient of the mean loss when its margin yᵢŷᵢ is below 1 and nothing when it is above. The margins are 2.4, 0.7, −0.3, 1.6, −1.4 and 0.9, so points 2, 3, 5 and 6 contribute. Points 1 and 4 sit past the margin with zero loss and zero gradient."
+        },
+        {
+         "text": "All six points",
+         "explain": "Every point contributes under the logistic loss log(1 + e^(−yŷ)), whose gradient shrinks with the margin but never reaches zero. The hinge is exactly flat past a margin of 1, so points 1 and 4, with margins 2.4 and 1.6, contribute nothing."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "A point contributes −yᵢxᵢ/6 to the subgradient of the mean loss when its margin yᵢŷᵢ is below 1 and nothing when it is above. The margins are 2.4, 0.7, −0.3, 1.6, −1.4 and 0.9, so points 2, 3, 5 and 6 contribute. Points 1 and 4 sit past the margin with zero loss and zero gradient."
+      },
+      {
+       "result": "Points 2, 3, 5 and 6"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lf-long-tailed-wait",
+   "moduleId": "loss-functions",
+   "title": "Predicting a Wait with a Long Tail",
+   "difficulty": "Hard",
+   "minutes": 30,
+   "overview": [
+    "A support line answers calls after a wait $Y$, in minutes, that follows an exponential distribution with mean $\\mu = 10$:"
+   ],
+   "setup": [
+    {
+     "tex": "P(Y > t) = e^{-t/\\mu} \\quad (t \\ge 0), \\qquad f(t) = \\tfrac{1}{\\mu} e^{-t/\\mu} ,"
+    },
+    {
+     "p": "and variance $\\mu^2$. Most waits are short and a few are very long. A model with no features predicts one number $c$ for every call."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Show that, for $c \\ge 0$,"
+      },
+      {
+       "tex": "\\mathbb{E}\\,|Y - c| = c - \\mu + 2\\mu\\, e^{-c/\\mu} ,"
+      },
+      {
+       "p": "then find the $c$ that minimizes it, to three decimal places. (Hint: for any number $a$, $|a| = -a + 2\\max(0, a)$.)"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Apply the hint with $a = Y - c$ and take expectations:"
+      },
+      {
+       "tex": "\\mathbb{E}\\,|Y - c| = c - \\mu + 2\\,\\mathbb{E}\\max(0,\\ Y - c) ."
+      },
+      {
+       "p": "The last expectation only counts waits longer than $c$. Substitute $t = c + s$:"
+      },
+      {
+       "tex": "\\int_c^\\infty (t - c)\\,\\tfrac{1}{\\mu} e^{-t/\\mu}\\,dt\n= e^{-c/\\mu} \\int_0^\\infty s\\,\\tfrac{1}{\\mu} e^{-s/\\mu}\\,ds\n= \\mu\\, e^{-c/\\mu} ,"
+      },
+      {
+       "p": "since the last integral is the mean of the same exponential. That gives the formula. Now set its derivative to zero:"
+      },
+      {
+       "tex": "1 - 2e^{-c/\\mu} = 0\n\\quad\\Longrightarrow\\quad\ne^{-c/\\mu} = \\tfrac12\n\\quad\\Longrightarrow\\quad\nc^\\star = \\mu \\log 2 = 6.931 ."
+      },
+      {
+       "p": "The second derivative, $\\tfrac{2}{\\mu} e^{-c/\\mu}$, is positive, so this is the minimum. It is the median, since $P(Y > \\mu \\log 2) = 1/2$, as the lesson's counting argument predicts: the derivative $1 - 2P(Y > c)$ is the continuous form of \"points below minus points above\"."
+      },
+      {
+       "result": "6.931"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "A teammate predicts the mean, $c = 10$, because it is the natural summary. What expected absolute error does that give? Give it to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "tex": "\\mathbb{E}\\,|Y - 10| = 10 - 10 + 20 e^{-1} = \\frac{20}{e} = 7.358 ."
+      },
+      {
+       "p": "At the median the expected absolute error is $\\mu\\log 2 - \\mu + 2\\mu \\cdot \\tfrac12 = \\mu \\log 2 = 6.931$. Predicting the mean costs $7.358 / 6.931 - 1 = 6.1\\%$ more absolute error on average per call. The long right tail drags the mean above the median, and absolute error charges for the gap on the many short waits."
+      },
+      {
+       "result": "7.358"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "The grader actually computes RMSE. What RMSE does the median prediction from Part 1 get?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Split the squared error around the mean:"
+      },
+      {
+       "tex": "\\mathbb{E}\\,(Y - c)^2 = \\operatorname{Var}(Y) + (\\mu - c)^2 = \\mu^2 + (\\mu - c)^2 ."
+      },
+      {
+       "p": "At $c = \\mu\\log 2$ this is $100 + (10 - 6.931)^2 = 100 + 9.42 = 109.42$, so"
+      },
+      {
+       "tex": "\\text{RMSE} = \\sqrt{109.42} = 10.46 ,"
+      },
+      {
+       "p": "against $\\sqrt{100} = 10$ for the mean, the value that minimizes squared error. Each metric is won by its own loss's minimizer: the mean is 6.1% worse on MAE and the median is 4.6% worse on RMSE."
+      },
+      {
+       "result": "10.46"
+      }
+     ]
+    },
+    {
+     "id": "1.4",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "The line takes two types of call, billing and technical, equally often. Billing waits are exponential with mean 4 minutes and technical waits are exponential with mean 16. A model now sees the type and predicts one number per type. One copy is trained to convergence on squared error and another on absolute error. What RMSE over all calls does the squared-error model get?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Within each type the squared-error model faces the problem of Part 3 with its own $\\mu$, so it predicts that type's mean: 4 for billing and 16 for technical. Its mean squared error on a type is that type's variance, $\\mu^2$, and the two types are equally common:"
+      },
+      {
+       "tex": "\\text{RMSE} = \\sqrt{\\tfrac12\\big(4^2 + 16^2\\big)} = \\sqrt{136} = 11.66 ."
+      },
+      {
+       "result": "11.66"
+      }
+     ]
+    },
+    {
+     "id": "1.5",
+     "kind": "computation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "What RMSE over all calls does the absolute-error model get? Compare the two models' average predictions, and say which one to submit to the RMSE grader."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The absolute-error model predicts each type's median, $\\mu \\log 2$: 2.773 for billing and 11.090 for technical. By the split in Part 3, its mean squared error on a type is $\\mu^2 + (\\mu - \\mu\\log 2)^2 = \\mu^2\\big(1 + (1 - \\log 2)^2\\big)$, so"
+      },
+      {
+       "tex": "\\text{RMSE} = \\sqrt{136 \\times 1.0942} = \\sqrt{148.81} = 12.20 ,"
+      },
+      {
+       "p": "again 4.6% above the squared-error model, because the factor $1 + (1 - \\log 2)^2$ is the same for every $\\mu$."
+      },
+      {
+       "p": "The squared-error model predicts 10 minutes on average, the overall mean wait. The absolute-error model predicts $6.93$ on average, about 31% lower, and it is lower on both types, not only on the long technical waits: every exponential has its median below its mean. Seeing the type did not remove the gap. It now sits inside each type. Submit the squared-error model, whose predictions are the conditional means that RMSE rewards."
+      },
+      {
+       "result": "12.20"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lf-r2-of-a-shifted-model",
+   "moduleId": "loss-functions",
+   "title": "The R² of a Model That Is off by Three",
+   "difficulty": "Medium",
+   "minutes": 6,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A regressor is scored on five test rows with targets"
+      },
+      {
+       "tex": "y = (1,\\ 3,\\ 5,\\ 7,\\ 9),"
+      },
+      {
+       "p": "and its predictions are $\\hat{y} = (4,\\ 6,\\ 8,\\ 10,\\ 12)$: every one is the target plus 3. A teammate points out that the predictions are perfectly correlated with the targets. What $R^2$ does the grader report?"
+      },
+      {
+       "choices": [
+        {
+         "text": "$1.000$",
+         "explain": "That is the squared correlation between predictions and targets. It equals R² for a least-squares fit scored on its own training data, where the fit has no constant offset left. Here the offset is 3 on every row, and R² charges for it: it compares the squared errors, 45 in total, with the spread of the targets around their mean, 40."
+        },
+        {
+         "text": "$0.000$",
+         "explain": "0 is the score of the constant that predicts the test mean, 5, on every row. R² has no floor there: any model whose squared error exceeds that constant's scores below 0. This one's total, 45, exceeds the constant's 40."
+        },
+        {
+         "text": "$-4.625$",
+         "explain": "This divides a sum by a mean: the squared errors summed over the five rows, 45, over the variance of the targets, 8, their mean squared deviation, giving 1 − 45/8. The two terms need the same footing. Sums give 1 − 45/40, and means give 1 − 9/8, which is the same number, −0.125."
+        },
+        {
+         "text": "$-0.125$",
+         "correct": true,
+         "explain": "Every residual is −3, so the squared errors sum to 5 × 9 = 45. The targets' squared deviations from their mean 5 are 16, 4, 0, 4 and 16, which sum to 40. So R² = 1 − 45/40 = −0.125: predicting 5 for every row would have scored better. Subtracting 3 from every prediction gives R² = 1, so a perfect ranking with an offset is the model's whole problem, and R² is the metric that sees it."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Every residual is −3, so the squared errors sum to 5 × 9 = 45. The targets' squared deviations from their mean 5 are 16, 4, 0, 4 and 16, which sum to 40. So R² = 1 − 45/40 = −0.125: predicting 5 for every row would have scored better. Subtracting 3 from every prediction gives R² = 1, so a perfect ranking with an offset is the model's whole problem, and R² is the metric that sees it."
+      },
+      {
+       "result": "$-0.125$"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lf-soft-label-entropy",
+   "moduleId": "loss-functions",
+   "title": "The Loss That Cannot Reach Zero",
+   "difficulty": "Medium",
+   "minutes": 15,
+   "overview": [
+    "A classifier sorts photos into four classes. Instead of one-hot targets it trains on soft labels: the true class gets 0.85 and each of the other three classes gets 0.05, so a photo of class 1 has the target"
+   ],
+   "setup": [
+    {
+     "tex": "\\mathbf{q} = (0.85,\\ 0.05,\\ 0.05,\\ 0.05)."
+    },
+    {
+     "p": "The loss is still the cross-entropy $\\mathcal{L} = -\\sum_k q_k \\log p_k$, with $\\mathbf{p}$ the softmax of the logits $\\mathbf{z}$. Consider one photo of class 1, and suppose the model can set its four logits to anything it likes. Use natural logarithms."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Raising logit $z_j$ changes probability $p_i$ at the rate $p_i\\,\\delta_{ij} - p_i p_j$, where $\\delta_{ij}$ is 1 for $i = j$ and 0 otherwise. Use this to show that the gradient of $\\mathcal{L}$ with respect to $\\mathbf{z}$ is $\\mathbf{p} - \\mathbf{q}$, then find the $\\mathbf{p}$ that minimizes the loss."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Divide the rate by $p_i$: the logit $z_j$ moves $\\log p_i$ at the rate $\\delta_{ij} - p_j$. The loss weights each $\\log p_i$ by $-q_i$, so its rate of change with $z_j$ is the sum of $-q_i(\\delta_{ij} - p_j)$ over the four classes. The $\\delta_{ij}$ terms leave only $i = j$, which gives $-q_j$. The $p_j$ terms give $p_j(q_1 + q_2 + q_3 + q_4) = p_j$, because the soft labels add up to $0.85 + 3(0.05) = 1$. So the $j$-th entry of the gradient is $p_j - q_j$, and the gradient is $\\mathbf{p} - \\mathbf{q}$. Any target that sums to 1 gives the same form, one-hot or not."
+      },
+      {
+       "p": "The gradient is zero exactly when $\\mathbf{p} = \\mathbf{q}$: probability 0.85 on class 1 and 0.05 on each of the others. Cross-entropy is convex in the logits, as the lesson's next section notes, so this stationary point is the minimum. With a one-hot target the same condition asks for $p_1 = 1$, which no finite logits reach, so the logits grow for as long as training runs. With soft labels the minimum is reached at finite logits."
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the lowest value the loss can take on this photo? Give it to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Put $\\mathbf{p} = \\mathbf{q}$ into the loss:"
+      },
+      {
+       "tex": "-\\big[0.85 \\log 0.85 + 3 \\times 0.05 \\log 0.05\\big]\n= 0.1381 + 0.4494 = 0.588 ."
+      },
+      {
+       "p": "This is the entropy of $\\mathbf{q}$. The lesson writes cross-entropy as the entropy of the target plus $D_{\\mathrm{KL}}(\\mathbf{q} \\Vert \\mathbf{p})$, and the KL divergence is zero only at $\\mathbf{p} = \\mathbf{q}$, so the entropy is the floor. A one-hot target has entropy 0, which is why its loss can approach 0. A training curve that levels off at 0.588 on soft labels like these has not stalled. It has reached the floor."
+      },
+      {
+       "p": "Two tempting answers are wrong. $-\\log 0.85 = 0.163$ keeps only the true class's term, as if the target were still one-hot. And 0, the one-hot floor, would need $p_1 = 1$, which costs infinite loss on the three 0.05 terms."
+      },
+      {
+       "result": "0.588"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "At the minimum, how far does the logit of class 1 sit above each of the other three logits?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Softmax probabilities depend only on differences of logits: $p_1 / p_k = e^{z_1 - z_k}$. At the minimum $p_1 / p_k = 0.85 / 0.05 = 17$, so"
+      },
+      {
+       "tex": "z_1 - z_k = \\log 17 \\approx 2.833 ."
+      },
+      {
+       "p": "The three other logits are equal to one another. Soft labels cap the gap at $\\log 17$, where a one-hot target would push it toward infinity, and this cap is what keeps a model trained on soft labels from growing overconfident."
+      },
+      {
+       "result": "2.833"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lf-two-meters",
+   "moduleId": "loss-functions",
+   "title": "One Estimate from Two Meters",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "A lab measures one voltage four times. Three readings come from a bench meter whose noise is Gaussian with standard deviation 1 mV, and one comes from a handheld meter whose noise is Gaussian with standard deviation 2 mV. Neither meter is biased, and the readings are independent:"
+   ],
+   "setup": [
+    {
+     "tex": "\\begin{array}{ccccc}\n\\text{Meter} & \\text{Bench} & \\text{Bench} & \\text{Bench} & \\text{Handheld} \\\\ \\hline\n\\text{Reading (mV)} & 11 & 12 & 14 & 8\n\\end{array}"
+    },
+    {
+     "p": "The lab reports one number $c$ for the voltage."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Write the negative log-likelihood of the four readings as a function of $c$, and drop the terms that do not depend on $c$. What loss is left?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Reading $i$ has density $\\frac{1}{\\sqrt{2\\pi\\sigma_i^2}} \\exp\\!\\big(-(y_i - c)^2 / 2\\sigma_i^2\\big)$ with its own $\\sigma_i$. The log of the product is"
+      },
+      {
+       "tex": "\\log \\mathcal{L}(c) = \\sum_{i=1}^{4} \\Big[-\\tfrac12 \\log(2\\pi\\sigma_i^2) - \\frac{(y_i - c)^2}{2\\sigma_i^2}\\Big]."
+      },
+      {
+       "p": "The first term does not involve $c$. What is left to minimize, after multiplying by 2, is"
+      },
+      {
+       "tex": "\\sum_{i=1}^{4} \\frac{(y_i - c)^2}{\\sigma_i^2},"
+      },
+      {
+       "p": "a **weighted** squared error with weight $w_i = 1/\\sigma_i^2$ on each reading. When every $\\sigma_i$ is the same, the weights cancel and this is the ordinary squared error of the lesson. Here they do not: each bench reading has weight 1 and the handheld reading has weight $1/4$."
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Find the maximum-likelihood value of $c$, in mV."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Set the derivative of $\\sum_i w_i (y_i - c)^2$ to zero:"
+      },
+      {
+       "tex": "-2\\sum_i w_i (y_i - c) = 0\n\\quad\\Longrightarrow\\quad\nc^\\star = \\frac{\\sum_i w_i y_i}{\\sum_i w_i}\n= \\frac{11 + 12 + 14 + \\tfrac14 \\cdot 8}{3 + \\tfrac14}\n= \\frac{39}{3.25} = 12 ."
+      },
+      {
+       "p": "The second derivative, $2\\sum_i w_i$, is positive, so this is the minimum. The plain mean, 11.25, treats the handheld reading as if it were as good as a bench reading and lets it pull the answer down. Weighting by $1/\\sigma_i$ instead of $1/\\sigma_i^2$ gives $41 / 3.5 = 11.71$, which is also not the likelihood's answer: the variance, not the standard deviation, sets the weight."
+      },
+      {
+       "result": "12"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "One bench reading goes up by 1 mV. Separately, the handheld reading goes up by 1 mV. How many times further does the estimate move in the first case than in the second?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The estimate is linear in the readings, $c^\\star = \\sum_i \\frac{w_i}{\\sum_j w_j}\\, y_i$, so reading $i$ moves it by $w_i / \\sum_j w_j$ per mV. That is $1 / 3.25 = 0.308$ for a bench reading and $0.25 / 3.25 = 0.077$ for the handheld one, a ratio of $w_{\\text{bench}} / w_{\\text{handheld}} = 1 / 0.25 = 4$."
+      },
+      {
+       "p": "Doubling the noise of a meter quarters its say in the estimate. In the plain mean every reading moves the answer by $1/4$, and the ratio would be 1."
+      },
+      {
+       "result": "4"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lf-where-squared-error-pushes",
+   "moduleId": "loss-functions",
+   "title": "The Spam Squared Error Barely Moves",
+   "difficulty": "Medium",
+   "minutes": 8,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A spam filter turns each email into a logit $z$ and reports the spam probability $p = \\sigma(z)$. Someone trains it with squared error on that probability, $\\mathcal{L} = (p - y)^2$, where $y = 1$ marks spam. Midway through training, the spam emails in the training set sit at every probability from near 0 to near 1. For a spam email, the size of $\\partial \\mathcal{L} / \\partial z$ sets how far one gradient step raises its logit. Recall that $\\sigma'(z) = p(1 - p)$."
+      },
+      {
+       "p": "For which current value of $p$ does a spam email get the largest raise?"
+      },
+      {
+       "choices": [
+        {
+         "text": "As $p$ approaches 0, where the filter is most wrong",
+         "explain": "That is where cross-entropy raises the logit most: its gradient with respect to the logit is p − 1, close to 1 in size when p is near 0. Squared error multiplies its error, 2(1 − p), by the sigmoid's slope p(1 − p), and the slope goes to 0 with p. The raise 2p(1 − p)² is 0.0903 at p = 0.05, under a third of its value at p = 1/3, and it keeps shrinking toward 0, so the spam the filter is surest is genuine gets the least attention."
+        },
+        {
+         "text": "At $p = 1/3$",
+         "correct": true,
+         "explain": "The chain rule gives ∂L/∂z = 2(p − 1) · p(1 − p), of size g(p) = 2p(1 − p)². Its derivative is 2(1 − p)(1 − 3p), zero at p = 1/3, where g = 8/27 = 0.296. Below 1/3 the raise shrinks with p: at p = 0.05 it is 0.0903, while cross-entropy would raise the same logit by 0.95, about 10.5 times as much. Squared error spends its largest steps on spam that is only moderately misjudged."
+        },
+        {
+         "text": "At $p = 1/2$, where the sigmoid is steepest",
+         "explain": "p = 1/2 is where the sigmoid's slope p(1 − p) peaks, but the raise also carries the error 2(1 − p), which is still falling there. The product 2p(1 − p)² is 0.25 at p = 1/2 and 0.296 at p = 1/3, so the peak sits to the left of 1/2."
+        },
+        {
+         "text": "At $p = 2/3$",
+         "explain": "This maximizes 2p²(1 − p), the size of the gradient for a genuine email, y = 0, where the error is p − 0. For spam the error is p − 1, so one factor of p becomes 1 − p and the peak moves from 2/3 to 1/3."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "The chain rule gives ∂L/∂z = 2(p − 1) · p(1 − p), of size g(p) = 2p(1 − p)². Its derivative is 2(1 − p)(1 − 3p), zero at p = 1/3, where g = 8/27 = 0.296. Below 1/3 the raise shrinks with p: at p = 0.05 it is 0.0903, while cross-entropy would raise the same logit by 0.95, about 10.5 times as much. Squared error spends its largest steps on spam that is only moderately misjudged."
+      },
+      {
+       "result": "At $p = 1/3$"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

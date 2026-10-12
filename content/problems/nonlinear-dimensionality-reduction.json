@@ -1,0 +1,766 @@
+{
+  "module": "nonlinear-dimensionality-reduction",
+  "stage": "Round 2",
+  "index": [
+    {
+      "id": "ndr-appended-column",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "A Column for One Reading",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ndr-appended-column",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A t-SNE map of 500 vibration readings gets one extra column that is 3 for reading 17 and 0 for every other reading, and every bandwidth is held at its old value. What happens to reading 17's own neighbor distribution over the other readings?",
+      "answer": "Nothing: every value stays exactly as it was. Every squared distance from reading 17 grows by exactly 9. That multiplies every weight in row 17 by the same factor, exp(-9 / (2 sigma squared)), and the normalization divides it out, so each of reading 17's neighbor probabilities is unchanged. What does change is every other reading's view of 17: in row j, only the weight for reading 17 picks up the factor, so that probability falls. So after symmetrization every pair that involves reading 17 is weaker, through that half."
+    },
+    {
+      "id": "ndr-matching-distance",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "The Distance That Keeps a Similarity",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ndr-matching-distance",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "The data gives a pair at distance r the Gaussian similarity exp(-r^2/2), and the plane gives a pair at distance d the Student-t similarity 1/(1 + d^2). Solve for the plane distance that keeps the similarity equal, evaluate it at r = 3, and find the r where the plane distance equals the data distance. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ndr-outlier-keeps-its-pull",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "An Outlier Keeps Its Pull",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ndr-outlier-keeps-its-pull",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "t-SNE builds its pair similarities by symmetrizing a Gaussian conditional around each point, and a simpler design would instead use one Gaussian over all pairs at once. Show that the symmetrized design keeps every point's total similarity strictly above 1/(2n), then compute an outlier's total under both designs for four points on a line with bandwidth 1. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ndr-pair-on-its-own",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "Where One UMAP Pair Settles",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ndr-pair-on-its-own",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "In UMAP's neighbor graph one point gives another the directed weight 0.75 and receives 0.2 back. Find the distance at which this pair's cross-entropy term is smallest under the plain similarity curve and under umap-learn's default curve, and say where a pair that is not neighbors in the graph gets pushed, compared with t-SNE. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ndr-scaled-copy-cluster",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "A Cluster Ten Times Wider",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ndr-scaled-copy-cluster",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A dataset in 20 dimensions has two groups of 300 points, and one group is an exact copy of the other stretched ten times wider about its own center, with the two centers 1,000 units apart. Say how the two groups compare in a t-SNE plot at perplexity 30 and why the bandwidth search removes the factor of ten.",
+      "answer": "They are the same size. Each point in B sees exactly its twin's distances times 10, so the perplexity search returns 10 times the twin's bandwidth, and every neighbor probability inside B equals the matching value inside A. Pairs across the groups have probabilities of essentially zero, about exp(-500,000 / sigma squared). The two blocks of P are identical, so the objective treats the groups identically and they come out the same size."
+    },
+    {
+      "id": "ndr-squared-kernel-line",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "Inner and Outer Points on a Line",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ndr-squared-kernel-line",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "Four points sit on a line at x = -2, -1, 1 and 2. The two at plus or minus 2 are labeled outer and the two at plus or minus 1 inner, so no threshold on a linear PCA score separates them. Kernel PCA with the kernel k(x, x') = (x x')^2 is used instead: build and center the kernel matrix, find its top eigenvalue and the four training scores, then find where a new point scores exactly halfway between the inner and outer points. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ndr-tied-nearest-neighbors",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "Three Neighbors at the Same Distance",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ndr-tied-nearest-neighbors",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A point has three other points at distance 2 and six at distance 3, so its t-SNE neighbor distribution has three tied nearest neighbors and its perplexity cannot drop below 3 at any bandwidth. The problem finds the two perplexity limits, the bandwidth where a far point carries half the weight of a near one, and what the bandwidth search does when the target perplexity is 2. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ndr-tsne-gradient",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "The t-SNE Gradient, and What Exaggeration Does to It",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=ndr-tsne-gradient",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "The t-SNE cost is a KL divergence between fixed high-dimensional similarities and Student-t similarities in the embedding plane. The problem derives the gradient of that cost with respect to each embedded point, then evaluates it for three points on a line, both before and during early exaggeration, to see which neighbors pull a point and which push it. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ndr-kernel-pca-rejection-rule",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "Kernel PCA Finds a Rejection Rule",
+      "source": "USAAIO Guide",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=ndr-kernel-pca-rejection-rule",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "A machine shop rejects parts whose two deviations point the same way, so no straight line separates them and linear PCA cannot help. Write kernel PCA from the kernel matrix up, fit it on the 300 recorded parts, and use its first component to sort 300 new parts.",
+      "answer": "Auto-graded inside the notebook. The rejection rule must be recovered from the first kernel component."
+    },
+    {
+      "id": "ndr-tsne-from-scratch",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "A t-SNE Map of Three Pumps",
+      "source": "USAAIO Guide",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=ndr-tsne-from-scratch",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Build t-SNE in NumPy and map 121 vibration readings from three pumps: the per-point bandwidths, the pair probabilities, the KL cost and its gradient, and the gradient descent that places the points. One reading carries a 9999 sentinel nobody removed.",
+      "answer": "Auto-graded inside the notebook. The map must separate the three pumps, finish with a KL cost below 1, and land the glitch next to one of its three nearest readings in the data."
+    },
+    {
+      "id": "ml15-kernel-pca-circles",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "Two Rings PCA Cannot Separate",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ml15-kernel-pca-circles",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "On two concentric rings, compare a linear classifier on raw coordinates, on PCA components, and on RBF kernel PCA components.",
+      "answer": "Auto-graded inside the notebook. All three accuracies and the component gap must match to 1e-6, with kernel PCA above 0.95 and linear PCA below 0.7."
+    },
+    {
+      "id": "ml15-kernel-centering",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "You Cannot Subtract a Mean You Cannot See",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=ml15-kernel-centering",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Center a kernel matrix in feature space using the double-centering identity, and verify it against an explicit polynomial feature map where the mean is visible.",
+      "answer": "Auto-graded inside the notebook. The two centering routes must agree to 1e-8, the row means to 1e-10, and the traces to a relative 1e-6."
+    },
+    {
+      "id": "ml16-perplexity-search",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "Every Point Gets Its Own Bandwidth",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=ml16-perplexity-search",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Implement t-SNE's per-point bandwidth search: binary search each sigma so the neighbor distribution hits a target perplexity, on data with two very different densities.",
+      "answer": "Auto-graded inside the notebook. Sigmas and achieved perplexities must match to 1e-6, each achieved perplexity within 1e-4 of the target, and the sparse cluster's mean sigma more than twice the dense cluster's."
+    },
+    {
+      "id": "ml16-trustworthiness",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "Scoring an Embedding Without Looking at It",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ml16-trustworthiness",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Implement the trustworthiness metric and use it to score PCA, t-SNE, and a random embedding of a Swiss roll without looking at a single plot.",
+      "answer": "Auto-graded inside the notebook. The PCA and random scores match to 1e-6 and the t-SNE score to 1e-3, all lie in [0,1], and t-SNE ranks above PCA above random."
+    }
+  ],
+  "theory": [
+    {
+      "id": "ndr-appended-column",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "A Column for One Reading",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A t-SNE map of 500 vibration readings looks fine except for reading 17, which was taken while the machine was being calibrated. Before the next run, an engineer appends one column to the data: it is 3 for reading 17 and 0 for every other reading. Nothing else changes."
+            },
+            {
+              "p": "Hold every bandwidth $\\sigma_i$ at its old value. What happens to reading 17's own neighbor distribution, the values $p_{j \\mid 17}$ over all other readings $j$?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Every value is multiplied by the same factor below 1, so all of them shrink",
+                  "explain": "Each unnormalized weight does pick up the factor exp(-9 / (2 sigma squared)). But the same factor multiplies the denominator, the sum over all candidates, so it cancels when the weights are normalized. The probabilities do not shrink."
+                },
+                {
+                  "text": "It flattens toward uniform, because every distance from reading 17 grows and the far readings become relatively closer",
+                  "explain": "This reasons with distances. Reading 17 sits 3 units further away in a new direction, so every squared distance from it grows by exactly 9, and the kernel works with squared distances. The ratio between any two weights depends only on the difference of their squared distances, which has not changed, so nothing flattens."
+                },
+                {
+                  "text": "Nothing: every value stays exactly as it was",
+                  "correct": true,
+                  "explain": "Every squared distance from reading 17 grows by exactly 9. That multiplies every weight in row 17 by the same factor, exp(-9 / (2 sigma squared)), and the normalization divides it out, so each $p_{j \\mid 17}$ is unchanged. What does change is every other reading's view of 17: in row j, only the weight for reading 17 picks up the factor, so $p_{17 \\mid j}$ falls. So after symmetrization every pair that involves reading 17 is weaker, through its $p_{17 \\mid j}$ half."
+                },
+                {
+                  "text": "It concentrates on reading 17's nearest neighbor, because the new column makes reading 17 an outlier",
+                  "explain": "An outlier far from a cluster does concentrate its distribution on its nearest neighbor, but that is because the squared distances to near and far points then differ by large amounts. Moving reading 17 along a new direction adds the same 9 to every squared distance, so the differences, and the distribution, are unchanged."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Every squared distance from reading 17 grows by exactly 9. That multiplies every weight in row 17 by the same factor, exp(-9 / (2 sigma squared)), and the normalization divides it out, so each $p_{j \\mid 17}$ is unchanged. What does change is every other reading's view of 17: in row j, only the weight for reading 17 picks up the factor, so $p_{17 \\mid j}$ falls. So after symmetrization every pair that involves reading 17 is weaker, through its $p_{17 \\mid j}$ half."
+            },
+            {
+              "result": "Nothing: every value stays exactly as it was"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ndr-matching-distance",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "The Distance That Keeps a Similarity",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "In the data, two points at distance $r$ get the Gaussian similarity $e^{-r^2/2}$. In the plane, two points at distance $d$ get the Student-t similarity $1/(1 + d^2)$. Ignore the normalizing sums and ask where the plane must put a pair so that its similarity is the same as in the data."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Write the plane distance $d$ as a function of $r$, and evaluate it at $r = 3$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Set the two similarities equal and solve for $d$:"
+            },
+            {
+              "tex": "\\frac{1}{1 + d^2} = e^{-r^2/2}\n\\quad\\Longrightarrow\\quad\nd(r) = \\sqrt{e^{r^2/2} - 1} ."
+            },
+            {
+              "p": "At $r = 3$, $d = \\sqrt{e^{4.5} - 1} = \\sqrt{90.02 - 1} = \\boxed{9.435}$, more than three times the distance in the data."
+            },
+            {
+              "result": "9.435"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "For which $r > 0$ is the plane distance equal to the data distance? Find it to three decimals, and say what the plane does to pairs on either side of it."
+            }
+          ],
+          "answer": [
+            {
+              "p": "$d(r) = r$ means $e^{r^2/2} - 1 = r^2$. With $u = r^2$ this is $e^{u/2} = 1 + u$. Both sides equal 1 at $u = 0$, the right side grows faster at first and the exponential overtakes it later. Bisection gives $u = 2.513$, so $r = \\boxed{1.585}$."
+            },
+            {
+              "p": "For small $r$, $e^{r^2/2} - 1 \\approx r^2/2$, so $d \\approx r/\\sqrt2$: close pairs are drawn somewhat closer in the plane. Beyond $r = 1.585$ the exponential takes over and $d(r)$ grows very fast: $d = 2.53$ at $r = 2$, 9.43 at $r = 3$ and 54.6 at $r = 4$. A point's many moderately distant neighbors are pushed far out, which leaves room in the plane for its close neighbors. That is the room the crowding problem takes away when the plane uses a Gaussian too, since then $d = r$ for every pair."
+            },
+            {
+              "result": "1.585"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ndr-outlier-keeps-its-pull",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "An Outlier Keeps Its Pull",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "t-SNE builds its pair similarities from the conditionals, $p_{ij} = (p_{j \\mid i} + p_{i \\mid j})/2n$. A simpler design would skip the conditionals and use one Gaussian for all pairs at once:"
+      ],
+      "setup": [
+        {
+          "tex": "p^{\\text{joint}}_{ij} = \\frac{e^{-\\lVert x_i - x_j \\rVert^2/2}}\n{\\sum_{k \\ne l} e^{-\\lVert x_k - x_l \\rVert^2/2}} ."
+        },
+        {
+          "p": "In both designs the attraction a point feels in the embedding is weighted by its $p_{ij}$, so a point whose $p_{ij}$ are all tiny is barely attached to anything."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Show that with t-SNE's design every point $i$ has $\\sum_j p_{ij} > 1/(2n)$, whatever the data."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Sum the definition over $j \\ne i$:"
+            },
+            {
+              "tex": "\\sum_j p_{ij} = \\frac{1}{2n}\\Big(\\sum_j p_{j \\mid i} + \\sum_j p_{i \\mid j}\\Big)\n= \\frac{1}{2n}\\Big(1 + \\sum_j p_{i \\mid j}\\Big) > \\frac{1}{2n} ."
+            },
+            {
+              "p": "The first sum is 1 because $p_{\\cdot \\mid i}$ is a distribution over $i$'s neighbors. The second is positive. However far point $i$ is from the rest, its own conditional distribution still hands out a full unit of probability, and the symmetrization keeps half of it."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Four points sit on a line at $x = 0, 1, 2, 6$. Take every bandwidth to be $\\sigma_i = 1$. Compute the total $\\sum_j p_{ij}$ of the point at 6 under the joint design and under t-SNE's design. Give the second to five decimals."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The squared distances from the point at 6 are 36, 25 and 16, and among the other three points they are 1, 1 and 4."
+            },
+            {
+              "p": "**Joint design.** The denominator runs over ordered pairs: $2(2e^{-1/2} + e^{-2} + e^{-8} + e^{-12.5} + e^{-18}) = 2.6975$. The point at 6 contributes $e^{-8} + e^{-12.5} + e^{-18} = 0.000339$, so its total is $0.000339 / 2.6975 = 0.000126$."
+            },
+            {
+              "p": "**t-SNE's design.** Its own conditional sends almost everything to the point at 2, $p_{2 \\mid 6} = 0.989$, and sums to 1. The other points barely see it: $p_{6 \\mid 2} = e^{-8}/(e^{-8} + e^{-1/2} + e^{-2}) = 0.00045$, and $p_{6 \\mid 1}$ and $p_{6 \\mid 0}$ are smaller still. So"
+            },
+            {
+              "tex": "\\sum_j p_{6j} = \\frac{1 + 0.000455}{2 \\cdot 4} = \\boxed{0.12506} ,"
+            },
+            {
+              "p": "just above the floor $1/8$ from the first part and about 1,000 times its total under the joint design. In the joint design the outlier has almost no pull toward anything, so the repulsion from the other points decides where it lands. In t-SNE's design it stays attached to its nearest point, the one at 2, with as much weight as an ordinary point's pair."
+            },
+            {
+              "result": "0.12506"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ndr-pair-on-its-own",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "Where One UMAP Pair Settles",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "In UMAP's neighbor graph, point $A$ gives point $B$ the directed weight 0.75, and $B$ gives $A$ the weight 0.2. Look at this one pair on its own: its term in UMAP's cross-entropy, as a function of the distance $d$ between the two points in the plane."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Find the pair's symmetric weight $w$. With $a = b = 1$, so that $v = 1/(1 + d^2)$, at what distance $d$ is the pair's term smallest?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The fuzzy union gives $w = 0.75 + 0.2 - 0.75 \\cdot 0.2 = 0.8$."
+            },
+            {
+              "p": "The pair's term, dropping the parts that do not depend on $v$, is $-w \\log v - (1 - w)\\log(1 - v)$. Its derivative in $v$ is $-w/v + (1 - w)/(1 - v)$, which is zero at $v = w$, negative below and positive above. So the term is smallest when the plane similarity equals the graph weight:"
+            },
+            {
+              "tex": "\\frac{1}{1 + d^2} = 0.8\n\\quad\\Longrightarrow\\quad\nd^2 = \\frac{1}{0.8} - 1 = 0.25 ,\n\\qquad d = \\boxed{0.5} ."
+            },
+            {
+              "result": "0.5"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Redo it with umap-learn's defaults, $a = 1.577$ and $b = 0.895$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The optimum is still $v = w$, now with $v = 1/(1 + a d^{2b})$:"
+            },
+            {
+              "tex": "a d^{2b} = \\frac{1}{w} - 1 = 0.25\n\\quad\\Longrightarrow\\quad\nd = \\Big(\\frac{0.25}{1.577}\\Big)^{1/1.79} = 0.1585^{0.5587} = \\boxed{0.357} ."
+            },
+            {
+              "p": "The default curve falls from 1 faster at short range, so the same weight is reached at a shorter distance and the pair sits closer."
+            },
+            {
+              "result": "0.357"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Now take a pair that are not neighbors in the graph, $w = 0$. Where does its UMAP term push it? Compare with t-SNE's term $p_{ij} \\log(p_{ij}/q_{ij})$ for a pair with $p_{ij} = 0$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "With $w = 0$ the term is $-\\log(1 - v)$, which falls as $v$ falls, that is as $d$ grows. It reaches zero only as $d \\to \\infty$, so the pair is pushed apart at every distance, harder the closer it is: with $a = b = 1$ the term is $\\log(1 + 1/d^2)$, 0.69 at $d = 1$ and 1.61 at $d = 0.5$."
+            },
+            {
+              "p": "t-SNE's term for the pair is $0 \\cdot \\log(0/q_{ij}) = 0$ wherever the pair sits. The pair feels no force of its own and is pushed apart only indirectly, through the normalizing sum in every $q_{kl}$. That is the difference the lesson describes: UMAP has an explicit repulsive term for every pair, estimated by sampling a few non-neighbors per edge, while t-SNE's loss says almost nothing about pairs that are not neighbors."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ndr-scaled-copy-cluster",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "A Cluster Ten Times Wider",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A dataset in 20 dimensions has two groups of 300 points. Group B is an exact copy of group A, stretched by a factor of 10 about its own center, so every distance inside B is 10 times the matching distance inside A. The two centers are 1,000 units apart. t-SNE runs at perplexity 30 until it converges."
+            },
+            {
+              "p": "How do the two groups compare in the plot?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Group B is about 10 times as wide as group A",
+                  "explain": "This reads the plot as a picture of the distances. But each point's bandwidth is set by its perplexity, and a point in B finds a bandwidth 10 times its twin's in A. Every ratio of distance to bandwidth is then the same, so B's neighbor probabilities are A's, and t-SNE only ever sees those probabilities."
+                },
+                {
+                  "text": "They are the same size",
+                  "correct": true,
+                  "explain": "Each point in B sees exactly its twin's distances times 10, so the perplexity search returns 10 times the twin's bandwidth, and every $p_{j \\mid i}$ inside B equals the matching value inside A. Pairs across the groups have probabilities of essentially zero, about exp(-500,000 / sigma squared). The two blocks of P are identical, so the objective treats the groups identically and they come out the same size. A run with scikit-learn's TSNE gives a width ratio of 1.00."
+                },
+                {
+                  "text": "Group B is wider, but by much less than a factor of 10",
+                  "explain": "This assumes the perplexity search only partly makes up for the wider spacing. It makes up for it exactly here: the bandwidths scale by 10, every distance-to-bandwidth ratio matches A's, and the probabilities are identical, so no trace of the factor 10 remains."
+                },
+                {
+                  "text": "Group B is smaller than group A, because t-SNE contracts sparse groups",
+                  "explain": "t-SNE does tend to even out sizes, expanding dense groups and contracting sparse ones, but it does not overshoot. Here the neighbor probabilities of the two groups are identical, so nothing can make B come out smaller than A."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each point in B sees exactly its twin's distances times 10, so the perplexity search returns 10 times the twin's bandwidth, and every $p_{j \\mid i}$ inside B equals the matching value inside A. Pairs across the groups have probabilities of essentially zero, about exp(-500,000 / sigma squared). The two blocks of P are identical, so the objective treats the groups identically and they come out the same size. A run with scikit-learn's TSNE gives a width ratio of 1.00."
+            },
+            {
+              "result": "They are the same size"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ndr-squared-kernel-line",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "Inner and Outer Points on a Line",
+      "difficulty": "Medium",
+      "minutes": 20,
+      "overview": [
+        "Four points sit on a line at $x = -2, -1, 1, 2$. The two at $\\pm 2$ are labeled outer and the two at $\\pm 1$ inner. Linear PCA leaves the order of the points along the line unchanged, so no threshold on its score puts both inner points on one side and both outer points on the other. Try kernel PCA with the kernel $k(x, x') = (x x')^2$."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Build the kernel matrix $K$, center it, and find the top eigenvalue of $\\tilde K$ and the four training scores."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The kernel is the inner product of the feature $\\phi(x) = x^2$, so $K_{ij} = x_i^2 x_j^2$ with $x^2 = (4, 1, 1, 4)$. The mean of $\\phi$ over the training points is $2.5$. The centering formula gives $\\tilde K_{ij} = x_i^2 x_j^2 - 2.5 x_j^2 - 2.5 x_i^2 + 6.25 = (x_i^2 - 2.5)(x_j^2 - 2.5)$: the column mean of $K$ is $2.5 x_j^2$, the row mean $2.5 x_i^2$ and the grand mean $6.25$. So $\\tilde K = \\mathbf{c}\\mathbf{c}^\\top$ with $\\mathbf{c} = (1.5, -1.5, -1.5, 1.5)$."
+            },
+            {
+              "p": "A rank-one matrix $\\mathbf{c}\\mathbf{c}^\\top$ has one nonzero eigenvalue, $\\lVert \\mathbf{c} \\rVert^2 = 4 \\cdot 2.25 = \\boxed{9}$, with unit eigenvector $\\mathbf{a} = \\mathbf{c}/3 = (0.5, -0.5, -0.5, 0.5)$. The scores are $\\sqrt{9}\\,\\mathbf{a} = (1.5, -1.5, -1.5, 1.5)$, up to an overall sign. The outer points score $1.5$ and the inner ones $-1.5$, so a threshold at 0 separates them."
+            },
+            {
+              "result": "9"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A new point arrives at position $x$. Find its score as a function of $x$, centering its kernel row with the training statistics. For which $|x|$ does a new point score exactly halfway between the inner and outer points?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The new row is $k_j = x^2 x_j^2$. Its own mean is $2.5x^2$, the training column means are $2.5 x_j^2$ and the grand mean is $6.25$, so"
+            },
+            {
+              "tex": "\\tilde k_j = x^2 x_j^2 - 2.5 x^2 - 2.5 x_j^2 + 6.25 = (x^2 - 2.5)\\,c_j ."
+            },
+            {
+              "p": "Dividing $\\tilde{\\mathbf{k}}^\\top \\mathbf{a}$ by $\\sqrt{\\lambda} = 3$ gives $(x^2 - 2.5)\\, \\mathbf{c}^\\top \\mathbf{c}/(3 \\cdot 3) = x^2 - 2.5$. It is the new point's feature $x^2$ minus the training mean of the feature, which is what PCA in the feature space has to give."
+            },
+            {
+              "p": "Halfway between $-1.5$ and $1.5$ is 0, so $x^2 = 2.5$ and $|x| = \\sqrt{2.5} = \\boxed{1.581}$. In the input space the component draws two boundaries, at $x = \\pm 1.581$, which no linear projection can do. A point at $x = 0$ scores $-2.5$, further inside than either inner point."
+            },
+            {
+              "result": "1.581"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ndr-tied-nearest-neighbors",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "Three Neighbors at the Same Distance",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A point $i$ has nine other points in its dataset. Three of them sit at distance 2 from it and the other six at distance 3. Its neighbor distribution $p_{\\cdot \\mid i}$ uses the bandwidth $\\sigma_i$ as in the lesson."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What value does the perplexity of $p_{\\cdot \\mid i}$ approach as $\\sigma_i \\to 0$, and what as $\\sigma_i \\to \\infty$? Give the first."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each near point gets the weight $e^{-4/2\\sigma_i^2}$ and each far point $e^{-9/2\\sigma_i^2}$. Their ratio, far over near, is $e^{-5/2\\sigma_i^2}$."
+            },
+            {
+              "p": "As $\\sigma_i \\to 0$ the ratio goes to 0, so the far points lose all their probability and the three near points share it equally, $1/3$ each. The entropy is $\\log_2 3$ bits and the perplexity approaches $\\boxed{3}$, not 1. The three near points are tied, and no bandwidth can prefer one of them over the others."
+            },
+            {
+              "p": "As $\\sigma_i \\to \\infty$ the ratio goes to 1, all nine points get $1/9$, and the perplexity approaches 9. Perplexity rises with $\\sigma_i$, so the values this point can reach are exactly those strictly between 3 and 9."
+            },
+            {
+              "result": "3"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "At what $\\sigma_i$ does each far point get exactly half the probability of a near point? What is the perplexity there?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Set the ratio to one half:"
+            },
+            {
+              "tex": "e^{-5/2\\sigma_i^2} = \\tfrac12\n\\quad\\Longrightarrow\\quad\n\\sigma_i^2 = \\frac{5}{2 \\ln 2},\n\\qquad \\sigma_i = 1.899 ."
+            },
+            {
+              "p": "Then a near point has probability $a$ and a far point $a/2$, with $3a + 6 \\cdot a/2 = 1$, so $a = 1/6$ and $a/2 = 1/12$. The entropy is"
+            },
+            {
+              "tex": "H = 3 \\cdot \\tfrac16 \\log_2 6 + 6 \\cdot \\tfrac1{12} \\log_2 12\n= \\tfrac12 \\log_2 72 ,"
+            },
+            {
+              "p": "and the perplexity is $2^H = \\sqrt{72} = 6\\sqrt2 = \\boxed{8.485}$. Half the probability sits on the near points, yet the effective neighbor count is already close to the ceiling of 9."
+            },
+            {
+              "result": "8.485"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "A user runs t-SNE at perplexity 2. What does the bandwidth search do for this point, and what does the point's neighbor distribution end up as?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "No bandwidth reaches 2, since the perplexity of this point never falls below 3. At every trial $\\sigma_i$ the achieved perplexity is too high, so a binary search keeps shrinking $\\sigma_i$ and ends at the smallest bandwidth it can try, with perplexity 3 and nothing to signal that the target was missed. The point ends up spread evenly over its three tied neighbors, a third each, which is the closest it can get to the target. Ties like this are common in data with repeated or rounded values, and they put a floor under the perplexity that the target cannot push through."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ndr-tsne-gradient",
+      "moduleId": "nonlinear-dimensionality-reduction",
+      "title": "The t-SNE Gradient, and What Exaggeration Does to It",
+      "difficulty": "Hard",
+      "minutes": 30,
+      "overview": [
+        "Write $w_{ij} = (1 + \\lVert y_i - y_j \\rVert^2)^{-1}$ for the unnormalized Student-t similarity, $Z = \\sum_{k \\ne l} w_{kl}$, and $q_{ij} = w_{ij}/Z$. The $p_{ij}$ are fixed, symmetric and sum to 1 over all ordered pairs, and the cost is $C = \\sum_{i \\ne j} p_{ij} \\log (p_{ij}/q_{ij})$."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Show that"
+            },
+            {
+              "tex": "\\frac{\\partial C}{\\partial y_i} = 4 \\sum_{j \\ne i} (p_{ij} - q_{ij})\\, w_{ij}\\, (y_i - y_j) ."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Split the logarithm and use $\\sum p_{kl} = 1$:"
+            },
+            {
+              "tex": "C = \\text{const} - \\sum_{k \\ne l} p_{kl} \\log w_{kl} + \\log Z ."
+            },
+            {
+              "p": "Only the pairs that contain $i$ depend on $y_i$, and each unordered pair $\\{i, j\\}$ appears twice in the sums, as $(i, j)$ and $(j, i)$. With $u = \\lVert y_i - y_j \\rVert^2$ and $w = (1 + u)^{-1}$,"
+            },
+            {
+              "tex": "\\frac{\\partial \\log w_{ij}}{\\partial y_i} = -\\frac{2(y_i - y_j)}{1 + u}\n= -2 w_{ij} (y_i - y_j),\n\\qquad\n\\frac{\\partial w_{ij}}{\\partial y_i} = -2 w_{ij}^2 (y_i - y_j) ."
+            },
+            {
+              "p": "The first term, counting both orders and using $p_{ij} = p_{ji}$, gives $\\sum_j 4 p_{ij} w_{ij}(y_i - y_j)$. The second gives"
+            },
+            {
+              "tex": "\\frac{1}{Z}\\frac{\\partial Z}{\\partial y_i}\n= \\frac{1}{Z}\\sum_j 2 \\cdot \\big(-2 w_{ij}^2 (y_i - y_j)\\big)\n= -4 \\sum_j q_{ij} w_{ij} (y_i - y_j) ."
+            },
+            {
+              "p": "Adding them gives $4 \\sum_j (p_{ij} - q_{ij}) w_{ij} (y_i - y_j)$. Each pair acts like a spring along $y_i - y_j$: it attracts when $p_{ij} > q_{ij}$ and repels when $p_{ij} < q_{ij}$, and the factor $w_{ij}$ weakens it with distance only as $1/d^2$."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Three points are embedded on a line at $y = (0, 1, 3)$, with $p_{12} = 0.4$, $p_{13} = 0.05$ and $p_{23} = 0.05$ (each pair counted in both orders, so the six values sum to 1). Compute $\\partial C/\\partial y_1$. Which neighbor pulls point 1 and which pushes it?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The unnormalized similarities are $w_{12} = 1/2$, $w_{13} = 1/10$ and $w_{23} = 1/5$, so $Z = 2(0.5 + 0.1 + 0.2) = 1.6$, $q_{12} = 0.3125$ and $q_{13} = 0.0625$. Then"
+            },
+            {
+              "tex": "\\frac{\\partial C}{\\partial y_1}\n= 4\\big[(0.4 - 0.3125)(0.5)(0 - 1) + (0.05 - 0.0625)(0.1)(0 - 3)\\big]\n= 4(-0.04375 + 0.00375) = \\boxed{-0.16} ."
+            },
+            {
+              "p": "Gradient descent moves $y_1$ against the gradient, toward $+$. Point 2 pulls, since $p_{12} > q_{12}$: the pair is closer in the data than the plane shows. Point 3 pushes, since $p_{13} < q_{13}$, but weakly: it is far, so $w_{13}$ is small, and $p$ and $q$ nearly agree."
+            },
+            {
+              "result": "$-0.16$"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "During early exaggeration every $p_{ij}$ in the gradient is multiplied by 12. Compute $\\partial C/\\partial y_1$ again. What changed besides the size, and why does that help the layout form?"
+            }
+          ],
+          "answer": [
+            {
+              "tex": "4\\big[(4.8 - 0.3125)(0.5)(-1) + (0.6 - 0.0625)(0.1)(-3)\\big]\n= 4(-2.24375 - 0.16125) = \\boxed{-9.62} ."
+            },
+            {
+              "p": "Point 3 now pulls instead of pushing, since $12 p_{13} = 0.6$ is far above $q_{13} = 0.0625$. During exaggeration almost every pair with a non-negligible $p_{ij}$ attracts, so true neighbors gather into tight groups quickly, and only pairs with $p_{ij}$ near zero still repel. Those tight groups have empty space between them and can slide past one another, which is what the lesson means by groups moving before the layout settles. After the exaggeration ends, $p_{13} < q_{13}$ again and the moderate neighbors are pushed back out."
+            },
+            {
+              "result": "$-9.62$"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

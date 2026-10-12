@@ -1,0 +1,38 @@
+{
+  "MODULE_ID": "neural-networks-perceptrons-mlps-activations",
+  "practice": [
+    {
+      "uniqueId": "official-usaaio-past-problems",
+      "name": "Official Past Problems Archive",
+      "url": "https://www.usaaio.org/past-problems",
+      "source": "USAAIO",
+      "difficulty": "Mixed",
+      "isStarred": true,
+      "tags": [
+        "Contest",
+        "Review",
+        "Notebook"
+      ],
+      "solutionMetadata": {
+        "kind": "external"
+      }
+    },
+    {
+      "uniqueId": "custom-shape-debug-drill",
+      "name": "Shape Debugging Drill",
+      "url": "",
+      "source": "Custom",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": [
+        "NumPy",
+        "PyTorch",
+        "Debugging"
+      ],
+      "solutionMetadata": {
+        "kind": "inline",
+        "summary": "Write tensor shapes after every matrix operation before running the cell."
+      }
+    }
+  ]
+}

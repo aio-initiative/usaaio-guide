@@ -1,0 +1,113 @@
+{
+  "aModule": "neural-networks-perceptrons-mlps-activations",
+  "stage": "Round 1",
+  "fixes": [
+    {
+      "file": "mlp-four-lines-cut-the-plane",
+      "find": "as if every line added two regions.",
+      "replace": "as if every line after the first added two regions.",
+      "why": "A flat two regions per line from the first line gives 1 + 2*4 = 9, not 8; only if the first line adds 1 and each later line adds 2 does the count come to 8. Swarm review fix (mcq-5c)."
+    },
+    {
+      "file": "mlp-max-by-hand",
+      "find": "each flat on one side of some line and sloped on the other.",
+      "replace": "each flat on one side of some line and sloped on the other.\n\nWhere the construction comes from: that one hidden layer of ReLU units suffices for the maximum of two numbers, and that stacking it gives the maximum of $2^k$ numbers in $k$ hidden layers, is the opening example of Hertrich, Basu, Di Summa and Skutella, \"Towards Lower Bounds on the Depth of ReLU Neural Networks\", NeurIPS 2021 (arXiv:2105.14835), Figure 1, which credits the stacking to Arora, Basu, Mianjy and Mukherjee, ICLR 2018 (arXiv:1611.01491). The four-unit network above is a symmetric rearrangement of theirs.",
+      "why": "Already committed in the A repo's scripts/import-b/modules/multilayer-perceptron.json, whose note says the provenance paragraph was added in review after the import, so a re-import must repeat it or the committed entry loses it. The two-unit and four-unit constructions are not B's own. Not from a packet: the module's packet is 'none found', so a governor should confirm the fix is carried forward rather than dropped."
+    },
+    {
+      "file": "mlp-sigmoid-neuron-with-a-bias",
+      "find": "Zero is the weighted sum, not the output.",
+      "replace": "Zero is the sum with the bias added, not the output.",
+      "why": "B's lesson says the bias is added to the weighted sum, so the weighted sum here is 1 and 0 is the sum after the bias; the sentence used the term backwards. Confirmed by swarm report mcq-1c (VERDICT: FIX, high confidence) and already recorded as fix 1 of A's committed spec for this module, so a re-import matches the committed entry."
+    },
+    {
+      "file": "mlp-square-by-sawtooth",
+      "find": "the sense in which depth buys expressive power.",
+      "replace": "the sense in which depth buys expressive power.\n\nWhere the construction comes from: the tent $t(x) = 2\\operatorname{ReLU}(x) - 4\\operatorname{ReLU}(x - \\tfrac12)$ and the fact that its $s$-fold self-composition has $2^{s-1}$ teeth are Lemma 16 and Lemma 17 of Telgarsky, \"Benefits of depth in neural networks\", COLT 2016 (arXiv:1602.04485), where the exponentially growing sawtooth is what a deep ReLU network has and a shallow one cannot afford.",
+      "why": "Provenance paragraph added to the committed entry in review after the import; the tent and its tooth count are Telgarsky's, not B's own. Named here so a re-import matches the committed entry. No packet lists it (the module's packet is 'none found'); carried forward so the committed entry does not lose it, and flagged for a governor."
+    }
+  ],
+  "parts": {
+    "mlp-max-by-hand": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "mlp-relu-on-a-regression-output": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "mlp-square-by-sawtooth": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is required."
+      },
+      "1.4": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "mlp-ten-layers-with-no-activation": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "mlp-xor-linear-impossible": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "mlp-four-lines-cut-the-plane": "A hidden layer's four ReLU units switch on along four lines in the input plane, with no parallel pair and no three through one point. How many regions do the four lines cut the plane into?",
+    "mlp-max-by-hand": "Every network below is one hidden layer of ReLU units feeding a plain weighted sum, and the weights are chosen by hand. Build the two units that output the absolute value of x, build the four units that output the larger of a and b, and show that no single unit can output x itself.",
+    "mlp-relu-on-a-regression-output": "A regression network ends with a linear layer and then a ReLU, and part of the training set has targets below zero. What does the final ReLU do to the predictions and to the gradient?",
+    "mlp-square-by-sawtooth": "The tent t(x) = 2 ReLU(x) \u2212 4 ReLU(x \u2212 1/2) climbs from t(0) = 0 to t(1/2) = 1 and comes back down to t(1) = 0. Feeding it into itself gives a sawtooth, and the piecewise-linear interpolant of x\u00b2 is x minus a sum of scaled sawtooths.",
+    "mlp-ten-layers-with-no-activation": "Ten nn.Linear layers are stacked with no activation function between any two of them. Which family of functions can the whole stack compute?",
+    "mlp-xor-linear-impossible": "XOR of two bits is 1 when exactly one of them is 1. The question is whether some choice of w1, w2 and b turns a classifier with no hidden layer into XOR on the four inputs."
+  },
+  "source": {
+    "mlp-max-by-hand": "Research-based",
+    "mlp-square-by-sawtooth": "Research-based"
+  },
+  "order": [
+    "mlp-sigmoid-neuron-with-a-bias",
+    "mlp-relu-on-a-regression-output",
+    "mlp-ten-layers-with-no-activation",
+    "mlp-a-quadratic-activation",
+    "mlp-four-lines-cut-the-plane",
+    "mlp-shape-out-of-a-layer",
+    "mlp-xor-linear-impossible",
+    "mlp-max-by-hand",
+    "mlp-square-by-sawtooth"
+  ]
+}

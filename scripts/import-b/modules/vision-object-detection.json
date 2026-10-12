@@ -1,0 +1,12 @@
+{
+  "aModule": "object-detection-fpn-yolo",
+  "stage": "Camp",
+  "stageNote": "The map's stage is Round 2, but the lesson file is still at content/3_Camp/3.2-CV5-object-detection-fpn-yolo.md and content/chapters.json therefore lists this module under camp (chapters-from-map.mjs defers the move to 2_Round_2). scripts/validate-content.mjs checks every index entry's stage tag against that listing, so the tag is Camp until the lesson file moves; retag Round 2 in the same change that moves it.",
+  "order": [
+    "cv-anchor-for-a-horizontal-line"
+  ],
+  "fixes": [],
+  "parts": {},
+  "indexPrompt": {},
+  "indexAnswer": {}
+}

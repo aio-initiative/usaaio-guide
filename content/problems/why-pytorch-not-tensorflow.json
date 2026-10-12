@@ -1,0 +1,260 @@
+{
+ "module": "why-pytorch-not-tensorflow",
+ "stage": "Round 1",
+ "index": [
+  {
+   "id": "pyt-autodiff-from-scratch",
+   "moduleId": "why-pytorch-not-tensorflow",
+   "title": "Reverse-Mode Autodiff by Hand",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=pyt-autodiff-from-scratch",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 1"
+   ],
+   "prompt": "Autograd is bookkeeping. Keep the books yourself, in NumPy, for f(x, y) = (xy + x) sigmoid(y). First derive each partial derivative in closed form from a backward walk on paper, then run the same walk as a tape: store every intermediate of the forward pass, visit the steps in reverse, give each step's inputs their share of the adjoint, and add rather than overwrite when a variable is used twice.",
+   "answer": "Auto-graded inside the notebook. The closed forms must match a central difference to 1e-5 without collapsing either of the two routes that x and y take through the graph, and the tape must reproduce f, give df/dx = 0.933689 and df/dy = 1.462447 at (1.5, 0.5), and agree with the closed forms to 1e-9 at five random points."
+  },
+  {
+   "id": "pyt-define-by-run-defined",
+   "moduleId": "why-pytorch-not-tensorflow",
+   "title": "Define-by-Run, Defined",
+   "source": "Custom",
+   "difficulty": "Easy",
+   "url": "/theory/?id=pyt-define-by-run-defined",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 1"
+   ],
+   "prompt": "PyTorch is called a define-by-run framework. Which description fits?",
+   "answer": "Each operation runs at once on real values and is recorded as it goes, so the graph is whatever the Python code executed, branches and loops included. The graph exists only for the pass that built it. backward() uses it once, and the next forward pass records a fresh one from whatever code runs that time."
+  },
+  {
+   "id": "pyt-the-job-of-a-central-difference",
+   "moduleId": "why-pytorch-not-tensorflow",
+   "title": "The Job of a Central Difference",
+   "source": "Custom",
+   "difficulty": "Easy",
+   "url": "/theory/?id=pyt-the-job-of-a-central-difference",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 1"
+   ],
+   "prompt": "The central difference (f(x + h) - f(x - h)) / 2h estimates a derivative from two values of f near x. What is it for?",
+   "answer": "Checking a gradient, whether from a derivation or from autograd, to five or six digits. This is the standard gradient check. With h near 10 to the minus 6 in float64 the estimate matches a correct gradient to five or six digits, and a disagreement points at a mistake in the derivation or the code."
+  },
+  {
+   "id": "pyt-what-requires-grad-switches-on",
+   "moduleId": "why-pytorch-not-tensorflow",
+   "title": "What requires_grad Switches On",
+   "source": "Custom",
+   "difficulty": "Easy",
+   "url": "/theory/?id=pyt-what-requires-grad-switches-on",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 1"
+   ],
+   "prompt": "You create a tensor with requires_grad=True. What does that setting change?",
+   "answer": "PyTorch starts recording the operations applied to the tensor, so a later backward() can work out a gradient for it. The recorded operations form the computation graph. backward() walks that graph from the result back to the tensor and leaves the gradient in its grad field."
+  },
+  {
+   "id": "pyt-why-the-sweep-runs-backward",
+   "moduleId": "why-pytorch-not-tensorflow",
+   "title": "Why the Sweep Runs Backward",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=pyt-why-the-sweep-runs-backward",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 1"
+   ],
+   "prompt": "Training needs the gradient of one scalar loss with respect to millions of parameters, and autograd computes it in reverse mode. Why not forward mode?",
+   "answer": "The loss is a single number, so one backward sweep delivers the gradient for every parameter at once. Forward mode pushes a derivative through from one input at a time, so it would take one sweep per parameter, millions of them. Reverse mode starts at the single output and reaches every input in one pass that costs a small multiple of the forward pass."
+  }
+ ],
+ "theory": [
+  {
+   "id": "pyt-define-by-run-defined",
+   "moduleId": "why-pytorch-not-tensorflow",
+   "title": "Define-by-Run, Defined",
+   "difficulty": "Easy",
+   "minutes": 3,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "PyTorch is called a define-by-run framework. Which description fits?"
+      },
+      {
+       "choices": [
+        {
+         "text": "Each operation runs at once on real values and is recorded as it goes, so the graph is whatever the Python code executed, branches and loops included.",
+         "correct": true,
+         "explain": "The graph exists only for the pass that built it. backward() uses it once, and the next forward pass records a fresh one from whatever code runs that time."
+        },
+        {
+         "text": "The graph is written out first and then fed data in a separate run step.",
+         "explain": "That describes define-and-run, which is how TensorFlow 1 worked. The whole graph had to exist before any number flowed through it."
+        },
+        {
+         "text": "The graph is compiled a single time and never changes afterward.",
+         "explain": "A define-by-run graph follows the control flow of each pass, so an if that takes the other branch produces a different graph."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "The graph exists only for the pass that built it. backward() uses it once, and the next forward pass records a fresh one from whatever code runs that time."
+      },
+      {
+       "result": "Each operation runs at once on real values and is recorded as it goes, so the graph is whatever the Python code executed, branches and loops included."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pyt-the-job-of-a-central-difference",
+   "moduleId": "why-pytorch-not-tensorflow",
+   "title": "The Job of a Central Difference",
+   "difficulty": "Easy",
+   "minutes": 4,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "The central difference $\\big(f(x + h) - f(x - h)\\big) / 2h$ estimates a derivative from two values of $f$ near $x$. What is it for?"
+      },
+      {
+       "choices": [
+        {
+         "text": "Training a network whenever autograd is too slow to use.",
+         "explain": "It takes two evaluations of the function per parameter, so a full gradient costs millions of forward passes. One backward pass is far cheaper."
+        },
+        {
+         "text": "Checking a gradient, whether from a derivation or from autograd, to five or six digits.",
+         "correct": true,
+         "explain": "This is the standard gradient check. With h near 10 to the minus 6 in float64 the estimate matches a correct gradient to five or six digits, and a disagreement points at a mistake in the derivation or the code."
+        },
+        {
+         "text": "Producing an exact derivative for a function that has no closed formula.",
+         "explain": "It is an estimate whose error depends on h. Autograd is the exact one, and it differentiates the program as written, formula or no formula."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "This is the standard gradient check. With h near 10 to the minus 6 in float64 the estimate matches a correct gradient to five or six digits, and a disagreement points at a mistake in the derivation or the code."
+      },
+      {
+       "result": "Checking a gradient, whether from a derivation or from autograd, to five or six digits."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pyt-what-requires-grad-switches-on",
+   "moduleId": "why-pytorch-not-tensorflow",
+   "title": "What requires_grad Switches On",
+   "difficulty": "Easy",
+   "minutes": 3,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "You create a tensor with `requires_grad=True`. What does that setting change?"
+      },
+      {
+       "choices": [
+        {
+         "text": "Every operation on the tensor computes its gradient the moment it runs.",
+         "explain": "The forward pass only records what happened. No gradient exists until backward() is called on something computed from the tensor."
+        },
+        {
+         "text": "PyTorch starts recording the operations applied to the tensor, so a later `backward()` can work out a gradient for it.",
+         "correct": true,
+         "explain": "The recorded operations form the computation graph. backward() walks that graph from the result back to the tensor and leaves the gradient in its grad field."
+        },
+        {
+         "text": "The tensor is moved to the GPU.",
+         "explain": "Where a tensor lives is a separate choice, made with the device argument or .to(). Recording for gradients works the same on the CPU and on a GPU."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "The recorded operations form the computation graph. backward() walks that graph from the result back to the tensor and leaves the gradient in its grad field."
+      },
+      {
+       "result": "PyTorch starts recording the operations applied to the tensor, so a later `backward()` can work out a gradient for it."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pyt-why-the-sweep-runs-backward",
+   "moduleId": "why-pytorch-not-tensorflow",
+   "title": "Why the Sweep Runs Backward",
+   "difficulty": "Medium",
+   "minutes": 4,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "Training needs the gradient of one scalar loss with respect to millions of parameters, and autograd computes it in reverse mode. Why not forward mode?"
+      },
+      {
+       "choices": [
+        {
+         "text": "Forward mode gives only an approximate gradient.",
+         "explain": "Each mode is exact. The difference between them is cost, not accuracy."
+        },
+        {
+         "text": "Reverse mode holds on to nothing from the forward pass, so it needs less memory.",
+         "explain": "The reverse is true. The backward sweep reads every intermediate value that the forward pass produced, so training holds more in memory than inference does."
+        },
+        {
+         "text": "The loss is a single number, so one backward sweep delivers the gradient for every parameter at once.",
+         "correct": true,
+         "explain": "Forward mode pushes a derivative through from one input at a time, so it would take one sweep per parameter, millions of them. Reverse mode starts at the single output and reaches every input in one pass that costs a small multiple of the forward pass."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Forward mode pushes a derivative through from one input at a time, so it would take one sweep per parameter, millions of them. Reverse mode starts at the single output and reaches every input in one pass that costs a small multiple of the forward pass."
+      },
+      {
+       "result": "The loss is a single number, so one backward sweep delivers the gradient for every parameter at once."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

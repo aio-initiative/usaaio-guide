@@ -1,0 +1,141 @@
+{
+  "aModule": "linear-logistic-regression",
+  "stage": "Round 1",
+  "fixes": [
+    {
+      "file": "llr-copied-feature-naive-bayes",
+      "find": "Summing the probabilities rather than the log-likelihoods",
+      "replace": "Adding the likelihood ratios rather than the log-likelihoods"
+    }
+  ],
+  "parts": {
+    "llr-first-newton-step": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "llr-gd-feature-scale": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is required."
+      }
+    },
+    "llr-hours-of-sun-odds": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "llr-lasso-path-two-features": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "llr-one-bad-reading": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "llr-ridge-two-scales": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "llr-softmax-regions-1d": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "llr-two-group-mle": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "llr-broadcast-mse": "A least-squares fit with an intercept on 100 rows has training R^2 0.8 and targets with variance 5. The fitted weights come back as a column, so pred = X @ w has shape (100, 1) while y has shape (100,), and mse = np.mean((pred - y) ** 2) broadcasts instead of matching: what does it print?",
+    "llr-copied-feature-naive-bayes": "A mail filter is trained on 500 spam and 500 genuine messages with one yes-no feature, whether a message contains a link; 300 of the spam and 100 of the genuine messages have one. A pipeline bug then copies the feature, so every message has two identical link columns, and both a no-smoothing naive Bayes and an unpenalised logistic regression with an intercept are refitted on the two columns. Say what probability of spam each model now gives a message with a link.",
+    "llr-first-newton-step": "Five points with one feature and labels are fitted to logistic regression with Newton's method starting from zero weights. Compute the gradient component and the weights after the first step, then show that the first step is four times the least-squares fit of the shifted targets.",
+    "llr-gd-feature-scale": "A linear regression with two centered features and no intercept is fitted by gradient descent on the mean squared error; the two uncorrelated features have standard deviations 1 and 10. Work out the largest step size that converges from every start, how many steps a half-size step needs to bring the error down to 1 percent, and what dividing the second feature by 10 changes.",
+    "llr-hours-of-sun-odds": "A logistic regression predicts whether a seedling survives its first month, and one feature is hours of direct sun per day, with weight ln 2, about 0.693. A seedling in the shade has a predicted survival probability of 0.2, and only its hours of sun change.",
+    "llr-lasso-path-two-features": "Two standardized features come with a small Gram matrix and two target inner products, and the lasso penalty falls from a level that pins both weights at zero. Find the level where both sit at zero, the surviving weight partway down, and where the second feature enters and with which sign.",
+    "llr-new-baseline-category": "A courier fits an unpenalized logistic regression for whether a parcel arrives late on the distance and the region, with the region one-hot encoded and north as the dropped baseline. The same data is then refit with west dropped instead, keeping indicators for north and south. What are the new intercept and the new weight on south?",
+    "llr-one-bad-reading": "A technician fits a least-squares line to five gauge readings, then finds the reading farthest from the mean was logged 5 units too high. Work out how the slope and the fitted values move when she corrects it, without refitting the line from scratch.",
+    "llr-one-solve-models": "Each model below has unknown parameters named by letters and is to be fitted to data by minimizing the sum of squared residuals. Which one can be fitted exactly by building a design matrix and solving the normal equations once, with a unique answer, taking A at least 0 and the angle phi from 0 up to but not including 2 pi?",
+    "llr-ridge-two-scales": "A model has two orthogonal columns of squared length 4 and 36 and a mean-zero target, fitted with ridge at lambda 12. Compute the two ridge weights, then explain why the wider column keeps more of its least-squares weight and what the shrinkage factors become if it is rescaled to the narrower column's size.",
+    "llr-softmax-regions-1d": "A softmax regression sorts a single reading x into classes A, B and C with scores 0, x minus 1 and 2x minus 4, and predicts the class with the largest probability. Find where class A stops winning, how low B's offset must go for B to never win at all, and where A then gives way to C.",
+    "llr-two-group-mle": "A clinic texted a reminder before some appointments: 28 of the 40 patients who got one attended, and 15 of the 60 who did not. Fit attendance with a logistic regression on this single yes-no feature by maximum likelihood.",
+    "llr-which-fit-is-finite": "Four data sets of four points each, one feature x and a binary label, are each fitted with an unpenalized logistic regression p = sigmoid(w0 + w1 x) by maximum likelihood. For which data set do finite weights minimize the log loss?",
+    "llr-which-residuals": "Four points at x = 1, 2, 3, 4 are fitted with a least-squares line that has an intercept, and the y values are not given. Decide which of four lists could be the residuals in order of x, using what the normal equations force the residuals to satisfy."
+  }
+}

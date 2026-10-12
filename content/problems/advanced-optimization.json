@@ -1,0 +1,696 @@
+{
+ "module": "advanced-optimization",
+ "stage": "Round 2",
+ "index": [
+  {
+   "id": "cvx-a-learning-rate-for-a-tilted-bowl",
+   "moduleId": "advanced-optimization",
+   "title": "A Learning Rate for 3x² + 4xy + 6y²",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=cvx-a-learning-rate-for-a-tilted-bowl",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 2"
+   ],
+   "prompt": "Gradient descent starts at (1, 0) on the quadratic 3x^2 + 4xy + 6y^2 and takes fixed steps of size 0.15. Decide what the run does.",
+   "answer": "It diverges, since the part along (1, 2) is multiplied by -1.1 each step. The Hessian [[6, 4], [4, 12]] has eigenvalues 14, along (1, 2), and 4, along (2, -1). One step multiplies the part of the position along (1, 2) by 1 - 0.15 · 14 = -1.1 and the part along (2, -1) by 1 - 0.15 · 4 = 0.4. The start is (1, 0) = 0.2 · (1, 2) + 0.4 · (2, -1), so it has a part along the steep direction, and that part grows 1.1-fold every step. The loss goes 3, 1.95, 2.09, 2.49, 3.00, 3.63 and keeps growing: it falls at first only because the flat part shrinks fast."
+  },
+  {
+   "id": "cvx-averaging-three-models",
+   "moduleId": "advanced-optimization",
+   "title": "Averaging Three Delivery-Time Predictions",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=cvx-averaging-three-models",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "Three regression models predict how many minutes one food order will take to arrive: 7, 10 and 16. It takes 10 minutes. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "cvx-budget-between-two-inputs",
+   "moduleId": "advanced-optimization",
+   "title": "A Budget Split Between Compute and Labels",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=cvx-budget-between-two-inputs",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "A lab has 8 thousand dollars to split between compute at 2 a unit and labeled data at 1 a unit, and values a plan by the log of each amount. Find the best split through the dual function, then the best split once compute is capped at 1 unit. 2 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "cvx-closest-point-in-a-disc",
+   "moduleId": "advanced-optimization",
+   "title": "The Closest Point in a Disc, Through Its Dual",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=cvx-closest-point-in-a-disc",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "Projected gradient descent replaces the weights with the closest point of the disc of radius 1, so for the point (3, 4) form the Lagrangian with a nonnegative multiplier, maximize its dual function, and confirm that strong duality holds, then repeat for the point (0.3, 0.4). Three written parts: the multiplier that maximizes the dual, the smallest squared distance and the point that reaches it, and what the projection does when the point is already inside the disc. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "cvx-curvature-from-three-iterates",
+   "moduleId": "advanced-optimization",
+   "title": "Read the Curvature off Three Iterates",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=cvx-curvature-from-three-iterates",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "A loss is the parabola f(w) = (a/2)(w - c)^2 with unknown a and c, and gradient descent at rate 0.16 from w = 1 logs w = 9 then w = 4.2. Work out where the minimum c sits, and the largest learning rate that still converges. 2 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "cvx-standardized-but-correlated",
+   "moduleId": "advanced-optimization",
+   "title": "Standardizing Two Correlated Features",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=cvx-standardized-but-correlated",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 2"
+   ],
+   "prompt": "A linear model predicts a building's heating bill from the night and day outdoor temperatures, and both columns are standardized to mean 0 and standard deviation 1, but on this data the two correlate at 0.96. With gradient descent at step size 1 over the largest curvature of the Hessian, about how many steps does it take to shrink the error in the flattest direction 1,000-fold?",
+   "answer": "About 340. The eigenvalues of [[1, ρ], [ρ, 1]] are 1 + ρ and 1 - ρ, along (1, 1) and (1, -1), so the Hessian's are 3.92 and 0.08 and the condition number is κ = 49. With η = 1/3.92 the flat direction shrinks by 1 - 1/49 per step, and 1,000-fold takes about 49 · ln 1000, roughly 7 · 49 = 343 (336 steps when counted). Standardizing fixes scale, not correlation: here the two temperatures move together, so the data say little about their difference, and that direction of the loss is nearly flat."
+  },
+  {
+   "id": "cvx-which-loss-is-not-convex",
+   "moduleId": "advanced-optimization",
+   "title": "The One Loss That Is Not Convex",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=cvx-which-loss-is-not-convex",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 2"
+   ],
+   "prompt": "Four candidate losses depend on one weight w. Three are convex on their whole domain. Which one is not, and what is the counterexample that proves it?",
+   "answer": "Take the absolute value of w, subtract 1 and square it. Its value is 1 at w = 0 and 0 at both w = -1 and w = 1. The chord from (-1, 0) to (1, 0) has height 0 at w = 0, below the graph's 1, so the definition fails. The trap is the reasoning 'a square of a convex function is convex': the absolute value of w minus 1 is convex, but it goes negative, and squaring flips the part below zero into a bump. For w between -1 and 1 the function is the square of one minus the absolute value of w, which has its maximum at 0."
+  },
+  {
+   "id": "cvx-curvature-range-numpy",
+   "moduleId": "advanced-optimization",
+   "title": "The Curvature Range from Hessian-Vector Products",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=cvx-curvature-range-numpy",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "The lesson reads the safe learning rate off the Hessian's eigenvalues. A model with a million weights has a Hessian no one forms: it has a trillion entries. What you can afford is a Hessian-vector product, which for least squares costs two matrix-vector products with X. Find the largest and the smallest curvature from those products alone, then test the largest against an experiment: the learning rate at which gradient descent starts to blow up.",
+   "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+  },
+  {
+   "id": "cvx-fit-scaled-report-raw-numpy",
+   "moduleId": "advanced-optimization",
+   "title": "Fit on Standardized Features, Report in Raw Units",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=cvx-fit-scaled-report-raw-numpy",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "A price model for used cars uses three features: age in years, distance driven in kilometers and engine size in liters. The distance column is tens of thousands of times larger than the others, so gradient descent on the raw columns faces a condition number in the billions. Standardizing makes the fit take a few dozen steps, but its weights belong to the standardized columns, and the people using the model want dollars per year, per kilometer and per liter. Fit on standardized features and report the model in raw units.",
+   "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+  },
+  {
+   "id": "advanced-optimization-implementation-task",
+   "moduleId": "advanced-optimization",
+   "title": "Ill-Conditioned Optimization Practice",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=advanced-optimization",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "Feature normalization / momentum / Adam for badly scaled problems. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+   "answer": "Auto-graded inside the notebook. Test R² must reach the target shown in the evaluation cell."
+  },
+  {
+   "id": "dl6-convexity-certificate",
+   "moduleId": "advanced-optimization",
+   "title": "Convex Here, Not Convex There",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=dl6-convexity-certificate",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "Test three functions for convexity with the chord inequality and numerical Hessian eigenvalues, and identify which are convex everywhere and which is convex only outside a strip through the origin.",
+   "answer": "Auto-graded inside the notebook. All violation counts and the minimum eigenvalue must match to 1e-6, with the quartic failing at every near-origin point."
+  },
+  {
+   "id": "dl7-gradient-noise-scale",
+   "moduleId": "advanced-optimization",
+   "title": "Four Times the Batch, Half the Noise",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=dl7-gradient-noise-scale",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "Measure how minibatch gradient noise scales with batch size across three orders of magnitude, and recover the -1/2 exponent by a log-log fit.",
+   "answer": "Auto-graded inside the notebook. The noise curve, fitted slope, and bias check must match to 1e-6, with the slope near -0.5."
+  }
+ ],
+ "theory": [
+  {
+   "id": "cvx-a-learning-rate-for-a-tilted-bowl",
+   "moduleId": "advanced-optimization",
+   "title": "A Learning Rate for 3x² + 4xy + 6y²",
+   "difficulty": "Medium",
+   "minutes": 8,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "Gradient descent minimizes"
+      },
+      {
+       "tex": "f(x, y) = 3x^2 + 4xy + 6y^2 ,"
+      },
+      {
+       "p": "whose minimum is at $(0, 0)$. It starts at $(1, 0)$ with the fixed learning rate $\\eta = 0.15$. What happens?"
+      },
+      {
+       "choices": [
+        {
+         "text": "It converges, since the curvature along each axis is at most 12 and $0.15 < 2/12$",
+         "explain": "The diagonal entries of the Hessian, 6 and 12, are the curvatures along the x and y axes, but the cross term 4xy couples the coordinates, so the axes are not the directions that matter. The Hessian [[6, 4], [4, 12]] has eigenvalues 14, along (1, 2), and 4, along (2, -1). The limit is 2/14 ≈ 0.143, and 0.15 is above it."
+        },
+        {
+         "text": "It diverges, since the part along $(1, 2)$ is multiplied by $-1.1$ each step",
+         "correct": true,
+         "explain": "The Hessian [[6, 4], [4, 12]] has eigenvalues 14, along (1, 2), and 4, along (2, -1). One step multiplies the part of the position along (1, 2) by 1 - 0.15 · 14 = -1.1 and the part along (2, -1) by 1 - 0.15 · 4 = 0.4. The start is (1, 0) = 0.2 · (1, 2) + 0.4 · (2, -1), so it has a part along the steep direction, and that part grows 1.1-fold every step. The loss goes 3, 1.95, 2.09, 2.49, 3.00, 3.63 and keeps growing: it falls at first only because the flat part shrinks fast."
+        },
+        {
+         "text": "It converges, since the part along $(2, -1)$ is multiplied by $0.4$ each step",
+         "explain": "The flat direction (2, -1), with curvature 4, does shrink by 0.4 per step. But convergence needs every direction to shrink, and the steep direction (1, 2), with curvature 14, is multiplied by 1 - 0.15 · 14 = -1.1. The flattest direction sets the speed of a converging run, and the steepest one sets whether it converges."
+        },
+        {
+         "text": "It converges, since the first step lowers the loss from 3 to 1.95",
+         "explain": "The first step does lower the loss, from 3 to 1.95, but only because the part along the flat direction (2, -1) shrinks 0.4-fold. The part along the steep direction (1, 2) grows 1.1-fold every step, so from the second step on the loss rises, 2.09, 2.49, 3.00, 3.63, and never stops. One falling step says little about a run."
+        },
+        {
+         "text": "It diverges only from starts on the line $y = 2x$, and from $(1, 0)$ it converges",
+         "explain": "Only a start with no part at all along (1, 2) avoids the growing direction, and those starts lie on the line x + 2y = 0, through (2, -1). The start (1, 0) is 0.2 · (1, 2) + 0.4 · (2, -1), so its part along (1, 2) is not zero, and it is multiplied by -1.1 every step."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "The Hessian [[6, 4], [4, 12]] has eigenvalues 14, along (1, 2), and 4, along (2, -1). One step multiplies the part of the position along (1, 2) by 1 - 0.15 · 14 = -1.1 and the part along (2, -1) by 1 - 0.15 · 4 = 0.4. The start is (1, 0) = 0.2 · (1, 2) + 0.4 · (2, -1), so it has a part along the steep direction, and that part grows 1.1-fold every step. The loss goes 3, 1.95, 2.09, 2.49, 3.00, 3.63 and keeps growing: it falls at first only because the flat part shrinks fast."
+      },
+      {
+       "result": "It diverges, since the part along $(1, 2)$ is multiplied by $-1.1$ each step"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cvx-averaging-three-models",
+   "moduleId": "advanced-optimization",
+   "title": "Averaging Three Delivery-Time Predictions",
+   "difficulty": "Medium",
+   "minutes": 15,
+   "overview": [
+    "Three regression models predict how many minutes one food order will take to arrive: $p_1 = 7$, $p_2 = 10$ and $p_3 = 16$. It takes $y = 10$ minutes."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "What is the squared error of the averaged prediction $\\bar p = (p_1 + p_2 + p_3)/3$? Compare it with the average of the three models' own squared errors."
+      }
+     ],
+     "answer": [
+      {
+       "p": "$\\bar p = 33/3 = 11$, so its squared error is $(11 - 10)^2 = 1$."
+      },
+      {
+       "p": "The models' own squared errors are $9$, $0$ and $36$, which average to $15$. So the averaged prediction is far better than the average model. It is not better than the best one: model 2 happens to be exact, with error 0. Averaging is guaranteed to beat the average of the models, not the best of them."
+      },
+      {
+       "result": "1"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "For any predictions $p_1, \\dots, p_k$ and target $y$, find a formula for the gap"
+      },
+      {
+       "tex": "\\frac1k\\sum_i (p_i - y)^2 - (\\bar p - y)^2"
+      },
+      {
+       "p": "and prove it. Check it on the numbers of part 1, say what it has to do with Jensen's inequality, and say when averaging gives no gain."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Write $p_i - y = (p_i - \\bar p) + (\\bar p - y)$ and square:"
+      },
+      {
+       "tex": "(p_i - y)^2 = (p_i - \\bar p)^2 + 2(p_i - \\bar p)(\\bar p - y) + (\\bar p - y)^2 ."
+      },
+      {
+       "p": "Average over $i$. The middle term averages to 0, because $\\tfrac1k\\sum_i (p_i - \\bar p) = 0$ and $\\bar p - y$ does not depend on $i$. What is left is"
+      },
+      {
+       "tex": "\\frac1k\\sum_i (p_i - y)^2 - (\\bar p - y)^2 = \\frac1k\\sum_i (p_i - \\bar p)^2 ,"
+      },
+      {
+       "p": "the spread (variance) of the predictions around their own mean. Here the spread of the predictions is $(16 + 1 + 25)/3 = 14$, which is $15 - 1$."
+      },
+      {
+       "p": "The squared error $e(p) = (p - y)^2$ is convex in $p$, and Jensen's inequality with equal weights says $e(\\bar p) \\le \\tfrac1k\\sum_i e(p_i)$. The identity says more: the gap equals the spread of the predictions around their mean, and it does not depend on $y$. Since $e$ is strictly convex, the gap is zero only when all the predictions are equal. Averaging helps as much as the models disagree."
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "explanation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "Suppose instead you average the three models' weights and use the model with the averaged weights. Does the same guarantee hold when the models are linear regressions, $p = \\boldsymbol\\theta^\\top\\mathbf{x}$? When they are neural networks?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "For linear models the prediction is linear in the weights, so the averaged weights $\\bar{\\boldsymbol\\theta}$ predict $\\bar{\\boldsymbol\\theta}^\\top\\mathbf{x} = \\bar p$, the averaged prediction. On this order the error is again 1, and on any data set the mean squared error is convex in $\\boldsymbol\\theta$, so by Jensen the loss at the averaged weights is at most the average of the three losses."
+      },
+      {
+       "p": "For a neural network the prediction is not linear in the weights and the loss is not convex in them. The averaged weights can land in a region where the network is much worse than all three, for example when the networks learned the same features in a different order of hidden units. Averaging predictions is always safe for squared error. Averaging weights is safe only when the loss is convex in the weights, or in practice when the models are close together, such as checkpoints of one training run."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cvx-budget-between-two-inputs",
+   "moduleId": "advanced-optimization",
+   "title": "A Budget Split Between Compute and Labels",
+   "difficulty": "Medium",
+   "minutes": 15,
+   "overview": [
+    "A lab has a budget of 8 (thousand dollars) for two inputs to a model: $x$ units of compute at 2 each and $y$ units of labeled data at 1 each. It values a plan at $\\ln x + \\ln y$ and wants the best plan within budget. As a minimization,"
+   ],
+   "setup": [
+    {
+     "tex": "\\min_{x, y > 0}\\ -\\ln x - \\ln y \\quad\\text{subject to}\\quad 2x + y - 8 \\le 0 ."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "How many units of compute does the best plan buy? Solve it through the dual function."
+      }
+     ],
+     "answer": [
+      {
+       "p": "With a multiplier $\\mu \\ge 0$,"
+      },
+      {
+       "tex": "\\mathcal{L} = -\\ln x - \\ln y + \\mu(2x + y - 8) ."
+      },
+      {
+       "p": "For $\\mu > 0$ the partial derivatives $-1/x + 2\\mu$ and $-1/y + \\mu$ vanish at $x = 1/(2\\mu)$ and $y = 1/\\mu$. Substituting,"
+      },
+      {
+       "tex": "g(\\mu) = \\ln(2\\mu) + \\ln\\mu + \\mu\\Big(\\frac1\\mu + \\frac1\\mu - 8\\Big)\n= \\ln 2 + 2\\ln\\mu + 2 - 8\\mu ."
+      },
+      {
+       "p": "Its derivative $2/\\mu - 8$ is zero at $\\mu = \\tfrac14$, which gives $x = 2$, $y = 4$ and $g(\\tfrac14) = \\ln 2 - 4\\ln 2 = -\\ln 8$. The plan $(2, 4)$ spends all 8 and has objective $-\\ln 8$, equal to the dual's bound, so it is optimal: buy **2** units of compute and 4 of labels."
+      },
+      {
+       "p": "The budget is split evenly, 4 on each input. With a log value, the last dollar spent on either input must bring the same gain, and $1/x$ per unit at price 2 equals $1/y$ per unit at price 1 when $2x = y$."
+      },
+      {
+       "result": "2"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "The cloud provider caps compute at $x \\le 1$. Add the constraint $x - 1 \\le 0$ with its own multiplier $\\mu_2$, and call the budget's multiplier $\\mu_1$. Find the new best plan. What is $\\mu_2$? Give it as a fraction or to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The old plan has $x = 2$, which breaks the cap, so the cap is active: $x = 1$. Is the budget still active? If it were not, $\\mu_1 = 0$, and the $y$ equation $-1/y + \\mu_1 = 0$ would have no solution: $-\\ln y$ keeps falling as $y$ grows, so spending leftover money always helps. So both are active: $x = 1$ and $2 + y = 8$, giving $y = 6$."
+      },
+      {
+       "p": "Stationarity now reads"
+      },
+      {
+       "tex": "-\\frac1x + 2\\mu_1 + \\mu_2 = 0, \\qquad -\\frac1y + \\mu_1 = 0 ."
+      },
+      {
+       "p": "The second gives $\\mu_1 = 1/6$. The first, at $x = 1$, gives $\\mu_2 = 1 - 2/6 = 2/3$. Both multipliers are positive, as they must be."
+      },
+      {
+       "p": "To certify the plan, evaluate the dual function there. For fixed multipliers the Lagrangian is smallest at $x = 1/(2\\mu_1 + \\mu_2)$ and $y = 1/\\mu_1$, which gives"
+      },
+      {
+       "tex": "g(\\mu_1, \\mu_2) = \\ln(2\\mu_1 + \\mu_2) + \\ln\\mu_1 + 2 - 8\\mu_1 - \\mu_2 ."
+      },
+      {
+       "p": "At $(\\tfrac16, \\tfrac23)$, $2\\mu_1 + \\mu_2 = 1$, so $g = 0 - \\ln 6 + 2 - \\tfrac43 - \\tfrac23 = -\\ln 6$. Every plan within budget and cap has objective at least this lower bound, and the plan $(1, 6)$ reaches it, $-\\ln 1 - \\ln 6 = -\\ln 6$. So $(1, 6)$ is optimal, and the lab's value $\\ln x + \\ln y$ drops from $\\ln 8$ to $\\ln 6$."
+      },
+      {
+       "p": "The multiplier says how hard each constraint pushes. The budget's multiplier dropped from $\\tfrac14$ to $\\tfrac16$: the extra dollars now go to labels, which the lab already has more of, so each is worth less. A plan that kept $y = 4$ and cut $x$ to 1 would leave 2 unspent and reach only $\\ln 4$."
+      },
+      {
+       "result": "2/3"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cvx-closest-point-in-a-disc",
+   "moduleId": "advanced-optimization",
+   "title": "The Closest Point in a Disc, Through Its Dual",
+   "difficulty": "Hard",
+   "minutes": 20,
+   "overview": [
+    "Projected gradient descent keeps a weight vector inside the disc $\\lVert\\mathbf{x}\\rVert \\le 1$: after each step it replaces the weights by the closest point of the disc. For the point $\\mathbf{a} = (3, 4)$ that move solves"
+   ],
+   "setup": [
+    {
+     "tex": "\\min_{\\mathbf{x}}\\ \\lVert\\mathbf{x} - \\mathbf{a}\\rVert^2 \\quad\\text{subject to}\\quad \\lVert\\mathbf{x}\\rVert^2 \\le 1 ."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Form the Lagrangian with a multiplier $\\mu \\ge 0$, find the dual function $g(\\mu)$, and maximize it. Which $\\mu$ maximizes $g$?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Write the constraint as $\\lVert\\mathbf{x}\\rVert^2 - 1 \\le 0$:"
+      },
+      {
+       "tex": "\\mathcal{L}(\\mathbf{x}, \\mu) = \\lVert\\mathbf{x} - \\mathbf{a}\\rVert^2 + \\mu\\big(\\lVert\\mathbf{x}\\rVert^2 - 1\\big) ."
+      },
+      {
+       "p": "For fixed $\\mu \\ge 0$ this is a round bowl in $\\mathbf{x}$. Its gradient $2(\\mathbf{x} - \\mathbf{a}) + 2\\mu\\mathbf{x}$ is zero at $\\mathbf{x} = \\mathbf{a}/(1 + \\mu)$, the point $\\mathbf{a}$ pulled toward the origin. Substituting, with $\\lVert\\mathbf{a}\\rVert^2 = 25$:"
+      },
+      {
+       "tex": "\\lVert\\mathbf{x} - \\mathbf{a}\\rVert^2 = \\frac{\\mu^2}{(1 + \\mu)^2}\\,25, \\qquad\n\\mu\\lVert\\mathbf{x}\\rVert^2 = \\frac{\\mu}{(1 + \\mu)^2}\\,25 ,"
+      },
+      {
+       "p": "which add up to $25\\mu/(1 + \\mu)$. So"
+      },
+      {
+       "tex": "g(\\mu) = \\frac{25\\mu}{1 + \\mu} - \\mu ."
+      },
+      {
+       "p": "Its derivative is $25/(1 + \\mu)^2 - 1$, zero when $(1 + \\mu)^2 = 25$, so at $\\mu = 4$ (the other root, $-6$, is not allowed). The derivative is positive before 4 and negative after, so $\\mu = 4$ is the maximum."
+      },
+      {
+       "result": "4"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the smallest value of $\\lVert\\mathbf{x} - \\mathbf{a}\\rVert^2$, and at which point is it reached? Check that strong duality holds."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The dual's best bound is $d^\\star = g(4) = 20 - 4 = 16$. At $\\mu = 4$ the minimizer of the Lagrangian is $\\mathbf{x} = \\mathbf{a}/5 = (0.6, 0.8)$, which has length 1, so it is feasible. Its squared distance to $\\mathbf{a}$ is $2.4^2 + 3.2^2 = 5.76 + 10.24 = 16$. A feasible point reaches the lower bound, so $p^\\star = d^\\star = 16$."
+      },
+      {
+       "p": "That was guaranteed in advance: the objective and the constraint are convex, and the origin satisfies the constraint strictly ($0 < 1$), so strong duality holds. Any other multiplier still gives a valid floor, for example $g(1) = 11.5$."
+      },
+      {
+       "p": "The answer is $\\mathbf{a}$ scaled down to length 1, the step back to the disc along the line to the origin."
+      },
+      {
+       "result": "16"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Now take $\\mathbf{a} = (0.3, 0.4)$. Which $\\mu$ maximizes the dual function now? Check your answer against the KKT conditions, and say what the projection does in this case."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Here $\\lVert\\mathbf{a}\\rVert^2 = 0.25$, and the same algebra gives $g(\\mu) = 0.25\\mu/(1 + \\mu) - \\mu$, with derivative $0.25/(1 + \\mu)^2 - 1 < 0$ for every $\\mu \\ge 0$. The dual is largest at $\\mu = 0$, with $g(0) = 0$."
+      },
+      {
+       "p": "At $\\mu = 0$ the Lagrangian's minimizer is $\\mathbf{x} = \\mathbf{a}$ itself, which is inside the disc. Complementary slackness, $\\mu(\\lVert\\mathbf{x}\\rVert^2 - 1) = 0$, holds because $\\mu = 0$, and the constraint has room to spare ($0.25 < 1$), so it is inactive. The projection leaves a point that is already inside unchanged, with distance 0."
+      },
+      {
+       "p": "So the rule is: $\\mathbf{x}^\\star = \\mathbf{a}$ when $\\lVert\\mathbf{a}\\rVert \\le 1$, and $\\mathbf{x}^\\star = \\mathbf{a}/\\lVert\\mathbf{a}\\rVert$ otherwise, with multiplier $\\mu = \\lVert\\mathbf{a}\\rVert - 1$ (here $5 - 1 = 4$). A larger multiplier means the constraint is pushing harder."
+      },
+      {
+       "result": "0"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cvx-curvature-from-three-iterates",
+   "moduleId": "advanced-optimization",
+   "title": "Read the Curvature off Three Iterates",
+   "difficulty": "Medium",
+   "minutes": 10,
+   "overview": [
+    "A loss depends on one weight and is known to be a parabola, $f(w) = \\tfrac{a}{2}(w - c)^2$ with $a > 0$, but nobody wrote down $a$ or $c$. You run gradient descent with $\\eta = 0.16$ from $w_0 = 1$ and log the first two steps: $w_1 = 9$ and $w_2 = 4.2$."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Where is the minimum $c$?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "On a parabola each step multiplies the error $w - c$ by the same factor $r = 1 - \\eta a$. So the three errors $1 - c$, $9 - c$ and $4.2 - c$ form a geometric sequence:"
+      },
+      {
+       "tex": "(9 - c)^2 = (1 - c)(4.2 - c) ."
+      },
+      {
+       "p": "Expanding, $81 - 18c + c^2 = 4.2 - 5.2c + c^2$, so $12.8c = 76.8$ and $c = 6$."
+      },
+      {
+       "p": "Check: the errors are $-5$, $3$ and $-1.8$, each $-0.6$ times the one before. The iterates jump from one side of 6 to the other, closing in."
+      },
+      {
+       "p": "A tempting shortcut is to take the midpoint of the last two iterates, 6.6. That is not the minimum: the error shrinks to 0.6 of its size and flips sign each step, so the iterates bracket $c$ without being symmetric around it."
+      },
+      {
+       "result": "6"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Up to what learning rate does gradient descent on this loss converge? Give the boundary value."
+      }
+     ],
+     "answer": [
+      {
+       "p": "From part 1 the factor is $r = 3 / (-5) = -0.6$. Then $1 - 0.16\\,a = -0.6$ gives the curvature $a = 10$."
+      },
+      {
+       "p": "Gradient descent converges when $|1 - \\eta a| < 1$, that is $0 < \\eta < 2/a = 0.2$. At $\\eta = 0.2$ the factor is exactly $-1$ and the iterates bounce between two points forever."
+      },
+      {
+       "p": "So the run you watched, at $\\eta = 0.16$, is already past the one-step rate $1/a = 0.1$, which is why it overshoots. It still converges, because $0.16$ is below $0.2$. Raising the rate by a quarter, to $0.2$, would stop it."
+      },
+      {
+       "result": "0.2"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cvx-standardized-but-correlated",
+   "moduleId": "advanced-optimization",
+   "title": "Standardizing Two Correlated Features",
+   "difficulty": "Medium",
+   "minutes": 8,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A linear model predicts a building's heating bill from two features, the outdoor temperature at night and during the day. You standardize both, so each column has mean 0 and standard deviation 1. On this data the two are correlated, with $\\rho = 0.96$, so"
+      },
+      {
+       "tex": "\\frac{1}{n}X^\\top X = \\begin{pmatrix} 1 & 0.96 \\\\ 0.96 & 1 \\end{pmatrix},"
+      },
+      {
+       "p": "and the mean squared error has Hessian $\\tfrac{2}{n}X^\\top X$. You run gradient descent with $\\eta = 1/\\lambda_{\\max}$. About how many steps does it take to shrink the error in the flattest direction 1,000-fold?"
+      },
+      {
+       "choices": [
+        {
+         "text": "One step, since standardized features make the bowl round",
+         "explain": "Standardizing gives every column the same scale, but the Hessian is close to a multiple of the identity only when the features are not strongly correlated. Here the off-diagonal 0.96 makes the eigenvalues 2(1 + 0.96) = 3.92 and 2(1 - 0.96) = 0.08, far apart."
+        },
+        {
+         "text": "About 50",
+         "explain": "Two slips land here. One takes 7 as the condition number, the square root of the right one: 7 is the ratio of the singular values of X, the stretch of the data matrix itself, but the Hessian contains X twice, through XᵀX, so its eigenvalues are the squares, 3.92 and 0.08, and their ratio is 49. The other gets κ = 49 right but takes it as the step count. Each step shrinks the flat direction by 1 - 1/49, so κ steps only cut it by a factor of about e ≈ 2.7. A 1,000-fold cut needs about κ · ln 1000 ≈ 7κ steps."
+        },
+        {
+         "text": "About 340",
+         "correct": true,
+         "explain": "The eigenvalues of [[1, ρ], [ρ, 1]] are 1 + ρ and 1 - ρ, along (1, 1) and (1, -1), so the Hessian's are 3.92 and 0.08 and the condition number is κ = 49. With η = 1/3.92 the flat direction shrinks by 1 - 1/49 per step, and 1,000-fold takes about 49 · ln 1000, roughly 7 · 49 = 343 (336 steps when counted). Standardizing fixes scale, not correlation: here the two temperatures move together, so the data say little about their difference, and that direction of the loss is nearly flat."
+        },
+        {
+         "text": "It never gets there, since nearly copied columns leave $X^\\top X$ without an inverse",
+         "explain": "With a correlation of 1 the columns would be copies, XᵀX would have a zero eigenvalue and the flat direction would not move at all. At 0.96 the smallest eigenvalue is small but positive, 0.08, so gradient descent converges, slowly."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "The eigenvalues of [[1, ρ], [ρ, 1]] are 1 + ρ and 1 - ρ, along (1, 1) and (1, -1), so the Hessian's are 3.92 and 0.08 and the condition number is κ = 49. With η = 1/3.92 the flat direction shrinks by 1 - 1/49 per step, and 1,000-fold takes about 49 · ln 1000, roughly 7 · 49 = 343 (336 steps when counted). Standardizing fixes scale, not correlation: here the two temperatures move together, so the data say little about their difference, and that direction of the loss is nearly flat."
+      },
+      {
+       "result": "About 340"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cvx-which-loss-is-not-convex",
+   "moduleId": "advanced-optimization",
+   "title": "The One Loss That Is Not Convex",
+   "difficulty": "Medium",
+   "minutes": 8,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "Four candidate losses depend on one weight $w$. Three of them are convex on their whole domain. Which one is not?"
+      },
+      {
+       "choices": [
+        {
+         "text": "$(|w| - 1)^2$",
+         "correct": true,
+         "explain": "Its value is 1 at w = 0 and 0 at both w = -1 and w = 1. The chord from (-1, 0) to (1, 0) has height 0 at w = 0, below the graph's 1, so the definition fails. The trap is the reasoning 'a square of a convex function is convex': $|w| - 1$ is convex, but it goes negative, and squaring flips the part below zero into a bump. For $|w| < 1$ the function is $(1 - |w|)^2$, which has its maximum at 0."
+        },
+        {
+         "text": "$\\max(w^2,\\ 2w + 3)$",
+         "explain": "The kinks at w = 3 and w = -1, where the two pieces meet, do not break convexity. Both w² and 2w + 3 are convex, and the maximum of convex functions is convex: a chord of the maximum lies above the chords of both pieces, and each of those lies above its own piece."
+        },
+        {
+         "text": "$\\max(0,\\ 1 - w)^2$",
+         "explain": "This is convex. For w < 1 it is (1 - w)² with second derivative 2, for w > 1 it is 0, and at w = 1 both the value and the slope are 0, so the slope never decreases. Unlike $|w| - 1$, the inner function max(0, 1 - w) is never negative, so squaring it cannot fold anything up into a bump."
+        },
+        {
+         "text": "$-\\ln w + w^2$ for $w > 0$",
+         "explain": "ln w is concave, so -ln w is convex, and w² is convex. Their sum has second derivative 1/w² + 2 > 0 on w > 0, so it is convex there (its domain, an interval, is a convex set)."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Its value is 1 at w = 0 and 0 at both w = -1 and w = 1. The chord from (-1, 0) to (1, 0) has height 0 at w = 0, below the graph's 1, so the definition fails. The trap is the reasoning 'a square of a convex function is convex': $|w| - 1$ is convex, but it goes negative, and squaring flips the part below zero into a bump. For $|w| < 1$ the function is $(1 - |w|)^2$, which has its maximum at 0."
+      },
+      {
+       "result": "$(|w| - 1)^2$"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

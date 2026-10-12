@@ -1,0 +1,97 @@
+{
+  "aModule": "transformer-architectures-bert-mlm",
+  "stage": "Round 2",
+  "fixes": [
+    {
+      "file": "bert-tag-labels-for-word-pieces",
+      "find": "| rey | ##k   | ##ja   | ##vik   |",
+      "replace": "| rey | \\#\\#k   | \\#\\#ja   | \\#\\#vik   |",
+      "why": "A renders B's markdown tables as KaTeX arrays (scripts/import-b/problems.py table_to_tex, cell_tex wraps each cell in \\text{} with no escaping), and KaTeX rejects a bare # inside \\text{} (ParseError: Expected 'EOF', got '#'), so the WordPiece continuation markers ##k, ##ja and ##vik are written as \\#\\#k, \\#\\#ja and \\#\\#vik to render as typed. Not a wording change: the pieces read exactly as B wrote them."
+    }
+  ],
+  "parts": {
+    "bert-five-predictions-two-inputs": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "bert-nan-on-short-titles": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.4": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "bert-scoring-whole-sentences": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "bert-what-a-visible-piece-says": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.4": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "bert-five-predictions-two-inputs": "A batch holds two inputs: input A has four masked positions and input B has one, for five losses in total. Two scripts turn them into one batch loss, one by averaging all five and one by averaging within each input first, and they disagree.",
+    "bert-hide-each-piece-from-itself": "A teammate wants an encoder that sees the context on both sides without changing the input: she leaves the sentence as it is and sets each position's score against itself to minus infinity before the softmax, so no position attends to its own piece, then trains each position to predict the piece at that same position. Decide whether her plan keeps each piece out of its own prediction, and say where the leak first shows up.",
+    "bert-loss-at-three-kinds-of-target": "A training sentence has three of its pieces chosen by BERT's masking recipe: one is replaced by the mask, one by a random piece, and one is left as it is. Given the model's output probabilities at the three chosen positions, what is the masked-LM loss for the sentence?",
+    "bert-nan-on-short-titles": "A team pretrains a small BERT on short product titles, and the collator flips a 15% coin at each title piece, labeling every unchosen position as ignored. Every so often the logged loss is nan even though the weights never blow up. Explain where the nan comes from, how often it happens, and what a fixed target count per input would change.",
+    "bert-scoring-whole-sentences": "The pseudo-log-likelihood scores a whole sentence by hiding each word piece in turn and adding the log probabilities of the true pieces. Compute it for a toy language of two-piece sentences, prove two of its properties, and compare it with the chain rule a left-to-right model uses on a word the tokenizer splits into several pieces.",
+    "bert-tag-labels-for-word-pieces": "A tagger fine-tunes BERT to label whole words, but the scoring script reads each word's prediction from the output at that word's first piece. Given the piece layout of a padded sentence, which label array trains the layer for exactly what the script measures?",
+    "bert-what-a-visible-piece-says": "Under BERT's masking recipe a target position keeps its original piece a tenth of the time and gets a uniformly random piece a tenth of the time. Work out what the model should believe about the original piece at a position that shows a real piece, for a toy vocabulary and for two other masking recipes."
+  },
+  "order": [
+    "bert-hide-each-piece-from-itself",
+    "bert-five-predictions-two-inputs",
+    "bert-loss-at-three-kinds-of-target",
+    "bert-mask-and-segments-swapped",
+    "bert-tag-labels-for-word-pieces",
+    "bert-nan-on-short-titles",
+    "bert-scoring-whole-sentences",
+    "bert-what-a-visible-piece-says"
+  ]
+}

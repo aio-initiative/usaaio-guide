@@ -1,0 +1,79 @@
+{
+  "aModule": "transformer-architectures-t5-encoder-decoder",
+  "stage": "Round 2",
+  "fixes": [],
+  "parts": {
+    "t5-greedy-label": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A short justification is required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "t5-pad-columns": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "t5-passage-for-a-fixed-input": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "t5-scores-as-text": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "t5-who-sees-the-input": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "t5-greedy-label": "A fine-tuned T5 routes support tickets to one of four labels, and the decoder's next-token probabilities are given for its first two steps. Work out what greedy decoding writes, which label the model rates most likely, and a way to read a label that always picks the most likely one.",
+    "t5-pad-columns": "A batch holds two English to German pairs, each sequence padded to the longest one of its kind in the batch: pair 1 has 8 input tokens and 7 decoder positions, and pair 2 has 5 input tokens padded to 8 and 4 decoder positions padded to 7. Numbering rows and columns from 1, which entries of pair 2's 7 by 8 cross-attention score grid should be set to minus infinity before the softmax?",
+    "t5-passage-for-a-fixed-input": "A team pretrains a T5-style model with span corruption and every encoder input must be exactly 288 tokens: 15% of each passage's tokens are hidden in 3-token spans, one sentinel replaces each span in the input, and the target holds each sentinel followed by its span plus one closing sentinel. How many tokens long must each passage be, and how many tokens long is each target?",
+    "t5-scores-as-text": "A fine-tuned T5 rates how well a summary covers its article on a scale from 1 to 5 and writes the rating as text, and two checkpoints give different probabilities to the same whole output strings. Work out what each writes by greedy decoding, compare the two cross-entropy losses on the target, and explain why the loss prefers the checkpoint whose rating is further off.",
+    "t5-translator-ignores-input": "A small English to German encoder-decoder trains to a loss that levels off at what a German-only language model of the same size reaches on the same German sentences, and at test time changing the English does not change the German at all. Which one-line slip in the training code explains both?",
+    "t5-typo-in-the-target": "A fine-tuned T5 trains on an English to German pair whose German target is seven tokens, and a typo in the data changes the fifth one. Say which of the seven cross-entropy loss terms can differ from the same training step on the clean pair.",
+    "t5-who-sees-the-input": "An encoder-decoder and a decoder-only model translate the same 12-token English sentence into 5 German tokens, and the decoder-only one reads both as a single stream under one causal mask. Count the ordered pairs of tokens the encoder-decoder lets attend that the decoder-only model does not, then say whether the two give a German token the same information about the English."
+  },
+  "order": [
+    "t5-pad-columns",
+    "t5-who-sees-the-input",
+    "t5-typo-in-the-target",
+    "t5-greedy-label",
+    "t5-passage-for-a-fixed-input",
+    "t5-scores-as-text",
+    "t5-translator-ignores-input"
+  ]
+}

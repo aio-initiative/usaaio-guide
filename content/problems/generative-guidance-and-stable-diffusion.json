@@ -1,0 +1,315 @@
+{
+  "module": "generative-guidance-and-stable-diffusion",
+  "stage": "Camp",
+  "index": [
+    {
+      "id": "gen-the-guided-value-at-step-500",
+      "moduleId": "generative-guidance-and-stable-diffusion",
+      "title": "The Guided Value at Step 500 of a Prompted Run",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=gen-the-guided-value-at-step-500",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "A prompted run holds a different noisy image at step 500 than the unguided run, so its unprompted estimate is different too. Give the weight on LEFT and the guided estimate for the prompted run's own step 500 image, and say which of the two a sampler uses. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "gen-reweighting-an-imperfect-prompt",
+      "moduleId": "generative-guidance-and-stable-diffusion",
+      "title": "Reweighting by a Prompt the Classifier Is Unsure About",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=gen-reweighting-an-imperfect-prompt",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Camp"
+      ],
+      "prompt": "The page turns guidance into reweighting: sampling with weight w follows ln p(x_t) plus w times ln p(prompt given x_t), which reweights the noisy images by p(prompt given x_t) raised to w. Keep the chapter's two training images, LEFT and RIGHT, each with half the data. The prompt asks for left, and an imperfect classifier scores a noisy image from LEFT at 0.9 and one from RIGHT at 0.2. How much of the reweighted mass sits on LEFT when w is 3?",
+      "answer": "0.989. Reweighting multiplies each image's share by the classifier's score raised to w, so LEFT gets 0.9 cubed = 0.729 and RIGHT gets 0.2 cubed = 0.008. LEFT's share of the total is 0.729 / 0.737 = 0.989. That is the sense in which w above 1 favors images where the prompt is unmistakable: the uncertain image falls away faster than the confident one."
+    },
+    {
+      "id": "gen-two-starts-with-the-same-contrast",
+      "moduleId": "generative-guidance-and-stable-diffusion",
+      "title": "Two Starts with the Same Contrast",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=gen-two-starts-with-the-same-contrast",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "The running example's ten-jump sampler turns a start from pure noise into one of its two training images, and with only two training images the whole run depends on the start through one number, the contrast of its pixels. Show why, then use it to say what two starts that share a contrast have in common and what becomes of a start that barely leans either way. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "gen-diffusion-in-numpy",
+      "moduleId": "generative-guidance-and-stable-diffusion",
+      "title": "The Chapter's Diffusion Model in NumPy",
+      "source": "USAAIO Guide",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=gen-diffusion-in-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Camp"
+      ],
+      "prompt": "Build the chapter's four-pixel diffusion model in NumPy: the noise schedule and the forward process, the estimate of the clean image from a noisy one, the ten-jump sampler, and classifier-free guidance on top of it.",
+      "answer": "Auto-graded inside the notebook. Each part's checks must pass: the schedule and forward-process values, the estimate's weights, the sampler's final image, and the guided sampler's final image."
+    },
+    {
+      "id": "gm5-cfg-scale",
+      "moduleId": "generative-guidance-and-stable-diffusion",
+      "title": "Turning Up the Guidance Until It Breaks",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=gm5-cfg-scale",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Camp"
+      ],
+      "prompt": "Work classifier-free guidance out in closed form on a Gaussian toy, and measure how prompt adherence and sample diversity trade off as the scale rises.",
+      "answer": "Auto-graded inside the notebook. Guided means, standard deviations, adherence fractions, and the largest w whose guided precision is still positive must match to 1e-5, with diversity falling as guidance rises."
+    }
+  ],
+  "theory": [
+    {
+      "id": "gen-the-guided-value-at-step-500",
+      "moduleId": "generative-guidance-and-stable-diffusion",
+      "title": "The Guided Value at Step 500 of a Prompted Run",
+      "difficulty": "Medium",
+      "minutes": 16,
+      "overview": [
+        "Guidance is recomputed at every step, from the noisy image the run is holding at that step. Turn the prompt on and that image changes, so the unprompted estimate changes with it."
+      ],
+      "setup": [
+        {
+          "p": "Start B of Step 5, $(1.05,\\ 1.78,\\ -2.55,\\ -0.14)$, is sampled over the same ten jumps, 1,000 down to 0, with the prompt \"left\" and $w = 3$. At step 500 that run holds"
+        },
+        {
+          "tex": "(1.589,\\ 1.401,\\ -1.866,\\ -0.442),"
+        },
+        {
+          "p": "not the $(1.123,\\ 1.868,\\ -2.333,\\ 0.025)$ of the unguided run. The training set is still LEFT and RIGHT, and $\\bar\\alpha_{500} = 0.0786$, so the signal factor is 0.2803 and the noise variance is 0.9214."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Give the weight the unprompted network puts on LEFT for that image, to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Step 5's `estimate` function gives each training image the squared distance $d = \\|x - \\sqrt{\\bar\\alpha_t} \\,(\\text{image})\\|^2 \\div (2 (1 - \\bar\\alpha_t))$ and then weights the images by $e^{-d}$, so what is needed is the difference $d_L - d_R$. With $s = 0.280$ the two sets of differences are"
+            },
+            {
+              "list": [
+                "LEFT: $(1.3091,\\ 1.4014,\\ -2.1466,\\ -0.4417)$, squares $1.7138 + 1.9639 + 4.6079 + 0.1951 = 8.4807$",
+                "RIGHT: $(1.5895,\\ 1.1210,\\ -1.8663,\\ -0.7220)$, squares $2.5265 + 1.2566 + 3.4831 + 0.5213 = 7.7875$"
+              ]
+            },
+            {
+              "p": "Dividing both by $2 \\times 0.9214 = 1.843$ gives $d_L = 4.602$ and $d_R = 4.226$, so the gap is $(8.4807 - 7.7875) \\div 1.843 = 0.376$. The image sits further from LEFT than from RIGHT, so that gap is positive and"
+            },
+            {
+              "tex": "w = \\frac{1}{1 + e^{0.376}} = \\frac{1}{1 + 1.456} = 0.407 ."
+            },
+            {
+              "p": "The gap does not depend on rounding the signal factor, because the two images have the same length and the $s^2$ terms cancel, so a reader who rounds $s$ to 0.280 gets the same 0.376."
+            },
+            {
+              "p": "The network now leans towards RIGHT, where the unguided run's own step 500 image gives a weight of only 0.280 on LEFT. Leaving the factor of 2 out of the distance doubles both distances, and the weight comes out 0.320 instead."
+            },
+            {
+              "result": "0.407"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Give the first pixel of the guided estimate at step 500, to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Conditioned on \"left\" the training set is LEFT alone, so the prompted estimate is exactly $(1, 0, 1, 0)$ at every step. The unprompted estimate is the weighted average of LEFT and RIGHT, which has the form $(w, 1 - w, w, 1 - w)$ with $w = 0.407$, so it is $(0.407,\\ 0.593,\\ 0.407,\\ 0.593)$."
+            },
+            {
+              "p": "Guidance with $w = 3$ moves past the prompted estimate by three times the gap between the two, which is $3 \\times 0.593 = 1.779$. The first pixel is $0.407 + 1.779 = 2.186$, and the second is $0.593 - 1.779 = -1.186$. So the guided estimate is $(2.186,\\ -1.186,\\ 2.186,\\ -1.186)$."
+            },
+            {
+              "result": "2.186"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "The page's guidance table gives 2.44 as the first pixel of the guided estimate at step 500 of start B with $w = 3$. Explain why the number here is smaller, and say which of the two a sampler would use."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The page's 2.44 comes from an unprompted weight of 0.280, since its unprompted estimate is $(0.28,\\ 0.72,\\ 0.28,\\ 0.72)$ and $0.28 + 3 \\times 0.72 = 2.44$. That estimate belongs to the unguided run's step 500 image $(1.123,\\ 1.868,\\ -2.333,\\ 0.025)$, which is not the image the prompted run holds at step 500."
+            },
+            {
+              "p": "Guidance changes the estimate at step 1,000, so the jump to step 900 carries a different image, and the gap between the two runs has grown by step 500. The contrast $x_1 + x_3 - x_2 - x_4$ of the prompted run's image is $-0.277 - 0.960 = -1.237$, against $-1.210 - 1.893 = -3.103$ for the unguided one. The step 500 factor is 0.304, so those contrasts are worth 0.376 and 0.943 standard deviations, and the two unprompted weights come out 0.407 and 0.280. The prompted run's image leans towards RIGHT, but less sharply than the unguided run's, so guidance has less of a gap to work with."
+            },
+            {
+              "p": "A sampler uses the value it computes for the image it is holding, 2.186. Guiding the unguided run's estimate instead would mean steering a run that is not the one being sampled."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gen-reweighting-an-imperfect-prompt",
+      "moduleId": "generative-guidance-and-stable-diffusion",
+      "title": "Reweighting by a Prompt the Classifier Is Unsure About",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "The page turns guidance into reweighting: sampling with weight $w$ follows $\\ln p(x_t) + w \\ln p(\\text{prompt} \\mid x_t)$, which reweights the noisy images by $p(\\text{prompt} \\mid x_t)^w$."
+            },
+            {
+              "p": "Keep the chapter's two training images, LEFT and RIGHT, each with half the data, and suppose the prompt is \"left\" and a classifier over prompts is imperfect: it returns 0.9 for a noisy image that came from LEFT and 0.2 for one that came from RIGHT. How much of the reweighted mass sits on LEFT when $w = 3$?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "0.729",
+                  "explain": "This is the unnormalised 0.9 cubed, the weight LEFT would carry before the RIGHT image is counted at all. Both images are in the sum, so LEFT's share has to be divided by its total with RIGHT."
+                },
+                {
+                  "text": "0.818",
+                  "explain": "This is the w = 1 answer, where each image is reweighted once. Raising the classifier's score to the power w is what makes guidance bite: a score of 0.2 cubed is 0.008, so RIGHT loses far more than LEFT."
+                },
+                {
+                  "text": "0.953",
+                  "explain": "This is the w = 2 answer. The reweighting is 0.9 to the power w against 0.2 to the power w, so the answer has to be computed at w = 3, not at w = 2."
+                },
+                {
+                  "text": "0.989",
+                  "correct": true,
+                  "explain": "Reweighting multiplies each image's share by the classifier's score raised to w, so LEFT gets 0.9 cubed = 0.729 and RIGHT gets 0.2 cubed = 0.008. LEFT's share of the total is 0.729 / 0.737 = 0.989. That is the sense in which w above 1 favors images where the prompt is unmistakable: the uncertain image falls away faster than the confident one."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Reweighting multiplies each image's share by the classifier's score raised to w, so LEFT gets 0.9 cubed = 0.729 and RIGHT gets 0.2 cubed = 0.008. LEFT's share of the total is 0.729 / 0.737 = 0.989. That is the sense in which w above 1 favors images where the prompt is unmistakable: the uncertain image falls away faster than the confident one."
+            },
+            {
+              "result": "0.989"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gen-two-starts-with-the-same-contrast",
+      "moduleId": "generative-guidance-and-stable-diffusion",
+      "title": "Two Starts with the Same Contrast",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "The running example's sampler turns a start from pure noise into one of its two training images. With LEFT and RIGHT as the training set, the whole run depends on the start through one number. Write the contrast of a noisy image as $C = x_1 + x_3 - x_2 - x_4$."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Show that the final image of the ten-jump sampler, over the steps 1,000, 900, 800, 700, 600, 500, 400, 300, 200, 100 and 0, depends on the start only through its contrast $C$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Three facts do the work. First, the estimate of the clean image is a weighted average of LEFT and RIGHT, so it is $(w, 1 - w, w, 1 - w)$ for the weight $w$ on LEFT, and that weight depends on the noisy image only through its contrast, as Step 5's problem shows. So the whole estimate at step $t$ is a function of $C_t$ alone, where $C_t$ is the contrast of the image the run holds at $t$."
+            },
+            {
+              "p": "Second, the implied noise is $\\varepsilon = (x_t - \\sqrt{\\bar\\alpha_t}\\, \\hat x_0) \\div \\sqrt{1 - \\bar\\alpha_t}$, so it is a linear function of $x_t$ and $\\hat x_0$, hence of $x_t$ alone once $\\hat x_0$ is fixed."
+            },
+            {
+              "p": "Third, the jump to the next step is $x_{t'} = \\sqrt{\\bar\\alpha_{t'}}\\, \\hat x_0 + \\sqrt{1 - \\bar\\alpha_{t'}}\\, \\varepsilon$, again linear in $x_t$ once $\\hat x_0$ is known. So there are constants $A$ and $B$ with $x_{t'} = A \\hat x_0(C_t) + B x_t$, and taking the contrast of both sides gives a rule for $C_{t'}$ that reads $C_t$ and nothing else. From $C_{1000}$ the rule determines $C_{900}$, then $C_{800}$, and so on down to $C_0$."
+            },
+            {
+              "p": "The final image is the estimate at the last step, because $\\sqrt{\\bar\\alpha_0} = 1$ and $\\sqrt{1 - \\bar\\alpha_0} = 0$, so the last jump returns the estimate and drops the noise. The final image is therefore a function of $C_{100}$, which is a function of $C_{1000}$ alone. The other three pixels of the start do nothing at all."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The start $(1.37,\\ 0,\\ 0,\\ -1.37)$ has the same contrast 2.74 as start A, $(0.19,\\ -0.52,\\ -0.41,\\ -2.44)$, but its four numbers are nothing like start A's. Give the contrast of the image each run holds at step 600."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The rule above says the two are the same, so the answer is one number for both. Following start A's run gives a contrast of 2.708 at step 500 and 2.671 at step 400, so step 600 sits at 2.728. Recomputing it directly from the update $\\hat x_0 = (w, 1 - w, w, 1 - w)$ and the jump gives the same 2.728 for the other start."
+            },
+            {
+              "p": "Carrying on, the contrast falls slowly at first and then quickly: 2.740 at step 900, 2.728 at 600, 2.565 at 200 and 2.407 at 100. The weight on LEFT runs 0.511, 0.611, 0.998 and 1.000 along the way, so the run ends at LEFT for both starts. Two starts that share a contrast but not a size therefore reach the same image, which is why the chapter can promise that a start with any lean towards LEFT ends at LEFT."
+            },
+            {
+              "result": "2.728"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A start of $(0.05,\\ -1.0,\\ -0.9,\\ 0.1)$ has a contrast of just 0.05. Give the first pixel of the image the ten-jump sampler returns from it, and explain why this start does not end at either training image."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The contrast is $0.05 - 0.9 + 1.0 - 0.1 = 0.05$, which is almost zero, so the estimate starts as the average $(0.5, 0.5, 0.5, 0.5)$ and every jump moves it by very little. The run's contrast is 0.0498 at step 600 and 0.0541 at step 200, so the weight on LEFT is still 0.502 and 0.532 there. Only at the last step does it move, reaching 0.704 at step 100."
+            },
+            {
+              "p": "The final image is the estimate at that last step, so the first pixel is 0.704 and the run returns $(0.704,\\ 0.296,\\ 0.704,\\ 0.296)$. Which training image the run lands on, if either, is decided by the sign of the contrast, and a start that barely leans either way keeps the blend. The factor $\\sqrt{\\bar\\alpha_t} \\div (1 - \\bar\\alpha_t)$ is what turns a lean into a decision, and at step 100 it is 9.2, so the step-100 contrast of 0.094 is worth only 0.87 standard deviations, still just a weight of 0.704."
+            },
+            {
+              "result": "0.704"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

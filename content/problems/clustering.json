@@ -1,0 +1,1151 @@
+{
+  "module": "clustering",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "clustering-implementation-task",
+      "moduleId": "clustering",
+      "title": "k-Means from Scratch",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=clustering",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Lloyd's algorithm with random restarts (no sklearn KMeans). Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Adjusted Rand Index vs the hidden truth must be ≥ 0.75."
+    },
+    {
+      "id": "theory-kmeans-lloyd",
+      "moduleId": "clustering",
+      "title": "k-Means, Lloyd's Algorithm, and Why It Converges",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=theory-kmeans-lloyd",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Includes code",
+        "Round 1"
+      ],
+      "prompt": "Prove both steps of Lloyd's algorithm decrease the distortion, run one iteration by hand, and explain why it still lands on the wrong clustering. 6 parts, each with its own grading instruction. Solutions revealed part by part.",
+      "answer": "Worked solutions are given part by part on the problem page: full derivations, not just final values. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "km-spread-from-distances",
+      "moduleId": "clustering",
+      "title": "A Cluster's Inertia from Its Distances Alone",
+      "difficulty": "Medium",
+      "url": "/theory/?id=km-spread-from-distances",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A search service grouped five documents into one cluster, but it stored only the squared distances between their embeddings, not the embeddings themselves. The center of the cluster is the mean of its five embeddings. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "km-update-for-manhattan",
+      "moduleId": "clustering",
+      "title": "The Update Step for City-Block Distance",
+      "difficulty": "Medium",
+      "url": "/theory/?id=km-update-for-manhattan",
+      "source": "Custom",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A courier company measures how far a customer at (x_1, x_2) is from a depot at (m_1, m_2) in city blocks, |x_1 - m_1| + |x_2 - m_2|. It replaces the squared distance in J with this distance and assigns every customer to the nearest depot in the same distance. Which update step keeps the guarantee that no step of the loop can increase the new objective?",
+      "answer": "The median of the cluster's first coordinates and the median of its second coordinates, taken separately. The city-block cost splits into one sum per coordinate, the sum of |x1 − m1| plus the sum of |x2 − m2|, and each can be minimized on its own. As m increases, the sum of |x − m| over the cluster changes at a rate equal to the number of points below m minus the number above, so it stops falling, and is lowest, at a median. With each coordinate at its median the update minimizes the cluster's cost exactly, as the mean did for squared distance, so neither step can raise the objective."
+    },
+    {
+      "id": "km-where-lloyd-can-stop",
+      "moduleId": "clustering",
+      "title": "Every Place Lloyd's Algorithm Can Stop",
+      "difficulty": "Medium",
+      "url": "/theory/?id=km-where-lloyd-can-stop",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A machine logs six response times, in milliseconds: 0, 2, 7, 10, 11 and 18. They are clustered with $k = 2$. A clustering is a place where Lloyd's algorithm can stop when, with each center at the mean of its cluster, every reading is strictly closer to its own center than to the other one. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "km-third-seed",
+      "moduleId": "clustering",
+      "title": "Where the Third Seed Lands",
+      "difficulty": "Medium",
+      "url": "/theory/?id=km-third-seed",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Eight charging stations stand along a highway, at kilometers 0, 2, 3, 10, 11, 19, 20 and 22. They form three groups: west (0, 2, 3), middle (10, 11) and east (19, 20, 22). k-means++ with $k = 3$ has already chosen its first two seeds, at kilometers 0 and 11. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "km-silhouette-on-a-line",
+      "moduleId": "clustering",
+      "title": "Silhouettes on a Line of Readings",
+      "difficulty": "Medium",
+      "url": "/theory/?id=km-silhouette-on-a-line",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "k-means with $k = 3$ on eight sensor readings, 0, 2, 5, 9, 15, 24, 25 and 27, stops at three clusters: Every reading is closer to its own center than to the other two. The silhouette of a reading is $s = (b - a) / \\max(a, b)$, where $a$ is its mean distance to the other members of its own cluster, excluding itself, and $b$ is its mean distance to the nearest other cluster. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "km-transform-that-changes-nothing",
+      "moduleId": "clustering",
+      "title": "The Transformation That Changes Nothing",
+      "difficulty": "Medium",
+      "url": "/theory/?id=km-transform-that-changes-nothing",
+      "source": "Custom",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A dataset has three numeric columns, and k-means is run on it from a fixed set of starting rows: the starting centers are always the same three rows of whatever matrix is clustered. Before clustering, the data is transformed in one of four ways. Which transformation is guaranteed to give the same clusters as the untransformed data, for every dataset?",
+      "answer": "Subtract the column means, then multiply every row by the same orthogonal 3 times 3 matrix Q. Subtracting the same vector from every row leaves every difference between rows unchanged, and an orthogonal matrix preserves lengths: ‖Qv‖ = ‖v‖ for every vector v. So every distance between rows, and between a row and any mean of rows, is the same as before, since the mean of transformed rows is the transformed mean. Each assign step and each update step then makes the same choices as on the original data."
+    },
+    {
+      "id": "km-match-clusters-to-types",
+      "moduleId": "clustering",
+      "title": "Matching Clusters to Cell Types",
+      "difficulty": "Medium",
+      "url": "/theory/?id=km-match-clusters-to-types",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A lab clusters 200 cells with $k = 3$ and then compares the clusters with the three cell types that staining revealed. The counts of each type in each cluster: 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "km-cost-of-a-merge",
+      "moduleId": "clustering",
+      "title": "What Merging Two Clusters Costs",
+      "difficulty": "Hard",
+      "url": "/theory/?id=km-cost-of-a-merge",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A clustering of 66 points in the plane has three clusters, each with its center at its mean: Its inertia is 150. A report needs two clusters, and an analyst proposes merging two of the three into one, centered at the mean of their points. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "km-outlier-own-center",
+      "moduleId": "clustering",
+      "title": "When One Reading Earns Its Own Center",
+      "difficulty": "Hard",
+      "url": "/theory/?id=km-outlier-own-center",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Five pumps report vibration levels of 20, 21, 22, 23 and 24. A sixth pump reports a level $t > 24$. The six readings are split into two clusters, and the split with the lowest inertia is kept. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "km-inertia-rose-with-k",
+      "moduleId": "clustering",
+      "title": "Inertia That Went Up with k",
+      "difficulty": "Medium",
+      "url": "/theory/?id=km-inertia-rose-with-k",
+      "source": "Custom",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A teammate runs KMeans(n_clusters=k, init=\"random\", n_init=1, random_state=0) on the same standardized data for k = 2 to 8 and logs the inertia: They conclude that the data has five clusters, since adding a sixth center made the inertia rise. Which statement explains the 845?",
+      "answer": "The five centers from the k = 5 run plus any sixth point already give inertia at most 812, so 845 is not even the best six-center clustering. Take the five centers of the k = 5 run and add a sixth at any data point. Assigning each point to the nearest of the six can only shorten distances, so that clustering has inertia at most 812, and Lloyd's steps from there only lower it. So the best clustering with six centers has inertia at most 812, and the logged 845 is above it. The run stopped at a poor local minimum, which depends on the start, and it says nothing about the number of clusters."
+    },
+    {
+      "id": "km-weighted-lloyd-numpy",
+      "moduleId": "clustering",
+      "title": "k-means on Weighted Points",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=km-weighted-lloyd-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "A bakery chain wants four delivery hubs. It knows how many orders each of 300 city blocks placed last month, and a hub should sit close to the orders, not to the blocks: a block with 40 orders counts 40 times, and a block with none should not pull a hub at all. Write the weighted update step, Lloyd's algorithm on weighted points, and k-means++ seeding that respects the weights.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "km-scores-without-ids-numpy",
+      "moduleId": "clustering",
+      "title": "Scoring a Clustering Without Reading Its IDs",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=km-scores-without-ids-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "A lab clustered 400 cells whose types it later learned from staining, and wants to know how well each clustering recovered the types. Cluster IDs are arbitrary, some methods mark noise points with -1, and the types are strings, so pred == y means nothing here. Build the table of types against clusters, the adjusted Rand index, and the matched accuracy, all from that table.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "ml10-kmeans-init",
+      "moduleId": "clustering",
+      "title": "Same Algorithm, Forty Different Answers",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ml10-kmeans-init",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Run Lloyd's algorithm 40 times from random starts and 40 times from k-means++ starts, and compare the spread of final inertias.",
+      "answer": "Auto-graded inside the notebook. Both inertia arrays and their summaries must match to 1e-6, with k-means++ the more stable initialization."
+    },
+    {
+      "id": "foundations-16-clustering-vector-search",
+      "moduleId": "clustering",
+      "title": "AI Foundations 16: Clustering, Vector Search and Experiments",
+      "source": "AI Foundations",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=foundations-16-clustering-vector-search",
+      "tags": [
+        "Coding",
+        "Course",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Course notebook, about ~5 h end to end. Read it top to bottom, then do the exercises marked with a pencil icon - each one checks itself - and finish with the exam-style quiz. Sections 5 and 6 go beyond this lesson: randomized experiments, and the vector search indexes taught in the Camp module Retrieval-Augmented Generation.",
+      "answer": "Self-checking: every exercise has a checker cell that prints a verdict, and the quiz answers are explained at the end of the notebook."
+    }
+  ],
+  "theory": [
+    {
+      "id": "theory-kmeans-lloyd",
+      "moduleId": "clustering",
+      "title": "k-Means, Lloyd's Algorithm, and Why It Converges",
+      "difficulty": "Medium",
+      "minutes": 45,
+      "overview": [
+        "Prove both steps of Lloyd's algorithm decrease the distortion, run one iteration by hand, and explain why it still lands on the wrong clustering."
+      ],
+      "setup": [
+        {
+          "p": "Given points $x_0, \\dots, x_{N-1} \\in \\mathbb{R}^d$, k-means seeks assignments $z_n \\in \\{0, \\dots, K-1\\}$ and centroids $\\mu_0, \\dots, \\mu_{K-1}$ minimizing the distortion"
+        },
+        {
+          "tex": "J(z, \\mu) = \\sum_{n=0}^{N-1} \\big\\lVert x_n - \\mu_{z_n} \\big\\rVert_2^2."
+        },
+        {
+          "p": "Lloyd's algorithm alternates two steps until the assignments stop changing:"
+        },
+        {
+          "olist": [
+            "Assignment: $z_n \\leftarrow \\arg\\min_k \\lVert x_n - \\mu_k \\rVert_2^2$ with $\\mu$ held fixed. (We assume the assignment step keeps a point in its current cluster when two centroids are exactly equidistant, so that any change of assignment strictly lowers $J$. Note that numpy's `argmin` does not implement this rule, which is why Part 18.4 has to break the tie by hand.)",
+            "Update: $\\mu_k \\leftarrow$ the mean of the points currently assigned to cluster $k$, with $z$ held fixed."
+          ]
+        }
+      ],
+      "parts": [
+        {
+          "id": "18.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Prove that for fixed assignments, the centroid minimizing $J$ is the mean of the assigned points."
+            }
+          ],
+          "answer": [
+            {
+              "p": "With $z$ fixed, $J$ separates over clusters, so we can minimize each independently. Let $S_k = \\{ n : z_n = k \\}$ with $\\lvert S_k \\rvert = m_k > 0$, and consider"
+            },
+            {
+              "tex": "J_k(\\mu_k) = \\sum_{n \\in S_k}\\lVert x_n - \\mu_k \\rVert_2^2."
+            },
+            {
+              "p": "Take the gradient with respect to $\\mu_k$ and set it to zero:"
+            },
+            {
+              "tex": "\\nabla_{\\mu_k} J_k = \\sum_{n \\in S_k} -2\\big( x_n - \\mu_k \\big) = 0 \\ \\Longrightarrow \\ \\sum_{n \\in S_k} x_n = m_k \\mu_k \\ \\Longrightarrow \\ \\mu_k = \\frac{1}{m_k}\\sum_{n \\in S_k} x_n."
+            },
+            {
+              "p": "This stationary point is the global minimum for that cluster because $J_k$ is a sum of convex quadratics, with Hessian $2m_k I \\succ 0$, hence strictly convex."
+            },
+            {
+              "p": "So the update step is not a heuristic. It is the exact minimizer of $J$ over $\\mu$ given $z$. Note this is where the squared Euclidean distance is load-bearing: with $\\ell_1$ distance the optimal centre would be the coordinatewise median (giving k-medians), and for a general metric there may be no closed form at all."
+            }
+          ]
+        },
+        {
+          "id": "18.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Prove that Lloyd's algorithm terminates in a finite number of iterations."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The proof has two parts: the objective never increases, and only finitely many states exist."
+            },
+            {
+              "p": "Monotonicity. Write $J(z^{(t)}, \\mu^{(t)})$ for the objective after iteration $t$. The assignment step chooses, for each $n$ independently, the $k$ minimizing $\\lVert x_n - \\mu_k\\rVert^2$ with $\\mu$ fixed, so it cannot increase any term:"
+            },
+            {
+              "tex": "J\\big(z^{(t+1)}, \\mu^{(t)}\\big) \\le J\\big(z^{(t)}, \\mu^{(t)}\\big)."
+            },
+            {
+              "p": "The update step replaces each $\\mu_k$ with the exact minimizer over $\\mu$ for the current assignments, by Part 1, so it cannot increase $J$ either:"
+            },
+            {
+              "tex": "J\\big(z^{(t+1)}, \\mu^{(t+1)}\\big) \\le J\\big(z^{(t+1)}, \\mu^{(t)}\\big)."
+            },
+            {
+              "p": "Chaining the two gives $J(z^{(t+1)}, \\mu^{(t+1)}) \\le J(z^{(t)}, \\mu^{(t)})$: the distortion is non-increasing at every iteration. This is coordinate descent on $J$, alternately exact in each block of variables."
+            },
+            {
+              "p": "Finiteness. There are at most $K^N$ possible assignments $z$, a finite number, and $\\mu$ is fully determined by $z$ through the update step. So the algorithm visits points of a finite set with non-increasing objective value. If an assignment ever repeated after a strict decrease we would have $J < J$, a contradiction. Hence no assignment can recur, and the algorithm must reach an iteration where $z$ is unchanged, at which point it has terminated."
+            },
+            {
+              "p": "The bound $K^N$ is astronomically loose. In practice Lloyd's algorithm converges in tens of iterations. But note what is proved: convergence to a *fixed point*, not to the global minimum. That distinction is Part 3."
+            }
+          ]
+        },
+        {
+          "id": "18.3",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Part 2 proves the algorithm terminates. Explain why it may nonetheless return a poor clustering, and describe the standard mitigations."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The proof only shows $J$ decreases to a point where neither step can improve it, a local minimum of a non-convex objective. The global problem is NP-hard, and the fixed point reached depends entirely on the initialization. A classic failure is three blobs in a row with $K = 2$, where the middle blob is split in half, each centroid serving an outer blob plus half of the middle one. That configuration is symmetric, so it is a genuine fixed point, but its distortion is well above the clustering that keeps the middle blob whole."
+            },
+            {
+              "list": [
+                "Multiple restarts. Run from several random initializations and keep the run with the lowest final $J$. This is why scikit-learn restarts by default: since version 1.4 the default is $\\texttt{n\\_init='auto'}$, which runs 10 restarts for $\\texttt{init='random'}$ but only 1 for the default $\\texttt{init='k-means++'}$.",
+                "k-means++ initialization. Choose the first centre uniformly, then each subsequent centre with probability proportional to its squared distance from the nearest existing centre. This spreads the initial centres apart and yields an expected distortion within $O(\\log K)$ of optimal before a single Lloyd iteration runs."
+              ]
+            },
+            {
+              "p": "Two further limitations are structural rather than algorithmic. Because the objective is squared Euclidean distance from a single centre, k-means implicitly assumes clusters are roughly spherical and comparable in size, and it cannot recover elongated or nested shapes, where Gaussian mixtures or spectral clustering do better. And $K$ must be chosen in advance, typically by the elbow of $J$ against $K$ or by silhouette score, neither of which is decisive."
+            }
+          ]
+        },
+        {
+          "id": "18.4",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Run one full iteration of Lloyd's algorithm on the one-dimensional dataset $\\{1, 2, 3, 10, 11, 12\\}$ with $K = 2$ and initial centroids $\\mu_0 = 2$, $\\mu_1 = 4$. Report the assignments, the updated centroids, and the distortion before and after."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Assignment step. Each point goes to the nearer centroid: the midpoint of $\\mu_0 = 2$ and $\\mu_1 = 4$ is $3$, so points below $3$ go to cluster $0$ and above to cluster $1$ (the tie at $3$ is equidistant, and we assign it to cluster $1$. Assigning it to cluster $0$ instead reaches the same final clustering in one iteration, but the numbers below follow the cluster-$1$ choice)."
+            },
+            {
+              "tex": "S_0 = \\{1, 2\\}, \\qquad S_1 = \\{3, 10, 11, 12\\}."
+            },
+            {
+              "p": "Distortion with the original centroids:"
+            },
+            {
+              "tex": "J = (1-2)^2 + (2-2)^2 + (3-4)^2 + (10-4)^2 + (11-4)^2 + (12-4)^2 = 1 + 0 + 1 + 36 + 49 + 64 = 151."
+            },
+            {
+              "p": "Update step. Take the means of the assigned points:"
+            },
+            {
+              "tex": "\\mu_0 = \\frac{1 + 2}{2} = 1.5, \\qquad \\mu_1 = \\frac{3 + 10 + 11 + 12}{4} = 9."
+            },
+            {
+              "p": "Distortion after the update:"
+            },
+            {
+              "tex": "J = (1-1.5)^2 + (2-1.5)^2 + (3-9)^2 + (10-9)^2 + (11-9)^2 + (12-9)^2 = 0.25 + 0.25 + 36 + 1 + 4 + 9 = 50.5,"
+            },
+            {
+              "p": "a large decrease, consistent with Part 2."
+            },
+            {
+              "p": "The next iteration reassigns $3$ to cluster $0$ (since $\\lvert 3 - 1.5 \\rvert = 1.5 < 6 = \\lvert 3 - 9\\rvert$), giving $S_0 = \\{1,2,3\\}$, $S_1 = \\{10,11,12\\}$, centroids $2$ and $11$, and $J = 2 + 2 = 4$. A third iteration changes nothing, so the algorithm has converged, here to the global optimum."
+            }
+          ]
+        },
+        {
+          "id": "18.5",
+          "kind": "mcq",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Which of the following tasks is an example of unsupervised learning?"
+            },
+            {
+              "choices": [
+                "A. Predicting house prices given historical data and labeled prices.",
+                "B. Classifying emails as spam or not spam.",
+                "C. Grouping customers based on purchasing behavior without predefined labels.",
+                "D. Predicting whether a tumor is malignant or benign.",
+                "E. Recognizing handwritten digits using labeled images."
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Unsupervised learning discovers structure in inputs with no target variable. Option C provides only purchasing behavior and asks for groups, exactly the k-means setting, where the cluster labels are outputs of the algorithm rather than inputs to it."
+            },
+            {
+              "p": "Every other option names a label that is given during training: prices (A, regression), spam flags (B), diagnoses (D), and digit identities (E) are all supervised. The tell is the phrase \"without predefined labels\"."
+            },
+            {
+              "p": "Worth noting is that the same raw data can pose either kind of problem: customer records with a churn flag give a supervised task, and the identical records without it give a clustering task. What determines the category is the presence of a target, not the data."
+            },
+            {
+              "result": "C. Grouping customers based on purchasing behavior without predefined labels."
+            }
+          ]
+        },
+        {
+          "id": "18.6",
+          "kind": "coding",
+          "requirement": "Do not use scikit-learn. Do not use any loop over data points (a loop over the small number of iterations is fine).",
+          "prompt": [
+            {
+              "p": "Run the following starter code:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "import numpy as np",
+                  "",
+                  "rng = np.random.default_rng(0)",
+                  "X = np.concatenate([rng.normal(0, 1, (100, 2)), rng.normal(6, 1, (100, 2))])",
+                  "K = 2",
+                  "mu = X[rng.choice(len(X), K, replace=False)]"
+                ]
+              }
+            },
+            {
+              "p": "Implement the assignment and update steps in a vectorized way, and give a correct stopping condition."
+            }
+          ],
+          "answer": [
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "for _ in range(100):",
+                  "    # assignment: (N, K) squared distances via broadcasting",
+                  "    d2 = ((X[:, None, :] - mu[None, :, :]) ** 2).sum(axis=2)",
+                  "    z = d2.argmin(axis=1)",
+                  "",
+                  "    # update: mean of each cluster, leaving empty clusters in place",
+                  "    new_mu = np.array([X[z == k].mean(axis=0) if np.any(z == k) else mu[k]",
+                  "                       for k in range(K)])",
+                  "",
+                  "    if np.array_equal(new_mu, mu):    # assignments can no longer change",
+                  "        break",
+                  "    mu = new_mu"
+                ]
+              }
+            },
+            {
+              "p": "The assignment step uses $\\texttt{X[:, None, :] - mu[None, :, :]}$ to broadcast into an $(N, K, d)$ array of differences, summing the last axis to get all $NK$ squared distances at once. For large $N$ and $K$ the expansion in Part 6 of *k-Nearest Neighbors and the Curse of Dimensionality*, a problem in [Decision Trees & k-Nearest Neighbors](/module/?id=decision-trees-knn), is preferable, since this materializes $NKd$ intermediate values."
+            },
+            {
+              "p": "Two correctness details. Stopping on unchanged *centroids* (or unchanged assignments) is the right condition, and stopping when $J$ changes by less than a tolerance is weaker, because Part 2 guarantees exact termination, so no tolerance is needed. And empty clusters must be handled explicitly: $\\texttt{X[z == k].mean()}$ over an empty selection returns $\\texttt{nan}$ with a warning, and a single $\\texttt{nan}$ centroid poisons all subsequent distances. Keeping the old centroid is the simplest repair: reseeding it at the point furthest from its centroid is the better one."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "km-spread-from-distances",
+      "moduleId": "clustering",
+      "title": "A Cluster's Inertia from Its Distances Alone",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A search service grouped five documents into one cluster, but it stored only the squared distances between their embeddings, not the embeddings themselves. The center of the cluster is the mean of its five embeddings."
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{cccccc}\n\\text{} & d_1 & d_2 & d_3 & d_4 & d_5 \\\\ \\hline\nd_1 & 0 & 9 & 17 & 19 & 26 \\\\\nd_2 & 9 & 0 & 6 & 6 & 5 \\\\\nd_3 & 17 & 6 & 0 & 22 & 11 \\\\\nd_4 & 19 & 6 & 22 & 0 & 9 \\\\\nd_5 & 26 & 5 & 11 & 9 & 0\n\\end{array}"
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "For a cluster $C$ of $m$ points with mean $\\boldsymbol{\\mu}$, show that"
+            },
+            {
+              "tex": "\\sum_{\\mathbf{x}_i \\in C} \\lVert \\mathbf{x}_i - \\boldsymbol{\\mu} \\rVert^2\n= \\frac{1}{m} \\sum_{\\{i, j\\} \\subseteq C} \\lVert \\mathbf{x}_i - \\mathbf{x}_j \\rVert^2 ,"
+            },
+            {
+              "p": "where the sum on the right runs over the $\\binom{m}{2}$ unordered pairs."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write $\\mathbf{x}_i - \\mathbf{x}_j = (\\mathbf{x}_i - \\boldsymbol{\\mu}) - (\\mathbf{x}_j - \\boldsymbol{\\mu})$ and expand. Summing over all ordered pairs $(i, j)$, including $i = j$:"
+            },
+            {
+              "tex": "\\sum_{i}\\sum_{j} \\lVert \\mathbf{x}_i - \\mathbf{x}_j \\rVert^2\n= 2m \\sum_{i} \\lVert \\mathbf{x}_i - \\boldsymbol{\\mu} \\rVert^2\n- 2 \\Big(\\sum_i (\\mathbf{x}_i - \\boldsymbol{\\mu})\\Big)^{\\!\\top} \\Big(\\sum_j (\\mathbf{x}_j - \\boldsymbol{\\mu})\\Big) ."
+            },
+            {
+              "p": "The deviations from the mean add up to the zero vector, so the last term vanishes. The ordered sum counts every unordered pair twice and the terms with $i = j$ are zero, so the left side is twice the sum over unordered pairs. Dividing both sides by $2m$ gives the identity. $\\qquad\\blacksquare$"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What does this cluster contribute to the inertia $J$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The ten unordered pairs are the entries above the diagonal:"
+            },
+            {
+              "tex": "9 + 17 + 19 + 26 + 6 + 6 + 5 + 22 + 11 + 9 = 130 ."
+            },
+            {
+              "p": "By Part 1 the cluster contributes $130 / 5 = 26$."
+            },
+            {
+              "p": "Two slips give other numbers. Adding the whole table counts each pair twice and gives $260 / 5 = 52$, unless the sum is also halved. Dividing by $m^2 = 25$ instead of $m$ gives 5.2. No coordinates were needed: inertia depends on the points only through their distances, which is why it can be computed from a distance table at all."
+            },
+            {
+              "result": "26"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "km-update-for-manhattan",
+      "moduleId": "clustering",
+      "title": "The Update Step for City-Block Distance",
+      "difficulty": "Medium",
+      "minutes": 8,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A courier company measures how far a customer at $(x_1, x_2)$ is from a depot at $(m_1, m_2)$ in city blocks, $|x_1 - m_1| + |x_2 - m_2|$. It replaces the squared distance in $J$ with this distance and assigns every customer to the nearest depot in the same distance. Which update step keeps the guarantee that no step of the loop can increase the new objective?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "The mean of the cluster, as before, since only the assign step has to change when the distance changes",
+                  "explain": "The mean minimizes a sum of squared distances, and the objective no longer squares anything. For the three customers (0, 0), (2, 0) and (0, 2) the mean (2/3, 2/3) has a total city-block distance of 16/3 = 5.33, while (0, 0) has 4. Moving the depot to the mean can raise the cluster's cost, so the guarantee is lost."
+                },
+                {
+                  "text": "The point that minimizes the sum of straight-line distances to the cluster's customers, since distance is no longer squared",
+                  "explain": "That point, the geometric median, minimizes the sum of straight-line distances, which is a different objective. For (0, 0), (2, 0) and (0, 2) it sits inside the triangle at about (0.42, 0.42), with a total city-block distance of about 4.85, worse than the 4 of the point (0, 0)."
+                },
+                {
+                  "text": "The median of the cluster's first coordinates and the median of its second coordinates, taken separately",
+                  "correct": true,
+                  "explain": "The city-block cost splits into one sum per coordinate, the sum of $|x_1 - m_1|$ plus the sum of $|x_2 - m_2|$, and each can be minimized on its own. As m increases, the sum of $|x - m|$ over the cluster changes at a rate equal to the number of points below m minus the number above, so it stops falling, and is lowest, at a median. With each coordinate at its median the update minimizes the cluster's cost exactly, as the mean did for squared distance, so neither step can raise the objective."
+                },
+                {
+                  "text": "The customer in the cluster who is closest to the cluster's mean, since a depot has to stand at a real address",
+                  "explain": "Restricting the depot to a customer's location does not make it the minimizer. Take customers on one street at positions 0, 1, 2, 3 and 20. The mean is 5.2, the nearest customer to it is at 3 with a total distance of 23, and the median 2 does better with 22. The update can move a depot from a cheaper spot to this one and raise the cost."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The city-block cost splits into one sum per coordinate, the sum of $|x_1 - m_1|$ plus the sum of $|x_2 - m_2|$, and each can be minimized on its own. As m increases, the sum of $|x - m|$ over the cluster changes at a rate equal to the number of points below m minus the number above, so it stops falling, and is lowest, at a median. With each coordinate at its median the update minimizes the cluster's cost exactly, as the mean did for squared distance, so neither step can raise the objective."
+            },
+            {
+              "result": "The median of the cluster's first coordinates and the median of its second coordinates, taken separately"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "km-where-lloyd-can-stop",
+      "moduleId": "clustering",
+      "title": "Every Place Lloyd's Algorithm Can Stop",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A machine logs six response times, in milliseconds: 0, 2, 7, 10, 11 and 18. They are clustered with $k = 2$. A clustering is a place where Lloyd's algorithm can stop when, with each center at the mean of its cluster, every reading is strictly closer to its own center than to the other one."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "How many two-cluster clusterings of the six readings are places where Lloyd's algorithm can stop?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "At a stopping place every reading goes to the nearer of two centers on a line, so everything below the midpoint of the two centers is in one cluster and everything above it in the other. Each cluster is a run of consecutive readings, which leaves only five clusterings to check, one per cut."
+            },
+            {
+              "tex": "\\begin{array}{cccc}\n\\text{Left cluster} & \\text{Right cluster} & \\text{Means} & \\text{Check} \\\\ \\hline\n0 & \\text{2, 7, 10, 11, 18} & \\text{0 and 9.6} & \\text{2 is 2 from 0 and 7.6 from 9.6: moves} \\\\\n\\text{0, 2} & \\text{7, 10, 11, 18} & \\text{1 and 11.5} & \\text{7 is 6 from 1 and 4.5 from 11.5: stays} \\\\\n\\text{0, 2, 7} & \\text{10, 11, 18} & \\text{3 and 13} & \\text{7 is 4 from 3, 10 is 3 from 13: stays} \\\\\n\\text{0, 2, 7, 10} & \\text{11, 18} & \\text{4.75 and 14.5} & \\text{10 is 5.25 from 4.75 and 4.5 from 14.5: moves} \\\\\n\\text{0, 2, 7, 10, 11} & 18 & \\text{6 and 18} & \\text{11 is 5 from 6 and 7 from 18: stays}\n\\end{array}"
+            },
+            {
+              "p": "Only the readings next to the cut can be on the wrong side, so checking those two is enough. Three clusterings are stopping places."
+            },
+            {
+              "result": "3"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the largest inertia at which Lloyd's algorithm can stop on these readings?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The inertias of the three stopping places:"
+            },
+            {
+              "list": [
+                "$\\{0, 2\\}$ and $\\{7, 10, 11, 18\\}$: $2 + 65 = 67$.",
+                "$\\{0, 2, 7\\}$ and $\\{10, 11, 18\\}$: $26 + 38 = 64$.",
+                "$\\{0, 2, 7, 10, 11\\}$ and $\\{18\\}$: $94 + 0 = 94$."
+              ]
+            },
+            {
+              "p": "The worst is 94, almost half again the best, 64. The best of the stopping places is the best clustering of all, since the best clustering is itself a place where the algorithm stops."
+            },
+            {
+              "result": "94"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Give two starting centers from which Lloyd's algorithm ends at the clustering with inertia 94, and say what that clustering does with the reading 18."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Start the centers at 11 and 18. The readings 0 to 11 are closer to 11 and 18 is closer to itself, so the update moves the centers to 6 and 18. The next assign step changes nothing: 11 is 5 from 6 and 7 from 18. The algorithm stops with inertia 94."
+            },
+            {
+              "p": "The far reading 18 has taken a center for itself, and the five other readings share the remaining one, although $\\{0, 2, 7\\}$ and $\\{10, 11\\}$ are visibly two groups. With one center at 18, the other started anywhere above 4 and below 18 ends here too, while a start at 0, 2 or 3 reaches the best clustering, 64. The start decides the result, which is why restarts and k-means++ seeding matter."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "km-third-seed",
+      "moduleId": "clustering",
+      "title": "Where the Third Seed Lands",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "Eight charging stations stand along a highway, at kilometers 0, 2, 3, 10, 11, 19, 20 and 22. They form three groups: west (0, 2, 3), middle (10, 11) and east (19, 20, 22). k-means++ with $k = 3$ has already chosen its first two seeds, at kilometers 0 and 11."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the probability that the third seed lands in the east group?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each station's weight is its squared distance to the nearer of the two seeds already chosen, not to the first seed or the latest one:"
+            },
+            {
+              "tex": "\\begin{array}{ccccccccc}\n\\text{km} & 0 & 2 & 3 & 10 & 11 & 19 & 20 & 22 \\\\ \\hline\nD(x)^2 & 0 & 4 & 9 & 1 & 0 & 64 & 81 & 121\n\\end{array}"
+            },
+            {
+              "p": "The station at 3 is 3 from the seed at 0 and 8 from the seed at 11, so its weight is 9. The weights add up to 280 and the east group holds $64 + 81 + 121 = 266$ of it, so the probability is $266 / 280 = 0.95$."
+            },
+            {
+              "p": "Measuring from the first seed only gives the east group $1245 / 1479 = 0.842$, and measuring from the seed at 11 only gives about 0.499, because the west group then looks as far away as the east. Leaving distances unsquared gives $14 / 17 = 0.824$. Squaring is what makes the far group dominate."
+            },
+            {
+              "result": "0.95"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "On a large dataset, a single run of k-means from a k-means++ seeding ends at the best clustering 70% of the time, and runs with different seeds are independent. The run with the lowest inertia is kept. What is the smallest number of runs for which the best clustering is found with probability at least 0.99?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The best clustering has the lowest inertia, so keeping the lowest inertia finds it whenever at least one run reaches it. All $n$ runs miss with probability $0.3^n$, so the condition is $1 - 0.3^n \\ge 0.99$, that is $0.3^n \\le 0.01$."
+            },
+            {
+              "p": "$0.3^3 = 0.027$ is too large and $0.3^4 = 0.0081$ is small enough, so four runs are needed, which find it with probability 0.9919. Each run multiplies the chance of missing by 0.3, so a few restarts go a long way, which is why `n_init` is usually set above one."
+            },
+            {
+              "result": "4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "km-silhouette-on-a-line",
+      "moduleId": "clustering",
+      "title": "Silhouettes on a Line of Readings",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "k-means with $k = 3$ on eight sensor readings, 0, 2, 5, 9, 15, 24, 25 and 27, stops at three clusters:"
+      ],
+      "setup": [
+        {
+          "list": [
+            "$A = \\{0, 2\\}$, with center 1,",
+            "$B = \\{5, 9\\}$, with center 7,",
+            "$C = \\{15, 24, 25, 27\\}$, with center 22.75."
+          ]
+        },
+        {
+          "p": "Every reading is closer to its own center than to the other two."
+        },
+        {
+          "p": "The silhouette of a reading is $s = (b - a) / \\max(a, b)$, where $a$ is its mean distance to the **other** members of its own cluster, excluding itself, and $b$ is its mean distance to the nearest other cluster."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Compute the silhouette of the reading 9."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The reading 9 is in $B$. Its mean distance to the other members of its own cluster is $a = |9 - 5| = 4$. The reading itself is not counted, since including its zero distance would halve $a$."
+            },
+            {
+              "p": "$b$ is the mean distance to the nearest other cluster, where nearest means the cluster with the smallest mean distance:"
+            },
+            {
+              "list": [
+                "to $A$: $(9 + 7) / 2 = 8$,",
+                "to $C$: $(6 + 15 + 16 + 18) / 4 = 13.75$."
+              ]
+            },
+            {
+              "p": "So $b = 8$ and $s = (8 - 4) / 8 = 0.5$."
+            },
+            {
+              "p": "The single reading closest to 9 from another cluster is 15, in $C$. Taking $C$ as the other cluster for that reason gives $b = 13.75$ and $s = 0.709$. Taking the distance 6 to that nearest reading as $b$ gives 0.333, and averaging over all six readings outside $B$ gives 0.662."
+            },
+            {
+              "result": "0.5"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Compute the silhouette of the reading 15. What does its sign say, given that k-means put 15 in $C$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The reading 15 is in $C$, so $a = (9 + 10 + 12) / 3 = 31/3 = 10.33$. Its mean distances to the other clusters are $(15 + 13) / 2 = 14$ for $A$ and $(10 + 6) / 2 = 8$ for $B$, so $b = 8$ and"
+            },
+            {
+              "tex": "s = \\frac{8 - 31/3}{31/3} = -\\frac{7}{31} = -0.226 ."
+            },
+            {
+              "p": "The silhouette is negative: on average 15 is closer to the readings of $B$ than to the rest of its own cluster. k-means still puts it in $C$, because it compares distances to centers, and 15 is 7.75 from $C$'s center against 8 from $B$'s. The two rules measure different things. The center of $C$ is pulled toward 15 by 15 itself, while the silhouette looks at the other members, which sit 9 to 12 away. A negative silhouette flags a point that sits on a boundary or in a stretched cluster, even when k-means has nothing to correct."
+            },
+            {
+              "result": "$-0.226$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "km-transform-that-changes-nothing",
+      "moduleId": "clustering",
+      "title": "The Transformation That Changes Nothing",
+      "difficulty": "Medium",
+      "minutes": 8,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A dataset has three numeric columns, and k-means is run on it from a fixed set of starting rows: the starting centers are always the same three rows of whatever matrix is clustered. Before clustering, the data is transformed in one of four ways. Which transformation is guaranteed to give the same clusters as the untransformed data, for every dataset?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Standardize every column to mean 0 and standard deviation 1",
+                  "explain": "Standardizing divides each column by its own standard deviation, which rescales the columns by different factors whenever their spreads differ. A column with a large spread loses weight in every distance, so the nearest center can change. On random data with column spreads 1 and 4, the partition did change."
+                },
+                {
+                  "text": "Subtract the column means, then multiply every row by the same orthogonal $3 \\times 3$ matrix $Q$",
+                  "correct": true,
+                  "explain": "Subtracting the same vector from every row leaves every difference between rows unchanged, and an orthogonal matrix preserves lengths: ‖Qv‖ = ‖v‖ for every vector v. So every distance between rows, and between a row and any mean of rows, is the same as before, since the mean of transformed rows is the transformed mean. Each assign step and each update step then makes the same choices as on the original data."
+                },
+                {
+                  "text": "Subtract the column means, then multiply every row by the same invertible matrix chosen so that the new columns are uncorrelated with variance 1",
+                  "explain": "Making the new columns uncorrelated with variance 1 is whitening. It stretches the data more along some directions than others whenever the original spreads differ, the same kind of change as standardizing, so distances change and so can the clusters. On the same random data the partition changed."
+                },
+                {
+                  "text": "Delete the third column, since it is always the sum of the first two and carries no new information",
+                  "explain": "A column that equals the sum of the other two adds no new information, but it does add to every squared distance: the term (Δx1 + Δx2)² weights the direction along the sum more heavily. Dropping it changes the distances and can change the clusters, as it did on the same random data."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Subtracting the same vector from every row leaves every difference between rows unchanged, and an orthogonal matrix preserves lengths: ‖Qv‖ = ‖v‖ for every vector v. So every distance between rows, and between a row and any mean of rows, is the same as before, since the mean of transformed rows is the transformed mean. Each assign step and each update step then makes the same choices as on the original data."
+            },
+            {
+              "result": "Subtract the column means, then multiply every row by the same orthogonal $3 \\times 3$ matrix $Q$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "km-match-clusters-to-types",
+      "moduleId": "clustering",
+      "title": "Matching Clusters to Cell Types",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "A lab clusters 200 cells with $k = 3$ and then compares the clusters with the three cell types that staining revealed. The counts of each type in each cluster:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{cccc}\n\\text{Type} & \\text{Cluster 0} & \\text{Cluster 1} & \\text{Cluster 2} \\\\ \\hline\n\\text{Type A} & 52 & 46 & 2 \\\\\n\\text{Type B} & 44 & 4 & 2 \\\\\n\\text{Type C} & 4 & 0 & 46\n\\end{array}"
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Pair each type with a different cluster so that the number of cells whose cluster matches their type is as large as possible. What fraction of the cells match under that pairing?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "A one-to-one pairing of three types with three clusters is one of $3! = 6$ choices of a cell from each row and each column. The totals:"
+            },
+            {
+              "tex": "\\begin{array}{cc}\n\\text{A, B, C go to} & \\text{Matches} \\\\ \\hline\n\\text{0, 1, 2} & \\text{52 + 4 + 46 = 102} \\\\\n\\text{0, 2, 1} & \\text{52 + 2 + 0 = 54} \\\\\n\\text{1, 0, 2} & \\text{46 + 44 + 46 = 136} \\\\\n\\text{1, 2, 0} & \\text{46 + 2 + 4 = 52} \\\\\n\\text{2, 0, 1} & \\text{2 + 44 + 0 = 46} \\\\\n\\text{2, 1, 0} & \\text{2 + 4 + 4 = 10}\n\\end{array}"
+            },
+            {
+              "p": "The best pairing sends A to cluster 1, B to cluster 0 and C to cluster 2, with $136 / 200 = 0.68$."
+            },
+            {
+              "p": "Taking the largest count first, 52, and pairing greedily gives $52 + 4 + 46 = 102$, or 0.51: claiming cluster 0 for type A leaves type B with only 4 cells. Letting each type take its own largest count without the one-to-one rule gives $52 + 44 + 46 = 142$, or 0.71, which uses cluster 0 twice."
+            },
+            {
+              "result": "0.68"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Describe in words what this clustering got wrong."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Type C is found almost exactly, in cluster 2. Types A and B are not: cluster 0 holds 52 cells of A and 44 of B, so it mixes the two, and type A is spread over clusters 0 and 1. The matched pairing calls cluster 1 \"A\" and cluster 0 \"B\", but cluster 0 holds more A than B, 52 to 44. A matched accuracy of 0.68 hides that one of the three clusters is close to a coin flip between two types, which the table shows at a glance. Reading the table is the check that the single number cannot replace."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "km-cost-of-a-merge",
+      "moduleId": "clustering",
+      "title": "What Merging Two Clusters Costs",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "A clustering of 66 points in the plane has three clusters, each with its center at its mean:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{ccc}\n\\text{Cluster} & \\text{Points} & \\text{Center} \\\\ \\hline\n1 & 30 & (0, 0) \\\\\n2 & 30 & (4, 0) \\\\\n3 & 6 & (-6, 2)\n\\end{array}"
+        },
+        {
+          "p": "Its inertia is 150. A report needs two clusters, and an analyst proposes merging two of the three into one, centered at the mean of their points."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Two clusters $P$ and $Q$ have $p$ and $q$ points and means $\\boldsymbol{\\mu}_P$ and $\\boldsymbol{\\mu}_Q$. Show that merging them raises the inertia by"
+            },
+            {
+              "tex": "\\Delta J = \\frac{pq}{p + q}\\, \\lVert \\boldsymbol{\\mu}_P - \\boldsymbol{\\mu}_Q \\rVert^2 ."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The merged cluster has mean $\\boldsymbol{\\mu} = (p\\boldsymbol{\\mu}_P + q\\boldsymbol{\\mu}_Q)/(p + q)$. For any point set $S$ with mean $\\mathbf{m}$ and any vector $\\mathbf{c}$,"
+            },
+            {
+              "tex": "\\sum_{\\mathbf{x} \\in S} \\lVert \\mathbf{x} - \\mathbf{c} \\rVert^2\n= \\sum_{\\mathbf{x} \\in S} \\lVert \\mathbf{x} - \\mathbf{m} \\rVert^2 + |S|\\,\\lVert \\mathbf{m} - \\mathbf{c} \\rVert^2 ,"
+            },
+            {
+              "p": "because the cross term $2(\\mathbf{m} - \\mathbf{c})^\\top \\sum_{\\mathbf{x} \\in S} (\\mathbf{x} - \\mathbf{m})$ is zero. Apply this to $P$ and to $Q$ with $\\mathbf{c} = \\boldsymbol{\\mu}$: the merged cluster's inertia is the two old inertias plus $p\\lVert \\boldsymbol{\\mu}_P - \\boldsymbol{\\mu} \\rVert^2 + q\\lVert \\boldsymbol{\\mu}_Q - \\boldsymbol{\\mu} \\rVert^2$. Since $\\boldsymbol{\\mu}_P - \\boldsymbol{\\mu} = \\frac{q}{p+q}(\\boldsymbol{\\mu}_P - \\boldsymbol{\\mu}_Q)$ and $\\boldsymbol{\\mu}_Q - \\boldsymbol{\\mu} = -\\frac{p}{p+q}(\\boldsymbol{\\mu}_P - \\boldsymbol{\\mu}_Q)$, the increase is"
+            },
+            {
+              "tex": "\\frac{pq^2 + qp^2}{(p+q)^2} \\lVert \\boldsymbol{\\mu}_P - \\boldsymbol{\\mu}_Q \\rVert^2\n= \\frac{pq}{p+q} \\lVert \\boldsymbol{\\mu}_P - \\boldsymbol{\\mu}_Q \\rVert^2 . \\qquad\\blacksquare"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Which merge raises the inertia least, and what is the inertia after it?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The squared distances between centers and the factors $pq/(p+q)$:"
+            },
+            {
+              "list": [
+                "1 and 2: $\\lVert(4, 0)\\rVert^2 = 16$, factor $900/60 = 15$, cost 240.",
+                "1 and 3: $\\lVert(6, 2)\\rVert^2 = 40$, factor $180/36 = 5$, cost 200.",
+                "2 and 3: $\\lVert(10, 2)\\rVert^2 = 104$, factor 5, cost 520."
+              ]
+            },
+            {
+              "p": "The cheapest merge is 1 with 3, and the inertia becomes $150 + 200 = 350$. Clusters 1 and 2 have the closest centers, but both are large, and the factor $pq/(p+q)$ is at most the size of the smaller cluster, and near it when one cluster is much larger. Moving 30 points 16 apart costs more than moving 6 points 40 apart."
+            },
+            {
+              "result": "350"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Is 350 the lowest inertia any two-cluster clustering of these 66 points can have? Say what Lloyd's algorithm, started from the two centers after the merge, can and cannot do."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Not necessarily. The merge keeps every point with its old companions, and nothing guarantees that is the best partition into two. The two centers after the merge are $(-1, 1/3)$, the mean of clusters 1 and 3, and $(4, 0)$. Some points of cluster 1, those on its side facing cluster 2, may be closer to $(4, 0)$ than to $(-1, 1/3)$. Starting Lloyd's algorithm from these two centers reassigns such points, and since neither step can raise $J$ the result is at most 350. It can still stop at a local minimum, so it gives an upper bound on the best inertia, not the best inertia itself. Without the individual points there is no way to tell how much lower it goes."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "km-outlier-own-center",
+      "moduleId": "clustering",
+      "title": "When One Reading Earns Its Own Center",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "Five pumps report vibration levels of 20, 21, 22, 23 and 24. A sixth pump reports a level $t > 24$. The six readings are split into two clusters, and the split with the lowest inertia is kept."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Find the smallest $t$ at which the best split puts the sixth pump in a cluster on its own. Give it to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "On a line, the best split cuts the sorted readings into a lower run and an upper run. With the sixth pump alone, the five others form one cluster with mean 22 and inertia $4 + 1 + 0 + 1 + 4 = 10$. Each other cut puts $t$ together with the top $r$ of the five."
+            },
+            {
+              "p": "A cluster of $r$ points with mean $m$ gains $\\frac{r}{r+1}(t - m)^2$ in inertia when the point $t$ joins it, by the merging formula with $q = 1$. Each cut, with its inertia without $t$ and the value of $t$ at which it reaches 10:"
+            },
+            {
+              "tex": "\\begin{array}{cccc}\n\\text{Lower run} & \\text{Upper run without $t$} & \\text{Inertia without $t$} & \\text{Ties 10 at $t =$} \\\\ \\hline\n20 & \\text{21, 22, 23, 24} & \\text{0 + 5 = 5} & 22.5 + \\sqrt{25/4} = 25 \\\\\n\\text{20, 21} & \\text{22, 23, 24} & \\text{0.5 + 2 = 2.5} & 23 + \\sqrt{10} = 26.162 \\\\\n\\text{20, 21, 22} & \\text{23, 24} & \\text{2 + 0.5 = 2.5} & 23.5 + \\sqrt{45/4} = 26.854 \\\\\n\\text{20, 21, 22, 23} & 24 & \\text{5 + 0 = 5} & 24 + \\sqrt{10} = 27.162\n\\end{array}"
+            },
+            {
+              "p": "For the last row, the cut needs $5 + \\frac12(t - 24)^2 \\ge 10$, that is $(t - 24)^2 \\ge 10$. The sixth pump is alone in the best split once every cut costs at least 10, which happens at the largest of the four values, $t = 24 + \\sqrt{10} = 27.162$. Just below it, the best split pairs the sixth pump with the pump at 24."
+            },
+            {
+              "result": "27.162"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "The vibration levels of the five working pumps spread over 4 units. Compare that with how far above them the sixth pump has to be before it takes a center of its own, and say what this means for k-means on data with a few faulty readings."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The sixth pump takes its own center once it is about 3.2 above the highest working pump, less than the 4 units the working pumps spread over. A single reading that is only moderately far out already wins a whole cluster, because it would add its squared distance to whichever cluster it joined, and with $k = 2$ that can cost more than leaving the five together. In real data with a few faulty sensors, k-means can spend its centers on them and merge real groups instead. Removing or clipping outliers first, as the lesson advises, or raising $k$ and discarding tiny clusters, keeps the centers for the structure that matters."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "km-inertia-rose-with-k",
+      "moduleId": "clustering",
+      "title": "Inertia That Went Up with k",
+      "difficulty": "Medium",
+      "minutes": 8,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A teammate runs `KMeans(n_clusters=k, init=\"random\", n_init=1, random_state=0)` on the same standardized data for $k = 2$ to 8 and logs the inertia:"
+            },
+            {
+              "tex": "\\begin{array}{cccccccc}\nk & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\\\ \\hline\n\\text{inertia} & 1940 & 1210 & 905 & 812 & 845 & 690 & 655\n\\end{array}"
+            },
+            {
+              "p": "They conclude that the data has five clusters, since adding a sixth center made the inertia rise. Which statement explains the 845?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "The sixth center has to split one of five real clusters, and splitting a real cluster into two parts raises its inertia",
+                  "explain": "Splitting a cluster cannot raise its inertia: the old center is one option for both halves, and each half's mean fits that half at least as well. A sixth center placed inside a real cluster lowers the total, by less than the earlier centers did, which is what an elbow looks like. It never raises it."
+                },
+                {
+                  "text": "The reported inertia is the sum of squared distances divided by $k$, so a larger $k$ can report a larger value",
+                  "explain": "`inertia_` is the plain sum of squared distances from the points to their centers. Nothing divides it by k or by the number of points, so it cannot rise for that reason."
+                },
+                {
+                  "text": "Inertia adds a penalty for each center, like an information criterion, so it rises once $k$ passes the true number",
+                  "explain": "That describes a criterion such as BIC, which adds a penalty for each extra parameter. Inertia has no penalty term, which is exactly why it cannot pick k by itself."
+                },
+                {
+                  "text": "The five centers from the $k = 5$ run plus any sixth point already give inertia at most 812, so 845 is not even the best six-center clustering",
+                  "correct": true,
+                  "explain": "Take the five centers of the k = 5 run and add a sixth at any data point. Assigning each point to the nearest of the six can only shorten distances, so that clustering has inertia at most 812, and Lloyd's steps from there only lower it. So the best clustering with six centers has inertia at most 812, and the logged 845 is above it. The run stopped at a poor local minimum, which depends on the start, and it says nothing about the number of clusters."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Take the five centers of the k = 5 run and add a sixth at any data point. Assigning each point to the nearest of the six can only shorten distances, so that clustering has inertia at most 812, and Lloyd's steps from there only lower it. So the best clustering with six centers has inertia at most 812, and the logged 845 is above it. The run stopped at a poor local minimum, which depends on the start, and it says nothing about the number of clusters."
+            },
+            {
+              "result": "The five centers from the $k = 5$ run plus any sixth point already give inertia at most 812, so 845 is not even the best six-center clustering"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

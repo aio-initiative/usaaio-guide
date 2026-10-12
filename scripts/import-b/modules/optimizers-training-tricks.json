@@ -1,0 +1,30 @@
+{
+  "aModule": "optimization-adam-sgd",
+  "stage": "Round 1",
+  "order": [
+    "opt-adam-bias",
+    "opt-he-init",
+    "opt-momentum-in-a-ravine",
+    "opt-lower-rate-with-momentum",
+    "opt-l2-decay-inside-adam"
+  ],
+  "parts": {
+    "opt-adam-bias": {
+      "1.1": { "kind": "derivation", "requirement": "A complete derivation is required." },
+      "1.2": { "kind": "computation", "requirement": "Reasoning is not required." }
+    },
+    "opt-he-init": {
+      "1.1": { "kind": "derivation", "requirement": "A complete derivation is required." },
+      "1.2": { "kind": "derivation", "requirement": "A complete derivation is required." },
+      "1.3": { "kind": "computation", "requirement": "Reasoning is not required." },
+      "1.4": { "kind": "computation", "requirement": "Reasoning is not required." }
+    }
+  },
+  "indexPrompt": {
+    "opt-adam-bias": "Adam's two moving averages both start at zero, so their first values are biased small. Show what the bias-correction denominators fix exactly, and measure how much longer the uncorrected first step is.",
+    "opt-he-init": "Derive the variance that flows through one linear layer, then through a ReLU, and solve for the weight variance that keeps activation sizes steady layer after layer.",
+    "opt-momentum-in-a-ravine": "Near the current parameters the loss surface is a long narrow valley: steep across, nearly flat along, with the minimum far down the floor. Plain SGD with a large learning rate bounces from wall to wall, and with a small one it creeps along the floor. Momentum replaces the gradient step by a step along a velocity. How does that help?",
+    "opt-lower-rate-with-momentum": "A network trains with plain SGD at learning rate eta. You switch on momentum and step along the velocity instead of the gradient. Why is the usual advice to lower the learning rate at the same time, often to a tenth of its value?",
+    "opt-l2-decay-inside-adam": "Weight decay is usually written as an L2 penalty on the loss, which adds lambda * theta to the gradient. The same penalty term is handed to Adam by adding it to the gradient. Why does the decay stop acting the same way on every parameter?"
+  }
+}

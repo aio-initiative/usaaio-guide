@@ -1,0 +1,80 @@
+{
+  "aModule": "calculus-gradients",
+  "stage": "Round 1",
+  "order": [
+    "cg-steepest-point-of-a-bump",
+    "cg-silu-slope-below-zero",
+    "cg-gradient-from-two-probes",
+    "cg-one-weight-three-steps",
+    "cg-expected-cost-through-softmax",
+    "cg-weight-gradient-for-a-batch",
+    "cg-product-of-two-linear-forms",
+    "cg-duplicate-row-as-weight",
+    "cg-squared-error-on-a-sigmoid",
+    "cg-two-weight-chain-hessian",
+    "cg-check-fails-at-one-weight",
+    "cg-two-estimates-beat-one",
+    "cg-softmax-temperature-gradients"
+  ],
+  "fixes": [],
+  "parts": {
+    "cg-duplicate-row-as-weight": {
+      "1.1": {"kind": "derivation", "requirement": "A complete derivation is required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.3": {"kind": "coding", "requirement": "Write one NumPy expression. Do not use any loop, and do not use the @ operator or .T."}
+    },
+    "cg-expected-cost-through-softmax": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "derivation", "requirement": "A complete derivation is required."}
+    },
+    "cg-gradient-from-two-probes": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.3": {"kind": "derivation", "requirement": "A complete derivation is required."}
+    },
+    "cg-one-weight-three-steps": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.3": {"kind": "computation", "requirement": "Reasoning is not required."}
+    },
+    "cg-softmax-temperature-gradients": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.3": {"kind": "explanation", "requirement": "Reasoning is required."}
+    },
+    "cg-squared-error-on-a-sigmoid": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.3": {"kind": "explanation", "requirement": "Reasoning is required."}
+    },
+    "cg-steepest-point-of-a-bump": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is not required."}
+    },
+    "cg-two-estimates-beat-one": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.3": {"kind": "computation", "requirement": "Reasoning is not required."}
+    },
+    "cg-two-weight-chain-hessian": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "explanation", "requirement": "Reasoning is required."},
+      "1.3": {"kind": "derivation", "requirement": "A complete derivation is required."}
+    }
+  },
+  "indexPrompt": {
+    "cg-steepest-point-of-a-bump": "A radial basis unit has center 3 and width 2, so its output is 1 at x = 3 and falls toward 0 on both sides. Training moves the input to this unit, so what matters is how fast the output changes, and that is not largest where the output is largest. Find where the slope is steepest and compare it with the sigmoid's.",
+    "cg-silu-slope-below-zero": "Many recent networks use the SiLU activation, f(z) = z sigma(z), in place of ReLU. One SiLU unit receives the pre-activation z = -2, where sigma(-2) is about 0.1192, and the gradient arriving at its output is 1.5. What gradient does the unit pass back, to three decimals?",
+    "cg-gradient-from-two-probes": "A model has two weights and a loss that can only be evaluated, not differentiated by hand. You probe it at the current weights by moving a tiny step along two unit directions and dividing the change in loss by the step length. Read the gradient off the two rates, find the best step of a fixed length, and find a direction along which the loss does not change.",
+    "cg-one-weight-three-steps": "A tiny recurrent model reads a sequence of three numbers and uses the same weight w at every step, starting from h0 = 1. The inputs are 1, -1 and 2, the weight is 0.5, and the loss is (h3 - 2)^2. Differentiate through the three steps, then redo it for a backward pass that treats h2 as a constant.",
+    "cg-expected-cost-through-softmax": "A model routes each support ticket to one of three teams. A softmax over its logits gives the probabilities of the three teams, and every team has a cost of handling the ticket: team 1 costs the most and team 3 is so well suited that its cost is negative, a gain. Compute the gradient of the expected cost with respect to the logits and show why the three entries always add up to 0.",
+    "cg-weight-gradient-for-a-batch": "A linear layer maps each input of length 10 to an output of length 4, so W has shape 4 by 10. In NumPy a batch of 32 inputs is stored one example per row and the layer computes Z = X @ W.T + b. Backpropagation has already produced G, of shape (32, 4), whose row n is the gradient of the mean loss with respect to that example's output. Which line computes the gradient with respect to W?",
+    "cg-product-of-two-linear-forms": "Two linear scores of the same input, a x and b x, are multiplied together, as in a gated unit with no nonlinearity: f(x) = (a x)(b x) with a = (1, 2) and b = (3, -1). What is the gradient of f at x = (2, 1)?",
+    "cg-duplicate-row-as-weight": "A sensor logged three readings, at t = 0, 1 and 3, and the reading at t = 3 was logged twice. Rather than store the duplicate you give that row the weight 2. Write the weighted mean squared error's gradient in matrix form, compute one entry by hand, and write it as one loop-free NumPy expression.",
+    "cg-squared-error-on-a-sigmoid": "A binary classifier outputs p = sigma(s) from a logit s. Compare training it on an example with label y = 1 under cross-entropy and under squared error: which gradient with respect to the logit is larger, where each one peaks, and what happens to each as the model becomes confidently wrong?",
+    "cg-two-weight-chain-hessian": "The smallest deep network multiplies its input by two weights in a row, y = b (a x). Trained on the single example x = 1, y = 1 with squared error, its loss is (ab - 1)^2. Find its stationary points, compute the Hessian at two of them, and read the second-derivative test.",
+    "cg-check-fails-at-one-weight": "You check the backward pass of a small ReLU network with central differences, h = 1e-5, in float64. Every weight passes with a relative error below 1e-9 except one. That weight feeds a unit that computes z = w x + b and then max(0, z). On the example used for the check, the unit's input is x = 2 and its pre-activation is z = 3e-7. The relative error for that weight is 0.33. What is the most likely explanation?",
+    "cg-two-estimates-beat-one": "A colleague's script estimates the slope of a smooth function with a difference formula at three step sizes, printing 2.5116731 at h = 0.2, 2.4827070 at h = 0.1 and 2.4754868 at h = 0.05. It prints only the estimates, not the function, the point or which formula it used. Work out which formula it used and combine two estimates into a better one.",
+    "cg-softmax-temperature-gradients": "A classifier scales its logits down by a temperature T and only then applies softmax. Raising T flattens the probabilities and lowering it sharpens them. With three classes, logits (ln 4, 0, 0), T = 2 and true class 2, differentiate through the temperature and say when raising T lowers the loss."
+  }
+}

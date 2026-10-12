@@ -1,0 +1,51 @@
+{
+  "aModule": "relative-position-rope-positional-methods",
+  "stage": "Camp",
+  "order": [
+    "pe-alibi-bias-on-the-key",
+    "pe-the-key-a-head-prefers",
+    "pe-sign-flip-in-key-rotation",
+    "pe-pairing-layout-mismatch",
+    "pe-two-decay-rates",
+    "pe-pairs-ntk-pushes-past",
+    "pe-position-term-after-projections",
+    "pe-sliding-window-past-training",
+    "pe-angle-maps-that-stay-relative",
+    "pe-rotated-normalizer"
+  ],
+  "parts": {
+    "pe-angle-maps-that-stay-relative": {
+      "1.1": {"kind": "derivation", "requirement": "A complete derivation is required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is required."}
+    },
+    "pe-pairs-ntk-pushes-past": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is required."}
+    },
+    "pe-position-term-after-projections": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "derivation", "requirement": "A complete derivation is required."}
+    },
+    "pe-rotated-normalizer": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.3": {"kind": "derivation", "requirement": "A complete derivation is required."}
+    },
+    "pe-the-key-a-head-prefers": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is required."}
+    },
+    "pe-two-decay-rates": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "derivation", "requirement": "A complete derivation is required."}
+    }
+  },
+  "indexPrompt": {
+    "pe-angle-maps-that-stay-relative": "A RoPE variant turns the query at position m by an angle phi(m) and the key at n by phi(n). Prove the score depends on the offset alone exactly when phi is linear in the position, then test the map phi(m) = ln(1 + m) at a query at position 99.",
+    "pe-pairs-ntk-pushes-past": "A model with head dimension 96 and base 500,000 is trained on 3,000 tokens and run on 12,000. Count how many of its 48 pairs never complete a turn in training, and find which pairs NTK-aware scaling carries past a full turn.",
+    "pe-position-term-after-projections": "When sinusoidal position vectors are added before the projections, the position-against-position term is p_i^T M p_j for M = W_Q^T W_K. Expand it into waves in i - j and in i + j, and find which matrices M make it depend on the offset alone.",
+    "pe-rotated-normalizer": "A linear attention head with a single feature pair rotates the numerator features only. With features (1, 1) at every position, compute what it returns, then compute the output when the denominator is rotated too, and say which choice is safer and what it gives up.",
+    "pe-the-key-a-head-prefers": "A toy two-dimensional head turns every key by a fixed angle per position. Its query is (1, 1) and every key is (-1, 1), so the score is a sine of the offset. Find the offset the head scores highest, and the next one that scores the same.",
+    "pe-two-decay-rates": "A linear attention head weights each offset by 0.8^(i-j) + 0.5^(i-j), a slow decay and a fast one together. Check whether that weight factorizes into a product f(i) g(j), and show the head still runs as a fixed-size recurrence."
+  }
+}

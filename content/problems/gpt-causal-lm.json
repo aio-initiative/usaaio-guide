@@ -1,0 +1,474 @@
+{
+ "module": "gpt-causal-lm",
+ "stage": "Round 2",
+ "index": [
+  {
+   "id": "gpt-one-text-two-tokenizations",
+   "moduleId": "gpt-causal-lm",
+   "title": "One Text, Two Tokenizations",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=gpt-one-text-two-tokenizations",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 2"
+   ],
+   "prompt": "Two tokenizers of the same model cut the text \"the mat is red\" differently, and the model gives each cut its own list of next-token probabilities. What probability does each cut give the whole text, and what mean loss per token would a training loop report for each?",
+   "answer": "Both cuts give 0.008, and a training loop reports 1.207 per token for cut A and 1.609 for cut B. By the chain rule a text's probability is the product of its token probabilities, and a different cut of the same text multiplies out to the same 0.008. The total loss, -ln 0.008 = 4.828 nats, is therefore the same either way, but a training loop divides that total by the tokens of its own cut: 4.828 / 4 = 1.207 for cut A and 4.828 / 3 = 1.609 for cut B. A perplexity of 3.34 for cut A and 5 for cut B comes from the same text under the same model."
+  },
+  {
+   "id": "gpt-pooled-perplexity",
+   "moduleId": "gpt-causal-lm",
+   "title": "Perplexity of Two Documents Together",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=gpt-pooled-perplexity",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "A language model scores a perplexity of 8 on a 300-token news article and 2 on a 100-token block of license text. Find its perplexity over the two documents taken together as one 400-token test set, and how many tokens of license text at the same perplexity 2 must be added to bring the combined perplexity down to 4. 2 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "gpt-window-cuts-what-gets-trained",
+   "moduleId": "gpt-causal-lm",
+   "title": "How Much of a Long Document Is Scored",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=gpt-window-cuts-what-gets-trained",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "A GPT whose context holds 512 tokens trains on documents of exactly 2,000 tokens. Count how many of a document's tokens are scored when it is fed as consecutive windows with no overlap, then when consecutive windows overlap by one token, and say what the overlap still cannot repair. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "gpt-temperature-without-logits",
+   "moduleId": "gpt-causal-lm",
+   "title": "Temperature When Only Probabilities Are Given",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=gpt-temperature-without-logits",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 2"
+   ],
+   "prompt": "A toy language model with a vocabulary of four tokens is served through an interface that returns probabilities, not logits. For one prompt it returns 0.64, 0.16, 0.16 and 0.04. You want to sample the next token at temperature tau = 2. What probability should the least likely token get?",
+   "answer": "0.111. The softmax does not change when the same constant is added to every logit, so the logs of the probabilities can serve as the logits. Dividing them by 2 and exponentiating gives the square roots 0.8, 0.4, 0.4 and 0.2, which add up to 1.8. The last token gets 0.2 / 1.8 = 1/9 = 0.111, almost three times its 0.04, and the first falls from 0.64 to 0.444."
+  },
+  {
+   "id": "gpt-perplexity-across-tokenizers",
+   "moduleId": "gpt-causal-lm",
+   "title": "Perplexities from Two Tokenizers",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=gpt-perplexity-across-tokenizers",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "Two models test on the same 2,000-word essays: model A's tokenizer makes one token per word for 2,000 tokens and scores perplexity 160, and model B's splits into 2,500 tokens and scores 64. Work out which model gives the essays the higher probability, model B's perplexity per word, and the perplexity a byte-level model must score to tie model A. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "nl2-top-p-sampling",
+   "moduleId": "gpt-causal-lm",
+   "title": "Top-K Is the Wrong Shape",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=nl2-top-p-sampling",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "Implement temperature-scaled softmax, top-k kept mass and nucleus size, and measure how the kept-set size responds to the model's own uncertainty across six distributions.",
+   "answer": "Auto-graded inside the notebook. Entropies, kept masses, and nucleus sizes must match to 1e-6, with nucleus size tracking entropy and temperature."
+  },
+  {
+   "id": "nlp-generative-implementation-task",
+   "moduleId": "gpt-causal-lm",
+   "title": "Character-Level Language Model Practice",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=nlp-generative",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "N-gram counts with backoff (or a tiny neural LM) at character level. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+   "answer": "Auto-graded inside the notebook. Next-character accuracy must reach the target shown in the evaluation cell."
+  },
+  {
+   "id": "gpt-bigram-baseline-numpy",
+   "moduleId": "gpt-causal-lm",
+   "title": "A Bigram Baseline with Sentence Boundaries",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=gpt-bigram-baseline-numpy",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "Score the simplest language model, a bigram model that predicts each word from the word before it alone, on short image captions that each start after a start token and end with an end token the model must also predict. Count the word pairs, smooth the counts, compute the perplexity, and choose the smoothing on a validation set.",
+   "answer": "Self-checked inside the notebook: each part prints its own check, and the closing report sets the test perplexity against a uniform guess."
+  },
+  {
+   "id": "transformer-architectures-implementation-task",
+   "moduleId": "gpt-causal-lm",
+   "title": "Causal Language Modeling Practice",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=transformer-architectures",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "Causal language modeling on synthetic sequences (PyTorch), or careful context analysis. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+   "answer": "Auto-graded inside the notebook. Test accuracy must reach the target shown in the evaluation cell (~0.86 is optimal)."
+  }
+ ],
+ "theory": [
+  {
+   "id": "gpt-one-text-two-tokenizations",
+   "moduleId": "gpt-causal-lm",
+   "title": "One Text, Two Tokenizations",
+   "difficulty": "Medium",
+   "minutes": 6,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A model is asked for the probability of the text `the mat is red`. Two tokenizers of the same model can cut it up differently, and the model gives these next-token probabilities:"
+      },
+      {
+       "tex": "\\begin{array}{ccc}\n\\text{Cut} & \\text{Tokens} & \\text{Probabilities, in order} \\\\ \\hline\n\\text{A} & \\text{`the`, `mat`, `is`, `red`} & \\text{0.20, 0.20, 0.40, 0.50} \\\\\n\\text{B} & \\text{`the mat`, `is`, `red`} & \\text{0.04, 0.40, 0.50}\n\\end{array}"
+      },
+      {
+       "p": "Cut B needs the first number: `the mat` is a single entry in the vocabulary, and the model gives it 0.04 at the start of a text, which is $0.20 \\cdot 0.20$, the same probability the two words get in cut A. The last two steps are shared, since both cuts have read `is` and then `red` from the same history."
+      },
+      {
+       "p": "Both cuts describe the same text. What does the model say about it, and what does a training loop report on it?"
+      },
+      {
+       "choices": [
+        {
+         "text": "Cut A, because the model gives one probability per token and cut B merges two of them",
+         "explain": "The two cuts are two factorizations of the same probability, and a factorization cannot change the product: 0.20 times 0.20 times 0.40 times 0.50 is 0.008, which is also 0.04 times 0.40 times 0.50. Cutting a text into more tokens multiplies in more factors, and the model has learned a probability for the merged token that already carries them."
+        },
+        {
+         "text": "Both cuts give 0.008, and a training loop reports 1.207 per token for cut A and 1.609 for cut B",
+         "correct": true,
+         "explain": "By the chain rule a text's probability is the product of its token probabilities, and a different cut of the same text multiplies out to the same 0.008. The total loss, -ln 0.008 = 4.828 nats, is therefore the same either way, but a training loop divides that total by the tokens of its own cut: 4.828 / 4 = 1.207 for cut A and 4.828 / 3 = 1.609 for cut B. A perplexity of 3.34 for cut A and 5 for cut B comes from the same text under the same model."
+        },
+        {
+         "text": "Both cuts give 0.008, and both report a mean loss of 4.828 nats, since the probability of the text is the same",
+         "explain": "That 4.828 is the loss of the whole text, not the loss per token. A loop that reports a loss averages it over the tokens it scored, and the two cuts score four and three, so the same total gives two different averages. The probability of the text does not decide which one you get."
+        },
+        {
+         "text": "Both cuts give 0.008, and cut B reports the lower mean loss, 1.207 nats, because one merged token is an easy prediction",
+         "explain": "1.207 is cut A's mean and 1.609 is cut B's, so the coarser cut reports the larger one. A merged token is not an easier prediction to make: the text costs 4.828 nats in total under either cut, and a total spread over fewer tokens gives a bigger number, not a smaller one."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "By the chain rule a text's probability is the product of its token probabilities, and a different cut of the same text multiplies out to the same 0.008. The total loss, -ln 0.008 = 4.828 nats, is therefore the same either way, but a training loop divides that total by the tokens of its own cut: 4.828 / 4 = 1.207 for cut A and 4.828 / 3 = 1.609 for cut B. A perplexity of 3.34 for cut A and 5 for cut B comes from the same text under the same model."
+      },
+      {
+       "result": "Both cuts give 0.008, and a training loop reports 1.207 per token for cut A and 1.609 for cut B"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "gpt-pooled-perplexity",
+   "moduleId": "gpt-causal-lm",
+   "title": "Perplexity of Two Documents Together",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "A language model is tested on two documents. On a 300-token news article its perplexity is 8. On a 100-token block of software license text, wording the model has seen many times in training, its perplexity is 2."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is its perplexity on the two documents together, taken as one test set of 400 tokens? Give it to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Perplexity is $e$ to the mean loss per token, so turn each perplexity back into a total loss. The article's mean loss is $\\ln 8 = 3 \\ln 2$ over 300 tokens, a total of $900 \\ln 2$. The license text's is $\\ln 2$ over 100 tokens, a total of $100 \\ln 2$. Together,"
+      },
+      {
+       "tex": "\\mathcal{L} = \\frac{900 \\ln 2 + 100 \\ln 2}{400} = 2.5 \\ln 2,\n\\qquad\ne^{\\mathcal{L}} = 2^{2.5} \\approx 5.657 ."
+      },
+      {
+       "p": "This is a weighted geometric mean of the two perplexities, $8^{3/4} \\cdot 2^{1/4}$, weighted by each document's share of the tokens. The plain mean of the two perplexities, 5, and their token-weighted mean, $(300 \\cdot 8 + 100 \\cdot 2) / 400 = 6.5$, both average the wrong quantity. The losses are what get averaged, and $e$ is raised to the result only at the end."
+      },
+      {
+       "result": "5.657"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "More license text is added to the test set, at the same perplexity of 2. How many tokens of license text must the set hold for its perplexity to fall to 4?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "With $n$ tokens of license text the mean loss is $(900 \\ln 2 + n \\ln 2) / (300 + n)$, and a perplexity of 4 is a mean loss of $\\ln 4 = 2 \\ln 2$:"
+      },
+      {
+       "tex": "\\frac{900 + n}{300 + n} = 2\n\\quad\\Longrightarrow\\quad\nn = 300 ."
+      },
+      {
+       "p": "Equal numbers of tokens at losses $3 \\ln 2$ and $\\ln 2$ average to $2 \\ln 2$. Averaging the perplexities instead, $(300 \\cdot 8 + 2n) / (300 + n) = 4$, would call for $n = 600$, twice as much."
+      },
+      {
+       "result": "300"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "gpt-window-cuts-what-gets-trained",
+   "moduleId": "gpt-causal-lm",
+   "title": "How Much of a Long Document Is Scored",
+   "difficulty": "Medium",
+   "minutes": 14,
+   "overview": [
+    "A team trains a GPT whose context holds 512 tokens. Every document in its training set is exactly 2,000 tokens long, and the model reads at most 512 of them at a time. Each row it reads scores the token that follows each of its positions."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "The team feeds each document as consecutive windows of 512 tokens with no overlap, and keeps every prediction whose target falls inside its own window. How many of the document's 2,000 tokens are scored?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The windows hold tokens 1 to 512, 513 to 1024 and 1025 to 1536, and each scores all but its own first token:"
+      },
+      {
+       "tex": "\\begin{array}{ccc}\n\\text{Window} & \\text{Tokens read} & \\text{Tokens scored} \\\\ \\hline\n1 & \\text{1 to 512} & \\text{2 to 512} \\\\\n2 & \\text{513 to 1024} & \\text{514 to 1024} \\\\\n3 & \\text{1025 to 1536} & \\text{1026 to 1536}\n\\end{array}"
+      },
+      {
+       "p": "That is $3 \\times 511 =$ **1,533** of the document's tokens, and 467 tokens are never scored, 23% of it. Three of those are the first token of the document and the first token of windows 2 and 3, which the model reads but is never scored on, and the other 464 are the tail from token 1,537 to token 2,000, which the windows never reach at all."
+      },
+      {
+       "result": "1533"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "The team overlaps consecutive windows by one token instead, so that the last prediction of a window is not wasted. How many token positions does the model read in total, over the whole 2,000-token document?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "To score a token, the next window has to start one token earlier, so the windows run 1 to 512, 512 to 1023, 1023 to 1534 and 1534 to 2000. The first three hold 512 tokens each and the last one holds 467, which makes"
+      },
+      {
+       "tex": "512 + 512 + 512 + 467 = 2{,}003"
+      },
+      {
+       "p": "token positions, 0.15% more than the document holds. Four windows are needed: the first three score $3 \\times 511 = 1{,}533$ tokens and the fourth the 466 that are left."
+      },
+      {
+       "p": "With the overlap, 1,999 of the 2,000 tokens are scored, every one except the first. A model without a start token in front of each document never predicts that first token, so no pipeline can score it."
+      },
+      {
+       "result": "2003"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A short justification is required.",
+     "prompt": [
+      {
+       "p": "The overlap repairs the loss but not the context. What does the model still not see at the start of every window but the first, and what does that cost it there?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The causal mask hides every token before the start of a window, so window 2 begins at token 512 with the model in the state it has at the start of a text: its first output there knows only token 512. The prediction it makes at the end of that window, the one for token 1,024, is made from the 512 tokens it read and nothing earlier, where a model that had read the document so far would have 1,023 tokens to work with. Every window but the first therefore trains the model to begin again in the middle of a document that in fact continues, and it never learns to use the context before the cut, which a longer overlap, or documents cut into shorter pieces, would give it."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "gpt-temperature-without-logits",
+   "moduleId": "gpt-causal-lm",
+   "title": "Temperature When Only Probabilities Are Given",
+   "difficulty": "Medium",
+   "minutes": 6,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A toy language model with a vocabulary of four tokens is served through an interface that returns probabilities, not logits. For one prompt it returns 0.64, 0.16, 0.16 and 0.04. You want to sample the next token at temperature $\\tau = 2$. What probability should the least likely token get?"
+      },
+      {
+       "choices": [
+        {
+         "text": "$0.04$",
+         "explain": "Dividing every probability by 2 and renormalizing gives back the same four numbers, because a factor shared by all of them cancels when they are renormalized. Temperature divides the logits, and logits live on a log scale."
+        },
+        {
+         "text": "$0.0035$",
+         "explain": "This squares the probabilities and renormalizes, 0.0016 / 0.4624 = 0.0035, which is temperature 0.5. Half of a log is the log of a square root, so dividing the logits by 2 takes the square roots of the probabilities, not their squares."
+        },
+        {
+         "text": "$0.224$",
+         "explain": "This feeds the probabilities into the softmax as if they were logits, then halves them for temperature 2: the softmax of (0.32, 0.08, 0.08, 0.02) gives 0.224 to the last token. Logits whose softmax is (0.64, 0.16, 0.16, 0.04) are the logs of those numbers, plus any constant."
+        },
+        {
+         "text": "$0.111$",
+         "correct": true,
+         "explain": "The softmax does not change when the same constant is added to every logit, so the logs of the probabilities can serve as the logits. Dividing them by 2 and exponentiating gives the square roots 0.8, 0.4, 0.4 and 0.2, which add up to 1.8. The last token gets 0.2 / 1.8 = 1/9 = 0.111, almost three times its 0.04, and the first falls from 0.64 to 0.444."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "The softmax does not change when the same constant is added to every logit, so the logs of the probabilities can serve as the logits. Dividing them by 2 and exponentiating gives the square roots 0.8, 0.4, 0.4 and 0.2, which add up to 1.8. The last token gets 0.2 / 1.8 = 1/9 = 0.111, almost three times its 0.04, and the first falls from 0.64 to 0.444."
+      },
+      {
+       "result": "$0.111$"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "gpt-perplexity-across-tokenizers",
+   "moduleId": "gpt-causal-lm",
+   "title": "Perplexities from Two Tokenizers",
+   "difficulty": "Hard",
+   "minutes": 20,
+   "overview": [
+    "Two teams test their language models on the same held-out essays: 2,000 words, stored as 10,000 bytes of text. Team A's tokenizer makes one token of each word, 2,000 tokens in all, and its model scores a perplexity of 160. Team B's tokenizer splits words into smaller pieces, 2,500 tokens in all, and its model scores a perplexity of 64. Each perplexity is $e$ to the model's mean loss over its own tokens, and each model predicts every one of its tokens, the first from a start token."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Which model gives the essays the higher probability? Enter A or B."
+      }
+     ],
+     "answer": [
+      {
+       "p": "A model's probability for the whole text is the product of its conditional probabilities, so its log is minus the model's total loss, which is the mean loss times the number of tokens:"
+      },
+      {
+       "tex": "\\begin{aligned}\n\\text{A:}\\quad \\ln P_A &= -2000 \\ln 160 \\approx -10{,}150 , \\\\[4pt]\n\\text{B:}\\quad \\ln P_B &= -2500 \\ln 64 \\approx -10{,}397 .\n\\end{aligned}"
+      },
+      {
+       "p": "Model A's log-probability is higher by about 247, so it gives the essays about $e^{247} \\approx 10^{107}$ times model B's probability. B's lower perplexity comes from its smaller tokens, each easier to guess, and B makes 500 more predictions than A to cover the same text."
+      },
+      {
+       "result": "A"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is model B's perplexity per word, the number to set against model A's 160? Give it to one decimal place."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Spread B's total loss over the 2,000 words instead of its 2,500 tokens:"
+      },
+      {
+       "tex": "\\frac{2500 \\ln 64}{2000} = 1.25 \\ln 64,\n\\qquad\ne^{1.25 \\ln 64} = 64^{1.25} = 2^{7.5} \\approx 181.0 ."
+      },
+      {
+       "p": "Per word, B is worse than A's 160, which matches Part 1. In general a perplexity per token converts to a perplexity per word by raising it to the power tokens per word."
+      },
+      {
+       "result": "181.0"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "A third team trains a byte-level model, with one token per byte. What perplexity must it score to tie with model A? Give it to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "A tie means the same total loss, now over 10,000 tokens:"
+      },
+      {
+       "tex": "10{,}000 \\ln x = 2000 \\ln 160\n\\quad\\Longrightarrow\\quad\nx = 160^{1/5} \\approx 2.759 ."
+      },
+      {
+       "p": "Byte-level perplexities look tiny next to word-level ones. A byte model that scores 2.8 sounds far better than 160 or 64, yet its total loss, $10{,}000 \\ln 2.8 \\approx 10{,}296$, loses to A's 10,150 and beats only B's 10,397. Perplexities from different tokenizers can only be compared after the total loss is divided by a unit that all of them share, such as words or bytes. Bits per byte, the total loss in bits over the number of bytes, is a common choice: 1.464 for A and exactly 1.5 for B."
+      },
+      {
+       "result": "2.759"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

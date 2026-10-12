@@ -1,0 +1,39 @@
+{
+ "module": "sparse-attention-sinks-and-eviction",
+ "stage": "Advanced",
+ "index": [
+  {
+   "id": "efficient-attention-implementation-task",
+   "moduleId": "sparse-attention-sinks-and-eviction",
+   "title": "Sliding-Window Attention Practice",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=efficient-attention",
+   "tags": [
+    "Advanced",
+    "Coding",
+    "Implementation",
+    "Notebook"
+   ],
+   "prompt": "Local (windowed) causal attention masks in NumPy. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+   "answer": "Auto-graded inside the notebook. Max absolute difference from the reference must be below 1e-6."
+  },
+  {
+   "id": "tf8-window-receptive-field",
+   "moduleId": "sparse-attention-sinks-and-eviction",
+   "title": "A 4096-Token Window and Three Document Lengths",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=tf8-window-receptive-field",
+   "tags": [
+    "Advanced",
+    "Coding",
+    "Implementation",
+    "Notebook"
+   ],
+   "prompt": "Compute the receptive field of stacked sliding-window attention, verify it by propagating a reachability mask, and find how many layers each document length needs.",
+   "answer": "Auto-graded inside the notebook. The reach, empirical propagation, and layer requirements must match to 1e-6, with the empirical result confirming the formula."
+  }
+ ],
+ "theory": []
+}

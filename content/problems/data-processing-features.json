@@ -1,0 +1,586 @@
+{
+  "module": "data-processing-features",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "data-processing-implementation-task",
+      "moduleId": "data-processing-features",
+      "title": "Data Preprocessing Practice",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=data-processing",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Missing-value handling, type coercion, categorical encoding, dropping an unused ID column. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Test accuracy must reach the target shown in the evaluation cell."
+    },
+    {
+      "id": "ml1-leaky-scaler",
+      "moduleId": "data-processing-features",
+      "title": "The Scaler That Saw the Test Set",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ml1-leaky-scaler",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Measure preprocessing leakage directly: standardize before the split versus inside each fold, on a wide noisy dataset where the leak is small but systematic.",
+      "answer": "Auto-graded inside the notebook. Both cross-validated accuracies must match the reference to 1e-6 and the leaky estimate must be the optimistic one."
+    },
+    {
+      "id": "ml1-unseen-categories",
+      "moduleId": "data-processing-features",
+      "title": "The Category That Only Exists in Production",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ml1-unseen-categories",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Build a frequency encoder that survives production: fold rare training levels and never-before-seen test levels into one bucket instead of raising KeyError.",
+      "answer": "Auto-graded inside the notebook. Level and row counts must match exactly and the encoded test vector to a relative tolerance of 1e-6."
+    },
+    {
+      "id": "fe-transforms-a-tree-notices",
+      "moduleId": "data-processing-features",
+      "title": "The Fare Change a Tree Notices",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=fe-transforms-a-tree-notices",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A decision tree is grown to full depth on 200 training passengers with two columns, age and fare. Fares are positive and run from 3 to 245 dollars, with 27 passengers above 100. You try four changes to the fare column, each applied to the training rows before the tree is grown again with the same settings. Which change can make the new tree group the training passengers differently, that is, put two passengers in the same leaf who were in different leaves before, or the other way round?",
+      "answer": "Capping fare at 100 dollars. Capping is not strictly increasing: it maps all 27 fares above 100 to one value, 100. A split between, say, 120 and 180 is then impossible, because both passengers have the same fare. If the full-depth tree used such a split to separate two passengers with different labels, the new tree cannot use it. It must look to another column, and if those two passengers agree on every other column, the new tree has to put them in one leaf. The other three changes are strictly increasing, so the same partitions of the training rows are available."
+    },
+    {
+      "id": "fe-rank-of-port-and-class",
+      "moduleId": "data-processing-features",
+      "title": "Counting the Independent Columns of Two Categoricals",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=fe-rank-of-port-and-class",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A ferry table has two categorical columns: the port a passenger boarded at (C, Q or S) and the cabin class (1, 2 or 3). There are 300 training rows, and every one of the nine (port, class) pairs occurs among them. Each design matrix below has a ones column for the intercept. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "fe-fill-value-with-an-indicator",
+      "moduleId": "data-processing-features",
+      "title": "Changing the Fill Value Under an Indicator",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=fe-fill-value-with-an-indicator",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A linear regression with an intercept predicts days in hospital from one lab value, which was not measured for about a quarter of the patients. The preprocessing is SimpleImputer(strategy=\"median\", add_indicator=True), so the model sees two columns: the lab value with gaps filled by the training median, 4.9, and a 0/1 column marking the filled rows. A colleague switches to strategy=\"constant\", fill_value=0, refits on the same training rows and predicts the same test rows, which are filled the same new way. What happens to the test predictions?",
+      "answer": "None of them change, because the refitted weights make up for the new fill value. On the training rows the new lab column equals the old one minus 4.9 times the indicator, since only the filled rows change and they change by 4.9. The two design matrices span the same columns, so least squares finds the same fitted values: the indicator's weight grows by 4.9 times the lab weight and absorbs the shift. The test rows are built the same way, so every test prediction is unchanged, up to rounding in the last digits."
+    },
+    {
+      "id": "fe-bins-for-a-power-curve",
+      "moduleId": "data-processing-features",
+      "title": "Bins for a Wind Turbine's Output",
+      "source": "USAAIO-style",
+      "difficulty": "Easy",
+      "url": "/theory/?id=fe-bins-for-a-power-curve",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Nine readings from one wind turbine give the wind speed in meters per second and the power it produced in kilowatts. Speed is cut into three bins, below 6, from 6 to 12.5, and 12.5 and above. Each bin becomes an indicator column, the first is dropped, and a linear regression with an intercept is fitted on the other two by least squares. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "fe-imputer-inside-the-folds",
+      "moduleId": "data-processing-features",
+      "title": "The Fill Values a Cross-Validated Pipeline Uses",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=fe-imputer-inside-the-folds",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Six apartments, in this order, have a column for the distance to the nearest station in kilometers. Two are missing. The rent model is cross-validated like this, with the rows in the order above: pipe = make_pipeline(SimpleImputer(strategy=\"median\"), StandardScaler(), Ridge()), and scores = cross_val_score(pipe, X, rent, cv=KFold(n_splits=3)). KFold(3) without shuffling holds out apartments 1 and 2, then 3 and 4, then 5 and 6. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "fe-leave-one-out-encoding",
+      "moduleId": "data-processing-features",
+      "title": "A Target Encoding That Leaves Each Row Out",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=fe-leave-one-out-encoding",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A table of 20 house listings has one categorical column, the city, and a label, whether the listing sold within a month. Austin has 4 listings, Boise 6 and Columbus 10, and in each city exactly half of them sold. The city tells you nothing about the label. To keep each row's own label out of its encoding, you use a leave-one-out target encoding: row $i$ gets the mean label of the other rows of its city, not counting row $i$ itself. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "fe-out-of-fold-target-encoding",
+      "moduleId": "data-processing-features",
+      "title": "Target Encoding Out of Fold",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=fe-out-of-fold-target-encoding",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "A target encoding swaps a category for the average label of the training rows that carry it. Computed on the same rows a model trains on, each row's own label sits inside its own feature. Build the version that keeps every training row's label out of the features of its fold, then the version used for new rows. NumPy only.",
+      "answer": "Auto-graded inside the notebook. Both parts' check cells must print their Part passed line."
+    }
+  ],
+  "theory": [
+    {
+      "id": "fe-transforms-a-tree-notices",
+      "moduleId": "data-processing-features",
+      "title": "The Fare Change a Tree Notices",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A decision tree is grown to full depth on 200 training passengers with two columns, age and fare. Fares are positive and run from 3 to 245 dollars, with 27 passengers above 100. You try four changes to the fare column, each applied to the training rows before the tree is grown again with the same settings."
+            },
+            {
+              "p": "Which change can make the new tree group the training passengers differently, that is, put two passengers in the same leaf who were in different leaves before, or the other way round?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Replacing fare by log(1 + fare)",
+                  "explain": "The log is not linear, so it changes distances and the shape of the histogram. A tree never uses either: it only asks which side of a threshold each value falls on. log(1 + fare) is strictly increasing, so every split on the old fares has a matching split on the new ones with the same passengers on each side."
+                },
+                {
+                  "text": "Standardizing fare with the training mean and standard deviation",
+                  "explain": "Standardizing subtracts a number and divides by a positive one, so it keeps the order of the fares exactly. A split at fare > 50 becomes a split at the z-score of 50, with the same passengers on each side."
+                },
+                {
+                  "text": "Replacing fare by its rank among the 200 training fares (tied fares share a rank)",
+                  "explain": "Ranks throw away how far apart the fares are, but a tree never used the gaps. Equal fares get equal ranks and a higher fare always gets a higher rank, so every threshold on fares has a matching threshold on ranks."
+                },
+                {
+                  "text": "Capping fare at 100 dollars",
+                  "correct": true,
+                  "explain": "Capping is not strictly increasing: it maps all 27 fares above 100 to one value, 100. A split between, say, 120 and 180 is then impossible, because both passengers have the same fare. If the full-depth tree used such a split to separate two passengers with different labels, the new tree cannot use it. It must look to another column, and if those two passengers agree on every other column, the new tree has to put them in one leaf. The other three changes are strictly increasing, so the same partitions of the training rows are available."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Capping is not strictly increasing: it maps all 27 fares above 100 to one value, 100. A split between, say, 120 and 180 is then impossible, because both passengers have the same fare. If the full-depth tree used such a split to separate two passengers with different labels, the new tree cannot use it. It must look to another column, and if those two passengers agree on every other column, the new tree has to put them in one leaf. The other three changes are strictly increasing, so the same partitions of the training rows are available."
+            },
+            {
+              "result": "Capping fare at 100 dollars"
+            }
+          ],
+          "requirement": "Reasoning is not required."
+        }
+      ]
+    },
+    {
+      "id": "fe-rank-of-port-and-class",
+      "moduleId": "data-processing-features",
+      "title": "Counting the Independent Columns of Two Categoricals",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A ferry table has two categorical columns: the port a passenger boarded at (C, Q or S) and the cabin class (1, 2 or 3). There are 300 training rows, and every one of the nine (port, class) pairs occurs among them. Each design matrix below has a ones column for the intercept."
+      ],
+      "parts": [
+        {
+          "id": "2.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The matrix has the ones column, all three port indicators and all three class indicators, seven columns in all. What is its rank?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each group of indicators adds up to the ones column: every row has exactly one port, so $\\text{port}_C + \\text{port}_Q + \\text{port}_S = 1$, and the same holds for the three classes. That is two independent linear relations among the seven columns, so the rank is at most $7 - 2 = 5$. It is exactly 5: the ones column, two port indicators and two class indicators are independent when every pair occurs. Dropping a single column, as one `drop=\"first\"` on one of the two groups would, still leaves a dependent matrix. Each categorical needs its own baseline."
+            },
+            {
+              "result": "5"
+            }
+          ]
+        },
+        {
+          "id": "2.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Now drop C and class 1, keeping $\\text{port}_Q$, $\\text{port}_S$, $\\text{class}_2$ and $\\text{class}_3$, and add the four products of a kept port indicator with a kept class indicator ($\\text{port}_Q \\cdot \\text{class}_2$ and so on). The matrix has $1 + 2 + 2 + 4 = 9$ columns. What is its rank?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Nine. A row's values in these nine columns are fixed by its (port, class) pair, so the matrix has at most nine distinct rows, one per pair. Order the pairs with (C, 1) first: it has only the ones column. (Q, 1) adds $\\text{port}_Q$, (C, 2) adds $\\text{class}_2$, and (Q, 2) adds the product $\\text{port}_Q \\cdot \\text{class}_2$. Each pair switches on one column that no earlier pair has, so the nine distinct rows are independent and the rank is 9."
+            },
+            {
+              "p": "With rank 9 and nine pairs, least squares can fit any value to each pair: the model predicts the mean label of each (port, class) pair. The four products are what the two groups of indicators could not do alone, giving the pair (Q, 3) an effect that is not the Q effect plus the class 3 effect."
+            },
+            {
+              "result": "9"
+            }
+          ]
+        },
+        {
+          "id": "2.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The same nine columns, but the training rows happen to contain no passenger who boarded at Q in class 1. What is the rank now?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Eight. Only eight distinct rows remain, so the rank is at most 8, and the argument above, run without (Q, 1), shows eight independent ones. The dependence is easy to name: every Q passenger is now in class 2 or 3, so on every training row"
+            },
+            {
+              "tex": "\\text{port}_Q = \\text{port}_Q \\cdot \\text{class}_2 + \\text{port}_Q \\cdot \\text{class}_3 ."
+            },
+            {
+              "p": "The normal equations no longer have a unique solution, and the weight the fit gives $\\text{port}_Q$ is arbitrary. A test passenger at (Q, 1) gets a prediction that depends on which of the many solutions the solver returned. The cross needs every cell it creates to have training rows, a real limit when two categoricals have many values."
+            },
+            {
+              "result": "8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-fill-value-with-an-indicator",
+      "moduleId": "data-processing-features",
+      "title": "Changing the Fill Value Under an Indicator",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "3.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A linear regression with an intercept predicts days in hospital from one lab value, which was not measured for about a quarter of the patients. The preprocessing is"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "SimpleImputer(strategy=\"median\", add_indicator=True)"
+                ]
+              }
+            },
+            {
+              "p": "so the model sees two columns: the lab value with gaps filled by the training median, 4.9, and a 0/1 column marking the filled rows. A colleague switches to `strategy=\"constant\", fill_value=0`, refits on the same training rows and predicts the same test rows, which are filled the same new way. What happens to the test predictions?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "None of them change, because the refitted weights make up for the new fill value",
+                  "correct": true,
+                  "explain": "On the training rows the new lab column equals the old one minus 4.9 times the indicator, since only the filled rows change and they change by 4.9. The two design matrices span the same columns, so least squares finds the same fitted values: the indicator's weight grows by 4.9 times the lab weight and absorbs the shift. The test rows are built the same way, so every test prediction is unchanged, up to rounding in the last digits."
+                },
+                {
+                  "text": "Only the predictions for test rows with a missing lab value change, since their lab value moved from 4.9 to 0",
+                  "explain": "The filled rows do get a lab value of 0 instead of 4.9, but they also carry the indicator, whose weight is refitted. It changes by exactly the amount that cancels the new fill, so those predictions stay where they were."
+                },
+                {
+                  "text": "All of them change, because 25% of the rows now sit at 0 and pull the slope",
+                  "explain": "This is what happens without the indicator: the filled rows then sit at 0 on the lab axis with their real outcomes, and they drag the slope. With the indicator they have a column of their own to fit their mean, so the slope comes from the measured rows alone and does not move."
+                },
+                {
+                  "text": "Rows with a measured value change a little, because a filled 0 now looks like a real reading of 0",
+                  "explain": "Without the indicator a filled 0 would be confused with a real reading of 0. The indicator is exactly what tells the two apart, so the model never mixes them, and the fit is unchanged."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "On the training rows the new lab column equals the old one minus 4.9 times the indicator, since only the filled rows change and they change by 4.9. The two design matrices span the same columns, so least squares finds the same fitted values: the indicator's weight grows by 4.9 times the lab weight and absorbs the shift. The test rows are built the same way, so every test prediction is unchanged, up to rounding in the last digits."
+            },
+            {
+              "result": "None of them change, because the refitted weights make up for the new fill value"
+            }
+          ],
+          "requirement": "Reasoning is not required."
+        }
+      ]
+    },
+    {
+      "id": "fe-bins-for-a-power-curve",
+      "moduleId": "data-processing-features",
+      "title": "Bins for a Wind Turbine's Output",
+      "difficulty": "Easy",
+      "minutes": 8,
+      "overview": [
+        "Nine readings from one wind turbine give the wind speed in meters per second and the power it produced in kilowatts:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{cccccccccc}\n\\text{speed (m/s)} & 3 & 15 & 5 & 9 & 26 & 4 & 11 & 7 & 18 \\\\ \\hline\n\\text{power (kW)} & 0 & 2000 & 90 & 700 & 0 & 40 & 1300 & 300 & 2000\n\\end{array}"
+        },
+        {
+          "p": "Speed is cut into three bins, below 6, from 6 to 12.5, and 12.5 and above. Each bin becomes an indicator column, the first is dropped, and a linear regression with an intercept is fitted on the other two by least squares."
+        }
+      ],
+      "parts": [
+        {
+          "id": "4.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What power does the model predict at a wind speed of 20 m/s?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "With an intercept $b$ and weights $w_2, w_3$ on the two kept indicators, every row in the first bin is predicted $b$, every row in the second $b + w_2$ and every row in the third $b + w_3$. Three free numbers, one per bin, and the squared error of each bin depends only on its own number. A sum of squares $\\sum (y_i - c)^2$ is smallest at the mean of the $y_i$, so each bin is predicted its mean."
+            },
+            {
+              "p": "20 m/s falls in the third bin, whose training rows are 15, 18 and 26 m/s:"
+            },
+            {
+              "tex": "\\frac{2000 + 2000 + 0}{3} = 1333.3 \\text{ kW.}"
+            },
+            {
+              "p": "For comparison the first two bins predict 43.3 and 766.7 kW."
+            },
+            {
+              "result": "1333.3"
+            }
+          ]
+        },
+        {
+          "id": "4.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The 0 kW at 26 m/s is not a lull: turbines shut down above a cut-out speed, 25 m/s for this model, to protect the blades. You add a cut at 25, so there are four bins and three kept indicators. What does the model predict at 20 m/s now?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The third bin now holds 15 and 18 m/s only, with mean $(2000 + 2000)/2 = 2000$ kW, and the 26 m/s reading has a bin of its own that predicts 0."
+            },
+            {
+              "p": "The first fit was not wrong arithmetic. It averaged a turbine at full power with a turbine that was switched off, because the cut points said nothing about how the machine works. Placing a cut where the physics changes is the kind of knowledge the model cannot find from nine rows, and it is what feature engineering adds. The price is the usual one for bins: the new bin rests on a single training row."
+            },
+            {
+              "result": "2000"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-imputer-inside-the-folds",
+      "moduleId": "data-processing-features",
+      "title": "The Fill Values a Cross-Validated Pipeline Uses",
+      "difficulty": "Medium",
+      "minutes": 8,
+      "overview": [
+        "Six apartments, in this order, have a column for the distance to the nearest station in kilometers. Two are missing:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{ccccccc}\n\\text{apartment} & 1 & 2 & 3 & 4 & 5 & 6 \\\\ \\hline\n\\text{distance} & 0.6 & \\text{missing} & 1.0 & 2.2 & \\text{missing} & 3.4\n\\end{array}"
+        },
+        {
+          "p": "The rent model is cross-validated like this, with the rows in the order above:"
+        },
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "pipe = make_pipeline(SimpleImputer(strategy=\"median\"), StandardScaler(), Ridge())",
+              "scores = cross_val_score(pipe, X, rent, cv=KFold(n_splits=3))"
+            ]
+          }
+        },
+        {
+          "p": "`KFold(3)` without shuffling holds out apartments 1 and 2, then 3 and 4, then 5 and 6."
+        }
+      ],
+      "parts": [
+        {
+          "id": "5.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "In the first fit, what value replaces apartment 2's missing distance?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Apartments 1 and 2 are held out, so the pipeline's `fit` sees apartments 3 to 6. The imputer learns the median of their known distances, 1.0, 2.2 and 3.4, which is 2.2. The held-out apartment 2 is then transformed with that learned value: 2.2."
+            },
+            {
+              "result": "2.2"
+            }
+          ]
+        },
+        {
+          "id": "5.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "In the second fit, apartments 3 and 4 are held out. What value fills the missing distances of the training apartments 2 and 5?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The training apartments are 1, 2, 5 and 6, and the only known distances among them are 0.6 and 3.4. Their median is $(0.6 + 3.4)/2 = 2.0$, and `fit_transform` on the training rows fills both gaps with it. Training rows are filled with the training statistic too, not only the held-out ones."
+            },
+            {
+              "result": "2"
+            }
+          ]
+        },
+        {
+          "id": "5.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A classmate fills the column once with `SimpleImputer` on all six rows and then cross-validates the scaler and the model. What value does every gap get? Say also why it matters for the third fit."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The median of all four known distances, 0.6, 1.0, 2.2 and 3.4, is $(1.0 + 2.2)/2 = 1.6$. The pipeline would have filled apartment 5 with 1.0 in the third fit, the median of apartments 1 to 4. With the fill done first, the 1.6 that apartment 5 carries into the third fit's held-out fold was computed partly from apartment 6's 3.4, a held-out value. The leak is small here, as the lesson measured for the scaler, but it is the same kind of mistake that becomes large when the fitted step reads the labels."
+            },
+            {
+              "result": "1.6"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-leave-one-out-encoding",
+      "moduleId": "data-processing-features",
+      "title": "A Target Encoding That Leaves Each Row Out",
+      "difficulty": "Hard",
+      "minutes": 15,
+      "overview": [
+        "A table of 20 house listings has one categorical column, the city, and a label, whether the listing sold within a month. Austin has 4 listings, Boise 6 and Columbus 10, and in each city exactly half of them sold. The city tells you nothing about the label."
+      ],
+      "setup": [
+        {
+          "p": "To keep each row's own label out of its encoding, you use a leave-one-out target encoding: row $i$ gets the mean label of the other rows of its city, not counting row $i$ itself."
+        }
+      ],
+      "parts": [
+        {
+          "id": "6.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What value does a Boise listing that sold get?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Boise has 6 listings and 3 sold. Leave out one that sold, and 2 of the remaining 5 sold: $2/5 = 0.4$. A Boise listing that did not sell sees 3 sales among the other 5 and gets $3/5 = 0.6$."
+            },
+            {
+              "result": "0.4"
+            }
+          ]
+        },
+        {
+          "id": "6.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A model uses only the encoded column, with the rule \"predict sold when the encoding is below $t$\". What is the highest training accuracy any $t$ reaches? Give it as a fraction of the 20 rows, between 0 and 1."
+            }
+          ],
+          "answer": [
+            {
+              "p": "In a city with $n$ listings and $k$ sales, a listing that sold gets $(k - 1)/(n - 1)$ and one that did not gets $k/(n - 1)$. With $k = n/2$ these are"
+            },
+            {
+              "tex": "\\begin{array}{cccc}\n\\text{city} & n & \\text{sold} & \\text{not sold} \\\\ \\hline\n\\text{Austin} & 4 & 1/3 \\approx 0.333 & 2/3 \\approx 0.667 \\\\\n\\text{Boise} & 6 & 2/5 = 0.4 & 3/5 = 0.6 \\\\\n\\text{Columbus} & 10 & 4/9 \\approx 0.444 & 5/9 \\approx 0.556\n\\end{array}"
+            },
+            {
+              "p": "Every listing that sold is below 0.5 and every one that did not is above, so $t = 0.5$ classifies all 20 correctly: accuracy 1."
+            },
+            {
+              "p": "The encoding was meant to keep each row's label out, and it did, but leaving a row out splits its city's rows by $1/(n - 1)$, with the sold rows that far below the not-sold ones. The direction of that split is the label. A model with any flexibility finds it."
+            },
+            {
+              "result": "1"
+            }
+          ]
+        },
+        {
+          "id": "6.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "At test time, a new listing is encoded with the mean over all training rows of its city. What does the model do on new listings, and how should the city column be encoded instead?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Every city's full mean is 0.5, so every new listing gets exactly 0.5, and the rule with $t = 0.5$ predicts \"not sold\" for all of them. Accuracy on new listings is the share that do not sell, about 0.5, against 1.0 in training. The model learned a pattern that exists only in the training encoding."
+            },
+            {
+              "p": "With three cities, one-hot encode the column. Three indicator columns read no labels, so there is nothing to leak, and a model fitted on them finds that every city sells half the time, which is the truth."
+            },
+            {
+              "p": "Computing each row's encoding from the other folds, as `TargetEncoder` does with K folds, is not enough on 20 rows. With at most a couple of a city's rows in each fold, a fold with more sales than its share leaves fewer for the other folds, so its rows are still encoded lower, the same shift in a weaker form. A threshold search on the plain out-of-fold means still beats the same search on a column of pure noise, and shrinking each encoding toward the overall mean, as `TargetEncoder(cv=5)` does, lowers the score further, but neither removes the shift. Out-of-fold target encoding with smoothing earns its place when a column has many categories and many rows in each, where one-hot encoding would make too many columns."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

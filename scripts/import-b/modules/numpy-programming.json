@@ -1,0 +1,62 @@
+{
+  "aModule": "programming-essentials",
+  "stage": "Round 1",
+  "order": [
+    "np-average-daily-range",
+    "np-uint8-difference",
+    "np-channels-first",
+    "np-vectorize-the-hinge",
+    "np-per-image-mean",
+    "np-true-class-probabilities",
+    "np-vectorize-the-gradient",
+    "np-places-from-argsort",
+    "np-which-writes-land",
+    "np-clipped-log",
+    "np-one-shift-for-the-batch"
+  ],
+  "fixes": [],
+  "parts": {
+    "np-channels-first": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "explanation", "requirement": "Reasoning is required."}
+    },
+    "np-clipped-log": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.3": {"kind": "computation", "requirement": "Reasoning is required."}
+    },
+    "np-one-shift-for-the-batch": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "coding", "requirement": "Code is required. Do not use a Python loop over the rows."}
+    },
+    "np-per-image-mean": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.3": {"kind": "coding", "requirement": "Reasoning is required. Code is required."}
+    },
+    "np-true-class-probabilities": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "coding", "requirement": "Reasoning is required. Code is required."}
+    },
+    "np-uint8-difference": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is required."}
+    },
+    "np-which-writes-land": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."}
+    }
+  },
+  "indexPrompt": {
+    "np-average-daily-range": "A weather station logs four temperature readings a day, at 6 am, 10 am, 2 pm and 6 pm, and stores three days with one row per reading time and one column per day. Pick the axis that gives the average daily range: each day's highest reading minus its lowest, then the mean of the three.",
+    "np-channels-first": "Images are often stored channels last, (N, H, W, C), and many models want them channels first, (N, C, H, W). Take one tiny 2 by 2 image with three color channels and see what a transpose and a reshape each do to its numbers.",
+    "np-clipped-log": "A model outputs logits (40, -95, 12) for one example whose true class is 1. A student clips the softmax probability so the log can never see a 0. Find what the clip does to the loss, and what the true cross-entropy is.",
+    "np-one-shift-for-the-batch": "A student shifts a batch of logits by the largest logit in the whole batch, not by each row's own largest. Find which rows come out nan, then write the loss for the whole batch with no loop, so no row can overflow or underflow.",
+    "np-per-image-mean": "A batch of 32 color images of 32 by 32 pixels has shape (32, 32, 32, 3). A student subtracts imgs.mean(axis=(1, 2)) to take each pixel away from its own image's mean color. The line raises no error, so find what it actually does and write the line the student meant.",
+    "np-places-from-argsort": "Five players have scores, and the leaderboard needs each player's place, 0 for the highest score. np.argsort(-s) gives the players in order from first to last instead. Find the expression that returns each player's place.",
+    "np-true-class-probabilities": "A classifier gives probabilities for four examples over three classes, and y holds the true labels. P[:, y] does not pick each example's own probability. Say what shape and mean it gives, and write the expression a cross-entropy needs.",
+    "np-uint8-difference": "A camera stores each pixel as uint8, and a student measures the change between two frames with np.abs(a - b). The subtraction happens in uint8 first, so the negative differences wrap. Find the wrong mean and the fix that converts before subtracting.",
+    "np-vectorize-the-gradient": "A loop computes the gradient of a squared error, adding 2 * r * X[i, j] / n into each entry one example at a time. Write the one line that gives the same g with no loop.",
+    "np-vectorize-the-hinge": "A loop adds max(0, 1 - y[i] * s[i]) over four examples and divides by the count. Write the same loss in one line with no loop.",
+    "np-which-writes-land": "Trace four writes aimed at an array of shape (2, 3). Each one either changes the array or changes only a temporary copy that is then thrown away. Find what the code prints."
+  }
+}

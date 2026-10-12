@@ -1,0 +1,606 @@
+{
+  "module": "cross-attention-multimodal-attention",
+  "stage": "Camp",
+  "index": [
+    {
+      "id": "vlm-snapping-visual-tokens",
+      "moduleId": "cross-attention-multimodal-attention",
+      "title": "Snapping Visual Tokens to Words",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=vlm-snapping-visual-tokens",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Camp"
+      ],
+      "prompt": "A LLaVA-style model trains only its projector, and each visual token is replaced by the nearest row of the language model's own embedding table before the language model reads it. What does training do to the projector?",
+      "answer": "The projector does not learn, because a small change to its weights almost never changes which row is nearest, so its gradient is zero. The loss depends on the projector only through which row each visual token snaps to. That choice is piecewise constant: a small change of the weights leaves every choice the same, so the gradient is zero almost everywhere and undefined at the switch points. With the encoder and the language model frozen, nothing in the model changes. Even if it could learn, each patch could pass on only which of the vocabulary's rows it chose. Feeding the projector's vectors in directly keeps both the gradient and the detail."
+    },
+    {
+      "id": "vlm-question-before-the-photo",
+      "moduleId": "cross-attention-multimodal-attention",
+      "title": "Question First, Photo Second",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=vlm-question-before-the-photo",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Camp"
+      ],
+      "prompt": "A team lays out its sequences as the question tokens, then the photo's visual tokens, then the answer, under the usual causal mask, and wants to compute the photo positions' keys and values once and reuse them for every new question. Say which of the four statements about those stored keys and values is right.",
+      "answer": "From the second layer on, they change with the question, since each visual position attends to the question. Under the causal mask a position sees itself and everything before it, and the question now comes before the photo. The first layer reads the visual tokens themselves, but each later layer reads hidden states that have already mixed in the question, so stored keys and values are right only for the question they were computed with. With the photo first, its positions see nothing but the photo, and their keys and values can be stored once per photo."
+    },
+    {
+      "id": "vlm-gate-starts-at-zero",
+      "moduleId": "cross-attention-multimodal-attention",
+      "title": "Training from a Closed Gate",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=vlm-gate-starts-at-zero",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "A Flamingo-style layer starts training with its gate alpha at 0, so its output is exactly the layer below, yet the gradient on alpha is not zero. Compute that gradient, take one plain gradient-descent step and find what the gradient on an entry of the output matrix is afterwards, then show that also starting the output matrix at zero leaves every weight of the new layer stuck forever. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "vlm-one-softmax-or-two",
+      "moduleId": "cross-attention-multimodal-attention",
+      "title": "One Softmax or Two",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=vlm-one-softmax-or-two",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "In the LLaVA design one softmax covers the visual tokens and the text tokens together. Show that the head's output is a weighted average of a pure image reading and a pure text reading, and find how the image's share changes when a photo is sent at twice the resolution. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "vlm-long-captions-short-answers",
+      "moduleId": "cross-attention-multimodal-attention",
+      "title": "Long Descriptions, Short Answers",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=vlm-long-captions-short-answers",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "One instruction-tuning batch holds eight examples: two long descriptions of a photo whose answers are 144 tokens, and six one-word questions whose answers are 4 tokens. The mean loss per answer token is 1.6 on a description and 0.3 on a short answer. Compute the loss the loop logs when it flattens the batch and calls cross entropy with its default settings, then under two other ways of weighting the examples, and generalise the three rules with one exponent. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "tf7-multimodal-attention-curated",
+      "moduleId": "cross-attention-multimodal-attention",
+      "title": "Multimodal Feature Fusion Practice",
+      "source": "Curated",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=multimodal-learning",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Camp"
+      ],
+      "prompt": "As extension practice beyond the lesson, use the multimodal learning notebook to practice combining image and tabular features.",
+      "answer": "Auto-graded inside the notebook. The grader checks the test accuracy of your predictions against a 0.75 target on the six-class labels."
+    },
+    {
+      "id": "vlm-pack-an-image-chat",
+      "moduleId": "cross-attention-multimodal-attention",
+      "title": "Pack an Image Chat for Training",
+      "source": "Curated",
+      "difficulty": "Medium",
+      "minutes": 25,
+      "url": "/editor/?nb=vlm-pack-an-image-chat",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Camp"
+      ],
+      "prompt": "Build the sequence and its labels for one chat with two photos, then the loss the model trains on.",
+      "answer": "Auto-graded inside the notebook. Part 1 checks the packed sequence and label array. Part 2 checks the masked loss."
+    },
+    {
+      "id": "vlm-gated-cross-attention-numpy",
+      "moduleId": "cross-attention-multimodal-attention",
+      "title": "Gated Cross-Attention in NumPy",
+      "source": "Curated",
+      "difficulty": "Hard",
+      "minutes": 40,
+      "url": "/editor/?nb=vlm-gated-cross-attention-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Camp"
+      ],
+      "prompt": "A Flamingo-style model keeps the language model's sequence text only: each photo leaves a marker token, a resampler turns its patch vectors into a fixed number of vectors, and new cross-attention layers let the text read them through a gate that starts closed. Write the resampler, the mask that says which photo each text position reads, and the gated layer.",
+      "answer": "Auto-graded inside the notebook. Part 1 checks the resampler, Part 2 the per-photo mask, Part 3 the gated layer and its closed-gate output."
+    }
+  ],
+  "theory": [
+    {
+      "id": "vlm-snapping-visual-tokens",
+      "moduleId": "cross-attention-multimodal-attention",
+      "title": "Snapping Visual Tokens to Words",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A team trains only the projector of a LLaVA-style model, with the image encoder and the language model frozen. One teammate worries that the language model has only ever read rows of its own embedding table. So before the sequence goes in, each visual token is replaced by the row of the embedding table closest to it, and the language model reads that row instead. Nothing else changes."
+            },
+            {
+              "p": "What happens when this model trains?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "The projector learns faster, because the language model now reads only vectors it was trained on and makes sense of them from the first step",
+                  "explain": "The forward pass does feed the language model familiar vectors, but learning needs a gradient. The nearest row stays the same under almost any small change of the projector's weights, so the loss is flat in those weights and gradient descent never moves them."
+                },
+                {
+                  "text": "The projector learns as before, because the snapping step has no weights of its own, and a step without weights passes the gradient back unchanged",
+                  "explain": "Having no weights does not make a step pass gradients through. A ReLU has none and still passes the gradient wherever its input is positive, but choosing the nearest row is constant between the points where the choice switches, so its derivative is zero wherever it exists."
+                },
+                {
+                  "text": "The projector does not learn, because a small change to its weights almost never changes which row is nearest, so its gradient is zero",
+                  "correct": true,
+                  "explain": "The loss depends on the projector only through which row each visual token snaps to. That choice is piecewise constant: a small change of the weights leaves every choice the same, so the gradient is zero almost everywhere and undefined at the switch points. With the encoder and the language model frozen, nothing in the model changes. Even if it could learn, each patch could pass on only which of the vocabulary's rows it chose. Feeding the projector's vectors in directly keeps both the gradient and the detail."
+                },
+                {
+                  "text": "The projector learns, but each patch can now say only one word of the vocabulary, so the model loses details such as counts and small text",
+                  "explain": "The loss of detail is real: each patch could pass on only which row of the table it chose. But training never gets that far. The choice of row does not change under small changes of the weights, so the gradient with respect to the projector is zero and it never moves."
+                },
+                {
+                  "text": "The projector does not learn, because the frozen language model passes no gradient back to its input, with or without the snapping step",
+                  "explain": "Freezing keeps the language model's weights fixed, but the backward pass still runs through its layers to their inputs. That is how the projector learns at all when the visual tokens go in directly. What stops it here is the snapping step, whose output does not change under small changes of its input."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The loss depends on the projector only through which row each visual token snaps to. That choice is piecewise constant: a small change of the weights leaves every choice the same, so the gradient is zero almost everywhere and undefined at the switch points. With the encoder and the language model frozen, nothing in the model changes. Even if it could learn, each patch could pass on only which of the vocabulary's rows it chose. Feeding the projector's vectors in directly keeps both the gradient and the detail."
+            },
+            {
+              "result": "The projector does not learn, because a small change to its weights almost never changes which row is nearest, so its gradient is zero"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vlm-question-before-the-photo",
+      "moduleId": "cross-attention-multimodal-attention",
+      "title": "Question First, Photo Second",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A team builds its sequences in a different order from LLaVA: the question tokens first, then the photo's visual tokens, then the answer, with the usual causal mask. Every question is 15 tokens long, so the photo always starts at the same position."
+            },
+            {
+              "p": "In use, people ask many different questions about the same photo. To save work, the team plans to compute the keys and values of the photo's positions in every layer once, store them, and reuse them for each new question."
+            },
+            {
+              "p": "Which statement about those keys and values is right?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "From the second layer on, they change with the question, since each visual position attends to the question",
+                  "correct": true,
+                  "explain": "Under the causal mask a position sees itself and everything before it, and the question now comes before the photo. The first layer reads the visual tokens themselves, but each later layer reads hidden states that have already mixed in the question, so stored keys and values are right only for the question they were computed with. With the photo first, its positions see nothing but the photo, and their keys and values can be stored once per photo."
+                },
+                {
+                  "text": "They depend only on the photo in every layer, because each visual token is the projector's output for its own patch",
+                  "explain": "That holds for the input to the first layer. Every attention layer mixes in the earlier positions, and the question now comes earlier, so from the second layer on the hidden states, and the keys and values computed from them, depend on the question."
+                },
+                {
+                  "text": "They depend only on the photo, because the causal mask stops a visual position from attending to the question",
+                  "explain": "The causal mask hides later positions, not earlier ones. With the question first, every visual position sees all 15 question tokens. It is the question that can no longer see the photo."
+                },
+                {
+                  "text": "They change with every answer token generated, because each visual position attends to the answer written so far",
+                  "explain": "The answer comes after the photo, and the causal mask hides later positions, so nothing the model writes reaches the visual positions. What changes them is the question in front of them."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Under the causal mask a position sees itself and everything before it, and the question now comes before the photo. The first layer reads the visual tokens themselves, but each later layer reads hidden states that have already mixed in the question, so stored keys and values are right only for the question they were computed with. With the photo first, its positions see nothing but the photo, and their keys and values can be stored once per photo."
+            },
+            {
+              "result": "From the second layer on, they change with the question, since each visual position attends to the question"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vlm-gate-starts-at-zero",
+      "moduleId": "cross-attention-multimodal-attention",
+      "title": "Training from a Closed Gate",
+      "difficulty": "Hard",
+      "minutes": 15,
+      "overview": [
+        "Follow one text position through one new Flamingo-style layer. Its input, from the frozen layer below, is $\\mathbf{x}$. The cross-attention reads the image vectors and produces a vector $\\mathbf{h}$, and the layer's $2 \\times 2$ output matrix $W_o$ turns it into the layer's contribution, so the layer outputs"
+      ],
+      "setup": [
+        {
+          "tex": "\\mathbf{y} = \\mathbf{x} + \\tanh(\\alpha)\\, W_o \\mathbf{h} ."
+        },
+        {
+          "p": "At this position"
+        },
+        {
+          "tex": "\\mathbf{h} = \\begin{pmatrix} 2 \\\\ 1 \\end{pmatrix}, \\qquad\nW_o = \\begin{pmatrix} 1 & -1 \\\\ 0.5 & 1 \\end{pmatrix}, \\qquad\n\\mathbf{g} = \\frac{\\partial L}{\\partial \\mathbf{y}} = \\begin{pmatrix} 0.5 \\\\ -1.5 \\end{pmatrix},"
+        },
+        {
+          "p": "and training starts from $\\alpha = 0$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Compute $\\partial L / \\partial \\alpha$ at $\\alpha = 0$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "$\\alpha$ enters $\\mathbf{y}$ only through the factor $\\tanh \\alpha$, whose derivative is $1 - \\tanh^2 \\alpha$. So"
+            },
+            {
+              "tex": "\\frac{\\partial L}{\\partial \\alpha}\n= (1 - \\tanh^2 \\alpha)\\; \\mathbf{g} \\cdot (W_o \\mathbf{h}) ."
+            },
+            {
+              "p": "Here $W_o \\mathbf{h} = (2 - 1,\\; 1 + 1) = (1, 2)$, and at $\\alpha = 0$ the factor is 1:"
+            },
+            {
+              "tex": "\\frac{\\partial L}{\\partial \\alpha} = 0.5 \\cdot 1 + (-1.5) \\cdot 2 = -2.5 ."
+            },
+            {
+              "p": "The gate is closed, but the gradient on $\\alpha$ is not zero: it measures how much the loss would change if a little of the layer's contribution were let through."
+            },
+            {
+              "result": "$-2.5$"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Take one step of plain gradient descent with learning rate 0.1, updating $\\alpha$ and $W_o$ together. Then, with $\\mathbf{x}$, $\\mathbf{h}$ and $\\mathbf{g}$ unchanged, compute the gradient of $L$ with respect to the entry in row 1, column 2 of $W_o$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Row $i$ of $\\mathbf{y}$ is $x_i + \\tanh(\\alpha) \\sum_j (W_o)_{ij} h_j$, so"
+            },
+            {
+              "tex": "\\frac{\\partial L}{\\partial (W_o)_{ij}} = \\tanh(\\alpha)\\, g_i h_j ,\n\\qquad\n\\frac{\\partial L}{\\partial W_o} = \\tanh(\\alpha)\\, \\mathbf{g} \\mathbf{h}^\\top ."
+            },
+            {
+              "p": "**The step.** At $\\alpha = 0$ this gradient is the zero matrix, so $W_o$ does not move. Only $\\alpha$ does:"
+            },
+            {
+              "tex": "\\alpha \\leftarrow 0 - 0.1 \\cdot (-2.5) = 0.25 ."
+            },
+            {
+              "p": "**After the step.**"
+            },
+            {
+              "tex": "\\frac{\\partial L}{\\partial (W_o)_{12}} = \\tanh(0.25) \\cdot g_1 h_2\n= 0.2449 \\cdot 0.5 \\cdot 1 \\approx 0.1225 ."
+            },
+            {
+              "p": "Ignoring the gate gives $g_1 h_2 = 0.5$, about four times too much. The same holds for every weight of the new layer, including the query, key and value matrices of the cross-attention, since all of them act on the output through $\\tanh(\\alpha) W_o \\mathbf{h}$. On the first step only the gates move. After that the new weights learn with their gradients scaled by $\\tanh \\alpha \\approx \\alpha$, so the image's influence grows gradually, as the design intends."
+            },
+            {
+              "result": "0.1225"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "A teammate wants to be doubly careful and also starts $W_o$ at the zero matrix. Show that then neither $\\alpha$ nor $W_o$ ever changes under gradient descent, whatever the data, and explain why starting only $\\alpha$ at 0 does not have this problem."
+            }
+          ],
+          "answer": [
+            {
+              "p": "With $\\alpha = 0$ and $W_o = 0$, both gradients from the parts above vanish:"
+            },
+            {
+              "tex": "\\frac{\\partial L}{\\partial \\alpha} = (1 - 0)\\; \\mathbf{g} \\cdot (0 \\cdot \\mathbf{h}) = 0 ,\n\\qquad\n\\frac{\\partial L}{\\partial W_o} = \\tanh(0)\\, \\mathbf{g} \\mathbf{h}^\\top = 0 ."
+            },
+            {
+              "p": "The gradient reaching $\\mathbf{h}$ is $\\tanh(\\alpha) W_o^\\top \\mathbf{g} = 0$ as well, so the cross-attention's own weights get nothing either. Every parameter of the new layer has zero gradient, so a step leaves all of them where they are, and the next step starts from the same point. This holds at every text position and for any $\\mathbf{g}$ and $\\mathbf{h}$, so no data can change it. Adam does not help: with zero gradients its running averages stay at zero, and so do its updates."
+            },
+            {
+              "p": "The layer's contribution is a product, $\\tanh(\\alpha)$ times $W_o \\mathbf{h}$, and the gradient on each factor is proportional to the other factor. With only $\\alpha = 0$, the other factor $W_o \\mathbf{h}$ is a random nonzero vector, so $\\alpha$ gets the gradient of Part 1 and moves, and from then on $W_o$ has a nonzero gradient too. Setting both factors to zero removes the signal that would open the gate. The output at the start is the same either way, $\\mathbf{y} = \\mathbf{x}$, so one zero is enough to start from the original language model."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vlm-one-softmax-or-two",
+      "moduleId": "cross-attention-multimodal-attention",
+      "title": "One Softmax or Two",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "In the LLaVA design a text position attends to the visual tokens and the text tokens before it with a single softmax. Take one head and one query. Write $s_j$ for the query's scaled score on key $j$ and $\\mathbf{v}_j$ for that key's value, let $I$ be the visual positions and $T$ the text positions the query can see, and let"
+      ],
+      "setup": [
+        {
+          "tex": "a_I = \\sum_{j \\in I} e^{s_j}, \\qquad a_T = \\sum_{j \\in T} e^{s_j} ."
+        },
+        {
+          "p": "Write $\\mathbf{o}_I$ for the output the query would get by attending over $I$ alone, and $\\mathbf{o}_T$ for the output over $T$ alone."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Show that the head's output is"
+            },
+            {
+              "tex": "\\mathbf{o} = \\lambda\\, \\mathbf{o}_I + (1 - \\lambda)\\, \\mathbf{o}_T ,\n\\qquad \\lambda = \\frac{a_I}{a_I + a_T} ."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Attention over all of $I \\cup T$ divides by the sum of every exponential, $a_I + a_T$:"
+            },
+            {
+              "tex": "\\begin{aligned}\n\\mathbf{o}\n&= \\frac{\\sum_{j \\in I} e^{s_j} \\mathbf{v}_j + \\sum_{j \\in T} e^{s_j} \\mathbf{v}_j}{a_I + a_T} \\\\[4pt]\n&= \\frac{a_I}{a_I + a_T} \\cdot \\frac{\\sum_{j \\in I} e^{s_j} \\mathbf{v}_j}{a_I}\n + \\frac{a_T}{a_I + a_T} \\cdot \\frac{\\sum_{j \\in T} e^{s_j} \\mathbf{v}_j}{a_T} \\\\[4pt]\n&= \\lambda\\, \\mathbf{o}_I + (1 - \\lambda)\\, \\mathbf{o}_T .\n\\end{aligned}"
+            },
+            {
+              "p": "The second line multiplies and divides each sum by its own normalizer, and each fraction on the right is the softmax average over that group alone. $\\qquad\\blacksquare$"
+            },
+            {
+              "p": "So one softmax over both groups is a weighted average of a pure image reading and a pure text reading, and $\\lambda$, the image's share of the query's attention, is set by the scores themselves."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A query sees two visual tokens and two text tokens. The exponentials of its scores and the values are"
+            },
+            {
+              "tex": "\\begin{array}{ccc}\n\\text{Key} & e^{s_j} & \\mathbf{v}_j \\\\ \\hline\n\\text{visual 1} & 3 & (2, 0) \\\\\n\\text{visual 2} & 1 & (-2, 8) \\\\\n\\text{text 1} & 6 & (0, 3) \\\\\n\\text{text 2} & 2 & (6, 1)\n\\end{array}"
+            },
+            {
+              "p": "Compute the second coordinate of $\\mathbf{o}$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each group's own average first:"
+            },
+            {
+              "tex": "\\mathbf{o}_I = \\frac{3\\,(2, 0) + 1\\,(-2, 8)}{4} = (1, 2), \\qquad\n\\mathbf{o}_T = \\frac{6\\,(0, 3) + 2\\,(6, 1)}{8} = (1.5, 2.5) ."
+            },
+            {
+              "p": "With $a_I = 4$ and $a_T = 8$, $\\lambda = 4/12 = 1/3$, so"
+            },
+            {
+              "tex": "\\mathbf{o} = \\tfrac13 (1, 2) + \\tfrac23 (1.5, 2.5) = \\left(\\tfrac43, \\tfrac73\\right) ."
+            },
+            {
+              "p": "The second coordinate is $7/3 \\approx 2.333$. Summing all four weighted values at once and dividing by 12 gives the same $(16, 28)/12$."
+            },
+            {
+              "result": "2.333"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The same photo is sent at twice the resolution, so it becomes four times as many visual tokens. Suppose each old visual token turns into four tokens with the same score and value as the old one, and the text is unchanged. What is $\\lambda$ now?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "$\\mathbf{o}_I$ is unchanged: four copies of each value with the same weights give the same average, $(1, 2)$. But $a_I$ is four times larger, $4 \\cdot 4 = 16$, while $a_T$ stays 8:"
+            },
+            {
+              "tex": "\\lambda = \\frac{16}{16 + 8} = \\frac23 \\approx 0.667 ."
+            },
+            {
+              "p": "The image's share of the query's attention doubled, from $1/3$ to $2/3$, and $\\mathbf{o}$ moves to $\\tfrac23 (1, 2) + \\tfrac13 (1.5, 2.5) = (7/6, 13/6)$, although the photo shows nothing new and the question has not changed. More visual tokens draw attention away from the text by their number alone, unless the model learns to give them lower scores."
+            },
+            {
+              "result": "0.667"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "In the Flamingo design the text attends to itself in the language model's own layers, and the photo enters a text position through the new layers' term $\\tanh(\\alpha)\\, W_o \\mathbf{o}_I$, where $\\mathbf{o}_I$ is the softmax average over the photo's vectors alone. Does the fourfold copying of Part 3 change this term? Say, for each design, what decides how strongly the photo enters a text position."
+            }
+          ],
+          "answer": [
+            {
+              "p": "No. $\\mathbf{o}_I$ is an average with its own softmax, so copying every vector four times leaves it at $(1, 2)$, and $\\tanh(\\alpha) W_o$ does not depend on the photo at all. The term is the same as before."
+            },
+            {
+              "list": [
+                "**LLaVA.** The photo and the text compete in one softmax, and the photo's weight is $\\lambda = a_I / (a_I + a_T)$. It depends on the query, which can raise $\\lambda$ for a question about the picture, and also on how many visual tokens there are, which by Part 3 raises $\\lambda$ whether or not the question needs more of the picture.",
+                "**Flamingo.** The two readings are kept apart, each with its own softmax. The photo's reading is scaled by $\\tanh \\alpha$, a learned number per layer that is the same for every query and every image size. Within the photo the softmax still chooses which vectors matter, but the number of vectors cannot change the strength of the whole term, and the resampler fixes that number at 64 anyway."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vlm-long-captions-short-answers",
+      "moduleId": "cross-attention-multimodal-attention",
+      "title": "Long Descriptions, Short Answers",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "Instruction tuning mixes long and short answers. One batch holds eight examples. Two are detailed descriptions of a photo, each with an answer 144 tokens long. Six are questions with one-word answers, each answer 4 tokens long with the end-of-answer marker."
+      ],
+      "setup": [
+        {
+          "p": "Partway through training, the model's mean loss per answer token is 1.6 on each description and 0.3 on each short answer. The training loop builds one label array for the batch, -100 everywhere except the answers, flattens the logits and the labels, and calls `F.cross_entropy` with its default settings."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What loss does the training loop log for this batch?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "`F.cross_entropy` averages over every position whose label is not -100, wherever it sits in the batch. The batch has $2 \\cdot 144 + 6 \\cdot 4 = 312$ scored tokens, so"
+            },
+            {
+              "tex": "\\frac{288 \\cdot 1.6 + 24 \\cdot 0.3}{312} = \\frac{460.8 + 7.2}{312} = 1.5 ."
+            },
+            {
+              "p": "Averaging over the 8 examples instead would treat each example as one unit, and that is not what the call computes."
+            },
+            {
+              "result": "1.5"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A teammate changes the loss: average the loss over each example's own answer tokens, then average those 8 numbers. The model and its predictions are the same. What does the loop log now?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each description's mean is 1.6 and each short answer's is 0.3, so"
+            },
+            {
+              "tex": "\\frac{2 \\cdot 1.6 + 6 \\cdot 0.3}{8} = \\frac{3.2 + 1.8}{8} = 0.625 ."
+            },
+            {
+              "p": "The logged loss fell from 1.5 to 0.625 with the model untouched. The number moved because the six short answers, whose tokens the model already gets mostly right, went from a small share of the average to three quarters of it. Two losses computed with different weightings cannot be compared as progress."
+            },
+            {
+              "result": "0.625"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Some recipes take a middle road: every token of an example with $n_i$ answer tokens gets a weight proportional to $1/\\sqrt{n_i}$, and the weights are scaled to add up to 1. What share of the total weight goes to the six short answers together?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "An example's tokens together weigh $n_i \\cdot n_i^{-1/2} = \\sqrt{n_i}$ before scaling. That is $\\sqrt{144} = 12$ for each description and $\\sqrt{4} = 2$ for each short answer, so the short answers get"
+            },
+            {
+              "tex": "\\frac{6 \\cdot 2}{2 \\cdot 12 + 6 \\cdot 2} = \\frac{12}{36} = \\frac13 \\approx 0.333 ."
+            },
+            {
+              "p": "Under the default of Part 1 their share is $24/312 = 1/13 \\approx 0.077$, and under the teammate's rule of Part 2 it is $6/8 = 0.75$."
+            },
+            {
+              "result": "0.333"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Generalize: if every token of example $i$ gets a weight proportional to $n_i^{-p}$, show that the weight its tokens carry together is proportional to $n_i^{1-p}$, and name the rules of Parts 1 to 3 by their $p$. Then explain what each extreme does to a model trained on this mix, and why the lesson's remark that averaging \"only rescales the loss\" does not carry over to a batch."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The weighted loss is $\\sum_i \\sum_{t \\in A_i} w_i \\ell_{i,t}$, with $w_i = c\\, n_i^{-p}$ and $c$ chosen so that the weights add up to 1. Writing $\\bar\\ell_i$ for example $i$'s mean token loss, the inner sum is $w_i n_i \\bar\\ell_i$, so"
+            },
+            {
+              "tex": "L = \\sum_i c\\, n_i^{1-p}\\, \\bar\\ell_i ,"
+            },
+            {
+              "p": "and example $i$ counts in proportion to $n_i^{1-p}$. Part 1 is $p = 0$ (the plain token mean, examples weighted by length), Part 2 is $p = 1$ (every example weighted the same), and Part 3 is $p = 1/2$."
+            },
+            {
+              "list": [
+                "**$p = 0$.** A 144-token description outweighs a 4-token answer 36 to 1, so the short answers get a thirteenth of the weight. Long answers set what the model learns, and short-answer skills such as reading a count or a word in the photo improve slowly.",
+                "**$p = 1$.** Each example counts once, so each token of a short answer counts 36 times as much as a token of a description. The short answers dominate, and each description token gets so little signal that the long descriptions improve slowly."
+              ]
+            },
+            {
+              "p": "For one sequence the number of answer tokens is fixed, so dividing by it scales the whole loss by a constant and moves no minimum. In a batch the divisor is shared, or chosen per example, and that choice sets how much each example counts. The rule decides what the model gets better at, and the logged numbers of Parts 1 and 2 measure different things."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "order": 321
+}

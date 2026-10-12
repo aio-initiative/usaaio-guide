@@ -1,0 +1,752 @@
+{
+  "module": "policy-gradients",
+  "stage": "Advanced",
+  "index": [
+    {
+      "id": "pg-update-from-one-delivery",
+      "moduleId": "policy-gradients",
+      "title": "The Update from One Delivery",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pg-update-from-one-delivery",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Advanced"
+      ],
+      "prompt": "A delivery app sends each order along one of three routes with feature vectors (1, 0), (0, 2) and (2, 1), and a softmax policy over route scores picks them with probabilities 0.5, 0.3 and 0.2. One order takes route B and earns a return of 5. What is 5 times the gradient of the log probability of route B?",
+      "answer": "(-4.5, 6). log π(B) is θ·φ(B) minus the log of the sum of exp(θ·φ(b)) over the routes. The first term has gradient φ(B) = (0, 2). The second has gradient equal to the sum of exp(θ·φ(b)) φ(b) divided by the sum of exp(θ·φ(b)), which is the average feature vector under the policy, 0.5(1, 0) + 0.3(0, 2) + 0.2(2, 1) = (0.9, 0.8). So the gradient of log π(B) is (−0.9, 1.2), and G = 5 gives (−4.5, 6). The first component is negative even though B earned a reward: B has less of the first feature than the policy's average route, so making B more likely means turning θ away from that feature."
+    },
+    {
+      "id": "pg-credit-across-one-episode",
+      "moduleId": "policy-gradients",
+      "title": "Credit Across One Episode",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pg-credit-across-one-episode",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Advanced"
+      ],
+      "prompt": "An agent alternates between positions A and B and picks left or right at each, with the probability of right at A equal to 0.6 and of left at B equal to 0.5. For one three-step episode with rewards +5, 0 and -2 and no discounting, compute the single-episode REINFORCE gradient component for the right-action logit at A under reward-to-go weights and under the full episode return, and say which actions each estimate pushes up and why both have the same expected value. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pg-baseline-read-one-step-late",
+      "moduleId": "policy-gradients",
+      "title": "A Baseline Read One Step Late",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pg-baseline-read-one-step-late",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Advanced"
+      ],
+      "prompt": "A warehouse robot at a junction takes a shortcut whose return is 5 or a long way whose return is 1, and a slipped baseline subtracts the average return of the state the robot moves to instead of the state it acts from. Which route does the policy at the junction come to prefer as training goes on?",
+      "answer": "The long way, more and more strongly as training goes on. With accurate averages, b(X) = 6 and b(Y) = 0, so the slipped weights are (−1 + 6) − 6 = −1 for the shortcut and (1 + 0) − 0 = +1 for the long way: each step keeps only its own reward, and the 6 that the shortcut leads to is subtracted away. The expected change in the shortcut's logit at 50/50 is 0.5(0.5)(−1) + 0.5(−0.5)(+1) = −0.25. The two weights stay −1 and +1 whatever the policy at J does, so the shortcut keeps losing probability. The correct baseline, b(J) = 3, gives weights +2 and −2 and an expected change of +1.0 toward the shortcut, whose return of 5 beats the long way's 1. The slip turns the robot into one that chases the reward of the current step."
+    },
+    {
+      "id": "pg-advantages-on-the-way-to-the-dock",
+      "moduleId": "policy-gradients",
+      "title": "Advantages on the Way to the Dock",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pg-advantages-on-the-way-to-the-dock",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Advanced"
+      ],
+      "prompt": "An actor-critic robot makes three moves into its charging dock, earning a reward at each, and a critic network values every state it lands in. Compute the one-step advantage weight for two of the moves, then weigh the first move by the Monte Carlo advantage instead and compare what each weight relies on. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pg-samples-that-still-pass-a-gradient",
+      "moduleId": "policy-gradients",
+      "title": "Samples That Still Pass a Gradient",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pg-samples-that-still-pass-a-gradient",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Advanced"
+      ],
+      "prompt": "PPO is on its third pass over a batch with epsilon 0.2, and five samples have their ratios and advantages in a table. Each sample adds the minimum of the ratio times the advantage and the ratio clipped to [0.8, 1.2] times the advantage to the objective. Which of the five terms still have a nonzero gradient with respect to theta, given that each ratio itself changes with theta?",
+      "answer": "Samples 1, 3 and 5. Sample 1 is inside the band, so both terms are 2.2 and the gradient flows. Sample 2: 1.35 against 1.2, the minimum is the clipped 1.2, a constant, so no gradient. Sample 3: 2.1 against 2.4, the minimum is the unclipped 2.1, so the gradient flows and pushes the ratio back up. Sample 4: −0.6 against −0.8, the minimum is the clipped −0.8, no gradient. Sample 5: −3.0 against −2.4, the minimum is the unclipped −3.0, so the gradient flows and pushes the ratio back down. A sample stops only once its ratio has gone past the band on the side its advantage favors, which is the case for samples 2 and 4."
+    },
+    {
+      "id": "pg-a-baseline-from-the-same-batch",
+      "moduleId": "policy-gradients",
+      "title": "A Baseline from the Same Batch",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=pg-a-baseline-from-the-same-batch",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Advanced"
+      ],
+      "prompt": "A policy trains on one-step episodes using the mean reward of its N sampled episodes as the baseline, and Part 1 finds the constant factor this shrinks the expected update by at N = 4. Part 2 shows a leave-one-out baseline is unbiased and rescales the estimator by N/(N-1), and Part 3 finds the smallest batch that keeps 95% of the true gradient. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pg-gaussian-policy-aims-at-a-target",
+      "moduleId": "policy-gradients",
+      "title": "A Gaussian Policy Aims at a Target",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=pg-gaussian-policy-aims-at-a-target",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Advanced"
+      ],
+      "prompt": "A controller picks a continuous action from a Gaussian policy with mean mu and a fixed spread, and the reward is minus the squared distance from the action to 3. Find the expected single-sample policy-gradient estimate, its variance, and the variance after subtracting the expected reward as a baseline. Then say what happens to both variances as the spread shrinks toward zero and why one of them blows up. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pg-ppo-update-numpy",
+      "moduleId": "policy-gradients",
+      "title": "A PPO Update in NumPy",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=pg-ppo-update-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Advanced"
+      ],
+      "prompt": "A news app shows each reader one of four headline styles, and its policy has one row of logits per reader group. An older copy of the policy collected a batch of 90 readers, and the advantages are already computed. Write PPO's clipped objective, its exact gradient with respect to the logits, and an update that makes many passes over the same batch, then compare how far the policy moves with the clip and without it. Write your solution in the marked cells, then run the check cell under each part to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Each check cell prints \"Part N passed\" when that part's function is right."
+    },
+    {
+      "id": "pg-reinforce-learned-baseline-numpy",
+      "moduleId": "policy-gradients",
+      "title": "REINFORCE with a Learned Baseline in NumPy",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=pg-reinforce-learned-baseline-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Advanced"
+      ],
+      "prompt": "A hiker walks a trail with five forks and takes one of two paths at each. Some paths pay at once and some only later, so even this small walk asks which choice earned which reward. Compute rewards-to-go, write the REINFORCE gradient of a softmax policy with one baseline value per fork, check that its average over every possible walk is the exact gradient, and train the policy with a baseline it learns as it goes. Write your solution in the marked cells, then run the check cell under each part to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Each check cell prints \"Part N passed\" when that part's function is right."
+    },
+    {
+      "id": "rf4-baseline-variance",
+      "moduleId": "policy-gradients",
+      "title": "Subtracting a Constant That Changes Everything",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=rf4-baseline-variance",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Advanced"
+      ],
+      "prompt": "Estimate a policy gradient with three baselines, confirm all are unbiased, and measure how much variance the mean-reward and variance-optimal baselines remove.",
+      "answer": "Auto-graded inside the notebook. The exact gradient, biases, variances, optimal baseline, and variance reduction must match to 1e-5, with all estimators unbiased and variance cut at least 20x."
+    }
+  ],
+  "theory": [
+    {
+      "id": "pg-update-from-one-delivery",
+      "moduleId": "policy-gradients",
+      "title": "The Update from One Delivery",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A delivery app sends each order along one of three routes, A, B or C. Every route comes with a feature vector $\\phi(a) \\in \\mathbb{R}^2$, and the policy scores the routes with a weight vector $\\theta$ and turns the scores into probabilities with a softmax:"
+            },
+            {
+              "tex": "\\pi_\\theta(a) = \\frac{\\exp\\big(\\theta^\\top \\phi(a)\\big)}{\\sum_{b} \\exp\\big(\\theta^\\top \\phi(b)\\big)} ."
+            },
+            {
+              "p": "The features are $\\phi(A) = (1, 0)$, $\\phi(B) = (0, 2)$ and $\\phi(C) = (2, 1)$, and at the current $\\theta$ the policy picks A, B and C with probabilities 0.5, 0.3 and 0.2. One order goes out on route B and earns a return of $G = 5$. REINFORCE moves $\\theta$ by a step size times $G \\, \\nabla_\\theta \\log \\pi_\\theta(B)$. What is $G \\, \\nabla_\\theta \\log \\pi_\\theta(B)$?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$(0, \\ 10)$",
+                  "explain": "This is G times φ(B), the gradient of B's own score θ·φ(B). The log of the softmax also subtracts the log of the sum over all three routes, and the gradient of that term is the probability-weighted average of the features, (0.9, 0.8). Without it the estimate no longer averages to the gradient of the expected return: with positive returns, every update would push θ toward whichever route happened to be sampled."
+                },
+                {
+                  "text": "$(-5, \\ 5)$",
+                  "explain": "This subtracts the plain average of the three feature vectors, (1, 1). The gradient of the log of the normalizing sum weights each route's features by that route's share of the sum, which is its probability: 0.5(1, 0) + 0.3(0, 2) + 0.2(2, 1) = (0.9, 0.8)."
+                },
+                {
+                  "text": "$(-1.35, \\ 1.8)$",
+                  "explain": "This is G times the gradient of π(B) itself, which is π(B) = 0.3 times the gradient of its log. The extra factor biases the mean: E[G ∇_θ π(a)] = Σ_a π(a) r(a) ∇_θ π(a), which weights each route by π(a)² instead of π(a) and is not ∇_θ J, so the routes the policy already picks get counted twice over."
+                },
+                {
+                  "text": "$(-4.5, \\ 6)$",
+                  "correct": true,
+                  "explain": "log π(B) is θ·φ(B) minus the log of the sum of exp(θ·φ(b)) over the routes. The first term has gradient φ(B) = (0, 2). The second has gradient equal to the sum of exp(θ·φ(b)) φ(b) divided by the sum of exp(θ·φ(b)), which is the average feature vector under the policy, 0.5(1, 0) + 0.3(0, 2) + 0.2(2, 1) = (0.9, 0.8). So the gradient of log π(B) is (−0.9, 1.2), and G = 5 gives (−4.5, 6). The first component is negative even though B earned a reward: B has less of the first feature than the policy's average route, so making B more likely means turning θ away from that feature."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "log π(B) is θ·φ(B) minus the log of the sum of exp(θ·φ(b)) over the routes. The first term has gradient φ(B) = (0, 2). The second has gradient equal to the sum of exp(θ·φ(b)) φ(b) divided by the sum of exp(θ·φ(b)), which is the average feature vector under the policy, 0.5(1, 0) + 0.3(0, 2) + 0.2(2, 1) = (0.9, 0.8). So the gradient of log π(B) is (−0.9, 1.2), and G = 5 gives (−4.5, 6). The first component is negative even though B earned a reward: B has less of the first feature than the policy's average route, so making B more likely means turning θ away from that feature."
+            },
+            {
+              "result": "$(-4.5, \\ 6)$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pg-credit-across-one-episode",
+      "moduleId": "policy-gradients",
+      "title": "Credit Across One Episode",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "An agent moves between two positions, A and B, and in each it chooses left or right. Its policy is a softmax over two logits per position, $\\theta[s, \\text{left}]$ and $\\theta[s, \\text{right}]$, so that"
+      ],
+      "setup": [
+        {
+          "tex": "\\frac{\\partial \\log \\pi_\\theta(a \\mid s)}{\\partial \\theta[s, b]} = \\mathbb{1}[a = b] - \\pi_\\theta(b \\mid s) ,"
+        },
+        {
+          "p": "while the logits of the other position do not affect $\\log \\pi_\\theta(a \\mid s)$ at all. At the current $\\theta$, $\\pi(\\text{right} \\mid A) = 0.6$ and $\\pi(\\text{left} \\mid B) = 0.5$. One episode, with no discounting ($\\gamma = 1$), runs as follows and then ends."
+        },
+        {
+          "tex": "\\begin{array}{cccc}\n\\text{Step $t$} & \\text{Position} & \\text{Action} & \\text{Reward $r_t$} \\\\ \\hline\n0 & \\text{A} & \\text{right} & +5 \\\\\n1 & \\text{B} & \\text{left} & 0 \\\\\n2 & \\text{A} & \\text{left} & -2\n\\end{array}"
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Form the single-episode REINFORCE estimate with the reward-to-go $G_t$ as the weight of step $t$. What is its component for $\\theta[A, \\text{right}]$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The rewards-to-go are $G_0 = 5 + 0 - 2 = 3$, $G_1 = -2$ and $G_2 = -2$."
+            },
+            {
+              "p": "Position A is visited twice, at steps 0 and 2, and both visits involve $\\theta[A, \\text{right}]$. Step 1 at B involves only B's logits."
+            },
+            {
+              "list": [
+                "Step 0 took right: $\\partial \\log \\pi / \\partial \\theta[A, \\text{right}] = 1 - 0.6 = 0.4$, weighted by $G_0 = 3$, gives $1.2$.",
+                "Step 2 took left: $\\partial \\log \\pi / \\partial \\theta[A, \\text{right}] = 0 - 0.6 = -0.6$, weighted by $G_2 = -2$, gives $1.2$."
+              ]
+            },
+            {
+              "p": "The component is $1.2 + 1.2 = 2.4$. Counting only the first visit to A gives 1.2. With two actions the two derivatives at a position are opposite, so the $\\theta[A, \\text{left}]$ component is $-2.4$."
+            },
+            {
+              "result": "2.4"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Now weight every step by the full return $R(\\tau)$ instead. What is the component for $\\theta[A, \\text{right}]$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "$R(\\tau) = 5 + 0 - 2 = 3$ for every step, so"
+            },
+            {
+              "tex": "3 \\times 0.4 + 3 \\times (-0.6) = 1.2 - 1.8 = -0.6 ."
+            },
+            {
+              "p": "The sign has flipped: this estimate makes left more likely at A, while the reward-to-go estimate makes right more likely."
+            },
+            {
+              "result": "$-0.6$"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Say which actions each estimate pushes up for this episode, why the reward-to-go reading of the episode is the sensible one, and why the two estimates still have the same expected value."
+            }
+          ],
+          "answer": [
+            {
+              "p": "With the full return every step has weight $+3$, and each term pushes up the action it scored: right at A in step 0, left at B, and left at A in step 2. The left at step 2 is credited with the $+5$ earned at step 0, before it was taken. The terms at A are the ones that decide the net effect, and there the two visits pull in opposite directions: $3 \\times 0.4$ for right against $3 \\times 0.6$ for left, so the larger score of the left step wins and left ends up pushed up while right is pushed down."
+            },
+            {
+              "p": "With reward-to-go, the right at step 0 keeps its weight of $+3$, because it came before everything that followed, while the left at B and the left at A in step 2 get $-2$, the only reward that came after them. Both visits to A now push right up, and the episode reads the way it should: the move that earned $+5$ is reinforced and the move that cost $-2$ is suppressed."
+            },
+            {
+              "p": "The two estimates differ by the terms in which a step is weighted by rewards collected before it, here $5$ for step 1 and $5 + 0$ for step 2. By the time $a_t$ is drawn those rewards are fixed, and the score $\\nabla_\\theta \\log \\pi_\\theta(a_t \\mid s_t)$ has mean zero under $\\pi_\\theta(\\cdot \\mid s_t)$, so each such term has expected value zero. Both estimates average to the same gradient. This one episode shows how much noise the past rewards add along the way."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pg-baseline-read-one-step-late",
+      "moduleId": "policy-gradients",
+      "title": "A Baseline Read One Step Late",
+      "difficulty": "Medium",
+      "minutes": 8,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A warehouse robot reaches a junction J and takes one of two routes. The shortcut drains the battery, a reward of $-1$, and leads to station X, from which the rest of the episode always earns 6. The long way passes a pickup point, a reward of $+1$, and leads to station Y, from which the rest of the episode always earns 0. There is no discounting, nothing after X or Y depends on the policy at J, and the policy at J is a softmax over two logits that currently picks each route with probability 0.5."
+            },
+            {
+              "p": "The team uses a baseline: for every state, the average return the robot has collected from that state onward, kept accurate under the current policy. An indexing slip makes the code weight the step at time $t$ by $G_t - b(s_{t+1})$, the stored average of the state the robot moves to, instead of $G_t - b(s_t)$."
+            },
+            {
+              "p": "If the team keeps training with the slip, which route does the policy at J come to prefer?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "The shortcut, at the same pace as with the correct baseline",
+                  "explain": "That would hold for a baseline that depends only on the state the robot acts in, here J. The slip subtracts the average of X when the robot took the shortcut and the average of Y when it took the long way, so the number subtracted depends on the action, and the proof that a baseline averages out no longer applies. The slipped weights are 5 − 6 = −1 for the shortcut and 1 − 0 = +1 for the long way."
+                },
+                {
+                  "text": "The shortcut, but more slowly than with the correct baseline",
+                  "explain": "This assumes the slip only rescales the shortcut's advantage, so the policy still drifts the same way, just more slowly. Recompute both routes' weights with b(X) and b(Y) in place of b(J) and check the sign of each, not only its size."
+                },
+                {
+                  "text": "The long way, more and more strongly as training goes on",
+                  "correct": true,
+                  "explain": "With accurate averages, b(X) = 6 and b(Y) = 0, so the slipped weights are (−1 + 6) − 6 = −1 for the shortcut and (1 + 0) − 0 = +1 for the long way: each step keeps only its own reward, and the 6 that the shortcut leads to is subtracted away. The expected change in the shortcut's logit at 50/50 is 0.5(0.5)(−1) + 0.5(−0.5)(+1) = −0.25. The two weights stay −1 and +1 whatever the policy at J does, so the shortcut keeps losing probability. The correct baseline, b(J) = 3, gives weights +2 and −2 and an expected change of +1.0 toward the shortcut, whose return of 5 beats the long way's 1. The slip turns the robot into one that chases the reward of the current step."
+                },
+                {
+                  "text": "Neither route: the policy stays near 50/50",
+                  "explain": "At 50/50 the two slipped weights, −1 and +1, do average to zero, but the update multiplies each weight by its score, and the scores of the two routes have opposite signs: 1 − 0.5 for the shortcut and 0 − 0.5 for the long way. The two terms add instead of cancelling, 0.5(0.5)(−1) + 0.5(−0.5)(+1) = −0.25, so the shortcut's logit falls."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "With accurate averages, b(X) = 6 and b(Y) = 0, so the slipped weights are (−1 + 6) − 6 = −1 for the shortcut and (1 + 0) − 0 = +1 for the long way: each step keeps only its own reward, and the 6 that the shortcut leads to is subtracted away. The expected change in the shortcut's logit at 50/50 is 0.5(0.5)(−1) + 0.5(−0.5)(+1) = −0.25. The two weights stay −1 and +1 whatever the policy at J does, so the shortcut keeps losing probability. The correct baseline, b(J) = 3, gives weights +2 and −2 and an expected change of +1.0 toward the shortcut, whose return of 5 beats the long way's 1. The slip turns the robot into one that chases the reward of the current step."
+            },
+            {
+              "result": "The long way, more and more strongly as training goes on"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pg-advantages-on-the-way-to-the-dock",
+      "moduleId": "policy-gradients",
+      "title": "Advantages on the Way to the Dock",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "An actor-critic robot makes three moves, from $s_0$ to $s_1$, from $s_1$ to $s_2$, and from $s_2$ into its charging dock. The discount is $\\gamma = 0.9$. The critic is a network that outputs a value for any state it is given, and on this run its outputs are:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{ccccc}\n\\text{State} & s_0 & s_1 & s_2 & \\text{dock} \\\\ \\hline\nV_\\phi(\\cdot) & 4.0 & 5.0 & 2.0 & 1.5\n\\end{array}"
+        },
+        {
+          "p": "The three moves earned $r_0 = 1$, $r_1 = -2$ and $r_2 = 3$. The actor weights the score of each move by the one-step advantage estimate from the lesson."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What weight does the last move, from $s_2$ into the dock, get?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "By the terminal-step convention, the one-step target is $r_2$ alone:"
+            },
+            {
+              "tex": "A_2 = r_2 - V_\\phi(s_2) = 3 - 2.0 = 1.0 ."
+            },
+            {
+              "p": "Bootstrapping from the network's 1.5 for the dock would give $3 + 0.9 \\times 1.5 - 2.0 = 2.35$, crediting the move with rewards an ended episode can never collect. Implementations multiply the next value by $1 - \\text{done}$ for this reason, which is the same rule."
+            },
+            {
+              "result": "1"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What weight does the first move, from $s_0$, get?"
+            }
+          ],
+          "answer": [
+            {
+              "tex": "A_0 = r_0 + \\gamma V_\\phi(s_1) - V_\\phi(s_0) = 1 + 0.9 \\times 5.0 - 4.0 = 1.5 ."
+            },
+            {
+              "p": "For the record, the middle move gets $A_1 = -2 + 0.9 \\times 2.0 - 5.0 = -5.2$."
+            },
+            {
+              "result": "1.5"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Weight the first move instead by the Monte Carlo advantage $G_0 - V_\\phi(s_0)$, using the discounted rewards this run actually collected. Compare it with Part 2, and say what each of the two weights relies on."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The returns are $G_2 = 3$, $G_1 = -2 + 0.9 \\times 3 = 0.7$ and $G_0 = 1 + 0.9 \\times 0.7 = 1.63$, so the Monte Carlo advantage is $1.63 - 4.0 = -2.37$. It pushes the first move down, while the one-step estimate pushes it up by 1.5."
+            },
+            {
+              "p": "The two differ in what they use for the value of reaching $s_1$. The one-step estimate uses the critic's 5.0. The Monte Carlo one uses what this run went on to collect from $s_1$, which was only 0.7."
+            },
+            {
+              "list": [
+                "If the critic is accurate, the first move led to a state worth 5.0 on average, and this run was let down by what came after. The one-step estimate places that shortfall on the middle move, whose advantage is $-5.2$, and leaves the first move its $+1.5$. It is also the less noisy weight, since it does not depend on the later random moves and rewards.",
+                "If the critic is wrong, for instance if it overrates $s_1$, the $+1.5$ is biased: it rewards the first move for a value $s_1$ does not have. The Monte Carlo weight is unbiased however poor the critic is, at the price of carrying all the noise of the steps that follow."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pg-samples-that-still-pass-a-gradient",
+      "moduleId": "policy-gradients",
+      "title": "Samples That Still Pass a Gradient",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "PPO is on its third pass over a batch, with $\\epsilon = 0.2$. For five of the samples, the current ratio $r_t(\\theta) = \\pi_\\theta(a_t \\mid s_t) / \\pi_{\\theta_\\text{old}}(a_t \\mid s_t)$ and the advantage are:"
+            },
+            {
+              "tex": "\\begin{array}{cccccc}\n\\text{Sample} & 1 & 2 & 3 & 4 & 5 \\\\ \\hline\nr_t(\\theta) & 1.10 & 1.35 & 0.70 & 0.60 & 1.50 \\\\\nA_t & +2 & +1 & +3 & -1 & -2\n\\end{array}"
+            },
+            {
+              "p": "Each sample adds $\\min\\big(r_t A_t,\\ \\operatorname{clip}(r_t, 0.8, 1.2)\\, A_t\\big)$ to the objective. Which of the five terms still have a nonzero gradient with respect to $\\theta$ at this point? Assume each ratio itself changes with $\\theta$."
+            },
+            {
+              "choices": [
+                {
+                  "text": "Sample 1 only",
+                  "explain": "This switches off every sample whose ratio is outside [0.8, 1.2], which is what clip(r)·A alone would do. The minimum keeps the unclipped r·A whenever it is the smaller of the two: for sample 3 (2.1 against 2.4) and sample 5 (−3.0 against −2.4). Those two ratios have moved the way their advantages do not favor, and their gradients pull them back."
+                },
+                {
+                  "text": "Samples 1, 3 and 5",
+                  "correct": true,
+                  "explain": "Sample 1 is inside the band, so both terms are 2.2 and the gradient flows. Sample 2: 1.35 against 1.2, the minimum is the clipped 1.2, a constant, so no gradient. Sample 3: 2.1 against 2.4, the minimum is the unclipped 2.1, so the gradient flows and pushes the ratio back up. Sample 4: −0.6 against −0.8, the minimum is the clipped −0.8, no gradient. Sample 5: −3.0 against −2.4, the minimum is the unclipped −3.0, so the gradient flows and pushes the ratio back down. A sample stops only once its ratio has gone past the band on the side its advantage favors, which is the case for samples 2 and 4."
+                },
+                {
+                  "text": "Samples 1, 2 and 4",
+                  "explain": "This takes the larger of the two terms instead of the smaller: it keeps 1.35 for sample 2 and −0.6 for sample 4, and drops samples 3 and 5. That keeps rewarding the samples that have already moved far in the favored direction, so repeated passes would push them further, which is what the clip is there to stop."
+                },
+                {
+                  "text": "Samples 1, 3 and 4",
+                  "explain": "This keeps, for each sample, the term closer to zero. For a positive advantage that is the minimum, but for a negative one it is the larger number: −0.6 rather than −0.8 for sample 4, and −2.4 rather than −3.0 for sample 5. The minimum of −3.0 and −2.4 is −3.0, the unclipped term, so sample 5 keeps its gradient and sample 4 loses it."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Sample 1 is inside the band, so both terms are 2.2 and the gradient flows. Sample 2: 1.35 against 1.2, the minimum is the clipped 1.2, a constant, so no gradient. Sample 3: 2.1 against 2.4, the minimum is the unclipped 2.1, so the gradient flows and pushes the ratio back up. Sample 4: −0.6 against −0.8, the minimum is the clipped −0.8, no gradient. Sample 5: −3.0 against −2.4, the minimum is the unclipped −3.0, so the gradient flows and pushes the ratio back down. A sample stops only once its ratio has gone past the band on the side its advantage favors, which is the case for samples 2 and 4."
+            },
+            {
+              "result": "Samples 1, 3 and 5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pg-a-baseline-from-the-same-batch",
+      "moduleId": "policy-gradients",
+      "title": "A Baseline from the Same Batch",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "A team trains a policy on one-step episodes. In each, the policy sees an input $s$ drawn from a fixed distribution, picks an output $a \\sim \\pi_\\theta(\\cdot \\mid s)$ and receives a reward $r$. To avoid training a critic, every update draws $N$ independent episodes from the current policy and uses the mean reward of the batch as the baseline:"
+      ],
+      "setup": [
+        {
+          "tex": "\\hat g = \\frac{1}{N} \\sum_{i=1}^{N} \\nabla_\\theta \\log \\pi_\\theta(a_i \\mid s_i)\\, \\big(r_i - \\bar r\\big),\n\\qquad \\bar r = \\frac{1}{N} \\sum_{j=1}^{N} r_j ."
+        },
+        {
+          "p": "Write $g = \\nabla_\\theta J(\\theta)$ for the true gradient of the expected reward."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "With $N = 4$, the expected value of $\\hat g$ is $c\\, g$ for a constant $c$. Find $c$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write $S_i = \\nabla_\\theta \\log \\pi_\\theta(a_i \\mid s_i)$ and expand the baseline:"
+            },
+            {
+              "tex": "\\hat g = \\frac{1}{N} \\sum_i S_i r_i \\;-\\; \\frac{1}{N^2} \\sum_i \\sum_j S_i r_j ."
+            },
+            {
+              "list": [
+                "$\\mathbb{E}[S_i r_i] = g$: this is the one-sample REINFORCE identity.",
+                "For $j \\ne i$, episode $j$ is independent of episode $i$, so $\\mathbb{E}[S_i r_j] = \\mathbb{E}[S_i]\\, \\mathbb{E}[r_j] = 0$, because the score has mean zero, the same fact that makes a baseline unbiased.",
+                "For $j = i$, the term is $S_i r_i$ again, with expected value $g$."
+              ]
+            },
+            {
+              "p": "So the double sum contributes only its $N$ diagonal terms:"
+            },
+            {
+              "tex": "\\mathbb{E}[\\hat g] = \\frac{1}{N} \\cdot N g - \\frac{1}{N^2} \\cdot N g = \\Big(1 - \\frac{1}{N}\\Big) g ,"
+            },
+            {
+              "p": "and $c = 3/4 = 0.75$ for $N = 4$. The batch mean contains $r_i$ itself, and $r_i$ depends on $a_i$, so a share $1/N$ of the baseline depends on the very action its score belongs to. That share is what the zero-mean argument does not cover."
+            },
+            {
+              "result": "0.75"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Replace $\\bar r$ in the $i$-th term by the mean of the other $N - 1$ rewards, $b_i = \\frac{1}{N - 1} \\sum_{j \\ne i} r_j$. Show that the new estimator is unbiased, and that for every batch it equals $\\frac{N}{N-1} \\hat g$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "$b_i$ is built only from the other episodes, which are independent of $(s_i, a_i)$, so $\\mathbb{E}[S_i b_i] = \\mathbb{E}[S_i]\\, \\mathbb{E}[b_i] = 0$ and each term has expected value $\\mathbb{E}[S_i r_i] = g$. The average of $N$ such terms is unbiased."
+            },
+            {
+              "p": "For the identity, use $\\sum_{j \\ne i} r_j = N \\bar r - r_i$:"
+            },
+            {
+              "tex": "r_i - b_i = r_i - \\frac{N \\bar r - r_i}{N - 1} = \\frac{N r_i - N \\bar r}{N - 1} = \\frac{N}{N - 1}\\,\\big(r_i - \\bar r\\big) ."
+            },
+            {
+              "p": "Every term of the new estimator is the matching term of $\\hat g$ times $N/(N-1)$, so the whole estimator is $\\frac{N}{N-1}\\hat g$. With $N = 4$ the factor is $4/3$, which exactly undoes the $3/4$ of Part 1. $\\qquad\\blacksquare$"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What is the smallest batch size $N$ for which $\\mathbb{E}[\\hat g]$ is at least 95% of $g$? Then say what $N = 1$ does, and whether the team needs the fix from Part 2 at all."
+            }
+          ],
+          "answer": [
+            {
+              "p": "$1 - 1/N \\ge 0.95$ means $1/N \\le 0.05$, so $N \\ge 20$."
+            },
+            {
+              "p": "With $N = 1$ the baseline is the episode's own reward, $r_1 - \\bar r = 0$, and $\\hat g$ is zero for every batch: nothing is learned. The leave-one-out baseline needs at least two episodes."
+            },
+            {
+              "p": "The bias of $\\hat g$ is a single factor $(N - 1)/N$ on the whole expected update. It shortens the step without turning it, so it acts like a smaller learning rate, and training still moves in the right direction. The fix matters when that factor changes: a team that tunes the learning rate at $N = 4$ and then moves to $N = 16$ gets steps $0.9375 / 0.75 = 1.25$ times longer in expectation, with no change to the learning rate. Multiplying by $N/(N-1)$, which is the leave-one-out form, makes the expected step equal to the learning rate times $g$ at every batch size."
+            },
+            {
+              "result": "20"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pg-gaussian-policy-aims-at-a-target",
+      "moduleId": "policy-gradients",
+      "title": "A Gaussian Policy Aims at a Target",
+      "difficulty": "Hard",
+      "minutes": 30,
+      "overview": [
+        "A controller sets a dial to a continuous value $a$, drawn from a Gaussian policy with mean $\\mu$ and a fixed spread $\\sigma$:"
+      ],
+      "setup": [
+        {
+          "tex": "\\pi_\\mu(a) = \\frac{1}{\\sigma \\sqrt{2\\pi}} \\exp\\!\\left( -\\frac{(a - \\mu)^2}{2\\sigma^2} \\right) ."
+        },
+        {
+          "p": "Each episode is a single setting, and its reward is $R(a) = -(a - 3)^2$. The parameter is $\\mu$, currently $\\mu = 1$, and the single-sample REINFORCE estimate of $dJ/d\\mu$ is"
+        },
+        {
+          "tex": "g = R(a)\\, \\frac{\\partial}{\\partial \\mu} \\log \\pi_\\mu(a) ."
+        },
+        {
+          "p": "For a standard normal $z$, $\\mathbb{E}[z^2] = 1$, $\\mathbb{E}[z^4] = 3$ and $\\mathbb{E}[z^6] = 15$, and every odd moment is 0."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Find $\\mathbb{E}[g]$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The log-density is $-\\log(\\sigma\\sqrt{2\\pi}) - (a - \\mu)^2 / (2\\sigma^2)$, so"
+            },
+            {
+              "tex": "\\frac{\\partial}{\\partial \\mu} \\log \\pi_\\mu(a) = \\frac{a - \\mu}{\\sigma^2} ."
+            },
+            {
+              "p": "Write $a = \\mu + \\sigma z$ with $z$ standard normal, and $d = \\mu - 3 = -2$. Then $a - 3 = d + \\sigma z$, the score is $z / \\sigma$, and"
+            },
+            {
+              "tex": "g = -\\frac{z}{\\sigma}\\,(d + \\sigma z)^2 = -\\frac{d^2}{\\sigma}\\, z - 2d\\, z^2 - \\sigma z^3 ."
+            },
+            {
+              "p": "Only the middle term has a nonzero mean, so $\\mathbb{E}[g] = -2d = 4$, for every $\\sigma$. As a check, $J(\\mu) = \\mathbb{E}[-(a - 3)^2] = -(d^2 + \\sigma^2)$, whose derivative in $\\mu$ is $-2d = 4$."
+            },
+            {
+              "result": "4"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Find $\\operatorname{Var}(g)$ when $\\sigma = 0.5$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Square the three terms of $g$ and take expectations, keeping the cross terms with an even power of $z$:"
+            },
+            {
+              "tex": "\\begin{aligned}\n\\mathbb{E}[g^2] &= \\frac{d^4}{\\sigma^2}\\,\\mathbb{E}[z^2] + 4d^2\\,\\mathbb{E}[z^4] + \\sigma^2\\,\\mathbb{E}[z^6] + 2 \\cdot \\frac{d^2}{\\sigma} \\cdot \\sigma\\,\\mathbb{E}[z^4] \\\\[4pt]\n&= \\frac{d^4}{\\sigma^2} + 12 d^2 + 15\\sigma^2 + 6 d^2 .\n\\end{aligned}"
+            },
+            {
+              "p": "The other two cross terms carry $z^3$ and $z^5$ and vanish. Subtracting $(\\mathbb{E}[g])^2 = 4d^2$,"
+            },
+            {
+              "tex": "\\operatorname{Var}(g) = \\frac{d^4}{\\sigma^2} + 14 d^2 + 15 \\sigma^2 = \\frac{16}{0.25} + 56 + 3.75 = 123.75 ."
+            },
+            {
+              "result": "123.75"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The team subtracts a baseline equal to the expected reward at the current $\\mu$, $b = J(\\mu)$, and uses $(R(a) - b)\\, \\frac{\\partial}{\\partial \\mu} \\log \\pi_\\mu(a)$. Find its variance when $\\sigma = 0.5$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "$b = -(d^2 + \\sigma^2) = -4.25$, and"
+            },
+            {
+              "tex": "R(a) - b = -(d + \\sigma z)^2 + d^2 + \\sigma^2 = -2d\\sigma z + \\sigma^2 (1 - z^2) ."
+            },
+            {
+              "p": "Multiplying by $z / \\sigma$ gives $g_b = -2d\\, z^2 + \\sigma (z - z^3)$, still with mean $-2d = 4$. Its second moment is"
+            },
+            {
+              "tex": "\\mathbb{E}[g_b^2] = 4d^2\\,\\mathbb{E}[z^4] + \\sigma^2\\, \\mathbb{E}\\big[(z - z^3)^2\\big] = 12 d^2 + \\sigma^2 (1 - 2 \\cdot 3 + 15) = 12 d^2 + 10 \\sigma^2 ,"
+            },
+            {
+              "p": "since the cross term carries $z^3 - z^5$ and vanishes. So"
+            },
+            {
+              "tex": "\\operatorname{Var}(g_b) = 8 d^2 + 10 \\sigma^2 = 32 + 2.5 = 34.5 ."
+            },
+            {
+              "result": "34.5"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "The team plans to shrink $\\sigma$ as training goes on, so the controller explores less. What happens to the two variances as $\\sigma \\to 0$, and why does one of them blow up?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Without the baseline the variance has the term $d^4 / \\sigma^2$ and grows without bound: 123.75 at $\\sigma = 0.5$, 312.9 at $\\sigma = 0.25$ and 1656 at $\\sigma = 0.1$. With the baseline it falls toward $8 d^2 = 32$."
+            },
+            {
+              "p": "The score $z / \\sigma$ grows like $1/\\sigma$: with a narrow policy, a small deviation of $a$ from $\\mu$ is a large surprise. Without a baseline that score multiplies the whole reward, and the reward is about $-d^2 = -4$ on every sample. That common offset has nothing to say about which direction to move $\\mu$, but it enters as the term $-(d^2/\\sigma)\\, z$, whose mean is zero and whose variance $d^4 / \\sigma^2$ explodes. The baseline removes the offset. What is left of the reward, $-2d\\sigma z$ plus a smaller term, shrinks in proportion to $\\sigma$ and cancels the $1/\\sigma$ of the score."
+            },
+            {
+              "p": "The expected gradient stays at 4 throughout. A policy that narrows its exploration therefore needs a baseline, or a critic, more and more: without one the same number of episodes gives a noisier estimate the less it explores."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

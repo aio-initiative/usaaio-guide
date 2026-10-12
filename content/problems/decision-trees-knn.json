@@ -1,0 +1,1576 @@
+{
+ "module": "decision-trees-knn",
+ "stage": "Round 1",
+ "index": [
+  {
+   "id": "dtknn-bike-nearest-after-scaling",
+   "moduleId": "decision-trees-knn",
+   "title": "The Nearest Bike After Scaling",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=dtknn-bike-nearest-after-scaling",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 1"
+   ],
+   "prompt": "Five sold bikes differ in weight in kilograms and price in dollars, and the two features are standardized the way StandardScaler does, fit on those five. A bike weighing 12 kg and priced at 450 dollars comes in. Which sold bike is its nearest neighbor?",
+   "answer": "Bike A. Fit on the five bikes, the weights have mean 10 and standard deviation 2, and the prices mean 600 and standard deviation 200 (the squared deviations add up to 20 and 200000, over 5 rows). The query becomes ((12 - 10)/2, (450 - 600)/200) = (1, -0.75). The bikes become A (1.5, -1.5), B (-1.5, 1.5), C (-0.5, -0.5), D (0.5, 0.5) and E (0, 0), with squared distances 0.8125 to A, 1.5625 to E, 1.8125 to D, 2.3125 to C and 11.3125 to B."
+  },
+  {
+   "id": "dtknn-cube-distance-spread",
+   "moduleId": "decision-trees-knn",
+   "title": "How Fast Distances Bunch Up in a Cube",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=dtknn-cube-distance-spread",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "Two points are drawn independently and uniformly from the unit cube in d dimensions, and their squared distance is a sum of d independent terms. The parts ask for the variance of one term, the smallest d at which the spread of that sum relative to its mean is at most 0.1, and what the answer means for a kNN vote. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "dtknn-gini-entropy-disagree",
+   "moduleId": "decision-trees-knn",
+   "title": "Which Leaf Is More Mixed",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=dtknn-gini-entropy-disagree",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 1"
+   ],
+   "prompt": "A tree sorts photos of fruit into four classes, and two of its leaves hold ten training photos each: leaf P with 5 apples and 5 pears, leaf Q with 7 apples, 1 pear, 1 plum and 1 fig. Which leaf is more impure by Gini impurity, and which by entropy?",
+   "answer": "P by Gini, Q by entropy. Gini: P has 1 - (0.25 + 0.25) = 0.5 and Q has 1 - (0.49 + 0.01 + 0.01 + 0.01) = 0.48, so P is slightly more impure. Entropy: P has 1 bit and Q has -0.7 log2 0.7 - 3(0.1 log2 0.1) = 0.360 + 0.997 = 1.357 bits, so Q is clearly more impure. A class with share 0.1 adds 0.332 bits to the entropy but only 0.1 × 0.9 = 0.09 to the Gini impurity, so entropy weighs the three rare classes much more heavily."
+  },
+  {
+   "id": "dtknn-hallway-lamp-greedy",
+   "moduleId": "decision-trees-knn",
+   "title": "A Hallway Lamp and a Greedy Tree",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=dtknn-hallway-lamp-greedy",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "A hallway lamp is wired to two switches, one at each end, and a logger records eight readings of both switch positions, the hour, and whether the lamp is on. A classification tree grown with Gini impurity takes the split with the largest gain at each node and stops at depth 2. Find the largest gain at the root and the tree's training accuracy. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "dtknn-importances-by-hand",
+   "moduleId": "decision-trees-knn",
+   "title": "Feature Importances from a Node Table",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=dtknn-importances-by-hand",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "A classification tree grown on 200 training rows with Gini impurity has four splits: the root splits 200 rows (100 positive, 100 negative) on x1 into 120 rows (90, 30) and 80 rows (10, 70), the 120-row node splits on x2 into 60 pure rows and 60 rows (30, 30), the 80-row node splits on x2 into 20 rows (10, 10) and 60 pure rows, and the 60-row node splits on x3 into 40 rows (30, 10) and 20 pure rows. A split's credit is its own rows times its Gini impurity minus the same quantity for its two children, and a feature's importance is the total credit of its splits divided by the total credit of all four splits. 2 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "dtknn-leave-one-out-two-ends",
+   "moduleId": "decision-trees-knn",
+   "title": "Leave-One-Out Error at Both Ends of k",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=dtknn-leave-one-out-two-ends",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "Six training points on a line have targets 2, 4, 3, 7, 9 and 5. Compute the leave-one-out mean squared error of a kNN regressor at k = 1 and at k = 5, then say which k you would pick and what each end of the range gets wrong. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "dtknn-oat-milk-regression-tree",
+   "moduleId": "decision-trees-knn",
+   "title": "One Split for a Café's Oat Milk Orders",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=dtknn-oat-milk-regression-tree",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "A café ordered oat milk for six weeks and fits a depth-1 regression tree to predict the cartons ordered from the week number. Work out the threshold the tree splits on, how much that split lowers the mean squared error, and what the tree predicts for a week far past the end of the data. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "dtknn-one-wrong-label",
+   "moduleId": "decision-trees-knn",
+   "title": "How Far One Wrong Label Reaches",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=dtknn-one-wrong-label",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "Nine training points sit on a line at x = 0, 1, 2, 4, 5, 7, 8, 10 and 11, with true class 0 on the first five and class 1 on the last four, but the point at x = 2 was recorded as class 1 by mistake. A kNN classifier with plain majority voting is trained on the recorded labels. For k = 1, 3 and 5, find the total length of the set of queries whose prediction differs from what the true labels would give. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "dtknn-pruning-path",
+   "moduleId": "decision-trees-knn",
+   "title": "Pruning a Tree as the Penalty Grows",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=dtknn-pruning-path",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "A classification tree grown on 100 rows is given as a table of class counts at each node. As the cost-complexity penalty ccp_alpha grows, find where the full tree stops being cheapest, how many leaves the cheapest tree keeps, and where it collapses to a single leaf. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "dtknn-staircase-leaves",
+   "moduleId": "decision-trees-knn",
+   "title": "Leaves for a Diagonal Boundary",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=dtknn-staircase-leaves",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "Points of a 5 by 5 grid are class 1 strictly above the diagonal and class 0 on and below it, and a classification tree is grown until every leaf is pure. Count the fewest leaves such a tree can have, first on the 5 by 5 grid and then on a 20 by 20 grid. 2 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "dtknn-weighted-vote-three-classes",
+   "moduleId": "decision-trees-knn",
+   "title": "A Distance-Weighted Vote with Three Classes",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=dtknn-weighted-vote-three-classes",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 1"
+   ],
+   "prompt": "Seven labeled points in the plane are classified with a 6-nearest-neighbor classifier using Euclidean distance and distance-weighted votes. Work out which class the weighted vote picks for the query (1, 2).",
+   "answer": "Class A. The squared distances from (1, 2) are 4 to the C point at (3, 2), 9 to both A points, 25 to all three B points and 100 to (7, 10), so the six nearest are at distances 2, 3, 3, 5, 5 and 5. Each adds 1/d to its class: A gets 1/3 + 1/3 = 0.667, B gets 3/5 = 0.6 and C gets 1/2 = 0.5. A wins although B has more neighbors and C has the nearest one."
+  },
+  {
+   "id": "dtknn-knn-from-scratch-numpy",
+   "moduleId": "decision-trees-knn",
+   "title": "Grade Coffee Beans with kNN in NumPy",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=dtknn-knn-from-scratch-numpy",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 1"
+   ],
+   "prompt": "Write the whole classifier with NumPy: every query-to-training distance in one matrix expression, standardization with the training rows' statistics, and a vote that settles ties. Write your solution in the marked cells, then run the check cell under each part to grade yourself.",
+   "answer": "Auto-graded inside the notebook. Each check cell prints \"Part N passed\" when that part's function is right."
+  },
+  {
+   "id": "dtknn-regression-tree-numpy",
+   "moduleId": "decision-trees-knn",
+   "title": "Grow a Regression Tree in NumPy",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=dtknn-regression-tree-numpy",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 1"
+   ],
+   "prompt": "Write that search and the recursion around it, with the two stopping rules max_depth and min_samples_leaf, and check your tree against small cases where the usual shortcuts go wrong. Write your solution in the marked cells, then run the check cell under each part to grade yourself.",
+   "answer": "Auto-graded inside the notebook. Each check cell prints \"Part N passed\" when that part's function is right."
+  },
+  {
+   "id": "knn-implementation-task",
+   "moduleId": "decision-trees-knn",
+   "title": "k-Nearest Neighbors from Scratch",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=knn",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 1"
+   ],
+   "prompt": "K-nearest neighbors with feature standardization (no sklearn). Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+   "answer": "Auto-graded inside the notebook. Test accuracy must reach the target shown in the evaluation cell."
+  },
+  {
+   "id": "theory-knn-curse",
+   "moduleId": "decision-trees-knn",
+   "title": "k-Nearest Neighbors and the Curse of Dimensionality",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=theory-knn-curse",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Includes code",
+    "Round 1"
+   ],
+   "prompt": "Work out what k-nearest-neighbors costs, how k trades bias against variance, and why distances stop meaning anything in high dimensions. 6 parts, each with its own grading instruction. Solutions revealed part by part.",
+   "answer": "Worked solutions are given part by part on the problem page: full derivations, not just final values. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "theory-decision-trees-entropy",
+   "moduleId": "decision-trees-knn",
+   "title": "Entropy, Information Gain, and Decision Trees",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=theory-decision-trees-entropy",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Includes code",
+    "Round 1"
+   ],
+   "prompt": "Compute entropy and information gain for a candidate split, prove the gain is never negative, and show how an ID column breaks the criterion. 7 parts, each with its own grading instruction. Solutions revealed part by part.",
+   "answer": "Worked solutions are given part by part on the problem page, with full derivations and not just final values. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "ml4-weighted-knn-ties",
+   "moduleId": "decision-trees-knn",
+   "title": "Even k, Two Classes, and a Coin Flip",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=ml4-weighted-knn-ties",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 1"
+   ],
+   "prompt": "With even k and two classes, 4-4 votes are decided by an arbitrary tiebreak. Count the ties, then replace the vote with inverse-distance weighting.",
+   "answer": "Auto-graded inside the notebook. Tie count and both accuracies must match the reference, and ties must actually occur."
+  },
+  {
+   "id": "ml4-knn-regression-k",
+   "moduleId": "decision-trees-knn",
+   "title": "Choosing k Without Fooling Yourself",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=ml4-knn-regression-k",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 1"
+   ],
+   "prompt": "Sweep k for k-NN regression and compare training error against 5-fold cross-validated error, showing why zero training error at k=1 measures nothing.",
+   "answer": "Auto-graded inside the notebook. Both error curves and the selected k must match the reference to 1e-6."
+  }
+ ],
+ "theory": [
+  {
+   "id": "dtknn-bike-nearest-after-scaling",
+   "moduleId": "decision-trees-knn",
+   "title": "The Nearest Bike After Scaling",
+   "difficulty": "Medium",
+   "minutes": 10,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A shop matches each bike brought in for trade to the most similar bike it has already sold, by 1-nearest neighbor on two features, weight in kilograms and price in dollars. The five bikes sold so far are"
+      },
+      {
+       "tex": "\\begin{array}{cccccc}\n\\text{Bike} & \\text{A} & \\text{B} & \\text{C} & \\text{D} & \\text{E} \\\\ \\hline\n\\text{Weight (kg)} & 13 & 7 & 9 & 11 & 10 \\\\\n\\text{Price (dollars)} & 300 & 900 & 500 & 700 & 600\n\\end{array}"
+      },
+      {
+       "p": "The features are standardized the way `StandardScaler` does it, fit on these five bikes, and the distance is Euclidean. A bike weighing 12 kg and priced at 450 dollars comes in. Which sold bike is its nearest neighbor?"
+      },
+      {
+       "choices": [
+        {
+         "text": "Bike C",
+         "explain": "This is the nearest bike in raw units. The squared distance to C is 3² + 50² = 2509 and to A it is 1² + 150² = 22501, so the price gap decides everything and the weights hardly count. Standardizing exists to stop exactly that."
+        },
+        {
+         "text": "Bike B",
+         "explain": "This is what comes out when the five sold bikes are standardized but the query is left in raw units. The query then sits at (12, 450) among points whose coordinates are all between -1.5 and 1.5, so its distance is decided by the 450 alone and the bike with the largest standardized price, B at 1.5, wins. The query must go through the same transform as the training rows."
+        },
+        {
+         "text": "Bike A",
+         "correct": true,
+         "explain": "Fit on the five bikes, the weights have mean 10 and standard deviation 2, and the prices mean 600 and standard deviation 200 (the squared deviations add up to 20 and 200000, over 5 rows). The query becomes ((12 - 10)/2, (450 - 600)/200) = (1, -0.75). The bikes become A (1.5, -1.5), B (-1.5, 1.5), C (-0.5, -0.5), D (0.5, 0.5) and E (0, 0), with squared distances 0.8125 to A, 1.5625 to E, 1.8125 to D, 2.3125 to C and 11.3125 to B."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Fit on the five bikes, the weights have mean 10 and standard deviation 2, and the prices mean 600 and standard deviation 200 (the squared deviations add up to 20 and 200000, over 5 rows). The query becomes ((12 - 10)/2, (450 - 600)/200) = (1, -0.75). The bikes become A (1.5, -1.5), B (-1.5, 1.5), C (-0.5, -0.5), D (0.5, 0.5) and E (0, 0), with squared distances 0.8125 to A, 1.5625 to E, 1.8125 to D, 2.3125 to C and 11.3125 to B."
+      },
+      {
+       "result": "Bike A"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dtknn-cube-distance-spread",
+   "moduleId": "decision-trees-knn",
+   "title": "How Fast Distances Bunch Up in a Cube",
+   "difficulty": "Hard",
+   "minutes": 20,
+   "overview": [
+    "Two points $\\mathbf{u}$ and $\\mathbf{v}$ are drawn independently and uniformly from the cube $[0, 1]^d$. Their squared distance is"
+   ],
+   "setup": [
+    {
+     "tex": "S = \\sum_{j=1}^{d} (u_j - v_j)^2 ,"
+    },
+    {
+     "p": "a sum of $d$ independent terms with the same distribution. Write $T$ for one term, $(u - v)^2$ with $u$ and $v$ independent and uniform on $[0, 1]$."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "$\\mathbb{E}[T] = 1/6$. What is $\\operatorname{Var}(T)$? Give it as a decimal."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The difference $w = u - v$ lies in $[-1, 1]$ with the triangular density $f(w) = 1 - |w|$. By symmetry,"
+      },
+      {
+       "tex": "\\mathbb{E}[w^2] = 2\\int_0^1 w^2 (1 - w)\\,dw = 2\\left(\\frac13 - \\frac14\\right) = \\frac16 ,\n\\qquad\n\\mathbb{E}[w^4] = 2\\int_0^1 w^4 (1 - w)\\,dw = 2\\left(\\frac15 - \\frac16\\right) = \\frac{1}{15} ."
+      },
+      {
+       "p": "Since $T = w^2$,"
+      },
+      {
+       "tex": "\\operatorname{Var}(T) = \\mathbb{E}[w^4] - \\mathbb{E}[w^2]^2 = \\frac{1}{15} - \\frac{1}{36} = \\frac{7}{180} \\approx 0.03889 ."
+      },
+      {
+       "result": "0.03889"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "The relative spread of $S$ is its standard deviation divided by its mean. What is the smallest $d$ at which the relative spread is at most 0.1?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The $d$ terms are independent, so their means and their variances add: $\\mathbb{E}[S] = d/6$ and $\\operatorname{Var}(S) = 7d/180$. The standard deviations do not add. They grow only like $\\sqrt{d}$:"
+      },
+      {
+       "tex": "\\frac{\\sqrt{7d/180}}{d/6} = 6\\sqrt{\\frac{7}{180}} \\cdot \\frac{1}{\\sqrt{d}} = \\frac{\\sqrt{1.4}}{\\sqrt{d}} \\approx \\frac{1.183}{\\sqrt{d}} ."
+      },
+      {
+       "p": "This is at most 0.1 when $\\sqrt{d} \\ge 10\\sqrt{1.4}$, so $d \\ge 140$. A simulation of 20,000 pairs at $d = 140$ gives a mean squared distance of 23.33 and a relative spread of 0.0999."
+      },
+      {
+       "result": "140"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "At $d = 140$, a query has 1,000 training points drawn the same way. Roughly how far apart, in squared distance, are its nearest and its farthest neighbors, compared with the typical squared distance? What does that mean for a kNN vote?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "$S$ is a sum of 140 independent terms, so it is close to normal with mean $140/6 \\approx 23.3$ and standard deviation about $2.33$. Among 1,000 draws the smallest and largest land about 3 standard deviations from the mean, near 17 and 30. So the farthest training point is less than twice as far, in squared distance, as the nearest, and about 95% of the 1,000 sit within 20% of 23.3, two standard deviations. In two dimensions the nearest point would be a tiny fraction of the typical distance away. Here the nearest neighbors are hardly nearer than any other points, so a vote among them carries little information about the query, unless the data lie near a low-dimensional structure that uniform points do not have."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dtknn-gini-entropy-disagree",
+   "moduleId": "decision-trees-knn",
+   "title": "Which Leaf Is More Mixed",
+   "difficulty": "Medium",
+   "minutes": 8,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A tree sorts photos of fruit into four classes: apple, pear, plum and fig. Two of its leaves hold ten training photos each."
+      },
+      {
+       "list": [
+        "Leaf P: 5 apples and 5 pears.",
+        "Leaf Q: 7 apples, 1 pear, 1 plum and 1 fig."
+       ]
+      },
+      {
+       "p": "Which leaf is more impure by Gini impurity, and which by entropy?"
+      },
+      {
+       "choices": [
+        {
+         "text": "P by Gini, Q by entropy",
+         "correct": true,
+         "explain": "Gini: P has 1 - (0.25 + 0.25) = 0.5 and Q has 1 - (0.49 + 0.01 + 0.01 + 0.01) = 0.48, so P is slightly more impure. Entropy: P has 1 bit and Q has -0.7 log2 0.7 - 3(0.1 log2 0.1) = 0.360 + 0.997 = 1.357 bits, so Q is clearly more impure. A class with share 0.1 adds 0.332 bits to the entropy but only 0.1 × 0.9 = 0.09 to the Gini impurity, so entropy weighs the three rare classes much more heavily."
+        },
+        {
+         "text": "P by both",
+         "explain": "This holds for two classes, where an even split is the most mixed a node can be. With four classes the maximum is 0.75 for Gini and 2 bits for entropy, so an even split of two classes is not the ceiling. Computing Q gives 0.48 by Gini, just below P, but 1.357 bits by entropy, above P's 1 bit."
+        },
+        {
+         "text": "Q by both",
+         "explain": "Q is more impure by entropy, at 1.357 bits against 1. But its Gini impurity is 1 - (0.49 + 0.01 + 0.01 + 0.01) = 0.48, just below P's 0.5. The 0.7 share of apples is squared to 0.49, and the three rare classes add only 0.03 to the sum of squares, so they barely register."
+        },
+        {
+         "text": "Q by Gini, P by entropy",
+         "explain": "This is what the two sums give without their outer signs. The sum of squared proportions is 0.5 for P and 0.52 for Q, and the sum of p log2 p is -1 for P and -1.357 for Q. Both measure how pure a node is, so each ranking comes out reversed. Gini is 1 minus the first sum and entropy is minus the second: P 0.5 against Q 0.48, and P 1 bit against Q 1.357."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Gini: P has 1 - (0.25 + 0.25) = 0.5 and Q has 1 - (0.49 + 0.01 + 0.01 + 0.01) = 0.48, so P is slightly more impure. Entropy: P has 1 bit and Q has -0.7 log2 0.7 - 3(0.1 log2 0.1) = 0.360 + 0.997 = 1.357 bits, so Q is clearly more impure. A class with share 0.1 adds 0.332 bits to the entropy but only 0.1 × 0.9 = 0.09 to the Gini impurity, so entropy weighs the three rare classes much more heavily."
+      },
+      {
+       "result": "P by Gini, Q by entropy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dtknn-hallway-lamp-greedy",
+   "moduleId": "decision-trees-knn",
+   "title": "A Hallway Lamp and a Greedy Tree",
+   "difficulty": "Medium",
+   "minutes": 15,
+   "overview": [
+    "A hallway lamp is wired to two switches, one at each end. A logger records eight readings: whether each switch is up (1) or down (0), the hour of the reading, and whether the lamp is on."
+   ],
+   "setup": [
+    {
+     "tex": "\\begin{array}{ccccccccc}\n\\text{Hour} & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\\\ \\hline\n\\text{Switch 1} & 0 & 0 & 1 & 1 & 0 & 1 & 0 & 1 \\\\\n\\text{Switch 2} & 0 & 1 & 0 & 1 & 0 & 1 & 1 & 0 \\\\\n\\text{Lamp on} & 0 & 1 & 1 & 0 & 0 & 0 & 1 & 1\n\\end{array}"
+    },
+    {
+     "p": "A classification tree is grown on the three features with Gini impurity. At each node it takes the split with the largest Gini gain, using the midpoints between neighboring values as thresholds, and it stops at depth 2."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the largest Gini gain of any split at the root?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The root holds four readings with the lamp on and four with it off, so its Gini impurity is 0.5."
+      },
+      {
+       "p": "Each switch splits the readings into its four 0s and its four 1s, and each side holds two readings with the lamp on and two with it off. Both children have impurity 0.5, so the gain of either switch is 0."
+      },
+      {
+       "p": "The hour offers seven thresholds. The best is hour $\\le 6.5$: the left child holds hours 1 to 6 with lamp values 0, 1, 1, 0, 0, 0, two on and four off, so its impurity is $1 - (1/9 + 4/9) = 4/9$. The right child, hours 7 and 8, is pure. The gain is"
+      },
+      {
+       "tex": "0.5 - \\frac{6}{8} \\cdot \\frac{4}{9} = 0.5 - \\frac13 = \\frac16 \\approx 0.1667 ."
+      },
+      {
+       "p": "The next best thresholds, 1.5 and 7.5, each peel off one reading and gain only $1/14 \\approx 0.071$."
+      },
+      {
+       "result": "0.1667"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What training accuracy does the depth-2 tree reach?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The right child (hours 7 and 8) is pure and stays a leaf. The left child holds hours 1 to 6, with lamp values 0, 1, 1, 0, 0, 0 and impurity $4/9$. Its candidate splits:"
+      },
+      {
+       "list": [
+        "Switch 1 sends hours 1, 2, 5 (lamp 0, 1, 0) one way and hours 3, 4, 6 (lamp 1, 0, 0) the other. Both sides have impurity $4/9$, so the gain is 0.",
+        "Switch 2 sends hours 1, 3, 5 (lamp 0, 1, 0) and hours 2, 4, 6 (lamp 1, 0, 0), again gain 0.",
+        "Hour $\\le 3.5$ gives hours 1 to 3 (lamp 0, 1, 1, impurity $4/9$) and hours 4 to 6 (all off, pure). Its gain is $4/9 - \\frac12 \\cdot \\frac49 = 2/9$, the best on offer."
+       ]
+      },
+      {
+       "p": "So the tree is: hour $\\le 6.5$, then hour $\\le 3.5$. Its leaves predict on for hours 1 to 3, off for 4 to 6 and on for 7 and 8. Only the reading at hour 1 is wrong, so the accuracy is $7/8 = 0.875$."
+      },
+      {
+       "result": "0.875"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Is there a depth-2 tree that classifies all eight readings correctly? What does that say about the greedy search?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Yes. Split on switch 1 at the root, then on switch 2 in both children. Each of the four leaves then holds one combination of the switches, and the lamp is on exactly when the switches differ, so every leaf is pure."
+      },
+      {
+       "p": "The greedy search cannot find it, because the first split of that tree has gain 0. A switch on its own says nothing about the lamp, and only the pair does. The hour has a small gain at the root that is pure coincidence, so the greedy search takes it and spends both levels on the hour. With a depth limit, a tree that never looks ahead can miss a perfect tree whose first question looks useless on its own."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dtknn-importances-by-hand",
+   "moduleId": "decision-trees-knn",
+   "title": "Feature Importances from a Node Table",
+   "difficulty": "Medium",
+   "minutes": 15,
+   "overview": [
+    "A classification tree was grown on 200 training rows with Gini impurity. Its internal nodes, with the class counts (positive, negative) of each node and of its two children, are"
+   ],
+   "setup": [
+    {
+     "tex": "\\begin{array}{cccccc}\n\\text{Node} & \\text{Rows} & \\text{Counts} & \\text{Splits on} & \\text{Left child} & \\text{Right child} \\\\ \\hline\n\\text{root} & 200 & \\text{(100, 100)} & x_1 & \\text{L: (90, 30)} & \\text{R: (10, 70)} \\\\\n\\text{L} & 120 & \\text{(90, 30)} & x_2 & \\text{(60, 0)} & \\text{LR: (30, 30)} \\\\\n\\text{R} & 80 & \\text{(10, 70)} & x_2 & \\text{(10, 10)} & \\text{(0, 60)} \\\\\n\\text{LR} & 60 & \\text{(30, 30)} & x_3 & \\text{(30, 10)} & \\text{(0, 20)}\n\\end{array}"
+    },
+    {
+     "p": "scikit-learn's `feature_importances_` credits each split with the impurity it removes from the rows that reach it: the node's row count times its Gini, minus the same for its two children. A feature's importance is the total credit of its splits, divided by the total credit of all splits, so the importances add up to 1."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the importance of $x_3$?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The Gini impurities are 0.5 for the root, $1 - (0.75^2 + 0.25^2) = 0.375$ for L, $1 - (0.125^2 + 0.875^2) = 0.21875$ for R, 0.5 for LR, 0.5 for the (10, 10) child, $1 - (0.75^2 + 0.25^2) = 0.375$ for the (30, 10) child and 0 for the pure ones. The credit of each split, rows times Gini of the node minus the same for the children:"
+      },
+      {
+       "tex": "\\begin{array}{ccc}\n\\text{Split} & \\text{Credit} & \\text{Feature} \\\\ \\hline\n\\text{root} & 200(0.5) - 120(0.375) - 80(0.21875) = 100 - 45 - 17.5 = 37.5 & x_1 \\\\\n\\text{L} & 120(0.375) - 60(0) - 60(0.5) = 45 - 30 = 15 & x_2 \\\\\n\\text{R} & 80(0.21875) - 20(0.5) - 60(0) = 17.5 - 10 = 7.5 & x_2 \\\\\n\\text{LR} & 60(0.5) - 40(0.375) - 20(0) = 30 - 15 = 15 & x_3\n\\end{array}"
+      },
+      {
+       "p": "The total is 75, so the importances are $37.5/75 = 0.5$ for $x_1$, $(15 + 7.5)/75 = 0.3$ for $x_2$ and $15/75 = 0.2$ for $x_3$."
+      },
+      {
+       "result": "0.2"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Of the four splits, the one at LR has the largest drop in Gini impurity, from 0.5 to a weighted 0.25 in its children. Compare that with the share of the importance it gets, explain the difference, and give the three importances you would get by adding up the drops in Gini without the row counts."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The split at LR gets a fifth of the importance, the smallest share of the three features, although its drop of 0.25 is the largest. The drop happens to 60 rows, while the root's drop of 0.1875 happens to all 200. Importance measures how much impurity a feature removes from the training set as a whole, so a split deep in the tree that cleans up a small node counts for little, however clean the result. Multiplying by the row count is what makes the credits comparable across nodes."
+      },
+      {
+       "p": "Without the row counts the drops are 0.1875 for the root, 0.125 for L, 0.09375 for R and 0.25 for LR. They add up to 0.65625 and give 0.286 for $x_1$, 0.333 for $x_2$ and 0.381 for $x_3$, the reverse of the right order. That reading would call the feature that only tidies up 60 rows the most important one."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dtknn-leave-one-out-two-ends",
+   "moduleId": "decision-trees-knn",
+   "title": "Leave-One-Out Error at Both Ends of k",
+   "difficulty": "Medium",
+   "minutes": 15,
+   "overview": [
+    "A kNN regression model predicts the mean target of the $k$ nearest training points. It has six training points on a line:"
+   ],
+   "setup": [
+    {
+     "tex": "\\begin{array}{ccccccc}\nx & 1 & 2 & 4 & 7 & 8 & 10 \\\\ \\hline\ny & 2 & 4 & 3 & 7 & 9 & 5\n\\end{array}"
+    },
+    {
+     "p": "To choose $k$ you run leave-one-out cross-validation: each point in turn is removed, predicted from the other five, and the squared errors of the six predictions are averaged."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the leave-one-out mean squared error at $k = 1$?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Each point is predicted by its nearest other point. The nearest neighbors are 2 for $x = 1$, 1 for $x = 2$, 2 for $x = 4$ (distance 2 against 3 for $x = 7$), 8 for $x = 7$, 7 for $x = 8$ and 8 for $x = 10$. So the predictions and errors are"
+      },
+      {
+       "tex": "\\begin{array}{ccccccc}\nx & 1 & 2 & 4 & 7 & 8 & 10 \\\\ \\hline\n\\text{Prediction} & 4 & 2 & 4 & 9 & 7 & 9 \\\\\n\\text{Error $y - \\hat{y}$} & -2 & 2 & -1 & -2 & 2 & -4\n\\end{array}"
+      },
+      {
+       "p": "The squared errors add up to $4 + 4 + 1 + 4 + 4 + 16 = 33$, and the mean is $33 / 6 = 5.5$. The training error at $k = 1$ is 0, because there every point is its own nearest neighbor. Leaving the point out is what makes the number honest."
+      },
+      {
+       "result": "5.5"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the leave-one-out mean squared error at $k = 5$, the largest $k$ the procedure allows?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "With one point removed only five remain, so at $k = 5$ every point is predicted by the mean of all the others. The six targets add up to 30, so the mean of the other five is $(30 - y_i) / 5$, and the error is"
+      },
+      {
+       "tex": "y_i - \\frac{30 - y_i}{5} = \\frac{6 y_i - 30}{5} = \\frac{6}{5}\\,(y_i - 5),"
+      },
+      {
+       "p": "where 5 is the mean of all six targets. The deviations $y_i - 5$ are $-3, -1, -2, 2, 4, 0$, with squares adding up to 34. So the leave-one-out error is"
+      },
+      {
+       "tex": "\\left(\\frac{6}{5}\\right)^2 \\cdot \\frac{34}{6} = \\frac{204}{25} = 8.16 ."
+      },
+      {
+       "p": "Averaging all six targets, the point itself included, would give $34 / 6 \\approx 5.67$ and make the most biased model look nearly as good as $k = 1$. In general, leaving a point out of a mean of $n$ points stretches its error by $n / (n - 1)$, so the leave-one-out error of the mean is $\\left(\\frac{n}{n - 1}\\right)^2$ times the variance."
+      },
+      {
+       "result": "8.16"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Of $k = 1$ and $k = 5$, which would you pick on these numbers, and what does each end of the range get wrong?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "$k = 1$, with 5.5 against 8.16. At $k = 5$ every prediction is close to the overall mean of 5, so the model ignores $x$ entirely: the targets rise from 2 and 4 at the left to 7 and 9 at $x = 7$ and 8, and a nearly flat prediction misses that trend. That is bias. At $k = 1$ each prediction copies a single neighbor, so one target off the trend costs a lot: the 5 at $x = 10$ is predicted as 9, the value next to it, for the largest error of the six. That is variance. A value of $k$ in between is worth trying next, and leave-one-out on these six points is cheap enough to run for every $k$."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dtknn-oat-milk-regression-tree",
+   "moduleId": "decision-trees-knn",
+   "title": "One Split for a Café's Oat Milk Orders",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "A café has ordered oat milk for six weeks and fits a depth-1 regression tree (`DecisionTreeRegressor(max_depth=1)`) to predict the order from the week number."
+   ],
+   "setup": [
+    {
+     "tex": "\\begin{array}{ccccccc}\n\\text{Week $x$} & 1 & 2 & 3 & 4 & 5 & 6 \\\\ \\hline\n\\text{Cartons $y$} & 1 & 4 & 7 & 8 & 11 & 17\n\\end{array}"
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Which threshold $t$ does the split $x \\le t$ use?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Each candidate threshold is a midpoint between two weeks. For each, add up the squared deviations from the mean on both sides:"
+      },
+      {
+       "tex": "\\begin{array}{cccccc}\nt & \\text{Left targets} & \\text{Right targets} & \\text{Left mean} & \\text{Right mean} & \\text{Squared error} \\\\ \\hline\n1.5 & 1 & \\text{4, 7, 8, 11, 17} & 1 & 9.4 & 97.2 \\\\\n2.5 & \\text{1, 4} & \\text{7, 8, 11, 17} & 2.5 & 10.75 & 65.25 \\\\\n3.5 & \\text{1, 4, 7} & \\text{8, 11, 17} & 4 & 12 & 60 \\\\\n4.5 & \\text{1, 4, 7, 8} & \\text{11, 17} & 5 & 14 & \\text{$\\mathbf{48}$} \\\\\n5.5 & \\text{1, 4, 7, 8, 11} & 17 & 6.2 & 17 & 58.8\n\\end{array}"
+      },
+      {
+       "p": "The smallest total is 48, at $t = 4.5$. The biggest jump in the data, 11 to 17 between weeks 5 and 6, is not where the tree cuts. Cutting there isolates one week but leaves five targets spread from 1 to 11 in the left leaf, whose squared error alone is 58.8."
+      },
+      {
+       "result": "4.5"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "By how much does the split lower the mean squared error, from the root to the two leaves (averaged over all six weeks)?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The six targets have mean 8 and deviations $-7, -4, -1, 0, 3, 9$, whose squares add up to 156. So the root's mean squared error is $156 / 6 = 26$. After the split the squared errors add up to 48, a mean of $48 / 6 = 8$. The split lowers the mean squared error by $26 - 8 = 18$."
+      },
+      {
+       "result": "18"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What does the tree predict for week 10?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Week 10 is past the threshold, so it lands in the right leaf, which predicts the mean of weeks 5 and 6: $(11 + 17) / 2 = 14$. A tree's leaves are constant, so it predicts 14 for every week after 4.5, however far ahead. A straight line fitted to the same six weeks would predict about 27 for week 10, carrying the trend on. Neither is safe so far outside the data, but only the tree can never go above 17, the largest order it has seen."
+      },
+      {
+       "result": "14"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dtknn-one-wrong-label",
+   "moduleId": "decision-trees-knn",
+   "title": "How Far One Wrong Label Reaches",
+   "difficulty": "Hard",
+   "minutes": 25,
+   "overview": [
+    "Nine training points lie on a line. The true classes are"
+   ],
+   "setup": [
+    {
+     "tex": "\\begin{array}{cccccccccc}\nx & 0 & 1 & 2 & 4 & 5 & 7 & 8 & 10 & 11 \\\\ \\hline\n\\text{Class} & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1\n\\end{array}"
+    },
+    {
+     "p": "but the point at $x = 2$ was recorded as class 1 by mistake. A kNN classifier with plain majority voting is trained on the recorded labels and used for queries anywhere on the line. For each $k$, find the total length of the set of queries whose prediction differs from what the true labels would give. Ignore single points where distances tie."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "$k = 1$."
+      }
+     ],
+     "answer": [
+      {
+       "p": "With $k = 1$ the point at 2 decides every query nearer to it than to any other point: the interval from the midpoint with 1 to the midpoint with 4, that is $(1.5, 3)$. Every query there is predicted class 1 instead of class 0, and no query outside it is affected. The length is 1.5."
+      },
+      {
+       "result": "1.5"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "$k = 3$."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The wrong label changes a 3-vote only for a query whose three nearest points include $x = 2$ and whose other two neighbors split one and one, so that the point at 2 casts the deciding vote. The point at 2 is among the three nearest only for queries left of 4.5, where it ties with 7 for third place. For those queries 7 is never among the three, so the other two nearest points come from 0, 1, 4 and 5, all class 0, so the vote is two to one for class 0 even with the wrong label. Nothing changes, and the length is 0."
+      },
+      {
+       "result": "0"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "$k = 5$."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Now the point at 2 is among the five nearest for queries up to $x = 6$, where it ties with 10 for fifth place. For a query $q$ between 4.5 and 6, the five nearest are 5, 4, 7, 8 and 2. Their true classes vote three to two for class 0, but with the wrong label it is three to two for class 1. Below 4.5 the five nearest always include at least three class-0 points other than 2 (just below 4.5 they are 4, 5, 2, 7 and 1), so the vote holds. Above 6 the point at 2 drops out of the five nearest. The changed set is $(4.5, 6)$, of length 1.5."
+      },
+      {
+       "p": "So the wrong label does not stay near $x = 2$. With the true labels the 5-neighbor boundary sits at 6, halfway between 5 and 7. With the wrong label it moves to 4.5. A larger $k$ outvotes one bad label in a region where all the neighbors agree, which is what happens at $k = 3$, but where the vote is close, near the boundary, the bad label still decides it, and at $k = 5$ it reaches 2.5 to 4 units away."
+      },
+      {
+       "result": "1.5"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dtknn-pruning-path",
+   "moduleId": "decision-trees-knn",
+   "title": "Pruning a Tree as the Penalty Grows",
+   "difficulty": "Hard",
+   "minutes": 25,
+   "overview": [
+    "A classification tree was grown on 100 rows. Each node is listed with its class counts (positive, negative):"
+   ],
+   "setup": [
+    {
+     "tex": "\\begin{array}{ccc}\n\\text{Node} & \\text{Counts} & \\text{Children} \\\\ \\hline\n\\text{root} & \\text{(50, 50)} & \\text{L, R} \\\\\n\\text{L} & \\text{(45, 15)} & \\text{LL (40, 0) and LR (5, 15)} \\\\\n\\text{R} & \\text{(5, 35)} & \\text{RL (5, 5) and RR (0, 30)} \\\\\n\\text{LR} & \\text{(5, 15)} & \\text{LRL (0, 15) and LRR (5, 0)}\n\\end{array}"
+    },
+    {
+     "p": "The tree has five leaves: LL, LRL, LRR, RL and RR. Pruning at a node replaces everything below it with a single leaf. Cost-complexity pruning, `ccp_alpha` in scikit-learn, keeps the pruned tree $T$ with the smallest cost $C_\\alpha(T)$ from the lesson, with Gini impurity and $n = 100$."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Above which value of $\\alpha$ is the full tree no longer the cheapest?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Write $R(t) = \\frac{n_t}{100} G(t)$ for a node. Then"
+      },
+      {
+       "list": [
+        "$R(\\text{root}) = 0.5$,",
+        "$R(\\text{L}) = 0.6 \\cdot 0.375 = 0.225$,",
+        "$R(\\text{R}) = 0.4 \\cdot 0.21875 = 0.0875$,",
+        "$R(\\text{LR}) = 0.2 \\cdot 0.375 = 0.075$,",
+        "$R(\\text{RL}) = 0.1 \\cdot 0.5 = 0.05$, and every other leaf is pure."
+       ]
+      },
+      {
+       "p": "Pruning at a node $t$ swaps the leaves below it for one leaf. The impurity term rises from the sum over those leaves to $R(t)$, and the leaf count falls by one less than the number of leaves below $t$. So pruning at $t$ pays off once $\\alpha$ exceeds"
+      },
+      {
+       "tex": "g(t) = \\frac{R(t) - \\sum_{\\ell \\text{ below } t} R(\\ell)}{(\\text{leaves below } t) - 1} ."
+      },
+      {
+       "tex": "\\begin{array}{ccccc}\n\\text{Node} & \\text{Leaves below} & R(t) & \\text{Sum over its leaves} & g(t) \\\\ \\hline\n\\text{LR} & 2 & 0.075 & 0 & 0.075 \\\\\n\\text{R} & 2 & 0.0875 & 0.05 & 0.0375 \\\\\n\\text{L} & 3 & 0.225 & 0 & 0.1125 \\\\\n\\text{root} & 5 & 0.5 & 0.05 & 0.1125\n\\end{array}"
+      },
+      {
+       "p": "The smallest is $g(\\text{R}) = 0.0375$. For $\\alpha > 0.0375$ replacing R's two leaves with one leaf costs 0.0375 in impurity and saves more than that in the penalty, so the full tree is no longer the cheapest. Pruning the deepest node first, LR, is a natural guess and is wrong: LR's two leaves are both pure, so they buy 0.075 of impurity for one extra leaf, twice what R's split buys."
+      },
+      {
+       "result": "0.0375"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "How many leaves does the cheapest tree have at $\\alpha = 0.1$?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "After R is pruned, the tree has leaves LL, LRL, LRR and R, and the values of $g$ change for the nodes above R. The root now has 4 leaves below it with total $R$ of $0.0875$, so $g(\\text{root}) = (0.5 - 0.0875)/3 = 0.1375$. LR still has $g = 0.075$ and L still has $0.1125$. The next node to go is LR, at $\\alpha = 0.075$. Then L has leaves LL and LR below it, with $g(\\text{L}) = (0.225 - 0.075)/1 = 0.15$, and the root has $(0.5 - 0.1625)/2 = 0.16875$."
+      },
+      {
+       "p": "So at $\\alpha = 0.1$, R and LR have been pruned and L has not. The tree has the 3 leaves LL, LR and R. Checking the costs directly at $\\alpha = 0.1$: the full tree costs $0.05 + 0.5 = 0.55$, with R pruned $0.0875 + 0.4 = 0.4875$, with R and LR pruned $0.1625 + 0.3 = 0.4625$, and with L also pruned $0.3125 + 0.2 = 0.5125$."
+      },
+      {
+       "result": "3"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Above which value of $\\alpha$ is the tree a single leaf?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "After L is pruned at $\\alpha = 0.15$, only the root split is left, with leaves L and R. Its value is"
+      },
+      {
+       "tex": "g(\\text{root}) = \\frac{0.5 - (0.225 + 0.0875)}{2 - 1} = 0.1875 ,"
+      },
+      {
+       "p": "so for $\\alpha > 0.1875$ the cheapest tree is the root alone. The whole path is a full tree up to 0.0375, then 4 leaves up to 0.075, 3 up to 0.15, 2 up to 0.1875, and 1 leaf after that. These breakpoints are what `cost_complexity_pruning_path` returns, and cross-validation picks among them."
+      },
+      {
+       "result": "0.1875"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dtknn-staircase-leaves",
+   "moduleId": "decision-trees-knn",
+   "title": "Leaves for a Diagonal Boundary",
+   "difficulty": "Hard",
+   "minutes": 20,
+   "overview": [
+    "The 25 points $(i, j)$ with $i, j \\in \\{1, 2, 3, 4, 5\\}$ form a grid. A point is class 1 when $i > j$ and class 0 otherwise, so the 5 points on the diagonal are class 0. A classification tree splits on $x_1 \\le t$ or $x_2 \\le t$ and is grown until every leaf is pure."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the smallest number of leaves such a tree can have?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "**At least 9.** Every leaf covers a rectangle of the grid, and it holds a single class. Take the five diagonal points $(m, m)$. A rectangle containing $(a, a)$ and $(b, b)$ with $a < b$ also contains $(b, a)$, which is class 1. So no class-0 leaf holds two diagonal points, and the class-0 points need at least 5 leaves. Now take the four points $(m + 1, m)$ just below the diagonal. A rectangle containing $(a + 1, a)$ and $(b + 1, b)$ with $a < b$ also contains $(b, b)$, which is class 0. So the class-1 points need at least 4 leaves. That makes at least $5 + 4 = 9$."
+      },
+      {
+       "p": "**9 is reached.** Split on $x_1 \\le 1.5$. The column $i = 1$ is all class 0, since $1 \\le j$ always, and becomes a leaf. On the other side split on $x_2 \\le 1.5$: the row $j = 1$ with $i \\ge 2$ is all class 1 and becomes a leaf. What remains is the same problem on the $4 \\times 4$ grid $\\{2, \\dots, 5\\}^2$. Each round of two splits makes two leaves and shrinks the grid by one, until the single point $(5, 5)$ is a leaf of its own, so the tree has $2 \\cdot 4 + 1 = 9$ leaves."
+      },
+      {
+       "result": "9"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "The same rule on the $20 \\times 20$ grid. What is the smallest number of leaves now?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Both halves of the argument work for any $n$: the $n$ diagonal points need $n$ class-0 leaves, the $n - 1$ points just below it need $n - 1$ class-1 leaves, and the staircase of splits reaches $2n - 1$. For $n = 20$ that is 39 leaves, and the staircase tree is 38 levels deep. One line, $x_1 = x_2$, separates the classes exactly, so a logistic regression on the two features needs only three weights. The tree's size grows with the number of points along the boundary, which is why a tilted boundary costs a tree so much, and why its staircase fits the noise once the data are not this clean."
+      },
+      {
+       "result": "39"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dtknn-weighted-vote-three-classes",
+   "moduleId": "decision-trees-knn",
+   "title": "A Distance-Weighted Vote with Three Classes",
+   "difficulty": "Medium",
+   "minutes": 8,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A kNN classifier stores seven labeled points in the plane:"
+      },
+      {
+       "tex": "\\begin{array}{cccccccc}\n\\text{Point} & (3, 2) & (1, 5) & (-2, 2) & (4, 6) & (-3, 5) & (1, -3) & (7, 10) \\\\ \\hline\n\\text{Class} & \\text{C} & \\text{A} & \\text{A} & \\text{B} & \\text{B} & \\text{B} & \\text{C}\n\\end{array}"
+      },
+      {
+       "p": "It is set up as `KNeighborsClassifier(n_neighbors=6, weights=\"distance\")` with Euclidean distance. Which class does it predict for the query $(1, 2)$?"
+      },
+      {
+       "choices": [
+        {
+         "text": "Class B",
+         "explain": "B is the plain majority: three of the six nearest points are B. With distance weighting the votes are not counted one each. Each neighbor adds 1/d, so the three B points at distance 5 add only 3/5 = 0.6, less than the two A points at distance 3."
+        },
+        {
+         "text": "Class A",
+         "correct": true,
+         "explain": "The squared distances from (1, 2) are 4 to the C point at (3, 2), 9 to both A points, 25 to all three B points and 100 to (7, 10), so the six nearest are at distances 2, 3, 3, 5, 5 and 5. Each adds 1/d to its class: A gets 1/3 + 1/3 = 0.667, B gets 3/5 = 0.6 and C gets 1/2 = 0.5. A wins although B has more neighbors and C has the nearest one."
+        },
+        {
+         "text": "Class C",
+         "explain": "This weights each neighbor by 1/d² instead of 1/d, which is what happens when the weights are taken from squared distances to save the square roots: C gets 1/4 = 0.25, A gets 2/9 = 0.222 and B gets 3/25 = 0.12. Squared distances give the same order of neighbors, so they are fine for choosing the six, but not for weighting them."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "The squared distances from (1, 2) are 4 to the C point at (3, 2), 9 to both A points, 25 to all three B points and 100 to (7, 10), so the six nearest are at distances 2, 3, 3, 5, 5 and 5. Each adds 1/d to its class: A gets 1/3 + 1/3 = 0.667, B gets 3/5 = 0.6 and C gets 1/2 = 0.5. A wins although B has more neighbors and C has the nearest one."
+      },
+      {
+       "result": "Class A"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "theory-knn-curse",
+   "moduleId": "decision-trees-knn",
+   "title": "k-Nearest Neighbors and the Curse of Dimensionality",
+   "difficulty": "Medium",
+   "minutes": 45,
+   "overview": [
+    "Work out what k-nearest-neighbors costs, how k trades bias against variance, and why distances stop meaning anything in high dimensions."
+   ],
+   "setup": [
+    {
+     "p": "The $k$-nearest-neighbors classifier stores the training set and, for a query $x$, predicts the majority label among the $k$ training points closest to $x$ under a distance metric, usually Euclidean:"
+    },
+    {
+     "tex": "d(x, x') = \\lVert x - x' \\rVert_2 = \\sqrt{\\sum_{j=0}^{d-1}\\big(x_j - x'_j\\big)^2}."
+    }
+   ],
+   "parts": [
+    {
+     "id": "16.1",
+     "kind": "explanation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "Describe the training and prediction costs of kNN for $N$ training points in $d$ dimensions, and explain in what sense kNN has a training phase at all."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Training costs $O(1)$ beyond storing the data: there are no parameters to fit. kNN is the canonical *lazy* learner. It defers all computation to prediction time, and its \"model\" is the training set itself, requiring $O(Nd)$ memory."
+      },
+      {
+       "p": "Prediction, by contrast, is expensive. A single query must compute the distance to all $N$ stored points at $O(d)$ each, then select the $k$ smallest:"
+      },
+      {
+       "tex": "O(Nd) \\text{ for distances} + O(N \\log k) \\text{ for selection}."
+      },
+      {
+       "p": "So the cost profile is exactly inverted from most models, which pay heavily once during training and then predict in $O(d)$. For a large deployment this is often disqualifying: $N = 10^6$ and $d = 1000$ means a billion floating-point operations per prediction."
+      },
+      {
+       "p": "Mitigations exist. KD-trees and ball trees give roughly $O(\\log N)$ queries in low dimensions, and approximate methods (locality-sensitive hashing, HNSW) scale to high dimensions, but KD-trees degrade to brute force once $d$ exceeds roughly $20$, for the reasons in Part 3. Reducing $d$ first, via PCA or a learned embedding, is usually the more effective move."
+      }
+     ]
+    },
+    {
+     "id": "16.2",
+     "kind": "explanation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "Explain how the choice of $k$ affects the bias and variance of the classifier. What happens at $k = 1$ and at $k = N$?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "At $k = 1$ the prediction is the label of the single nearest training point. The decision boundary is maximally jagged, training error is exactly $0$ (each point is its own neighbor), and moving or relabelling one point changes the boundary in its whole neighborhood. This is low bias and high variance, classic overfitting, and it is especially fragile to label noise, since a single mislabeled point creates a wrong region around itself."
+      },
+      {
+       "p": "At $k = N$ every query averages over the entire training set, so the model predicts the global majority class for every input. The decision boundary vanishes and the classifier ignores $x$ entirely: maximum bias, zero variance."
+      },
+      {
+       "p": "Increasing $k$ therefore smooths the boundary, monotonically trading variance for bias, and the total error of [Bias-Variance Tradeoff & Cross-Validation](/module/?id=bias-variance-cross-validation), Problem 14, Part 1 is U-shaped in $k$. A common heuristic is $k \\approx \\sqrt{N}$, but the honest answer is to select $k$ by cross-validation."
+      },
+      {
+       "p": "Two practical notes: choose $k$ odd for binary problems to avoid ties, and consider distance weighting (weight each neighbor by $1/d$) which lets you take a larger $k$ for stability without letting far-away points vote as loudly as near ones."
+      }
+     ]
+    },
+    {
+     "id": "16.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Consider $N$ points drawn uniformly from the unit hypercube $[0,1]^d$. To capture a fraction $r$ of the total volume, a hypercube-shaped neighborhood must have edge length $e$ satisfying $e^d = r$."
+      },
+      {
+       "p": "Compute $e$ for $r = 0.01$ when $d = 2$, $d = 10$, and $d = 100$, and explain what this says about locality in high dimensions."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Solving $e^d = r$ gives $e = r^{1/d}$. With $r = 0.01$:"
+      },
+      {
+       "tex": "d = 2: \\ e = 0.01^{1/2} = 0.1; \\qquad d = 10: \\ e = 0.01^{1/10} \\approx 0.631; \\qquad d = 100: \\ e = 0.01^{1/100} \\approx 0.955."
+      },
+      {
+       "p": "In two dimensions, capturing $1\\%$ of the data means looking within $10\\%$ of the range along each axis, which is genuinely local. In $100$ dimensions it means spanning $95.5\\%$ of the range along *every single axis*. The neighborhood covering the nearest $1\\%$ of points is nearly the entire cube."
+      },
+      {
+       "p": "This is the curse of dimensionality, and it destroys the premise kNN rests on. The method assumes that nearby points share a label because they are similar. In high dimensions \"nearby\" is no longer near, so the $k$ nearest neighbors are barely more informative about $x$ than a random sample would be."
+      },
+      {
+       "p": "A second, related fact sharpens it. For fixed $N$, the ratio of the farthest to the nearest distance from a query tends to $1$ as $d$ grows,"
+      },
+      {
+       "tex": "\\frac{d_{\\max} - d_{\\min}}{d_{\\min}} \\longrightarrow 0,"
+      },
+      {
+       "p": "so all pairwise distances concentrate and the ranking that kNN depends on becomes dominated by noise. Filling the space to a fixed density would require $N$ exponential in $d$, which is never available."
+      },
+      {
+       "p": "The practical escape is that real data rarely fill the cube: they lie near a much lower-dimensional manifold. Projecting onto that structure first (PCA, an autoencoder, or a learned embedding) restores meaningful distances, which is exactly the preprocessing the official kNN problem expects."
+      }
+     ]
+    },
+    {
+     "id": "16.4",
+     "kind": "explanation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "Explain why feature scaling is mandatory for kNN but irrelevant for a decision tree."
+      }
+     ],
+     "answer": [
+      {
+       "p": "kNN compares points through a single Euclidean distance in which every feature contributes $(x_j - x'_j)^2$. Those contributions are in the features' own units, so a feature with a large numeric range dominates the sum regardless of its predictive value."
+      },
+      {
+       "p": "Concretely, suppose one feature is annual income (range $\\sim 10^5$) and another is years of education (range $\\sim 20$). A difference of $10^4$ dollars in income contributes $10^8$ to the squared distance, while the full span of education contributes at most $400$. Education is effectively invisible: the classifier is doing one-dimensional nearest-neighbor on income. Changing income from dollars to thousands of dollars would change every prediction, which shows the model is responding to unit choice rather than to data."
+      },
+      {
+       "p": "Standardizing each feature to zero mean and unit variance (or min-max scaling to $[0,1]$) makes the contributions comparable, so the distance reflects the data rather than the measurement convention. As with regularization in [Linear & Logistic Regression](/module/?id=linear-logistic-regression), Problem 12, Part 5, the scaler must be fitted on the training fold only."
+      },
+      {
+       "p": "Decision trees are immune because they never combine features. Each split tests one feature against one threshold, $x_j \\le t$, and any strictly monotonic transformation of $x_j$ maps the threshold along with it, leaving the induced partition, and therefore every prediction, unchanged. This invariance to monotone rescaling is one reason tree ensembles are so convenient on raw tabular data."
+      }
+     ]
+    },
+    {
+     "id": "16.5",
+     "kind": "mcq",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Which statement about the $1$-nearest-neighbor classifier is correct?"
+      },
+      {
+       "choices": [
+        "A. Its training error is zero, so it will generalize well.",
+        "B. Its training error is zero, which says nothing about its test error.",
+        "C. Its training error equals its test error in expectation.",
+        "D. Its training error is zero only if the classes are linearly separable.",
+        "E. Its training error is nonzero whenever two training points share a location."
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Evaluating $1$-NN on a training point returns that point itself as its own nearest neighbor (distance $0$), so it predicts that point's own label and the training error is identically zero: for any dataset, separable or not, even one with random labels."
+      },
+      {
+       "p": "That is exactly why the number is uninformative. A metric that is $0$ regardless of whether the data contain any signal cannot distinguish a good model from a memorizing one. A is the classic error: zero training error is evidence of memorization capacity, not of generalization. C is false in general (test error is typically much higher), and D is false since separability is irrelevant to memorization."
+      },
+      {
+       "p": "E is a reasonable-sounding trap. Duplicate locations with conflicting labels can produce an error depending on how ties are broken, but that is an implementation detail, not a property of the method, and it does not hold whenever duplicates merely exist. The real point stands: any model that can memorize must be judged on held-out data, which is what Problem 9 of [Information Theory for AI](/module/?id=information-theory-core) formalizes."
+      },
+      {
+       "result": "B. Zero training error says nothing about test error."
+      }
+     ]
+    },
+    {
+     "id": "16.6",
+     "kind": "coding",
+     "requirement": "Do not use scikit-learn, do not use any loop, and do not use np.linalg.",
+     "prompt": [
+      {
+       "p": "Run the following starter code:"
+      },
+      {
+       "code": {
+        "language": "python",
+        "lines": [
+         "import numpy as np",
+         "",
+         "rng = np.random.default_rng(0)",
+         "X_train = rng.normal(size=(500, 20))",
+         "X_test = rng.normal(size=(100, 20))"
+        ]
+       }
+      },
+      {
+       "p": "Compute the full $100 \\times 500$ matrix of squared Euclidean distances between test and training points, using the expansion $\\lVert a - b \\rVert^2 = \\lVert a \\rVert^2 - 2a^\\top b + \\lVert b \\rVert^2$."
+      }
+     ],
+     "answer": [
+      {
+       "code": {
+        "language": "python",
+        "lines": [
+         "test_sq = (X_test ** 2).sum(axis=1, keepdims=True)     # (100, 1)",
+         "train_sq = (X_train ** 2).sum(axis=1)                  # (500,)",
+         "D2 = test_sq - 2 * (X_test @ X_train.T) + train_sq     # (100, 500)",
+         "D2 = np.maximum(D2, 0)                                 # clip tiny negatives"
+        ]
+       }
+      },
+      {
+       "p": "Broadcasting assembles the three terms: the column vector $\\texttt{test\\_sq}$ stretches across columns, the row vector $\\texttt{train\\_sq}$ across rows, and the cross term is one matrix product. The whole $100 \\times 500$ block is computed in a single BLAS call rather than $50{,}000$ separate distance evaluations, which is typically two orders of magnitude faster than the equivalent loop."
+      },
+      {
+       "p": "Two details matter. The $\\texttt{np.maximum(D2, 0)}$ clip is not cosmetic: the expansion is a difference of similar-magnitude numbers, so catastrophic cancellation can produce values like $-10^{-13}$ for identical points, and a later $\\texttt{np.sqrt}$ would return $\\texttt{nan}$. And there is no need to take the square root at all if you only want the nearest neighbors: $\\sqrt{\\cdot}$ is monotonic, so ranking by squared distance gives the identical ordering and saves the operation."
+      },
+      {
+       "p": "From here, $\\texttt{np.argpartition(D2, k, axis=1)[:, :k]}$ retrieves the $k$ nearest indices per test point in $O(N)$ rather than the $O(N\\log N)$ of a full sort."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "theory-decision-trees-entropy",
+   "moduleId": "decision-trees-knn",
+   "title": "Entropy, Information Gain, and Decision Trees",
+   "difficulty": "Medium",
+   "minutes": 45,
+   "overview": [
+    "Compute entropy and information gain for a candidate split, prove the gain is never negative, and show how an ID column breaks the criterion."
+   ],
+   "setup": [
+    {
+     "p": "For a node containing class proportions $p_0, \\dots, p_{C-1}$, define the entropy and the Gini impurity"
+    },
+    {
+     "tex": "H = -\\sum_{c=0}^{C-1} p_c \\log_2 p_c, \\qquad G = 1 - \\sum_{c=0}^{C-1}p_c^2,"
+    },
+    {
+     "p": "with the convention $0\\log_2 0 = 0$. A split partitions a parent node $S$ into children $S_1, \\dots, S_m$, and the information gain is"
+    },
+    {
+     "tex": "\\text{IG} = H(S) - \\sum_{i=1}^{m}\\frac{\\lvert S_i \\rvert}{\\lvert S \\rvert}H(S_i)."
+    },
+    {
+     "p": "For the numerical parts, a node holds $20$ examples: $10$ positive and $10$ negative. A candidate split sends $12$ examples left ($9$ positive, $3$ negative) and $8$ examples right ($1$ positive, $7$ negative)."
+    }
+   ],
+   "parts": [
+    {
+     "id": "17.1",
+     "kind": "computation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "Compute the entropy of the parent node, and of a node that is perfectly pure. What is the maximum possible entropy for $C$ classes, and when is it attained?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The parent has $p_0 = p_1 = 1/2$, so"
+      },
+      {
+       "tex": "H(S) = -\\tfrac{1}{2}\\log_2\\tfrac{1}{2} - \\tfrac{1}{2}\\log_2\\tfrac{1}{2} = \\tfrac{1}{2} + \\tfrac{1}{2} = 1 \\text{ bit}."
+      },
+      {
+       "p": "A pure node has $p_c = 1$ for one class and $0$ elsewhere, giving $H = -1\\log_2 1 = 0$: no uncertainty, so no information is needed to describe the label."
+      },
+      {
+       "p": "The maximum over $C$ classes is $\\log_2 C$, attained at the uniform distribution $p_c = 1/C$. One way to see it: by Jensen's inequality applied to the concave function $\\log_2$,"
+      },
+      {
+       "tex": "H = \\sum_c p_c \\log_2 \\frac{1}{p_c} \\le \\log_2 \\left( \\sum_c p_c \\cdot \\frac{1}{p_c} \\right) = \\log_2 C,"
+      },
+      {
+       "p": "with equality exactly when all $1/p_c$ are equal, i.e. $p_c = 1/C$."
+      },
+      {
+       "p": "The interpretation is the coding one: $H$ is the average number of bits needed to transmit a label drawn from this distribution. A fair coin needs one bit, and a two-headed coin needs none. Tree building is therefore a search for splits that reduce the number of bits still required to name the class."
+      }
+     ]
+    },
+    {
+     "id": "17.2",
+     "kind": "computation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "Compute the information gain of the candidate split described above."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Left child: $9$ positive and $3$ negative out of $12$, so $p = (3/4, 1/4)$ and"
+      },
+      {
+       "tex": "H(S_L) = -\\tfrac{3}{4}\\log_2\\tfrac{3}{4} - \\tfrac{1}{4}\\log_2\\tfrac{1}{4} = \\tfrac{3}{4}(0.4150) + \\tfrac{1}{4}(2) \\approx 0.8113."
+      },
+      {
+       "p": "Right child: $1$ positive and $7$ negative out of $8$, so $p = (1/8, 7/8)$ and"
+      },
+      {
+       "tex": "H(S_R) = -\\tfrac{1}{8}\\log_2\\tfrac{1}{8} - \\tfrac{7}{8}\\log_2\\tfrac{7}{8} = \\tfrac{1}{8}(3) + \\tfrac{7}{8}(0.1926) \\approx 0.5436."
+      },
+      {
+       "p": "Weight each child by its share of the parent, $12/20 = 0.6$ and $8/20 = 0.4$:"
+      },
+      {
+       "tex": "H_{\\text{after}} = 0.6(0.8113) + 0.4(0.5436) \\approx 0.4868 + 0.2174 = 0.7042."
+      },
+      {
+       "p": "Therefore"
+      },
+      {
+       "tex": "\\text{IG} = H(S) - H_{\\text{after}} = 1 - 0.7042 \\approx 0.296 \\text{ bits}."
+      },
+      {
+       "p": "The split removes about $0.3$ bits of uncertainty per example. A tree-building algorithm evaluates this quantity for every feature and every candidate threshold and greedily takes the largest. Note the weighting by child size is essential: a split that isolates one example into a perfectly pure leaf achieves $H = 0$ there, but its weight $1/20$ makes its contribution negligible. That discounting only protects against one isolated fragment: when a single feature creates many of them at once (a unique ID, for instance), the weighted child entropy is still exactly $0$ and the gain is maximal, which is the pathology Part 6 explores."
+      },
+      {
+       "result": "$\\text{IG} \\approx 0.296$ bits."
+      }
+     ]
+    },
+    {
+     "id": "17.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Prove that information gain is always non-negative, and state when it equals zero."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The claim is that conditioning cannot increase entropy: $H(Y \\mid X) \\le H(Y)$, and the weighted child entropy $\\sum_i \\frac{\\lvert S_i\\rvert}{\\lvert S\\rvert}H(S_i)$ is exactly the empirical $H(Y \\mid X)$ where $X$ is the split indicator."
+      },
+      {
+       "p": "The cleanest route is through mutual information. Writing $w_i = \\lvert S_i \\rvert / \\lvert S \\rvert$ and $p_{c|i}$ for the class proportions in child $i$, note $p_c = \\sum_i w_i p_{c|i}$, so"
+      },
+      {
+       "tex": "\\text{IG} = \\sum_i w_i \\sum_c p_{c|i}\\log_2\\frac{p_{c|i}}{p_c} = \\sum_i w_i \\, D_{\\text{KL}}\\big( p_{\\cdot|i} \\,\\Vert\\, p \\big)."
+      },
+      {
+       "p": "Each term is a KL divergence, and KL divergence is non-negative by Jensen's inequality (Gibbs' inequality): for distributions $q, p$,"
+      },
+      {
+       "tex": "-D_{\\text{KL}}(q \\Vert p) = \\sum_c q_c \\log_2\\frac{p_c}{q_c} \\le \\log_2 \\sum_c q_c \\frac{p_c}{q_c} = \\log_2 1 = 0."
+      },
+      {
+       "p": "Since the $w_i$ are non-negative, $\\text{IG} \\ge 0$."
+      },
+      {
+       "p": "Equality holds exactly when every $D_{\\text{KL}}(p_{\\cdot|i} \\Vert p) = 0$, i.e. when every child has the same class distribution as the parent, so the split carries no information about the label."
+      },
+      {
+       "p": "One caution: non-negativity means a greedy algorithm never *increases* impurity by splitting, which is what makes greedy growth sound locally. It does not make it globally optimal: a split with zero immediate gain can be the necessary first step to a perfect two-level tree (XOR is the standard example, where every single-feature split has $\\text{IG} = 0$). Finding the optimal tree is NP-hard, so greedy plus pruning is the practical compromise."
+      }
+     ]
+    },
+    {
+     "id": "17.4",
+     "kind": "computation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "Compute the Gini impurity of the parent and of both children for the same split, and compute the Gini gain. Comment on how it compares with the entropy criterion."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Parent: $G(S) = 1 - (0.5^2 + 0.5^2) = 1 - 0.5 = 0.5$."
+      },
+      {
+       "tex": "G(S_L) = 1 - \\left( \\tfrac{9}{16} + \\tfrac{1}{16} \\right) = \\tfrac{6}{16} = 0.375, \\qquad G(S_R) = 1 - \\left( \\tfrac{1}{64} + \\tfrac{49}{64} \\right) = \\tfrac{14}{64} = 0.21875."
+      },
+      {
+       "p": "Weighted child impurity is $0.6(0.375) + 0.4(0.21875) = 0.225 + 0.0875 = 0.3125$, so"
+      },
+      {
+       "tex": "\\text{Gini gain} = 0.5 - 0.3125 = 0.1875."
+      },
+      {
+       "p": "The numerical value differs from the $0.296$ bits of Part 2. The two criteria are on different scales, with Gini bounded by $1 - 1/C$ and entropy by $\\log_2 C$, but both are maximized at the uniform distribution, both vanish on pure nodes, and both are strictly concave. In practice they select the same split the overwhelming majority of the time, and published comparisons find no consistent accuracy difference."
+      },
+      {
+       "p": "The mild differences: Gini tends to isolate the largest class into a pure branch, while entropy slightly favours more balanced splits. Gini is also cheaper, needing no logarithm, which is why it is the default in scikit-learn's $\\texttt{DecisionTreeClassifier}$. Note that near the uniform distribution $G$ is a shifted and rescaled second-order match for $H$ (in nats), $H \\approx \\tfrac{C}{2}G + (\\ln C - \\tfrac{C}{2} + \\tfrac{1}{2})$, which is the precise sense in which the two criteria agree."
+      }
+     ]
+    },
+    {
+     "id": "17.5",
+     "kind": "explanation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "Explain why a decision tree grown to full depth is guaranteed to overfit, and describe two distinct remedies."
+      }
+     ],
+     "answer": [
+      {
+       "p": "A tree grown without a stopping rule keeps splitting until every leaf is pure, which (absent contradictory duplicates) means every leaf contains examples of one class, often a single example. Training error is then $0$, exactly as with $1$-NN in Part 5 of this module's problem *k-Nearest Neighbors and the Curse of Dimensionality*, and for the same reason: the model has memorized. The final splits are driven by one or two examples each, so they encode noise rather than structure, and the deep boundary is extremely sensitive to the particular sample. This is the high-variance end of Part 2 of *The Bias-Variance Decomposition and Cross-Validation*, a problem in [Bias-Variance Tradeoff & Cross-Validation](/module/?id=bias-variance-cross-validation)."
+      },
+      {
+       "p": "Remedy 1: constrain or prune the single tree. Pre-pruning caps growth via $\\texttt{max\\_depth}$, $\\texttt{min\\_samples\\_leaf}$, or a minimum-gain threshold. Post-pruning grows the full tree and then collapses subtrees that do not pay for themselves on validation data (cost-complexity pruning minimizes $\\text{error} + \\alpha \\cdot |\\text{leaves}|$). Post-pruning is generally the stronger of the two, because pre-pruning can stop early at a zero-gain split that would have led somewhere useful."
+      },
+      {
+       "p": "Remedy 2: ensemble. A random forest averages many deep trees, each grown on a bootstrap sample using a random feature subset at each split. Averaging $B$ predictors with pairwise correlation $\\rho$ reduces variance to"
+      },
+      {
+       "tex": "\\rho\\sigma^2 + \\frac{1 - \\rho}{B}\\sigma^2,"
+      },
+      {
+       "p": "so the gain depends on making the trees *decorrelated*, which is precisely what the random feature subsetting is for, and why it matters more than the bootstrap. Each tree keeps its low bias while the average sheds most of the variance. Gradient boosting attacks the problem from the opposite direction, combining many deliberately high-bias shallow trees to reduce bias instead."
+      }
+     ]
+    },
+    {
+     "id": "17.6",
+     "kind": "mcq",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "A dataset contains a unique identifier column (a distinct integer per row). What happens if it is left in when training a decision tree with information gain?"
+      },
+      {
+       "choices": [
+        "A. It is ignored, since it has no relationship with the target.",
+        "B. It is likely to be split on again and again until every leaf holds a single row, giving perfect training accuracy and no generalization.",
+        "C. It causes the tree to fail to build, because the feature is not categorical.",
+        "D. It reduces training accuracy but improves test accuracy through regularization.",
+        "E. It has the same effect as adding a constant column."
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "A high-cardinality identifier can split the data into singleton leaves, each perfectly pure, so its information gain is the maximum possible: it reduces entropy from $H(S)$ all the way to $0$. The greedy criterion will therefore prefer it over every genuinely predictive feature."
+      },
+      {
+       "p": "The resulting tree is a lookup table: perfect on training data, useless on any new row whose ID it has never seen. This is the classic pathology of information gain, and it generalizes to any high-cardinality feature: postcodes, user IDs, timestamps at full resolution."
+      },
+      {
+       "p": "The standard fix is the *gain ratio*, which normalizes by the split information $-\\sum_i w_i \\log_2 w_i$. A split into $N$ singletons has split information $\\log_2 N$, which penalizes it heavily. This is what C4.5 uses. Binary CART trees are less exposed since they split on thresholds rather than on all values at once, but the safest fix is simply to drop identifier columns before training."
+      },
+      {
+       "result": "B. It is likely to be split on again and again until every leaf holds a single row, giving perfect training accuracy and no generalization."
+      }
+     ]
+    },
+    {
+     "id": "17.7",
+     "kind": "coding",
+     "requirement": "Do not use scikit-learn. Do not use any loop over examples.",
+     "prompt": [
+      {
+       "p": "Run the following starter code:"
+      },
+      {
+       "code": {
+        "language": "python",
+        "lines": [
+         "import numpy as np",
+         "",
+         "y_left = np.array([1]*9 + [0]*3)",
+         "y_right = np.array([1]*1 + [0]*7)"
+        ]
+       }
+      },
+      {
+       "p": "Write a function $\\texttt{entropy(y)}$ returning the entropy in bits of a label array, then use it to reproduce the information gain from Part 2."
+      }
+     ],
+     "answer": [
+      {
+       "code": {
+        "language": "python",
+        "lines": [
+         "def entropy(y):",
+         "    counts = np.bincount(y)",
+         "    p = counts[counts > 0] / y.size      # drop empty classes: 0*log0 = 0",
+         "    return -(p * np.log2(p)).sum()",
+         "",
+         "y_parent = np.concatenate([y_left, y_right])",
+         "n, nl, nr = y_parent.size, y_left.size, y_right.size",
+         "ig = entropy(y_parent) - (nl / n) * entropy(y_left) - (nr / n) * entropy(y_right)",
+         "print(ig)    # 0.29580..."
+        ]
+       }
+      },
+      {
+       "p": "$\\texttt{np.bincount}$ tallies all class counts in one pass. The mask $\\texttt{counts > 0}$ implements the $0\\log_2 0 = 0$ convention: without it, an absent class contributes $0 \\times \\log_2 0 = 0 \\times (-\\infty) = \\texttt{nan}$, which would make every pure node report $\\texttt{nan}$ instead of $0$, a bug that silently disables the stopping criterion of a tree builder."
+      },
+      {
+       "p": "The printed value $0.2958$ matches the hand computation of Part 2. Note $\\texttt{np.bincount}$ requires non-negative integer labels. For arbitrary labels use $\\texttt{np.unique(y, return\\_counts=True)}$ instead."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

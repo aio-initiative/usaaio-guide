@@ -1,0 +1,825 @@
+{
+  "module": "neural-networks-perceptrons-mlps-activations",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "foundations-12-nonlinear-boundaries",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "AI Foundations 12: Learning Nonlinear Decision Boundaries with MLPs",
+      "source": "AI Foundations",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=foundations-12-nonlinear-boundaries",
+      "tags": [
+        "Coding",
+        "Course",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Course notebook, about 6 h end to end. Read it top to bottom, then do the exercises marked with a pencil icon - each one checks itself - and finish with the exam-style quiz.",
+      "answer": "Self-checking: every exercise has a checker cell that prints a verdict, and the quiz answers are explained at the end of the notebook."
+    },
+    {
+      "id": "mlp-mnist",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "Recognize Handwritten Digits with an MLP",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=mlp-mnist",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Seven parts, one per section of the lesson. Flatten MNIST into rows of 784 numbers, compute one neuron and one layer by hand, build the 784-16-16-10 network, train it with cross-entropy loss and gradient descent, check a forward pass against the numbers worked out on paper, look at the images the network still gets wrong, and compare three learning rates.",
+      "answer": "Self-checking: each part ends with a check cell that prints 'checks passed', and a worked solution is folded at the end of the notebook. Part 4 trains for 10 epochs at learning rate 0.5 with batches of 32 and the check wants test accuracy above 0.93. Part 7 wants the three rates to separate: above 0.9 at 0.5, below 0.5 at both 0.001 and 20."
+    },
+    {
+      "id": "mlp-sigmoid-neuron-with-a-bias",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "A Neuron with Three Inputs",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/theory/?id=mlp-sigmoid-neuron-with-a-bias",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A sigmoid neuron reads three inputs, which are 1, 0 and 1. Its weights are 2, 5 and \u22121, in the same order, and its bias is \u22121. What number does the neuron output?",
+      "answer": "0.5. The weights times the inputs give 2 + 0 \u2212 1 = 1, and the bias of \u22121 brings the sum to 0. The sigmoid of 0 is 0.5, the middle of its range."
+    },
+    {
+      "id": "mlp-line-detector",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "Build a Line Detector by Hand",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/editor/?nb=mlp-line-detector",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "A neuron that reads a 3 x 3 image has nine weights, one per pixel, and a bias. Here you pick the ten numbers yourself, with no training, so that the neuron fires on the image whose center column is lit and stays quiet on five other images.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "mlp-activations",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "Sigmoid, Tanh and ReLU on MNIST",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=mlp-activations",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "The same 784-16-16-10 network, trained three times with a different activation each time, learns at three different speeds. Write the activations and their slopes, train the network with each one, measure how much of the gradient survives the trip back through a deep network, and repair the deep ReLU network with a better initialization.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "mlp-relu-on-a-regression-output",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "A ReLU After the Last Layer",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/theory/?id=mlp-relu-on-a-regression-output",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A regression network ends with a linear layer and then a ReLU, and part of the training set has targets below zero. What does the final ReLU do to the predictions and to the gradient?",
+      "answer": "The network can never output a negative number, and whenever its final weighted sum is below 0 no gradient reaches the weights. ReLU maps every negative weighted sum to 0, and its slope there is 0 too. So the negative targets cannot be reached, and the examples that need them pass no gradient back, which freezes the weights for those rows. The output of a regression network should be left linear."
+    },
+    {
+      "id": "mlp-ten-layers-with-no-activation",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "Ten Layers and No Activation",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/theory/?id=mlp-ten-layers-with-no-activation",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "Ten nn.Linear layers are stacked with no activation function between any two of them. Which family of functions can the whole stack compute?",
+      "answer": "The same functions a single layer can, and no more. Two layers in a row multiply by one matrix, add a bias, multiply by a second matrix and add another bias. That equals one multiply by the product of the two matrices and one added bias, so the pair is a single layer. The same step absorbs the third layer, then the fourth, until all ten are one."
+    },
+    {
+      "id": "mlp-a-quadratic-activation",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "Squaring as the Activation",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=mlp-a-quadratic-activation",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "An MLP has one input x in [0, 1], one hidden layer, and an output that is a weighted sum of the hidden units. Every hidden unit uses sigma(z) = z^2 as its activation. The layer may be as wide as you like. Can the network get within any chosen error of every continuous function on [0, 1]?",
+      "answer": "No. Each unit's output is a quadratic in x, and so is every weighted sum of them. A hidden unit computes the square of wx + b, a quadratic in x, and a weighted sum of quadratics is again a quadratic. No quadratic comes arbitrarily close to x cubed on the interval, so some continuous functions stay out of reach however wide the layer is."
+    },
+    {
+      "id": "mlp-four-lines-cut-the-plane",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "Four Units, How Many Regions",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=mlp-four-lines-cut-the-plane",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A hidden layer's four ReLU units switch on along four lines in the input plane, with no parallel pair and no three through one point. How many regions do the four lines cut the plane into?",
+      "answer": "11. Start from the whole plane, one region. Every line after the first meets all the lines already drawn, so the k-th line is cut into k pieces, and each piece splits one region in two. The total is 1 + 1 + 2 + 3 + 4 = 11, the value of 1 + N + N(N \u2212 1)/2 at N = 4."
+    },
+    {
+      "id": "mlp-train-pytorch",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "Build and Train an MLP in PyTorch",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=mlp-train-pytorch",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Write a training loop and watch a linear model fail on the XOR pattern, train a one-hidden-layer MLP and plot its decision regions, then set a four-unit network's weights by hand and count how many training runs reach a solution that good at widths 1 to 16.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "mlp-shape-out-of-a-layer",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "The Shape a Layer Hands Back",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/theory/?id=mlp-shape-out-of-a-layer",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "You flatten 64 images to 784 numbers each and send the batch through nn.Linear(784, 16). What shape does the result have?",
+      "answer": "torch.Size([64, 16]). The input X is 64 by 784 and the transposed weight matrix is 784 by 16, so X times W transposed is 64 by 16, and the bias is added to every row. One row per image, one column per neuron."
+    },
+    {
+      "id": "mlp-xor-linear-impossible",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "One Linear Layer Cannot Do XOR",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=mlp-xor-linear-impossible",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "XOR of two bits is 1 when exactly one of them is 1. The question is whether some choice of w1, w2 and b turns a classifier with no hidden layer into XOR on the four inputs. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "mlp-max-by-hand",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "Exact Max, No Training",
+      "source": "Research-based",
+      "difficulty": "Hard",
+      "url": "/theory/?id=mlp-max-by-hand",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Every network below is one hidden layer of ReLU units feeding a plain weighted sum, and the weights are chosen by hand. Build the two units that output the absolute value of x, build the four units that output the larger of a and b, and show that no single unit can output x itself. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "mlp-square-by-sawtooth",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "Squaring with Sawtooths",
+      "source": "Research-based",
+      "difficulty": "Very Hard",
+      "url": "/theory/?id=mlp-square-by-sawtooth",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "The tent t(x) = 2 ReLU(x) \u2212 4 ReLU(x \u2212 1/2) climbs from t(0) = 0 to t(1/2) = 1 and comes back down to t(1) = 0. Feeding it into itself gives a sawtooth, and the piecewise-linear interpolant of x\u00b2 is x minus a sum of scaled sawtooths. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "dl1-dead-relu",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "Half Your Network Is Already Dead",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=dl1-dead-relu",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Count dead ReLU units under three initializations before training starts, and see how a negative bias or tiny weights can delete an entire layer.",
+      "answer": "Auto-graded inside the notebook. Dead-unit counts and zero fractions must match the reference within a relative tolerance of 1e-6, with He leaving none dead, the negative-bias scheme killing more than half, and the tiny-weight scheme killing all 512."
+    },
+    {
+      "id": "classic-models-implementation-task",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "Perceptron from Scratch",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=classic-models",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "The perceptron learning rule, implemented from scratch. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Test accuracy must reach the target shown in the evaluation cell."
+    }
+  ],
+  "theory": [
+    {
+      "id": "mlp-sigmoid-neuron-with-a-bias",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "A Neuron with Three Inputs",
+      "difficulty": "Easy",
+      "minutes": 3,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A sigmoid neuron reads three inputs, which are 1, 0 and 1. Its weights are 2, 5 and \u22121, in the same order, and its bias is \u22121. What number does the neuron output?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$0$",
+                  "explain": "Zero is the sum with the bias added, not the output. Two times 1, plus 5 times 0, minus 1 times 1, minus 1 more for the bias, comes to 0. The neuron then applies the sigmoid, and the sigmoid of 0 is 0.5."
+                },
+                {
+                  "text": "$0.5$",
+                  "correct": true,
+                  "explain": "The weights times the inputs give 2 + 0 \u2212 1 = 1, and the bias of \u22121 brings the sum to 0. The sigmoid of 0 is 0.5, the middle of its range."
+                },
+                {
+                  "text": "$0.73$",
+                  "explain": "That is the sigmoid of 1, the answer when the bias is forgotten. The bias belongs in the sum, and with it the sum is 0, not 1."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The weights times the inputs give 2 + 0 \u2212 1 = 1, and the bias of \u22121 brings the sum to 0. The sigmoid of 0 is 0.5, the middle of its range."
+            },
+            {
+              "result": "$0.5$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mlp-relu-on-a-regression-output",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "A ReLU After the Last Layer",
+      "difficulty": "Easy",
+      "minutes": 4,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A regression network finishes with `nn.Linear(64, 1)` and then `nn.ReLU()`. Part of the training set has targets below zero. What happens?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "The network can never output a negative number, and whenever its final weighted sum is below 0 no gradient reaches the weights.",
+                  "correct": true,
+                  "explain": "ReLU maps every negative weighted sum to 0, and its slope there is 0 too. So the negative targets cannot be reached, and the examples that need them pass no gradient back, which freezes the weights for those rows. The output of a regression network should be left linear."
+                },
+                {
+                  "text": "Nothing. ReLU is the standard activation in modern networks, so it belongs after the last layer as much as after any other.",
+                  "explain": "Between hidden layers ReLU is the usual pick. As the last step it cuts every prediction off at 0, which is wrong for any target below zero."
+                },
+                {
+                  "text": "ReLU is not differentiable at 0, so PyTorch stops with an error as soon as an output lands on 0.",
+                  "explain": "At the corner autograd uses a slope of 0 and raises no error, so nothing tells you. The predictions never drop below 0, and the training loss is the only sign."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "ReLU maps every negative weighted sum to 0, and its slope there is 0 too. So the negative targets cannot be reached, and the examples that need them pass no gradient back, which freezes the weights for those rows. The output of a regression network should be left linear."
+            },
+            {
+              "result": "The network can never output a negative number, and whenever its final weighted sum is below 0 no gradient reaches the weights."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mlp-ten-layers-with-no-activation",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "Ten Layers and No Activation",
+      "difficulty": "Easy",
+      "minutes": 3,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Someone stacks ten `nn.Linear` layers with nothing in between them, no sigmoid and no ReLU. Which functions can the stack compute?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Far more than a single layer can, since each added layer brings new functions within reach.",
+                  "explain": "Added layers bring new functions only when a nonlinear activation sits between them. With none, the tenth output is still a linear function of the input."
+                },
+                {
+                  "text": "Nothing useful, because the output collapses to zero.",
+                  "explain": "Zero is wrong. The stack outputs a perfectly ordinary linear function of its input. The trouble is that one layer already gives every such function."
+                },
+                {
+                  "text": "The same functions a single layer can, and no more.",
+                  "correct": true,
+                  "explain": "Two layers in a row multiply by one matrix, add a bias, multiply by a second matrix and add another bias. That equals one multiply by the product of the two matrices and one added bias, so the pair is a single layer. The same step absorbs the third layer, then the fourth, until all ten are one."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Two layers in a row multiply by one matrix, add a bias, multiply by a second matrix and add another bias. That equals one multiply by the product of the two matrices and one added bias, so the pair is a single layer. The same step absorbs the third layer, then the fourth, until all ten are one."
+            },
+            {
+              "result": "The same functions a single layer can, and no more."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mlp-a-quadratic-activation",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "Squaring as the Activation",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "An MLP has one input $x$ in $[0, 1]$, one hidden layer, and an output that is a weighted sum of the hidden units. Every hidden unit uses $\\sigma(z) = z^2$ as its activation. The layer may be as wide as you like. Can the network get within any chosen error of every continuous function on $[0, 1]$?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "No. Each unit's output is a quadratic in $x$, and so is every weighted sum of them.",
+                  "correct": true,
+                  "explain": "A hidden unit computes the square of wx + b, a quadratic in x, and a weighted sum of quadratics is again a quadratic. No quadratic comes arbitrarily close to x cubed on the interval, so some continuous functions stay out of reach however wide the layer is."
+                },
+                {
+                  "text": "Yes. Squaring is not linear, which is the one property the theorem asks of an activation.",
+                  "explain": "Nonlinear is necessary but not enough. The theorem asks for an activation that is continuous and not a polynomial, and squaring is a polynomial."
+                },
+                {
+                  "text": "Only when the width grows faster than one over the allowed error, as that error shrinks.",
+                  "explain": "Width is no help here. More units means more quadratics added together, and the sum is still a quadratic."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "A hidden unit computes the square of wx + b, a quadratic in x, and a weighted sum of quadratics is again a quadratic. No quadratic comes arbitrarily close to x cubed on the interval, so some continuous functions stay out of reach however wide the layer is."
+            },
+            {
+              "result": "No. Each unit's output is a quadratic in $x$, and so is every weighted sum of them."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mlp-four-lines-cut-the-plane",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "Four Units, How Many Regions",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A hidden layer with four ReLU units takes two inputs. Each unit switches on along a straight line in the input plane. Suppose no pair of those lines is parallel and no three of them pass through a common point. How many regions do the four lines divide the plane into?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$8$",
+                  "explain": "Eight is 2 times 4, as if every line after the first added two regions. The lines are not equal: the k-th one crosses the k \u2212 1 drawn before it and adds k regions, so the later lines add more than the earlier ones."
+                },
+                {
+                  "text": "$11$",
+                  "correct": true,
+                  "explain": "Start from the whole plane, one region. Every line after the first meets all the lines already drawn, so the k-th line is cut into k pieces, and each piece splits one region in two. The total is 1 + 1 + 2 + 3 + 4 = 11, the value of 1 + N + N(N \u2212 1)/2 at N = 4."
+                },
+                {
+                  "text": "$16$",
+                  "explain": "Sixteen is 2 to the power 4, one region for every on-or-off pattern of the four units. Lines in a plane cannot produce every pattern. The region count 1 + N + N(N \u2212 1)/2 grows like N squared, and at N = 4 it is 11."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Start from the whole plane, one region. Every line after the first meets all the lines already drawn, so the k-th line is cut into k pieces, and each piece splits one region in two. The total is 1 + 1 + 2 + 3 + 4 = 11, the value of 1 + N + N(N \u2212 1)/2 at N = 4."
+            },
+            {
+              "result": "$11$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mlp-shape-out-of-a-layer",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "The Shape a Layer Hands Back",
+      "difficulty": "Easy",
+      "minutes": 3,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "You flatten 64 images to 784 numbers each and send the batch through `nn.Linear(784, 16)`. What shape does the result have?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "`torch.Size([16, 64])`",
+                  "explain": "This puts the 16 neurons first. PyTorch keeps the batch first: row i of the result belongs to image i, and that image's 16 outputs run along the row."
+                },
+                {
+                  "text": "`torch.Size([64, 784])`",
+                  "explain": "That is the input's shape. Sixteen neurons read each image, so each image leaves as 16 weighted sums, not 784."
+                },
+                {
+                  "text": "`torch.Size([64, 16])`",
+                  "correct": true,
+                  "explain": "The input X is 64 by 784 and the transposed weight matrix is 784 by 16, so X times W transposed is 64 by 16, and the bias is added to every row. One row per image, one column per neuron."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The input X is 64 by 784 and the transposed weight matrix is 784 by 16, so X times W transposed is 64 by 16, and the bias is added to every row. One row per image, one column per neuron."
+            },
+            {
+              "result": "`torch.Size([64, 16])`"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mlp-xor-linear-impossible",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "One Linear Layer Cannot Do XOR",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "XOR of two bits is 1 when exactly one of them is 1:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{ccc}\nx_1 & x_2 & \\text{XOR} \\\\ \\hline\n0 & 0 & 0 \\\\\n0 & 1 & 1 \\\\\n1 & 0 & 1 \\\\\n1 & 1 & 0\n\\end{array}"
+        },
+        {
+          "p": "A classifier with no hidden layer computes $f(x_1, x_2) = w_1 x_1 + w_2 x_2 + b$ and answers 1 when $f > 0$ and 0 otherwise. The question is whether some choice of $w_1$, $w_2$ and $b$ turns it into XOR on these four inputs."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Prove that no $w_1$, $w_2$ and $b$ make the classifier agree with XOR on all four inputs. Write down the inequality that each correct answer requires, then show that the four cannot hold at once."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each input demands a sign for $f$:"
+            },
+            {
+              "list": [
+                "$(0, 0)$ must give 0, so $b \\le 0$.",
+                "$(1, 1)$ must give 0, so $w_1 + w_2 + b \\le 0$.",
+                "$(0, 1)$ must give 1, so $w_2 + b > 0$.",
+                "$(1, 0)$ must give 1, so $w_1 + b > 0$."
+              ]
+            },
+            {
+              "p": "Add the two strict inequalities: $w_1 + w_2 + 2b > 0$. Add the two others: $w_1 + w_2 + 2b \\le 0$. One number cannot be both above 0 and at most 0, so no weights exist. In the picture, the line $f = 0$ would have to put the two diagonal corners $(0, 1)$ and $(1, 0)$ on one side and the other two corners on the other, and no straight line does that."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Add a hidden layer of two step units, where $\\mathrm{step}(z)$ is 1 for $z > 0$ and 0 otherwise:"
+            },
+            {
+              "tex": "\\begin{aligned}\nh_1 &= \\mathrm{step}(x_1 + x_2 - 0.5), \\\\\nh_2 &= \\mathrm{step}(x_1 + x_2 - 1.5), \\\\\ny &= \\mathrm{step}(h_1 - h_2 - 0.5).\n\\end{aligned}"
+            },
+            {
+              "p": "Compute $h_1$, $h_2$ and $y$ for each of the four inputs and confirm that $y$ is XOR. In the hidden coordinates $(h_1, h_2)$, how many distinct points do the four inputs land on?"
+            }
+          ],
+          "answer": [
+            {
+              "tex": "\\begin{array}{ccccc}\nx_1 & x_2 & h_1 & h_2 & y \\\\ \\hline\n0 & 0 & 0 & 0 & 0 \\\\\n0 & 1 & 1 & 0 & 1 \\\\\n1 & 0 & 1 & 0 & 1 \\\\\n1 & 1 & 1 & 1 & 0\n\\end{array}"
+            },
+            {
+              "p": "$h_1$ answers \"is at least one input on\" and $h_2$ answers \"are both on\". The output is 1 exactly when the first holds and the second does not. The two inputs that need the answer 1, $(0, 1)$ and $(1, 0)$, share the hidden point $(1, 0)$, so the four inputs land on three points: $(0, 0)$, $(1, 0)$ and $(1, 1)$. In these coordinates the line $h_1 - h_2 = 0.5$ has the class-1 point alone on one side. Part 1 said that no line separates the inputs themselves. The hidden layer's job was to move them to a place where one line does the work."
+            },
+            {
+              "result": "3"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Now use two ReLU units and an output with no step: $h_1 = \\mathrm{ReLU}(x_1 + x_2)$, $h_2 = \\mathrm{ReLU}(x_1 + x_2 - 1)$ and $\\hat y = \\alpha h_1 + \\beta h_2$. Find $\\alpha$ and $\\beta$ so that $\\hat y$ equals XOR on all four inputs, and enter $\\beta$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Tabulate the hidden units first:"
+            },
+            {
+              "tex": "\\begin{array}{ccccc}\nx_1 & x_2 & h_1 & h_2 & \\hat y \\\\ \\hline\n0 & 0 & 0 & 0 & 0 \\\\\n0 & 1 & 1 & 0 & \\alpha \\\\\n1 & 0 & 1 & 0 & \\alpha \\\\\n1 & 1 & 2 & 1 & 2\\alpha + \\beta\n\\end{array}"
+            },
+            {
+              "p": "The first row is 0 whatever the weights. The middle rows need $\\alpha = 1$. The last row needs $2\\alpha + \\beta = 0$, so $\\beta = -2$ and $\\hat y = h_1 - 2 h_2$. Until both inputs are on, the second unit is 0 and does nothing. At $(1, 1)$ it wakes up and takes away the extra count that the first unit makes. Take the ReLUs away and the same weights give $\\hat y = (x_1 + x_2) - 2(x_1 + x_2 - 1) = 2 - x_1 - x_2$, one linear function of the inputs, which Part 1 rules out."
+            },
+            {
+              "result": "$-2$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mlp-max-by-hand",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "Exact Max, No Training",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "USAAIO likes to ask for a network whose weights are chosen by hand, with no training and no error allowed. Every network below is one hidden layer of ReLU units followed by an output that is a weighted sum of the hidden units, with no activation on it."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Build a network with two hidden units that computes $g(x) = |x|$ for every real $x$. Give the incoming weight of each unit and the two output weights."
+            }
+          ],
+          "answer": [
+            {
+              "p": "A ReLU keeps the positive part of its input, so $\\operatorname{ReLU}(x)$ equals $x$ to the right of zero and $\\operatorname{ReLU}(-x)$ equals $-x$ to the left. At any $x$ one of the two is zero and the other is $|x|$, so"
+            },
+            {
+              "tex": "|x| = \\operatorname{ReLU}(x) + \\operatorname{ReLU}(-x)."
+            },
+            {
+              "p": "The two hidden units have incoming weights $1$ and $-1$ with no bias, and both output weights are $1$."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Build a network with four hidden units that computes $g(a, b) = \\max(a, b)$ for all real $a$ and $b$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Two facts do it. First, the larger of two numbers is their average plus half their distance:"
+            },
+            {
+              "tex": "\\max(a, b) = \\frac{a + b}{2} + \\frac{|a - b|}{2}."
+            },
+            {
+              "p": "When $a \\ge b$ the right side is $\\tfrac12(a + b) + \\tfrac12(a - b) = a$, and when $a < b$ it is $b$. Second, Part 1 writes the distance with two units: $|a - b| = \\operatorname{ReLU}(a - b) + \\operatorname{ReLU}(b - a)$."
+            },
+            {
+              "p": "The average needs units of its own. A hidden layer cannot hand $a + b$ to the output as it is, because a ReLU clips it whenever it is negative, so the same two-unit split is used again: $a + b = \\operatorname{ReLU}(a + b) - \\operatorname{ReLU}(-a - b)$. The four units take the inputs $a - b$, $b - a$, $a + b$ and $-a - b$, and the output weights are $\\tfrac12$, $\\tfrac12$, $\\tfrac12$ and $-\\tfrac12$:"
+            },
+            {
+              "tex": "g = \\tfrac12\\,\\operatorname{ReLU}(a - b) + \\tfrac12\\,\\operatorname{ReLU}(b - a)\n  + \\tfrac12\\,\\operatorname{ReLU}(a + b) - \\tfrac12\\,\\operatorname{ReLU}(-a - b)\n  = \\tfrac12|a - b| + \\tfrac12(a + b) = \\max(a, b)."
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "A single ReLU unit with a linear readout computes $w\\,\\operatorname{ReLU}(vx + c) + d$. Show that no choice of $w$, $v$, $c$ and $d$ makes it equal to $g(x) = x$ for every real $x$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "If $v = 0$ the output is the constant $w\\,\\operatorname{ReLU}(c) + d$. If $v \\ne 0$, then $vx + c$ is negative on a whole half-line, either every $x$ below $-c/v$ or every $x$ above it, and there the ReLU gives 0 and the output is the constant $d$. So a single unit is flat on some half-line, and $g(x) = x$ is flat nowhere."
+            },
+            {
+              "p": "The two-unit network of Part 1 computes $x = \\operatorname{ReLU}(x) - \\operatorname{ReLU}(-x)$, and it gets past the obstacle because its units are flat on opposite half-lines: where one is stuck at 0, the other carries the slope. That is how a ReLU network builds everything it computes, out of one-sided pieces, each flat on one side of some line and sloped on the other."
+            },
+            {
+              "p": "Where the construction comes from: that one hidden layer of ReLU units suffices for the maximum of two numbers, and that stacking it gives the maximum of $2^k$ numbers in $k$ hidden layers, is the opening example of Hertrich, Basu, Di Summa and Skutella, \"Towards Lower Bounds on the Depth of ReLU Neural Networks\", NeurIPS 2021 (arXiv:2105.14835), Figure 1, which credits the stacking to Arora, Basu, Mianjy and Mukherjee, ICLR 2018 (arXiv:1611.01491). The four-unit network above is a symmetric rearrangement of theirs."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mlp-square-by-sawtooth",
+      "moduleId": "neural-networks-perceptrons-mlps-activations",
+      "title": "Squaring with Sawtooths",
+      "difficulty": "Very Hard",
+      "minutes": 40,
+      "overview": [
+        "The tent $t(x) = 2\\operatorname{ReLU}(x) - 4\\operatorname{ReLU}(x - \\frac12)$ climbs from $t(0) = 0$ to $t(\\tfrac12) = 1$ and comes back down to $t(1) = 0$. Feeding it into itself gives $t^{(s)} = t \\circ \\cdots \\circ t$, $s$ copies deep, which on $[0, 1]$ is a sawtooth of $2^{s-1}$ teeth: zero at each multiple of $2^{1-s}$, one at the midpoints between them, and linear in between."
+      ],
+      "setup": [
+        {
+          "p": "Now fix $m \\ge 0$ and let $f_m$ denote the piecewise-linear interpolant of $x^2$ on the grid of spacing $2^{-m}$: the curve that joins the points $(k\\,2^{-m}, k^2\\,4^{-m})$ for $k = 0, 1, \\dots, 2^m$ with straight segments. So $f_0(x) = x$, the chord from $(0, 0)$ to $(1, 1)$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Prove that for every $m \\ge 1$ the difference $f_{m-1} - f_m$ equals $t^{(m)} / 4^m$, and use it to write $f_m$ as $x$ minus a sum of scaled sawtooths."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Call the grid of spacing $h = 2^{1-m}$ the coarse grid. Both curves pass through the parabola's points there, so their difference is zero at every coarse grid point. The fine grid adds one point to each coarse cell $[a, a + h]$, its midpoint $a + \\tfrac h2$. At the midpoint $f_m$ sits on the parabola:"
+            },
+            {
+              "tex": "f_m\\big(a + \\tfrac h2\\big) = \\big(a + \\tfrac h2\\big)^2 = a^2 + ah + \\tfrac{h^2}{4},"
+            },
+            {
+              "p": "while $f_{m-1}$ is the chord across the cell, whose midpoint value is the mean of its two ends:"
+            },
+            {
+              "tex": "f_{m-1}\\big(a + \\tfrac h2\\big) = \\frac{a^2 + (a + h)^2}{2} = a^2 + ah + \\frac{h^2}{2}."
+            },
+            {
+              "p": "The gap is $h^2/4 = 4^{1-m}/4 = 4^{-m}$. On each half of the cell both curves are straight, so over every coarse cell the difference is a tent of height $4^{-m}$, zero at the ends and $4^{-m}$ at the midpoint. There are $2^{m-1}$ cells, which is $2^{m-1}$ teeth of width $2^{1-m}$: exactly $t^{(m)}$ scaled by $4^{-m}$."
+            },
+            {
+              "p": "Now add the differences. $f_0 - f_m = \\sum_{s=1}^{m} (f_{s-1} - f_s)$ telescopes, and $f_0(x) = x$, so"
+            },
+            {
+              "tex": "f_m(x) = x - \\sum_{s=1}^{m} 4^{-s}\\, t^{(s)}(x)."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Find the largest gap, $\\max_{x \\in [0, 1]} |f_m(x) - x^2|$, as a formula in $m$, and enter its value for $m = 3$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Inside one fine cell $[a, a + \\delta]$, with $\\delta = 2^{-m}$, $f_m$ is the chord of the parabola. Chord minus parabola is a quadratic in $x$ that vanishes at both ends of the cell and has leading coefficient $-1$, so it is $(x - a)(a + \\delta - x)$. That product is largest at the midpoint, where both factors equal $\\delta/2$:"
+            },
+            {
+              "tex": "\\max_{x \\in [0, 1]} |f_m(x) - x^2| = \\frac{\\delta^2}{4} = 2^{-2m-2}."
+            },
+            {
+              "p": "Every cell has the same gap, and the chord is never below the parabola, since $x^2$ is convex. For $m = 3$ the gap is $2^{-8} = 1/256 \\approx 0.0039$. Each extra level of the grid divides it by 4."
+            },
+            {
+              "result": "0.00390625"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "To bring the gap below $\\varepsilon = 10^{-6}$, what is the smallest $m$? Describe a ReLU network with $m$ layers that computes $f_m$ and count its units."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The gap $2^{-2m-2}$ is at most $10^{-6}$ when $2m + 2 \\ge \\log_2 10^6 \\approx 19.93$, so $m \\ge 8.97$ and the smallest choice is $m = 9$: the gap is then $2^{-20} \\approx 9.5 \\times 10^{-7}$, while $m = 8$ leaves $3.8 \\times 10^{-6}$."
+            },
+            {
+              "p": "Each layer of the network holds at most four units. Two of them turn the previous layer's tent $u = t^{(s-1)}(x)$ into the next, since $t(u) = 2\\operatorname{ReLU}(u) - 4\\operatorname{ReLU}(u - \\frac12)$ needs exactly $\\operatorname{ReLU}(u)$ and $\\operatorname{ReLU}(u - \\frac12)$. One unit carries $x$ forward, as $\\operatorname{ReLU}(x) = x$ on $[0, 1]$. One unit carries the running sum $\\sum_{j \\le s} t^{(j)}(x)/4^j$, which is never negative and so passes through a ReLU unchanged. The output subtracts the final running sum from $x$. That is at most $4m = 36$ units for $\\varepsilon = 10^{-6}$. In general $m$ is about $\\tfrac12 \\log_2(1/\\varepsilon)$, so the number of units grows like $\\log(1/\\varepsilon)$."
+            },
+            {
+              "result": "9"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Now take a single hidden layer of $N$ ReLU units with a linear output. Show that its largest gap from $x^2$ on $[0, 1]$ is at least $1/\\big(8(N + 1)^2\\big)$, and find the smallest $N$ this bound allows for $\\varepsilon = 10^{-6}$. Hint: on a stretch where the network is one straight line, compare the gap at the two ends with the gap at the middle."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each hidden unit bends the output at one point, where its input crosses zero, so $N$ units make at most $N + 1$ straight pieces on $[0, 1]$, and the longest piece covers an interval $[a, a + h]$ with $h \\ge 1/(N + 1)$. On it the network is a line $\\alpha x + \\beta$. Let $e(x) = x^2 - \\alpha x - \\beta$ be the gap there and take its second difference at spacing $h/2$:"
+            },
+            {
+              "tex": "e(a) - 2\\,e\\big(a + \\tfrac h2\\big) + e(a + h) = \\tfrac{h^2}{2}."
+            },
+            {
+              "p": "The linear part drops out of a second difference, and for $x^2$ the second difference at spacing $h/2$ is $2\\,(h/2)^2 = h^2/2$. Three values with weights $1$, $2$ and $1$ add up to $h^2/2$, so the largest of them in absolute value is at least $h^2/8$. The gap is therefore at least"
+            },
+            {
+              "tex": "\\frac{h^2}{8} \\ge \\frac{1}{8(N + 1)^2}."
+            },
+            {
+              "p": "For $\\varepsilon = 10^{-6}$ this needs $(N + 1)^2 \\ge 125{,}000$, so $N + 1 \\ge 353.6$ and $N \\ge 353$. Nine layers and at most 36 units against at least 353 units in one layer: the shallow count grows like $1/\\sqrt{\\varepsilon}$ and the deep one like $\\log(1/\\varepsilon)$. That is the sense in which depth buys expressive power."
+            },
+            {
+              "p": "Where the construction comes from: the tent $t(x) = 2\\operatorname{ReLU}(x) - 4\\operatorname{ReLU}(x - \\tfrac12)$ and the fact that its $s$-fold self-composition has $2^{s-1}$ teeth are Lemma 16 and Lemma 17 of Telgarsky, \"Benefits of depth in neural networks\", COLT 2016 (arXiv:1602.04485), where the exponentially growing sawtooth is what a deep ReLU network has and a shallow one cannot afford."
+            },
+            {
+              "result": "353"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

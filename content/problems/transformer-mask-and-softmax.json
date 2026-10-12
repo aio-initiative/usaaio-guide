@@ -1,0 +1,71 @@
+{
+ "module": "transformer-mask-and-softmax",
+ "stage": "Round 2",
+ "index": [
+  {
+   "id": "tf-a-pad-at-the-start",
+   "moduleId": "transformer-mask-and-softmax",
+   "title": "A Pad at the Start",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=tf-a-pad-at-the-start",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "The shorter of two texts in a batch is padded at the start to match the longer one, and only the causal mask is applied. Compute the attention weight head 1 gives the pad. 1 part.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  }
+ ],
+ "theory": [
+  {
+   "id": "tf-a-pad-at-the-start",
+   "moduleId": "transformer-mask-and-softmax",
+   "title": "A Pad at the Start",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "A batch holds \"the cat sat\" and \"the cat\". To give both three tokens, the shorter one is padded at the start with `<end>`, whose embedding is (0, 0, 0, −1), so the model reads `<end>` the cat. Positions follow the order as read: the pad at 0, \"the\" at 1 and \"cat\" at 2. Only the causal mask is applied, and every weight is the running example's."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "In head 1, what weight does \"the\" put on the pad? Give three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "First the two vectors that the row of \"the\" needs, embedding plus position values:"
+      },
+      {
+       "tex": "\\begin{array}{ccccc}\n\\text{Token} & \\text{Position} & \\text{Embedding} & \\text{Position values} & \\text{Vector} \\\\ \\hline\n\\text{pad} & 0 & \\text{(0, 0, 0, −1)} & \\text{(0.000, 1.000, 0.000, 1.000)} & \\text{(0.000, 1.000, 0.000, 0.000)} \\\\\n\\text{the} & 1 & \\text{(1, 0, 0, 0)} & \\text{(0.841, 0.540, 0.010, 1.000)} & \\text{(1.841, 0.540, 0.010, 1.000)}\n\\end{array}"
+      },
+      {
+       "p": "Head 1's query copies dimensions 3 and 4, and its key copies dimensions 2 and 3. The query of \"the\" is (0.010, 1.000), the key of the pad is (1.000, 0.000) and the key of \"the\" is (0.540, 0.010). The causal mask hides only the score against \"cat\", which comes later. The pad comes earlier, so its score stays:"
+      },
+      {
+       "tex": "\\frac{0.010 \\times 1.000 + 1.000 \\times 0.000}{1.414} = 0.0071, \\qquad\n\\frac{0.010 \\times 0.540 + 1.000 \\times 0.010}{1.414} = 0.0109 ."
+      },
+      {
+       "p": "The two scores are almost equal, so the softmax splits the weight almost evenly:"
+      },
+      {
+       "tex": "\\text{weight on the pad} = \\frac{e^{0.0071}}{e^{0.0071} + e^{0.0109}} = 0.499 ."
+      },
+      {
+       "p": "In \"the cat sat\", \"the\" puts all its weight on itself. Padded at the start, it gives half of head 1's attention to a token that is not part of the text. A padding mask that hides the pad's column fixes the weights: \"the\" goes back to 1 on itself. The vector of \"the\" is still not the one it had unpadded, because it moved from position 0 to position 1, so a model that pads at the start can also count positions from the first real token, which keeps each token's vector the same as it had unpadded."
+      },
+      {
+       "result": "0.499"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

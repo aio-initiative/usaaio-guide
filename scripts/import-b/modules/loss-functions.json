@@ -1,0 +1,115 @@
+{
+  "aModule": "loss-functions",
+  "stage": "Round 1",
+  "fixes": [
+    {
+      "file": "lf-hinge-which-points-pull",
+      "find": "A point contributes \u2212y\u1d62x\u1d62 to the subgradient",
+      "replace": "A point contributes \u2212y\u1d62x\u1d62/6 to the subgradient of the mean loss"
+    }
+  ],
+  "parts": {
+    "lf-bake-to-a-quantile": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "lf-convex-in-the-logits": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.4": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.5": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "lf-long-tailed-wait": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.4": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.5": {
+        "kind": "computation",
+        "requirement": "Reasoning is required."
+      }
+    },
+    "lf-soft-label-entropy": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "lf-two-meters": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "lf-where-squared-error-pushes": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "lf-bake-to-a-quantile": "A bakery bakes the same number of loaves every day and has nine days of demand: a loaf short of demand loses a sale worth 3 units of profit and an unsold loaf costs 1 unit. Pick the daily count that minimizes the mean cost, redo it when an unsold loaf costs 2, and show why the best count is the quantile of demand at the fraction a over a plus b.",
+    "lf-convex-in-the-logits": "For a softmax over K logits, show that the Hessian of the cross-entropy loss negative log p_c is the diagonal matrix of probabilities minus the outer product p p transpose, and that this makes the loss convex in the logits. Then test squared error on a sigmoid: compute how far the midpoint of a chord sits above the curve, and count how many gradient-descent steps squared error and cross-entropy each need to climb from z = -8 to z = -log 2.",
+    "lf-hinge-which-points-pull": "A linear classifier with labels +1 and -1 gives six training points the scores in the problem's table, and it is trained on the mean hinge loss by subgradient descent. Which of the six points contribute to the subgradient with respect to the weights at this step?",
+    "lf-long-tailed-wait": "A support line's wait times are exponentially distributed with a 10-minute mean, so most waits are short and a few are very long. A model with no features predicts one number for every call: find the number that minimizes mean absolute error, compare the mean and the median under both MAE and RMSE, and then redo the comparison for a line whose calls come in two types with different mean waits.",
+    "lf-r2-of-a-shifted-model": "A regressor scores five test targets, and every prediction is exactly 3 above its target, so the predictions rank the targets perfectly. Its total squared error is 45 while the targets' squared deviations from their own mean total 40; decide what R-squared the grader reports.",
+    "lf-soft-label-entropy": "A four-class classifier trains on soft labels that put 0.85 on the true class and 0.05 on each of the other three. Show that the gradient of the cross-entropy loss with respect to the logits is the predicted probabilities minus the target, and find both the lowest value the loss can reach and how far the true class logit sits above the others at that point.",
+    "lf-two-meters": "A lab measures one voltage four times: three readings from a bench meter whose noise is Gaussian with standard deviation 1 mV, and one from a handheld meter whose noise is Gaussian with standard deviation 2 mV. Neither meter is biased, and the readings are independent.",
+    "lf-where-squared-error-pushes": "A spam filter turns each email into a logit and reports the spam probability p, and it is trained with squared error on that probability, so for a spam email the size of one gradient step's raise of the logit depends on p. At which value of p is that raise the largest, and how does squared error's step there compare with cross-entropy's step on the same email?"
+  }
+}

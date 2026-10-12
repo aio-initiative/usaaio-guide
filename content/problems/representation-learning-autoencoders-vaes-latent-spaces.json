@@ -1,0 +1,138 @@
+{
+  "module": "representation-learning-autoencoders-vaes-latent-spaces",
+  "stage": "Camp",
+  "index": [
+    {
+      "id": "gen-a-stuck-pixel-and-a-stuck-gain",
+      "moduleId": "representation-learning-autoencoders-vaes-latent-spaces",
+      "title": "A Stuck Pixel and a Stuck Gain",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=gen-a-stuck-pixel-and-a-stuck-gain",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "The camp's scanner photographs 4-pixel thumbnails and hands each one to this chapter's autoencoder, the encoder and decoder the running example defines, trained on LEFT and RIGHT. Two faults showed up in the same morning: a thumbnail of LEFT with its bottom-left pixel stuck low, so the reading is (1, 0, 0.7, 0), and a reading of the same scene with every pixel 0.1 too high, so the reading is (1.1, 0.1, 1.1, 0.1). Give the reconstruction's mean squared error against the target each part names. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "autoencoders-representation-implementation-task",
+      "moduleId": "representation-learning-autoencoders-vaes-latent-spaces",
+      "title": "Autoencoder Anomaly Detection Practice",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=autoencoders-representation",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Camp"
+      ],
+      "prompt": "An autoencoder (PyTorch or sklearn) or linear bottleneck: score = reconstruction error. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. ROC-AUC of your scores against the label array _y_anom must be ≥ 0.85."
+    },
+    {
+      "id": "rp1-linear-ae-subspace",
+      "moduleId": "representation-learning-autoencoders-vaes-latent-spaces",
+      "title": "A Linear Autoencoder Finds PCA's Subspace, Not Its Axes",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=rp1-linear-ae-subspace",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Camp"
+      ],
+      "prompt": "Train a linear autoencoder, compare its weights to PCA's eigenvectors, and then compare the subspaces via projectors and principal angles instead.",
+      "answer": "Auto-graded inside the notebook. Errors, weight distance, subspace distance, and principal angles must each match the reference within 1e-4 times (1 plus the reference's magnitude), with matching subspaces and mismatched bases."
+    }
+  ],
+  "theory": [
+    {
+      "id": "gen-a-stuck-pixel-and-a-stuck-gain",
+      "moduleId": "representation-learning-autoencoders-vaes-latent-spaces",
+      "title": "A Stuck Pixel and a Stuck Gain",
+      "difficulty": "Medium",
+      "minutes": 18,
+      "overview": [
+        "The camp's scanner photographs 4-pixel thumbnails and hands each one to this chapter's autoencoder, the encoder and decoder the running example defines, trained on LEFT and RIGHT. Two faults showed up in the same morning."
+      ],
+      "setup": [
+        {
+          "p": "One thumbnail of LEFT came back with its bottom-left pixel stuck low, so the reading is $(1,\\ 0,\\ 0.7,\\ 0)$ and the three other pixels are right. A second thumbnail of the same scene came back with every pixel 0.1 too high, so the reading is $(1.1,\\ 0.1,\\ 1.1,\\ 0.1)$ and nothing about it looks stuck."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "For the first reading, give the mean squared error between the reconstruction and the image the scanner meant to photograph, which is LEFT itself. Give it to four decimal places, and say how many of the four pixels the reconstruction gets worse than the reading did."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The encoder reads a signed sum of the four pixels and halves it, so for $(1,\\ 0,\\ 0.7,\\ 0)$ it gives $1 - 0 + 0.7 - 0 = 1.7$, halved to $z = 0.85$. The decoder sets each left pixel to $0.5 + z \\div 2 = 0.925$ and each right pixel to $0.5 - z \\div 2 = 0.075$, so the reconstruction is $(0.925,\\ 0.075,\\ 0.925,\\ 0.075)$."
+            },
+            {
+              "p": "Against LEFT the reading is wrong by $0,\\ 0,\\ 0.3,\\ 0$, so storing it as it came would score $(0 + 0 + 0.09 + 0) \\div 4 = 0.0225$. The reconstruction is wrong by $0.075$ in every pixel, so it scores $0.075^2 = 0.0056$, a quarter of what copying it scores."
+            },
+            {
+              "p": "Three pixels get worse, because each was exactly right in the reading and is off by $0.075$ in the reconstruction. The stuck pixel is the only one that improves, from an error of $0.3$ down to $0.075$. The code moved by $0.15$, which is half the stuck pixel's shortfall, and the decoder then spent that movement on all four pixels at once. A code with one number in it cannot say which pixel let it down, so it corrects every pixel by the same amount and the $0.3$ fault comes back as a $0.075$ error four times over."
+            },
+            {
+              "result": "0.0056"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "For the second reading, give the same quantity, the mean squared error between the reconstruction and LEFT, again to four decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The signed sum is $1.1 - 0.1 + 1.1 - 0.1 = 2$, which is the same $2$ that LEFT gives, so $z = 1$ and the reconstruction is $(1,\\ 0,\\ 1,\\ 0)$, pixel for pixel LEFT. The loss is therefore $0$."
+            },
+            {
+              "p": "Nothing moved. The reading was $0.1$ too high in all four pixels, so storing it as it came would score a positive loss against LEFT, and the autoencoder took that loss down to nothing. That looks like a perfect repair, and the loss says so, but the code never registered the fault at all. Adding the same amount to a pixel the code adds to and the same amount to a pixel it subtracts from leaves the signed sum untouched, and a reading can be wrong in that direction by any amount at all without the code changing."
+            },
+            {
+              "result": "0"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The second reading was not a fault after all. It was a good photograph of a scene brighter than LEFT, so the correct reconstruction is the reading itself. Give the loss the autoencoder scores for it measured against that correct answer, to four decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The code is still $1$ and the reconstruction is still $(1,\\ 0,\\ 1,\\ 0)$. Against the true image $(1.1,\\ 0.1,\\ 1.1,\\ 0.1)$ that is an error of $0.1$ in every pixel, so the loss is $0.1^2 = 0.0100$, and storing the reading as it came would have scored $0$."
+            },
+            {
+              "p": "The same reading scores $0$ or $0.01$ depending only on which image the loss is measured against, and the autoencoder cannot tell the two situations apart. The fault runs in a direction the code does not read: adding the same amount to all four pixels leaves the left-minus-right sum unchanged. A second code number would only help if training gave it a reason to read overall brightness, and LEFT and RIGHT have the same brightness, so nothing in this training set does. Repairing faults like this one needs a code that can count brightness, not just contrast."
+            },
+            {
+              "result": "0.0100"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "aModule": "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
+  "stage": "Round 1",
+  "order": [
+    "es-undo-two-updates",
+    "es-a-matrix-with-a-dial",
+    "es-ten-correlated-features",
+    "es-a-server-up-or-down",
+    "es-psd-square-root",
+    "es-smallest-possible-correlation",
+    "es-the-longest-output-of-a-layer",
+    "es-variance-along-the-first-component",
+    "es-shift-power-iteration",
+    "es-similarity-matrix-spectrum"
+  ],
+  "fixes": [],
+  "parts": {
+    "es-a-matrix-with-a-dial": {
+      "1.1": { "kind": "computation", "requirement": "Reasoning is not required." },
+      "1.2": { "kind": "derivation", "requirement": "A complete derivation is required." },
+      "1.3": { "kind": "computation", "requirement": "Reasoning is not required." }
+    },
+    "es-a-server-up-or-down": {
+      "1.1": { "kind": "computation", "requirement": "Reasoning is not required." },
+      "1.2": { "kind": "computation", "requirement": "Reasoning is not required." }
+    },
+    "es-psd-square-root": {
+      "1.1": { "kind": "computation", "requirement": "Reasoning is not required." },
+      "1.2": { "kind": "derivation", "requirement": "A complete derivation is required." }
+    },
+    "es-smallest-possible-correlation": {
+      "1.1": { "kind": "computation", "requirement": "Reasoning is not required." },
+      "1.2": { "kind": "computation", "requirement": "Reasoning is not required." }
+    },
+    "es-shift-power-iteration": {
+      "1.1": { "kind": "computation", "requirement": "Reasoning is not required." },
+      "1.2": { "kind": "computation", "requirement": "Reasoning is not required." },
+      "1.3": { "kind": "computation", "requirement": "Reasoning is not required." }
+    },
+    "es-similarity-matrix-spectrum": {
+      "1.1": { "kind": "computation", "requirement": "Reasoning is not required." },
+      "1.2": { "kind": "computation", "requirement": "Reasoning is not required." },
+      "1.3": { "kind": "computation", "requirement": "Reasoning is not required." }
+    }
+  },
+  "indexPrompt": {
+    "es-a-matrix-with-a-dial": "One entry of a 2 by 2 matrix is a dial c. Say which c makes its two eigenvalues coincide, find the eigenvectors at that c, and give the eigenvalues at c = -4.",
+    "es-a-server-up-or-down": "A server is up or down each day with fixed switching chances. Write the probability of up as a + b mu^n and find the day it first comes within 1e-9 of its long-run value.",
+    "es-psd-square-root": "Find the symmetric square root of a covariance matrix, its off-diagonal entry, and every other symmetric matrix with the same square.",
+    "es-smallest-possible-correlation": "Two features each correlate 0.9 with a third. Find the smallest their mutual correlation can be, and the smallest eigenvalue when a report says 0.5.",
+    "es-shift-power-iteration": "Power iteration on a symmetric matrix with eigenvalues 10, 9 and 1. Find its convergence rate, the shift that speeds it up, and what a shift past the top eigenvalue finds.",
+    "es-similarity-matrix-spectrum": "From a 3 by 3 Gram matrix, read off the top eigenvalue of a 1000 by 1000 similarity matrix and the rank-1 truncation errors of both matrices."
+  }
+}

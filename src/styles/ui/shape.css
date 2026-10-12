@@ -1,0 +1,85 @@
+/* Shape (owner, 2026-10-12): squarer corners across the site. The radius
+   tokens shrink, and the pill-shaped buttons, chips and tabs take the small
+   radius instead of a full pill. Dots, avatars, meters and round icon buttons
+   keep their shape. Loaded last, and each selector gains an `html` prefix so it
+   outranks the rule it squares off. */
+:root {
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --ctl-radius: 5px;
+}
+
+html .about-kicker,
+html .auth-link-button,
+html .button,
+html .button-lite,
+html .complete-button,
+html .dashboard-continue,
+html .editor-kernel,
+html .filter-chip,
+html .glossary-clear,
+html .glossary-page .glossary-letters a,
+html .glossary-page .glossary-module,
+html .glossary-page .glossary-search,
+html .glossary-tag,
+html .hero .eyebrow,
+html .link-button,
+html .mini-status,
+html .mock-count,
+html .mock-download,
+html .mock-fullscreen,
+html .mock-mark,
+html .mock-quick,
+html .mock-result-pill,
+html .mock-viewtab,
+html .nav-links a,
+html .nav-login-button,
+html .nav-menu summary,
+html .nav-user button,
+html .pager-button,
+html .plan-add,
+html .plan-order,
+html .pp-type,
+html .problem-chip,
+html .ptabs-count,
+html .reader-chip,
+html .search-field,
+html .site-footer a.footer-contact,
+html .site-header .nav-links a,
+html .site-header .nav-login-button,
+html .site-header .nav-menu > summary,
+html .site-header .nav-search,
+html .site-header .nav-user .nav-account-button,
+html .site-header .nav-user button[data-auth-logout],
+html .sort-button,
+html .sort-select,
+html .splash-button,
+html .sponsor-info-link,
+html .stage-switch a,
+html .status-select,
+html .tab-button,
+html .tag-row span,
+html .team-aiic-tag,
+html .team-camp-tag,
+html .team-ioai-tag,
+html .theory-meta-chip,
+html .theory-requirement,
+html .theory-reveal,
+html .topic-row .topic-copy small,
+html [data-page="official"] .resource-open,
+html [data-page="planner"] .time-pill,
+html [data-page="resources"] .resource-card small,
+html [data-page="resources"] .resource-open,
+html [data-page="resources"] .season-date,
+html [data-page="search"] .card-pill,
+html [data-page="theory"] .theory-difficulty,
+html body[data-page="about"] .team-aiic-tag,
+html body[data-page="about"] .team-camp-tag,
+html body[data-page="about"] .team-ioai-tag,
+html body[data-page="editor"] .cell-tag,
+html body[data-page="editor"] .editor-output-status,
+html body[data-page="home"] .splash-button {
+  border-radius: var(--radius-sm);
+}

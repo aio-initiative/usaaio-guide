@@ -1,0 +1,77 @@
+{
+  "aModule": "linear-algebra-i-vectors-matrices-systems-transformations",
+  "stage": "Round 1",
+  "order": [
+    "vm-cosine-from-distances",
+    "vm-strip-a-shared-direction",
+    "vm-matrix-from-two-probes",
+    "vm-probe-an-affine-layer",
+    "vm-order-of-a-low-rank-product",
+    "vm-determinant-of-a-scaled-inverse",
+    "vm-which-right-sides-are-reachable",
+    "vm-rank-of-three-outer-products",
+    "vm-fit-a-symmetric-curve",
+    "vm-dimension-of-the-residuals",
+    "vm-remove-two-directions",
+    "vm-tiny-residual-large-error"
+  ],
+  "fixes": [
+    {
+      "file": "vm-fit-a-symmetric-curve",
+      "find": "<center>",
+      "replace": "",
+      "why": "Drops B's centering wrapper around the readings table. A renders the table as a centered KaTeX array, so the tags carry nothing; the lesson importer drops the same tag for the same reason. problems.py defines strip_center_tags but never calls it, so the tags would otherwise reach the page as literal text."
+    },
+    {
+      "file": "vm-fit-a-symmetric-curve",
+      "find": "</center>",
+      "replace": "",
+      "why": "Closing half of the same wrapper."
+    }
+  ],
+  "parts": {
+    "vm-cosine-from-distances": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.3": {"kind": "derivation", "requirement": "A complete derivation is required."}
+    },
+    "vm-strip-a-shared-direction": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "derivation", "requirement": "A complete derivation is required."}
+    },
+    "vm-order-of-a-low-rank-product": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "derivation", "requirement": "A complete derivation is required."}
+    },
+    "vm-which-right-sides-are-reachable": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "derivation", "requirement": "A complete derivation is required."}
+    },
+    "vm-rank-of-three-outer-products": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "derivation", "requirement": "A complete derivation is required."}
+    },
+    "vm-fit-a-symmetric-curve": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is required."}
+    },
+    "vm-remove-two-directions": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.3": {"kind": "derivation", "requirement": "A complete derivation is required."}
+    },
+    "vm-tiny-residual-large-error": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.3": {"kind": "derivation", "requirement": "A complete derivation is required."}
+    }
+  },
+  "indexPrompt": {
+    "vm-rank-of-three-outer-products": "A $3 \\times 3$ matrix is built as a sum of three outer products, $M = \\mathbf{u}_1\\mathbf{v}_1^\\top + \\mathbf{u}_2\\mathbf{v}_2^\\top + \\mathbf{u}_3\\mathbf{v}_3^\\top$, where $\\mathbf{u}_3 = \\mathbf{u}_1 + \\mathbf{u}_2$. Find the rank of $M$.",
+    "vm-which-right-sides-are-reachable": "Let $A = \\begin{pmatrix} 1 & 2 & 1 \\\\ 2 & 4 & 3 \\\\ 3 & 6 & 4 \\end{pmatrix}$ and $\\mathbf{b} = (1, 0, c)$. For which value of $c$ does $A\\mathbf{x} = \\mathbf{b}$ have a solution, and how many solutions are there then?",
+    "vm-fit-a-symmetric-curve": "An engineer fits $y = a + b\\,t^2$ by least squares to four readings taken at $t = -1, 0, 1, 2$. Find the fitted value of $b$ and the smallest possible sum of squared errors.",
+    "vm-remove-two-directions": "A team cleans an embedding $\\mathbf{x}$ by projecting out two unwanted directions $\\mathbf{v}_1$ and $\\mathbf{v}_2$ one at a time. Compare the result with the true projection of $\\mathbf{x}$ onto the plane the two directions span.",
+    "vm-strip-a-shared-direction": "Two review vectors, $\\mathbf{a} = (5, 3, 4)$ and $\\mathbf{b} = (2, 3, 4)$, have cosine similarity about $0.92$. Remove from each its part along $\\mathbf{v} = (1, 1, 1)$ and compare the residuals.",
+    "vm-tiny-residual-large-error": "A solver returns $\\tilde{\\mathbf{x}} = (2, 0)$ for $A\\mathbf{x} = \\mathbf{b}$, where $A = \\begin{pmatrix} 1 & 1 \\\\ 1 & 1.01 \\end{pmatrix}$ and $\\mathbf{b} = (2, 2.01)$. Its residual is tiny; how far can the answer be from the truth?"
+  }
+}

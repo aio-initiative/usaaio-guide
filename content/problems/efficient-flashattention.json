@@ -1,0 +1,112 @@
+{
+  "module": "efficient-flashattention",
+  "stage": "Advanced",
+  "index": [
+    {
+      "id": "eff-window-of-three",
+      "moduleId": "efficient-flashattention",
+      "title": "A Window of Three Tokens",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=eff-window-of-three",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Advanced"
+      ],
+      "prompt": "One head of a model reading \"the cat sat on\" has the problem's table of four rows of attention scores and the value behind each key. With a sliding window of 3 and the causal mask, find the weight the last token gives to the token two places before it, the head's output for the last token, and how many of the table's 16 scores the head still computes. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    }
+  ],
+  "theory": [
+    {
+      "id": "eff-window-of-three",
+      "moduleId": "efficient-flashattention",
+      "title": "A Window of Three Tokens",
+      "difficulty": "Medium",
+      "minutes": 16,
+      "overview": [
+        "The model reads \"the cat sat on\" and one head has these four rows of scores, before the causal mask hides what each token may not see, and the values behind them:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{cccccc}\n\\text{Query of} & \\text{the} & \\text{cat} & \\text{sat} & \\text{on} & \\text{Value} \\\\ \\hline\n\\text{the} & 0.000 & 0.714 & 0.721 & 0.021 & \\text{(1.000, 1.000)} \\\\\n\\text{cat} & 0.714 & 1.814 & 0.424 & \\text{−1.400} & \\text{(0.841, 1.540)} \\\\\n\\text{sat} & 0.721 & 2.539 & 1.142 & \\text{−1.393} & \\text{(0.909, −0.416)} \\\\\n\\text{on} & 0.021 & 1.461 & 1.433 & 0.000 & \\text{(−0.859, −1.990)}\n\\end{array}"
+        },
+        {
+          "p": "The window is 3, so a token scores itself and the two tokens before it, and nothing to the right of the diagonal. Attention is then computed in blocks that fit in fast memory, one key at a time here."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Under the window, what weight does \"on\" give to \"cat\"?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "\"On\" is the fourth token, so the window hides \"the\" and leaves \"cat\", \"sat\" and \"on\". Its three scores are 1.461, 1.433 and 0.000. With the largest subtracted the terms are 1.000, 0.9724 and 0.2320, which total 2.204, so \"cat\", which holds the largest score and so has the term 1.000, gets $1.000 / 2.204 = 0.454$ of the row."
+            },
+            {
+              "p": "With every key visible the same token gives \"cat\" 0.410 and \"the\" 0.097. A window does not only remove a weight, it hands what was removed to the keys that stay."
+            },
+            {
+              "result": "0.454"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Under the window, what does \"on\" return from this head? Give the first of its two numbers."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The blocks arrive one key at a time, and the running numbers after each are:"
+            },
+            {
+              "tex": "\\begin{array}{cccc}\n\\text{Block} & \\text{Largest score} & \\text{Running total} & \\text{Running weighted sum} \\\\ \\hline\n\\text{\"cat\"} & 1.461 & 1.000 & \\text{(0.841, 1.540)} \\\\\n\\text{\"sat\"} & 1.461 & 1.972 & \\text{+ 0.9724 × (0.909, −0.416) = (1.725, 1.135)} \\\\\n\\text{\"on\"} & 1.461 & 2.204 & \\text{+ 0.2320 × (−0.859, −1.990) = (1.526, 0.674)}\n\\end{array}"
+            },
+            {
+              "p": "No block holds a larger score than the first, so nothing is rescaled. Dividing the sum by the total gives $(1.526 / 2.204,\\ 0.674 / 2.204) = (0.692,\\ 0.306)$."
+            },
+            {
+              "p": "The window has moved the head's answer away from the (0.722, 0.373) it gives with every key visible, by (−0.030, −0.067). Blocks only change how the answer is computed, and the window changes the answer. The first three rows are untouched, since their tokens see only 1, 2 and 3 keys, and the window of 3 keeps that many."
+            },
+            {
+              "result": "0.692"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Of the 16 scores in this table, how many does the head still compute under the window?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each token scores itself and the two tokens before it, so the counts by row are 1 for \"the\", 2 for \"cat\", and 3 each for \"sat\" and \"on\": $1 + 2 + 3 + 3 = 9$."
+            },
+            {
+              "p": "A window of 3 leaves 9 of the 16, so most of the table survives on a text this short. The saving grows with the text rather than with the width of the window, since a text of $t$ tokens costs about $w \\times t$ scores with a window of width $w$, instead of $t \\times t$: over 8,192 tokens a window of 3 computes about 3 scores per token, against the 8,192 the last token alone would score without it. Skipping the keys outside the window is what makes the work per token the same at any length, and unlike the linear attention of Step 5 it is the loop that skips them, not a cheaper operation inside it."
+            },
+            {
+              "result": "9"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

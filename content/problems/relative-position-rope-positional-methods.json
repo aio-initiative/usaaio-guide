@@ -1,0 +1,884 @@
+{
+  "module": "relative-position-rope-positional-methods",
+  "stage": "Camp",
+  "index": [
+    {
+      "id": "pe-alibi-bias-on-the-key",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "An ALiBi Bias Stored with the Key",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pe-alibi-bias-on-the-key",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Camp"
+      ],
+      "prompt": "A causal ALiBi head adds -m(i - j) to the logit of query i against each key j <= i. To avoid building a row of biases at every decoding step, an engineer stores one extra number with each key when it enters the cache, b_j = m j, and adds b_j to that key's logit for every query i >= j. Nothing is added for the query's own position. How do the attention weights of query i compare with ALiBi's?",
+      "answer": "They are the same, since for query i the stored bias differs from ALiBi's by m·i for every key alike, and softmax is unchanged by a shift shared by a whole row. The ALiBi bias is −m(i − j) = m·j − m·i. The part −m·i is the same for every key that query i sees, so it cancels between each exponential and their sum in the softmax, and only m·j is left. Causal ALiBi can therefore be folded into the cached key after all. It works because the penalty is linear in the offset. A learned T5 table b(i − j) has no such split."
+    },
+    {
+      "id": "pe-the-key-a-head-prefers",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "The Key a Rotary Head Prefers",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pe-the-key-a-head-prefers",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "A toy two-dimensional head turns every key by a fixed angle per position. Its query is (1, 1) and every key is (-1, 1), so the score is a sine of the offset. Find the offset the head scores highest, and the next one that scores the same. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pe-sign-flip-in-key-rotation",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "A Sign Flipped in the Key Rotation",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pe-sign-flip-in-key-rotation",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Camp"
+      ],
+      "prompt": "Porting RoPE to a new codebase, an engineer flips the sign of the sine terms in the key rotation only. Queries are still rotated by R_m, but the key at position n is now rotated by R_n^T, a turn of -ntheta. In two dimensions, what does the score < R_mq, R_n^T k> depend on?",
+      "answer": "The sum m + n, so two tokens a fixed distance apart score differently in different places. (R_m q)ᵀ(R_nᵀ k) = qᵀ R_mᵀ R_nᵀ k, and both factors are turns by negative angles, −mθ and −nθ, so they add to a turn by −(m + n)θ. Positions 5 and 2 now score like positions 4 and 3, while positions 8 and 5, three apart like the first pair, score differently. A check that the score matrix is constant along its diagonals, as in From scratch, catches the bug at once."
+    },
+    {
+      "id": "pe-pairing-layout-mismatch",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "Weights Trained with Another Pairing",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/theory/?id=pe-pairing-layout-mismatch",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Camp"
+      ],
+      "prompt": "RoPE code comes in two layouts. Both turn pair i by the angle mtheta_i, with theta_i = 10000^-2i/d. The interleaved layout, used in this lesson, makes pair i from coordinates 2i and 2i + 1. The half-split layout makes pair i from coordinates i and i + d/2. A checkpoint was trained with half-split RoPE. You load its W_Q and W_K, unchanged, into a model whose attention uses the interleaved layout. What happens to the attention scores?",
+      "answer": "The scores stay relative but differ from training, and moving rows i and i + d/2 of W_Q and W_K to rows 2i and 2i + 1 restores the trained scores. Any split into pairs keeps the score relative, so the loaded model still computes a function of n − m, but each feature now turns with a different partner and at a different speed than in training. Let P send coordinate i to 2i and coordinate i + d/2 to 2i + 1. Interleaved RoPE of P x is P times half-split RoPE of x, so with P W_Q and P W_K the queries and keys are the trained ones, both reordered by P, and a shared reordering leaves every dot product unchanged."
+    },
+    {
+      "id": "pe-two-decay-rates",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "Two Decay Rates in One Linear Head",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pe-two-decay-rates",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "A linear attention head weights each offset by 0.8^(i-j) + 0.5^(i-j), a slow decay and a fast one together. Check whether that weight factorizes into a product f(i) g(j), and show the head still runs as a fixed-size recurrence. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pe-pairs-ntk-pushes-past",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "The Pairs NTK Scaling Carries Past a Full Turn",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pe-pairs-ntk-pushes-past",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "A model with head dimension 96 and base 500,000 is trained on 3,000 tokens and run on 12,000. Count how many of its 48 pairs never complete a turn in training, and find which pairs NTK-aware scaling carries past a full turn. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pe-position-term-after-projections",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "The Position Term After the Projections",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=pe-position-term-after-projections",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "When sinusoidal position vectors are added before the projections, the position-against-position term is p_i^T M p_j for M = W_Q^T W_K. Expand it into waves in i - j and in i + j, and find which matrices M make it depend on the offset alone. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pe-sliding-window-past-training",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "A Sliding Window Past the Training Length",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=pe-sliding-window-past-training",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Camp"
+      ],
+      "prompt": "A model with RoPE (base 10,000) was trained on sequences of 8,192 tokens. You run it over a 100,000-token server log and keep only the 8,000 most recent tokens in its cache, so each query attends to itself and the 7,999 tokens before it. Positions are counted from the start of the log, so they reach 99,999. What should you change about the positions?",
+      "answer": "Nothing, because every score depends only on an offset between 0 and 7,999, and training produced every one of those offsets. By the cancellation, each pair's term depends on its speed times the offset between query and key, never on the positions themselves. With this cache the largest offset is 7,999, below the 8,191 of training, so every angle a score uses was met in training, on every pair. Large positions cost only rounding: in float32 an angle near 100,000 radians is stored to within about 0.004 radians. A window that has evicted the first tokens of the log can still fail, but not because of positions: many heads put much of their weight on the first few tokens, and those are gone."
+    },
+    {
+      "id": "pe-angle-maps-that-stay-relative",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "Which Angle Maps Keep Scores Relative",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=pe-angle-maps-that-stay-relative",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "A RoPE variant turns the query at position m by an angle phi(m) and the key at n by phi(n). Prove the score depends on the offset alone exactly when phi is linear in the position, then test the map phi(m) = ln(1 + m) at a query at position 99. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pe-rotated-normalizer",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "When the Weights Stop Summing to One",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=pe-rotated-normalizer",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "A linear attention head with a single feature pair rotates the numerator features only. With features (1, 1) at every position, compute what it returns, then compute the output when the denominator is rotated too, and say which choice is safer and what it gives up. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "pe-rope-cache-numpy",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "RoPE with a Key Cache in NumPy",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=pe-rope-cache-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Camp"
+      ],
+      "prompt": "With RoPE each new key is rotated once, at its own position, and stored in the cache already rotated, so later queries use the cached keys as they are and the scores still depend only on how far apart the tokens are. Write the batched rotation, each row at its own position, and then a decoding loop that keeps such a cache.",
+      "answer": "Auto-graded inside the notebook. The rotation must match the reference pair by pair and position by position, including with a custom base, without changing its input, and the cached decode must match full causal attention with RoPE while rotating each query and each key exactly once, 2T rotated rows in all."
+    },
+    {
+      "id": "pe-sink-tokens-numpy",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "Sink Tokens and a Rolling Cache in NumPy",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=pe-sink-tokens-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Camp"
+      ],
+      "prompt": "A streaming policy keeps the first S tokens, the attention sinks, and the W most recent, and evicts everything between. Number the cached tokens by their place in the cache so no offset passes S + W - 1, then write a streaming loop that gives the same outputs while rotating each window key only once.",
+      "answer": "Auto-graded inside the notebook. The reindexed step must match a reference that rotates each key by its offset from the query, the stream must match that step-by-step reference for several S and W, and each window key may be rotated only once, when it arrives, and the sink keys may be rotated at every step."
+    },
+    {
+      "id": "tf7-rope-relative",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "RoPE's One Property, and Where It Stops Holding",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=tf7-rope-relative",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Camp"
+      ],
+      "prompt": "Implement rotary embeddings, verify the dot product depends only on relative position to machine precision, and locate why extrapolation past the training length fails.",
+      "answer": "Auto-graded inside the notebook. The relative-position error, wavelength, coverage fraction and dot product at relative distance 4096 must match the reference to 1e-6 relative, with the relative-position property exact (below 1e-9) and frac_unseen below 0.5."
+    }
+  ],
+  "theory": [
+    {
+      "id": "pe-alibi-bias-on-the-key",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "An ALiBi Bias Stored with the Key",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A causal ALiBi head adds $-m(i - j)$ to the logit of query $i$ against each key $j \\le i$. To avoid building a row of biases at every decoding step, an engineer stores one extra number with each key when it enters the cache, $b_j = m\\,j$, and adds $b_j$ to that key's logit for every query $i \\ge j$. Nothing is added for the query's own position. How do the attention weights of query $i$ compare with ALiBi's?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "They change when the text shifts, since b_j grows with the absolute position j, so moving the same window 1,000 tokens later adds 1,000m to its logits",
+                  "explain": "Moving the window 1,000 tokens later does add 1,000m to the logits, but to every logit of a query alike, and softmax ignores a constant added to a whole row. A bias tied to the key's absolute position can still give weights that depend only on offsets, as long as what it adds beyond the relative bias is the same for every key of the row."
+                },
+                {
+                  "text": "They are the same, since for query i the stored bias differs from ALiBi's by m·i for every key alike, and softmax is unchanged by a shift shared by a whole row",
+                  "correct": true,
+                  "explain": "The ALiBi bias is −m(i − j) = m·j − m·i. The part −m·i is the same for every key that query i sees, so it cancels between each exponential and their sum in the softmax, and only m·j is left. Causal ALiBi can therefore be folded into the cached key after all. It works because the penalty is linear in the offset. A learned T5 table b(i − j) has no such split."
+                },
+                {
+                  "text": "They are the same, and storing m·j works just as well for a bidirectional ALiBi head, whose penalty is $-m|i - j|$",
+                  "explain": "The causal part is right, but the bidirectional claim is not. For keys after the query the penalty is −m(j − i) = m·i − m·j, so their key part is −m·j, the opposite sign of the m·j that keys before the query need. Every key sits before some queries and after others, so no single stored number fits both sides, and a bidirectional head still builds a row of biases for each query."
+                },
+                {
+                  "text": "They are reversed in time, since ALiBi penalizes the oldest keys while the stored bias rewards the newest ones, so the head favors the other end of the window",
+                  "explain": "Penalizing old keys and rewarding new ones are the same preference. Under both biases the key at j = i gets m·i more than the key at j = 0, and each step toward the query adds m, so recent keys are favored by the same margins."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The ALiBi bias is −m(i − j) = m·j − m·i. The part −m·i is the same for every key that query i sees, so it cancels between each exponential and their sum in the softmax, and only m·j is left. Causal ALiBi can therefore be folded into the cached key after all. It works because the penalty is linear in the offset. A learned T5 table b(i − j) has no such split."
+            },
+            {
+              "result": "They are the same, since for query i the stored bias differs from ALiBi's by m·i for every key alike, and softmax is unchanged by a shift shared by a whole row"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pe-the-key-a-head-prefers",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "The Key a Rotary Head Prefers",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A toy attention head works in two dimensions and uses RoPE with an angle of $\\theta = \\pi/10$ per position, chosen for clean numbers (the real ladder starts at 1 radian). Before rotation its query is $\\mathbf{q} = (1, 1)$ at every position and every key is $\\mathbf{k} = (-1, 1)$. The head is causal, so the query at position $m$ sees only keys at positions $n \\le m$. Write $r = m - n$ for how many positions back a key is."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Which key does the head score highest? Give the smallest $r$ at which the score is largest."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Only the offset $n - m = -r$ matters, so the score is the query against the key turned by $-r\\theta$. With $\\varphi = r\\theta$, turning $(-1, 1)$ by $-\\varphi$ gives"
+            },
+            {
+              "tex": "(-\\cos\\varphi + \\sin\\varphi,\\ \\ \\sin\\varphi + \\cos\\varphi),"
+            },
+            {
+              "p": "and the dot product with $(1, 1)$ is"
+            },
+            {
+              "tex": "\\text{score}(r) = 2\\sin\\!\\left(\\frac{r\\pi}{10}\\right)."
+            },
+            {
+              "p": "It rises from 0 at $r = 0$ through 0.618, 1.176, 1.618 and 1.902 to its maximum of 2 at $r = 5$, then falls again. The geometry says the same thing. The query points at 45 degrees and the key at 135 degrees, and turning the key back by 18 degrees per position lines it up with the query after $90 / 18 = 5$ positions. The maximum is $|\\mathbf{q}|\\,|\\mathbf{k}| = 2$, the largest a dot product of these lengths can be."
+            },
+            {
+              "p": "Using $R_{m-n}$ instead turns the key the other way, through 270 degrees, and puts the maximum at $r = 15$."
+            },
+            {
+              "result": "5"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Another key further back gets exactly the same top score. What is the next $r$ after the one from Part 1 with that score, and what does this say about a head with a single pair?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The score $2\\sin(r\\pi/10)$ repeats every $2\\pi/\\theta = 20$ positions, so it is 2 again at $r = 25$, then at 45, 65 and so on. In the same way a key 20 back scores like the key at the query's own position."
+            },
+            {
+              "p": "With one pair the head cannot tell 5 back from 25 back. In real RoPE the pairs turn at speeds from 1 radian per position down to about $1/\\text{base}$, with periods that do not line up, so a key 25 back differs from a key 5 back on most pairs and a head can aim at one offset without the repeats."
+            },
+            {
+              "result": "25"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pe-sign-flip-in-key-rotation",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "A Sign Flipped in the Key Rotation",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Porting RoPE to a new codebase, an engineer flips the sign of the sine terms in the key rotation only. Queries are still rotated by $R_m$, but the key at position $n$ is now rotated by $R_n^\\top$, a turn of $-n\\theta$. In two dimensions, what does the score $\\langle R_m\\mathbf{q},\\ R_n^\\top\\mathbf{k}\\rangle$ depend on?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "The sum m + n, so two tokens a fixed distance apart score differently in different places",
+                  "correct": true,
+                  "explain": "(R_m q)ᵀ(R_nᵀ k) = qᵀ R_mᵀ R_nᵀ k, and both factors are turns by negative angles, −mθ and −nθ, so they add to a turn by −(m + n)θ. Positions 5 and 2 now score like positions 4 and 3, while positions 8 and 5, three apart like the first pair, score differently. A check that the score matrix is constant along its diagonals, as in From scratch, catches the bug at once."
+                },
+                {
+                  "text": "The offset n − m, as before, since a sign in the sine terms only mirrors the turn and turns still compose by adding angles",
+                  "explain": "The flip is not harmless. The dot product already transposes the query's rotation, which is what turns R_mᵀ R_n into R_(n − m). The bug adds a second transpose, on the key, so the product is R_mᵀ R_nᵀ, a turn by −(m + n)θ, and the absolute positions no longer cancel."
+                },
+                {
+                  "text": "The offset m − n, so the head still sees relative position but reads it backward and attends forward instead of back",
+                  "explain": "That is what happens when both rotations are transposed: (R_mᵀ q)ᵀ(R_nᵀ k) = qᵀ R_m R_nᵀ k = qᵀ R_(m − n) k, a valid RoPE with the opposite convention. Flipping only the key's sign leaves the query turning one way and the key the other, and the score picks up −(m + n)θ."
+                },
+                {
+                  "text": "Neither position, since R_m and R_nᵀ undo each other and the score is qᵀk wherever the tokens sit",
+                  "explain": "R_m and R_nᵀ are inverses only when m = n. In the score the query's rotation appears transposed, as R_mᵀ, so the product is R_mᵀ R_nᵀ, a turn by −(m + n)θ, which is not the identity."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "(R_m q)ᵀ(R_nᵀ k) = qᵀ R_mᵀ R_nᵀ k, and both factors are turns by negative angles, −mθ and −nθ, so they add to a turn by −(m + n)θ. Positions 5 and 2 now score like positions 4 and 3, while positions 8 and 5, three apart like the first pair, score differently. A check that the score matrix is constant along its diagonals, as in From scratch, catches the bug at once."
+            },
+            {
+              "result": "The sum m + n, so two tokens a fixed distance apart score differently in different places"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pe-pairing-layout-mismatch",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "Weights Trained with Another Pairing",
+      "difficulty": "Hard",
+      "minutes": 8,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "RoPE code comes in two layouts. Both turn pair $i$ by the angle $m\\theta_i$, with $\\theta_i = 10000^{-2i/d}$. The interleaved layout, used in this lesson, makes pair $i$ from coordinates $2i$ and $2i + 1$. The half-split layout makes pair $i$ from coordinates $i$ and $i + d/2$."
+            },
+            {
+              "p": "A checkpoint was trained with half-split RoPE. You load its $W_Q$ and $W_K$, unchanged, into a model whose attention uses the interleaved layout. What happens to the attention scores?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Nothing changes, since queries and keys are rearranged in the same way and a dot product does not depend on the order of the coordinates",
+                  "explain": "Without the rotation that would be right. But coordinate 1, for example, turned in training together with coordinate d/2 + 1 at speed θ₁, and now turns together with coordinate 0 at speed θ₀. Which coordinates turn together, and how fast, has changed, so the model no longer computes the scores it learned."
+                },
+                {
+                  "text": "The scores stop depending on n − m alone, since coordinates that never formed a pair in training now turn together and the positions no longer cancel",
+                  "explain": "The cancellation holds for any split of the coordinates into pairs, as long as queries and keys use the same split: each block contributes its own term, and that term depends on the offset alone. The interleaved layout is still a valid RoPE, so the scores remain relative. They are just not the relative scores the model was trained to produce."
+                },
+                {
+                  "text": "The scores stay relative but differ from training, and since no reordering of the weights turns one layout into the other, the model has to be fine-tuned",
+                  "explain": "A reordering is enough. Interleaved RoPE applied to a reordered vector equals the same reordering applied to the half-split RoPE of the original vector, and reordering q and k the same way is reordering the rows of W_Q and W_K. Conversion scripts between checkpoint formats do exactly this, with no training."
+                },
+                {
+                  "text": "The scores stay relative but differ from training, and moving rows i and i + d/2 of W_Q and W_K to rows 2i and 2i + 1 restores the trained scores",
+                  "correct": true,
+                  "explain": "Any split into pairs keeps the score relative, so the loaded model still computes a function of n − m, but each feature now turns with a different partner and at a different speed than in training. Let P send coordinate i to 2i and coordinate i + d/2 to 2i + 1. Interleaved RoPE of P x is P times half-split RoPE of x, so with P W_Q and P W_K the queries and keys are the trained ones, both reordered by P, and a shared reordering leaves every dot product unchanged."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Any split into pairs keeps the score relative, so the loaded model still computes a function of n − m, but each feature now turns with a different partner and at a different speed than in training. Let P send coordinate i to 2i and coordinate i + d/2 to 2i + 1. Interleaved RoPE of P x is P times half-split RoPE of x, so with P W_Q and P W_K the queries and keys are the trained ones, both reordered by P, and a shared reordering leaves every dot product unchanged."
+            },
+            {
+              "result": "The scores stay relative but differ from training, and moving rows i and i + d/2 of W_Q and W_K to rows 2i and 2i + 1 restores the trained scores"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pe-two-decay-rates",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "Two Decay Rates in One Linear Head",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A linear attention head should weight the similarity of query $i$ and key $j \\le i$ by"
+      ],
+      "setup": [
+        {
+          "tex": "w(i - j) = 0.8^{\\,i - j} + 0.5^{\\,i - j},"
+        },
+        {
+          "p": "a slow decay and a fast one together, so that it keeps both a long and a short memory."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "If $w(i - j)$ could be written as $f(i)\\,g(j)$, its value at offset 2 would be fixed by its values at offsets 0 and 1. What would $w(2)$ have to be? Compare it with the actual $w(2)$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "As in the lesson, setting $j = i$ gives $g(i) = w(0)/f(i)$, so a factorizable weight satisfies $w(i - j) = w(0)\\,f(i)/f(j)$. At offset 2, split the ratio into two steps of one:"
+            },
+            {
+              "tex": "w(2) = w(0)\\,\\frac{f(j + 2)}{f(j + 1)}\\cdot\\frac{f(j + 1)}{f(j)}\n= w(0)\\left(\\frac{w(1)}{w(0)}\\right)^{2}\n= \\frac{w(1)^2}{w(0)} ."
+            },
+            {
+              "p": "Here $w(0) = 2$ and $w(1) = 0.8 + 0.5 = 1.3$, so a factorizable weight would need $w(2) = 1.69 / 2 = 0.845$. The actual value is $0.64 + 0.25 = 0.89$, so no single product $f(i)\\,g(j)$ gives this weight."
+            },
+            {
+              "p": "The gap always goes this way for a sum of two decays: by the Cauchy-Schwarz inequality, $w(0)\\,w(2) = 2(a^2 + b^2) \\ge (a + b)^2 = w(1)^2$ for rates $a$ and $b$, with equality only when $a = b$."
+            },
+            {
+              "result": "0.845"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Show that the head can still run as a recurrence, without the $n \\times n$ matrix, and say what it costs compared with a head with one decay."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Split the weight into its two terms. Each term is a single decay, which the lesson's recurrence handles, so keep one state per decay. Writing $\\mathbf{u}_t = \\varphi(\\mathbf{k}_t)$ for the key's features,"
+            },
+            {
+              "tex": "\\begin{aligned}\nA_t &= 0.8\\,A_{t-1} + \\mathbf{u}_t\\,\\mathbf{v}_t^{\\top}, &\n\\mathbf{a}_t &= 0.8\\,\\mathbf{a}_{t-1} + \\mathbf{u}_t, \\\\\nB_t &= 0.5\\,B_{t-1} + \\mathbf{u}_t\\,\\mathbf{v}_t^{\\top}, &\n\\mathbf{b}_t &= 0.5\\,\\mathbf{b}_{t-1} + \\mathbf{u}_t .\n\\end{aligned}"
+            },
+            {
+              "p": "The numerator and the denominator are both linear in the weights, so"
+            },
+            {
+              "tex": "\\mathbf{o}_t = \\frac{\\varphi(\\mathbf{q}_t)^\\top (A_t + B_t)}\n{\\varphi(\\mathbf{q}_t)^\\top (\\mathbf{a}_t + \\mathbf{b}_t)} ."
+            },
+            {
+              "p": "The cost is two states instead of one: twice the memory and twice the update work per token, still fixed in size and still linear in the length. In general a weight that is a sum of $p$ decays needs $p$ states. A learned table over $L$ offsets can be matched by $L$ decays with distinct rates, since that is a Vandermonde system, but $L$ states of size $d \\times d$ cost more than storing every key, so a table gains nothing."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pe-pairs-ntk-pushes-past",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "The Pairs NTK Scaling Carries Past a Full Turn",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A model uses RoPE with head dimension $d = 96$, so 48 pairs, and base 500,000: pair $i$ turns by $\\theta_i = 500{,}000^{-2i/96}$ radians per position, for $i = 0, \\dots, 47$. It was trained on 3,000-token sequences and is now run on 12,000 tokens, $s = 4$ times as long. As in the lesson, take the largest angle pair $i$ reaches in a context of $L$ tokens to be $L\\theta_i$, and say that the pair completes a turn in training when $3000\\,\\theta_i \\ge 2\\pi$."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "How many of the 48 pairs never complete a turn in training?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Pair $i$ completes a turn when"
+            },
+            {
+              "tex": "3000 \\cdot 500{,}000^{-2i/96} \\ge 2\\pi\n\\iff 500{,}000^{\\,i/48} \\le \\frac{3000}{2\\pi} = 477.5\n\\iff i \\le 48\\,\\frac{\\ln 477.5}{\\ln 500{,}000} = 48 \\times \\frac{6.168}{13.122} = 22.56 ."
+            },
+            {
+              "p": "So pairs 0 to 22 complete a turn (pair 22 has a wavelength of 2,572 tokens) and pairs 23 to 47 never do (pair 23 needs 3,380 tokens). That is $48 - 23 = 25$ pairs."
+            },
+            {
+              "result": "25"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "The context is stretched with NTK-aware scaling: the base becomes $500{,}000 \\cdot s^{d/(d-2)}$ and the positions are left alone. Some of the pairs from Part 1 now complete a full turn somewhere in the 12,000 tokens, so they sweep every angle they never met in training. Which pairs are they? Give the highest-numbered one."
+            }
+          ],
+          "answer": [
+            {
+              "p": "With the new base, pair $i$ turns at"
+            },
+            {
+              "tex": "\\theta_i' = \\big(500{,}000 \\cdot s^{d/(d-2)}\\big)^{-2i/d} = \\theta_i\\, s^{-2i/(d-2)},"
+            },
+            {
+              "p": "so its largest angle over 12,000 tokens is its training angle times a factor"
+            },
+            {
+              "tex": "\\frac{s L\\,\\theta_i'}{L\\,\\theta_i} = s^{\\,1 - 2i/(d-2)} = 4^{\\,1 - 2i/94},"
+            },
+            {
+              "p": "which falls from about 2 near pair 23 to exactly 1 at pair 47. A pair completes a turn when that largest angle reaches $2\\pi \\approx 6.283$:"
+            },
+            {
+              "tex": "\\begin{array}{cccc}\n\\text{Pair} & \\text{Training angle} & \\text{Factor} & \\text{Angle at 12,000 tokens} \\\\ \\hline\n23 & 5.577 & 2.030 & 11.319 \\\\\n24 & 4.243 & 1.971 & 8.361 \\\\\n25 & 3.228 & 1.913 & 6.176 \\\\\n26 & 2.456 & 1.858 & 4.562\n\\end{array}"
+            },
+            {
+              "p": "Pairs 23 and 24 pass $2\\pi$, so the highest is pair 24. Pair 25 stops just short: its new wavelength is 12,208 tokens, a little longer than the context. Solving $3000\\,\\theta_i \\cdot 4^{\\,1 - 2i/94} = 2\\pi$ for a real $i$ gives $i = 24.94$, which confirms the boundary."
+            },
+            {
+              "p": "The other pairs that never turned in training still meet some new angles, since their factor is above 1 for every $i < 47$, but only part of their unseen arc: pair 26 reaches 4.56 radians of 6.28, and pair 46 goes only from 0.01037 to 0.01068. Pair 47 has a factor of exactly $4^0 = 1$ and stops at its training angle, which is what the exponent $d/(d-2)$ is chosen to do. Position interpolation would carry no pair past its training angle, at the price of neighbors only a quarter of a position apart."
+            },
+            {
+              "result": "24"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pe-position-term-after-projections",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "The Position Term After the Projections",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "Take one sinusoidal pair with speed $\\omega$, so the position vector at index $i$ is $\\mathbf{p}_i = (\\sin \\omega i,\\ \\cos \\omega i)$. When the score is built from $W_Q(\\mathbf{x}_i + \\mathbf{p}_i)$ and $W_K(\\mathbf{x}_j + \\mathbf{p}_j)$, its position against position term is"
+      ],
+      "setup": [
+        {
+          "tex": "\\mathbf{p}_i^\\top M\\,\\mathbf{p}_j, \\qquad\nM = W_Q^\\top W_K = \\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}."
+        },
+        {
+          "p": "With $M = I$ this is $\\cos(\\omega(i - j))$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Write $\\mathbf{p}_i^\\top M\\,\\mathbf{p}_j$ as a combination of the cosine and sine of $\\omega(i - j)$ and of $\\omega(i + j)$. Then take"
+            },
+            {
+              "tex": "M = \\begin{pmatrix} 1 & 2 \\\\ 1 & 5 \\end{pmatrix}"
+            },
+            {
+              "p": "and fix the offset $i - j$. Over all positions with that offset, what is half the gap between the largest and smallest values the term approaches? Assume $\\omega / \\pi$ is irrational, as it is for the speeds used in practice, so that $\\omega(i + j)$ comes as close as you like to every angle."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write $s_i = \\sin \\omega i$ and $c_i = \\cos \\omega i$. The term is $a\\,s_i s_j + b\\,s_i c_j + c\\,c_i s_j + d\\,c_i c_j$, and the product-to-sum identities turn each product into a difference and a sum of angles:"
+            },
+            {
+              "tex": "\\begin{aligned}\ns_i s_j &= \\tfrac12\\big[\\cos \\omega(i - j) - \\cos \\omega(i + j)\\big], &\nc_i c_j &= \\tfrac12\\big[\\cos \\omega(i - j) + \\cos \\omega(i + j)\\big], \\\\\ns_i c_j &= \\tfrac12\\big[\\sin \\omega(i + j) + \\sin \\omega(i - j)\\big], &\nc_i s_j &= \\tfrac12\\big[\\sin \\omega(i + j) - \\sin \\omega(i - j)\\big].\n\\end{aligned}"
+            },
+            {
+              "p": "Collecting terms,"
+            },
+            {
+              "tex": "\\mathbf{p}_i^\\top M\\,\\mathbf{p}_j\n= \\tfrac{a + d}{2}\\cos \\omega(i - j) + \\tfrac{b - c}{2}\\sin \\omega(i - j)\n+ \\tfrac{d - a}{2}\\cos \\omega(i + j) + \\tfrac{b + c}{2}\\sin \\omega(i + j)."
+            },
+            {
+              "p": "For the given $M$ this is"
+            },
+            {
+              "tex": "3\\cos \\omega(i - j) + 0.5\\sin \\omega(i - j) + 2\\cos \\omega(i + j) + 1.5\\sin \\omega(i + j)."
+            },
+            {
+              "p": "The first two terms are fixed once the offset is fixed. The last two combine into one wave in $\\omega(i + j)$ with amplitude"
+            },
+            {
+              "tex": "\\sqrt{2^2 + 1.5^2} = 2.5 ,"
+            },
+            {
+              "p": "and as the positions slide along, $\\omega(i + j)$ sweeps through every phase, so the term moves between the fixed part minus 2.5 and the fixed part plus 2.5. Two pairs of tokens the same distance apart can get position terms that differ by up to 5, while the part that does depend on the offset has amplitude only $\\sqrt{3^2 + 0.5^2} \\approx 3.04$."
+            },
+            {
+              "result": "2.5"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "For which matrices $M$ does the term depend on $i - j$ alone, whatever the speed $\\omega$? Describe them geometrically."
+            }
+          ],
+          "answer": [
+            {
+              "p": "By Part 1 the term depends on $i - j$ alone exactly when the wave in $\\omega(i + j)$ vanishes, so both of its coefficients are zero:"
+            },
+            {
+              "tex": "d = a, \\qquad c = -b, \\qquad\nM = \\begin{pmatrix} a & b \\\\ -b & a \\end{pmatrix}\n= \\rho \\begin{pmatrix} \\cos\\beta & \\sin\\beta \\\\ -\\sin\\beta & \\cos\\beta \\end{pmatrix},"
+            },
+            {
+              "p": "with $\\rho = \\sqrt{a^2 + b^2}$. These are the rotations of the plane scaled by $\\rho$, and for them the term is $a\\cos \\omega(i - j) + b\\sin \\omega(i - j)$."
+            },
+            {
+              "p": "The reason is geometric. Moving both positions along by $t$ turns both position vectors by the same rotation $A$, a turn through $\\omega t$ radians, since $\\mathbf{p}_{i+t} = A\\,\\mathbf{p}_i$, so the term becomes $\\mathbf{p}_i^\\top A^\\top M A\\,\\mathbf{p}_j$. That equals the old term for every shift exactly when $M$ commutes with every rotation, and the matrices that do are the scaled rotations."
+            },
+            {
+              "p": "A trained $W_Q^\\top W_K$ has no reason to satisfy the two equations $d = a$ and $c = -b$, so with an added encoding the position term is absolute in general. RoPE does not rely on the projections at all: it rotates the projected query and key, so the rotations meet directly inside the dot product."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pe-sliding-window-past-training",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "A Sliding Window Past the Training Length",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A model with RoPE (base 10,000) was trained on sequences of 8,192 tokens. You run it over a 100,000-token server log and keep only the 8,000 most recent tokens in its cache, so each query attends to itself and the 7,999 tokens before it. Positions are counted from the start of the log, so they reach 99,999. What should you change about the positions?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Renumber them inside the window, because past position 8,192 the queries and keys are turned by angles training never produced",
+                  "explain": "No score uses a query's or key's angle on its own. Each pair contributes a term in the angle of the offset between query and key, and in this cache every offset lies between 0 and 7,999, a range training covered. Renumbering inside the window subtracts the same amount from every position in a step, which leaves every offset, and so every score, as it was."
+                },
+                {
+                  "text": "Apply position interpolation with s = 100,000 / 8,192 ≈ 12.2, so that position 99,999 maps back inside the range seen in training",
+                  "explain": "Interpolation divides every offset by 12.2 as well, so neighbors end up 0.08 positions apart and the offsets 0 to 7,999 shrink to 0 to 655. The model would meet spacings it never trained on, to fix a problem this setup does not have."
+                },
+                {
+                  "text": "Nothing, because every score depends only on an offset between 0 and 7,999, and training produced every one of those offsets",
+                  "correct": true,
+                  "explain": "By the cancellation, each pair's term depends on its speed times the offset between query and key, never on the positions themselves. With this cache the largest offset is 7,999, below the 8,191 of training, so every angle a score uses was met in training, on every pair. Large positions cost only rounding: in float32 an angle near 100,000 radians is stored to within about 0.004 radians. A window that has evicted the first tokens of the log can still fail, but not because of positions: many heads put much of their weight on the first few tokens, and those are gone."
+                },
+                {
+                  "text": "Renumber the positions for the slow pairs only, because the fast pairs completed many turns in training while the slow pairs reach new angles past position 8,192",
+                  "explain": "This treats each pair's absolute angle as what the model reads, which it is not. A slow pair's term depends on its speed times the offset, at most 7,999 here, and that range of angles was covered in training for slow and fast pairs alike."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "By the cancellation, each pair's term depends on its speed times the offset between query and key, never on the positions themselves. With this cache the largest offset is 7,999, below the 8,191 of training, so every angle a score uses was met in training, on every pair. Large positions cost only rounding: in float32 an angle near 100,000 radians is stored to within about 0.004 radians. A window that has evicted the first tokens of the log can still fail, but not because of positions: many heads put much of their weight on the first few tokens, and those are gone."
+            },
+            {
+              "result": "Nothing, because every score depends only on an offset between 0 and 7,999, and training produced every one of those offsets"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pe-angle-maps-that-stay-relative",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "Which Angle Maps Keep Scores Relative",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "A variant of RoPE in two dimensions turns the query at position $m$ by an angle $\\phi(m)$ and the key at position $n$ by $\\phi(n)$, for some function $\\phi$ of the position. Positions are whole numbers $0, 1, 2, \\dots$, and angles are compared modulo $2\\pi$. RoPE itself is $\\phi(m) = m\\theta$."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Prove that the score $\\langle R_{\\phi(m)}\\mathbf{q},\\ R_{\\phi(n)}\\mathbf{k}\\rangle$ is a function of $n - m$ for every $\\mathbf{q}$ and $\\mathbf{k}$ exactly when $\\phi(n) = \\phi(0) + n\\theta$ modulo $2\\pi$, for some constant $\\theta$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Rotations are orthogonal and compose by adding angles, so the score is"
+            },
+            {
+              "tex": "\\mathbf{q}^\\top R_{\\phi(m)}^\\top R_{\\phi(n)}\\,\\mathbf{k}\n= \\mathbf{q}^\\top R_{\\Delta}\\,\\mathbf{k},\n\\qquad \\Delta(m, n) = \\phi(n) - \\phi(m)."
+            },
+            {
+              "p": "**If.** With $\\phi(n) = \\phi(0) + n\\theta$, $\\Delta = (n - m)\\theta$, a function of $n - m$. The constant $\\phi(0)$ cancels."
+            },
+            {
+              "p": "**Only if.** Take $\\mathbf{q} = (1, 0)$. With $\\mathbf{k} = (1, 0)$ the score is $\\cos\\Delta$, and with $\\mathbf{k} = (0, 1)$ it is $-\\sin\\Delta$. Both are functions of $n - m$ by assumption, and the cosine and sine together fix an angle modulo $2\\pi$, so $\\Delta(m, n) \\equiv g(n - m)$ for some function $g$. In particular every step of one position turns by the same angle,"
+            },
+            {
+              "tex": "\\phi(n) - \\phi(n - 1) \\equiv g(1) =: \\theta \\quad \\text{for every } n \\ge 1,"
+            },
+            {
+              "p": "and adding these steps from 1 to $n$ gives $\\phi(n) \\equiv \\phi(0) + n\\theta$. $\\qquad\\blacksquare$"
+            },
+            {
+              "p": "So the only freedom is the speed $\\theta$ and a starting angle that cancels. Position interpolation, $\\phi(m) = m\\theta/s$, and NTK-aware scaling, which changes $\\theta$ through the base, are both of this form, so both keep the scores relative. In $d$ dimensions the same argument applies to each pair on its own, so each pair needs an angle linear in the position, with its own speed."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "A team proposes $\\phi(m) = \\ln(1 + m)$, so that angles grow more slowly far from the start of the text. Keys sit at or before the query. A query at position 19 and a key at position 9 give some score. Seen from a query at position 99, which key position gives the same score for every $\\mathbf{q}$ and $\\mathbf{k}$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The score depends on"
+            },
+            {
+              "tex": "\\Delta = \\phi(n) - \\phi(m) = \\ln\\frac{1 + n}{1 + m},"
+            },
+            {
+              "p": "so by Part 1 it is not relative: at offset 1, the positions $(m, n) = (1, 0)$ give $\\Delta = -\\ln 2 = -0.693$ and $(3, 2)$ give $\\Delta = -\\ln(4/3) = -0.288$. For every $\\mathbf{q}$ and $\\mathbf{k}$ to give the same score, the angles must agree modulo $2\\pi$. For keys at or before position 99 the angle lies between $-\\ln 100 = -4.6$ and 0, a range shorter than $2\\pi$, so the two angles must be equal:"
+            },
+            {
+              "tex": "\\frac{1 + n}{1 + 99} = \\frac{1 + 9}{1 + 19} = \\frac12\n\\quad\\Longrightarrow\\quad n = 49 ."
+            },
+            {
+              "p": "The log map keeps ratios instead of differences. A key 10 back from position 19 looks like a key 50 back from position 99, so the head can no longer learn \"the previous token\" as one pattern: one position back means a smaller angle the further into the text it happens."
+            },
+            {
+              "result": "49"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pe-rotated-normalizer",
+      "moduleId": "relative-position-rope-positional-methods",
+      "title": "When the Weights Stop Summing to One",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "A linear attention head has a single pair of features, $d = 2$, and uses RoPE at the first rung of the ladder, $\\theta = 1$ radian per position. Its feature map $\\varphi = \\text{elu} + 1$ is positive. Following Su et al., it rotates the features in the numerator only:"
+      ],
+      "setup": [
+        {
+          "tex": "o_t = \\frac{\\sum_{j \\le t} \\big(R_t\\,\\varphi(\\mathbf{q}_t)\\big)^\\top \\big(R_j\\,\\varphi(\\mathbf{k}_j)\\big)\\, v_j}\n{\\sum_{j \\le t} \\varphi(\\mathbf{q}_t)^\\top \\varphi(\\mathbf{k}_j)} ."
+        },
+        {
+          "p": "In a stretch of text the features repeat: $\\varphi(\\mathbf{q}_t) = \\varphi(\\mathbf{k}_j) = (1, 1)$ at every position, starting from position 0. The values $v_j$ are numbers."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Every value is $v_j = 6$. Softmax attention would return 6 at every position. What does this head return at position 4? Give three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each numerator term is $(1, 1)^\\top R_{j-t}\\,(1, 1)$. A rotation by $\\alpha$ sends $(1, 1)$ to $(\\cos\\alpha - \\sin\\alpha,\\ \\sin\\alpha + \\cos\\alpha)$, and the dot product with $(1, 1)$ is $2\\cos\\alpha$. The sine terms cancel because the query and key features are equal, so the term is $2\\cos(t - j)$."
+            },
+            {
+              "p": "At $t = 4$ the keys sit at offsets 4, 3, 2, 1 and 0:"
+            },
+            {
+              "tex": "\\sum_{j=0}^{4} 2\\cos(4 - j) = 2(-0.6536 - 0.9900 - 0.4161 + 0.5403 + 1)\n= -1.0390 ."
+            },
+            {
+              "p": "The denominator is $5 \\times (1, 1)^\\top(1, 1) = 10$, so"
+            },
+            {
+              "tex": "o_4 = \\frac{-1.0390 \\times 6}{10} = -0.623 ."
+            },
+            {
+              "p": "The weights on the five values are $-0.131, -0.198, -0.083, 0.108$ and $0.2$. They sum to $-0.104$, not 1, so five copies of the value 6 come back as $-0.62$: the output is not an average of the values."
+            },
+            {
+              "result": "$-0.623$"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "A teammate rotates the denominator too, so that the weights sum to 1. The values are now $v_j = j$, that is 0, 1, 2 and 3. What does that head return at position 3? Give two decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Every weight now has the same form on top and bottom, $2\\cos(3 - j)$ over their sum:"
+            },
+            {
+              "tex": "\\begin{array}{cccc}\nj & 2\\cos(3 - j) & \\text{weight} & v_j \\\\ \\hline\n0 & -1.9800 & -7.379 & 0 \\\\\n1 & -0.8323 & -3.102 & 1 \\\\\n2 & 1.0806 & 4.027 & 2 \\\\\n3 & 2.0000 & 7.454 & 3 \\\\\n\\text{sum} & 0.2683 & 1 & \\text{}\n\\end{array}"
+            },
+            {
+              "tex": "o_3 = \\frac{-0.8323 \\times 1 + 1.0806 \\times 2 + 2 \\times 3}{0.2683}\n= \\frac{7.3289}{0.2683} = 27.316 ."
+            },
+            {
+              "p": "The values run from 0 to 3, and the output is 27.31. The weights do sum to 1, but the terms of the normalizer have both signs and nearly cancel, so dividing by 0.268 blows the weights up. One position later the normalizer is $-1.039$, and with other features it can pass through 0 exactly."
+            },
+            {
+              "result": "27.31"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Explain why rotating only the numerator is the safer of the two choices, and what it gives up."
+            }
+          ],
+          "answer": [
+            {
+              "p": "With positive features, every term of the plain denominator, $\\varphi(\\mathbf{q}_t)^\\top\\varphi(\\mathbf{k}_j)$, is positive. The denominator can never be zero or change sign, and it grows with every key, so the division is always safe. The rotated denominator is a sum of terms of both signs, and nothing stops them from cancelling, as Part 2 shows."
+            },
+            {
+              "p": "What the plain denominator gives up is the meaning of an average. Its weights need not sum to 1 and can be negative, so a row of equal values does not come back unchanged, as Part 1 shows, and the output can leave the range of the values. Softmax attention has none of these problems, because its weights are positive exponentials divided by their own sum. Once the features are rotated their dot products can be negative, and no choice of denominator gets both properties back: the plain one keeps the division safe, the rotated one keeps the sum at 1."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

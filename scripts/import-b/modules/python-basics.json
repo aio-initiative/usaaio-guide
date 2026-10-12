@@ -1,0 +1,78 @@
+{
+  "aModule": "python-basics",
+  "stage": "Round 1",
+  "fixes": [],
+  "parts": {
+    "py-confusion-grid-aliasing": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "py-dict-comprehension-keeps-last": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "py-early-stopping-trace": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "py-return-inside-the-loop": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "py-sort-reverse-flips-both": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A short justification is required."
+      },
+      "1.3": {
+        "kind": "coding",
+        "requirement": "Reasoning is required. Code is required."
+      }
+    },
+    "py-warmup-scheduler": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "py-confusion-grid-aliasing": "A classifier sorts seven photos into three classes and a script counts its results in a confusion matrix, but it pads the matrix to four rows by appending a reference to the first row instead of a fresh list. Trace what the fourth row holds after the loop, what the reported total comes out as, and the true accuracy once the padding is fixed.",
+    "py-dict-comprehension-keeps-last": "Five training runs of three sequence models finished and logged their validation accuracies in the order the runs ended: lstm 0.81, gru 0.88, lstm 0.86, gru 0.84 and tcn 0.79. A teammate builds a dict from the list of name and accuracy pairs with a comprehension, so say how many keys it ends with, which value it keeps for a model whose name repeats, and what the code would need to keep the best accuracy instead.",
+    "py-early-stopping-trace": "A loop replays a run's validation losses with a patience of 3 and prints the epoch it stops at and the best loss. Say what it prints, and what it prints when a teammate changes the comparison from strictly less to less-or-equal.",
+    "py-parse-a-run-tag": "An experiment tracker names each run with a tag that packs its settings into one string, and a script looks for the largest batch size among three runs. What does the script print?",
+    "py-return-inside-the-loop": "A function should return the index of the first score above a cutoff, or -1 when no score is above it, but its else branch returns -1 inside the loop. Say what the function prints when it is tried on three batches of scores.",
+    "py-shallow-copy-keeps-some": "A training script keeps a baseline of its parameters and tries two update steps on a copy of it, so that the baseline stays available for comparison. The copy is made with dict.copy(), the loop mutates one stored list in place and stores a brand new list under the other key. Say what the original dict prints after the loop, and which of the two edits reached it.",
+    "py-sort-reverse-flips-both": "Five training runs each hold an optimizer name, a validation loss and a batch size, and a sort uses the key minus loss then batch with reverse turned on. Find which optimizer lands first and which lands third, then write one key that gives the same order with reverse off.",
+    "py-stale-value-after-except": "A loop averages sensor readings that parse, but when a line fails to parse the running value is left unchanged and is still added to the total. What is the last line the loop prints?",
+    "py-warmup-scheduler": "A learning rate schedule multiplies the rate by a factor every few steps, and a warmup subclass scales the returned rate down for the first few calls. Trace six calls of the schedule as written, then trace six calls again after a teammate stores the scaled rate back into the object."
+  }
+}

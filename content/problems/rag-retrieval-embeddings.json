@@ -1,0 +1,799 @@
+{
+ "module": "rag-retrieval-embeddings",
+ "stage": "Camp",
+ "index": [
+  {
+   "id": "rag-cache-reuses-the-notes",
+   "moduleId": "rag-retrieval-embeddings",
+   "title": "Reusing the Notes of a Nearby Question",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=rag-cache-reuses-the-notes",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Camp"
+   ],
+   "prompt": "A rail company's help desk embeds questions and notes as dense vectors and retrieves notes by cosine similarity. To save time it keeps a cache. When a new question has cosine similarity at least 0.96 with a question it has already answered, it skips retrieval and reuses the notes found for that earlier question. One earlier question had cosine similarity 0.8 with its top note. A new question arrives with cosine similarity exactly 0.96 with it, and the help desk reuses that note. The embeddings have 768 entries. What is the lowest cosine similarity the new question can have with the note?",
+   "answer": "0.6. Split each vector into its part along the earlier question and the rest. As unit vectors, the new question is 0.96 times the earlier question plus 0.28 times a unit vector u perpendicular to it (0.96² + 0.28² = 1), and the note is 0.8 times the earlier question plus 0.6 times a unit vector w perpendicular to it. Their dot product is 0.96 × 0.8 + 0.28 × 0.6 × (u · w), and u · w is at least −1, so the cosine is at least 0.768 − 0.168 = 0.6. It equals 0.6 when u and w point opposite ways: all three vectors lie in one plane with the earlier question between the other two, and the angles of about 16.3° and 36.9° add up to about 53.1°."
+  },
+  {
+   "id": "rag-idf-after-new-notes",
+   "moduleId": "rag-retrieval-embeddings",
+   "title": "The Same Two Notes After the Collection Grows",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=rag-idf-after-new-notes",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "Two notes keep their words and the question keeps its words, but the collection grows from 6 notes to 12. Recompute the idf weights and both cosine similarities, and explain why the ranking flips. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "rag-weighting-two-scores",
+   "moduleId": "rag-retrieval-embeddings",
+   "title": "One Weight for a Dense and a Sparse Score",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=rag-weighting-two-scores",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "A help desk mixes a dense cosine similarity and a TF-IDF cosine similarity into one score with a weight alpha. For each of two questions, find the range of alpha that puts the answer note first, and choose one alpha for both. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "rag-same-budget-smaller-chunks",
+   "moduleId": "rag-retrieval-embeddings",
+   "title": "Two Chunk Sizes, One Prompt",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=rag-same-budget-smaller-chunks",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Camp"
+   ],
+   "prompt": "A retriever is tested over a camera manual chunked two ways, into 400-token chunks and 200-token chunks, with room for 800 tokens of retrieved text. Ten test questions give the rank of the answer chunk under each chunking. Which chunk size should the team use, and on what evidence?",
+   "answer": "200-token chunks: recall@4 is 0.7, against 0.6 for 400-token chunks at recall@2. Compare the two at the same budget. 800 tokens hold two 400-token chunks or four 200-token chunks. The larger chunks put the answer in the top 2 for questions 1, 2, 3, 4, 7 and 9, a recall@2 of 6/10. The smaller chunks put it in the top 4 for questions 1, 2, 3, 4, 5, 7 and 9, a recall@4 of 7/10. At the same k the larger chunks win every time, but the prompt never holds the same number of each."
+  },
+  {
+   "id": "rag-answer-in-a-long-chunk",
+   "moduleId": "rag-retrieval-embeddings",
+   "title": "An Exact Answer Inside a Long Chunk",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=rag-answer-in-a-long-chunk",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "An answer sentence sits inside a chunk of m related sentences, scored as the mean of their vectors. Find the chunk's cosine similarity with the question, the largest m for which it still beats an unrelated one-sentence warning, and where that cosine tends as m grows. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "rag-overlapping-windows",
+   "moduleId": "rag-retrieval-embeddings",
+   "title": "How Much Overlap Keeps an Answer in One Chunk",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=rag-overlapping-windows",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "A manual is chunked into windows of 6 sentences with a stride t between starts. Find the probability that a 3-sentence answer stays whole inside one chunk, the smallest overlap that always keeps it whole, and what that overlap costs. 4 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "rag-chance-cosines",
+   "moduleId": "rag-retrieval-embeddings",
+   "title": "How High Unrelated Notes Score by Chance",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=rag-chance-cosines",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "Model a note that has nothing to do with the question as a random direction in 400 dimensions, and work out the standard deviation of its cosine similarity with the question, then how many of 100,000 unrelated notes are expected to outrank an answer note. 4 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "rag-recall-with-tied-scores",
+   "moduleId": "rag-retrieval-embeddings",
+   "title": "Recall@k When Scores Tie",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=rag-recall-with-tied-scores",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Camp"
+   ],
+   "prompt": "TF-IDF gives a score of exactly 0 to every note that shares no word with a question, so many scores tie. Compute the worst rank an answer note can have under any ordering of the ties, and the recall@k a random ordering gives on average.",
+   "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+  },
+  {
+   "id": "rag-bm25-against-tf-idf",
+   "moduleId": "rag-retrieval-embeddings",
+   "title": "BM25 Against TF-IDF in NumPy",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=rag-bm25-against-tf-idf",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Camp"
+   ],
+   "prompt": "Implement BM25 from word counts in NumPy, compare it with TF-IDF by recall@k on twelve test questions, and find how many repeats of one word a spam note needs to come first under each score.",
+   "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+  },
+  {
+   "id": "foundations-18-document-vqa",
+   "moduleId": "rag-retrieval-embeddings",
+   "title": "AI Foundations 18: Document Question Answering over Tables, with Evidence",
+   "source": "AI Foundations",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=foundations-18-document-vqa",
+   "tags": [
+    "Coding",
+    "Course",
+    "Notebook",
+    "Camp"
+   ],
+   "prompt": "Course notebook (about 5 to 6 h): build from scratch a system that answers questions about the tables in report pages and shows the exact boxes on the page that justify each answer.",
+   "answer": "Self-checking: every exercise has a checker cell that prints a verdict, and each quiz answer is explained in a hidden block under its question."
+  }
+ ],
+ "theory": [
+  {
+   "id": "rag-cache-reuses-the-notes",
+   "moduleId": "rag-retrieval-embeddings",
+   "title": "Reusing the Notes of a Nearby Question",
+   "difficulty": "Medium",
+   "minutes": 8,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A rail company's help desk embeds questions and notes as dense vectors and retrieves notes by cosine similarity. To save time it keeps a cache. When a new question has cosine similarity at least 0.96 with a question it has already answered, it skips retrieval and reuses the notes found for that earlier question."
+      },
+      {
+       "p": "One earlier question had cosine similarity 0.8 with its top note. A new question arrives with cosine similarity exactly 0.96 with it, and the help desk reuses that note. The embeddings have 768 entries. What is the lowest cosine similarity the new question can have with the note?"
+      },
+      {
+       "choices": [
+        {
+         "text": "0.76",
+         "explain": "This adds the two cosine distances, 1 − 0.96 = 0.04 and 1 − 0.8 = 0.2, as if 1 − cos obeyed the triangle inequality, and concludes that the new distance is at most 0.24. Cosine distance is not a true distance and breaks that rule. The angles obey it: about 16.3° plus about 36.9° is about 53.1°, whose cosine is 0.6, below 0.76."
+        },
+        {
+         "text": "0.6",
+         "correct": true,
+         "explain": "Split each vector into its part along the earlier question and the rest. As unit vectors, the new question is 0.96 times the earlier question plus 0.28 times a unit vector u perpendicular to it (0.96² + 0.28² = 1), and the note is 0.8 times the earlier question plus 0.6 times a unit vector w perpendicular to it. Their dot product is 0.96 × 0.8 + 0.28 × 0.6 × (u · w), and u · w is at least −1, so the cosine is at least 0.768 − 0.168 = 0.6. It equals 0.6 when u and w point opposite ways: all three vectors lie in one plane with the earlier question between the other two, and the angles of about 16.3° and 36.9° add up to about 53.1°."
+        },
+        {
+         "text": "0.768",
+         "explain": "This multiplies the two cosines, 0.96 × 0.8. That is the value when the parts of the new question and of the note perpendicular to the earlier question are themselves perpendicular, which is typical for unrelated directions in 768 dimensions. It is not the lowest. When those two parts point opposite ways the dot product loses another 0.28 × 0.6 = 0.168, giving 0.6."
+        },
+        {
+         "text": "0.936",
+         "explain": "This is cos(36.9° − 16.3°) = 0.768 + 0.168 = 0.936, the highest value, reached when the new question leans from the earlier question toward the note. The lowest comes when it leans the other way and the two angles add, cos(36.9° + 16.3°) = 0.6."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Split each vector into its part along the earlier question and the rest. As unit vectors, the new question is 0.96 times the earlier question plus 0.28 times a unit vector u perpendicular to it (0.96² + 0.28² = 1), and the note is 0.8 times the earlier question plus 0.6 times a unit vector w perpendicular to it. Their dot product is 0.96 × 0.8 + 0.28 × 0.6 × (u · w), and u · w is at least −1, so the cosine is at least 0.768 − 0.168 = 0.6. It equals 0.6 when u and w point opposite ways: all three vectors lie in one plane with the earlier question between the other two, and the angles of about 16.3° and 36.9° add up to about 53.1°."
+      },
+      {
+       "result": "0.6"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "rag-idf-after-new-notes",
+   "moduleId": "rag-retrieval-embeddings",
+   "title": "The Same Two Notes After the Collection Grows",
+   "difficulty": "Medium",
+   "minutes": 15,
+   "overview": [
+    "A museum's help desk retrieves its notes with the lesson's TF-IDF: $\\mathrm{idf}(w) = 1 + \\ln\\big(n / \\mathrm{df}(w)\\big)$, and vectors scaled to length 1. To keep the arithmetic short, every note and question has been cut down to its keywords. The help desk has $n = 6$ notes, and a visitor's question becomes \"stroller garden\". Two of the notes that share a keyword with it are:"
+   ],
+   "setup": [
+    {
+     "list": [
+      "Note A: \"garden sculptures\"",
+      "Note B: \"stroller lockers lobby\""
+     ]
+    },
+    {
+     "p": "\"Garden\", \"sculptures\", \"lockers\" and \"lobby\" appear in no other note. \"Stroller\" appears in one other note."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Which of the two notes ranks first, and what is its cosine similarity with the question? Enter the cosine to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "With $n = 6$, a word in one note has idf $\\ln 6 + 1 = 2.792$ and \"stroller\", in two notes, has $\\ln 3 + 1 = 2.099$. Each word appears once, so the TF-IDF entries are the idf values. Over the words garden, stroller, sculptures, lockers and lobby:"
+      },
+      {
+       "tex": "\\begin{aligned}\n\\mathbf{q} &= (2.792,\\ 2.099,\\ 0,\\ 0,\\ 0), & \\lVert \\mathbf{q} \\rVert &= 3.493, \\\\\n\\mathbf{a} &= (2.792,\\ 0,\\ 2.792,\\ 0,\\ 0), & \\lVert \\mathbf{a} \\rVert &= 3.948, \\\\\n\\mathbf{b} &= (0,\\ 2.099,\\ 0,\\ 2.792,\\ 2.792), & \\lVert \\mathbf{b} \\rVert &= 4.471 .\n\\end{aligned}"
+      },
+      {
+       "p": "The cosines are"
+      },
+      {
+       "tex": "\\cos(\\mathbf{q}, \\mathbf{a}) = \\frac{2.792^2}{3.493 \\times 3.948} = \\frac{7.794}{13.79} = 0.565,\n\\qquad\n\\cos(\\mathbf{q}, \\mathbf{b}) = \\frac{2.099^2}{3.493 \\times 4.471} = \\frac{4.404}{15.62} = 0.282 ."
+      },
+      {
+       "p": "Note A ranks first, with 0.565. Its keyword \"garden\" is the rarer of the two question words, and it has one other word to dilute it where note B has two."
+      },
+      {
+       "result": "0.565"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "The museum then adds six notes about its new garden wing. Three of them mention \"garden\", and none of them uses \"stroller\", \"sculptures\", \"lockers\" or \"lobby\". Notes A and B are unchanged. Which of the two ranks first now, and what is its cosine similarity with the question?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Now $n = 12$, and every idf changes, including those of the words the new notes do not use:"
+      },
+      {
+       "list": [
+        "\"garden\" is in 4 notes: $\\ln 3 + 1 = 2.099$.",
+        "\"stroller\" is in 2 notes: $\\ln 6 + 1 = 2.792$.",
+        "\"sculptures\", \"lockers\" and \"lobby\" are each in 1 note: $\\ln 12 + 1 = 3.485$."
+       ]
+      },
+      {
+       "p": "The weights of \"garden\" and \"stroller\" have swapped, so $\\lVert \\mathbf{q} \\rVert$ is still 3.493, while the notes' other words weigh more than before:"
+      },
+      {
+       "tex": "\\begin{aligned}\n\\mathbf{a} &= (2.099,\\ 0,\\ 3.485,\\ 0,\\ 0), & \\lVert \\mathbf{a} \\rVert &= 4.068, \\\\\n\\mathbf{b} &= (0,\\ 2.792,\\ 0,\\ 3.485,\\ 3.485), & \\lVert \\mathbf{b} \\rVert &= 5.664 .\n\\end{aligned}"
+      },
+      {
+       "tex": "\\cos(\\mathbf{q}, \\mathbf{a}) = \\frac{2.099^2}{3.493 \\times 4.068} = 0.310,\n\\qquad\n\\cos(\\mathbf{q}, \\mathbf{b}) = \\frac{2.792^2}{3.493 \\times 5.664} = 0.394 ."
+      },
+      {
+       "p": "Note B ranks first, with 0.394. Keeping the old idf of 2.792 for the one-note words would give 0.361 and 0.461: the same order, but neither cosine is right."
+      },
+      {
+       "result": "0.394"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A short justification is required.",
+     "prompt": [
+      {
+       "p": "Neither note changed, and the question did not change. Explain why the ranking did, and what this means for a help desk that adds notes every week."
+      }
+     ],
+     "answer": [
+      {
+       "p": "An idf is a property of the whole collection, not of one note. The new notes made \"garden\" common, so a match on it now counts for less, and \"stroller\" became the rarer and heavier question word. They also raised $n$, which made every word that appears once weigh more, so a note's unmatched words dilute its vector more than before."
+      },
+      {
+       "p": "A help desk that adds notes must recompute the idf values and every note's vector, not only embed the new notes, because the old vectors were scaled with weights that no longer hold. Retrieval quality measured last month, such as recall@k on a test set, has to be measured again too."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "rag-weighting-two-scores",
+   "moduleId": "rag-retrieval-embeddings",
+   "title": "One Weight for a Dense and a Sparse Score",
+   "difficulty": "Medium",
+   "minutes": 15,
+   "overview": [
+    "A washing machine maker's help desk scores every note in two ways: the cosine similarity of dense embeddings, $d$, and the cosine similarity of TF-IDF vectors, $s$. It ranks notes by the mix"
+   ],
+   "setup": [
+    {
+     "tex": "h = \\alpha\\, d + (1 - \\alpha)\\, s, \\qquad 0 \\le \\alpha \\le 1 ."
+    },
+    {
+     "p": "Two test questions, with the three best candidate notes for each:"
+    },
+    {
+     "tex": "\\begin{array}{ccc}\n\\text{Question 1: \"Can I wash a duvet?\"} & d & s \\\\ \\hline\n\\text{A1: \"Wash comforters and other bulky bedding on the Bulky cycle.\"} & 0.80 & 0.10 \\\\\n\\text{B1: \"Can I wash new towels with old ones? Wash them apart the first time.\"} & 0.35 & 0.40 \\\\\n\\text{C1: \"Pillows can go in on the Delicates cycle.\"} & 0.55 & 0.20\n\\end{array}"
+    },
+    {
+     "tex": "\\begin{array}{ccc}\n\\text{Question 2: \"What does error code E21 mean?\"} & d & s \\\\ \\hline\n\\text{A2: \"E21 means the water did not drain within ten minutes.\"} & 0.50 & 0.80 \\\\\n\\text{B2: \"Error codes starting with E1 concern the water supply.\"} & 0.70 & 0.20 \\\\\n\\text{C2: \"If an error code appears, switch the machine off and on again.\"} & 0.60 & 0.65\n\\end{array}"
+    },
+    {
+     "p": "A1 and A2 hold the answers. Every note not in the tables scores below A1 and below A2 on both scores, so only the six notes shown can come first."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Question 1 retrieves A1 first exactly when $\\alpha$ is above some value. What is that value?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "A1 beats another note when its mix is higher. Against B1:"
+      },
+      {
+       "tex": "0.80\\alpha + 0.10(1 - \\alpha) > 0.35\\alpha + 0.40(1 - \\alpha)\n\\iff 0.10 + 0.70\\alpha > 0.40 - 0.05\\alpha\n\\iff \\alpha > \\frac{0.30}{0.75} = 0.4 ."
+      },
+      {
+       "p": "Against C1: $0.10 + 0.70\\alpha > 0.20 + 0.35\\alpha$, so $\\alpha > 2/7 \\approx 0.286$. A1 must beat both, so the condition is $\\alpha > 0.4$, set by B1. At $\\alpha = 0.4$, A1 and B1 tie at 0.38."
+      },
+      {
+       "result": "0.4"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Question 2 retrieves A2 first exactly when $\\alpha$ is below some value. What is that value?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Against B2, the note the dense score ranks first:"
+      },
+      {
+       "tex": "0.50\\alpha + 0.80(1 - \\alpha) > 0.70\\alpha + 0.20(1 - \\alpha)\n\\iff 0.80 - 0.30\\alpha > 0.20 + 0.50\\alpha\n\\iff \\alpha < 0.75 ."
+      },
+      {
+       "p": "Against C2:"
+      },
+      {
+       "tex": "0.80 - 0.30\\alpha > 0.65 - 0.05\\alpha\n\\iff 0.15 > 0.25\\alpha\n\\iff \\alpha < 0.6 ."
+      },
+      {
+       "p": "The condition is $\\alpha < 0.6$, and it is set by C2, a note that neither score ranks first. Checking A2 only against B2 would give 0.75, and at $\\alpha = 0.7$ the mixes are 0.590 for A2, 0.550 for B2 and 0.615 for C2: C2 comes first. C2 is second on both scores, and a weighted average rewards a note that is good on both over notes that are excellent on one."
+      },
+      {
+       "result": "0.6"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A short justification is required.",
+     "prompt": [
+      {
+       "p": "Which values of $\\alpha$ retrieve both answer notes first? Compare them with the two pure scores, $\\alpha = 1$ and $\\alpha = 0$, and say which $\\alpha$ you would choose from these two questions."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Both are first for $0.4 < \\alpha < 0.6$. The dense score alone, $\\alpha = 1$, gets question 1 right, because it knows that a duvet is bulky bedding, and question 2 wrong: it ranks B2 first, since to a dense model one error code looks much like another. TF-IDF alone, $\\alpha = 0$, gets question 2 right through the rare word \"E21\" and question 1 wrong: A1 shares only \"wash\" with \"Can I wash a duvet?\", while B1 shares \"can\", \"I\" and \"wash\"."
+      },
+      {
+       "p": "The middle of the range, $\\alpha = 0.5$, leaves the most room on both sides: A1 leads by 0.075 and A2 by 0.025. Two questions are far too few to fix $\\alpha$ for real use. The range would be measured on a test set of many questions, by recall@k at each $\\alpha$."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "rag-same-budget-smaller-chunks",
+   "moduleId": "rag-retrieval-embeddings",
+   "title": "Two Chunk Sizes, One Prompt",
+   "difficulty": "Medium",
+   "minutes": 6,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A team builds a retriever over a camera's user manual. The prompt has room for 800 tokens of retrieved text. They chunk the manual two ways, into chunks of 400 tokens and into chunks of 200 tokens, and run the same ten test questions on each. For each question they record the rank of the chunk that holds its answer. \"None\" means that chunk was not in the top 20."
+      },
+      {
+       "tex": "\\begin{array}{ccccccccccc}\n\\text{Question} & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\\\ \\hline\n\\text{400-token chunks} & 1 & 1 & 2 & 1 & 3 & 5 & 2 & 9 & 1 & 4 \\\\\n\\text{200-token chunks} & 1 & 3 & 2 & 4 & 2 & 6 & 1 & \\text{none} & 2 & 11\n\\end{array}"
+      },
+      {
+       "p": "Which chunk size should they use, and on what evidence?"
+      },
+      {
+       "choices": [
+        {
+         "text": "400-token chunks: recall@2 is 0.6, against 0.5 for 200-token chunks",
+         "explain": "Both chunkings are compared at k = 2. Two chunks of 200 tokens fill only 400 of the 800 tokens, so this leaves half the prompt empty for the smaller chunks. The prompt holds four of them, and at their own budget they score 0.7."
+        },
+        {
+         "text": "400-token chunks: recall@4 is 0.8, against 0.7 for 200-token chunks",
+         "explain": "Four chunks of 400 tokens are 1,600 tokens, twice what the prompt holds, so recall@4 of the larger chunks describes a prompt that cannot be built. With 800 tokens the larger chunks get k = 2, where they score 0.6."
+        },
+        {
+         "text": "200-token chunks: recall@4 is 0.7, against 0.6 for 400-token chunks at recall@2",
+         "correct": true,
+         "explain": "Compare the two at the same budget. 800 tokens hold two 400-token chunks or four 200-token chunks. The larger chunks put the answer in the top 2 for questions 1, 2, 3, 4, 7 and 9, a recall@2 of 6/10. The smaller chunks put it in the top 4 for questions 1, 2, 3, 4, 5, 7 and 9, a recall@4 of 7/10. At the same k the larger chunks win every time, but the prompt never holds the same number of each."
+        },
+        {
+         "text": "200-token chunks: recall@4 is 0.78, against 0.6 for 400-token chunks at recall@2",
+         "explain": "The choice is right but the number drops question 8 from the count, giving 7/9. Question 8 is a test question whose answer chunk never reached the top 20. It is a miss and stays in the denominator, so recall@4 is 7/10."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Compare the two at the same budget. 800 tokens hold two 400-token chunks or four 200-token chunks. The larger chunks put the answer in the top 2 for questions 1, 2, 3, 4, 7 and 9, a recall@2 of 6/10. The smaller chunks put it in the top 4 for questions 1, 2, 3, 4, 5, 7 and 9, a recall@4 of 7/10. At the same k the larger chunks win every time, but the prompt never holds the same number of each."
+      },
+      {
+       "result": "200-token chunks: recall@4 is 0.7, against 0.6 for 400-token chunks at recall@2"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "rag-answer-in-a-long-chunk",
+   "moduleId": "rag-retrieval-embeddings",
+   "title": "An Exact Answer Inside a Long Chunk",
+   "difficulty": "Hard",
+   "minutes": 20,
+   "overview": [
+    "A lab's safety manual is made of sections, each a run of sentences about one procedure. A retriever embeds every sentence as a vector of length 1, and embeds a chunk as the mean of the vectors of its sentences. Within one section, any two different sentences have cosine similarity $\\rho = 0.25$."
+   ],
+   "setup": [
+    {
+     "p": "A technician asks a question whose vector is exactly that of one sentence, the answer. Chunks are runs of $m$ consecutive sentences of the answer's section, and the chunk that holds the answer is scored against the question. The manual also has a one-sentence warning about a different procedure, stored as a chunk of its own, with cosine similarity 0.6 with the question."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the cosine similarity between the question and the chunk of $m = 4$ sentences that holds the answer? Enter it to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Call the answer sentence $\\mathbf{s}_1 = \\mathbf{q}$ and the others in the chunk $\\mathbf{s}_2, \\dots, \\mathbf{s}_m$, so that $\\mathbf{s}_i \\cdot \\mathbf{s}_i = 1$ and $\\mathbf{s}_i \\cdot \\mathbf{s}_j = \\rho$ for $i \\ne j$. The chunk is $\\mathbf{c} = \\frac1m \\sum_i \\mathbf{s}_i$."
+      },
+      {
+       "tex": "\\begin{aligned}\n\\mathbf{q} \\cdot \\mathbf{c} &= \\frac1m \\big(1 + (m - 1)\\rho\\big), \\\\[4pt]\n\\lVert \\mathbf{c} \\rVert^2 &= \\frac{1}{m^2} \\sum_{i, j} \\mathbf{s}_i \\cdot \\mathbf{s}_j\n= \\frac{1}{m^2}\\big(m + m(m - 1)\\rho\\big) = \\frac{1 + (m - 1)\\rho}{m} .\n\\end{aligned}"
+      },
+      {
+       "p": "Dividing, with $\\lVert \\mathbf{q} \\rVert = 1$,"
+      },
+      {
+       "tex": "\\cos(\\mathbf{q}, \\mathbf{c}) = \\sqrt{\\frac{1 + (m - 1)\\rho}{m}} ."
+      },
+      {
+       "p": "With $\\rho = 1/4$ this is $\\sqrt{(m + 3)/(4m)}$, and for $m = 4$ it is $\\sqrt{7/16} = \\sqrt7 / 4 = 0.661$. The question matches one sentence of the chunk exactly, yet the chunk scores only 0.661: the three other sentences pull the mean away from the answer."
+      },
+      {
+       "result": "0.661"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the largest $m$ for which the chunk holding the answer still ranks above the warning?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The chunk wins when its cosine exceeds 0.6, that is when its square exceeds 0.36:"
+      },
+      {
+       "tex": "\\frac{m + 3}{4m} > 0.36 \\iff m + 3 > 1.44\\,m \\iff m < \\frac{3}{0.44} = 6.8 ."
+      },
+      {
+       "p": "So $m = 6$ is the largest, with cosine $\\sqrt{9/24} = 0.612$. At $m = 7$ the chunk scores $\\sqrt{10/28} = 0.598$ and the warning takes first place, although the chunk contains the exact answer."
+      },
+      {
+       "result": "6"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "What value does the chunk's cosine with the question approach as $m$ grows? Say what the chunk's vector looks like for large $m$, and what changes if the sentences of a section are unrelated to each other ($\\rho = 0$)."
+      }
+     ],
+     "answer": [
+      {
+       "tex": "\\frac{1 + (m - 1)\\rho}{m} = \\rho + \\frac{1 - \\rho}{m} \\longrightarrow \\rho ,"
+      },
+      {
+       "p": "so the cosine falls toward $\\sqrt\\rho = \\sqrt{0.25} = 0.5$. For large $m$ the answer sentence is one of many, and the mean is dominated by what all the sentences of the section share. The chunk's vector says what the section is about, not what the answer sentence says, and any other chunk scoring above 0.5 beats every long enough chunk that holds the answer."
+      },
+      {
+       "p": "With $\\rho = 0$ the cosine is $1/\\sqrt m$ and falls to 0: a chunk of four unrelated sentences already scores only 0.5 against a question that matches one of them exactly. Related sentences hold the score up, and unrelated ones drag it down faster. This is the cost of large chunks that the pipeline trades against small chunks losing their subject."
+      },
+      {
+       "result": "0.5"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "rag-overlapping-windows",
+   "moduleId": "rag-retrieval-embeddings",
+   "title": "How Much Overlap Keeps an Answer in One Chunk",
+   "difficulty": "Medium",
+   "minutes": 20,
+   "overview": [
+    "A car's owner's manual is split into sentences, and every chunk is a window of $s$ consecutive sentences. Each chunk starts $t$ sentences after the previous one, with $1 \\le t \\le s$, so neighboring chunks share $s - t$ sentences, the **overlap**. An answer that spans $L$ consecutive sentences can be retrieved only if some chunk contains all $L$ of them: when an answer is cut between two chunks, neither chunk matches the question well."
+   ],
+   "setup": [
+    {
+     "p": "Take windows of $s = 6$ sentences and answers of $L = 3$ sentences whose first sentence is equally likely to be any sentence of a long manual (ignore the two ends)."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "With no overlap ($t = 6$), what is the probability that an answer lies whole inside one chunk? Enter it to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The chunks are sentences 1 to 6, 7 to 12, and so on. Number the sentences inside a chunk 1 to 6. An answer that starts at position 1, 2, 3 or 4 ends at position 3, 4, 5 or 6 and stays inside. One that starts at position 5 or 6 runs into the next chunk. The starting position is equally likely to be any of the six, so the probability is $4/6 = 0.667$. One answer in three is cut."
+      },
+      {
+       "result": "0.667"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the smallest overlap that puts every 3-sentence answer whole inside some chunk?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Number the sentences from 0, so that chunk $j = 0, 1, 2, \\dots$ covers sentences $jt$ to $jt + 5$. An answer starting at sentence $a$ covers $a$ to $a + 2$, so it fits in chunk $j$ when"
+      },
+      {
+       "tex": "jt \\le a \\quad\\text{and}\\quad a + 2 \\le jt + 5\n\\iff a - 3 \\le jt \\le a ."
+      },
+      {
+       "p": "The interval from $a - 3$ to $a$ holds 4 consecutive whole numbers. It contains a multiple of $t$ for every $a$ exactly when $t \\le 4$. With $t = 5$, the start $a = 4$ gives the interval 1 to 4, which holds no multiple of 5. So the largest stride is $t = 4$, an overlap of $6 - 4 = 2$ sentences."
+      },
+      {
+       "p": "With overlap 1 ($t = 5$) the interval holds a multiple of 5 for 4 of every 5 starts, a probability of $4/5 = 0.8$."
+      },
+      {
+       "result": "2"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "With the overlap of Part 2, how many times as many chunks does the manual need as with no overlap?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "A manual of $N$ sentences needs about $N / t$ chunks, so the ratio is $(N/4) / (N/6) = 6/4 = 1.5$. The index stores and searches half as many vectors again, and the embedding work grows by the same factor."
+      },
+      {
+       "result": "1.5"
+      }
+     ]
+    },
+    {
+     "id": "1.4",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Generalize. For windows of $s$ sentences and answers of $L \\le s$ sentences, show that every answer lies whole in some chunk exactly when the overlap is at least $L - 1$, and give the probability that an answer lies whole when the overlap $o$ is smaller. Then say what overlap costs inside the prompt, beyond the size of the index."
+      }
+     ],
+     "answer": [
+      {
+       "p": "With stride $t = s - o$, an answer starting at $a$ fits in chunk $j$ when $jt \\le a$ and $a + L - 1 \\le jt + s - 1$, that is"
+      },
+      {
+       "tex": "a - (s - L) \\le jt \\le a ."
+      },
+      {
+       "p": "This interval holds $s - L + 1$ consecutive whole numbers. If $s - L + 1 \\ge t$ it always contains a multiple of $t$. If not, the multiples of $t$ fall in it for $s - L + 1$ of every $t$ consecutive values of $a$. So"
+      },
+      {
+       "tex": "P(\\text{answer whole}) = \\min\\left(1,\\ \\frac{s - L + 1}{s - o}\\right),"
+      },
+      {
+       "p": "which is 1 exactly when $s - o \\le s - L + 1$, that is $o \\ge L - 1$. For $s = 6$ and $L = 3$ this gives $4/6$ at $o = 0$, $4/5$ at $o = 1$ and 1 from $o = 2$ on, as in Parts 1 and 2. The index grows by the factor $s / (s - o)$."
+      },
+      {
+       "p": "Inside the prompt, neighboring chunks repeat $o$ sentences. When the retriever returns two neighbors, which is likely since they share text, part of the budget carries the same sentences twice. With $o = 2$ and $s = 6$, two neighbors give 10 different sentences in the room of 12."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "rag-chance-cosines",
+   "moduleId": "rag-retrieval-embeddings",
+   "title": "How High Unrelated Notes Score by Chance",
+   "difficulty": "Hard",
+   "minutes": 25,
+   "overview": [
+    "A company wiki uses a dense retriever whose embeddings have $d = 400$ entries. To judge what a cosine similarity means, model a note that has nothing to do with the question as a random direction: its unit vector $\\mathbf{u}$ is equally likely to point anywhere, so the distribution of $\\mathbf{u}$ is unchanged by any rotation or reflection. The question's vector $\\mathbf{q}$ is a fixed unit vector."
+   ],
+   "setup": [
+    {
+     "p": "For the later parts, with $Z$ a standard normal variable:"
+    },
+    {
+     "tex": "\\begin{array}{ccccc}\nz & 2 & 3 & 4 & 5 \\\\ \\hline\nP(Z > z) & 0.0228 & 0.00135 & 3.2 \\times 10^{-5} & 2.9 \\times 10^{-7}\n\\end{array}"
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Find the standard deviation of the cosine similarity $\\mathbf{q} \\cdot \\mathbf{u}$ between the question and an unrelated note."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Rotate the space so that $\\mathbf{q}$ is the first axis. The distribution of $\\mathbf{u}$ does not change, and the cosine becomes $u_1$, the first entry of $\\mathbf{u}$."
+      },
+      {
+       "list": [
+        "**Mean.** $\\mathbf{u}$ and $-\\mathbf{u}$ are equally likely, so $u_1$ is symmetric about 0 and $\\mathbb{E}[u_1] = 0$.",
+        "**Mean square.** $\\mathbf{u}$ has length 1, so $u_1^2 + u_2^2 + \\dots + u_d^2 = 1$ always. Swapping two axes does not change the distribution either, so all $d$ terms have the same expectation, and they add up to 1:"
+       ]
+      },
+      {
+       "tex": "\\mathbb{E}[u_1^2] = \\frac1d ."
+      },
+      {
+       "p": "The variance is $1/d$ and the standard deviation is $1/\\sqrt d = 1/\\sqrt{400} = 0.05$. Unrelated notes do not score 0. They scatter around 0 by about 0.05."
+      },
+      {
+       "result": "0.05"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "For large $d$ the cosine is close to normal, with the mean and standard deviation of Part 1. The note that holds the answer to a question has cosine 0.15 with it, and the wiki also holds 100,000 unrelated notes. How many of them are expected to score higher than the answer note?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "A cosine of 0.15 is $0.15 / 0.05 = 3$ standard deviations above the mean, so each unrelated note beats it with probability about $P(Z > 3) = 0.00135$, and"
+      },
+      {
+       "tex": "100{,}000 \\times 0.00135 = 135"
+      },
+      {
+       "p": "unrelated notes are expected above it. The answer note ranks around 136th, and a prompt with room for five notes will not see it. The exact distribution of $u_1$ has slightly thinner tails than the normal one and gives about 130, which tells the same story."
+      },
+      {
+       "result": "135"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "The wiki grows to 1,000,000 unrelated notes. With the same normal approximation, how many of them are expected to score higher than an answer note with cosine 0.25?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "$0.25 / 0.05 = 5$ standard deviations, so"
+      },
+      {
+       "tex": "1{,}000{,}000 \\times 2.9 \\times 10^{-7} = 0.29 ."
+      },
+      {
+       "p": "On average fewer than one unrelated note beats it, and the chance that at least one does is at most 0.29. This far into the tail the normal approximation runs high: the exact distribution gives about 0.20, the same order of magnitude. An answer note at 0.20, 4 standard deviations, would face about $10^6 \\times 3.2 \\times 10^{-5} = 32$ unrelated notes above it. Here each extra 0.05 of cosine cuts the expected number of chance matches by a factor of 40 or more."
+      },
+      {
+       "result": "0.29"
+      }
+     ]
+    },
+    {
+     "id": "1.4",
+     "kind": "derivation",
+     "requirement": "A short justification is required.",
+     "prompt": [
+      {
+       "p": "Explain what these numbers say about reading a cosine similarity as \"related\", and how the picture changes with the dimension $d$. Real embeddings are not spread uniformly: notes from one wiki point in broadly similar directions, so even unrelated ones tend to have positive cosines with each other. Does that make chance matches more or less of a problem than this model says?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "A cosine score has no fixed meaning on its own. Whether 0.15 is a good score depends on how many other notes there are and how widely unrelated notes scatter. The same 0.15 that usually wins against 100 unrelated notes loses to over a hundred of them in a collection of 100,000. The number of chance matches grows in proportion to the size of the collection, so a retriever that works on a small wiki can fail on a large one with the same embeddings."
+      },
+      {
+       "p": "The scatter is $1/\\sqrt d$. With $d = 768$ it is 0.036, so 0.15 is about 4.2 standard deviations and far fewer chance matches beat it. More dimensions make a given cosine more significant."
+      },
+      {
+       "p": "Real embeddings make it worse. If unrelated notes from the same wiki share a common direction, their cosines with a question center above 0, and a given cosine is fewer standard deviations above them than the uniform model says. The uniform model is optimistic: on real embeddings, expect more chance matches than it predicts. A fixed cutoff such as \"use only notes above 0.3\" has to be chosen by looking at scores on the real collection, not taken from another system."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,1061 @@
+{
+  "module": "bias-variance-cross-validation",
+  "stage": "Round 2",
+  "index": [
+    {
+      "id": "bv-copies-across-the-split",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "Copies on Both Sides of the Split",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=bv-copies-across-the-split",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A payments team copies every fraudulent transaction twice before splitting train and validation, so identical rows land on both sides of the split. Compute how much of the reported fraud recall is memorized copies rather than real recognition, and rewrite the protocol so the validation score estimates recall on new transactions. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "bv-cv-picks-for-the-fold-size",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "The Training Size Cross-Validation Scores",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=bv-cv-picks-for-the-fold-size",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "Two regression models P and Q are candidates for a task with 500 labeled rows. Each has expected test error sigma^2 + b + v/m after training on m rows, with noise sigma^2 = 0.25, P at b = 0.030 and v = 2, and Q at b = 0.005 and v = 13, and the winner is refit on all 500 rows. Compare the two at the full 500 rows and again under 5-fold cross-validation, find the smallest fold count that changes the pick, and say why leave-one-out is still not the default choice here. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "bv-loo-from-one-fit",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "Leave-One-Out from a Single Least Squares Fit",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=bv-loo-from-one-fit",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "Least squares fitted values are H times the targets, and the diagonal entry h_ii of H is a row's leverage. Show that the leave-one-out error at row i is the residual e_i divided by 1 minus h_ii, use it to get the leave-one-out mean squared error of a line through four given points from a single fit, and extend the identity to ridge regression. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "bv-loo-of-the-mean",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "Leave-One-Out for a Model That Predicts the Mean",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=bv-loo-of-the-mean",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A baseline regressor ignores its inputs and predicts the mean of its training targets. Six rows have targets 2, 4, 4, 5, 7 and 8, stored in that order sorted by target. Find its leave-one-out MSE, show how each row's leave-one-out error relates to its training residual, and report the MSE that unshuffled 3-fold cross-validation gives. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "bv-noise-floor-from-repeats",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "How Much a Better Model Can Gain",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=bv-noise-floor-from-repeats",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A lab measured each of 400 compounds twice, and the mean squared difference between the two measurements of one compound is 0.50. Work out the noise floor this sets on a validation MSE of 0.28 scored against single measurements, and how much of that error any better model could remove.",
+      "answer": "Very little: the noise alone accounts for 0.25, so at most about 0.03 of the validation error can be removed. The difference of two independent measurements of one compound has variance \u03c3\u00b2 + \u03c3\u00b2 = 2\u03c3\u00b2, so \u03c3\u00b2 = 0.50 / 2 = 0.25. A fresh measurement carries that noise whatever the model predicts, so 0.25 is the floor for the validation MSE. The model sits 0.03 above it. Bias and variance together are at most 0.03, and that is all any change of model can win back."
+    },
+    {
+      "id": "bv-shrink-the-average",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "Shrinking an Average Toward Zero",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=bv-shrink-the-average",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A field station averages four noisy readings of an unchanging soil moisture value and multiplies that average by a shrinkage factor between 0 and 1 to predict the next reading. The parts ask for the expected squared error as a function of the factor and the true value, the factor that minimizes it when the true value is 2, and how large the true value must be before a fixed factor of 0.8 does worse than the plain average. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "bv-when-flexible-wins",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "The Training Size Where the Flexible Model Wins",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=bv-when-flexible-wins",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A team predicts delivery times with either a linear model on a few features or a boosted model on many, and has measured each model's squared bias and variance at 100 and 400 training rows, where the noise variance of a delivery time is 0.20. Find the smallest training size at which the boosted model has the lower expected test error, and work out what buying 300 more rows actually buys. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "bv-loo-ridge-path",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "Leave-One-Out for a Whole Ridge Path",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=bv-loo-ridge-path",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "For least squares and ridge regression the leave-one-out error of row i needs no refit: it is the residual e_i divided by 1 - h_ii. Write leverages(X, lam) for the n diagonal entries of the hat matrix, loo_mse(X, y, lam) for the leave-one-out MSE of one penalty from a single fit, and loo_path(X, y, lams) for the whole path of penalties from one singular value decomposition. Each part has its own check cell.",
+      "answer": "Self-checking: each part ends with a check cell that prints a verdict when the code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "bv-select-inside-the-folds",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "Feature Selection Inside the Folds",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=bv-select-inside-the-folds",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "A screening study measured 2,000 features on each of 60 samples, half of them labeled 1. Write top_features(X, y, m) to keep the m columns most correlated with the label, then cv_accuracy(X, y, folds, m) to cross-validate the whole procedure, and run both on two data sets: one whose labels carry real signal and one whose labels have nothing to do with the features. Each part has its own check cell.",
+      "answer": "Self-checking: each part ends with a check cell that prints a verdict when the code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "theory-bias-variance-cv",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "The Bias-Variance Decomposition and Cross-Validation",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=theory-bias-variance-cv",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "Derive the bias-variance decomposition, then pick a sound cross-validation scheme and find the leak in a flawed one. 6 parts, each with its own grading instruction. Solutions revealed part by part.",
+      "answer": "Worked solutions are given part by part on the problem page: full derivations, not just final values. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "statistical-learning-implementation-task",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "Bias-Variance and Cross-Validation Practice",
+      "source": "Custom",
+      "difficulty": "Very Hard",
+      "url": "/editor/?nb=statistical-learning",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Cross-validation over model complexity (degree \u00d7 regularization grid). Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Test R\u00b2 must reach the target shown in the evaluation cell."
+    },
+    {
+      "id": "ml5-nested-cv",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "The Score You Get from Tuning on Your Test Set",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=ml5-nested-cv",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "With labels that are pure noise, compare flat cross-validation over 40 hyperparameters against nested cross-validation, and measure the selection optimism.",
+      "answer": "Auto-graded inside the notebook. All three values (flat_best, nested, optimism) must match the reference within 1e-6 * (1 + |ref|), with the flat estimate optimistic and the nested one within 0.12 of 0.5."
+    },
+    {
+      "id": "model-training-implementation-task",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "Overfitting and Model Selection Practice",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=model-training",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Train/validation discipline + model-complexity selection. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Test R\u00b2 must reach the target shown in the evaluation cell."
+    },
+    {
+      "id": "ps5-random-labels",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "It Fits Random Labels Perfectly",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ps5-random-labels",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Fit random labels at six model widths, measure where memorization becomes perfect, and track empirical Rademacher complexity alongside real-label test accuracy.",
+      "answer": "Auto-graded inside the notebook. All four curves and width_fits_noise must match the reference to 1e-6, with the widest model fitting noise perfectly (and the narrowest staying below 0.8), the Rademacher value growing with width, and real-label test accuracy holding up."
+    }
+  ],
+  "theory": [
+    {
+      "id": "bv-copies-across-the-split",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "Copies on Both Sides of the Split",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A payments team has 1,800 genuine transactions and 200 fraudulent ones. To give the rare class more weight, a teammate adds two exact copies of every fraudulent row, so each fraudulent transaction now appears three times and the table has 2,400 rows. The teammate then shuffles the 2,400 rows, holds out a random 20% (480 rows) for validation, trains a 1-nearest-neighbor classifier on the other 1,920, and reports its recall on the fraudulent validation rows."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What fraction of the fraudulent rows in the validation split have an identical copy in the training split? Give it to two decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Take one fraudulent validation row. Its transaction has two other copies, and each of them lands in the 1,920 training rows unless it is among the other 479 validation rows. Both copies miss training only when both are held out:"
+            },
+            {
+              "tex": "P(\\text{no copy in training}) = \\frac{479}{2399} \\cdot \\frac{478}{2398} \\approx 0.0398 \\approx 0.2^2 ."
+            },
+            {
+              "p": "So $1 - 0.0398 \\approx 0.96$ of the fraudulent validation rows have an exact twin in training. A simulation of 2,000 shuffles gives 0.960."
+            },
+            {
+              "result": "0.96"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "On fraudulent transactions it has never seen, the classifier's recall is 0.40. What recall should the teammate expect the validation split to report? Give it to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "A 1-nearest-neighbor classifier predicts the label of the closest training row. When an identical copy sits in training, that copy is at distance 0 and carries the fraud label, so the row is caught. The other 4% of fraudulent validation rows are new to the model and are caught at its real rate of 0.40:"
+            },
+            {
+              "tex": "0.9602 \\times 1 + 0.0398 \\times 0.40 \\approx 0.976 ."
+            },
+            {
+              "p": "The split reports 0.976 for a model whose recall on new fraud is 0.40. The number measures how often a transaction's twin was memorized, not how well fraud is recognized."
+            },
+            {
+              "result": "0.976"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Rewrite the protocol so that the validation recall estimates the recall on new transactions, and say where the copying belongs if the team later uses cross-validation instead of one split."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Split first, on the original 2,000 rows, keeping the class proportions (`stratify=y`): 1,440 genuine and 160 fraudulent rows for training, 360 and 40 for validation. Copy the fraudulent rows of the training split only, fit, and score on the untouched validation split, one row per transaction. Every fraudulent validation row is then new to the model, and the recall comes out near 0.40."
+            },
+            {
+              "p": "With cross-validation the copying is part of the fit, so it happens within each fold, using only the rows that fold trains on. Copying once before cutting the folds recreates the leak in every fold. In scikit-learn that means a resampling step inside the pipeline that is cross-validated, never a resampled table passed to `cross_val_score`."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bv-cv-picks-for-the-fold-size",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "The Training Size Cross-Validation Scores",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "Two regression models P and Q are candidates for a task with 500 labeled rows. For each, the expected test error after training on $m$ rows is"
+      ],
+      "setup": [
+        {
+          "tex": "\\text{err}(m) = \\sigma^2 + b + \\frac{v}{m},"
+        },
+        {
+          "p": "with noise $\\sigma^2 = 0.25$, squared bias $b$ and variance $v/m$:"
+        },
+        {
+          "tex": "\\begin{array}{ccc}\n\\text{Model} & b & v \\\\ \\hline\n\\text{P} & 0.030 & 2 \\\\\n\\text{Q} & 0.005 & 13\n\\end{array}"
+        },
+        {
+          "p": "Whichever model is chosen will be refit on all 500 rows and then used on new data."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Which model has the lower expected test error once refit on all 500 rows, and by how much?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The noise is common to both, so compare $b + v/500$:"
+            },
+            {
+              "tex": "\\text{P: } 0.030 + \\tfrac{2}{500} = 0.034, \\qquad\n\\text{Q: } 0.005 + \\tfrac{13}{500} = 0.031 ."
+            },
+            {
+              "p": "Q is better by $0.003$."
+            },
+            {
+              "result": "0.003"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The team chooses by 5-fold cross-validation on the 500 rows. In expectation, which model does it prefer, and by how much do the two cross-validated errors differ?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each of the five fits trains on the other four folds, 400 rows, so the expected score of each model is its error at $m = 400$, not at 500:"
+            },
+            {
+              "tex": "\\text{P: } 0.030 + \\tfrac{2}{400} = 0.0350, \\qquad\n\\text{Q: } 0.005 + \\tfrac{13}{400} = 0.0375 ."
+            },
+            {
+              "p": "Cross-validation prefers P by $0.0025$, while on the full 500 rows Q is better by 0.003. The two models cross at $m = (13 - 2) / (0.030 - 0.005) = 440$ rows. Cross-validation measures each model at 400, below the crossing, and the final model is trained at 500, above it, so it picks the model that is better for a size nobody will use."
+            },
+            {
+              "result": "0.0025"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the smallest number of folds $k$ for which $k$-fold cross-validation prefers Q in expectation?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "$k$-fold trains each fit on $500(k - 1)/k$ rows, and Q wins once that exceeds 440:"
+            },
+            {
+              "tex": "500\\,\\frac{k - 1}{k} > 440\n\\quad\\Longleftrightarrow\\quad\n\\frac{1}{k} < 0.12\n\\quad\\Longleftrightarrow\\quad\nk > 8.33 ."
+            },
+            {
+              "p": "At $k = 8$ each fit sees 437.5 rows and P still wins, 0.03457 against 0.03471. At $k = 9$ each sees 444.4 and Q wins, 0.03425 against 0.03450. So $k = 9$."
+            },
+            {
+              "result": "9"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Leave-one-out trains on 499 rows, so it removes almost all of this effect. Give two reasons it is still not the default choice here, and say what you would do instead with these two models."
+            }
+          ],
+          "answer": [
+            {
+              "list": [
+                "**Cost.** It needs 500 fits per model against 5, unless the model has a closed form for it. Least squares and ridge do: each leave-one-out error is the full fit's residual divided by $1 - h_{ii}$, where $h_{ii}$ is the row's leverage, so one fit gives all 500.",
+                "**The size of the difference against the noise of the estimate.** The expected gap at 500 rows is 0.003, about 1% of the total error of 0.28. The cross-validated estimate of each model moves by more than that from one split of the data to another, and the leave-one-out estimate is not steadier for being longer: its 500 fits share 498 rows pairwise, so their errors move together and averaging them removes little noise."
+              ]
+            },
+            {
+              "p": "Instead, plot a learning curve for each model: cross-validated error at several training sizes, such as 200, 300 and 400 rows. Q's curve still falling steeply at 400 while P's has flattened is the evidence that Q will be ahead at 500, and it uses the effect instead of hiding it. With a gap this small, either choice costs little, and the simpler model on the plateau is also a defensible pick."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bv-loo-from-one-fit",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "Leave-One-Out from a Single Least Squares Fit",
+      "difficulty": "Hard",
+      "minutes": 30,
+      "overview": [
+        "Fit least squares to $n$ rows with design matrix $X$ ($n \\times p$, full column rank) and targets $y$. Write the fit as $\\hat{y} = Hy$, where $H = X(X^\\top X)^{-1}X^\\top$, let $e = y - \\hat{y}$ be the residuals, and let $h_{ii}$ be the $i$-th diagonal entry of $H$, the **leverage** of row $i$. Write $\\hat{y}_{(-i)}$ for the prediction at row $i$ of the model fit without row $i$, and assume $h_{ii} < 1$, which is exactly the condition for $X$ without row $i$ to keep full column rank."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Show that"
+            },
+            {
+              "tex": "y_i - \\hat{y}_{(-i)} = \\frac{e_i}{1 - h_{ii}} ."
+            },
+            {
+              "p": "A route that needs no matrix inverse identity: build a new target vector $y^\\ast$ equal to $y$ except that $y^\\ast_i = \\hat{y}_{(-i)}$, and ask which coefficients minimize the squared error on $(X, y^\\ast)$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Let $\\beta_{(-i)}$ be the coefficients fit without row $i$. On $(X, y^\\ast)$ the squared error of any $\\beta$ is"
+            },
+            {
+              "tex": "\\sum_{j \\ne i} (y_j - x_j^\\top \\beta)^2 + (\\hat{y}_{(-i)} - x_i^\\top \\beta)^2 ."
+            },
+            {
+              "p": "$\\beta_{(-i)}$ exists and is unique because $h_{ii} < 1$. It minimizes the first sum by definition, and it makes the last term 0, its smallest possible value. So $\\beta_{(-i)}$ minimizes the whole, and since $X$ has full column rank the minimizer is unique: the fit on $y^\\ast$ is the leave-one-out fit, and its fitted value at row $i$ is $\\hat{y}_{(-i)}$. Fitted values are $H$ times the targets, so"
+            },
+            {
+              "tex": "\\hat{y}_{(-i)} = \\sum_j h_{ij} y^\\ast_j = \\sum_j h_{ij} y_j - h_{ii} y_i + h_{ii}\\,\\hat{y}_{(-i)} = \\hat{y}_i - h_{ii} y_i + h_{ii}\\,\\hat{y}_{(-i)} ."
+            },
+            {
+              "p": "Rearranging, $(1 - h_{ii})\\,\\hat{y}_{(-i)} = \\hat{y}_i - h_{ii} y_i$, and subtracting from $(1 - h_{ii})\\,y_i$:"
+            },
+            {
+              "tex": "(1 - h_{ii})\\big(y_i - \\hat{y}_{(-i)}\\big) = y_i - \\hat{y}_i = e_i .\n\\qquad\\blacksquare"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Fit a line $y = a + bx$ to the four points $(0, 1), (1, 3), (2, 2), (3, 6)$. What is its leave-one-out mean squared error? Give it to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "For a line with an intercept, write $d_i = x_i - \\bar{x}$. Then the leverage is $h_{ii} = 1/n + d_i^2 / \\sum_j d_j^2$. Here $\\bar{x} = 1.5$ and $\\sum_j d_j^2 = 2.25 + 0.25 + 0.25 + 2.25 = 5$, so the leverages are 0.7, 0.3, 0.3 and 0.7: the end points pull the line hardest."
+            },
+            {
+              "p": "The fit has $b = 7/5 = 1.4$ (the products $d_i\\,(y_i - 3)$ add up to 7) and $a = 3 - 1.4 \\times 1.5 = 0.9$, so the fitted values are 0.9, 2.3, 3.7, 5.1 and the residuals are $0.1, 0.7, -1.7, 0.9$. Dividing by $1 - h_{ii}$:"
+            },
+            {
+              "tex": "\\frac{0.1}{0.3} = 0.333, \\quad \\frac{0.7}{0.7} = 1, \\quad \\frac{-1.7}{0.7} = -2.429, \\quad \\frac{0.9}{0.3} = 3 ."
+            },
+            {
+              "tex": "\\text{LOO MSE} = \\frac{0.111 + 1 + 5.898 + 9}{4} \\approx 4.002 ,"
+            },
+            {
+              "p": "against a training MSE of $4.2 / 4 = 1.05$. Refitting the line four times gives the same four errors. The end points have residuals of only 0.1 and 0.9 because the line is pulled toward them, and leaving them out shows it."
+            },
+            {
+              "result": "4.002"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Ridge regression replaces $H$ by $H_\\lambda = X(X^\\top X + \\lambda I)^{-1}X^\\top$ and fits by minimizing $\\|y - X\\beta\\|^2 + \\lambda\\|\\beta\\|^2$. Show that the formula of Part 1 holds for ridge with $h_{ii}$ taken from $H_\\lambda$, and say what this means for choosing $\\lambda$ by leave-one-out."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Repeat the argument with the ridge objective. The leave-one-out coefficients $\\beta_{(-i)}$ minimize $\\sum_{j \\ne i} (y_j - x_j^\\top \\beta)^2 + \\lambda\\|\\beta\\|^2$, and on $(X, y^\\ast)$ the extra term $(\\hat{y}_{(-i)} - x_i^\\top \\beta)^2$ is 0 at $\\beta_{(-i)}$. The penalty does not involve row $i$, so $\\beta_{(-i)}$ still minimizes the full ridge objective on $y^\\ast$, which is strictly convex for $\\lambda > 0$, so the minimizer is unique. The ridge fitted values are $H_\\lambda$ times the targets, and the same three lines of algebra give $y_i - \\hat{y}_{(-i)} = e_i / (1 - h_{ii})$ with $e$ and $h_{ii}$ from $H_\\lambda$."
+            },
+            {
+              "p": "So one fit per $\\lambda$ gives the exact leave-one-out error, a fifth of the work of 5-fold cross-validation. With the singular value decomposition $X = U S V^\\top$, $H_\\lambda = U \\operatorname{diag}\\big(s_j^2/(s_j^2 + \\lambda)\\big) U^\\top$, so one decomposition serves every $\\lambda$ on the grid."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bv-loo-of-the-mean",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "Leave-One-Out for a Model That Predicts the Mean",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A baseline regressor ignores the inputs and predicts the mean of its training targets. Six rows have targets"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{ccccccc}\n\\text{Row} & 1 & 2 & 3 & 4 & 5 & 6 \\\\ \\hline\n\\text{Target} & 2 & 4 & 4 & 5 & 7 & 8\n\\end{array}"
+        },
+        {
+          "p": "and are stored in that order, sorted by target."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the leave-one-out mean squared error of the baseline on these six rows?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Leaving out row $i$, the model predicts the mean of the other five. The full mean is 5, and for the first row the prediction is $(30 - 2) / 5 = 5.6$, an error of $2 - 5.6 = -3.6$. All six:"
+            },
+            {
+              "tex": "\\begin{array}{cccc}\n\\text{Row} & \\text{Target} & \\text{Mean of the other five} & \\text{Error} \\\\ \\hline\n1 & 2 & 5.6 & -3.6 \\\\\n2 & 4 & 5.2 & -1.2 \\\\\n3 & 4 & 5.2 & -1.2 \\\\\n4 & 5 & 5.0 & 0 \\\\\n5 & 7 & 4.6 & 2.4 \\\\\n6 & 8 & 4.4 & 3.6\n\\end{array}"
+            },
+            {
+              "tex": "\\frac{12.96 + 1.44 + 1.44 + 0 + 5.76 + 12.96}{6} = \\frac{34.56}{6} = 5.76 ."
+            },
+            {
+              "p": "The training MSE of the same model is $(9 + 1 + 1 + 0 + 4 + 9)/6 = 4$."
+            },
+            {
+              "result": "5.76"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Show that for any $n$ targets the leave-one-out error of row $i$ is $\\frac{n}{n-1}$ times its training residual $y_i - \\bar{y}$, and so the leave-one-out MSE of this baseline is $\\big(\\frac{n}{n-1}\\big)^2$ times its training MSE."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The mean of the other $n - 1$ targets is $\\bar{y}_{-i} = (n\\bar{y} - y_i)/(n - 1)$. Then"
+            },
+            {
+              "tex": "y_i - \\bar{y}_{-i} = \\frac{(n - 1) y_i - n\\bar{y} + y_i}{n - 1} = \\frac{n}{n - 1}\\,(y_i - \\bar{y}) ."
+            },
+            {
+              "p": "Every error is the training residual scaled by the same factor, so the mean of the squares is scaled by its square. For $n = 6$ the factor is $1.2^2 = 1.44$, and $1.44 \\times 4 = 5.76$, as in Part 1."
+            },
+            {
+              "p": "Leaving a row out moves the prediction away from it, by a fraction $1/(n - 1)$ of its residual. The training error is optimistic because each row pulled the mean toward itself before being scored."
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Now 3-fold cross-validation is run without shuffling, so the folds are rows 1 and 2, rows 3 and 4, and rows 5 and 6. What MSE does it report? Give it to three decimal places, and say why it differs from Part 1."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each fold is scored by the mean of the other four rows:"
+            },
+            {
+              "tex": "\\begin{array}{ccc}\n\\text{Validation targets} & \\text{Training mean} & \\text{Squared errors} \\\\ \\hline\n\\text{2, 4} & 6 & \\text{16, 4} \\\\\n\\text{4, 5} & 5.25 & \\text{1.5625, 0.0625} \\\\\n\\text{7, 8} & 3.75 & \\text{10.5625, 18.0625}\n\\end{array}"
+            },
+            {
+              "tex": "\\frac{16 + 4 + 1.5625 + 0.0625 + 10.5625 + 18.0625}{6} = \\frac{50.25}{6} = 8.375 ."
+            },
+            {
+              "p": "The rows are sorted, so the first and last folds hold out one end of the range and train on the other. Their training means sit far from the held-out targets, and the estimate is 45% above the leave-one-out value. Averaged over every shuffle of the six rows, 3-fold gives 6.0, a little above 5.76 because each fit sees four rows instead of five. Cutting folds from sorted data scores the model on a range it never trained on, which is why the rows are shuffled before the folds are cut."
+            },
+            {
+              "result": "8.375"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bv-noise-floor-from-repeats",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "How Much a Better Model Can Gain",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A lab predicts the solubility of a compound (on a standardized scale) from its structure. To check its assay, the lab measured each of 400 compounds twice, independently, and the mean of the squared difference between the two measurements of the same compound is 0.50. A gradient-boosted model, trained and validated against single measurements, has"
+            },
+            {
+              "tex": "\\begin{array}{cc}\n\\text{Training MSE} & \\text{Validation MSE} \\\\ \\hline\n0.27 & 0.28\n\\end{array}"
+            },
+            {
+              "p": "A teammate says both errors are high and close together, so the model is underfitting, and proposes a far more flexible model. What should the team expect?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "The teammate is right: a far more flexible model should bring the validation error well below 0.28",
+                  "explain": "High and close errors do point to bias when the noise is small, but here the noise sets a floor. Two measurements of one compound differ with variance 2\u03c3\u00b2, so \u03c3\u00b2 = 0.50 / 2 = 0.25, and no model can score below 0.25 on single measurements. At most 0.03 of the 0.28 is reducible, so a more flexible model cannot bring the validation error well below it."
+                },
+                {
+                  "text": "Very little: the noise alone accounts for 0.25, so at most about 0.03 of the validation error can be removed",
+                  "correct": true,
+                  "explain": "The difference of two independent measurements of one compound has variance \u03c3\u00b2 + \u03c3\u00b2 = 2\u03c3\u00b2, so \u03c3\u00b2 = 0.50 / 2 = 0.25. A fresh measurement carries that noise whatever the model predicts, so 0.25 is the floor for the validation MSE. The model sits 0.03 above it. Bias and variance together are at most 0.03, and that is all any change of model can win back."
+                },
+                {
+                  "text": "The model already scores below the noise level of 0.50, so it must be fitting noise and needs more regularization",
+                  "explain": "0.50 is the variance of the difference of two measurements, which holds the noise twice. The noise in one measurement is 0.25, and the model's 0.27 and 0.28 sit just above that, not below the noise. Nothing here says the model fits noise."
+                },
+                {
+                  "text": "The validation error is above the training error, so the model overfits and needs more regularization",
+                  "explain": "A validation error above the training error is normal for any fitted model, and a gap of 0.01 is small. Overfitting shows as a training error far below the validation error, and here the training error is not even below the noise floor of 0.25. More regularization would add bias to a model with little variance to remove."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The difference of two independent measurements of one compound has variance \u03c3\u00b2 + \u03c3\u00b2 = 2\u03c3\u00b2, so \u03c3\u00b2 = 0.50 / 2 = 0.25. A fresh measurement carries that noise whatever the model predicts, so 0.25 is the floor for the validation MSE. The model sits 0.03 above it. Bias and variance together are at most 0.03, and that is all any change of model can win back."
+            },
+            {
+              "result": "Very little: the noise alone accounts for 0.25, so at most about 0.03 of the validation error can be removed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bv-shrink-the-average",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "Shrinking an Average Toward Zero",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A field station logs a soil moisture value $\\mu$ that does not change during the day. Each reading is $\\mu$ plus independent noise with mean 0 and variance $\\sigma^2 = 12$. In the morning the station takes $n = 4$ readings and averages them to $\\bar{y}$. It then uses $c\\,\\bar{y}$, for a fixed number $c$ between 0 and 1, as its prediction of the next reading $y_{\\text{new}}$, which is taken later and has its own independent noise."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Write the expected squared error $\\mathbb{E}\\big[(y_{\\text{new}} - c\\,\\bar{y})^2\\big]$ as a function of $c$ and $\\mu$, and name each of its terms."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Here the training set is the four morning readings, and the prediction $\\hat{f} = c\\,\\bar{y}$ changes with them. Its average over training sets is $\\bar{f} = c\\,\\mu$, because $\\bar{y}$ averages to $\\mu$. The truth is $f = \\mu$, and $y_{\\text{new}} = \\mu + \\varepsilon$ with $\\operatorname{Var}(\\varepsilon) = 12$. The decomposition gives"
+            },
+            {
+              "list": [
+                "bias$^2$ $= (f - \\bar{f})^2 = (1 - c)^2 \\mu^2$,",
+                "variance $= \\operatorname{Var}(c\\,\\bar{y}) = c^2 \\sigma^2 / n = 3c^2$, since an average of 4 independent readings has variance $12 / 4 = 3$,",
+                "noise $= \\sigma^2 = 12$."
+              ]
+            },
+            {
+              "tex": "\\mathbb{E}\\big[(y_{\\text{new}} - c\\,\\bar{y})^2\\big] = 12 + (1 - c)^2 \\mu^2 + 3c^2 ."
+            },
+            {
+              "p": "At $c = 1$ the bias is 0 and the error is $12 + 3 = 15$. Lowering $c$ adds bias and removes variance."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Take $\\mu = 2$. Which $c$ gives the lowest expected squared error? Give it to four decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "With $\\mu^2 = 4$ the error is $12 + 4(1 - c)^2 + 3c^2$. Its derivative in $c$ is $-8(1 - c) + 6c$, which is zero at $14c = 8$:"
+            },
+            {
+              "tex": "c^\\ast = \\frac{4}{7} \\approx 0.5714 ."
+            },
+            {
+              "p": "In general $c^\\ast = \\mu^2 / (\\mu^2 + \\sigma^2/n)$. The error there is $12 + \\tfrac{12}{7} \\approx 13.71$ against 15 for the plain average, so the reducible part drops from 3 to $\\tfrac{12}{7}$, a cut of 43%. A biased prediction beats the unbiased one because the average of four noisy readings varies a lot relative to the size of $\\mu$."
+            },
+            {
+              "result": "0.5714"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The station does not know $\\mu$, so it cannot compute $c^\\ast$. A technician proposes $c = 0.8$ for every site. Above what value of $|\\mu|$ does $c = 0.8$ give a larger expected squared error than the plain average $c = 1$? Give it to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Compare the two errors. The noise of 12 is the same in both, so only the reducible parts matter:"
+            },
+            {
+              "tex": "\\underbrace{0.04\\,\\mu^2 + 3(0.64)}_{c = 0.8} \\;\\text{ against }\\; \\underbrace{3}_{c = 1} ."
+            },
+            {
+              "p": "$c = 0.8$ loses when $0.04\\,\\mu^2 > 3 - 1.92 = 1.08$, that is when $\\mu^2 > 27$:"
+            },
+            {
+              "tex": "|\\mu| > \\sqrt{27} = 3\\sqrt{3} \\approx 5.196 ."
+            },
+            {
+              "p": "The shrinkage pays when the signal is small next to the spread of the average, $\\sqrt{3} \\approx 1.73$ here, and costs when the signal is large. Since the right $c$ depends on the unknown $\\mu$, a real system chooses it the way a ridge penalty is chosen: by its error on data that did not fit it, across many sites."
+            },
+            {
+              "result": "5.196"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bv-when-flexible-wins",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "The Training Size Where the Flexible Model Wins",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A team predicts delivery times with one of two models: A, a linear model on a few features, and B, a boosted model on many. By refitting each on many fresh training sets of a given size and averaging, they measured its squared bias and variance at two training sizes $n$:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{ccccc}\n\\text{Model} & \\text{Bias$^2$ at $n = 100$} & \\text{Variance at $n = 100$} & \\text{Bias$^2$ at $n = 400$} & \\text{Variance at $n = 400$} \\\\ \\hline\n\\text{A} & 0.029 & 0.010 & 0.029 & 0.0025 \\\\\n\\text{B} & 0.005 & 0.060 & 0.005 & 0.015\n\\end{array}"
+        },
+        {
+          "p": "The noise variance of a delivery time is 0.20. Assume the pattern the two columns show holds at every training size."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the smallest training size $n$ at which model B has the lower expected test error?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "From $n = 100$ to $n = 400$ each bias is unchanged and each variance is divided by 4, the factor by which $n$ grew. So the variance is a constant over $n$: $1/n$ for A and $6/n$ for B. The noise is the same for both models, so B has the lower expected error when"
+            },
+            {
+              "tex": "0.005 + \\frac{6}{n} < 0.029 + \\frac{1}{n}\n\\quad\\Longleftrightarrow\\quad\n\\frac{5}{n} < 0.024\n\\quad\\Longleftrightarrow\\quad\nn > 208.3 ."
+            },
+            {
+              "p": "The smallest whole training size is 209. At $n = 208$ the reducible errors are 0.033808 for A and 0.033846 for B, and at $n = 209$ they are 0.033785 and 0.033708."
+            },
+            {
+              "result": "209"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The team has 150 rows and can buy 300 more. Using the better model at each size, by how much does the expected test error fall when the data grow from 150 rows to 450? Give it to four decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "At 150 rows, A has $0.029 + 1/150 = 0.03567$ and B has $0.005 + 6/150 = 0.04500$, so A is better. At 450 rows, A has $0.029 + 1/450 = 0.03122$ and B has $0.005 + 6/450 = 0.01833$, so B is better. The noise of 0.20 is in both totals and cancels:"
+            },
+            {
+              "tex": "0.03567 - 0.01833 = 0.0173 ."
+            },
+            {
+              "p": "Keeping model A, the same 300 rows would gain only $1/150 - 1/450 = 0.0044$. Most of what the data buy is the switch to the flexible model, which only pays once its variance has been averaged down."
+            },
+            {
+              "result": "0.0173"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Before measuring B, a teammate plotted model A's validation error from $n = 50$ to $n = 450$, saw it flatten near 0.23, and concluded that more data would not help on this task. What is wrong with the conclusion?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The curve flattens at $0.20 + 0.029 = 0.229$, the noise plus A's squared bias, because A's variance has nearly gone and its bias does not shrink with data. That says more data will not help model A. It says nothing about a more flexible model, whose larger variance is exactly what more data remove: with 450 rows B reaches $0.20 + 0.018 = 0.218$, below A's floor, and its curve is still falling. A flat learning curve is a statement about one model's bias."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "theory-bias-variance-cv",
+      "moduleId": "bias-variance-cross-validation",
+      "title": "The Bias-Variance Decomposition and Cross-Validation",
+      "difficulty": "Medium",
+      "minutes": 45,
+      "overview": [
+        "Derive the bias-variance decomposition, then pick a sound cross-validation scheme and find the leak in a flawed one."
+      ],
+      "setup": [
+        {
+          "p": "Assume data are generated as $y = f(x) + \\varepsilon$ with $\\mathbb{E}[\\varepsilon] = 0$, $\\operatorname{Var}[\\varepsilon] = \\sigma^2$, and $\\varepsilon$ independent of everything else."
+        },
+        {
+          "p": "A learning algorithm trained on a random dataset $\\mathcal{D}$ produces a predictor $\\hat{f}_\\mathcal{D}$. Fix a test point $x$ and consider the expected squared error at that point, averaged over both the noise $\\varepsilon$ and the draw of $\\mathcal{D}$:"
+        },
+        {
+          "tex": "\\text{Err}(x) = \\mathbb{E}_{\\mathcal{D},\\, \\varepsilon}\\Big[ \\big( y - \\hat{f}_\\mathcal{D}(x) \\big)^2 \\Big]."
+        }
+      ],
+      "parts": [
+        {
+          "id": "14.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Prove the bias-variance decomposition"
+            },
+            {
+              "tex": "\\text{Err}(x) = \\sigma^2 + \\underbrace{\\Big( \\mathbb{E}_\\mathcal{D}\\big[\\hat{f}_\\mathcal{D}(x)\\big] - f(x) \\Big)^2}_{\\text{Bias}^2} + \\underbrace{\\mathbb{E}_\\mathcal{D}\\Big[ \\big( \\hat{f}_\\mathcal{D}(x) - \\mathbb{E}_\\mathcal{D}[\\hat{f}_\\mathcal{D}(x)] \\big)^2 \\Big]}_{\\text{Variance}}."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write $\\hat{f} = \\hat{f}_\\mathcal{D}(x)$ and $\\bar{f} = \\mathbb{E}_\\mathcal{D}[\\hat{f}]$ for brevity. Split the error using $y = f + \\varepsilon$:"
+            },
+            {
+              "tex": "y - \\hat{f} = \\underbrace{\\varepsilon}_{\\text{noise}} + \\underbrace{\\big(f - \\bar{f}\\big)}_{\\text{constant}} + \\underbrace{\\big(\\bar{f} - \\hat{f}\\big)}_{\\text{mean zero over } \\mathcal{D}}."
+            },
+            {
+              "p": "Square and take expectations. The three squared terms give $\\sigma^2$, $(f - \\bar{f})^2$, and $\\mathbb{E}[(\\bar f - \\hat f)^2]$ respectively. All three cross terms vanish:"
+            },
+            {
+              "olist": [
+                "$\\mathbb{E}[\\varepsilon(f - \\bar{f})] = \\mathbb{E}[\\varepsilon](f - \\bar f) = 0$, since $\\varepsilon$ has mean zero and the second factor is a constant.",
+                "$\\mathbb{E}[\\varepsilon(\\bar{f} - \\hat{f})] = \\mathbb{E}[\\varepsilon]\\,\\mathbb{E}[\\bar f - \\hat f] = 0$, using independence of the test noise from the training set.",
+                "$\\mathbb{E}[(f - \\bar{f})(\\bar{f} - \\hat{f})] = (f - \\bar f)\\,\\mathbb{E}[\\bar f - \\hat f] = 0$, since $\\mathbb{E}_\\mathcal{D}[\\hat f] = \\bar f$ by definition."
+              ]
+            },
+            {
+              "p": "Therefore"
+            },
+            {
+              "tex": "\\text{Err}(x) = \\sigma^2 + \\big(\\bar{f} - f\\big)^2 + \\mathbb{E}_\\mathcal{D}\\big[(\\hat{f} - \\bar{f})^2\\big] = \\sigma^2 + \\text{Bias}^2 + \\text{Variance}."
+            },
+            {
+              "p": "Read the three terms. $\\sigma^2$ is irreducible. It is the noise in $y$ itself and no model can beat it. Bias measures how far the *average* fitted function is from the truth, i.e. systematic error from the model being too rigid. Variance measures how much the fit wobbles as the training data change. Only the second and third are under your control, and typically pushing one down pushes the other up."
+            }
+          ]
+        },
+        {
+          "id": "14.2",
+          "kind": "mcq",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Which of the following best describes the typical behavior of the error components attributed to bias and variance as you increase the complexity of a model (for example, by increasing the degree of a polynomial in a regression model)?"
+            },
+            {
+              "choices": [
+                "A. Both bias and variance increase.",
+                "B. Both bias and variance decrease.",
+                "C. Bias and variance remain constant regardless of complexity.",
+                "D. Bias decreases and variance increases.",
+                "E. Bias increases and variance decreases."
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "A richer model class can represent more functions, so the best achievable approximation to $f$ improves and bias falls. But a richer model also fits the noise in whatever sample it sees, so refitting on a different sample yields a noticeably different function, and variance rises."
+            },
+            {
+              "p": "The extremes make it concrete. A degree-$0$ polynomial (a constant) has large bias and essentially zero variance: it ignores the data almost entirely. A degree-$(N-1)$ polynomial passes exactly through all $N$ training points, so its training error is zero but moving a single point swings the curve wildly."
+            },
+            {
+              "p": "Since total error is $\\sigma^2 + \\text{Bias}^2 + \\text{Variance}$, the sum is U-shaped in complexity and the goal is the minimum, not either extreme. This is also a diagnostic: a large gap between training and validation error indicates variance (regularize, get more data, simplify), while both errors being high and close together indicates bias (a richer model or better features)."
+            },
+            {
+              "result": "D. Bias decreases and variance increases."
+            }
+          ]
+        },
+        {
+          "id": "14.3",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Describe $k$-fold cross-validation precisely, state how many models it trains, and explain what it estimates that a single train/validation split does not."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Procedure. Partition the data into $k$ roughly equal folds. For each $i = 1, \\dots, k$: train on the $k-1$ folds excluding fold $i$, and evaluate on fold $i$. Average the $k$ scores. It trains $k$ models, and every example is used for validation exactly once and for training exactly $k-1$ times."
+            },
+            {
+              "p": "What it buys. A single split estimates performance from one validation set of size $N/k$, so its standard error scales as $1/\\sqrt{N/k}$, which is noisy when data are scarce. Cross-validation instead averages $k$ estimates, each computed on a disjoint fold, so the estimate uses all $N$ examples for validation across the run and is substantially less sensitive to an unlucky split."
+            },
+            {
+              "p": "It also produces a spread across folds, which is informative in its own right: a large variance across folds warns that the performance number is unstable and that differences between candidate models may be noise."
+            },
+            {
+              "p": "The costs are that you pay $k\\times$ the training compute, and that the folds are not independent (their training sets overlap heavily), so the standard deviation across folds understates the true uncertainty and should not be used as a formal confidence interval. Typical choices are $k = 5$ or $k = 10$, which balance the bias from training on less data against the compute."
+            }
+          ]
+        },
+        {
+          "id": "14.4",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Compare leave-one-out cross-validation ($k = N$) with $5$-fold cross-validation in terms of bias, variance, and cost."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Bias. LOOCV trains each model on $N - 1$ examples, essentially the full dataset, so it nearly eliminates the pessimistic bias that comes from training on less data. $5$-fold trains on only $80\\%$ of the data, so each model is slightly worse than the one you would ultimately fit, and the estimate is mildly pessimistic. LOOCV wins on bias."
+            },
+            {
+              "p": "Variance. This runs the other way. The $N$ LOOCV training sets differ by a single example, so the $N$ fitted models are almost identical and their errors are highly correlated. Averaging highly correlated quantities reduces variance far less than averaging independent ones, so the LOOCV estimate can have *higher* variance than the $5$-fold estimate, whose folds overlap much less."
+            },
+            {
+              "p": "Cost. LOOCV trains $N$ models against $5$, prohibitive for anything but small $N$ or models with an analytic shortcut. Least squares is the notable exception, where the LOOCV error has a closed form using the hat matrix, as derived in Leave-one-out from a single least squares fit, Part 1.1:"
+            },
+            {
+              "tex": "\\text{LOOCV} = \\frac{1}{N}\\sum_{n=0}^{N-1}\\left( \\frac{y_n - \\hat{y}_n}{1 - H_{nn}} \\right)^2,"
+            },
+            {
+              "p": "computable from a single fit."
+            },
+            {
+              "p": "In practice $5$- or $10$-fold is the default: the bias from holding out $10$\u2013$20\\%$ is small, and the compute saving is enormous."
+            }
+          ]
+        },
+        {
+          "id": "14.5",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "A student standardizes all features using the mean and standard deviation of the full dataset, then runs $5$-fold cross-validation and reports the average score."
+            },
+            {
+              "p": "Explain what is wrong and how to fix it."
+            }
+          ],
+          "answer": [
+            {
+              "p": "This leaks information from the validation folds into training. The means and standard deviations were computed using every example, including those in the held-out fold, so each model has already seen a summary of its own validation data. The reported score is therefore optimistic and no longer estimates performance on genuinely unseen data."
+            },
+            {
+              "p": "The leak is mild for simple standardization on large $N$, but the same mistake in other guises is severe: feature selection by correlation with $y$ on the full dataset, imputing missing values with a global mean, resampling to balance classes before splitting, or fitting PCA on everything. Selecting the top-$k$ features by target correlation before splitting can produce apparently excellent cross-validation scores on pure noise."
+            },
+            {
+              "p": "The fix is to treat every data-dependent transformation as part of the model and fit it inside each fold, on the training portion only, then apply the fitted transformation to the validation portion. Concretely, wrap the steps in a pipeline:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "from sklearn.pipeline import make_pipeline",
+                  "from sklearn.preprocessing import StandardScaler",
+                  "from sklearn.linear_model import LogisticRegression",
+                  "from sklearn.model_selection import cross_val_score",
+                  "",
+                  "pipe = make_pipeline(StandardScaler(), LogisticRegression())",
+                  "scores = cross_val_score(pipe, X, y, cv=5)   # scaler refit inside every fold"
+                ]
+              }
+            },
+            {
+              "p": "The rule of thumb: if a step looks at $y$, or at any example outside the current training fold, it belongs inside the cross-validation loop."
+            }
+          ]
+        },
+        {
+          "id": "14.6",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Give two situations in which a plain random $k$-fold split gives a misleading estimate, and state the appropriate alternative in each case."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Severe class imbalance. With a $1\\%$ positive class and $N = 500$, a random fold of $100$ examples contains one positive on average and may contain none, making the fold score meaningless or undefined. The fix is stratified $k$-fold, which preserves the class proportions in every fold. This is the default for classifiers in scikit-learn for exactly this reason."
+            },
+            {
+              "p": "Temporal or grouped data. If the data are a time series, a random split trains on the future and validates on the past, so the model can exploit information that would not exist at prediction time, and the estimate will be far too optimistic. The fix is a forward-chaining split, where each fold trains on a prefix and validates on the segment immediately after it."
+            },
+            {
+              "p": "The grouped case is the same failure in a different costume: if a dataset contains several images of each patient, a random split puts images of the same patient in both training and validation, so the model can score well by recognizing the patient rather than the disease. The fix is group $k$-fold, splitting on patient rather than on image."
+            },
+            {
+              "p": "The unifying principle is that the split must mimic the deployment condition. Ask what the model will genuinely not have seen at prediction time, and make the validation fold exactly that."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "module": "generative-adding-noise",
+  "stage": "Camp",
+  "index": [
+    {
+      "id": "gen-where-to-split-a-thousand-steps",
+      "moduleId": "generative-adding-noise",
+      "title": "Where to Split a Thousand Steps",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=gen-where-to-split-a-thousand-steps",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "A cheap stand-in for DDPM's 1,000-step forward process would precompute training pairs as two jumps, one jump per stretch of the schedule. The split step is chosen so the two stretches add the same noise variance. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "gm4-forward-process",
+      "moduleId": "generative-adding-noise",
+      "title": "Jump to Any Timestep in One Line",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=gm4-forward-process",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Camp"
+      ],
+      "prompt": "Derive and verify the closed-form diffusion forward process against a 100-step simulation, and read the signal-to-noise curve off the schedule.",
+      "answer": "Auto-graded inside the notebook. Alpha-bar values, SNR in dB, the half-life step t_half, and the simulation gaps must match to 1e-5, with SNR falling monotonically and both gaps small."
+    }
+  ],
+  "theory": [
+    {
+      "id": "gen-where-to-split-a-thousand-steps",
+      "moduleId": "generative-adding-noise",
+      "title": "Where to Split a Thousand Steps",
+      "difficulty": "Medium",
+      "minutes": 18,
+      "overview": [
+        "A practitioner wants a cheap stand-in for the forward process, to precompute training pairs without running 1,000 single steps. The stand-in keeps DDPM's schedule but replaces the run with two stretches, each used as one jump. The split is chosen so that the noise grows evenly across the two halves of the run, which means picking the step $m$ where the second stretch starts so that the two stretches add the same noise variance."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The first stretch is steps 1 to $m$, so the second one is steps $m + 1$ to 1000. Write the noise variance each stretch adds in terms of $\\bar\\alpha_m$ and $\\bar\\alpha_{1000}$, set them equal, and find the step. Give $m$ to the nearest step. Also report the noise variance each stretch adds and the factor by which each one multiplies the image."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The first stretch keeps a share $\\bar\\alpha_m$ of the signal, so it multiplies the image by $\\sqrt{\\bar\\alpha_m}$ and adds noise of variance $1 - \\bar\\alpha_m$."
+            },
+            {
+              "p": "The second stretch covers the remaining steps, whose alphas multiply to $\\bar\\alpha_{1000} \\div \\bar\\alpha_m$. It multiplies the image by $\\sqrt{\\bar\\alpha_{1000} \\div \\bar\\alpha_m}$ and adds noise of variance $1 - \\bar\\alpha_{1000} \\div \\bar\\alpha_m$."
+            },
+            {
+              "p": "Setting the two variances equal,"
+            },
+            {
+              "tex": "1 - \\bar\\alpha_m = 1 - \\frac{\\bar\\alpha_{1000}}{\\bar\\alpha_m}\n\\qquad\\Longrightarrow\\qquad\n\\bar\\alpha_m^2 = \\bar\\alpha_{1000} ."
+            },
+            {
+              "p": "With $\\bar\\alpha_{1000} = 4.036 \\times 10^{-5}$ the split wants $\\bar\\alpha_m = 0.006353$, and the cumulative product of the schedule straddles that value between two steps,"
+            },
+            {
+              "tex": "\\bar\\alpha_{706} = 0.006397, \\qquad \\bar\\alpha_{707} = 0.006307 ."
+            },
+            {
+              "p": "So $m = 706$ to the nearest step. At that split the two stretches add noise of variance $0.99360$ and $0.99369$, and each multiplies the image by about $0.080$ ($0.0800$ and $0.0794$). Together they multiply the image by $0.00635 = \\sqrt{\\bar\\alpha_{1000}}$, the factor the one jump uses."
+            },
+            {
+              "p": "Note what the condition does to the two stretches. It makes them nearly interchangeable, since they share a noise variance and a signal factor, so their order cannot matter. What it does not balance is their length: 706 steps against 294, and each of those 294 steps scales down whatever the first 706 produced."
+            },
+            {
+              "result": "706"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "A colleague on the same team reads the merge the other way and adds the two noise variances. Give the number the colleague reports, to three decimals, and say what is wrong with it."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The colleague gets $0.99360 + 0.99369 = 1.98729$."
+            },
+            {
+              "p": "The noise from the first stretch does not reach step 1000 at the size it was drawn. The second stretch multiplies everything it carries by its own signal factor, $0.0794$, so the variance of that noise is scaled by the square of that factor, $0.006309$, on the way through:"
+            },
+            {
+              "tex": "0.006309 \\times 0.99360 = 0.00627 ."
+            },
+            {
+              "p": "Only the fresh noise of the second stretch, of variance $0.99369$, arrives undamped. Merged, the variance is"
+            },
+            {
+              "tex": "0.00627 + 0.99369 = 0.99996 = 1 - \\bar\\alpha_{1000},"
+            },
+            {
+              "p": "which is what the one jump to step 1000 gives."
+            },
+            {
+              "p": "Variances add when both reach the end of the run undamped. One of these two is scaled on the way, so the merge is a weighted combination of them rather than a plain sum. The colleague's number is close to 2, which would give the pixels a spread of about $1.41$ rather than $1.00$, and the coarse process would no longer hold the same range of values as the process it stands in for."
+            },
+            {
+              "result": "1.987"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "The practitioner expected a split this even to leave each stretch responsible for half of the noise in the final image. What share of the noise variance at step 1000 comes from the first stretch? Then say what this means for choosing split points."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The first stretch contributes $0.00627$ of the $0.99996$ total, a share of $0.0063$, so $0.6\\%$. The second stretch brings the other $99.4\\%$, even though the two added the same variance at the time."
+            },
+            {
+              "p": "The asymmetry grows with every step after the split. A stretch's noise is multiplied by the signal factor of each step that follows it, and by step 706 those factors are small, so the first stretch's noise variance has been shrunk by about 158 times. Noise added late is never scaled down, because nothing follows it."
+            },
+            {
+              "p": "What sets the share is where the split sits in the schedule, and it moves in one direction only. At a split of step 350, where the first stretch adds noise of variance $0.715$, the share is $0.0001$. At a split of step 800 it is $0.026$, and only a split in the last steps of the run brings the first stretch near parity. Since a stretch that ends late already holds nearly all the noise, its share comes to very nearly the square of the following stretch's signal factor."
+            },
+            {
+              "p": "So a stretch's responsibility for the final image is set by how much signal the steps after it keep, not by how much noise it added when it ran. The equal-variance rule asks for a late split and lands at step 706, where the first stretch is adding nearly all of the noise and keeping almost none of it."
+            },
+            {
+              "result": "0.0063"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

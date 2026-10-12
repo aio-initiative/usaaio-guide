@@ -1,0 +1,1081 @@
+{
+  "module": "programming-essentials",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "py1-sensor-gaps",
+      "moduleId": "programming-essentials",
+      "title": "The Greenhouse with Flaky Sensors",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/editor/?nb=py1-sensor-gaps",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Clean a sensor matrix with scattered NaNs: NaN-aware column statistics, mean imputation, then standardization using the pre-imputation statistics. NumPy only, no row loops.",
+      "answer": "Auto-graded inside the notebook. Column means, standard deviations, and the cleaned matrix must pass the notebook's sum-and-projection check at 1e-6."
+    },
+    {
+      "id": "py1-drawdown",
+      "moduleId": "programming-essentials",
+      "title": "Worst Week on the Leaderboard",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=py1-drawdown",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Compute each of the 200 training curves' worst peak-to-trough regression with np.maximum.accumulate, no Python loop over steps.",
+      "answer": "Auto-graded inside the notebook. The length-200 drawdown array must pass the notebook's sum-and-projection check at 1e-9."
+    },
+    {
+      "id": "np-average-daily-range",
+      "moduleId": "programming-essentials",
+      "title": "The Average Daily Range",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/theory/?id=np-average-daily-range",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A weather station logs four temperature readings a day, at 6 am, 10 am, 2 pm and 6 pm, and stores three days with one row per reading time and one column per day. Pick the axis that gives the average daily range: each day's highest reading minus its lowest, then the mean of the three.",
+      "answer": "(T.max(axis=0) - T.min(axis=0)).mean(), which prints 12.0. Each day is a column, so its readings run down axis 0, and naming axis 0 removes the reading times. T.max(axis=0) is each day's highest reading, (25, 20, 22), and T.min(axis=0) each day's lowest, (12, 10, 9). Their differences are the daily ranges 13, 10 and 13, and their mean is 36 / 3 = 12."
+    },
+    {
+      "id": "np-uint8-difference",
+      "moduleId": "programming-essentials",
+      "title": "Subtracting Two Photos Stored as Bytes",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=np-uint8-difference",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A camera stores each pixel as uint8, and a student measures the change between two frames with np.abs(a - b). The subtraction happens in uint8 first, so the negative differences wrap. Find the wrong mean and the fix that converts before subtracting. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "np-channels-first",
+      "moduleId": "programming-essentials",
+      "title": "Moving the Color Axis to the Front",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=np-channels-first",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Images are often stored channels last, (N, H, W, C), and many models want them channels first, (N, C, H, W). Take one tiny 2 by 2 image with three color channels and see what a transpose and a reshape each do to its numbers. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "np-vectorize-the-hinge",
+      "moduleId": "programming-essentials",
+      "title": "One Line for the Hinge Loss",
+      "source": "Custom",
+      "difficulty": "Easy",
+      "url": "/theory/?id=np-vectorize-the-hinge",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A loop adds max(0, 1 - y[i] * s[i]) over four examples and divides by the count. Write the same loss in one line with no loop.",
+      "answer": "np.maximum(0, 1 - y * s).mean(). 1 - y * s is [-1, 1.5, 2, -2], one term per example. np.maximum(0, ...) compares each entry with 0 and keeps the larger, giving [0, 1.5, 2, 0], and the mean is 3.5 / 4 = 0.875, the loop's answer."
+    },
+    {
+      "id": "np-per-image-mean",
+      "moduleId": "programming-essentials",
+      "title": "Centering Each Image in a Batch",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=np-per-image-mean",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A batch of 32 color images of 32 by 32 pixels has shape (32, 32, 32, 3). A student subtracts imgs.mean(axis=(1, 2)) to take each pixel away from its own image's mean color. The line raises no error, so find what it actually does and write the line the student meant. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "np-true-class-probabilities",
+      "moduleId": "programming-essentials",
+      "title": "Picking Each Example's True Class",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=np-true-class-probabilities",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A classifier gives probabilities for four examples over three classes, and y holds the true labels. P[:, y] does not pick each example's own probability. Say what shape and mean it gives, and write the expression a cross-entropy needs. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "np-vectorize-the-gradient",
+      "moduleId": "programming-essentials",
+      "title": "The Gradient Loop as One Product",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=np-vectorize-the-gradient",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A loop computes the gradient of a squared error, adding 2 * r * X[i, j] / n into each entry one example at a time. Write the one line that gives the same g with no loop.",
+      "answer": "2 / n * X.T @ (X @ w - y). Entry j of g is the sum over examples of 2 * r_i * X[i, j] / n, which is 2 / n times the dot product of column j of X with the errors. Column j of X is row j of X.T, so all three entries together are X.T @ (X @ w - y), shape (3,)."
+    },
+    {
+      "id": "np-places-from-argsort",
+      "moduleId": "programming-essentials",
+      "title": "Places on a Leaderboard",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=np-places-from-argsort",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "Five players have scores, and the leaderboard needs each player's place, 0 for the highest score. np.argsort(-s) gives the players in order from first to last instead. Find the expression that returns each player's place.",
+      "answer": "np.argsort(np.argsort(-s)). order = np.argsort(-s) is [1, 2, 4, 0, 3], so player order[k] holds place k. The places are the inverse: the array p with p[order[k]] = k. np.argsort(order) lists where player 0, then player 1 and so on, sit in order, which is each player's place: [3, 0, 1, 4, 2]."
+    },
+    {
+      "id": "np-which-writes-land",
+      "moduleId": "programming-essentials",
+      "title": "Which Writes Reach the Array",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=np-which-writes-land",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Trace four writes aimed at an array of shape (2, 3). Each one either changes the array or changes only a temporary copy that is then thrown away. Find what the code prints. 1 part.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "np-clipped-log",
+      "moduleId": "programming-essentials",
+      "title": "The Loss That a Clip Hides",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=np-clipped-log",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A model outputs logits (40, -95, 12) for one example whose true class is 1. A student clips the softmax probability so the log can never see a 0. Find what the clip does to the loss, and what the true cross-entropy is. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "np-one-shift-for-the-batch",
+      "moduleId": "programming-essentials",
+      "title": "One Shift for the Whole Batch",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=np-one-shift-for-the-batch",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A student shifts a batch of logits by the largest logit in the whole batch, not by each row's own largest. Find which rows come out nan, then write the loss for the whole batch with no loop, so no row can overflow or underflow. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "np-nearest-mean-classifier",
+      "moduleId": "programming-essentials",
+      "title": "A Nearest-Mean Classifier Without Loops",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=np-nearest-mean-classifier",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Build a nearest-mean classifier with NumPy alone and no Python loop over the examples: the class means as one matrix product, the predictions from a table of squared distances, and a leave-one-out accuracy estimate that never lets an example vote on its own class mean.",
+      "answer": "Auto-graded inside the notebook. The class means, the predictions, and the leave-one-out labels must match the reference."
+    },
+    {
+      "id": "np-photo-composite",
+      "moduleId": "programming-essentials",
+      "title": "Compositing Photos Stored as Bytes",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=np-photo-composite",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Photos are uint8 arrays, so arithmetic wraps modulo 256. Paste one photo into another through a mask, brighten a photo, and find its brightest pixel by luma, each without a Python loop and without letting a byte wrap.",
+      "answer": "Auto-graded inside the notebook. The composite, the brightened photo, and the brightest pixel must match the reference, and the inputs must not change."
+    }
+  ],
+  "theory": [
+    {
+      "id": "np-average-daily-range",
+      "moduleId": "programming-essentials",
+      "title": "The Average Daily Range",
+      "difficulty": "Easy",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A weather station logs four temperature readings a day, at 6 am, 10 am, 2 pm and 6 pm, in degrees Celsius. Its log for three days is stored with one row per reading time and one column per day:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "T = np.array([[12, 10,  9],    # 6 am on days 1, 2, 3",
+                  "              [18, 14, 22],    # 10 am",
+                  "              [25, 20, 17],    # 2 pm",
+                  "              [15, 16, 11]])   # 6 pm"
+                ]
+              }
+            },
+            {
+              "p": "The station reports the average daily range: for each day, its highest reading minus its lowest, then the mean of those three numbers. Which line computes it, and what does it print?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "`(T.max(axis=1) - T.min(axis=1)).mean()`, which prints `6.0`",
+                  "explain": "Axis 1 runs across each row, so this takes the range of each reading time across the three days: 3, 8, 8 and 5, with mean 6. Here the days are the columns, so a day's readings run down axis 0."
+                },
+                {
+                  "text": "`(T.max(axis=0) - T.min(axis=0)).mean()`, which prints `12.0`",
+                  "correct": true,
+                  "explain": "Each day is a column, so its readings run down axis 0, and naming axis 0 removes the reading times. `T.max(axis=0)` is each day's highest reading, (25, 20, 22), and `T.min(axis=0)` each day's lowest, (12, 10, 9). Their differences are the daily ranges 13, 10 and 13, and their mean is 36 / 3 = 12."
+                },
+                {
+                  "text": "`T.max() - T.min()`, which prints `16`",
+                  "explain": "With no axis, `max` and `min` run over all twelve readings, so this is the range of the whole three days, 25 − 9 = 16. The hottest and coldest readings come from different days, so no single day had this range."
+                },
+                {
+                  "text": "`T.mean(axis=0).max() - T.mean(axis=0).min()`, which prints `2.75`",
+                  "explain": "This averages each day first, giving 17.5, 15 and 14.75, and takes the range of those means, 2.75. It measures how much the days differ from each other, not how much the temperature moves within a day."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each day is a column, so its readings run down axis 0, and naming axis 0 removes the reading times. `T.max(axis=0)` is each day's highest reading, (25, 20, 22), and `T.min(axis=0)` each day's lowest, (12, 10, 9). Their differences are the daily ranges 13, 10 and 13, and their mean is 36 / 3 = 12."
+            },
+            {
+              "result": "`(T.max(axis=0) - T.min(axis=0)).mean()`, which prints `12.0`"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "np-uint8-difference",
+      "moduleId": "programming-essentials",
+      "title": "Subtracting Two Photos Stored as Bytes",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "A camera stores each pixel as `uint8`. To measure how much a scene changed between two frames, a student compares four pixels:"
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "a = np.array([40, 120, 75, 180], dtype=np.uint8)   # frame 1",
+              "b = np.array([65, 90, 75, 230], dtype=np.uint8)    # frame 2",
+              "change = np.abs(a - b).mean()",
+              "print(change)"
+            ]
+          }
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What does it print?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The subtraction happens in `uint8` before `np.abs` sees anything. The true differences are $-25$, $30$, $0$ and $-50$. The two negative ones fall outside 0 to 255 and wrap modulo 256: $-25$ is stored as $256 - 25 = 231$ and $-50$ as $256 - 50 = 206$. So `a - b` is `[231, 30, 0, 206]`, `np.abs` leaves it unchanged (nothing in a `uint8` array is negative), and the mean is"
+            },
+            {
+              "tex": "\\frac{231 + 30 + 0 + 206}{4} = \\frac{467}{4} = 116.75 ."
+            },
+            {
+              "result": "116.75"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Two fixes are proposed:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "fix_1 = np.abs(a - b).astype(np.int64).mean()",
+                  "fix_2 = np.abs(a.astype(np.int64) - b.astype(np.int64)).mean()"
+                ]
+              }
+            },
+            {
+              "p": "Which one is right, and what is the correct mean change?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "`fix_1` converts too late. `a - b` has already wrapped to `[231, 30, 0, 206]`, and converting that to `int64` keeps those values, so it still gives $116.75$."
+            },
+            {
+              "p": "`fix_2` converts both frames before subtracting, so the subtraction runs in `int64`, which holds negative numbers. The absolute differences are $25$, $30$, $0$ and $50$, and the mean change is"
+            },
+            {
+              "tex": "\\frac{25 + 30 + 0 + 50}{4} = \\frac{105}{4} = 26.25 ."
+            },
+            {
+              "p": "The wrapped answer is more than four times the true one, and nothing warned about it. An array's dtype decides what a result can hold, so change the dtype before the operation that needs the wider range, not after. Converting to `float` works as well."
+            },
+            {
+              "result": "26.25"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "np-channels-first",
+      "moduleId": "programming-essentials",
+      "title": "Moving the Color Axis to the Front",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "Images are often stored channels last, with shape `(N, H, W, C)`: image, row, column, color. Many models want them channels first, `(N, C, H, W)`. Take one tiny 2 by 2 image with three color channels, red, green and blue:"
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "x = np.arange(12).reshape(1, 2, 2, 3)   # x[0, h, w, c] = 6h + 3w + c",
+              "via_reshape = x.reshape(1, 3, 2, 2)",
+              "via_transpose = x.transpose(0, 3, 1, 2)"
+            ]
+          }
+        },
+        {
+          "p": "Both `via_reshape` and `via_transpose` have shape `(1, 3, 2, 2)`, and the model reads channel 0 as red: `via_reshape[0, 0]` or `via_transpose[0, 0]`."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the sum of the four numbers in `via_reshape[0, 0]`?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "`reshape` never changes the row order of the numbers. `x` holds $0$ to $11$ in row order, so `via_reshape` holds them in the same order, and `via_reshape[0, 0]` is the first $2 \\times 2 = 4$ of them: $0, 1, 2, 3$, with sum $6$."
+            },
+            {
+              "p": "Those four numbers are the red, green and blue values of pixel $(0, 0)$ and the red value of pixel $(0, 1)$. The model's \"red channel\" is a mix of all three colors."
+            },
+            {
+              "result": "6"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What is the sum of the four numbers in `via_transpose[0, 0]`, and why can no `reshape` of `x` give the same array as `via_transpose`?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "`transpose(0, 3, 1, 2)` builds the new axes from the old axes 0, 3, 1 and 2, so `via_transpose[0, c, h, w]` is `x[0, h, w, c]`. Channel 0 holds $x[0, h, w, 0] = 6h + 3w$ for the four pixels: $0, 3, 6, 9$, with sum $18$. These are the four red values."
+            },
+            {
+              "p": "Read in row order, `via_transpose` is $0, 3, 6, 9, 1, 4, 7, 10, 2, 5, 8, 11$: every third number, then the same starting one place later. A `reshape` keeps the row order $0, 1, \\dots, 11$ whatever shape it is given, so no reshape can produce this order. Changing which axis comes first needs a transpose."
+            },
+            {
+              "result": "18"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "np-vectorize-the-hinge",
+      "moduleId": "programming-essentials",
+      "title": "One Line for the Hinge Loss",
+      "difficulty": "Easy",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A classifier gives scores `s` to four examples with labels `y` of $+1$ or $-1$. Its loss is computed with a loop:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "y = np.array([1, -1, 1, -1])",
+                  "s = np.array([2.0, 0.5, -1.0, -3.0])",
+                  "",
+                  "total = 0.0",
+                  "for i in range(len(y)):",
+                  "    total += max(0.0, 1 - y[i] * s[i])",
+                  "loss = total / len(y)"
+                ]
+              }
+            },
+            {
+              "p": "Which line gives the same `loss` with no loop?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "`np.maximum(0, 1 - y * s).mean()`",
+                  "correct": true,
+                  "explain": "`1 - y * s` is `[-1, 1.5, 2, -2]`, one term per example. `np.maximum(0, ...)` compares each entry with 0 and keeps the larger, giving `[0, 1.5, 2, 0]`, and the mean is 3.5 / 4 = 0.875, the loop's answer."
+                },
+                {
+                  "text": "`np.max(1 - y * s, 0).mean()`",
+                  "explain": "`np.max` is a reduction: its second argument is the axis, so `np.max(1 - y * s, 0)` returns the single largest term, 2.0, and the mean of that one number is 2.0. Taking the larger of two arrays entry by entry is `np.maximum`."
+                },
+                {
+                  "text": "`max(0, (1 - y * s).mean())`",
+                  "explain": "This clips the mean instead of each term. The mean of `[-1, 1.5, 2, -2]` is 0.125, which is positive, so the result is 0.125. The loop sets the two negative terms to 0 before averaging, so they cannot cancel the positive ones."
+                },
+                {
+                  "text": "`np.abs(1 - y * s).mean()`",
+                  "explain": "The absolute value flips the negative terms to positive instead of setting them to 0, giving `[1, 1.5, 2, 2]` and a mean of 1.625. An example with a negative term is classified with room to spare and should add nothing."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "`1 - y * s` is `[-1, 1.5, 2, -2]`, one term per example. `np.maximum(0, ...)` compares each entry with 0 and keeps the larger, giving `[0, 1.5, 2, 0]`, and the mean is 3.5 / 4 = 0.875, the loop's answer."
+            },
+            {
+              "result": "`np.maximum(0, 1 - y * s).mean()`"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "np-per-image-mean",
+      "moduleId": "programming-essentials",
+      "title": "Centering Each Image in a Batch",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A batch of 32 color images of 32 by 32 pixels has shape `(32, 32, 32, 3)`: image, row, column, channel. A student wants to subtract from every pixel its own image's mean color, one mean per image and channel. `imgs.mean(axis=(1, 2))` averages over the row and column axes at once, so it has shape `(32, 3)`, and the student writes"
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "centered = imgs - imgs.mean(axis=(1, 2))"
+            ]
+          }
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Does this line raise an error? If not, what shape is `centered`?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Line the shapes up from the right:"
+            },
+            {
+              "tex": "\\begin{array}{ccccc}\n\\text{} & \\text{axis 0} & \\text{axis 1} & \\text{axis 2} & \\text{axis 3} \\\\ \\hline\n\\text{`imgs`} & 32 & 32 & 32 & 3 \\\\\n\\text{the means} & \\text{} & \\text{} & 32 & 3\n\\end{array}"
+            },
+            {
+              "p": "The channels match, 3 and 3. The 32 means then meet the 32 columns, and equal sizes work together. The missing axes count as 1 and stretch. So there is no error, and `centered` has shape `(32, 32, 32, 3)`, the shape the student expected."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "`centered[5, 7, 20, 1]` is `imgs[5, 7, 20, 1]` minus the green mean of one image. Which image?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The means array lines up with the last two axes, column and channel, so `centered[n, h, w, c]` is `imgs[n, h, w, c] - means[w, c]`. For column $w = 20$ and channel $c = 1$ that is `means[20, 1]`, the green mean of image 20. Every pixel in column 20 of every image has image 20's mean subtracted, and image 5's own mean is used only in column 5."
+            },
+            {
+              "result": "20"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "coding",
+          "requirement": "Reasoning is required. Code is required.",
+          "prompt": [
+            {
+              "p": "Fix the line, and explain why the same mistake on a batch of 30 images would have been caught at once."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Keep the averaged axes with size 1:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "centered = imgs - imgs.mean(axis=(1, 2), keepdims=True)"
+                ]
+              }
+            },
+            {
+              "p": "The means now have shape `(32, 1, 1, 3)`. Lined up from the right, the channels match, the two size-1 axes stretch over the rows and columns, and the 32 means meet the 32 images, so image $n$ gets its own mean."
+            },
+            {
+              "p": "With 30 images the wrong line pairs the means' shape `(30, 3)` with the columns: 30 against 32, neither of them 1, so NumPy raises a `ValueError`. The bug was hidden only because the batch size happened to equal the image width. When two axes can have the same size, give the reduced array its place with `keepdims=True` instead of relying on an error to catch a mismatch."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "np-true-class-probabilities",
+      "moduleId": "programming-essentials",
+      "title": "Picking Each Example's True Class",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "A classifier gives these probabilities for four examples and three classes, one row per example, and the true labels are `y`:"
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "P = np.array([[0.7, 0.2, 0.1],",
+              "              [0.1, 0.8, 0.1],",
+              "              [0.2, 0.2, 0.6],",
+              "              [0.5, 0.4, 0.1]])",
+              "y = np.array([0, 2, 2, 1])"
+            ]
+          }
+        },
+        {
+          "p": "A student wants the mean probability the model gives to the true class, and writes `P[:, y].mean()`. It runs without an error."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What shape is `P[:, y]`, and what does `P[:, y].mean()` print?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The `:` keeps all 4 rows, and the list `y` picks columns 0, 2, 2 and 1 for every row. So `P[:, y]` has shape `(4, 4)`: column $j$ of the result is column `y[j]` of `P`."
+            },
+            {
+              "p": "Its mean is the mean of four whole columns of `P`. The column means of `P` are $0.375$ for class 0, $0.4$ for class 1 and $0.225$ for class 2, so"
+            },
+            {
+              "tex": "\\frac{0.375 + 0.225 + 0.225 + 0.4}{4} = \\frac{1.225}{4} = 0.30625 ."
+            },
+            {
+              "result": "0.30625"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "coding",
+          "requirement": "Reasoning is required. Code is required.",
+          "prompt": [
+            {
+              "p": "Write the expression that picks one probability per example, and give the correct mean."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Pair a row list with the column list, so that example $i$ gets column `y[i]`:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "P[np.arange(4), y]      # [0.7, 0.1, 0.6, 0.4]"
+                ]
+              }
+            },
+            {
+              "p": "The mean is $1.8 / 4 = 0.45$."
+            },
+            {
+              "p": "These four numbers are also the diagonal of the student's `(4, 4)` table: entry $(i, i)$ of `P[:, y]` is `P[i, y[i]]`. The other twelve entries pair an example with another example's label. A cross-entropy written as `-np.log(P[:, y]).mean()` has the same bug and runs just as quietly."
+            },
+            {
+              "result": "0.45"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "np-vectorize-the-gradient",
+      "moduleId": "programming-essentials",
+      "title": "The Gradient Loop as One Product",
+      "difficulty": "Medium",
+      "minutes": 8,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "`X` has shape `(100, 3)`: 100 examples, 3 features. `w` has shape `(3,)` and `y` has shape `(100,)`. This loop computes the gradient of a squared error:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "n, d = X.shape",
+                  "g = np.zeros(d)",
+                  "for i in range(n):",
+                  "    r = X[i] @ w - y[i]              # the error on example i",
+                  "    for j in range(d):",
+                  "        g[j] += 2 * r * X[i, j] / n"
+                ]
+              }
+            },
+            {
+              "p": "Which line gives the same `g`?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "`2 / n * X.T * (X @ w - y)`",
+                  "explain": "`X.T` has shape `(3, 100)` and the errors `X @ w - y` have shape `(100,)`, so `*` broadcasts them into a `(3, 100)` table of the separate terms `2 * r * X[i, j] / n`. It never adds them up over the examples, which `@` would do."
+                },
+                {
+                  "text": "`2 / n * X @ (X @ w - y)`",
+                  "explain": "`X` has shape `(100, 3)` and the errors `(100,)`, so `@` pairs the 3 entries of each row of `X` with 100 errors and raises a `ValueError`. The sum over examples runs down the columns of `X`, so `X` must be transposed first."
+                },
+                {
+                  "text": "`2 / n * X.T @ (X @ w - y)`",
+                  "correct": true,
+                  "explain": "Entry `j` of `g` is the sum over examples of `2 * r_i * X[i, j] / n`, which is 2 / n times the dot product of column `j` of `X` with the errors. Column `j` of `X` is row `j` of `X.T`, so all three entries together are `X.T @ (X @ w - y)`, shape `(3,)`."
+                },
+                {
+                  "text": "`2 / n * (X @ w - y).sum() * X.sum(axis=0)`",
+                  "explain": "This multiplies the total error by the total of each feature. The loop multiplies each error by that example's own feature value before adding, and in general a sum of products is not the product of the sums."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Entry `j` of `g` is the sum over examples of `2 * r_i * X[i, j] / n`, which is 2 / n times the dot product of column `j` of `X` with the errors. Column `j` of `X` is row `j` of `X.T`, so all three entries together are `X.T @ (X @ w - y)`, shape `(3,)`."
+            },
+            {
+              "result": "`2 / n * X.T @ (X @ w - y)`"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "np-places-from-argsort",
+      "moduleId": "programming-essentials",
+      "title": "Places on a Leaderboard",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Five players have these scores, player $i$ at position $i$:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "s = np.array([0.3, 0.9, 0.6, 0.1, 0.5])"
+                ]
+              }
+            },
+            {
+              "p": "The leaderboard needs each player's place, 0 for the highest score, as an array with one entry per player. For these scores that is `[3, 0, 1, 4, 2]`: player 0 is fourth, so place 3. Which expression returns it?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "`np.argsort(-s)`",
+                  "explain": "`np.argsort(-s)` is `[1, 2, 4, 0, 3]`: the players listed from first place to last. It says which player holds each place, while the leaderboard wants the place each player holds. The two arrays are inverses of each other, and here they differ."
+                },
+                {
+                  "text": "`np.argsort(np.argsort(s))`",
+                  "explain": "This gives each player's place counted from the lowest score, `[1, 4, 3, 0, 2]`: player 3, with the lowest score, gets 0. The places on the leaderboard count from the highest, so sort `-s` instead."
+                },
+                {
+                  "text": "`len(s) - 1 - np.argsort(s)`",
+                  "explain": "`np.argsort(s)` is `[3, 0, 4, 2, 1]`, the players from lowest to highest. Subtracting it from 4 flips those player numbers, not their places, and gives `[1, 4, 0, 2, 3]`, which is neither the order nor the places."
+                },
+                {
+                  "text": "`np.argsort(np.argsort(-s))`",
+                  "correct": true,
+                  "explain": "`order = np.argsort(-s)` is `[1, 2, 4, 0, 3]`, so player `order[k]` holds place `k`. The places are the inverse: the array `p` with `p[order[k]] = k`. `np.argsort(order)` lists where player 0, then player 1 and so on, sit in `order`, which is each player's place: `[3, 0, 1, 4, 2]`."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "`order = np.argsort(-s)` is `[1, 2, 4, 0, 3]`, so player `order[k]` holds place `k`. The places are the inverse: the array `p` with `p[order[k]] = k`. `np.argsort(order)` lists where player 0, then player 1 and so on, sit in `order`, which is each player's place: `[3, 0, 1, 4, 2]`."
+            },
+            {
+              "result": "`np.argsort(np.argsort(-s))`"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "np-which-writes-land",
+      "moduleId": "programming-essentials",
+      "title": "Which Writes Reach the Array",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "Trace this code. Each of the four writes either changes `X` or changes only a temporary array that is then thrown away."
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "X = np.arange(6).reshape(2, 3).astype(float)   # [[0, 1, 2], [3, 4, 5]]",
+              "",
+              "X[[0]][0, 2] = -1",
+              "X.reshape(-1)[4] = 0",
+              "X[[1]] *= 2",
+              "X.T.reshape(-1)[1] = 99",
+              "",
+              "print(X.sum())"
+            ]
+          }
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What does it print?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Take the writes one at a time. A chained line like `X[[0]][0, 2] = -1` first reads `X[[0]]`, then writes into whatever that read returned."
+            },
+            {
+              "list": [
+                "`X[[0]]` reads with a list of positions, so it is a new `(1, 3)` copy of row 0. The write sets an entry of that copy, which is never stored anywhere. `X` is unchanged.",
+                "`astype(float)` built `X` as a fresh array in row order, so `X.reshape(-1)` is a view of the same six numbers. Its entry 4 is `X[1, 1]`, which becomes 0: `X` is `[[0, 1, 2], [3, 0, 5]]`.",
+                "`X[[1]] *= 2` looks like a read with a list, but it is an assignment through the index: Python runs it as `X[[1]] = X[[1]] * 2`, which writes the doubled row back into `X`. Row 1 becomes `[6, 0, 10]`.",
+                "`X.T` is a view, but reading it in row order gives the entries of `X` in the order 0, 3, 1, 4, 2, 5 of its memory, which no single stride can describe. So `X.T.reshape(-1)` is a copy, as the lesson's `A.T.reshape(12)` was, and setting its entry 1 changes only that copy."
+              ]
+            },
+            {
+              "p": "So `X` ends as `[[0, 1, 2], [6, 0, 10]]`, and the sum is $0 + 1 + 2 + 6 + 0 + 10 = 19$. Had every write landed, `X` would be `[[0, 1, -1], [99, 0, 10]]` with sum 109."
+            },
+            {
+              "p": "A copy only matters when it is written into and then dropped. Check with `np.shares_memory(X, view)` when a line both picks entries and writes."
+            },
+            {
+              "result": "19"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "np-clipped-log",
+      "moduleId": "programming-essentials",
+      "title": "The Loss That a Clip Hides",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A model outputs logits $\\mathbf{z} = (40, -95, 12)$ for one example whose true class is 1. A student computes the softmax directly, then clips the probability so that the log can never see a 0:"
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "logits = np.array([40.0, -95.0, 12.0])",
+              "probs = np.exp(logits) / np.exp(logits).sum()",
+              "loss = -np.log(np.clip(probs[1], 1e-12, 1.0))"
+            ]
+          }
+        },
+        {
+          "p": "Nothing here overflows: $e^{40}$ is about $2.4 \\times 10^{17}$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What value does `loss` take? Give it to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Divide the top and the bottom of the softmax by $e^{40}$, the largest term, so every exponent is measured from the largest logit. Call the three logits $z_0$, $z_1$ and $z_2$. The class 1 probability is then"
+            },
+            {
+              "tex": "p_1 = \\frac{e^{z_1 - z_0}}{1 + e^{z_1 - z_0} + e^{z_2 - z_0}} \\approx e^{z_1 - z_0} \\approx 2.3 \\times 10^{-59} ."
+            },
+            {
+              "p": "That is far below $10^{-12}$, so the clip raises it to $10^{-12}$, and"
+            },
+            {
+              "tex": "\\text{loss} = -\\ln 10^{-12} = 12 \\ln 10 \\approx 27.631 ."
+            },
+            {
+              "result": "27.631"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What is the true cross-entropy for this example? Compute it as a logsumexp minus one logit, and say what the clip did to it."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The cross-entropy is $\\log\\sum_j e^{z_j} - z_y$. Shift by the largest logit, $m = 40$:"
+            },
+            {
+              "tex": "\\log\\sum_j e^{z_j} = 40 + \\log\\left(1 + e^{-135} + e^{-28}\\right) \\approx 40 + 7 \\times 10^{-13} ."
+            },
+            {
+              "p": "So the loss is $40 - (-95) = 135$, to float precision."
+            },
+            {
+              "p": "$2.3 \\times 10^{-59}$ is an ordinary `float64`, so even `-np.log(probs[1])` without the clip gives 135 here. The clip changed a correct loss of 135 into 27.631. Every example whose true-class probability falls below $10^{-12}$ is capped at the same 27.631, so the loss can no longer tell a bad mistake from a terrible one. Worse, the clip is flat there, so the gradient that should push these logits apart is zero."
+            },
+            {
+              "result": "135"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Now the logits are $(40, -800, 12)$, true class still 1. What do the clipped version and the version without the clip give, and what is the true loss?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "$p_1 \\approx e^{-840}$ is below the smallest positive `float64`, about $5 \\times 10^{-324}$, so `probs[1]` is exactly 0. Without the clip, `-np.log(0.0)` is `inf`. With it, the loss is 27.631 again, the same as for the logits $(40, -95, 12)$."
+            },
+            {
+              "p": "The logsumexp form never builds the probability. With the same shift, $\\log\\sum_j e^{z_j} = 40 + \\log(1 + e^{-840} + e^{-28}) \\approx 40$, so the true loss is $40 - (-800) = 840$."
+            },
+            {
+              "p": "So the clip turns `inf` into a finite number, but the wrong one, and it hides that anything went wrong. Computing the loss from the logits as logsumexp minus the true logit gives 135 and 840, each correct."
+            },
+            {
+              "result": "840"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "np-one-shift-for-the-batch",
+      "moduleId": "programming-essentials",
+      "title": "One Shift for the Whole Batch",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "A batched softmax should turn each row of logits into probabilities. A student shifts by the largest logit, as the lesson suggests, but takes one largest value for the whole batch:"
+      ],
+      "setup": [
+        {
+          "code": {
+            "language": "python",
+            "lines": [
+              "Z = np.array([[870.0, 873.0],",
+              "              [  0.0,   3.0],",
+              "              [860.0, 861.0],",
+              "              [170.0, 169.0],",
+              "              [110.0, 112.0]])",
+              "E = np.exp(Z - Z.max())",
+              "P = E / E.sum(axis=1, keepdims=True)"
+            ]
+          }
+        },
+        {
+          "p": "You may use one fact about `float64`: its smallest positive number is about $5 \\times 10^{-324}$, so `np.exp(x)` is exactly 0 for any $x$ below about $-745$, while `np.exp(-700)` is still about $10^{-304}$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Subtracting one number from a whole row does not change that row's softmax, so the shift is exact in algebra. How many rows of `P` come out as `nan`?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The shift is `Z.max()`, which is 873. Look at each row's shifted logits:"
+            },
+            {
+              "tex": "\\begin{array}{cccc}\n\\text{Row} & \\text{Shifted logits} & \\text{`np.exp` of them} & \\text{Result} \\\\ \\hline\n0 & \\text{$-3$, $0$} & \\text{about 0.05, 1} & \\text{correct} \\\\\n1 & \\text{$-873$, $-870$} & \\text{0, 0} & \\text{$0 / 0$ = `nan`} \\\\\n2 & \\text{$-13$, $-12$} & \\text{about $2.3 \\times 10^{-6}$, $6.1 \\times 10^{-6}$} & \\text{correct} \\\\\n3 & \\text{$-703$, $-704$} & \\text{about $4.9 \\times 10^{-306}$, $1.8 \\times 10^{-306}$} & \\text{correct} \\\\\n4 & \\text{$-763$, $-761$} & \\text{0, 0} & \\text{$0 / 0$ = `nan`}\n\\end{array}"
+            },
+            {
+              "p": "Rows 1 and 4 have every logit more than 745 below the batch's largest logit, so all their terms underflow to 0, and dividing 0 by 0 gives `nan`. Row 3 survives because its terms, though tiny, are still above the smallest `float64`. So 2 rows are `nan`."
+            },
+            {
+              "p": "The shift was chosen to stop overflow in the row with the largest logits, and it did. But in a row whose logits sit far below that, it causes the opposite failure, underflow of every term."
+            },
+            {
+              "result": "2"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "coding",
+          "requirement": "Code is required. Do not use a Python loop over the rows.",
+          "prompt": [
+            {
+              "p": "The true classes are `y = [1, 0, 0, 0, 0]`. The student decides to skip the probabilities and compute each row's cross-entropy as a logsumexp minus the true logit, $\\log\\sum_j e^{z_{ij}} - z_{i, y_i}$. Write that loss for the whole batch with no loop, so that no row can overflow or underflow completely, and give the mean loss over the five rows to four decimal places. What would the mean be if the logsumexp used the one batch-wide shift `Z.max()` instead?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Shift each row by its own largest logit $m_i$: $\\log\\sum_j e^{z_{ij}} = m_i + \\log\\sum_j e^{z_{ij} - m_i}$. After the shift each row holds one term equal to 1, from its own largest logit, which keeps the row's sum from reaching 0, and no term is above 1, which keeps it from overflowing."
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "row_max = Z.max(axis=1, keepdims=True)                              # (5, 1)",
+                  "log_norm = row_max[:, 0] + np.log(np.exp(Z - row_max).sum(axis=1))  # (5,)",
+                  "losses = log_norm - Z[np.arange(5), y]                              # minus each row's true logit",
+                  "print(losses.mean())"
+                ]
+              }
+            },
+            {
+              "p": "With two logits per row, the logsumexp is the larger logit plus $\\log(1 + e^{-g})$, where $g$ is the gap between the two:"
+            },
+            {
+              "tex": "\\begin{array}{ccccc}\n\\text{Row} & \\text{Logits} & \\text{True} & \\text{Logsumexp} & \\text{Loss} \\\\ \\hline\n0 & \\text{870, 873} & 873 & 873 + \\log(1 + e^{-3}) = 873.0486 & 0.0486 \\\\\n1 & \\text{0, 3} & 0 & 3 + \\log(1 + e^{-3}) = 3.0486 & 3.0486 \\\\\n2 & \\text{860, 861} & 860 & 861 + \\log(1 + e^{-1}) = 861.3133 & 1.3133 \\\\\n3 & \\text{170, 169} & 170 & 170 + \\log(1 + e^{-1}) = 170.3133 & 0.3133 \\\\\n4 & \\text{110, 112} & 110 & 112 + \\log(1 + e^{-2}) = 112.1269 & 2.1269\n\\end{array}"
+            },
+            {
+              "p": "The mean is $6.8506 / 5 = 1.3701$."
+            },
+            {
+              "p": "With the batch-wide shift, rows 1 and 4 have $\\sum_j e^{z_{ij} - 873} = 0$, so their logsumexp is $873 + \\log 0 = -\\infty$ and their loss is $-\\infty$. The mean comes out as $-\\infty$, and a training step on it would be meaningless. Rows 0, 2 and 3 get the same losses as before. The shift that makes logsumexp safe has to be taken per row."
+            },
+            {
+              "result": "1.3701"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

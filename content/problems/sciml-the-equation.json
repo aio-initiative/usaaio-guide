@@ -1,0 +1,151 @@
+{
+  "module": "sciml-the-equation",
+  "stage": "Camp",
+  "index": [
+    {
+      "id": "sm-six-steps-to-reach-t-six",
+      "moduleId": "sciml-the-equation",
+      "title": "Six Steps to Reach t = 6",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=sm-six-steps-to-reach-t-six",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "The model is unchanged, dy/dt = -y with y(0) = 1, but the lab wants the value at t = 6 now instead of t = 2. Euler's method reaches t = 6 only after a whole number of steps, and the analyst's spreadsheet has room for six multiplications, so the step has to be h = 6/n for a whole number n of steps between 1 and 6. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    }
+  ],
+  "theory": [
+    {
+      "id": "sm-six-steps-to-reach-t-six",
+      "moduleId": "sciml-the-equation",
+      "title": "Six Steps to Reach t = 6",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "The model is unchanged, $\\frac{dy}{dt} = -y$ with $y(0) = 1$, but the lab wants the value at $t = 6$ now instead of $t = 2$. Euler's method reaches $t = 6$ only after a whole number of steps, and the analyst's spreadsheet has room for six multiplications, so the step has to be $h = 6/n$ for a whole number $n$ of steps between 1 and 6. That leaves six choices:"
+      ],
+      "setup": [
+        {
+          "tex": "h = 6,\\ 3,\\ 2,\\ 1.5,\\ 1.2,\\ 1 ."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The analyst tries $h = 3$, which is two steps. What value does that run report at $t = 6$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Every step multiplies the value by $1 - h$, so with $h = 3$ the multiplier is $-2$ and the run is"
+            },
+            {
+              "tex": "1 \\ \\to\\ -2 \\ \\to\\ 4 ."
+            },
+            {
+              "p": "The value at $t = 3$ is already negative, and the magnitude doubles at each step, so the run reports 4 at $t = 6$. The exact value there is $e^{-6} = 0.0024788$, and $e^{-t}$ is positive at every $t$, so a run that crosses zero has not approximated the answer. The step is longer than the time the drink needs to cool by any noticeable amount, and the rule \"fall by $h$ times my current value\" with $h = 3$ subtracts three times the value in a single move."
+            },
+            {
+              "result": "4"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The analyst moves to the finest step the budget allows, $h = 1$. What does that run report at $t = 6$, and at every later time?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The multiplier is $1 - 1 = 0$. The first step takes the value to 0 at $t = 1$, and every step after that multiplies 0 by 0, so the run reports 0 at $t = 6$, at $t = 100$, at every $t$ from 1 on. The value never turns negative and never rises, so the run survives the quick sanity checks an analyst would run on a solver, and it is still wrong. Its error at $t = 6$ is the whole truth, 0.0024788, which is 100 percent of the truth."
+            },
+            {
+              "result": "0"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The analyst also tries $h = 1.2$, which is five steps. Give the error of that run at $t = 6$ as a percentage of the truth."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The multiplier is $1 - 1.2 = -0.2$, so the magnitude falls by a factor of 5 at every step while the sign alternates:"
+            },
+            {
+              "tex": "1 \\ \\to\\ -0.2 \\ \\to\\ 0.04 \\ \\to\\ -0.008 \\ \\to\\ 0.0016 \\ \\to\\ -0.00032 ."
+            },
+            {
+              "p": "The run reports $-0.00032$ at $t = 6$, which puts a drink that is still warm on the wrong side of zero. The distance from the truth is $0.00032 + 0.0024788 = 0.0027988$, and as a percentage of the truth that is"
+            },
+            {
+              "tex": "\\frac{0.0027988}{0.0024788} \\times 100 = 112.9 \\text{ percent} ."
+            },
+            {
+              "p": "The run is out by more than its own size, and the sign flip is why: a multiplier of $-0.2$ keeps crossing zero however small the values get, and making the values smaller does not stop it."
+            },
+            {
+              "result": "112.9"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "The report promises a value at $t = 6$ that is within 10 percent of the truth. Which of the six steps, if any, keeps that promise? Give the error of each run as a percentage of the truth, state what the step has to satisfy for a run of this equation to stay positive and decreasing, and say what you would change to keep the promise."
+            }
+          ],
+          "answer": [
+            {
+              "tex": "\\begin{array}{cccc}\n\\text{Step $h$} & \\text{Steps $n$} & \\text{Reported at $t = 6$} & \\text{Error as a percentage of the truth} \\\\ \\hline\n6 & 1 & -5 & \\text{201,814} \\\\\n3 & 2 & 4 & \\text{161,272} \\\\\n2 & 3 & -1 & \\text{40,443} \\\\\n1.5 & 4 & 0.0625 & \\text{2,421} \\\\\n1.2 & 5 & -0.00032 & 113 \\\\\n1 & 6 & 0 & 100\n\\end{array}"
+            },
+            {
+              "p": "None of the six keeps the promise. Read the same six runs as a distance from the truth instead of a percentage, and $h = 1$ is the closest of the six at 0.00248, just ahead of $h = 1.2$ at 0.00280. The run that wins the analyst's comparison is the one that says the drink reached exactly room temperature at $t = 1$ and never moved again, which no exponential decay ever does. Two runs can agree to within 0.0004 and both be wrong by their own size, so an error number only means something next to the size of the quantity being measured."
+            },
+            {
+              "p": "The step has to satisfy a condition before any of this matters. Each step multiplies by $1 - h$, so the run stays positive and strictly decreasing exactly when"
+            },
+            {
+              "tex": "0 < 1 - h < 1, \\qquad \\text{which means} \\qquad 0 < h < 1 ."
+            },
+            {
+              "p": "Every step in the budget is $h = 6/n \\ge 1$, so the budget rules out every step that could work. That is the real finding, and the percentages only show it from one side."
+            },
+            {
+              "p": "Leaving the budget does keep the promise eventually, but slowly. The error at $t = 6$ halves each time the step count doubles, once the count is large: 27 percent at 60 steps, 14 percent at 120, 7 percent at 240, 3.7 percent at 480, and the first whole step count that lands within 10 percent is 175, a step of about 0.034. The reason is in the step rule, since a run of $n = 6/h$ steps reports"
+            },
+            {
+              "tex": "(1 - h)^{6/h} = \\exp\\left(\\frac{6}{h}\\ln(1 - h)\\right) \\approx \\exp(-6 - 3h)"
+            },
+            {
+              "p": "against the true $e^{-6} = \\exp(-6)$. Each step multiplies by $1 - h$ where the truth multiplies by $e^{-h}$, and that small gap, repeated over $6/h$ steps, leaves the answer low by a fraction of roughly $3h$. The error shrinks only in proportion to the step."
+            },
+            {
+              "p": "So the choice is between spending 175 steps, reporting the value at a shorter time instead, where the same step of 0.1 is 10 percent out at $t = 2$ and 27 percent out at $t = 6$, or changing the step rule. A midpoint step, which takes a half step to get a slope and then uses that slope for the whole step, costs two evaluations per step and keeps the error to second order: 60 midpoint steps of 0.1 are only about 1 percent out at $t = 6$ where 60 Euler steps of 0.1 are 27 percent out. Plain Euler steps served the lesson only because the interval they cover, up to $t = 2$, is short."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

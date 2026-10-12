@@ -1,0 +1,11 @@
+{
+  "aModule": "why-pytorch-not-tensorflow",
+  "stage": "Round1",
+  "fixes": [],
+  "parts": {},
+  "indexPrompt": {
+    "pyt-the-job-of-a-central-difference": "The central difference (f(x + h) - f(x - h)) / 2h estimates a derivative from two values of f near x. What is it for?",
+    "pyt-what-requires-grad-switches-on": "Setting requires_grad=True on a tensor changes what PyTorch does as you operate on it, not where the tensor lives. Choose the description of what that setting changes.",
+    "pyt-why-the-sweep-runs-backward": "Training needs the gradient of one scalar loss with respect to millions of parameters, and autograd computes it in reverse mode. Why not forward mode?"
+  }
+}

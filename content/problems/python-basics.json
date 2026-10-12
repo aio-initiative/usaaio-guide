@@ -1,0 +1,977 @@
+{
+ "module": "python-basics",
+ "stage": "Round 1",
+ "index": [
+  {
+   "id": "py-batches-per-epoch",
+   "moduleId": "python-basics",
+   "title": "Batches in an Epoch",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=py-batches-per-epoch",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 1"
+   ],
+   "prompt": "A training loop cuts a dataset of n examples into batches of b examples, and the last batch holds whatever is left over, so it may be smaller than b. The loop runs for i in range(num_batches), so num_batches must be an int, and every example must land in exactly one batch, with no empty batch at the end. Which expression gives num_batches for every n and b of at least 1?",
+   "answer": "(n - 1) // b + 1. Write n = qb + r with 0 \u2264 r < b. When r is at least 1, n \u2212 1 = qb + (r \u2212 1) still has q full batches, so the result is q + 1, one more for the leftovers. When r = 0, n \u2212 1 = (q \u2212 1)b + (b \u2212 1) has only q \u2212 1, so the result is q and no empty batch appears. Both cases round n / b up: 16 for n = 1000 and also 16 for n = 1024."
+  },
+  {
+   "id": "py-confusion-grid-aliasing",
+   "moduleId": "python-basics",
+   "title": "A Confusion Matrix That Counts One Class Twice",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=py-confusion-grid-aliasing",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "A classifier sorts seven photos into three classes and a script counts its results in a confusion matrix, but it pads the matrix to four rows by appending a reference to the first row instead of a fresh list. Trace what the fourth row holds after the loop, what the reported total comes out as, and the true accuracy once the padding is fixed. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "py-dict-comprehension-keeps-last",
+   "moduleId": "python-basics",
+   "title": "One Entry per Model",
+   "source": "Custom",
+   "difficulty": "Easy",
+   "url": "/theory/?id=py-dict-comprehension-keeps-last",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 1"
+   ],
+   "prompt": "Five training runs of three sequence models finished and logged their validation accuracies in the order the runs ended: lstm 0.81, gru 0.88, lstm 0.86, gru 0.84 and tcn 0.79. A teammate builds a dict from the list of name and accuracy pairs with a comprehension, so say how many keys it ends with, which value it keeps for a model whose name repeats, and what the code would need to keep the best accuracy instead.",
+   "answer": "3 0.84. The comprehension runs best[name] = acc for each pair in order. The repeated keys are overwritten, so best ends as lstm 0.86, gru 0.84 and tcn 0.79: three keys, each holding the model's last accuracy, not its best. Keeping the best needs a comparison, such as storing acc only when it beats best.get(name, 0)."
+  },
+  {
+   "id": "py-early-stopping-trace",
+   "moduleId": "python-basics",
+   "title": "When Early Stopping Stops",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=py-early-stopping-trace",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "A loop replays a run's validation losses with a patience of 3 and prints the epoch it stops at and the best loss. Say what it prints, and what it prints when a teammate changes the comparison from strictly less to less-or-equal. 2 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "py-parse-a-run-tag",
+   "moduleId": "python-basics",
+   "title": "The Largest Batch in Three Run Tags",
+   "source": "Custom",
+   "difficulty": "Easy",
+   "url": "/theory/?id=py-parse-a-run-tag",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 1"
+   ],
+   "prompt": "An experiment tracker names each run with a tag that packs its settings into one string, and a script looks for the largest batch size among three runs. What does the script print?",
+   "answer": "64 20. Splitting each tag at the underscores and slicing off 'bs=' leaves the strings '64', '128' and '32'. Strings compare character by character, so their first characters, 6, 1 and 3, already decide the order, and '64' is the largest even though 128 is the largest number. tags[-1] is the last tag, and [-2:] keeps its last two characters, '20'."
+  },
+  {
+   "id": "py-return-inside-the-loop",
+   "moduleId": "python-basics",
+   "title": "The First Score Above a Cutoff",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=py-return-inside-the-loop",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 1"
+   ],
+   "prompt": "A function should return the index of the first score above a cutoff, or -1 when no score is above it, but its else branch returns -1 inside the loop. Say what the function prints when it is tried on three batches of scores.",
+   "answer": "[0, -1, None]. return ends the function at once, wherever it sits. In the first loop pass one of the two branches always returns, so only the first score is ever looked at: 0.9 gives 0, and 0.5 gives -1 even though 0.8 comes next. An empty list never enters the loop, so no return runs and the function gives back None. The fix is to move return -1 out of the loop, after it."
+  },
+  {
+   "id": "py-shallow-copy-keeps-some",
+   "moduleId": "python-basics",
+   "title": "What a Shallow Copy Keeps",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=py-shallow-copy-keeps-some",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 1"
+   ],
+   "prompt": "A training script keeps a baseline of its parameters and tries two update steps on a copy of it, so that the baseline stays available for comparison. The copy is made with dict.copy(), the loop mutates one stored list in place and stores a brand new list under the other key. Say what the original dict prints after the loop, and which of the two edits reached it.",
+   "answer": "[0.5, -2.0] [0.0]. The shallow copy is a new dict whose values are the same list objects, so the sharing runs both ways. saved['w'][0] -= 0.25 changes the shared w list in place, twice, so params sees 0.5. saved['b'] = [...] builds a new list and points saved at it, which leaves params holding the original list, still [0.0]. Changing an object inside a container reaches every name for it, and storing a new object under a key reaches only that container."
+  },
+  {
+   "id": "py-sort-reverse-flips-both",
+   "moduleId": "python-basics",
+   "title": "A Minus Sign and Reverse Together",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=py-sort-reverse-flips-both",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "Five training runs each hold an optimizer name, a validation loss and a batch size, and a sort uses the key minus loss then batch with reverse turned on. Find which optimizer lands first and which lands third, then write one key that gives the same order with reverse off. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "py-stale-value-after-except",
+   "moduleId": "python-basics",
+   "title": "A Mean That Counts the Bad Readings",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=py-stale-value-after-except",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 1"
+   ],
+   "prompt": "A loop averages sensor readings that parse, but when a line fails to parse the running value is left unchanged and is still added to the total. What is the last line the loop prints?",
+   "answer": "mean 0.72. A failed float(text) raises before anything is stored, so value keeps the number from the previous pass. After skipping, the loop still adds that old value and counts the line: 'n/a' adds the 0.6 before it, and the empty line adds the 0.9 before it. The total is 0.6 + 0.6 + 0.9 + 0.9 + 0.6 = 3.6 over a count of 5, which prints mean 0.72. The bug is quiet because the answer is close to the right 0.70."
+  },
+  {
+   "id": "py-warmup-scheduler",
+   "moduleId": "python-basics",
+   "title": "A Learning Rate Schedule with Warmup",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=py-warmup-scheduler",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 1"
+   ],
+   "prompt": "A learning rate schedule multiplies the rate by a factor every few steps, and a warmup subclass scales the returned rate down for the first few calls. Trace six calls of the schedule as written, then trace six calls again after a teammate stores the scaled rate back into the object. 2 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "py-sweep-summary",
+   "moduleId": "python-basics",
+   "title": "Summarize a Hyperparameter Sweep",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=py-sweep-summary",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 1"
+   ],
+   "prompt": "Summarize a hyperparameter sweep: turn the raw log into a ranking of configurations by their mean accuracy over seeds, in plain Python.",
+   "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+  },
+  {
+   "id": "py-vocab-class",
+   "moduleId": "python-basics",
+   "title": "A Vocabulary Class for a Tiny Corpus",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=py-vocab-class",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 1"
+   ],
+   "prompt": "A vocabulary class for a tiny corpus: write one as a class, then a subclass that pads a batch of sentences to one length, the shape a model takes as input.",
+   "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+  },
+  {
+   "id": "python-core-implementation-task",
+   "moduleId": "python-basics",
+   "title": "Core Python Data Processing Practice",
+   "source": "Custom",
+   "difficulty": "Easy",
+   "url": "/editor/?nb=python-core",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 1"
+   ],
+   "prompt": "A Python Basics warm-up on dicts, loops and comprehensions, with no pandas or NumPy in your solution. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+   "answer": "Auto-graded inside the notebook. The evaluation cell recomputes the ground truth independently and checks all three answers."
+  }
+ ],
+ "theory": [
+  {
+   "id": "py-batches-per-epoch",
+   "moduleId": "python-basics",
+   "title": "Batches in an Epoch",
+   "difficulty": "Medium",
+   "minutes": 5,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A training loop cuts a dataset of `n` examples into batches of `b` examples, and the last batch holds whatever is left over, so it may be smaller than `b`. The loop runs `for i in range(num_batches)`, so `num_batches` must be an `int`, and every example must land in exactly one batch, with no empty batch at the end."
+      },
+      {
+       "p": "Which expression gives `num_batches` for every `n` and `b` of at least 1?"
+      },
+      {
+       "choices": [
+        {
+         "text": "`n // b`",
+         "explain": "This drops the leftover examples. With n = 1000 and b = 64 it gives 15, and 15 batches of 64 hold 960 examples, so the last 40 are never trained on. Floor division rounds down, and the partial batch needs rounding up."
+        },
+        {
+         "text": "`n // b + 1`",
+         "explain": "This is right whenever b does not divide n, which is why it looks right on most tests. With n = 1024 and b = 64 it gives 17, but 16 full batches already hold all 1024 examples, so the 17th batch is empty."
+        },
+        {
+         "text": "`(n - 1) // b + 1`",
+         "correct": true,
+         "explain": "Write n = qb + r with 0 \u2264 r < b. When r is at least 1, n \u2212 1 = qb + (r \u2212 1) still has q full batches, so the result is q + 1, one more for the leftovers. When r = 0, n \u2212 1 = (q \u2212 1)b + (b \u2212 1) has only q \u2212 1, so the result is q and no empty batch appears. Both cases round n / b up: 16 for n = 1000 and also 16 for n = 1024."
+        },
+        {
+         "text": "`round(n / b)`",
+         "explain": "Rounding to the nearest whole number rounds down whenever the leftover is under half a batch. With n = 970 and b = 64, n / b is about 15.16, so it gives 15 batches holding 960 examples and the last 10 are lost. It happens to be right for n = 1000, where the leftover of 40 is more than half of 64."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Write n = qb + r with 0 \u2264 r < b. When r is at least 1, n \u2212 1 = qb + (r \u2212 1) still has q full batches, so the result is q + 1, one more for the leftovers. When r = 0, n \u2212 1 = (q \u2212 1)b + (b \u2212 1) has only q \u2212 1, so the result is q and no empty batch appears. Both cases round n / b up: 16 for n = 1000 and also 16 for n = 1024."
+      },
+      {
+       "result": "`(n - 1) // b + 1`"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "py-confusion-grid-aliasing",
+   "moduleId": "python-basics",
+   "title": "A Confusion Matrix That Counts One Class Twice",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "A classifier sorts photos into three classes, 0, 1 and 2. A short script counts its results in a **confusion matrix**: entry `cm[t][p]` counts the photos of true class `t` that were predicted as class `p`, so the diagonal holds the correct predictions."
+   ],
+   "setup": [
+    {
+     "p": "The report it feeds expects a matrix with a row for each of four classes, so the script pads the matrix before it counts:"
+    },
+    {
+     "code": {
+      "language": "python",
+      "lines": [
+       "labels = [0, 2, 1, 1, 0, 2, 2]",
+       "preds  = [0, 1, 1, 2, 0, 2, 0]",
+       "",
+       "cm = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]",
+       "cm.append(cm[0])                    # a fourth row for the class the model never predicts",
+       "for t, p in zip(labels, preds):",
+       "    cm[t][p] += 1",
+       "",
+       "reported_total = sum(sum(row) for row in cm)",
+       "accuracy = sum(cm[i][i] for i in range(3)) / len(labels)"
+      ]
+     }
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is `cm[3][0]` after the loop?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "`cm.append(cm[0])` stores a second reference to the list that `cm[0]` already points at. It does not copy the row. So `cm[3]` and `cm[0]` are one list under two names, and anything the loop writes to row 0 shows up in row 3 as well."
+      },
+      {
+       "p": "Two photos have true class 0 and both were predicted as class 0, so `cm[0][0]` ends at 2, and `cm[3][0]` reads the same cell: **2**. A fresh fourth row would have held 0, since no photo has true class 3."
+      },
+      {
+       "result": "2"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What does `reported_total` come out as?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Seven photos were labeled, so the counts should add up to 7. With the shared row the matrix holds"
+      },
+      {
+       "tex": "\\begin{array}{ccccc}\n\\text{true class} & \\text{predicted 0} & \\text{predicted 1} & \\text{predicted 2} & \\text{predicted 3} \\\\ \\hline\n0 & 2 & 0 & 0 & 0 \\\\\n1 & 0 & 1 & 1 & 0 \\\\\n2 & 1 & 1 & 1 & 0 \\\\\n3 & 2 & 0 & 0 & 0\n\\end{array}"
+      },
+      {
+       "p": "Row 3 repeats row 0, so `sum(sum(row) for row in cm)` counts the two class 0 photos twice and reports $7 + 2 = $ **9**."
+      },
+      {
+       "result": "9"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Fix the padding so the fourth row is its own list, and give the true accuracy to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Append a freshly built row instead of a reference to an existing one:"
+      },
+      {
+       "code": {
+        "language": "python",
+        "lines": [
+         "cm.append([0, 0, 0, 0])"
+        ]
+       }
+      },
+      {
+       "p": "Now `cm[3]` is a fourth list, and the counts separate by class as they should. The diagonal holds $2 + 1 + 1 = 4$ correct predictions out of 7, an accuracy of $4 / 7 \\approx$ **0.571**."
+      },
+      {
+       "p": "The reported total was the tell: a matrix that adds up to more than the number of photos has counted something twice, and here the extra two were a row that was never really there."
+      },
+      {
+       "result": "0.571"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "py-dict-comprehension-keeps-last",
+   "moduleId": "python-basics",
+   "title": "One Entry per Model",
+   "difficulty": "Easy",
+   "minutes": 4,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "Five training runs of three sequence models finished, and their validation accuracies were logged in the order the runs ended. A teammate wants each model's best accuracy and writes"
+      },
+      {
+       "code": {
+        "language": "python",
+        "lines": [
+         "runs = [(\"lstm\", 0.81), (\"gru\", 0.88), (\"lstm\", 0.86), (\"gru\", 0.84), (\"tcn\", 0.79)]",
+         "best = {name: acc for name, acc in runs}",
+         "print(len(best), best[\"gru\"])"
+        ]
+       }
+      },
+      {
+       "p": "What does it print?"
+      },
+      {
+       "choices": [
+        {
+         "text": "`5 0.84`",
+         "explain": "This lets a dict hold the same key twice. A key appears at most once, so the five pairs give three keys, one per model."
+        },
+        {
+         "text": "`3 0.88`",
+         "explain": "This expects the dict to keep the best value, or the first one it saw, for a repeated key. The comprehension stores each pair in turn, and storing under a key that already exists replaces its value, so the later 0.84 overwrites 0.88. The name best does not make it keep the best."
+        },
+        {
+         "text": "`3 [0.88, 0.84]`",
+         "explain": "This expects a repeated key to collect its values into a list. Each key holds one value, and a new one replaces the old. To collect values, start each key with an empty list and append to it."
+        },
+        {
+         "text": "`3 0.84`",
+         "correct": true,
+         "explain": "The comprehension runs best[name] = acc for each pair in order. The repeated keys are overwritten, so best ends as lstm 0.86, gru 0.84 and tcn 0.79: three keys, each holding the model's last accuracy, not its best. Keeping the best needs a comparison, such as storing acc only when it beats best.get(name, 0)."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "The comprehension runs best[name] = acc for each pair in order. The repeated keys are overwritten, so best ends as lstm 0.86, gru 0.84 and tcn 0.79: three keys, each holding the model's last accuracy, not its best. Keeping the best needs a comparison, such as storing acc only when it beats best.get(name, 0)."
+      },
+      {
+       "result": "`3 0.84`"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "py-early-stopping-trace",
+   "moduleId": "python-basics",
+   "title": "When Early Stopping Stops",
+   "difficulty": "Medium",
+   "minutes": 10,
+   "overview": [
+    "Early stopping ends training once the validation loss has gone a set number of epochs, the **patience**, without improving. This loop replays a run's validation losses with a patience of 3. `float(\"inf\")` is infinity, larger than any loss, so the first epoch always counts as an improvement."
+   ],
+   "setup": [
+    {
+     "code": {
+      "language": "python",
+      "lines": [
+       "val_loss = [0.80, 0.62, 0.65, 0.62, 0.66, 0.62, 0.58, 0.67, 0.69, 0.70, 0.55]",
+       "",
+       "best = float(\"inf\")",
+       "wait = 0",
+       "for epoch, loss in enumerate(val_loss, start=1):",
+       "    if loss < best:",
+       "        best = loss",
+       "        wait = 0",
+       "    else:",
+       "        wait += 1",
+       "        if wait == 3:",
+       "            break",
+       "print(epoch, best)"
+      ]
+     }
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Which epoch does the program print?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Follow `best` and `wait` epoch by epoch. A loss counts as an improvement only when it is strictly below `best`."
+      },
+      {
+       "tex": "\\begin{array}{ccccc}\n\\text{epoch} & \\text{loss} & \\text{below `best`?} & \\text{`best`} & \\text{`wait`} \\\\ \\hline\n1 & 0.80 & \\text{yes} & 0.80 & 0 \\\\\n2 & 0.62 & \\text{yes} & 0.62 & 0 \\\\\n3 & 0.65 & \\text{no} & 0.62 & 1 \\\\\n4 & 0.62 & \\text{no, it ties} & 0.62 & 2 \\\\\n5 & 0.66 & \\text{no} & 0.62 & 3\n\\end{array}"
+      },
+      {
+       "p": "At epoch 5 `wait` reaches 3, so `break` leaves the loop with `epoch` still holding 5, and the program prints `5 0.62`. The tie at epoch 4 is what ends the run early: 0.62 is not below 0.62, so it adds to `wait` like any other epoch without progress. The `break` leaves the rest of the list unread."
+      },
+      {
+       "result": "5"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "A teammate changes `loss < best` to `loss <= best`, so a tie also resets the patience. What best loss does the program print now?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The first three epochs go as before. At epoch 4 the tie now counts, so `wait` goes back to 0 and the run continues:"
+      },
+      {
+       "tex": "\\begin{array}{ccccc}\n\\text{epoch} & \\text{loss} & \\text{at most `best`?} & \\text{`best`} & \\text{`wait`} \\\\ \\hline\n4 & 0.62 & \\text{yes} & 0.62 & 0 \\\\\n5 & 0.66 & \\text{no} & 0.62 & 1 \\\\\n6 & 0.62 & \\text{yes} & 0.62 & 0 \\\\\n7 & 0.58 & \\text{yes} & 0.58 & 0 \\\\\n8 & 0.67 & \\text{no} & 0.58 & 1 \\\\\n9 & 0.69 & \\text{no} & 0.58 & 2 \\\\\n10 & 0.70 & \\text{no} & 0.58 & 3\n\\end{array}"
+      },
+      {
+       "p": "The program prints `10 0.58`. The patience runs out at epoch 10, one epoch before the 0.55 at epoch 11, so the run never sees its lowest loss. Changing `<` to `<=` moved the stop from epoch 5 to epoch 10 and the best loss from 0.62 to 0.58. Neither rule is wrong in general: with `<=`, a loss that sits on a plateau keeps resetting the patience, and training can run far longer than it should. Keras and PyTorch Lightning count an epoch as an improvement only when the loss drops by more than `min_delta`, which is 0 unless you set it, so a tie does not reset their patience either."
+      },
+      {
+       "result": "0.58"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "py-parse-a-run-tag",
+   "moduleId": "python-basics",
+   "title": "The Largest Batch in Three Run Tags",
+   "difficulty": "Easy",
+   "minutes": 5,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "An experiment tracker names each run with a tag that packs its settings into one string. A script looks for the largest batch size among three runs, and reads the epoch count of the last run from the end of its tag:"
+      },
+      {
+       "code": {
+        "language": "python",
+        "lines": [
+         "tags = [\"lr=3e-4_bs=64_ep=12\", \"lr=1e-3_bs=128_ep=8\", \"lr=3e-4_bs=32_ep=20\"]",
+         "sizes = [t.split(\"_\")[1][3:] for t in tags]",
+         "print(max(sizes), tags[-1][-2:])"
+        ]
+       }
+      },
+      {
+       "p": "What does it print?"
+      },
+      {
+       "choices": [
+        {
+         "text": "`128 20`",
+         "explain": "This compares the batch sizes as numbers. The slices are strings, '64', '128' and '32', and strings compare character by character from the left, the way words are put in alphabetical order. The first characters are 6, 1 and 3, and 6 comes last, so max picks '64'. Convert first, as in max(int(s) for s in sizes), to get 128."
+        },
+        {
+         "text": "`64 =20`",
+         "explain": "This counts the last character as index -0, the way the first is index 0. Negative indices start at -1 for the last character, so -2 is the second to last, and the slice [-2:] keeps the last two characters, '20'."
+        },
+        {
+         "text": "It raises a `TypeError`.",
+         "explain": "This expects max to need numbers. max compares any values that can be compared with one another, and two strings can be, character by character. It runs without error and returns the string that would come last in that order."
+        },
+        {
+         "text": "`64 20`",
+         "correct": true,
+         "explain": "Splitting each tag at the underscores and slicing off 'bs=' leaves the strings '64', '128' and '32'. Strings compare character by character, so their first characters, 6, 1 and 3, already decide the order, and '64' is the largest even though 128 is the largest number. tags[-1] is the last tag, and [-2:] keeps its last two characters, '20'."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Splitting each tag at the underscores and slicing off 'bs=' leaves the strings '64', '128' and '32'. Strings compare character by character, so their first characters, 6, 1 and 3, already decide the order, and '64' is the largest even though 128 is the largest number. tags[-1] is the last tag, and [-2:] keeps its last two characters, '20'."
+      },
+      {
+       "result": "`64 20`"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "py-return-inside-the-loop",
+   "moduleId": "python-basics",
+   "title": "The First Score Above a Cutoff",
+   "difficulty": "Medium",
+   "minutes": 5,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "`first_above` should return the index of the first score above `cutoff`, or `-1` when no score is above it. It is tried on three batches of scores:"
+      },
+      {
+       "code": {
+        "language": "python",
+        "lines": [
+         "def first_above(scores, cutoff):",
+         "    for i, s in enumerate(scores):",
+         "        if s > cutoff:",
+         "            return i",
+         "        else:",
+         "            return -1",
+         "",
+         "print([first_above(b, 0.7) for b in [[0.9, 0.2], [0.5, 0.8], []]])"
+        ]
+       }
+      },
+      {
+       "p": "What does it print?"
+      },
+      {
+       "choices": [
+        {
+         "text": "`[0, -1, None]`",
+         "correct": true,
+         "explain": "return ends the function at once, wherever it sits. In the first loop pass one of the two branches always returns, so only the first score is ever looked at: 0.9 gives 0, and 0.5 gives -1 even though 0.8 comes next. An empty list never enters the loop, so no return runs and the function gives back None. The fix is to move return -1 out of the loop, after it."
+        },
+        {
+         "text": "`[0, 1, -1]`",
+         "explain": "This is what the function was meant to do, and what it gives once return -1 moves out of the loop, after it. As written, the second batch returns -1 at 0.5 without looking at 0.8, and the empty batch never reaches a return, so it gives None."
+        },
+        {
+         "text": "`[0, -1, -1]`",
+         "explain": "This sees that the second batch stops at 0.5, but expects -1 for the empty list. An empty list never runs the loop body, so neither return is reached, and a function that ends without return gives back None."
+        },
+        {
+         "text": "`[0, 1, None]`",
+         "explain": "This gets the empty batch right but expects the loop to move on to the next score after the else branch, as if return -1 only took effect once the loop had finished. return leaves the function at once, so the second batch returns -1 at 0.5."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "return ends the function at once, wherever it sits. In the first loop pass one of the two branches always returns, so only the first score is ever looked at: 0.9 gives 0, and 0.5 gives -1 even though 0.8 comes next. An empty list never enters the loop, so no return runs and the function gives back None. The fix is to move return -1 out of the loop, after it."
+      },
+      {
+       "result": "`[0, -1, None]`"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "py-shallow-copy-keeps-some",
+   "moduleId": "python-basics",
+   "title": "What a Shallow Copy Keeps",
+   "difficulty": "Medium",
+   "minutes": 6,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A training script keeps a baseline of its parameters and tries two update steps on a copy of it, so that the baseline stays available for comparison:"
+      },
+      {
+       "code": {
+        "language": "python",
+        "lines": [
+         "params = {\"w\": [1.0, -2.0], \"b\": [0.0]}",
+         "saved = params.copy()",
+         "for step in range(2):",
+         "    saved[\"w\"][0] -= 0.25",
+         "    saved[\"b\"] = [saved[\"b\"][0] + 1.0]",
+         "print(params[\"w\"], params[\"b\"])"
+        ]
+       }
+      },
+      {
+       "p": "What does it print?"
+      },
+      {
+       "choices": [
+        {
+         "text": "`[1.0, -2.0] [0.0]`",
+         "explain": "This treats params.copy() as a deep copy. It makes a new dict, but its values are the same two lists that params holds, so a change made inside one of those lists reaches params as well."
+        },
+        {
+         "text": "`[0.5, -2.0] [2.0]`",
+         "explain": "This expects every change to the copy to reach the original. The line for b does not change the old list. It builds a new list and stores it in saved only, while params still holds the old list."
+        },
+        {
+         "text": "`[0.5, -2.0] [0.0]`",
+         "correct": true,
+         "explain": "The shallow copy is a new dict whose values are the same list objects, so the sharing runs both ways. saved['w'][0] -= 0.25 changes the shared w list in place, twice, so params sees 0.5. saved['b'] = [...] builds a new list and points saved at it, which leaves params holding the original list, still [0.0]. Changing an object inside a container reaches every name for it, and storing a new object under a key reaches only that container."
+        },
+        {
+         "text": "`[1.0, -2.0] [2.0]`",
+         "explain": "This swaps the two rules. Changing w[0] in place does not build a new list, so params, which holds that same w list, sees both updates. Storing a new list under 'b' changes saved only, so params keeps the old [0.0]."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "The shallow copy is a new dict whose values are the same list objects, so the sharing runs both ways. saved['w'][0] -= 0.25 changes the shared w list in place, twice, so params sees 0.5. saved['b'] = [...] builds a new list and points saved at it, which leaves params holding the original list, still [0.0]. Changing an object inside a container reaches every name for it, and storing a new object under a key reaches only that container."
+      },
+      {
+       "result": "`[0.5, -2.0] [0.0]`"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "py-sort-reverse-flips-both",
+   "moduleId": "python-basics",
+   "title": "A Minus Sign and Reverse Together",
+   "difficulty": "Medium",
+   "minutes": 8,
+   "overview": [
+    "Five optimizers were each trained once. Each run is a dict with the optimizer's name, its validation loss and its batch size:"
+   ],
+   "setup": [
+    {
+     "code": {
+      "language": "python",
+      "lines": [
+       "runs = [",
+       "    {\"opt\": \"sgd\", \"loss\": 0.42, \"batch\": 32},",
+       "    {\"opt\": \"adam\", \"loss\": 0.38, \"batch\": 64},",
+       "    {\"opt\": \"rmsprop\", \"loss\": 0.42, \"batch\": 128},",
+       "    {\"opt\": \"adamw\", \"loss\": 0.38, \"batch\": 16},",
+       "    {\"opt\": \"lion\", \"loss\": 0.45, \"batch\": 64},",
+       "]",
+       "order = sorted(runs, key=lambda r: (-r[\"loss\"], r[\"batch\"]), reverse=True)",
+       "names = [r[\"opt\"] for r in order]"
+      ]
+     }
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Which optimizer is first in `names`? Type the name without quotes."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Sort by the key first, ignoring `reverse`. The key puts the highest loss first, because of the minus sign, and breaks ties by the smaller batch:"
+      },
+      {
+       "tex": "\\begin{array}{cc}\n\\text{key `(-loss, batch)`} & \\text{run} \\\\ \\hline\n\\text{(\u22120.45, 64)} & \\text{lion} \\\\\n\\text{(\u22120.42, 32)} & \\text{sgd} \\\\\n\\text{(\u22120.42, 128)} & \\text{rmsprop} \\\\\n\\text{(\u22120.38, 16)} & \\text{adamw} \\\\\n\\text{(\u22120.38, 64)} & \\text{adam}\n\\end{array}"
+      },
+      {
+       "p": "`reverse=True` turns the whole list around, so `names` is `[\"adam\", \"adamw\", \"rmsprop\", \"sgd\", \"lion\"]` and `adam` comes first. Reversing flips both entries of the key: the loss now goes from lowest to highest, and ties now go to the larger batch. The minus sign and `reverse` cancel on the loss, but nothing cancels the flip on the batch, so `adam`, with batch 64, beats `adamw`, with batch 16."
+      },
+      {
+       "result": "adam"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "derivation",
+     "requirement": "A short justification is required.",
+     "prompt": [
+      {
+       "p": "Which optimizer is third? Type the name without quotes."
+      }
+     ],
+     "answer": [
+      {
+       "p": "`rmsprop`. The third and fourth places go to the two runs with loss 0.42, and the tie goes to the larger batch, 128 against 32. Someone who reads `reverse=True` as undoing only the minus sign expects lowest loss first with the smaller batch first, which gives `adamw`, `adam`, `sgd`, `rmsprop`, `lion`: a different first place and a different third."
+      },
+      {
+       "result": "rmsprop"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "coding",
+     "requirement": "Reasoning is required. Code is required.",
+     "prompt": [
+      {
+       "p": "Write a key that gives the same order without `reverse=True`."
+      }
+     ],
+     "answer": [
+      {
+       "code": {
+        "language": "python",
+        "lines": [
+         "order = sorted(runs, key=lambda r: (r[\"loss\"], -r[\"batch\"]))"
+        ]
+       }
+      },
+      {
+       "p": "The order wanted is loss from lowest to highest, then batch from largest to smallest. Write each entry so that its smaller value comes first: the loss as it is, the batch with a minus sign. A key that says the order directly is easier to check than one that relies on `reverse` to undo part of it."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "py-stale-value-after-except",
+   "moduleId": "python-basics",
+   "title": "A Mean That Counts the Bad Readings",
+   "difficulty": "Medium",
+   "minutes": 6,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A sensor log stores one reading per line as text, and two of the five lines are broken. This loop is meant to average the readings that parse:"
+      },
+      {
+       "code": {
+        "language": "python",
+        "lines": [
+         "readings = [\"0.6\", \"n/a\", \"0.9\", \"\", \"0.6\"]",
+         "total, count = 0.0, 0",
+         "for text in readings:",
+         "    try:",
+         "        value = float(text)",
+         "    except ValueError:",
+         "        print(\"skipping\")",
+         "    total += value",
+         "    count += 1",
+         "print(f\"mean {total / count:.2f}\")"
+        ]
+       }
+      },
+      {
+       "p": "What is the last line it prints?"
+      },
+      {
+       "choices": [
+        {
+         "text": "`mean 0.70`",
+         "explain": "This is the mean of the three good readings, which is what the loop was meant to print. The except branch only handles the error. Once it has printed, Python carries on with the lines after the try and except, so the two lines that add to total and count still run. A continue at the end of the except branch would skip them."
+        },
+        {
+         "text": "`mean 0.72`",
+         "correct": true,
+         "explain": "A failed float(text) raises before anything is stored, so value keeps the number from the previous pass. After skipping, the loop still adds that old value and counts the line: 'n/a' adds the 0.6 before it, and the empty line adds the 0.9 before it. The total is 0.6 + 0.6 + 0.9 + 0.9 + 0.6 = 3.6 over a count of 5, which prints mean 0.72. The bug is quiet because the answer is close to the right 0.70."
+        },
+        {
+         "text": "`mean 0.42`",
+         "explain": "This treats a failed float(text) as setting value to 0. The assignment never happens when float raises, so value keeps the previous reading, 0.6 and then 0.9. Adding 0 for each bad line would give 2.1 over 5, which is the 0.42 here."
+        },
+        {
+         "text": "The program stops with a `NameError`.",
+         "explain": "This expects value to be undefined after a failed assignment. It would be if the very first line were bad. Here the first line sets value to 0.6, and a failed float(text) later leaves that old value in place, so the loop runs to the end with no error."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "A failed float(text) raises before anything is stored, so value keeps the number from the previous pass. After skipping, the loop still adds that old value and counts the line: 'n/a' adds the 0.6 before it, and the empty line adds the 0.9 before it. The total is 0.6 + 0.6 + 0.9 + 0.9 + 0.6 = 3.6 over a count of 5, which prints mean 0.72. The bug is quiet because the answer is close to the right 0.70."
+      },
+      {
+       "result": "`mean 0.72`"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "py-warmup-scheduler",
+   "moduleId": "python-basics",
+   "title": "A Learning Rate Schedule with Warmup",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "A **learning rate schedule** changes the learning rate as training goes on. `StepDecay` multiplies the rate by `factor` every `every` steps. `Warmup` builds on it: for the first `warm - 1` steps it scales the rate down, so training starts gently."
+   ],
+   "setup": [
+    {
+     "code": {
+      "language": "python",
+      "lines": [
+       "class StepDecay:",
+       "    def __init__(self, lr, every, factor):",
+       "        self.lr = lr",
+       "        self.every = every",
+       "        self.factor = factor",
+       "        self.steps = 0",
+       "",
+       "    def step(self):",
+       "        self.steps += 1",
+       "        if self.steps % self.every == 0:",
+       "            self.lr = self.lr * self.factor",
+       "        return self.lr",
+       "",
+       "",
+       "class Warmup(StepDecay):",
+       "    def __init__(self, lr, every, factor, warm):",
+       "        super().__init__(lr, every, factor)",
+       "        self.warm = warm",
+       "",
+       "    def step(self):",
+       "        lr = super().step()",
+       "        if self.steps < self.warm:",
+       "            return lr * self.steps / self.warm",
+       "        return lr",
+       "",
+       "",
+       "sched = Warmup(0.08, 3, 0.5, 4)",
+       "rates = [sched.step() for _ in range(6)]"
+      ]
+     }
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is `rates[2]`, the rate returned by the third call?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Each call to `sched.step()` runs `Warmup.step`, which first runs `StepDecay.step` through `super()`. That parent method adds 1 to `self.steps`, halves `self.lr` when the step count is a multiple of 3, and returns `self.lr`. `Warmup.step` then scales the returned value by `steps / warm` while `steps` is below 4."
+      },
+      {
+       "tex": "\\begin{array}{cccc}\n\\text{call} & \\text{`self.steps`} & \\text{`self.lr` after the parent} & \\text{returned} \\\\ \\hline\n1 & 1 & 0.08 & \\text{0.08 \u00d7 1/4 = 0.02} \\\\\n2 & 2 & 0.08 & \\text{0.08 \u00d7 2/4 = 0.04} \\\\\n3 & 3 & \\text{0.04 (halved)} & \\text{0.04 \u00d7 3/4 = 0.03} \\\\\n4 & 4 & 0.04 & 0.04 \\\\\n5 & 5 & 0.04 & 0.04 \\\\\n6 & 6 & \\text{0.02 (halved)} & 0.02\n\\end{array}"
+      },
+      {
+       "p": "So `rates[2]` is 0.03. The decay at step 3 happens inside the parent's method, during the warmup, so the third call scales the halved rate. The warmup factor only changes the value that is returned. It never touches `self.lr`, so the stored rate stays the plain step decay schedule."
+      },
+      {
+       "result": "0.03"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "A teammate thinks the warmup should be stored, and rewrites `Warmup.step` as"
+      },
+      {
+       "code": {
+        "language": "python",
+        "lines": [
+         "    def step(self):",
+         "        lr = super().step()",
+         "        if self.steps < self.warm:",
+         "            self.lr = lr * self.steps / self.warm",
+         "        return self.lr"
+        ]
+       }
+      },
+      {
+       "p": "What does the sixth call return now?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Now each warmup step writes its scaled rate back into `self.lr`, and the next call starts from that smaller number."
+      },
+      {
+       "tex": "\\begin{array}{ccc}\n\\text{call} & \\text{parent returns} & \\text{stored and returned} \\\\ \\hline\n1 & 0.08 & \\text{0.08 \u00d7 1/4 = 0.02} \\\\\n2 & 0.02 & \\text{0.02 \u00d7 2/4 = 0.01} \\\\\n3 & \\text{0.01 halved to 0.005} & \\text{0.005 \u00d7 3/4 = 0.00375} \\\\\n4 & 0.00375 & 0.00375 \\\\\n5 & 0.00375 & 0.00375 \\\\\n6 & \\text{0.00375 halved to 0.001875} & 0.001875\n\\end{array}"
+      },
+      {
+       "p": "The sixth call returns 0.001875, less than a tenth of the original schedule's 0.02. The warmup factors 1/4, 2/4 and 3/4 now multiply together instead of applying one at a time, and the rate never climbs back to 0.08. An attribute keeps its value from one method call to the next, which is what makes a class useful here, and also what makes this bug last for the whole run."
+      },
+      {
+       "result": "0.001875"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

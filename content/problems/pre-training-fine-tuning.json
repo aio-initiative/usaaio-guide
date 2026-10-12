@@ -1,0 +1,818 @@
+{
+ "module": "pre-training-fine-tuning",
+ "stage": "Camp",
+ "index": [
+  {
+   "id": "ptft-loss-floor",
+   "moduleId": "pre-training-fine-tuning",
+   "title": "Three Losses on One Token Stream",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=ptft-loss-floor",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "A team makes training text for a small language model from a random process over 8 tokens: after the current token, with probability one half the next token is the current token plus one wrapping from 7 to 0, and otherwise it is drawn uniformly from all 8 tokens. Work out the average loss the lesson's table model approaches, and decide which of three reported runs must have a bug. Then a second process, where each token copies the token two places back, changes the answer. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "ptft-temperature-and-nucleus-order",
+   "moduleId": "pre-training-fine-tuning",
+   "title": "Temperature Before or After Top-P",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=ptft-temperature-and-nucleus-order",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "A model's next-token distribution over six tokens is 0.34, 0.24, 0.20, 0.13, 0.08 and 0.01 from most to least probable. Two pipelines apply a temperature of 0.5 and top-p at 0.9 in opposite orders, renormalizing at each step. Work out what each one can sample. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "ptft-which-change-adds-most",
+   "moduleId": "pre-training-fine-tuning",
+   "title": "Where the Extra Parameters Go",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=ptft-which-change-adds-most",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Camp"
+   ],
+   "prompt": "A decoder-only model has a vocabulary of 32,000 tokens, width d = 1024, 16 layers, feed-forward width d_ff = 4096 and 2,048 learned positions. Its output layer is tied to the token embeddings, and each layer has biases and two LayerNorms, as in the lesson's parameter count. That comes to about 236 million parameters. Which one of these changes adds the most parameters?",
+   "answer": "Raising d_ff from 4,096 to 5,120. Each layer's two feed-forward matrices gain 1,024 \u00d7 1,024 entries each, and the first gains 1,024 biases: 2,098,176 per layer, 33.6 million over the 16 layers. Two more layers add 25.2 million, the larger vocabulary 24.6 million and the longer context 6.3 million. A change to the largest matrices of every layer beats a change to one table."
+  },
+  {
+   "id": "ptft-freeze-top-or-bottom",
+   "moduleId": "pre-training-fine-tuning",
+   "title": "Freeze the Top or the Bottom",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=ptft-freeze-top-or-bottom",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Camp"
+   ],
+   "prompt": "You fine-tune a 24-layer encoder for classification in PyTorch and can afford to train only half of its layers. Plan A freezes layers 1 to 12, the ones nearest the input, and trains layers 13 to 24. Plan B freezes layers 13 to 24 and trains layers 1 to 12. The embeddings stay frozen in both plans, and every step runs the whole forward pass. Count the cost of one training step in units, where one unit is one layer's forward pass. In the backward pass, computing a layer's gradient with respect to its input costs one unit, and computing the gradients of its weights costs another unit. Ignore the classification head. What does a step cost under each plan?",
+   "answer": "Plan A costs 47 units and plan B costs 59. Both run 24 units forward. Plan A computes 12 weight gradients and the input gradients of layers 24 down to 14, which carry the gradient to the trainable layers below them, 11 units: 47 in all. Layer 13 needs no input gradient, since only frozen layers sit under it. Plan B must carry the gradient back through the 12 frozen layers on top, 12 units, then computes 12 weight gradients and 11 input gradients for layers 12 down to 2: 59 in all. Training every layer would cost 24 + 24 + 23 = 71. Plan A also need not store the activations inside layers 1 to 12, since no gradient flows back into them."
+  },
+  {
+   "id": "ptft-lora-swapped-init",
+   "moduleId": "pre-training-fine-tuning",
+   "title": "LoRA with Its Factors Swapped",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=ptft-lora-swapped-init",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Camp"
+   ],
+   "prompt": "A LoRA layer computes W_0 x + alpha/r BAx with W_0 frozen. A teammate initializes B with small random entries and A with zeros, the other way round from the usual recipe, and trains with plain gradient descent. Which describes the first two steps?",
+   "answer": "The layer starts at W\u2080, only A changes on the first step, and B starts changing on the second. With A = 0 the product BA is zero, so training starts from the pretrained layer. For an output gradient g, the gradient of B is (\u03b1/r) g (Ax)\u1d40, which is zero while A is zero, and the gradient of A is (\u03b1/r) B\u1d40 g x\u1d40, which is not zero because B is random. After the first step A is no longer zero, so B's gradient is not zero either. The swapped start trains too, and the only difference is which factor moves first."
+  },
+  {
+   "id": "ptft-lora-or-unfreeze",
+   "moduleId": "pre-training-fine-tuning",
+   "title": "LoRA Everywhere or One Block Unfrozen",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=ptft-lora-or-unfreeze",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "A decoder has 24 blocks of width 2048 and feed-forward width 8192. Plan P unfreezes the last block and keeps everything else frozen. Plan Q freezes the whole model and adds a LoRA update of rank r to all six matrices of every block. Find the largest r for which plan Q trains no more parameters than plan P. 2 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "ptft-greedy-against-beam",
+   "moduleId": "pre-training-fine-tuning",
+   "title": "Greedy Against a Beam of Two",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=ptft-greedy-against-beam",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "A toy model always writes exactly three tokens: the first is A with probability 0.6 or B with 0.4, the second is drawn from fixed conditional probabilities given the first, and the third from fixed conditional probabilities given the whole prefix. Compare the sequence greedy decoding writes with the sequence beam search of width 2 returns. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "ptft-fine-tuning-memory",
+   "moduleId": "pre-training-fine-tuning",
+   "title": "Fitting Fine-Tuning into 20 GB",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=ptft-fine-tuning-memory",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "A decoder-only model has a 50,000-token vocabulary, width 2560, 32 blocks, feed-forward width 10,240 and 2,048 learned positions. Count its parameters and work out the training memory for full fine-tuning, for training only the top k blocks, and for LoRA of rank 16 on the query and value projections of every block. 4 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "ptft-batched-generation",
+   "moduleId": "pre-training-fine-tuning",
+   "title": "Generate a Batch of Prompts at Once",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=ptft-batched-generation",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Camp"
+   ],
+   "prompt": "A small frozen decoder written in NumPy reads a batch of token ids, an attention mask and a position number for every column, and returns the next token's logits for each row. Generating for four prompts one at a time takes four times as many calls, so generate for all four in one batch. A batch is right when every row generates exactly the tokens its prompt generates alone.",
+   "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+  },
+  {
+   "id": "ptft-lora-layer-numpy",
+   "moduleId": "pre-training-fine-tuning",
+   "title": "A LoRA Layer in NumPy",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=ptft-lora-layer-numpy",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Camp"
+   ],
+   "prompt": "A pretrained linear layer computes W0 x for a frozen matrix W0. LoRA adds a trainable update of rank r, scaled by alpha over r, and you write its forward and backward pass by hand, train adapters for two tasks on one shared W0, merge an adapter into a single matrix, and serve a batch that mixes the two tasks.",
+   "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+  },
+  {
+   "id": "ptft-probe-pooled-features",
+   "moduleId": "pre-training-fine-tuning",
+   "title": "A Linear Probe on Pooled Token Features",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=ptft-probe-pooled-features",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Camp"
+   ],
+   "prompt": "A frozen text encoder gives one feature vector per token. To classify whole reviews as positive or negative with a linear probe, each review needs one vector, and the usual choice is the average of its own token vectors, not the average over every padded column. Pool the features and train the probe, a logistic regression head, in NumPy.",
+   "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+  },
+  {
+   "id": "nl7-lora-rank",
+   "moduleId": "pre-training-fine-tuning",
+   "title": "How Much Can You Say with Rank 8?",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=nl7-lora-rank",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Camp"
+   ],
+   "prompt": "Take a full-rank fine-tuning update, find its best rank-r approximation by truncated SVD for each r from 1 to 128, and turn the smallest rank that captures 95% of it into LoRA's parameter saving.",
+   "answer": "Auto-graded inside the notebook. The capture curve, parameter counts and 95% rank must match the reference to a relative tolerance of 1e-6, capture must rise with rank, and the 95% rank must save at least 5x the parameters."
+  },
+  {
+   "id": "nl8-scaling-law-fit",
+   "moduleId": "pre-training-fine-tuning",
+   "title": "Fit the Power Law, Then Spend the Budget",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=nl8-scaling-law-fit",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Camp"
+   ],
+   "prompt": "Fit the scaling law L = E + A/N^alpha + B/D^beta to 40 training runs by grid-searching the two exponents with a least-squares solve for the rest, then use it to split three compute budgets between model size and training tokens.",
+   "answer": "Auto-graded inside the notebook. The exponents, the floor E and the three optimal allocations must match the reference to a relative tolerance of 1e-5, the exponents must land within 0.08 of the true ones, and the tokens-per-parameter ratio must stay within a factor of 1.5 across budgets."
+  }
+ ],
+ "theory": [
+  {
+   "id": "ptft-loss-floor",
+   "moduleId": "pre-training-fine-tuning",
+   "title": "Three Losses on One Token Stream",
+   "difficulty": "Hard",
+   "minutes": 20,
+   "overview": [
+    "A team makes training text for a small language model from a random process over 8 tokens, numbered 0 to 7. The first token of a sequence is drawn uniformly. After that, with probability $1/2$ each token is the previous token plus 1, wrapping from 7 to 0, and otherwise it is drawn uniformly from all 8 tokens (so the draw can also land on the previous token plus 1). Every loss below is the average cross-entropy in nats per predicted token, over sequences long enough that the first position does not matter."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "The team trains the lesson's table model, which predicts the next token from the current token alone, on plenty of sequences and with the one-token shift in place. What average loss does it approach on new sequences? Give it to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "After the current token $c$, the next token is $c + 1$ with probability $\\tfrac12 + \\tfrac12 \\cdot \\tfrac18 = \\tfrac{9}{16}$ and each of the other 7 tokens with probability $\\tfrac12 \\cdot \\tfrac18 = \\tfrac{1}{16}$."
+      },
+      {
+       "p": "A model that predicts $q$ when the truth is $p$ has expected loss $-\\sum_x p(x) \\ln q(x)$. That is the entropy of $p$ plus $D_{\\mathrm{KL}}(p \\,\\|\\, q)$, which is never negative and is zero only at $q = p$. The table model has one row per current token, so it can learn $p$ exactly, and its loss approaches the entropy of the next token given the current one:"
+      },
+      {
+       "tex": "\\begin{aligned}\nH &= \\tfrac{9}{16} \\ln \\tfrac{16}{9} + 7 \\cdot \\tfrac{1}{16} \\ln 16 \\\\[4pt]\n&= 0.3236 + 1.2130 = 1.5366 .\n\\end{aligned}"
+      },
+      {
+       "p": "That is below chance, $\\ln 8$, because the step pattern makes the next token partly predictable, and well above 0, because half the time the next token is a fresh draw."
+      },
+      {
+       "result": "1.537"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "explanation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "Three runs on sequences of 64 tokens from this process report the following. Each validation loss is measured on 500 new sequences."
+      },
+      {
+       "tex": "\\begin{array}{ccccc}\n\\text{Run} & \\text{Model} & \\text{Trained on} & \\text{Training loss} & \\text{Validation loss} \\\\ \\hline\n\\text{A} & \\text{the table model} & \\text{2,000 sequences} & 0.02 & 0.02 \\\\\n\\text{B} & \\text{a Transformer that reads the whole prefix} & \\text{20 sequences} & 0.85 & 2.30 \\\\\n\\text{C} & \\text{a Transformer that reads the whole prefix} & \\text{2,000 sequences} & 1.21 & 1.24\n\\end{array}"
+      },
+      {
+       "p": "Which runs must have a bug, whatever their code looks like? Explain each verdict."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The process has no memory beyond the current token: once $x_t$ is known, the earlier tokens say nothing more about $x_{t+1}$. So a model that reads the whole prefix can do no better on new data than the true distribution given $x_t$, and 1.537 from Part 1 is a floor for every model's validation loss."
+      },
+      {
+       "list": [
+        "**Run A has a bug.** The table model has only 8 rows of 8 probabilities. Its lowest possible training loss sets each row to the frequencies seen in training, and with about $2{,}000 \\times 63 = 126{,}000$ predictions those frequencies are within sampling noise of $\\tfrac{9}{16}$ and $\\tfrac{1}{16}$, so the training loss cannot fall far below 1.537 either. A loss of 0.02 on both splits points to the lesson's forgotten shift, with every position scored on the token it is reading.",
+        "**Run B proves nothing.** A training loss below the floor is possible when a large model memorizes a small training set, here 20 sequences. Its validation loss, 2.30, is above the floor and even above chance: the model overfits badly, which is a problem, but not a sign that it reads its targets.",
+        "**Run C has a bug.** Its validation loss of 1.24 is below 1.537 on sequences it never trained on, which no model can reach honestly. It must see what it predicts, for example through a causal mask that lets a position attend to the next one, or through validation sequences that are also in the training set."
+       ]
+      },
+      {
+       "p": "So runs A and C have bugs."
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "The team switches to a second process. The first two tokens are drawn uniformly. After that, with probability $1/2$ each token copies the token two places back, and otherwise it is drawn uniformly from all 8. What loss does the table model approach on new sequences now?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Each token depends only on the token two places back. So the tokens at odd positions form one chain and the tokens at even positions another, and the two chains start from independent uniform tokens and never use each other's tokens, so they are independent. The table model reads only $x_t$, which lies in the other chain from $x_{t+1}$ and tells it nothing."
+      },
+      {
+       "p": "Every token is also uniform on its own: the first two are, and copying a uniform token or drawing a fresh one keeps it uniform. So the best prediction from $x_t$ alone is the uniform distribution, and the loss approaches"
+      },
+      {
+       "tex": "\\ln 8 = 2.079 ."
+      },
+      {
+       "p": "A model that reads the prefix sees $x_{t-1}$, which gives the copied token probability $\\tfrac{9}{16}$ again, so its floor is 1.537 as in Part 1. The floor depends on the data and on what the model can see: on this process a table model reporting 1.6 would have a bug, and a Transformer reporting 1.6 would not."
+      },
+      {
+       "result": "2.079"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ptft-temperature-and-nucleus-order",
+   "moduleId": "pre-training-fine-tuning",
+   "title": "Temperature Before or After Top-P",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "A model's next-token distribution over six tokens, sorted from most to least probable, is"
+   ],
+   "setup": [
+    {
+     "tex": "\\begin{array}{ccccccc}\n\\text{Token} & 1 & 2 & 3 & 4 & 5 & 6 \\\\ \\hline\n\\text{Probability} & 0.34 & 0.24 & 0.20 & 0.13 & 0.08 & 0.01\n\\end{array}"
+    },
+    {
+     "p": "Two sampling pipelines use the same two controls, temperature $\\tau = 0.5$ and top-$p$ with $p = 0.9$. Pipeline X applies the temperature first and then top-$p$ to the result. Pipeline Y applies top-$p$ first and then the temperature to the tokens that survive it. Each step renormalizes."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "How many tokens can pipeline X sample?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Dividing the logits by $\\tau = 0.5$ doubles them, which raises each probability to the power $1/\\tau = 2$ before renormalizing. The squares are $0.1156, 0.0576, 0.0400, 0.0169, 0.0064, 0.0001$, which sum to $0.2366$, so the sharpened distribution is"
+      },
+      {
+       "tex": "(0.489,\\ 0.243,\\ 0.169,\\ 0.071,\\ 0.027,\\ 0.000) ."
+      },
+      {
+       "p": "Its running totals are $0.489$, $0.732$ and $0.901$. Two tokens fall short of 0.9 and three reach it, so top-$p$ keeps **3** tokens."
+      },
+      {
+       "result": "3"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What probability does pipeline Y give token 4? Give it to four decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "On the original distribution the running totals are $0.34$, $0.58$, $0.78$ and $0.91$, so top-$p$ keeps four tokens. The temperature then squares their probabilities and renormalizes over those four:"
+      },
+      {
+       "tex": "\\frac{0.13^2}{0.34^2 + 0.24^2 + 0.20^2 + 0.13^2}\n= \\frac{0.0169}{0.2301} = 0.0734 ."
+      },
+      {
+       "p": "Pipeline X gives token 4 nothing. Sharpening first moves mass onto the leaders, so fewer tokens are needed to reach 0.9, and the fourth token drops out of the nucleus before it can be sampled."
+      },
+      {
+       "result": "0.0734"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "explanation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "A teammate concludes that the order of temperature and any truncation always matters. Run both pipelines again with top-$k$, $k = 3$, in place of top-$p$, and explain what you find."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Pipeline X: the sharpened distribution from Part 1 keeps its top three, $0.489, 0.243, 0.169$, renormalized to $0.542, 0.270, 0.188$."
+      },
+      {
+       "p": "Pipeline Y: top-$k$ keeps $0.34, 0.24, 0.20$, and the temperature gives $0.1156, 0.0576, 0.0400$ divided by $0.2132$, which is again $0.542, 0.270, 0.188$."
+      },
+      {
+       "p": "The two agree, and they always will. Raising to the power $1/\\tau$ never changes the order of the probabilities, so top-$k$ keeps the same $k$ tokens whichever comes first. On those tokens both pipelines end with each $p_i^{1/\\tau}$ divided by their sum, because a renormalization in the middle multiplies all of them by one constant, which the final renormalization removes. Top-$p$ is different because its cutoff depends on the values of the probabilities and not only on their order, and the temperature changes those values. The order can matter for top-$p$ and never matters for top-$k$."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ptft-which-change-adds-most",
+   "moduleId": "pre-training-fine-tuning",
+   "title": "Where the Extra Parameters Go",
+   "difficulty": "Medium",
+   "minutes": 8,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A decoder-only model has a vocabulary of 32,000 tokens, width $d = 1024$, 16 layers, feed-forward width $d_{ff} = 4096$ and 2,048 learned positions. Its output layer is tied to the token embeddings, and each layer has biases and two LayerNorms, as in the lesson's parameter count. That comes to about 236 million parameters."
+      },
+      {
+       "p": "Which one of these changes adds the most parameters?"
+      },
+      {
+       "choices": [
+        {
+         "text": "Growing the vocabulary from 32,000 to 56,000 tokens",
+         "explain": "The token table gains 24,000 rows of 1,024 numbers, 24.6 million, and with the output layer tied that is the only cost. A vocabulary change feels big because the table is a large share of a small model, but widening the feed-forward layers adds 33.6 million."
+        },
+        {
+         "text": "Adding two more layers",
+         "explain": "One layer has 4 \u00d7 (1,024 \u00d7 1,024 + 1,024) = 4.20 million attention parameters, 2 \u00d7 1,024 \u00d7 4,096 + 4,096 + 1,024 = 8.39 million in its feed-forward part and 4,096 in its LayerNorms, 12.6 million in all, so two layers add 25.2 million. Widening the feed-forward part of all 16 existing layers adds more."
+        },
+        {
+         "text": "Raising d_ff from 4,096 to 5,120",
+         "correct": true,
+         "explain": "Each layer's two feed-forward matrices gain 1,024 \u00d7 1,024 entries each, and the first gains 1,024 biases: 2,098,176 per layer, 33.6 million over the 16 layers. Two more layers add 25.2 million, the larger vocabulary 24.6 million and the longer context 6.3 million. A change to the largest matrices of every layer beats a change to one table."
+        },
+        {
+         "text": "Raising the context from 2,048 to 8,192 positions",
+         "explain": "The position table gains one row of 1,024 numbers per new position, 6,144 \u00d7 1,024 = 6.3 million, the smallest of the four. A longer context costs a lot of memory and compute in attention at run time, but its parameter cost is just that table."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Each layer's two feed-forward matrices gain 1,024 \u00d7 1,024 entries each, and the first gains 1,024 biases: 2,098,176 per layer, 33.6 million over the 16 layers. Two more layers add 25.2 million, the larger vocabulary 24.6 million and the longer context 6.3 million. A change to the largest matrices of every layer beats a change to one table."
+      },
+      {
+       "result": "Raising d_ff from 4,096 to 5,120"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ptft-freeze-top-or-bottom",
+   "moduleId": "pre-training-fine-tuning",
+   "title": "Freeze the Top or the Bottom",
+   "difficulty": "Medium",
+   "minutes": 8,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "You fine-tune a 24-layer encoder for classification in PyTorch and can afford to train only half of its layers. Plan A freezes layers 1 to 12, the ones nearest the input, and trains layers 13 to 24. Plan B freezes layers 13 to 24 and trains layers 1 to 12. The embeddings stay frozen in both plans, and every step runs the whole forward pass."
+      },
+      {
+       "p": "Count the cost of one training step in units, where one unit is one layer's forward pass. In the backward pass, computing a layer's gradient with respect to its input costs one unit, and computing the gradients of its weights costs another unit. Ignore the classification head. What does a step cost under each plan?"
+      },
+      {
+       "choices": [
+        {
+         "text": "Both cost 47 units, because each plan trains 12 layers",
+         "explain": "That treats a frozen layer as free in the backward pass. It is free in plan A, where no trainable weight lies below layers 1 to 12. In plan B the gradient for layers 1 to 12 starts at the loss and must pass back through layers 24 down to 13 first, one input-gradient product each, which adds 12 units."
+        },
+        {
+         "text": "Plan A costs 47 units and plan B costs 59",
+         "correct": true,
+         "explain": "Both run 24 units forward. Plan A computes 12 weight gradients and the input gradients of layers 24 down to 14, which carry the gradient to the trainable layers below them, 11 units: 47 in all. Layer 13 needs no input gradient, since only frozen layers sit under it. Plan B must carry the gradient back through the 12 frozen layers on top, 12 units, then computes 12 weight gradients and 11 input gradients for layers 12 down to 2: 59 in all. Training every layer would cost 24 + 24 + 23 = 71. Plan A also need not store the activations inside layers 1 to 12, since no gradient flows back into them."
+        },
+        {
+         "text": "Plan A costs 47 units and plan B costs 71",
+         "explain": "That charges a frozen layer for both products whenever the gradient passes through it. Plan B needs the input gradients of layers 13 to 24 to reach the trainable layers, but their weight gradients are never used, and PyTorch does not compute gradients for weights with requires_grad off. The frozen top costs 12 units, not 24, so plan B costs 59."
+        },
+        {
+         "text": "Both cost 71 units, the same as training every layer",
+         "explain": "Freezing does save work. PyTorch computes no weight gradient for a frozen layer, and below the lowest trainable layer it builds no backward pass at all. Only training every layer costs 24 + 24 + 23 = 71 units."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Both run 24 units forward. Plan A computes 12 weight gradients and the input gradients of layers 24 down to 14, which carry the gradient to the trainable layers below them, 11 units: 47 in all. Layer 13 needs no input gradient, since only frozen layers sit under it. Plan B must carry the gradient back through the 12 frozen layers on top, 12 units, then computes 12 weight gradients and 11 input gradients for layers 12 down to 2: 59 in all. Training every layer would cost 24 + 24 + 23 = 71. Plan A also need not store the activations inside layers 1 to 12, since no gradient flows back into them."
+      },
+      {
+       "result": "Plan A costs 47 units and plan B costs 59"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ptft-lora-swapped-init",
+   "moduleId": "pre-training-fine-tuning",
+   "title": "LoRA with Its Factors Swapped",
+   "difficulty": "Medium",
+   "minutes": 6,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A LoRA layer computes $W_0 x + \\frac{\\alpha}{r} BAx$ with $W_0$ frozen. A teammate initializes $B$ with small random entries and $A$ with zeros, the other way round from the usual recipe, and trains with plain gradient descent. Which describes the first two steps?"
+      },
+      {
+       "choices": [
+        {
+         "text": "Nothing ever trains: the product BA starts at zero, so both factors get zero gradients",
+         "explain": "That happens only when both factors start at zero. For an output gradient g, the gradient of A is (\u03b1/r) B\u1d40 g x\u1d40, which is not zero while B is random, so A moves on the first step."
+        },
+        {
+         "text": "The first forward pass already differs from the pretrained layer, because B is random",
+         "explain": "The update is the product BA, and with A all zeros the product is zero whatever B holds. The first forward pass is exactly the pretrained layer's, as in the usual recipe."
+        },
+        {
+         "text": "The layer starts at W\u2080, only B changes on the first step, and A starts changing on the second",
+         "explain": "That has the two gradients the wrong way round. For an output gradient g, the gradient of B is (\u03b1/r) g (Ax)\u1d40, and Ax is zero while A is zero, so B cannot move on the first step. The gradient of A carries B, which is random, so A is the one that moves."
+        },
+        {
+         "text": "The layer starts at W\u2080, only A changes on the first step, and B starts changing on the second",
+         "correct": true,
+         "explain": "With A = 0 the product BA is zero, so training starts from the pretrained layer. For an output gradient g, the gradient of B is (\u03b1/r) g (Ax)\u1d40, which is zero while A is zero, and the gradient of A is (\u03b1/r) B\u1d40 g x\u1d40, which is not zero because B is random. After the first step A is no longer zero, so B's gradient is not zero either. The swapped start trains too, and the only difference is which factor moves first."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "With A = 0 the product BA is zero, so training starts from the pretrained layer. For an output gradient g, the gradient of B is (\u03b1/r) g (Ax)\u1d40, which is zero while A is zero, and the gradient of A is (\u03b1/r) B\u1d40 g x\u1d40, which is not zero because B is random. After the first step A is no longer zero, so B's gradient is not zero either. The swapped start trains too, and the only difference is which factor moves first."
+      },
+      {
+       "result": "The layer starts at W\u2080, only A changes on the first step, and B starts changing on the second"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ptft-lora-or-unfreeze",
+   "moduleId": "pre-training-fine-tuning",
+   "title": "LoRA Everywhere or One Block Unfrozen",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "A decoder has 24 blocks of width $d = 2048$ and feed-forward width $d_{ff} = 8192$. Each block has four $d \\times d$ attention projections with biases, a $d \\times d_{ff}$ and a $d_{ff} \\times d$ feed-forward matrix with biases, and two LayerNorms, as in the lesson's parameter count. You compare two ways to adapt it."
+   ],
+   "setup": [
+    {
+     "list": [
+      "**Plan P** unfreezes the last block, every weight, bias and LayerNorm parameter in it, and keeps everything else frozen.",
+      "**Plan Q** freezes the whole model and adds a LoRA update of rank $r$ to all six matrices of every block."
+     ]
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the largest $r$ for which plan Q trains no more parameters than plan P?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Plan P trains one block:"
+      },
+      {
+       "tex": "\\begin{aligned}\n\\text{attention: } & 4(d^2 + d) = 16{,}785{,}408 \\\\[4pt]\n\\text{feed-forward: } & 2\\,d\\,d_{ff} + d_{ff} + d = 33{,}564{,}672 \\\\[4pt]\n\\text{LayerNorms: } & 4d = 8{,}192\n\\end{aligned}"
+      },
+      {
+       "p": "for $50{,}358{,}272$ in all."
+      },
+      {
+       "p": "A LoRA update of a $d_1 \\times d_2$ matrix trains $r(d_1 + d_2)$ numbers, and the feed-forward matrices are not square. Per block:"
+      },
+      {
+       "tex": "4 \\cdot r(2048 + 2048) + 2 \\cdot r(2048 + 8192) = 16{,}384\\,r + 20{,}480\\,r = 36{,}864\\,r ,"
+      },
+      {
+       "p": "and $884{,}736\\,r$ over 24 blocks. The condition $884{,}736\\,r \\le 50{,}358{,}272$ gives $r \\le 56.9$, so $r = 56$, which trains $49{,}545{,}216$ numbers."
+      },
+      {
+       "p": "Two slips give other answers. Counting $2rd$ for every matrix, as if all six were $d \\times d$, gives $r = 85$. Forgetting that plan Q adapts all 24 blocks gives $r = 1366$."
+      },
+      {
+       "result": "56"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "explanation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "At $r = 56$ the two plans train about the same number of parameters. Name one kind of change plan Q can make that plan P cannot, and one that plan P can make that plan Q cannot."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Plan Q reaches every block. It can change what the early blocks compute, and so the features every later block receives. Plan P keeps the first 23 blocks exactly as pretrained, so the input to the last block is fixed, as for a probe with one trainable block on top."
+      },
+      {
+       "p": "Plan P can make any change to the last block's matrices, of full rank, and can also change its biases and LayerNorm parameters. Plan Q's change to each matrix has rank at most 56 out of a possible 2048, and it leaves every bias and LayerNorm as pretrained."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ptft-greedy-against-beam",
+   "moduleId": "pre-training-fine-tuning",
+   "title": "Greedy Against a Beam of Two",
+   "difficulty": "Hard",
+   "minutes": 20,
+   "overview": [
+    "A toy model always writes exactly three tokens, with these probabilities:"
+   ],
+   "setup": [
+    {
+     "list": [
+      "**First token:** A with probability 0.6, B with 0.4.",
+      "**Second token:** after A, one of a1, a2, a3, a4 with probabilities 0.30, 0.25, 0.25 and 0.20. After B, b1 or b2 with 0.5 each.",
+      "**Third token:** after a sequence that starts with A, z with 0.8 and w with 0.2. After a sequence that starts with B, z or w with 0.5 each."
+     ]
+    },
+    {
+     "p": "Beam search with width 2 keeps the 2 most probable partial sequences after each step, ranked by their probability, extends each by every possible next token, and finally returns the most probable complete sequence it holds."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the probability of the sequence that greedy decoding writes?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Greedy takes A (0.6), then the most likely token after A, a1 (0.30), then the most likely third token, z (0.8):"
+      },
+      {
+       "tex": "P(\\text{A a1 z}) = 0.6 \\times 0.30 \\times 0.8 = 0.144 ."
+      },
+      {
+       "result": "0.144"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the probability of the sequence that beam search with width 2 returns?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Step 1 keeps A (0.6) and B (0.4), the only two first tokens. Step 2 ranks all their extensions:"
+      },
+      {
+       "tex": "\\begin{array}{ccccccc}\n\\text{Prefix} & \\text{A a1} & \\text{A a2} & \\text{A a3} & \\text{A a4} & \\text{B b1} & \\text{B b2} \\\\ \\hline\n\\text{Probability} & 0.18 & 0.15 & 0.15 & 0.12 & 0.20 & 0.20\n\\end{array}"
+      },
+      {
+       "p": "The beam keeps B b1 and B b2, and greedy's prefix A a1 falls out. Step 3 extends both by z or w, and every one of the four sequences has probability $0.20 \\times 0.5 = 0.10$. The beam returns a sequence of probability **0.1**, below greedy's 0.144. A beam of width 3 would have kept A a1 and found the 0.144 sequence, which is the most probable of all."
+      },
+      {
+       "result": "0.1"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Show that when a model writes exactly two tokens, beam search with width 2 never returns a less probable sequence than greedy decoding, whatever the probabilities, with ties broken the same way. Then say which step of your argument fails for three tokens."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Let greedy write $g_1 g_2$: $g_1$ is the most probable first token and $g_2$ the most probable second token after it. The beam's first step keeps the two most probable first tokens, and with ties broken the same way $g_1$ is one of them. Its second step ranks every extension of the two kept tokens, and $g_1 g_2$ is among them. The beam returns the most probable of those, so its sequence has probability at least $P(g_1 g_2)$. $\\qquad\\blacksquare$"
+      },
+      {
+       "p": "The argument needs greedy's sequence to be a candidate at the final ranking. With three tokens the ranking at step 2 is not final: it keeps only two prefixes, and greedy's prefix $g_1 g_2$ can be pushed out by two others that are more probable so far, as A a1 (0.18) lost to B b1 and B b2 (0.20 each). Once a prefix leaves the beam it never comes back, however good its continuations are. The beam keeps the prefixes that are most probable so far, and those need not lead to the most probable complete sequences."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ptft-fine-tuning-memory",
+   "moduleId": "pre-training-fine-tuning",
+   "title": "Fitting Fine-Tuning into 20 GB",
+   "difficulty": "Medium",
+   "minutes": 20,
+   "overview": [
+    "A decoder-only model has a vocabulary of 50,000 tokens, width $d = 2560$, 32 blocks, feed-forward width $d_{ff} = 10{,}240$ and 2,048 learned positions, with the output layer tied to the token embeddings. Count its parameters as in the lesson's parameter count."
+   ],
+   "setup": [
+    {
+     "p": "Training state takes memory as follows. A frozen parameter takes 2 bytes, its 16-bit value. A trained parameter takes 16 bytes: its 16-bit value and its 16-bit gradient ($2 + 2$), and for the Adam optimizer a 32-bit master copy and two 32-bit moment estimates ($4 + 4 + 4$). Ignore activations and everything else, and take 1 GB to be $10^9$ bytes."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "How many GB does full fine-tuning need?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The embeddings, with the final LayerNorm, hold"
+      },
+      {
+       "tex": "50{,}000 \\cdot 2560 + 2048 \\cdot 2560 + 2 \\cdot 2560 = 133{,}248{,}000 ."
+      },
+      {
+       "p": "One block holds"
+      },
+      {
+       "tex": "4(d^2 + d) + 2\\,d\\,d_{ff} + d_{ff} + d + 4d = 78{,}676{,}480 ,"
+      },
+      {
+       "p": "so the model has $133{,}248{,}000 + 32 \\times 78{,}676{,}480 = 2{,}650{,}895{,}360$ parameters, about 2.65 billion. Training all of them takes $16 \\times 2{,}650{,}895{,}360$ bytes, about **42.41 GB**."
+      },
+      {
+       "result": "42.41"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "The GPU has 20 GB for the model and its training state. You train the top $k$ blocks in full and freeze everything else, embeddings included. What is the largest $k$ that fits?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "With everything frozen the model takes $2 \\times 2{,}650{,}895{,}360$ bytes, 5.30 GB. Training a block raises its parameters from 2 bytes to 16, so each trained block adds $14 \\times 78{,}676{,}480$ bytes, 1.10 GB. Then"
+      },
+      {
+       "tex": "5.30 + 1.10\\,k \\le 20 \\quad\\Longrightarrow\\quad k \\le 13.3 ,"
+      },
+      {
+       "p": "so $k = 13$, which takes 19.62 GB. Fourteen blocks would take 20.72 GB."
+      },
+      {
+       "result": "13"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Instead, freeze the whole model and train LoRA updates of rank 16 on the query and value projections of every block. How many GB does that need?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Each projection is $2560 \\times 2560$, so its update trains $16 \\times (2560 + 2560) = 81{,}920$ numbers. Two projections in each of 32 blocks give $5{,}242{,}880$ trained parameters, 0.2% of the model. The memory is"
+      },
+      {
+       "tex": "2 \\times 2{,}650{,}895{,}360 + 16 \\times 5{,}242{,}880\n= 5{,}301{,}790{,}720 + 83{,}886{,}080 ,"
+      },
+      {
+       "p": "about **5.39 GB**."
+      },
+      {
+       "result": "5.39"
+      }
+     ]
+    },
+    {
+     "id": "1.4",
+     "kind": "explanation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "The LoRA plan trains 0.2% of the parameters but needs about 13% of the memory of full fine-tuning. Explain the gap, and say which part of the memory no choice of rank can reduce."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The frozen weights still have to be in memory, 2 bytes for each of the 2.65 billion, which is 5.30 GB of the plan's 5.39. What LoRA removes is the extra 14 bytes per parameter for the gradient, the master copy and Adam's two moments, for every parameter except the 5.2 million it trains. So the memory falls from 16 bytes per parameter toward 2, a factor of at most 8 however small the rank, while the count of trained parameters falls by a factor of 500."
+      },
+      {
+       "p": "The 2 bytes per frozen weight is the part no rank can reduce. Only storing the frozen weights in fewer bits would lower it, and the activations that this problem ignores also stay."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

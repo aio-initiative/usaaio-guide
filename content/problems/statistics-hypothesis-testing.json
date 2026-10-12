@@ -1,0 +1,1623 @@
+{
+  "module": "statistics-hypothesis-testing",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "ps2-bootstrap-median",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "A Confidence Interval with No Formula",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ps2-bootstrap-median",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Build a 95% bootstrap percentile interval for a median latency, and report how far the interval is asymmetric around the sample median.",
+      "answer": "Auto-graded inside the notebook. The median, interval endpoints, bootstrap standard error, and asymmetry must match the reference to 1e-6."
+    },
+    {
+      "id": "ps2-peeking",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "The A/B Test You Checked Too Often",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ps2-peeking",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Simulate 4,000 A/B tests with zero true effect, peek 20 times each, and measure how far repeated significance testing inflates the false-positive rate above the nominal 5%.",
+      "answer": "Auto-graded inside the notebook. Both rates and their ratio must match the reference, and the peeking rate must land well above 0.05."
+    },
+    {
+      "id": "ps1-monte-carlo-ci",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "How Many Samples Before You Believe It",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ps1-monte-carlo-ci",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Estimate a tail probability for a sum of 20 Gamma latencies by simulation, then report its standard error, 95% interval, and the sample size needed to bring the half-width below 0.0005.",
+      "answer": "Auto-graded inside the notebook. Every value is compared with the reference simulation at a relative tolerance of 1e-6, so reproduce the exact random draw the notebook names."
+    },
+    {
+      "id": "si-three-labs",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "Three Labs of Unequal Precision",
+      "source": "USAAIO-style",
+      "difficulty": "Easy",
+      "url": "/theory/?id=si-three-labs",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Three labs each measure the same unknown concentration $\\mu$ once. Each result is normal with mean $\\mu$, and the results are independent. Each lab's noise variance is known from its past calibration runs: lab A measured 10 with noise variance 1, lab B measured 13 with noise variance 4, and lab C measured 16 with noise variance 4. 1 part.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "si-noise-from-three-machines",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "One Noise Level from Three Machines",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=si-noise-from-three-machines",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A factory has three filling machines. Each is set to its own target weight, which nobody knows exactly, but all three add noise with the same variance sigma^2. You weigh four bottles from each machine, twelve in all. For each machine you subtract that machine's own average from its four weights, square, and add. Summed over the three machines, these squared deviations come to 36. Which estimate of sigma^2 is unbiased?",
+      "answer": "36/9 = 4. Within one machine, the four squared deviations from that machine's average add up to 3σ² on average, the n − 1 = 3 from the lesson. The three machines are independent, so the total averages 9σ², and 36 / 9 is unbiased. It is the same as averaging the three machines' own sample variances, since the groups are the same size."
+    },
+    {
+      "id": "si-constant-under-laplace-noise",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "The Best Constant Under Laplace Noise",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=si-constant-under-laplace-noise",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A service logs how long five requests took, in milliseconds: 4, 6, 7, 9 and 64. You model every time as $y_i = c + \\varepsilon_i$, one constant $c$ plus independent noise. The noise is not Gaussian. It follows a Laplace distribution with density $f(\\varepsilon) = \\frac{1}{2s} e^{-|\\varepsilon|/s}$ for a fixed scale $s > 0$. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "theory-expectation-mle",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "Expectation, Variance, and Maximum Likelihood",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=theory-expectation-mle",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Includes code",
+        "Round 1"
+      ],
+      "prompt": "Derive the maximum likelihood estimators for a Gaussian and a Bernoulli, show the variance estimate is biased, and connect least squares to Gaussian noise. 8 parts, each with its own grading instruction. Solutions revealed part by part.",
+      "answer": "Worked solutions are given part by part on the problem page: full derivations, not just final values. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "si-prior-at-the-old-weight",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "Fine-Tuning with a Prior at the Old Weight",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=si-prior-at-the-old-weight",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A one-weight model $y = wx + \\varepsilon$, with Gaussian noise of variance $\\sigma^2 = 1$, was trained long ago and settled at $w_0 = 2$. You now fine-tune it on new data, whose sums are $\\sum_i x_i^2 = 30$ and $\\sum_i x_i y_i = 45$. To keep the new weight from drifting far from the old one, you use the prior $w \\sim \\mathcal{N}(w_0, \\tau^2)$ with $\\tau^2 = 0.1$. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "si-gap-on-a-shared-test-set",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "The Gap Between Two Models on One Test Set",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=si-gap-on-a-shared-test-set",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Two classifiers are scored on the same 400 independent test examples. Model A gets 340 right and model B gets 328. They agree on 370 examples. On the other 30, A is right and B wrong 21 times, and B is right and A wrong 9 times. For example $i$, let $d_i = c_{A,i} - c_{B,i}$, where $c_{A,i}$ is 1 if A is right and 0 if not, and the same for B. The measured gap in accuracy is the average $\\bar d = 0.03$. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "si-test-size-for-a-strong-model",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "A Test Set for a Strong Model",
+      "source": "USAAIO-style",
+      "difficulty": "Easy",
+      "url": "/theory/?id=si-test-size-for-a-strong-model",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Earlier versions of a spam filter all scored between 95% and 99% accuracy, and you are sure the new one does too. You want its 95% confidence interval, by the normal approximation, to have a half-width of at most $0.01$, whatever its accuracy turns out to be in that range. 1 part.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "si-two-overlapping-intervals",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "Two Intervals That Overlap",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=si-two-overlapping-intervals",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "Two teams each test their model on its own, separate test set, drawn independently from the same source. They report 95% confidence intervals from the normal approximation: model A reports $[0.82, 0.88]$ and model B reports $[0.77, 0.83]$. The intervals share $[0.82, 0.83]$. What is the z-score of the gap of 0.05, and is the gap significant in a two-sided test at the 5% level?",
+      "answer": "Yes: z approx 2.31. Each half-width is 1.96 standard errors, so each SE is 0.03 / 1.96 ≈ 0.0153. The two estimates are independent, so their variances add: the gap has SE √2 · 0.0153 ≈ 0.0216, and z = 0.05 / 0.0216 ≈ 2.31, past 1.96 (p ≈ 0.021). Intervals that overlap a little can still give a significant difference."
+    },
+    {
+      "id": "si-bootstrap-spread-of-a-mean",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "The Bootstrap Spread of a Mean",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=si-bootstrap-spread-of-a-mean",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Five per-example losses from a test set are 2, 3, 7, 8 and 10. You bootstrap their mean: draw 5 values with replacement, average them, and repeat. With more and more resamples, the variance of these resampled means settles to a fixed number. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "si-leaderboard-margins",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "Margins on a Competition Leaderboard",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=si-leaderboard-margins",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A machine learning competition keeps a hidden test set of independent examples. Each submission is a classifier, and the leaderboard shows its accuracy on the hidden set. The organizers want to promise that, with probability at least 95%, every score on the leaderboard is within $0.03$ of that submission's true accuracy at the same time. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "si-uniform-range-mle",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "Estimating the Width of a Uniform Range",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=si-uniform-range-mle",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A data augmentation step shifts each image right by a random offset drawn uniformly from $[0, \\theta]$ pixels, independently for each image. The setting $\\theta$ was lost, and you recover four offsets from the logs: 3.1, 7.4, 5.0 and 9.2. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "si-wald-coverage-for-rare-failures",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "How Often a 95% Interval Covers a Rare Failure Rate",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=si-wald-coverage-for-rare-failures",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A model fails on 5% of inputs, though nobody running the test knows that. Each test run feeds it 10 independent inputs, counts the failures $k$, and reports the usual 95% interval $\\hat p \\pm 1.96\\sqrt{\\frac{\\hat p(1 - \\hat p)}{10}}$ with $\\hat p = k/10$ for the failure rate. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "si-exact-binomial-test",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "An Exact Test and Its Power",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=si-exact-binomial-test",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Compute the test exactly from the binomial distribution, then ask the planning question: if the new version really resolves 80%, how many tickets make it likely to pass?",
+      "answer": "Self-checking: each part ends with a check cell that prints a verdict, and the worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "foundations-15-statistics-images",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "AI Foundations 15: Statistics and Image Basics",
+      "source": "AI Foundations",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=foundations-15-statistics-images",
+      "tags": [
+        "Coding",
+        "Course",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Course notebook, about ~6 h end to end. Read it top to bottom, then do the exercises marked with a pencil icon - each one checks itself - and finish with the exam-style quiz. This lesson backs its descriptive-statistics half. The image-processing half (histogram equalization, Otsu thresholds, masks and compositing) is extra material.",
+      "answer": "Self-checking: every exercise has a checker cell that prints a verdict, and the quiz answers are explained at the end of the notebook."
+    },
+    {
+      "id": "theory-hoeffding-generalization",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "Hoeffding's Inequality and Generalization",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=theory-hoeffding-generalization",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Includes code",
+        "Round 1"
+      ],
+      "prompt": "Bound the gap between test error and true error, invert the bound to size a test set, then extend it with a union bound over many candidate models. 7 parts, each with its own grading instruction. Solutions revealed part by part.",
+      "answer": "Worked solutions are given part by part on the problem page: full derivations, not just final values. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ps4-vc-bound-slack",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "The Bound Is True and Useless",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ps4-vc-bound-slack",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Measure the true generalization gap of a threshold classifier across sample sizes and compare it against the VC bound it is supposed to satisfy.",
+      "answer": "Auto-graded inside the notebook. Empirical gaps and bound values must match to 1e-6, with the bound holding everywhere and loose by at least 3x."
+    }
+  ],
+  "theory": [
+    {
+      "id": "si-three-labs",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "Three Labs of Unequal Precision",
+      "difficulty": "Easy",
+      "minutes": 10,
+      "overview": [
+        "Three labs each measure the same unknown concentration $\\mu$ once. Each result is normal with mean $\\mu$, and the results are independent. Each lab's noise variance is known from its past calibration runs:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{ccc}\n\\text{Lab} & \\text{Result} & \\text{Noise variance} \\\\ \\hline\n\\text{A} & 10 & 1 \\\\\n\\text{B} & 13 & 4 \\\\\n\\text{C} & 16 & 4\n\\end{array}"
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the maximum likelihood estimate of $\\mu$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each result $x_i$ has density proportional to $e^{-(x_i - \\mu)^2/(2\\sigma_i^2)}$, and the factors in front do not depend on $\\mu$. So the log-likelihood is, up to a constant,"
+            },
+            {
+              "tex": "\\ell(\\mu) = -\\sum_i \\frac{(x_i - \\mu)^2}{2\\sigma_i^2} ."
+            },
+            {
+              "p": "Setting its derivative to zero:"
+            },
+            {
+              "tex": "\\ell'(\\mu) = \\sum_i \\frac{x_i - \\mu}{\\sigma_i^2} = 0\n\\quad\\Longrightarrow\\quad\n\\hat\\mu = \\frac{\\sum_i x_i/\\sigma_i^2}{\\sum_i 1/\\sigma_i^2} ."
+            },
+            {
+              "p": "Each result is weighted by its precision $1/\\sigma_i^2$: weights 1, $\\tfrac14$ and $\\tfrac14$. Then"
+            },
+            {
+              "tex": "\\hat\\mu = \\frac{10 + 13/4 + 16/4}{1 + 1/4 + 1/4} = \\frac{17.25}{1.5} = 11.5 ."
+            },
+            {
+              "p": "The plain average, 13, would be the answer only if all three variances were equal. Lab A is four times as precise as each of the others, so it carries twice the weight of the other two put together, and the estimate sits at 11.5, halfway between A's 10 and B's 13 and well away from C's 16."
+            },
+            {
+              "result": "11.5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-noise-from-three-machines",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "One Noise Level from Three Machines",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A factory has three filling machines. Each is set to its own target weight, which nobody knows exactly, but all three add noise with the same variance $\\sigma^2$. You weigh four bottles from each machine, twelve in all. For each machine you subtract that machine's own average from its four weights, square, and add. Summed over the three machines, these squared deviations come to 36."
+            },
+            {
+              "p": "Which estimate of $\\sigma^2$ is unbiased?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$36/12 = 3$",
+                  "explain": "Dividing by the number of bottles is the maximum likelihood estimate. It is biased low, because each machine's average is fitted to its own four weights and sits closer to them than the true target does. The expected sum is 9σ², not 12σ², so 36 / 12 underestimates."
+                },
+                {
+                  "text": "$36/11 \\approx 3.27$",
+                  "explain": "This applies Bessel's correction once, as if one mean had been fitted to all twelve bottles. Three means were fitted, one per machine, and each removes one degree of freedom from its own group. The expected sum is 3 · 3σ² = 9σ², not 11σ²."
+                },
+                {
+                  "text": "$36/9 = 4$",
+                  "correct": true,
+                  "explain": "Within one machine, the four squared deviations from that machine's average add up to 3σ² on average, the n − 1 = 3 from the lesson. The three machines are independent, so the total averages 9σ², and 36 / 9 is unbiased. It is the same as averaging the three machines' own sample variances, since the groups are the same size."
+                },
+                {
+                  "text": "$36/8 = 4.5$",
+                  "explain": "This also subtracts one for an overall mean of all twelve bottles. No overall mean enters the sum: every deviation is taken from its own machine's average. Only the three fitted machine averages cost degrees of freedom, so the divisor is 12 − 3 = 9."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Within one machine, the four squared deviations from that machine's average add up to 3σ² on average, the n − 1 = 3 from the lesson. The three machines are independent, so the total averages 9σ², and 36 / 9 is unbiased. It is the same as averaging the three machines' own sample variances, since the groups are the same size."
+            },
+            {
+              "result": "$36/9 = 4$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-constant-under-laplace-noise",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "The Best Constant Under Laplace Noise",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A service logs how long five requests took, in milliseconds:"
+      ],
+      "setup": [
+        {
+          "tex": "4,\\quad 6,\\quad 7,\\quad 9,\\quad 64 ."
+        },
+        {
+          "p": "You model every time as $y_i = c + \\varepsilon_i$, one constant $c$ plus independent noise. The noise is not Gaussian. It follows a Laplace distribution, with density"
+        },
+        {
+          "tex": "f(\\varepsilon) = \\frac{1}{2s}\\, e^{-|\\varepsilon|/s}"
+        },
+        {
+          "p": "for a fixed scale $s > 0$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the maximum likelihood estimate of $c$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The negative log-likelihood is"
+            },
+            {
+              "tex": "-\\ell(c) = n\\ln(2s) + \\frac{1}{s}\\sum_i |y_i - c| ,"
+            },
+            {
+              "p": "so maximizing the likelihood means minimizing $\\sum_i |y_i - c|$, the absolute error. Under Gaussian noise the same steps give the squared error."
+            },
+            {
+              "p": "Move $c$ up by a small amount. Each point above $c$ gets closer and each point below gets farther, by the same amount. So the sum falls while more points lie above $c$ than below, and rises once more lie below. The minimum comes where neither side outnumbers the other, at the middle value of the data, the median."
+            },
+            {
+              "p": "The sorted data are 4, 6, 7, 9, 64, so $\\hat c = 7$. Below 7, three points lie above $c$ and only two below. Above 7, the opposite holds."
+            },
+            {
+              "result": "7"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Model the noise as Gaussian instead. What is the maximum likelihood estimate of $c$ now?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Gaussian noise leads to the squared error $\\sum_i (y_i - c)^2$. Its derivative $-2\\sum_i (y_i - c)$ is zero at the mean,"
+            },
+            {
+              "tex": "\\hat c = \\frac{4 + 6 + 7 + 9 + 64}{5} = \\frac{90}{5} = 18 ."
+            },
+            {
+              "p": "That is larger than four of the five times, pulled up by the single slow request."
+            },
+            {
+              "result": "18"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Suppose the 64 was a typo for 640. What does each estimate become, and what does that say about the two noise models?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "With 640 the mean jumps to $133.2$. The median stays at 7, because it depends only on which point is in the middle, not on how far away the largest one is. The choice of noise model is a choice of loss: the Laplace model gives the absolute error, which an outlier pulls on with a constant force, while the Gaussian model gives the squared error, whose pull grows with the size of the error."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "theory-expectation-mle",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "Expectation, Variance, and Maximum Likelihood",
+      "difficulty": "Medium",
+      "minutes": 45,
+      "overview": [
+        "Derive the maximum likelihood estimators for a Gaussian and a Bernoulli, show the variance estimate is biased, and connect least squares to Gaussian noise."
+      ],
+      "setup": [
+        {
+          "p": "Let $x_0, \\dots, x_{n-1}$ be i.i.d. samples from a distribution with mean $\\mu$ and variance $\\sigma^2$. Write the sample mean and the maximum-likelihood variance as"
+        },
+        {
+          "tex": "\\bar{x} = \\frac{1}{n}\\sum_{i=0}^{n-1} x_i, \\qquad \\hat{\\sigma}^2_{\\text{MLE}} = \\frac{1}{n}\\sum_{i=0}^{n-1}(x_i - \\bar{x})^2."
+        }
+      ],
+      "parts": [
+        {
+          "id": "8.1",
+          "kind": "mcq",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A random variable $X$ satisfies $\\mathbb{E}[X] = 3$ and $\\operatorname{Var}[X] = 4$. Let $Y = 2X - 5$. What is $\\mathbb{E}[Y] + \\operatorname{Var}[Y]$?"
+            },
+            {
+              "choices": [
+                "A. $9$.",
+                "B. $12$.",
+                "C. $17$.",
+                "D. $19$.",
+                "E. $24$."
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Expectation is linear, so $\\mathbb{E}[Y] = 2\\mathbb{E}[X] - 5 = 6 - 5 = 1$."
+            },
+            {
+              "p": "Variance is not linear. Shifts do not change spread and scaling squares:"
+            },
+            {
+              "tex": "\\operatorname{Var}[aX + b] = a^2 \\operatorname{Var}[X] \\ \\Longrightarrow \\ \\operatorname{Var}[Y] = 2^2 \\cdot 4 = 16."
+            },
+            {
+              "p": "Therefore $\\mathbb{E}[Y] + \\operatorname{Var}[Y] = 1 + 16 = 17$. The common error is $2 \\cdot 4 = 8$, forgetting that variance carries squared units, which is also why standard deviation, not variance, is the quantity directly comparable to the data."
+            },
+            {
+              "result": "C. $17$."
+            }
+          ]
+        },
+        {
+          "id": "8.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Prove that the sample mean is unbiased and that its variance shrinks as $1/n$:"
+            },
+            {
+              "tex": "\\mathbb{E}[\\bar{x}] = \\mu, \\qquad \\operatorname{Var}[\\bar{x}] = \\frac{\\sigma^2}{n}."
+            },
+            {
+              "p": "State where independence is used."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Unbiasedness uses only linearity of expectation, which holds whether or not the samples are independent:"
+            },
+            {
+              "tex": "\\mathbb{E}[\\bar{x}] = \\frac{1}{n}\\sum_{i=0}^{n-1}\\mathbb{E}[x_i] = \\frac{1}{n} \\cdot n\\mu = \\mu."
+            },
+            {
+              "p": "For the variance, pull out the constant (squaring it), then use that the variance of a sum of independent variables is the sum of the variances:"
+            },
+            {
+              "tex": "\\operatorname{Var}[\\bar{x}] = \\frac{1}{n^2}\\operatorname{Var}\\left[\\sum_{i} x_i\\right] = \\frac{1}{n^2}\\sum_{i}\\operatorname{Var}[x_i] = \\frac{n\\sigma^2}{n^2} = \\frac{\\sigma^2}{n}."
+            },
+            {
+              "p": "Independence is exactly what kills the cross terms: in general $\\operatorname{Var}[\\sum_i x_i] = \\sum_i \\operatorname{Var}[x_i] + \\sum_{i \\ne j}\\operatorname{Cov}[x_i, x_j]$, and independence forces every covariance to zero."
+            },
+            {
+              "p": "The practical consequence is the $\\sqrt{n}$ rule: the standard error is $\\sigma/\\sqrt{n}$, so halving your error bar costs four times the data. A validation set of $100$ examples gives an accuracy estimate with standard error near $5\\%$, far too coarse to separate models differing by $1\\%$. It also explains why correlated samples (augmented copies of one image, say) inflate your true uncertainty: the covariances are no longer zero."
+            }
+          ]
+        },
+        {
+          "id": "8.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Suppose $x_i \\sim \\mathcal{N}(\\mu, \\sigma^2)$ i.i.d., with density"
+            },
+            {
+              "tex": "f(x) = \\frac{1}{\\sqrt{2\\pi\\sigma^2}}\\exp\\left( -\\frac{(x - \\mu)^2}{2\\sigma^2} \\right)."
+            },
+            {
+              "p": "Derive the maximum likelihood estimators of $\\mu$ and $\\sigma^2$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "By independence the likelihood is a product, so the log-likelihood is a sum:"
+            },
+            {
+              "tex": "\\ell(\\mu, \\sigma^2) = \\sum_{i=0}^{n-1} \\log f(x_i) = -\\frac{n}{2}\\log(2\\pi) - \\frac{n}{2}\\log \\sigma^2 - \\frac{1}{2\\sigma^2}\\sum_{i=0}^{n-1}(x_i - \\mu)^2."
+            },
+            {
+              "p": "Maximizing $\\ell$ is equivalent to maximizing the likelihood because $\\log$ is strictly increasing, and turning the product into a sum is what makes the derivatives tractable."
+            },
+            {
+              "p": "Mean. Differentiate with respect to $\\mu$ and set to zero:"
+            },
+            {
+              "tex": "\\frac{\\partial \\ell}{\\partial \\mu} = \\frac{1}{\\sigma^2}\\sum_i (x_i - \\mu) = 0 \\ \\Longrightarrow \\ \\sum_i x_i = n\\mu \\ \\Longrightarrow \\ \\hat{\\mu} = \\bar{x}."
+            },
+            {
+              "p": "The answer does not involve $\\sigma^2$, so the two estimates decouple."
+            },
+            {
+              "p": "Variance. Treat $s = \\sigma^2$ as the variable and differentiate:"
+            },
+            {
+              "tex": "\\frac{\\partial \\ell}{\\partial s} = -\\frac{n}{2s} + \\frac{1}{2s^2}\\sum_i (x_i - \\mu)^2 = 0 \\ \\Longrightarrow \\ s = \\frac{1}{n}\\sum_i (x_i - \\mu)^2."
+            },
+            {
+              "p": "Substituting $\\hat{\\mu} = \\bar{x}$ gives"
+            },
+            {
+              "tex": "\\hat{\\sigma}^2_{\\text{MLE}} = \\frac{1}{n}\\sum_{i=0}^{n-1}(x_i - \\bar{x})^2."
+            },
+            {
+              "p": "Both are maxima rather than minima: $\\ell \\to -\\infty$ as $\\mu \\to \\pm\\infty$ and as $s \\to 0^+$ or $s \\to \\infty$, and each stationary point is unique."
+            }
+          ]
+        },
+        {
+          "id": "8.4",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Prove that the maximum likelihood variance estimator is biased, specifically that"
+            },
+            {
+              "tex": "\\mathbb{E}\\big[\\hat{\\sigma}^2_{\\text{MLE}}\\big] = \\frac{n-1}{n}\\,\\sigma^2."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Expand around the true mean by writing $x_i - \\bar{x} = (x_i - \\mu) - (\\bar{x} - \\mu)$, and let $d_i = x_i - \\mu$, $\\bar{d} = \\bar{x} - \\mu$:"
+            },
+            {
+              "tex": "\\sum_i (x_i - \\bar{x})^2 = \\sum_i (d_i - \\bar{d})^2 = \\sum_i d_i^2 - 2\\bar{d}\\sum_i d_i + n\\bar{d}^2."
+            },
+            {
+              "p": "Since $\\sum_i d_i = n\\bar{d}$, the last two terms combine to $-n\\bar{d}^2$, giving the identity"
+            },
+            {
+              "tex": "\\sum_i (x_i - \\bar{x})^2 = \\sum_i d_i^2 - n \\bar{d}^2."
+            },
+            {
+              "p": "Now take expectations. We have $\\mathbb{E}[d_i^2] = \\operatorname{Var}[x_i] = \\sigma^2$, and by Part 2, $\\mathbb{E}[\\bar{d}^2] = \\operatorname{Var}[\\bar{x}] = \\sigma^2/n$. Therefore"
+            },
+            {
+              "tex": "\\mathbb{E}\\left[\\sum_i (x_i - \\bar{x})^2\\right] = n\\sigma^2 - n \\cdot \\frac{\\sigma^2}{n} = (n-1)\\sigma^2,"
+            },
+            {
+              "p": "and dividing by $n$ gives $\\mathbb{E}[\\hat{\\sigma}^2_{\\text{MLE}}] = \\frac{n-1}{n}\\sigma^2 < \\sigma^2$."
+            },
+            {
+              "p": "The estimator systematically underestimates the spread, and the algebra shows why: the term $-n\\bar{d}^2$ is subtracted because $\\bar{x}$ was fitted to the same data. Deviations measured from the sample mean are always smaller than deviations from the true mean, since $\\bar{x}$ is by construction the $c$ minimizing $\\sum_i (x_i - c)^2$."
+            }
+          ]
+        },
+        {
+          "id": "8.5",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Give the unbiased variance estimator, explain the $n - 1$ in terms of degrees of freedom, and state whether maximum likelihood estimators are unbiased in general."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Rescaling the result of Part 4 by $n/(n-1)$ removes the bias:"
+            },
+            {
+              "tex": "s^2 = \\frac{1}{n-1}\\sum_{i=0}^{n-1}(x_i - \\bar{x})^2, \\qquad \\mathbb{E}[s^2] = \\sigma^2."
+            },
+            {
+              "p": "This is Bessel's correction."
+            },
+            {
+              "p": "Degrees of freedom. The $n$ residuals $x_i - \\bar{x}$ satisfy one exact linear constraint, $\\sum_i (x_i - \\bar{x}) = 0$: knowing any $n-1$ of them determines the last. They therefore span an $(n-1)$-dimensional space, and dividing by $n-1$ averages over the number of free directions. The same accounting reappears in regression, where residual variance is divided by $n - d$ after fitting $d$ coefficients."
+            },
+            {
+              "p": "In general, maximum likelihood estimators are not unbiased. This is the standard counterexample. What they are is consistent ($\\hat{\\sigma}^2 \\to \\sigma^2$ as $n \\to \\infty$, since $(n-1)/n \\to 1$) and asymptotically efficient. Bias is also not automatically bad: the biased MLE has smaller variance than $s^2$, and by the bias-variance decomposition it actually achieves lower mean squared error here. Unbiasedness is a property, not a goal."
+            }
+          ]
+        },
+        {
+          "id": "8.6",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Let $x_0, \\dots, x_{n-1}$ be i.i.d. $\\text{Bernoulli}(p)$, so $P(x = 1) = p$ and $P(x = 0) = 1 - p$. Derive the maximum likelihood estimator of $p$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The probability mass function can be written in one line as $P(x_i) = p^{x_i}(1-p)^{1-x_i}$. Let $k = \\sum_i x_i$ be the number of ones. The log-likelihood is"
+            },
+            {
+              "tex": "\\ell(p) = \\sum_{i}\\big[ x_i \\log p + (1 - x_i)\\log(1-p) \\big] = k \\log p + (n - k)\\log(1 - p)."
+            },
+            {
+              "p": "Differentiate and set to zero:"
+            },
+            {
+              "tex": "\\frac{d\\ell}{dp} = \\frac{k}{p} - \\frac{n-k}{1-p} = 0 \\ \\Longrightarrow \\ k(1-p) = (n-k)p \\ \\Longrightarrow \\ k = np,"
+            },
+            {
+              "p": "so $\\hat{p} = k/n$, the observed fraction of ones. It is a maximum because $\\ell''(p) = -k/p^2 - (n-k)/(1-p)^2 < 0$, making $\\ell$ strictly concave on $(0,1)$."
+            },
+            {
+              "p": "Two remarks. First, $\\ell(p)$ is exactly the negative of the binary cross-entropy loss, so maximizing likelihood and minimizing cross-entropy are the same operation, which is Part 7 in miniature. Second, this estimator is unbiased ($\\mathbb{E}[\\hat p] = p$) but degenerate at the edges: observing $k = 0$ gives $\\hat{p} = 0$, asserting an event is impossible on finite evidence. That is precisely the zero-count pathology Laplace smoothing fixes in Naive Bayes."
+            }
+          ]
+        },
+        {
+          "id": "8.7",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Assume the regression model $y_n = \\theta^\\top X[n] + \\varepsilon_n$ with $\\varepsilon_n \\sim \\mathcal{N}(0, \\sigma^2)$ i.i.d."
+            },
+            {
+              "p": "Prove that maximizing the likelihood over $\\theta$ is equivalent to minimizing the sum of squared errors."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Conditional on $X[n]$, the response is Gaussian with mean $\\theta^\\top X[n]$ and variance $\\sigma^2$, so"
+            },
+            {
+              "tex": "\\ell(\\theta) = \\sum_{n=0}^{N-1} \\left[ -\\frac{1}{2}\\log(2\\pi\\sigma^2) - \\frac{\\big(y_n - \\theta^\\top X[n]\\big)^2}{2\\sigma^2} \\right]."
+            },
+            {
+              "p": "The first term does not involve $\\theta$, and $1/(2\\sigma^2)$ is a positive constant, so dropping both and flipping the sign gives"
+            },
+            {
+              "tex": "\\arg\\max_\\theta\\, \\ell(\\theta) = \\arg\\min_\\theta \\sum_{n=0}^{N-1}\\big(y_n - \\theta^\\top X[n]\\big)^2."
+            },
+            {
+              "p": "Maximizing likelihood and minimizing squared error return the identical $\\hat{\\theta}$."
+            },
+            {
+              "p": "This is worth internalizing in both directions. It justifies squared error, which is not an arbitrary choice but the right loss if you believe the noise is Gaussian with constant variance. And it warns you when squared error is wrong: heavy-tailed noise makes the Gaussian log-density a poor fit and the squared penalty over-reacts to outliers (Laplace noise yields $\\ell_1$/MAE instead), while non-constant variance calls for weighted least squares. Choosing a loss is choosing a noise model."
+            }
+          ]
+        },
+        {
+          "id": "8.8",
+          "kind": "coding",
+          "requirement": "Do not use np.var, np.std, or np.mean. Do not use any loop.",
+          "prompt": [
+            {
+              "p": "Run the following starter code:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "import numpy as np",
+                  "",
+                  "x = np.array([2.0, 4.0, 4.0, 4.0, 5.0, 5.0, 7.0, 9.0])"
+                ]
+              }
+            },
+            {
+              "p": "Write code that computes both $\\hat{\\sigma}^2_{\\text{MLE}}$ and the unbiased $s^2$, naming them $\\texttt{var\\_mle}$ and $\\texttt{var\\_unbiased}$. Report both values."
+            }
+          ],
+          "answer": [
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "n = x.size",
+                  "xbar = x.sum() / n",
+                  "sq = ((x - xbar) ** 2).sum()",
+                  "var_mle = sq / n",
+                  "var_unbiased = sq / (n - 1)"
+                ]
+              }
+            },
+            {
+              "p": "For this data $\\sum_i x_i = 40$ and $n = 8$, so $\\bar{x} = 5$. The squared deviations are $9, 1, 1, 1, 0, 0, 4, 16$, summing to $32$. Hence"
+            },
+            {
+              "tex": "\\hat{\\sigma}^2_{\\text{MLE}} = \\frac{32}{8} = 4, \\qquad s^2 = \\frac{32}{7} \\approx 4.571."
+            },
+            {
+              "p": "The unbiased estimate is larger by the factor $n/(n-1) = 8/7 \\approx 1.14$, exactly as Part 4 predicts. With $n = 8$ that is a $14\\%$ difference, large enough to matter. By $n = 1000$ it is $0.1\\%$ and the distinction is academic. Beware that library defaults disagree: $\\texttt{np.var}$ uses $\\texttt{ddof=0}$ (the MLE) while $\\texttt{pandas.Series.var}$ uses $\\texttt{ddof=1}$ (unbiased), so mixing the two silently changes your numbers."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-prior-at-the-old-weight",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "Fine-Tuning with a Prior at the Old Weight",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A one-weight model $y = wx + \\varepsilon$, with Gaussian noise of variance $\\sigma^2 = 1$, was trained long ago and settled at $w_0 = 2$. You now fine-tune it on new data, whose sums are"
+      ],
+      "setup": [
+        {
+          "tex": "\\sum_i x_i^2 = 30, \\qquad \\sum_i x_i y_i = 45 ."
+        },
+        {
+          "p": "To keep the new weight from drifting far from the old one, you use the prior $w \\sim \\mathcal{N}(w_0, \\tau^2)$ with $\\tau^2 = 0.1$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the MAP estimate of $w$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The log-posterior is, up to a constant,"
+            },
+            {
+              "tex": "-\\frac{1}{2\\sigma^2}\\sum_i (y_i - w x_i)^2 - \\frac{(w - w_0)^2}{2\\tau^2} ."
+            },
+            {
+              "p": "Its derivative is $\\frac{1}{\\sigma^2}\\sum_i x_i(y_i - w x_i) - \\frac{w - w_0}{\\tau^2}$, and setting it to zero gives"
+            },
+            {
+              "tex": "\\hat w_{\\text{MAP}} = \\frac{\\tfrac{1}{\\sigma^2}\\sum_i x_i y_i + \\tfrac{1}{\\tau^2} w_0}{\\tfrac{1}{\\sigma^2}\\sum_i x_i^2 + \\tfrac{1}{\\tau^2}}\n= \\frac{45 + 20}{30 + 10} = \\frac{65}{40} = 1.625 ."
+            },
+            {
+              "p": "It is a weighted average of the data's answer and the old weight. The data alone give the MLE $45/30 = 1.5$, with weight equal to the data's precision, 30. The old weight 2 gets the prior's precision, 10. So the estimate sits a quarter of the way from 1.5 to 2."
+            },
+            {
+              "p": "Two answers are tempting. A prior centered at 0, as in the lesson, would pull toward 0 and give $45/40 = 1.125$, below the MLE. The plain average of 1.5 and 2, 1.75, gives the prior as much weight as all the data."
+            },
+            {
+              "result": "1.625"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "For what prior variance $\\tau^2$ would the MAP estimate land exactly halfway between the MLE 1.5 and the old weight 2?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The MAP is a weighted average of the MLE and $w_0$, with weights equal to the two precisions:"
+            },
+            {
+              "tex": "\\hat w_{\\text{MAP}} = \\frac{30 \\cdot 1.5 + \\tfrac{1}{\\tau^2} \\cdot 2}{30 + \\tfrac{1}{\\tau^2}} ,"
+            },
+            {
+              "p": "since $\\sum_i x_i y_i/\\sigma^2 = 30 \\cdot 1.5$. It lands halfway when the two weights are equal, that is when the prior's precision equals the data's: $1/\\tau^2 = 30$, so $\\tau^2 = 1/30 \\approx 0.0333$. Check: $(45 + 60)/(30 + 30) = 105/60 = 1.75$."
+            },
+            {
+              "p": "The prior has to be three times as precise as the one above, where $1/\\tau^2 = 10$, to pull the estimate from a quarter of the way to halfway. The data's precision grows with $\\sum_i x_i^2$, so with twice as much data the same halfway point would need $\\tau^2 = 1/60$."
+            },
+            {
+              "result": "0.0333"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-gap-on-a-shared-test-set",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "The Gap Between Two Models on One Test Set",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "Two classifiers are scored on the same 400 independent test examples. Model A gets 340 right and model B gets 328. They agree on 370 examples. On the other 30, A is right and B wrong 21 times, and B is right and A wrong 9 times."
+      ],
+      "setup": [
+        {
+          "p": "For example $i$, let $d_i = c_{A,i} - c_{B,i}$, where $c_{A,i}$ is 1 if A is right and 0 if not, and the same for B. The measured gap in accuracy is the average $\\bar d = 0.03$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Estimate the standard error of $\\bar d$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "$\\bar d$ is an average of 400 independent draws of $d$, so its standard error is $\\sqrt{\\operatorname{Var}(d)/400}$. Estimate $\\operatorname{Var}(d)$ from the data."
+            },
+            {
+              "p": "Each $d_i$ is 0 on the 370 agreements, $+1$ on 21 examples and $-1$ on 9. So $d_i^2$ is 1 on the 30 disagreements and 0 elsewhere, and"
+            },
+            {
+              "tex": "\\operatorname{Var}(d) = \\overline{d^2} - \\bar d^{\\,2} = \\frac{30}{400} - 0.03^2 = 0.075 - 0.0009 = 0.0741 ."
+            },
+            {
+              "p": "Then $\\text{SE} = \\sqrt{0.0741/400} \\approx 0.0136$. Dividing by $n - 1$ instead of $n$ moves it from 0.01361 to 0.01363, a change in the fifth decimal place."
+            },
+            {
+              "result": "0.0136"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A teammate treats the two accuracies as independent, as if each model had its own test set, and gets the standard error $\\sqrt{0.85 \\cdot 0.15/400 + 0.82 \\cdot 0.18/400} \\approx 0.0262$. Which standard error describes the measured gap? That figure would be right if each model had been scored on its own separate set of 400. How many times as many examples per set would that design need to bring the gap's standard error down to 0.0136?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Use $0.0136$. The two models saw the same examples, so their results move together: an example that is easy for one is usually easy for the other. The 370 agreements add exactly 0 to every $d_i$, so all the noise in the gap comes from the 30 disagreements. The teammate's formula adds the full variance of each model's accuracy, as if the two were scored on separate examples, and so charges the gap for noise that cancels in $c_{A,i} - c_{B,i}$."
+            },
+            {
+              "p": "A standard error shrinks like $1/\\sqrt{n}$, so dividing it by a factor $r$ takes $r^2$ times the examples. Here"
+            },
+            {
+              "tex": "\\left(\\frac{0.0262}{0.0136}\\right)^2 \\approx 1.9265^2 \\approx 3.71 ."
+            },
+            {
+              "p": "Scoring the two models on one shared test set and comparing them example by example is worth about 3.7 times as many examples as scoring them on separate test sets. That is why a model comparison should use one test set and the paired difference."
+            },
+            {
+              "result": "3.71"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-test-size-for-a-strong-model",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "A Test Set for a Strong Model",
+      "difficulty": "Easy",
+      "minutes": 8,
+      "overview": [
+        "Earlier versions of a spam filter all scored between 95% and 99% accuracy, and you are sure the new one does too. You want its 95% confidence interval, by the normal approximation, to have a half-width of at most $0.01$, whatever its accuracy turns out to be in that range."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the smallest test set that achieves this?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "One standard error of the accuracy is $\\sqrt{p(1 - p)/n}$, and the interval reaches 1.96 of them to each side. Requiring $1.96 \\cdot \\text{SE} \\le 0.01$ gives"
+            },
+            {
+              "tex": "n \\ge \\frac{1.96^2\\, p(1 - p)}{0.01^2} ."
+            },
+            {
+              "p": "The right side depends on $p$, and the size must work for every $p$ from 0.95 to 0.99. So take the largest value of $p(1 - p)$ on that range. $p(1 - p)$ rises toward its peak at $\\tfrac12$, so on $[0.95, 0.99]$ it is largest at the end nearest $\\tfrac12$, $p = 0.95$: $0.95 \\cdot 0.05 = 0.0475$. Then"
+            },
+            {
+              "tex": "n \\ge \\frac{3.8416 \\cdot 0.0475}{0.0001} \\approx 1824.8 ,"
+            },
+            {
+              "p": "so 1825 examples."
+            },
+            {
+              "p": "Two tempting shortcuts go wrong. Plugging in the 99% end gives $p(1 - p) = 0.0099$ and only 381 examples, which is too few if the model scores 95%. The all-purpose worst case $p = \\tfrac12$ gives 9604, more than five times what is needed, because it ignores what you know about the model."
+            },
+            {
+              "result": "1825"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-two-overlapping-intervals",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "Two Intervals That Overlap",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Two teams each test their model on its own, separate test set, drawn independently from the same source. They report 95% confidence intervals from the normal approximation:"
+            },
+            {
+              "list": [
+                "Model A: $0.85 \\pm 0.03$, which is $[0.82,\\ 0.88]$.",
+                "Model B: $0.80 \\pm 0.03$, which is $[0.77,\\ 0.83]$."
+              ]
+            },
+            {
+              "p": "The intervals share $[0.82,\\ 0.83]$. What is the z-score of the gap of $0.05$, and is the gap significant in a two-sided test at the 5% level?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Yes: $z \\approx 2.31$",
+                  "correct": true,
+                  "explain": "Each half-width is 1.96 standard errors, so each SE is 0.03 / 1.96 ≈ 0.0153. The two estimates are independent, so their variances add: the gap has SE √2 · 0.0153 ≈ 0.0216, and z = 0.05 / 0.0216 ≈ 2.31, past 1.96 (p ≈ 0.021). Intervals that overlap a little can still give a significant difference."
+                },
+                {
+                  "text": "No: $z \\approx 1.18$",
+                  "explain": "This treats each ±0.03 as one standard error. The ±0.03 already includes the factor 1.96, so one SE is 0.03 / 1.96 ≈ 0.0153, and the gap's SE is √2 · 0.0153 ≈ 0.0216, which gives z ≈ 2.31."
+                },
+                {
+                  "text": "No: $z \\approx 1.63$",
+                  "explain": "This adds the two standard errors, 0.0153 + 0.0153, instead of their variances. It is the same reasoning as calling the gap real only when the intervals do not overlap. For independent estimates Var(A − B) = Var(A) + Var(B), so the gap's SE is √2 · 0.0153 ≈ 0.0216, not 0.0306, and z ≈ 2.31."
+                },
+                {
+                  "text": "Yes: $z \\approx 3.27$",
+                  "explain": "This divides the gap by one model's SE, as if model B's 0.80 were a known baseline. Both numbers come from finite test sets and both carry noise, so the gap's variance is the sum of the two. z ≈ 2.31, smaller than 3.27, though still significant."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each half-width is 1.96 standard errors, so each SE is 0.03 / 1.96 ≈ 0.0153. The two estimates are independent, so their variances add: the gap has SE √2 · 0.0153 ≈ 0.0216, and z = 0.05 / 0.0216 ≈ 2.31, past 1.96 (p ≈ 0.021). Intervals that overlap a little can still give a significant difference."
+            },
+            {
+              "result": "Yes: $z \\approx 2.31$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-bootstrap-spread-of-a-mean",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "The Bootstrap Spread of a Mean",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "Five per-example losses from a test set are"
+      ],
+      "setup": [
+        {
+          "tex": "2,\\quad 3,\\quad 7,\\quad 8,\\quad 10 ."
+        },
+        {
+          "p": "You bootstrap their mean: draw 5 values with replacement, average them, and repeat. With more and more resamples, the variance of these resampled means settles to a fixed number."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is that number?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each draw picks one of the five values with chance $\\tfrac15$ each. So one draw is a random variable with mean $\\bar x = 6$ and variance"
+            },
+            {
+              "tex": "\\frac15\\big((2-6)^2 + (3-6)^2 + (7-6)^2 + (8-6)^2 + (10-6)^2\\big) = \\frac{16 + 9 + 1 + 4 + 16}{5} = 9.2 ."
+            },
+            {
+              "p": "This is a plain average over the five equally likely values, so it divides by 5. Nothing is fitted here: the mean of the draw is exactly 6."
+            },
+            {
+              "p": "A resample averages 5 independent draws, so its mean has variance $9.2 / 5 = 1.84$. Listing all $5^5 = 3125$ equally likely resamples gives the same number."
+            },
+            {
+              "result": "1.84"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Compare $1.84$ with $s^2/n$, the variance of the mean the lesson's formula would estimate with the sample variance $s^2$. Which is larger, by what factor, and why?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "$s^2 = 46/4 = 11.5$, so $s^2/n = 2.3$. The bootstrap gives $1.84$, which is smaller by the factor $\\frac{n-1}{n} = \\frac45$."
+            },
+            {
+              "p": "The bootstrap treats the five losses as the whole population. The variance of that population is the divide-by-$n$ value $\\hat\\sigma^2 = 9.2$, the maximum likelihood estimate, which is biased low because the five values sit closer to their own mean than to the true one. So the bootstrap inherits that bias and slightly understates the spread. With $n = 5$ the standard error is $\\sqrt{1.84} \\approx 1.36$ against $\\sqrt{2.3} \\approx 1.52$. With hundreds of test examples, $\\frac{n-1}{n}$ is close to 1 and the difference vanishes."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-leaderboard-margins",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "Margins on a Competition Leaderboard",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "A machine learning competition keeps a hidden test set of independent examples. Each submission is a classifier, and the leaderboard shows its accuracy on the hidden set. The organizers want to promise that, with probability at least 95%, **every** score on the leaderboard is within $0.03$ of that submission's true accuracy at the same time."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The organizers expect 50 submissions in total. How many hidden examples does the promise need? Use Hoeffding's inequality and the union bound."
+            }
+          ],
+          "answer": [
+            {
+              "p": "For one submission, Hoeffding bounds the chance that its score is off by $0.03$ or more by $2e^{-2n(0.03)^2} = 2e^{-0.0018n}$. The promise fails if any of the 50 scores is off. The scores share the test set, so these 50 events are not independent, but the union bound needs no independence: the chance that at least one happens is at most the sum,"
+            },
+            {
+              "tex": "50 \\cdot 2e^{-0.0018n} \\le 0.05\n\\quad\\Longrightarrow\\quad\nn \\ge \\frac{\\ln(100/0.05)}{0.0018} = \\frac{\\ln 2000}{0.0018} \\approx 4222.7 ,"
+            },
+            {
+              "p": "so 4223 examples. One submission alone would need $\\ln 40 / 0.0018 \\approx 2049.4$, so 2050. Fifty submissions cost about twice the data, not fifty times, because the count of submissions sits inside the logarithm."
+            },
+            {
+              "result": "4223"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The hidden set ends up with 5,000 examples. What is the largest number of submissions for which the same promise still holds?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "With $K$ submissions the promise needs $2K e^{-2 \\cdot 5000 \\cdot 0.0009} \\le 0.05$. The exponent is $-9$, so"
+            },
+            {
+              "tex": "K \\le \\frac{0.05}{2e^{-9}} = 0.025\\, e^{9} \\approx 0.025 \\cdot 8103.1 \\approx 202.6 ."
+            },
+            {
+              "p": "$K$ must be a whole number, so at most 202 submissions. At 202 the bound is $404\\,e^{-9} \\approx 0.0499$, and at 203 it is $0.0501$, just over. Adding 2950 examples to the 2050 that one submission needs supports about two hundred of them."
+            },
+            {
+              "result": "202"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "On the 5,000-example set, team X tried 30 versions of its model and keeps its best leaderboard score, 0.91. Team Y submitted once and also scores 0.91. For team Y, Hoeffding gives a 95% margin of $\\sqrt{\\ln 40/(2 \\cdot 5000)} \\approx 0.0192$. What margin can team X honestly claim at 95%? Explain why it differs."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Team X's 0.91 is the highest of its 30 scores, so it is the score most likely to have come out high by luck. The single-model margin is only valid for a score fixed before the test set was used. What holds for X is a statement about all 30 of its versions at once, since that covers whichever one turned out best:"
+            },
+            {
+              "tex": "30 \\cdot 2e^{-2 \\cdot 5000\\, t^2} \\le 0.05\n\\quad\\Longrightarrow\\quad\nt = \\sqrt{\\frac{\\ln(60/0.05)}{2 \\cdot 5000}} = \\sqrt{\\frac{\\ln 1200}{10{,}000}} \\approx 0.0266 ."
+            },
+            {
+              "p": "So team X can claim $0.91 \\pm 0.027$, while team Y can claim $0.91 \\pm 0.019$. The two scores are equal, but X's says less, because X looked at the test set 30 times before choosing what to report. Scoring the chosen version once on fresh data would give it the narrower margin back."
+            },
+            {
+              "result": "0.0266"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-uniform-range-mle",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "Estimating the Width of a Uniform Range",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "A data augmentation step shifts each image right by a random offset drawn uniformly from $[0, \\theta]$ pixels, independently for each image. The setting $\\theta$ was lost, and you recover four offsets from the logs:"
+      ],
+      "setup": [
+        {
+          "tex": "3.1,\\quad 7.4,\\quad 5.0,\\quad 9.2 ."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the maximum likelihood estimate of $\\theta$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each offset has density $1/\\theta$ on $[0, \\theta]$ and 0 outside it. So the likelihood of the four offsets is"
+            },
+            {
+              "tex": "L(\\theta) = \\begin{cases} \\theta^{-4} & \\text{if } \\theta \\ge \\max_i x_i = 9.2, \\\\ 0 & \\text{if } \\theta < 9.2 . \\end{cases}"
+            },
+            {
+              "p": "A $\\theta$ below 9.2 cannot have produced the offset 9.2, so its likelihood is 0. Above 9.2, $\\theta^{-4}$ falls as $\\theta$ grows. Setting a derivative to zero finds nothing here, since $\\frac{d}{d\\theta}\\theta^{-4} = -4\\theta^{-5}$ is never zero. The maximum sits at the edge of the allowed range: $\\hat\\theta = \\max_i x_i = 9.2$."
+            },
+            {
+              "result": "9.2"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "For samples of $n = 4$ offsets, the estimate $\\max_i x_i$ averages to a fixed fraction of the true $\\theta$. What is that fraction?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The maximum of $n$ draws is at most $m$ only if every draw is, so $P(\\max \\le m) = (m/\\theta)^n$ for $0 \\le m \\le \\theta$. The density is the derivative, $n m^{n-1}/\\theta^n$, and"
+            },
+            {
+              "tex": "\\mathbb{E}[\\max] = \\int_0^\\theta m \\cdot \\frac{n m^{n-1}}{\\theta^n}\\, dm = \\frac{n}{n+1}\\,\\theta ."
+            },
+            {
+              "p": "For $n = 4$ that is $\\tfrac45\\theta = 0.8\\,\\theta$. The maximum of the sample can never exceed $\\theta$ and is usually below it, so it underestimates on average, the same direction of bias as the divide-by-$n$ variance."
+            },
+            {
+              "result": "0.8"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Scale the maximum likelihood estimate to make it unbiased, and give the value for these four offsets."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Since $\\mathbb{E}[\\max] = \\frac{n}{n+1}\\theta$, the estimator $\\frac{n+1}{n}\\max_i x_i$ averages exactly $\\theta$. Here $\\frac54 \\cdot 9.2 = 11.5$."
+            },
+            {
+              "p": "Another unbiased choice is twice the mean, since a uniform on $[0, \\theta]$ has mean $\\theta/2$. It gives $2 \\cdot 6.175 = 12.35$. Both average to $\\theta$, but twice the mean can even come out below the largest offset seen, a value of $\\theta$ the data rule out. Scaling the maximum never does that."
+            },
+            {
+              "result": "11.5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-wald-coverage-for-rare-failures",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "How Often a 95% Interval Covers a Rare Failure Rate",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "A model fails on 5% of inputs, though nobody running the test knows that. Each test run feeds it 10 independent inputs, counts the failures $k$, and reports the usual 95% interval for the failure rate,"
+      ],
+      "setup": [
+        {
+          "tex": "\\hat p \\pm 1.96\\sqrt{\\frac{\\hat p(1 - \\hat p)}{10}}, \\qquad \\hat p = \\frac{k}{10} ."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Over many test runs, what fraction of the reported intervals contain the true rate 0.05? Give three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The interval depends only on $k$, so go through the possible counts, decide for each whether its interval contains 0.05, and add the probabilities of the counts whose interval does. $k$ is binomial with $n = 10$ and $p = 0.05$."
+            },
+            {
+              "tex": "\\begin{array}{cccc}\nk & P(k) & \\text{Interval} & \\text{Contains 0.05} \\\\ \\hline\n0 & 0.95^{10} \\approx 0.5987 & [0,\\ 0] & \\text{no} \\\\\n1 & 10(0.05)(0.95)^9 \\approx 0.3151 & [-0.086,\\ 0.286] & \\text{yes} \\\\\n2 & 45(0.05)^2(0.95)^8 \\approx 0.0746 & [-0.048,\\ 0.448] & \\text{yes} \\\\\n3 & 120(0.05)^3(0.95)^7 \\approx 0.0105 & [0.016,\\ 0.584] & \\text{yes} \\\\\n4 & \\approx 0.0010 & [0.096,\\ 0.704] & \\text{no}\n\\end{array}"
+            },
+            {
+              "p": "Counts of 5 or more have probability below 0.0001 together, and their intervals start even higher, so they miss too. The coverage is"
+            },
+            {
+              "tex": "0.3151 + 0.0746 + 0.0105 \\approx 0.400 ."
+            },
+            {
+              "p": "The \"95%\" interval contains the truth in only about 40% of test runs."
+            },
+            {
+              "result": "0.400"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Which outcome causes most of the misses, and what goes wrong in the formula there? How would you report a run with no failures?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The count $k = 0$ alone has probability $0.599$. Then $\\hat p = 0$, so $\\hat p(1 - \\hat p) = 0$ and the interval shrinks to the single point 0. The formula plugs in $\\hat p$ for the unknown $p$ when it computes the standard error, and at $\\hat p = 0$ that estimate says there is no uncertainty at all. Ten inputs with no failures are entirely consistent with a failure rate of a few percent, so this is the worst possible moment to trust the plug-in. The normal approximation behind the 1.96 also needs many expected failures, and here the expected count is $np = 0.5$."
+            },
+            {
+              "p": "The honest report keeps a nonzero upper end. The Wilson interval solves $|\\hat p - p| \\le 1.96\\sqrt{p(1-p)/n}$ for $p$ instead of plugging in $\\hat p$. For $k = 0$ it gives $[0,\\ 0.278]$, which contains 0.05. Even simpler, if no failure shows up in 10 independent tries, then any rate $p$ with $(1 - p)^{10} < 0.05$, that is $p > 0.26$, would make that result unlikely, so \"at most about 26%\" is a fair summary. Either way the answer to \"how often does it fail?\" after 10 clean inputs is \"rarely, but possibly as often as one time in four\"."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "theory-hoeffding-generalization",
+      "moduleId": "statistics-hypothesis-testing",
+      "title": "Hoeffding's Inequality and Generalization",
+      "difficulty": "Hard",
+      "minutes": 50,
+      "overview": [
+        "Bound the gap between test error and true error, invert the bound to size a test set, then extend it with a union bound over many candidate models."
+      ],
+      "setup": [
+        {
+          "p": "Hoeffding's inequality states that if $Z_0, \\dots, Z_{n-1}$ are i.i.d. with $Z_i \\in [0, 1]$ and mean $\\mu = \\mathbb{E}[Z_i]$, then for any $\\varepsilon > 0$,"
+        },
+        {
+          "tex": "P\\big( \\lvert \\bar{Z} - \\mu \\rvert \\ge \\varepsilon \\big) \\le 2 \\exp\\big( -2n\\varepsilon^2 \\big), \\qquad \\bar{Z} = \\frac{1}{n}\\sum_{i=0}^{n-1} Z_i."
+        },
+        {
+          "p": "Throughout, $Z_i = \\mathbb{1}[h(x_i) \\ne y_i]$ is the $0/1$ error of a fixed classifier $h$ on a test example, so $\\bar{Z}$ is the test error $\\hat{E}(h)$ and $\\mu$ is the true error $E(h)$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "9.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "You evaluate a fixed classifier on a test set of $n = 1000$ examples held out before training. Bound the probability that the test error differs from the true error by at least $\\varepsilon = 0.05$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Substitute directly into Hoeffding's inequality:"
+            },
+            {
+              "tex": "P\\big( \\lvert \\hat{E} - E \\rvert \\ge 0.05 \\big) \\le 2\\exp\\big(-2 \\cdot 1000 \\cdot 0.05^2\\big) = 2\\exp(-5) \\approx 2(0.006738) \\approx 0.0135."
+            },
+            {
+              "p": "So with probability at least $98.65\\%$, the true error lies within $5$ percentage points of the measured test error. Note what makes this legitimate: $h$ was fixed before the test set was touched, so the $Z_i$ are genuinely i.i.d. and independent of $h$."
+            },
+            {
+              "p": "The bound is distribution-free: it holds for any data distribution and any classifier, requiring only boundedness. That generality is why it is loose: for a classifier with error near $0.5$ the true tail probability is closer to the Gaussian estimate of about $0.0016$, roughly eight times smaller."
+            },
+            {
+              "result": "$P(\\lvert \\hat{E} - E \\rvert \\ge 0.05) \\le 2e^{-5} \\approx 1.35\\%$."
+            }
+          ]
+        },
+        {
+          "id": "9.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "How large must the test set be so that, with probability at least $95\\%$, the test error is within $\\varepsilon = 0.01$ of the true error? Give the general formula and the numerical answer."
+            }
+          ],
+          "answer": [
+            {
+              "p": "We want the failure probability to be at most $\\delta = 0.05$, so it suffices that $2\\exp(-2n\\varepsilon^2) \\le \\delta$. Taking logarithms,"
+            },
+            {
+              "tex": "-2n\\varepsilon^2 \\le \\log\\frac{\\delta}{2} \\ \\Longrightarrow \\ n \\ge \\frac{\\log(2/\\delta)}{2\\varepsilon^2}."
+            },
+            {
+              "p": "With $\\varepsilon = 0.01$ and $\\delta = 0.05$:"
+            },
+            {
+              "tex": "n \\ge \\frac{\\log 40}{2(0.01)^2} = \\frac{3.6889}{0.0002} \\approx 18{,}444.4,"
+            },
+            {
+              "p": "so $n = 18{,}445$ examples suffice."
+            },
+            {
+              "p": "The shape of the formula is the lesson: $n$ scales as $1/\\varepsilon^2$ but only as $\\log(1/\\delta)$. Tightening the interval by $10\\times$ costs $100\\times$ the data, while raising confidence from $95\\%$ to $99\\%$ costs only a factor of $\\log(200)/\\log(40) \\approx 1.44$. Confidence is cheap, but precision is expensive."
+            },
+            {
+              "result": "$n \\ge \\log(2/\\delta)/(2\\varepsilon^2) \\approx 18{,}445$."
+            }
+          ]
+        },
+        {
+          "id": "9.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Now suppose you choose the best of $M$ candidate classifiers $h_1, \\dots, h_M$ by their error on the same dataset of size $n$. Prove that"
+            },
+            {
+              "tex": "P\\left( \\max_{m} \\big\\lvert \\hat{E}(h_m) - E(h_m) \\big\\rvert \\ge \\varepsilon \\right) \\le 2M\\exp(-2n\\varepsilon^2),"
+            },
+            {
+              "p": "and convert this into a bound on $\\varepsilon$ that holds with probability at least $1 - \\delta$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Let $A_m$ be the event that classifier $h_m$ deviates by at least $\\varepsilon$. The maximum exceeds $\\varepsilon$ exactly when at least one $A_m$ occurs, i.e. on $\\bigcup_m A_m$. By the union bound (which requires no independence at all),"
+            },
+            {
+              "tex": "P\\left( \\bigcup_{m=1}^{M} A_m \\right) \\le \\sum_{m=1}^{M} P(A_m) \\le \\sum_{m=1}^{M} 2\\exp(-2n\\varepsilon^2) = 2M\\exp(-2n\\varepsilon^2),"
+            },
+            {
+              "p": "where the second inequality applies Hoeffding to each fixed $h_m$ separately."
+            },
+            {
+              "p": "To invert it, set the right-hand side equal to $\\delta$ and solve:"
+            },
+            {
+              "tex": "2M\\exp(-2n\\varepsilon^2) = \\delta \\ \\Longrightarrow \\ \\varepsilon = \\sqrt{ \\frac{\\log(2M/\\delta)}{2n} }."
+            },
+            {
+              "p": "So with probability at least $1 - \\delta$, simultaneously for every $m$,"
+            },
+            {
+              "tex": "E(h_m) \\le \\hat{E}(h_m) + \\sqrt{ \\frac{\\log M + \\log(2/\\delta)}{2n} }."
+            },
+            {
+              "p": "Because the bound holds for all $m$ at once, it holds in particular for whichever $h_m$ you selected, which is the point, since your selection depends on the data and is therefore not fixed in advance."
+            }
+          ]
+        },
+        {
+          "id": "9.4",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Interpret the $\\sqrt{\\log M / (2n)}$ term from Part 3 as a statement about model complexity. In particular, how does the required $n$ grow if $M$ is squared?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The term is the price of searching. It is the gap you must add to your measured error to account for having picked the winner of $M$ attempts, and the winner is optimistically biased, because some model was lucky on this particular sample."
+            },
+            {
+              "p": "Growth is very slow: $\\varepsilon$ scales as $\\sqrt{\\log M}$, so squaring $M$ multiplies $\\log M$ by $2$ and hence $\\varepsilon$ by $\\sqrt{2} \\approx 1.41$. To hold $\\varepsilon$ fixed you need to double $n$. Going from $10^3$ to $10^6$ candidates costs the same factor of two in data."
+            },
+            {
+              "p": "Two practical readings. First, mild hyperparameter searches are nearly free statistically, as twenty configurations add $\\sqrt{\\log 20/(2n)}$, negligible for large $n$. Second, the quantity that matters is the effective number of hypotheses considered, and it counts every choice made after looking at the data, including ones you never wrote down. That is why leaderboard overfitting is real even when each individual submission looks honest."
+            },
+            {
+              "p": "For infinite hypothesis classes $\\log M$ is replaced by a capacity measure such as the VC dimension, but the shape, measured error plus a complexity term shrinking like $1/\\sqrt{n}$, is unchanged, and it is the formal version of the bias-variance tradeoff."
+            }
+          ]
+        },
+        {
+          "id": "9.5",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "A student reports: \"I tuned my model against the test set until the test error stopped improving, then quoted the final test error with a Hoeffding confidence interval for $n = 10{,}000$.\""
+            },
+            {
+              "p": "Explain precisely which assumption is violated and what the student should have done."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Hoeffding requires the classifier $h$ to be fixed independently of the sample used to evaluate it. Only then are the indicators $Z_i = \\mathbb{1}[h(x_i) \\ne y_i]$ i.i.d. with mean $E(h)$. Tuning against the test set makes $h$ a function of that very data, so $\\hat{E}(h)$ is no longer an unbiased estimate of $E(h)$. It is a minimum over many correlated evaluations, and minima are biased downward."
+            },
+            {
+              "p": "The single-hypothesis bound of Part 1 therefore does not apply. At best the student could use the union bound of Part 3 with $M$ equal to the number of distinct configurations tried, but that number is usually unknown and understated, since it must include every abandoned idea and every judgement call made after seeing a test score."
+            },
+            {
+              "p": "The correct protocol is a three-way split: train on the training set, select models and hyperparameters on a validation set, and touch the test set exactly once at the end. The validation error is then allowed to be optimistic (it paid for the search), while the test error stays an honest estimate to which Part 1 legitimately applies."
+            },
+            {
+              "p": "If the test set has already been used for selection, the only real fix is a fresh held-out sample. This is exactly why the official USAAIO problems evaluate submissions on a hidden test set contestants cannot access during the competition."
+            }
+          ]
+        },
+        {
+          "id": "9.6",
+          "kind": "mcq",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Which condition is not required for the version of Hoeffding's inequality stated above?"
+            },
+            {
+              "choices": [
+                "A. The variables are independent.",
+                "B. The variables are bounded in $[0, 1]$.",
+                "C. The variables are identically distributed with a common mean.",
+                "D. The variables are normally distributed.",
+                "E. The number of variables $n$ is finite and fixed."
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "No distributional shape is assumed. That is the whole appeal. Hoeffding needs independence and boundedness, and the proof (via the moment generating function and Hoeffding's lemma) works for any distribution supported on $[0,1]$. A $0/1$ error indicator is Bernoulli, about as far from Gaussian as a variable can be, and the bound still applies."
+            },
+            {
+              "p": "Boundedness is genuinely essential: with unbounded variables the tails can be arbitrarily heavy and no sub-Gaussian bound holds. Independence is essential too, though it can be relaxed to martingale differences (Azuma-Hoeffding). For a general range $[a, b]$ the exponent becomes $-2n\\varepsilon^2/(b-a)^2$."
+            },
+            {
+              "result": "D. Normality is not required."
+            }
+          ]
+        },
+        {
+          "id": "9.7",
+          "kind": "coding",
+          "requirement": "Do not use any explicit Python loop over the trials.",
+          "prompt": [
+            {
+              "p": "Run the following starter code:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "import numpy as np",
+                  "",
+                  "rng = np.random.default_rng(0)",
+                  "n, trials, p, eps = 1000, 200000, 0.3, 0.05"
+                ]
+              }
+            },
+            {
+              "p": "Empirically estimate $P(\\lvert \\bar{Z} - p \\rvert \\ge \\varepsilon)$ for $Z_i \\sim \\text{Bernoulli}(p)$, and compare it with the Hoeffding bound from Part 1."
+            }
+          ],
+          "answer": [
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "means = rng.binomial(n, p, size=trials) / n     # one sample mean per trial",
+                  "empirical = (np.abs(means - p) >= eps).mean()",
+                  "bound = 2 * np.exp(-2 * n * eps ** 2)",
+                  "print(empirical, bound)"
+                ]
+              }
+            },
+            {
+              "p": "Drawing from $\\texttt{binomial(n, p)}$ returns the sum of $n$ Bernoulli variables in one call, so the $200{,}000$ trials are vectorized rather than looped."
+            },
+            {
+              "p": "The empirical frequency comes out near $0.0006$, against a bound of $2e^{-5} \\approx 0.0135$, so the bound is roughly $20\\times$ larger than the truth. That gap is expected and is not a flaw: Hoeffding is worst-case over all distributions on $[0,1]$, and the worst case is $p = 1/2$ where the variance $p(1-p)$ is maximal. Here $p = 0.3$ gives variance $0.21$, so the actual concentration is tighter."
+            },
+            {
+              "p": "Bernstein's inequality closes much of this gap by using the variance explicitly, but Hoeffding's virtue is needing nothing beyond the range. You can apply it before knowing anything about your error distribution."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

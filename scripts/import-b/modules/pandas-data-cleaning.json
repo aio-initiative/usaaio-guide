@@ -1,0 +1,72 @@
+{
+  "aModule": "pandas-data-cleaning-storing",
+  "stage": "Round 1",
+  "order": [
+    "pdc-what-describe-counts",
+    "pdc-coerce-hides-fixable-prices",
+    "pdc-dedupe-before-or-after-cleaning",
+    "pdc-averaging-with-gaps",
+    "pdc-labels-after-a-filter",
+    "pdc-a-fee-in-tiers",
+    "pdc-above-own-branch-average",
+    "pdc-left-join-audit",
+    "pdc-pivot-table-default",
+    "pdc-dummies-on-each-split",
+    "pdc-mean-of-group-means",
+    "pdc-order-of-cleaning-steps"
+  ],
+  "fixes": [
+    {
+      "file": "pdc-mean-of-group-means",
+      "find": "76. The mean of the room means gives each room one vote, so the 2 students",
+      "replace": "**76**. The mean of the room means gives each room one vote, so the 2 students",
+      "why": "B's own solution states the answer (76) up front, but the bare '76.' at the start of a line is a numbered-list marker, which B's renderer turns into an ordered list starting at 76 and which spins the problems importer forever (its paragraph accumulator never advances past a numbered line). Bold is how B itself states answers in its other solutions ('**5** orders', '**900**'). No word changes."
+    }
+  ],
+  "parts": {
+    "pdc-coerce-hides-fixable-prices": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.3": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.4": {"kind": "computation", "requirement": "Reasoning is required."}
+    },
+    "pdc-averaging-with-gaps": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.3": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.4": {"kind": "explanation", "requirement": "Reasoning is required."}
+    },
+    "pdc-above-own-branch-average": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.3": {"kind": "explanation", "requirement": "Reasoning is required."}
+    },
+    "pdc-left-join-audit": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.3": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.4": {"kind": "explanation", "requirement": "Reasoning is required."}
+    },
+    "pdc-mean-of-group-means": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.3": {"kind": "explanation", "requirement": "Reasoning is required."}
+    },
+    "pdc-order-of-cleaning-steps": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.3": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.4": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.5": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.6": {"kind": "explanation", "requirement": "Reasoning is required."}
+    }
+  },
+  "indexPrompt": {
+    "pdc-coerce-hides-fixable-prices": "Sellers on a used bike site type their asking price into a free text box, and seven listings came in: 120, 90 with a dollar sign, 1,050 with a comma, 80, one that is not a number, 1,200 with a dollar sign and a comma, and 70. Converting with to_numeric and errors set to coerce turns whatever does not parse into NaN. Find the mean it reports, how many values go missing, and what changes once the dollar signs and commas are stripped first.",
+    "pdc-averaging-with-gaps": "A study app logs 48, 25, 30, 42 and 100 minutes on the five days the phone was on, and nothing on the other two days of the week. Compare the plain mean, a hand-computed sum divided by the row count, and a median fill, and say which assumption about the two missing days each number makes.",
+    "pdc-above-own-branch-average": "A cafe chain records the amount of each of ten orders at branches A, B and C, and branch B sells catering trays far larger than the others' orders. Find which orders were large for their own branch, what an overall average misses, and what happens if the branch average is compared as an aggregation instead of with transform.",
+    "pdc-left-join-audit": "A shop computes revenue by left-joining seven orders onto a price list where one product is priced twice, at 12 and at 10, and two products have no entry. Count the rows the join produces, the revenue it reports, and what a deduplicated price list and an audit of the unmatched orders would say instead.",
+    "pdc-mean-of-group-means": "A school gives one test to its three math rooms: two rooms have two students each and the third is a lecture section of six. Compare the mean of the room means with the mean of all ten scores, and say which one answers what the average student scored.",
+    "pdc-order-of-cleaning-steps": "A rental site exports ten listings where one id appears twice with different spacing and capitals, one rent says ask and one listing has no bedroom count. An analyst cleans it in five steps: drop duplicates, lowercase the area, coerce the rent, fill the gaps with the median rent of the area, and drop the rows without bedrooms. Trace the row count and the medians, and what changes when the text is cleaned before the duplicates are dropped."
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "aModule": "transformer-add-position",
+  "stage": "Round 2",
+  "fixes": [
+    {
+      "file": "tf-position-least-like-the-first",
+      "find": "No sine or cosine of 250 or of 265 is needed. This is the property the original\npaper chose sines and cosines for: two positions 15 apart look the same to a\ndot product wherever they sit in the text.",
+      "replace": "No sine or cosine of 250 or of 265 is needed. Two positions 15 apart look the\nsame to a dot product wherever they sit in the text."
+    }
+  ],
+  "parts": {
+    "tf-position-least-like-the-first": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "tf-position-least-like-the-first": "With a width of 4, the values added at position p are (sin p, cos p, sin(p/100), cos(p/100)); find which of the positions 1 to 10 is least like position 0 by dot product, and the dot product of the values at positions 250 and 265."
+  }
+}

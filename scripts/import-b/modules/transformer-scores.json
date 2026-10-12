@@ -1,0 +1,34 @@
+{
+  "aModule": "transformer-scores",
+  "stage": "Round 2",
+  "order": [
+    "tf-a-head-whose-queries-are-its-keys",
+    "tf-which-key-a-query-picks"
+  ],
+  "fixes": [
+    {
+      "file": "tf-which-key-a-query-picks",
+      "find": "Add the four\nscores from the middle column instead and the same total is −3, and dividing\nthose by the head size of 16 rather than by its square root gives −0.1875.",
+      "replace": "Add the four dot products in the middle column instead and their total is −3, and dividing that by the head size of 16 rather than by its square root gives −0.1875.",
+      "why": "The table's middle column holds the dot products −4, 0, 1, 0, and this problem exists to pin the divisor down, so calling a dot product a score blurs the distinction the lesson teaches. Swarm review fix (pack-72, bprv-73)."
+    },
+    {
+      "file": "tf-which-key-a-query-picks",
+      "find": "Reusing one set of weights for both is what makes a\ntoken score itself on every row, and that is the arrangement the earlier problem\nin this module warns against.",
+      "replace": "Reusing one set of weights for both is what makes a token's score against itself a sum of squares, large and hard to beat, and that is the arrangement the earlier problem in this module warns against.",
+      "why": "The lesson's head 2 example uses the same vectors for queries and keys and 'the' is the exception, scoring 'cat' at 1.796 above its own 1.414, so 'on every row' reads as 'ranks itself first on every row' and contradicts the lesson's own example. Swarm review fix (pack-72, bprv-73)."
+    }
+  ],
+  "indexPrompt": {
+    "tf-which-key-a-query-picks": "A model reads one short sentence, \"The lantern swung as rigging and hull held in the tide\", as four tokens: lantern, rigging, hull and tide. A single head gives each of them a query of 16 numbers and a key of 16 numbers. Queries and keys come out of different weight matrices, so nothing forces a token's query to match its own key. The head size is 16, so the divisor is the square root of 16, which is 4. Every score is one dot product of a query with a key divided by 4, and the score table has a row for each query and a column for each key."
+  },
+  "parts": {
+    "tf-which-key-a-query-picks": {
+      "1.1": {"kind": "derivation", "requirement": "A complete derivation is required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.3": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.4": {"kind": "derivation", "requirement": "A complete derivation is required."},
+      "1.5": {"kind": "derivation", "requirement": "A complete derivation is required."}
+    }
+  }
+}

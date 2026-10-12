@@ -1,0 +1,834 @@
+{
+  "module": "sequence-models-transfer-learning",
+  "stage": "Camp",
+  "index": [
+    {
+      "id": "rnn-delay-line-state-size",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "The Smallest State for a Two-Step Delay",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=rnn-delay-line-state-size",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "A linear RNN with the identity instead of tanh has to output each input two steps later, with the first two outputs zero. The question is the smallest hidden size that can do this exactly, weights that work at that size, and why nothing smaller can. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "rnn-loss-at-every-step",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "A Loss at Every Step",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=rnn-loss-at-every-step",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Camp"
+      ],
+      "prompt": "A recurrent layer with two hidden units uses the identity instead of tanh, makes a prediction at every step, and the loss sums the squared error over three steps. Given the error at each of the three steps, find the gradient of the total loss with respect to the first hidden state.",
+      "answer": "(1.5, -2). Go backward, giving each state the gradient of its own prediction plus Wᵀ times the gradient of the state after it, since the next state is W times this one plus terms that do not depend on it. With Wᵀ = [[0, 1], [−1, −1]]: g₃ = −1 × w = (−1, 0). g₂ = 1 × w + Wᵀ g₃ = (1, 0) + (0, 1) = (1, 1). g₁ = 0.5 × w + Wᵀ g₂ = (0.5, 0) + (1, −2) = (1.5, −2). The second entry of h₁ never touches its own prediction, yet it gets the largest gradient, all of it through the later steps."
+    },
+    {
+      "id": "rnn-truncation-chunk-reach",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "A Lag of Five Under Truncated BPTT",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=rnn-truncation-chunk-reach",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "A stream is cut into chunks of k steps and trained with truncated BPTT, so each loss reaches only the inputs inside its own chunk. Find what fraction of the steps see the reading five steps back at k = 8, and how large k must be for that fraction to reach 90 percent. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "rnn-clipped-bias-gradient",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "The Bias Gradient After Clipping",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=rnn-clipped-bias-gradient",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Camp"
+      ],
+      "prompt": "A recurrent model's gradients on one batch have length 12 for W_hh, length 4 for W_xh, and the bias gradient is (1.8, -2.4). Between loss.backward() and optimizer.step() the loop calls PyTorch's clip_grad_norm_ with a threshold of 2.0. What gradient does the optimizer then use for the bias?",
+      "answer": "(0.28, -0.37). The three tensors form one gradient of length √(12² + 4² + 3²) = √169 = 13. That is above 2, so every entry of every tensor is multiplied by 2/13 ≈ 0.154. The bias gradient becomes (1.8, −2.4) × 2/13 ≈ (0.28, −0.37), and the other two shrink by the same factor, to lengths 1.85 and 0.62. The update points the same way as before and has length 2."
+    },
+    {
+      "id": "rnn-forget-bias-memory-span",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "How Long a Forget Bias Keeps a Memory",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=rnn-forget-bias-memory-span",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "An LSTM carries a stored value through steps where the input gate is 0 and the forget gate is set by its bias alone. Compute how many steps a bias of 3 takes to halve the value and the smallest bias that keeps at least 90% after 200 steps, then explain why a bias of 20 is too large. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "rnn-gru-flipped-update-gate",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "Porting a GRU Between Update Conventions",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=rnn-gru-flipped-update-gate",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Camp"
+      ],
+      "prompt": "A teammate's GRU writes the update gate's blend the other way round: their gate keeps the old state where yours keeps the candidate, with the reset gate and the candidate computed the same way. Which update-gate weights and bias make the two GRUs compute exactly the same function?",
+      "answer": "W'_z = -W_z and b'_z = -b_z. The teammate's gate has to equal 1 − z at every step. For any pre-activation a, 1 − σ(a) = e^(−a) / (1 + e^(−a)) = 1 / (1 + e^a) = σ(−a). Negating every weight and the bias turns the teammate's pre-activation into −a, so its gate is σ(−a) = 1 − z and the two updates agree term by term. Nothing else changes."
+    },
+    {
+      "id": "rnn-bidirectional-summary-vector",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "A Sequence Summary from a Bidirectional GRU",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=rnn-bidirectional-summary-vector",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Camp"
+      ],
+      "prompt": "A bidirectional GRU with hidden size 32 reads 40-token reviews, so each step's output holds 64 features and h_n stacks the two directions. Which expression joins each pass's final state, taken after that pass has read all 40 tokens, into a (16, 64) summary with one row per review?",
+      "answer": "torch.cat([h_n[0], h_n[1]], dim=1). h_n holds each pass's final state: the left-to-right pass after token 40, and the right-to-left pass after token 1, which is the last token it reads. Row b of h_n[0] and of h_n[1] both belong to review b, so joining them along dim 1 gives the (16, 64) summary. The same two vectors sit in out[:, -1, :32] and out[:, 0, 32:]."
+    },
+    {
+      "id": "rnn-hundred-steps-triangular-w",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "A Hundred Steps Through a Triangular Matrix",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/theory/?id=rnn-hundred-steps-triangular-w",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Camp"
+      ],
+      "prompt": "A recurrent layer with two hidden units uses a triangular recurrent matrix whose largest singular value is exactly 1.6. By at most how much can 100 steps scale the length of a gradient carried back through the layer?",
+      "answer": "3.1 x 10^-8. Write W = 0.8 I + 1.2 N with N = [[0, 1], [0, 0]]. Since N² = 0 and N commutes with I, the binomial expansion of the power stops after two terms: W^n = 0.8^n I + n · 0.8^(n−1) · 1.2 N. At n = 100 the corner is 100 × 1.2 × 0.8^99 = 3.1 × 10^−8 and the diagonal 0.8^100 = 2.0 × 10^−10, so the norm is about 3.1 × 10^−8. The eigenvalues are both 0.8, the spectral radius, and the gradient vanishes at that rate per step. The corner adds a factor that grows only like n."
+    },
+    {
+      "id": "rnn-raising-the-recurrent-weight",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "Raising the Recurrent Weight",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=rnn-raising-the-recurrent-weight",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "A one-unit tanh RNN carries information across long gaps in which no input arrives, and its per-step gradient factor is the recurrent weight times the tanh slope at the new state. A teammate proposes raising the recurrent weight past 1 to stop the gradient product from shrinking. The parts ask whether that helps, why it cannot at a settled state, and when the gradient explodes instead. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "rnn-bptt-delay-task-numpy",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "Backpropagation Through Time in NumPy",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=rnn-bptt-delay-task-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Camp"
+      ],
+      "prompt": "A recurrent network reads a stream of symbols and, at every step, has to name the symbol it saw four steps earlier. Nothing but its hidden state can carry a symbol across those steps, so it can only learn the task if the gradient reaches back that far. You will write the forward pass over a batch, the backward pass through time, and clipping by the global norm, then train the network with them.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "rnn-lstm-backward-numpy",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "An LSTM Backward Pass in NumPy",
+      "source": "Custom",
+      "difficulty": "Very hard",
+      "url": "/editor/?nb=rnn-lstm-backward-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Camp"
+      ],
+      "prompt": "An LSTM cell has four gates' worth of weights, two states and a product at every turn, so its backward pass is where hand-written gradients most often go wrong. You will write one step of the cell, its backward pass, and backpropagation through time over a whole sequence, and check every gradient against central differences.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "rnn-padded-batch-final-states",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "Final States of a Padded Batch",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=rnn-padded-batch-final-states",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Camp"
+      ],
+      "prompt": "A factory logs three sensor readings at every step of each machine run, and a classifier reads a whole run at a time. Runs last between 3 and 9 steps, so a batch pads every run to 9 steps. You will run a recurrent layer over the padded batch in NumPy, take each run's state at its own last step, and add the right-to-left pass of a bidirectional layer, which is where padding is easiest to get wrong.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "nl3-vanishing-bptt",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "How Far Back Can a Vanilla RNN See?",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=nl3-vanishing-bptt",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Camp"
+      ],
+      "prompt": "Backpropagate through 80 steps of a tanh RNN at three spectral radii and measure how far back a usable gradient survives once saturation is accounted for.",
+      "answer": "Auto-graded inside the notebook. Gradient-norm curves, effective memory and decay_rate_07 must match to 1e-6, with all three radii decaying and memory growing with radius."
+    },
+    {
+      "id": "nl4-gate-gradient-highway",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "The Cell State Is a Gradient Highway",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=nl4-gate-gradient-highway",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Camp"
+      ],
+      "prompt": "Compare gradient flow through 100 steps of a vanilla RNN against an LSTM's cell path, and see what the positive forget-gate bias is worth.",
+      "answer": "Auto-graded inside the notebook. Both norm curves must match the reference in sum and in a fixed probe dot product to a tolerance of 1e-6 times (1 plus the reference value), the mean forget gate and both ratios to the same tolerance, with the mean forget gate above 0.75 and the LSTM retaining a million times more gradient."
+    }
+  ],
+  "theory": [
+    {
+      "id": "rnn-delay-line-state-size",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "The Smallest State for a Two-Step Delay",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "Take the recurrence from the lesson with tanh replaced by the identity and both biases set to zero, so the network is linear:"
+      ],
+      "setup": [
+        {
+          "tex": "\\mathbf{h}_t = W_{hh}\\mathbf{h}_{t-1} + W_{xh}\\,x_t, \\qquad\ny_t = W_{hy}\\mathbf{h}_t, \\qquad\n\\mathbf{h}_0 = \\mathbf{0} ."
+        },
+        {
+          "p": "Each input $x_t$ and each output $y_t$ is a single number. The network should output the input from two steps earlier, $y_t = x_{t-2}$, for every input sequence, with $y_1 = y_2 = 0$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the smallest hidden size with which this network can do it exactly? Give weights that work at that size."
+            }
+          ],
+          "answer": [
+            {
+              "p": "One construction keeps the last three inputs in the state, $\\mathbf{h}_t = (x_t,\\ x_{t-1},\\ x_{t-2})$. Each step writes the new input into the first entry and moves the other two down one place, and the output reads the last entry:"
+            },
+            {
+              "tex": "W_{xh} = \\begin{bmatrix} 1 \\\\ 0 \\\\ 0 \\end{bmatrix}, \\qquad\nW_{hh} = \\begin{bmatrix} 0 & 0 & 0 \\\\ 1 & 0 & 0 \\\\ 0 & 1 & 0 \\end{bmatrix}, \\qquad\nW_{hy} = \\begin{bmatrix} 0 & 0 & 1 \\end{bmatrix} ."
+            },
+            {
+              "p": "Since $\\mathbf{h}_0 = \\mathbf{0}$, the last entry is still 0 after steps 1 and 2, so $y_1 = y_2 = 0$."
+            },
+            {
+              "p": "No smaller state works, and the reason is what the state has to carry forward. Look at any step $t$ and suppose the inputs after it are 0. The next two states are then $W_{hh}\\mathbf{h}_t$ and $W_{hh}^2\\mathbf{h}_t$, so"
+            },
+            {
+              "tex": "y_t = W_{hy}\\mathbf{h}_t = x_{t-2}, \\qquad\ny_{t+1} = W_{hy}W_{hh}\\mathbf{h}_t = x_{t-1}, \\qquad\ny_{t+2} = W_{hy}W_{hh}^2\\mathbf{h}_t = x_t ."
+            },
+            {
+              "p": "One fixed linear map, $\\mathbf{h}_t \\mapsto (y_t, y_{t+1}, y_{t+2})$, must therefore produce whatever three numbers $(x_{t-2}, x_{t-1}, x_t)$ the input contains. A linear map out of a space of dimension $d$ has outputs that fill at most $d$ dimensions, so $d \\ge 3$."
+            },
+            {
+              "p": "The tempting answer is 2, one slot for each input the output is waiting for. It leaves out $x_t$, which arrives now, is needed two steps later, and has nowhere to wait except the state."
+            },
+            {
+              "result": "3"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "The lesson's network applies tanh, which no linear output layer can undo. Explain how a three-unit tanh network, with the same kind of weights, can come as close as you like to $y_t = x_{t-2}$ for inputs between $-1$ and $1$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Keep the state where tanh is nearly the identity. Use the same shift matrix $W_{hh}$, shrink the input weight to $W_{xh} = (\\varepsilon, 0, 0)^\\top$ and enlarge the output weight to $W_{hy} = (0, 0, 1/\\varepsilon)$."
+            },
+            {
+              "p": "The first unit then holds $\\tanh(\\varepsilon x_t)$, and each move down the line applies tanh once more. A number of size about $\\varepsilon$ hardly changes under tanh, since $\\tanh(a) = a - a^3/3 + \\cdots$, so after three applications the last unit holds $\\varepsilon x_{t-2}$ up to a relative error of about $(\\varepsilon x_{t-2})^2$. The output divides by $\\varepsilon$ and gives $x_{t-2}$ to the same relative error."
+            },
+            {
+              "p": "For inputs in $[-1, 1]$ the largest error is about $10^{-2}$ with $\\varepsilon = 0.1$ and $10^{-4}$ with $\\varepsilon = 0.01$, so a smaller $\\varepsilon$ gets as close as you like. The exact linear construction is the limit of tanh networks that work in the nearly linear part of the curve."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rnn-loss-at-every-step",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "A Loss at Every Step",
+      "difficulty": "Medium",
+      "minutes": 8,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A recurrent layer with two hidden units uses the identity in place of tanh, so $\\mathbf{h}_t = W_{hh}\\mathbf{h}_{t-1} + W_{xh}\\mathbf{x}_t$, with"
+            },
+            {
+              "tex": "W_{hh} = \\begin{bmatrix} 0 & -1 \\\\ 1 & -1 \\end{bmatrix} ."
+            },
+            {
+              "p": "A readout $y_t = \\mathbf{w}^\\top \\mathbf{h}_t$ with $\\mathbf{w} = (1, 0)$ makes a prediction at every step, and the loss over a sequence of three steps is"
+            },
+            {
+              "tex": "L = \\tfrac12 \\sum_{t=1}^{3} \\left(y_t - s_t\\right)^2 ,"
+            },
+            {
+              "p": "where $s_t$ is the target at step $t$. On one training sequence the errors $y_t - s_t$ are $0.5$, $1$ and $-1$ at steps 1, 2 and 3. With the weights and inputs held fixed, what is $\\partial L / \\partial \\mathbf{h}_1$?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$(0.5,\\ 0)$",
+                  "explain": "That is only the gradient through h₁'s own prediction, 0.5 × w. Changing h₁ also changes h₂ and h₃, whose predictions are in the loss too, so their errors reach h₁ through the recurrence."
+                },
+                {
+                  "text": "$(0.5,\\ -1)$",
+                  "explain": "This adds h₁'s own term to what h₂'s own prediction sends back, 0.5 × w + Wᵀ(1 × w), and stops. What reaches h₁ through h₂ is the whole gradient of h₂, which also holds what h₃ sent back to h₂: g₂ = (1, 0) + (0, 1) = (1, 1), not (1, 0)."
+                },
+                {
+                  "text": "$(1.5,\\ -2)$",
+                  "correct": true,
+                  "explain": "Go backward, giving each state the gradient of its own prediction plus Wᵀ times the gradient of the state after it, since the next state is W times this one plus terms that do not depend on it. With Wᵀ = [[0, 1], [−1, −1]]: g₃ = −1 × w = (−1, 0). g₂ = 1 × w + Wᵀ g₃ = (1, 0) + (0, 1) = (1, 1). g₁ = 0.5 × w + Wᵀ g₂ = (0.5, 0) + (1, −2) = (1.5, −2). The second entry of h₁ never touches its own prediction, yet it gets the largest gradient, all of it through the later steps."
+                },
+                {
+                  "text": "$(1.5,\\ 2)$",
+                  "explain": "This carries the gradient back with W in place of Wᵀ. The forward step multiplies the state by W, so the backward step multiplies the gradient by the transpose: the gradient of a state is Wᵀ times the gradient of the state after it, plus its own term. With W the second entry comes out +2 instead of −2, because this W is not symmetric."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Go backward, giving each state the gradient of its own prediction plus Wᵀ times the gradient of the state after it, since the next state is W times this one plus terms that do not depend on it. With Wᵀ = [[0, 1], [−1, −1]]: g₃ = −1 × w = (−1, 0). g₂ = 1 × w + Wᵀ g₃ = (1, 0) + (0, 1) = (1, 1). g₁ = 0.5 × w + Wᵀ g₂ = (0.5, 0) + (1, −2) = (1.5, −2). The second entry of h₁ never touches its own prediction, yet it gets the largest gradient, all of it through the later steps."
+            },
+            {
+              "result": "$(1.5,\\ -2)$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rnn-truncation-chunk-reach",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "A Lag of Five Under Truncated BPTT",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A recurrent model reads a long stream of readings from a vibration sensor and predicts a value at every step. The value at step $t$ depends only on the reading at step $t - 5$. The model is trained with truncated BPTT as in the lesson. The stream is cut into chunks of $k$ steps, steps 1 to $k$, then $k + 1$ to $2k$, and so on. The forward pass carries the hidden state from each chunk into the next, and each chunk's backward pass stops at that chunk's first step."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "With $k = 8$, what fraction of the steps have a loss whose gradient reaches the reading that step depends on? Ignore the first chunk, where no reading five steps back exists yet."
+            }
+          ],
+          "answer": [
+            {
+              "p": "A loss at step $t$ sends gradient to the inputs of its own chunk, from the chunk's first step up to $t$, and to nothing earlier. Number the places inside a chunk 1 to 8. A loss at place $p$ reaches back $p - 1$ steps, so it reaches the reading 5 steps back only when $p \\ge 6$. At places 1 to 5 that reading belongs to the previous chunk, whose inputs this backward pass never visits."
+            },
+            {
+              "p": "Three of every eight steps qualify, so the fraction is $3/8 = 0.375$. The first chunk has no reading five steps back at all, so it contributes none of them. The lesson's limit of $k$ steps is only an upper bound. The last loss of a chunk sees all $k$ of the chunk's inputs, every other loss sees fewer, and a loss at a chunk's first step reaches no earlier input at all."
+            },
+            {
+              "result": "0.375"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the smallest $k$ for which at least 90% of the steps get a gradient path to the reading they depend on? Ignore the first chunk again."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Leaving the first chunk out as Part 1 did, for $k \\ge 5$ the places 6 to $k$ qualify, $k - 5$ of the $k$, so the fraction is"
+            },
+            {
+              "tex": "\\frac{k - 5}{k} = 1 - \\frac{5}{k} ."
+            },
+            {
+              "p": "It reaches 0.9 when $5/k \\le 0.1$, that is at $k = 50$ ($k = 49$ gives $44/49 = 0.898$). Chunks must be ten times as long as the dependency before nine losses in ten see it."
+            },
+            {
+              "result": "50"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Memory limits each backward pass to short spans. Describe a way of cutting the stream that gives every loss a gradient path to the reading 5 steps back, and say what it costs compared with $k = 8$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Let each backward pass reach further back than the losses it collects. Take the losses of 8 new steps at a time as before, but run the backward pass through the last 13 steps: those 8 and the 5 before them, whose states the forward pass has already computed. The earliest of the 8 losses then reaches 5 steps back, and every later one reaches further."
+            },
+            {
+              "p": "Each backward pass computes the gradient of its own 8 losses, so no loss is counted twice, although the 5 extra steps take part in two passes. The cost is 13 stored states instead of 8 and about $13/8 \\approx 1.6$ times the backward work per step of the stream. Doubling to $k = 16$ chunks, the cheaper-looking fix, would still leave 5 of every 16 losses with no path."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rnn-clipped-bias-gradient",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "The Bias Gradient After Clipping",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A recurrent model has three parameter tensors: $W_{xh}$, $W_{hh}$ and a bias $\\mathbf{b}$ with two entries. On one batch the loss spikes. The gradient of each tensor has this length (the square root of the sum of its squared entries), and the bias gradient is given in full:"
+            },
+            {
+              "tex": "\\begin{array}{cc}\n\\text{Tensor} & \\text{Gradient} \\\\ \\hline\nW_{hh} & \\text{length 12} \\\\\nW_{xh} & \\text{length 4} \\\\\n\\mathbf{b} & (1.8,\\ -2.4)\n\\end{array}"
+            },
+            {
+              "p": "Between `loss.backward()` and `optimizer.step()`, the training loop calls PyTorch's `clip_grad_norm_` with a threshold of 2.0. What gradient does the optimizer then use for $\\mathbf{b}$?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$(1.2,\\ -1.6)$",
+                  "explain": "This clips each tensor on its own. The bias gradient has length 3, so it is scaled by 2/3. clip_grad_norm_ measures one length for all the parameters together and scales every tensor by the same factor, so the update keeps the direction of the full gradient."
+                },
+                {
+                  "text": "$(0.28,\\ -0.37)$",
+                  "correct": true,
+                  "explain": "The three tensors form one gradient of length √(12² + 4² + 3²) = √169 = 13. That is above 2, so every entry of every tensor is multiplied by 2/13 ≈ 0.154. The bias gradient becomes (1.8, −2.4) × 2/13 ≈ (0.28, −0.37), and the other two shrink by the same factor, to lengths 1.85 and 0.62. The update points the same way as before and has length 2."
+                },
+                {
+                  "text": "$(1.8,\\ -2.0)$",
+                  "explain": "That caps each entry at ±2, which is what clip_grad_value_ does. Capping entries one by one changes the direction of the update, here turning the bias gradient from (1.8, −2.4) to (1.8, −2.0). clip_grad_norm_ scales the whole gradient instead."
+                },
+                {
+                  "text": "$(0.19,\\ -0.25)$",
+                  "explain": "This takes 12 + 4 + 3 = 19, the sum of the three lengths, for the length of the whole gradient, and scales every tensor by 2/19, which turns (1.8, −2.4) into (0.19, −0.25). The length of the whole gradient is the square root of the sum of all its squared entries, √(144 + 16 + 9) = 13, and a norm is never larger than the sum of the parts."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The three tensors form one gradient of length √(12² + 4² + 3²) = √169 = 13. That is above 2, so every entry of every tensor is multiplied by 2/13 ≈ 0.154. The bias gradient becomes (1.8, −2.4) × 2/13 ≈ (0.28, −0.37), and the other two shrink by the same factor, to lengths 1.85 and 0.62. The update points the same way as before and has length 2."
+            },
+            {
+              "result": "$(0.28,\\ -0.37)$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rnn-forget-bias-memory-span",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "How Long a Forget Bias Keeps a Memory",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "An LSTM unit has to carry a value written into its cell across a long stretch of steps in which nothing new should be written. Assume that during the stretch the input gate is 0 and the weighted part of the forget gate's pre-activation is 0, so at every step the forget gate is $f = \\sigma(b_f)$, set by its bias alone."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "With $b_f = 3$, over how many steps does the stored value fall to half its size? Give the answer as a real number to two decimals."
+            }
+          ],
+          "answer": [
+            {
+              "p": "$f = \\sigma(3) = 1 / (1 + e^{-3}) = 0.95257$. Each step multiplies the cell by $f$, so after $n$ steps it holds $f^{\\,n}$ of the value, and"
+            },
+            {
+              "tex": "f^{\\,n} = \\tfrac12 \\quad\\Longleftrightarrow\\quad\nn = \\frac{\\ln 2}{-\\ln f} = \\frac{0.69315}{0.048587} = 14.27 ."
+            },
+            {
+              "p": "A gate of 0.95 looks close to 1, yet it halves the memory in about 14 steps. After 200 steps $0.95257^{200} = 6.0 \\times 10^{-5}$ of it is left."
+            },
+            {
+              "result": "14.27"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the smallest $b_f$ that keeps at least 90% of the value after 200 steps?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The cell keeps $f^{200}$ of the value, so we need $f \\ge 0.9^{1/200} = 0.999473$. The sigmoid's inverse is $b = \\ln\\big(f / (1 - f)\\big)$, which gives"
+            },
+            {
+              "tex": "b_f = \\ln \\frac{0.999473}{0.000527} = \\ln 1897 = 7.55 ."
+            },
+            {
+              "p": "A shortcut shows the pattern. For large $b$, $1 - \\sigma(b) \\approx e^{-b}$, so $f^{\\,n} \\approx e^{-n e^{-b}}$ and a memory lasts on the order of $e^{b}$ steps. Setting $200\\,e^{-b} = -\\ln 0.9 = 0.1054$ gives $b = 7.55$ again. Each extra unit of bias multiplies the span by $e \\approx 2.7$: with $b_f = 3$ the value halves in 14 steps, with $b_f = 5$ in 103."
+            },
+            {
+              "result": "7.55"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Why not set $b_f = 20$, which would keep a memory over any span the data could need?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Because the model also has to learn when to forget, for example when a new segment of the input starts, and it learns that through the gate's slope. Every gradient that reaches the forget gate's weights and bias is multiplied by $\\partial f / \\partial a = f(1 - f)$, where $a$ is the gate's pre-activation. That slope is 0.25 at $b_f = 0$, $5.3 \\times 10^{-4}$ at $b_f = 7.55$ and $2.1 \\times 10^{-9}$ at $b_f = 20$."
+            },
+            {
+              "p": "At $b_f = 20$ it is worse than small. $\\sigma(20) = 1 - 2.1 \\times 10^{-9}$ rounds to exactly 1 in float32, so a backward pass that computes the slope from the stored gate value gets $1 \\times (1 - 1) = 0$. The gate can never learn to close, and the cell can never be cleared. A positive bias of a few units keeps memory by default while leaving the gate trainable."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rnn-gru-flipped-update-gate",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "Porting a GRU Between Update Conventions",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "You trained a GRU in NumPy that follows the lesson's equations, with the update gate $\\mathbf{z}_t = \\sigma(W_z [\\mathbf{h}_{t-1}, \\mathbf{x}_t] + \\mathbf{b}_z)$ and the update"
+            },
+            {
+              "tex": "\\mathbf{h}_t = (1 - \\mathbf{z}_t) \\odot \\mathbf{h}_{t-1} + \\mathbf{z}_t \\odot \\tilde{\\mathbf{h}}_t ."
+            },
+            {
+              "p": "A teammate's GRU computes the reset gate and the candidate $\\tilde{\\mathbf{h}}_t$ the same way as yours, with the same weights, but writes the update as"
+            },
+            {
+              "tex": "\\mathbf{h}_t = \\mathbf{z}'_t \\odot \\mathbf{h}_{t-1} + (1 - \\mathbf{z}'_t) \\odot \\tilde{\\mathbf{h}}_t ,\n\\qquad\n\\mathbf{z}'_t = \\sigma(W'_z [\\mathbf{h}_{t-1}, \\mathbf{x}_t] + \\mathbf{b}'_z) ."
+            },
+            {
+              "p": "Which $W'_z$ and $\\mathbf{b}'_z$ make the teammate's GRU compute exactly the same function as yours?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$W'_z = W_z$ and $\\mathbf{b}'_z = \\mathbf{b}_z$",
+                  "explain": "With the same parameters the two gates take the same value, but in your GRU that value is the share of the candidate and in the teammate's it is the share of the old state. A gate of 0.9 that overwrites 90% of your state keeps 90% of the teammate's."
+                },
+                {
+                  "text": "$W'_z = -W_z$ and $\\mathbf{b}'_z = \\mathbf{b}_z$",
+                  "explain": "Write v for the joined vector of h and x. Negating the weights alone turns the pre-activation W_z v + b_z into −W_z v + b_z, and the sigmoid of that is 1 − z only where b_z is 0. The whole pre-activation has to change sign, bias included."
+                },
+                {
+                  "text": "$W'_z = 1 - W_z$ and $\\mathbf{b}'_z = 1 - \\mathbf{b}_z$",
+                  "explain": "Complementing the parameters does not complement the gate. With v the joined vector of h and x, it turns the pre-activation a = W_z v + b_z into (1 − W_z) v + 1 − b_z, which is −a plus the sum of the entries of v plus 1, and that extra amount changes with the input. The gate needs 1 − σ(a), and that is the sigmoid of −a."
+                },
+                {
+                  "text": "$W'_z = -W_z$ and $\\mathbf{b}'_z = -\\mathbf{b}_z$",
+                  "correct": true,
+                  "explain": "The teammate's gate has to equal 1 − z at every step. For any pre-activation a, 1 − σ(a) = e^(−a) / (1 + e^(−a)) = 1 / (1 + e^a) = σ(−a). Negating every weight and the bias turns the teammate's pre-activation into −a, so its gate is σ(−a) = 1 − z and the two updates agree term by term. Nothing else changes."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The teammate's gate has to equal 1 − z at every step. For any pre-activation a, 1 − σ(a) = e^(−a) / (1 + e^(−a)) = 1 / (1 + e^a) = σ(−a). Negating every weight and the bias turns the teammate's pre-activation into −a, so its gate is σ(−a) = 1 − z and the two updates agree term by term. Nothing else changes."
+            },
+            {
+              "result": "$W'_z = -W_z$ and $\\mathbf{b}'_z = -\\mathbf{b}_z$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rnn-bidirectional-summary-vector",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "A Sequence Summary from a Bidirectional GRU",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A classifier reads reviews of 40 tokens through a bidirectional GRU:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "gru = nn.GRU(input_size=8, hidden_size=32, batch_first=True, bidirectional=True)",
+                  "x = torch.randn(16, 40, 8)    # 16 reviews, 40 steps each, no padding",
+                  "out, h_n = gru(x)             # out: (16, 40, 64)   h_n: (2, 16, 32)"
+                ]
+              }
+            },
+            {
+              "p": "At each step, the first 32 features of `out` come from the left-to-right pass and the last 32 from the right-to-left pass. The classifier needs a tensor of shape `(16, 64)`, one row per review, that joins the final states of the two passes, each taken after that pass has read all 40 tokens. Which expression gives it?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "`torch.cat([h_n[0], h_n[1]], dim=1)`",
+                  "correct": true,
+                  "explain": "h_n holds each pass's final state: the left-to-right pass after token 40, and the right-to-left pass after token 1, which is the last token it reads. Row b of h_n[0] and of h_n[1] both belong to review b, so joining them along dim 1 gives the (16, 64) summary. The same two vectors sit in out[:, -1, :32] and out[:, 0, 32:]."
+                },
+                {
+                  "text": "`out[:, -1, :]`",
+                  "explain": "The first 32 features are right: the left-to-right state after token 40. The last 32 are the right-to-left state at step 40, the first step that pass reads, so that half has seen one token of the review. The right-to-left pass finishes at step 1, in out[:, 0, 32:]."
+                },
+                {
+                  "text": "`h_n.reshape(16, 64)`",
+                  "explain": "h_n is laid out direction first, with the two passes on its first axis, so reshape fills row 0 with the left-to-right states of reviews 0 and 1. Every row then mixes two reviews, and the right-to-left states land in rows 8 to 15."
+                },
+                {
+                  "text": "`torch.cat([out[:, 0, :32], out[:, -1, 32:]], dim=1)`",
+                  "explain": "This takes each half from the wrong end. At step 1 the left-to-right pass has read only token 1, and at step 40 the right-to-left pass has read only token 40, so each half has seen one token. Each pass finishes where the other starts: the left-to-right state after all 40 tokens is out[:, -1, :32] and the right-to-left one is out[:, 0, 32:]."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "h_n holds each pass's final state: the left-to-right pass after token 40, and the right-to-left pass after token 1, which is the last token it reads. Row b of h_n[0] and of h_n[1] both belong to review b, so joining them along dim 1 gives the (16, 64) summary. The same two vectors sit in out[:, -1, :32] and out[:, 0, 32:]."
+            },
+            {
+              "result": "`torch.cat([h_n[0], h_n[1]], dim=1)`"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rnn-hundred-steps-triangular-w",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "A Hundred Steps Through a Triangular Matrix",
+      "difficulty": "Hard",
+      "minutes": 10,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A recurrent layer with two hidden units runs where tanh is nearly linear, so carrying a gradient back across $n$ steps multiplies it by $(W_{hh}^{\\top})^n$. Its recurrent matrix is"
+            },
+            {
+              "tex": "W_{hh} = \\begin{bmatrix} 0.8 & 1.2 \\\\ 0 & 0.8 \\end{bmatrix},"
+            },
+            {
+              "p": "whose largest singular value is exactly 1.6. A teammate expects gradients to explode across long spans. By at most how much can 100 steps scale the length of a gradient, that is, what is $\\lVert W_{hh}^{100} \\rVert_2$?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$2.6 \\times 10^{20}$",
+                  "explain": "That is 1.6^100, the bound from the largest singular value. It is a true bound but far from the actual value, because the vector W stretches most is sent toward a direction it stretches much less, so no vector gets the full 1.6 at every step. The norm of W^n rises from 1.6 at one step to a peak of 2.52 at four steps, and from 14 steps on it stays below 1."
+                },
+                {
+                  "text": "$2.4 \\times 10^{-8}$",
+                  "explain": "Every path through the 100 steps chooses one step to supply the 1.2, and this counts 0.8 on all 100 of them, giving 100 × 1.2 × 0.8^100 = 2.4 × 10^−8. That 0.8^100 is the diagonal entry on its own, 150 times smaller than the corner."
+                },
+                {
+                  "text": "$3.1 \\times 10^{-8}$",
+                  "correct": true,
+                  "explain": "Write W = 0.8 I + 1.2 N with N = [[0, 1], [0, 0]]. Since N² = 0 and N commutes with I, the binomial expansion of the power stops after two terms: W^n = 0.8^n I + n · 0.8^(n−1) · 1.2 N. At n = 100 the corner is 100 × 1.2 × 0.8^99 = 3.1 × 10^−8 and the diagonal 0.8^100 = 2.0 × 10^−10, so the norm is about 3.1 × 10^−8. The eigenvalues are both 0.8, the spectral radius, and the gradient vanishes at that rate per step. The corner adds a factor that grows only like n."
+                },
+                {
+                  "text": "$2.0 \\times 10^{-10}$",
+                  "explain": "That is 0.8^100, the spectral radius to the 100th power, which would be the answer if W were diagonal. W cannot be diagonalized: its eigenvalue 0.8 is repeated but it has only one direction of eigenvectors, and its powers carry an extra n · 1.2 / 0.8 = 150 in the corner. The rate per step is 0.8, but the size is 150 times larger."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write W = 0.8 I + 1.2 N with N = [[0, 1], [0, 0]]. Since N² = 0 and N commutes with I, the binomial expansion of the power stops after two terms: W^n = 0.8^n I + n · 0.8^(n−1) · 1.2 N. At n = 100 the corner is 100 × 1.2 × 0.8^99 = 3.1 × 10^−8 and the diagonal 0.8^100 = 2.0 × 10^−10, so the norm is about 3.1 × 10^−8. The eigenvalues are both 0.8, the spectral radius, and the gradient vanishes at that rate per step. The corner adds a factor that grows only like n."
+            },
+            {
+              "result": "$3.1 \\times 10^{-8}$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rnn-raising-the-recurrent-weight",
+      "moduleId": "sequence-models-transfer-learning",
+      "title": "Raising the Recurrent Weight",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "A one-unit tanh RNN, $h_t = \\tanh(w\\,h_{t-1} + x_t)$, has to carry information across long gaps in which no input arrives, $x_t = 0$. Across a gap its gradient is the product of the per-step factors"
+      ],
+      "setup": [
+        {
+          "tex": "\\frac{\\partial h_t}{\\partial h_{t-1}} = w\\,(1 - h_t^2) ."
+        },
+        {
+          "p": "With $w = 0.8$ every factor is at most 0.8, so a teammate proposes $w = 2$, reasoning that factors of up to 2 will stop the product from shrinking."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Take $w = 2$ and a gap that starts at $h = 0.5$. The state settles at a value $h^*$. What is the per-step factor once it has settled?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "With no input the state follows $h \\leftarrow \\tanh(2h)$:"
+            },
+            {
+              "tex": "0.5 \\to 0.7616 \\to 0.9093 \\to 0.9487 \\to 0.9560 \\to 0.9573 \\to 0.9575 \\to 0.9575 ."
+            },
+            {
+              "p": "It settles at the positive solution of $h^* = \\tanh(2h^*)$, which is $h^* = 0.9575$. There $1 - h^{*2} = 0.0832$, so the factor is"
+            },
+            {
+              "tex": "2 \\times 0.0832 = 0.166 ."
+            },
+            {
+              "p": "Across 20 settled steps the gradient is multiplied by $0.166^{20} = 2.52 \\times 10^{-16}$. With $w = 0.8$ the state decays toward 0, where the tanh slope is 1, so each factor approaches 0.8 and 20 steps multiply the gradient by about $0.8^{20} = 0.012$. Doubling the weight past 1 made the vanishing far worse."
+            },
+            {
+              "result": "0.166"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Show that for every $w > 1$ the factor at the positive solution $h^*$ of $h = \\tanh(wh)$ is less than 1."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Let $g(h) = \\tanh(wh)$. The factor at $h^*$ is $w\\,(1 - \\tanh^2(wh^*)) = g'(h^*)$, the slope of $g$ there."
+            },
+            {
+              "p": "For $h > 0$, $g$ is concave: $g''(h) = -2w^2 \\tanh(wh)\\,(1 - \\tanh^2(wh)) < 0$. A concave function's slope at the right end of an interval is smaller than the slope of the chord across it, because the slope keeps falling across the interval. Take the interval $[0, h^*]$. The chord joins $(0, g(0)) = (0, 0)$ to $(h^*, g(h^*)) = (h^*, h^*)$, so its slope is exactly 1. Hence $g'(h^*) < 1$. $\\qquad\\blacksquare$"
+            },
+            {
+              "p": "In words: a curve that leaves the origin with slope $w > 1$ and bends down must be flatter than the line $y = h$ at the point where it meets it again. A larger $w$ pushes $h^*$ further into the flat part of tanh, and the slope falls faster than $w$ rises. At $w = 3$ the factor is 0.031."
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "So when can the gradient of a tanh RNN explode? Describe, with $w = 2$, a situation in which it does, and say what gradient clipping does about it."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The factor $2(1 - h^2)$ exceeds 1 only while $|h| < 1/\\sqrt2 \\approx 0.71$, the part of the curve where tanh is close to linear. The gradient explodes when the state spends many steps there. Start a gap at $h_0 = 0.001$ instead. The state roughly doubles each step, $0.002, 0.004, 0.008, \\ldots$, and each factor is close to 2:"
+            },
+            {
+              "tex": "\\begin{array}{cccccc}\n\\text{Steps from $h_0$} & 3 & 6 & 9 & 12 & 15 \\\\ \\hline\n\\text{$h$ after them} & 0.008 & 0.064 & 0.460 & 0.946 & 0.957 \\\\\n\\text{$\\partial h / \\partial h_0$ across them} & 8.0 & 63.7 & 370 & 29.0 & 0.1\n\\end{array}"
+            },
+            {
+              "p": "Over the first 9 steps the gradient grows by a factor of about 370. Then the state reaches the flat part and the product collapses. Inputs that hold the state near 0 for longer make the growth last longer. Gradients like this come in bursts: most batches are fine and one is hundreds of times larger than the rest. Clipping by norm scales that one batch's gradient down to length $\\tau$ and keeps its direction, so a single step cannot throw the weights far. It does nothing for the vanishing in Part 1, where the gradient is already below $\\tau$."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

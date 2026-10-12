@@ -1,0 +1,945 @@
+{
+  "module": "expectations-multivariate-distributions",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "ej-checkpoint-saves",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "How Often the Best Checkpoint Changes",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ej-checkpoint-saves",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A training script measures the validation loss after each of 6 epochs and saves a checkpoint whenever the loss is the lowest seen so far, so the first epoch always saves. Suppose the model is not learning at all: the six losses are six different numbers in random order, and each of the 6! = 720 orders is equally likely. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ej-shift-the-predictions",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "One Constant off Every Prediction",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ej-shift-the-predictions",
+      "source": "Custom",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A model forecasts each day's electricity demand. Over a long test period its error, the forecast minus the actual demand in gigawatt hours, has a mean squared error of 6.25 and a standard deviation of 2, and the model over-forecasts on average. You may subtract one constant from every forecast. What is the best you can do?",
+      "answer": "Subtract 1.5, which brings the mean squared error down to 4. The mean squared error is the mean of the squared error, so it equals the variance plus the squared mean: 6.25 = 2² + 1.5², and the mean error is +1.5 because the model over-forecasts. Subtracting c from every forecast subtracts c from every error. That leaves the variance at 4 and makes the mean 1.5 − c, so the mean squared error is 4 + (1.5 − c)², smallest at c = 1.5, where it is 4."
+    },
+    {
+      "id": "ej-draws-until-every-class",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "Draws Until Every Class Has Appeared",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ej-draws-until-every-class",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A data loader draws training examples one at a time, uniformly at random and with replacement, from a dataset with four equally common classes. Let N be the number of draws until every class has appeared at least once. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ej-hedged-requests",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "Send a Second Request Only When the First Is Slow",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ej-hedged-requests",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A service answers a request in 1, 2 or 6 milliseconds, with probabilities 0.6, 0.3 and 0.1, so its mean response time is 1.8 ms. A client sends each request to one copy of the service. If that copy has not answered after d ms, that is, if its response time is more than d, the client sends the same request to a second copy and uses whichever answer arrives first. The two copies answer independently, each with this distribution, and d is a whole number of milliseconds. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ej-tickets-by-channel",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "Ticket Priority by Channel",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ej-tickets-by-channel",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A help desk receives 40% of its tickets by email and 60% by chat, and marks each ticket low, medium or high priority. Among email tickets, 50% are low, 25% medium and 25% high. Over all tickets, 38% are low, 34% medium and 28% high. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ej-mix-two-sensors",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "Mixing in a Noisier Sensor",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ej-mix-two-sensors",
+      "source": "Custom",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "Two thermometers read the same temperature. Thermometer A's error has variance 9, thermometer B's has variance 1, both have mean 0, and the two errors have covariance 1. You report wA + (1 - w)B, where A and B are the two readings and w is a weight between 0 and 1. Which weight gives the report with the smallest error variance?",
+      "answer": "w = 0. The report's error is w·eA + (1 − w)·eB, so its variance is 9w² + (1 − w)² + 2w(1 − w)·1 = 8w² + 1. That is smallest at w = 0, where it is 1. Any weight on A makes the report worse: the covariance 1 equals B's own variance, so A's error is B's error plus extra noise that is uncorrelated with it, with variance 9 − 1 = 8. Mixing in A only adds that extra noise."
+    },
+    {
+      "id": "ej-ensemble-floor-from-two-sizes",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "The Ensemble Floor from Two Measurements",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ej-ensemble-floor-from-two-sizes",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A team measures the variance of an ensemble's averaged error at two sizes. With 2 models it is 3.0, and with 8 models it is 1.5. Every model has the same error variance, and every pair of models has the same correlation. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ej-predict-by-group-mean",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "How Much the City Explains",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ej-predict-by-group-mean",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A delivery company predicts how long each order takes, in minutes, from its city alone. Half of the orders are in city A and a quarter each in cities B and C, with mean delivery times of 60, 64 and 72 minutes. Over all orders the delivery time has variance 40. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ej-impute-from-arm-span",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "The Spread of Filled-in Values",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ej-impute-from-arm-span",
+      "source": "Custom",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A table of athletes has two columns, height h and arm span s, both in centimeters. They are jointly Gaussian: h has standard deviation 8, s has standard deviation 10, and their correlation is 0.75. Some heights are missing, and you fill each one with E[h | s], computed from that athlete's arm span. Across many athletes, what is the variance of the filled-in heights?",
+      "answer": "36. The filled-in value is μ_h + 0.75 · (8/10) · (s − μ_s), a straight-line function of s with slope 0.6. So its variance is 0.6² · Var(s) = 0.36 · 100 = 36, which is 0.75² of the variance of h. The rest, 64 − 36 = 28, is Var(h | s): the spread of the true heights around their filled-in values. Filled-in values vary less than real heights, so a column with many of them has too small a spread."
+    },
+    {
+      "id": "ej-permuted-model-kl",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "The Right Probabilities on the Wrong Symbols",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ej-permuted-model-kl",
+      "source": "Custom",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A source emits the symbols a, b, c and d with probabilities p = (1/2, 1/4, 1/8, 1/8). A model assigns them q = (1/2, 1/8, 1/4, 1/8): the same four numbers, with those of b and c swapped. How many bits is the KL divergence of the model from the source, D_KL(p || q)?",
+      "answer": "0.125. The cross-entropy is the average surprise under q: 1/2 · 1 + 1/4 · 3 + 1/8 · 2 + 1/8 · 3 = 1.875 bits. The entropy of p is 1/2 · 1 + 1/4 · 2 + 1/8 · 3 + 1/8 · 3 = 1.75 bits, so KL = 1.875 − 1.75 = 0.125. Term by term: b adds 1/4 · log₂ 2 = 0.25 and c adds 1/8 · log₂(1/2) = −0.125. The uniform model has KL 0.25, so this model is closer to the source than uniform, and still not equal to it."
+    },
+    {
+      "id": "ej-impossible-correlations",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "Three Correlations That Cannot All Be True",
+      "difficulty": "Hard",
+      "url": "/theory/?id=ej-impossible-correlations",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A data report lists the correlations between three features: corr(A, B) = 0.9, corr(B, C) = 0.9 and corr(A, C) = -0.5. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ej-grouped-test-set",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "A Test Set with Five Scans per Patient",
+      "difficulty": "Hard",
+      "url": "/theory/?id=ej-grouped-test-set",
+      "source": "USAAIO-style",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A model reads medical scans. Its test set has 300 scans, 5 from each of 60 patients, and on a random scan the model is right with probability 0.9. Two scans of the same patient look alike, so whether the model is right on one and whether it is right on the other have correlation 0.5. Scans of different patients are independent. The team reports the accuracy, the share of the 300 scans the model gets right. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ej-best-split-numpy",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "The Split That Explains the Most Variance",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ej-best-split-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "A support line logs how long each call waits before an agent answers, in whole minutes, but keeps only a histogram. Compute the mean and variance from the histogram, the between-group variance at every cutoff, and the best cutoff.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+    }
+  ],
+  "theory": [
+    {
+      "id": "ej-checkpoint-saves",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "How Often the Best Checkpoint Changes",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "A training script measures the validation loss after each of 6 epochs and saves a checkpoint whenever the loss is the lowest seen so far, so the first epoch always saves. Suppose the model is not learning at all: the six losses are six different numbers in random order, and each of the $6! = 720$ orders is equally likely."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What is the expected number of checkpoints the script saves?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Let $I_k$ be 1 if epoch $k$ saves, that is, if its loss is the smallest of the first $k$, and 0 otherwise. The number of saves is $I_1 + I_2 + \\dots + I_6$."
+            },
+            {
+              "p": "The first $k$ losses are in random order, so each of them is equally likely to be the smallest of the $k$. The last one is the smallest with probability $1/k$, so $\\mathbb{E}[I_k] = 1/k$. Linearity adds the six means:"
+            },
+            {
+              "tex": "1 + \\tfrac12 + \\tfrac13 + \\tfrac14 + \\tfrac15 + \\tfrac16 = \\tfrac{49}{20} = 2.45 ."
+            },
+            {
+              "p": "Linearity holds whether or not the $I_k$ are independent. A model that learns nothing still saves a new best more than twice on average, so a few new bests in a log are no evidence that training works."
+            },
+            {
+              "result": "2.45"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "The script also flags an epoch whose loss is the highest seen so far, as a warning that training may be diverging. On average, how many of the six epochs set a new lowest loss, a new highest loss, or both?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Let $J_k$ be 1 if epoch $k$ sets a new lowest or a new highest loss. Epoch 1 does both, so $J_1 = 1$. For $k \\ge 2$, the last of the first $k$ losses is the smallest with probability $1/k$ and the largest with probability $1/k$, and it cannot be both, so $\\mathbb{E}[J_k] = 2/k$. Linearity gives"
+            },
+            {
+              "tex": "1 + \\tfrac22 + \\tfrac23 + \\tfrac24 + \\tfrac25 + \\tfrac26 = 2\\left(1 + \\tfrac12 + \\dots + \\tfrac16\\right) - 1 = 4.9 - 1 = 3.9 ."
+            },
+            {
+              "p": "Adding the expected number of new lows, 2.45, to the expected number of new highs, also 2.45, gives 4.9, which counts epoch 1 twice. The count is of epochs, and epoch 1 is one epoch that sets both records."
+            },
+            {
+              "result": "3.9"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ej-shift-the-predictions",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "One Constant off Every Prediction",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A model forecasts each day's electricity demand. Over a long test period its error, the forecast minus the actual demand in gigawatt hours, has a mean squared error of 6.25 and a standard deviation of 2, and the model over-forecasts on average. You may subtract one constant from every forecast. What is the best you can do?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Subtract 2.25, which brings the mean squared error down to 4",
+                  "explain": "2.25 is the squared mean error, the gap between the mean squared error 6.25 and the variance 4. The mean error is its square root, 1.5. Subtracting 2.25 overshoots and leaves a mean error of −0.75, so the mean squared error falls only to 4 + 0.75² = 4.5625."
+                },
+                {
+                  "text": "Subtract 1.5, which brings the mean squared error down to 4",
+                  "correct": true,
+                  "explain": "The mean squared error is the mean of the squared error, so it equals the variance plus the squared mean: 6.25 = 2² + 1.5², and the mean error is +1.5 because the model over-forecasts. Subtracting c from every forecast subtracts c from every error. That leaves the variance at 4 and makes the mean 1.5 − c, so the mean squared error is 4 + (1.5 − c)², smallest at c = 1.5, where it is 4."
+                },
+                {
+                  "text": "Add 1.5, which brings the mean squared error down to 4",
+                  "explain": "This moves the forecasts the wrong way. The error is forecast minus demand and its mean is +1.5, so adding 1.5 to every forecast makes the mean error 3 and the mean squared error 4 + 3² = 13."
+                },
+                {
+                  "text": "Nothing helps: a constant shift leaves the spread of the errors unchanged, so the mean squared error stays 6.25",
+                  "explain": "A constant shift does leave the variance at 4, but the mean squared error also counts the squared mean, 6.25 = 4 + 1.5². Subtracting 1.5 from every forecast removes that part and leaves 4."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The mean squared error is the mean of the squared error, so it equals the variance plus the squared mean: 6.25 = 2² + 1.5², and the mean error is +1.5 because the model over-forecasts. Subtracting c from every forecast subtracts c from every error. That leaves the variance at 4 and makes the mean 1.5 − c, so the mean squared error is 4 + (1.5 − c)², smallest at c = 1.5, where it is 4."
+            },
+            {
+              "result": "Subtract 1.5, which brings the mean squared error down to 4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ej-draws-until-every-class",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "Draws Until Every Class Has Appeared",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A data loader draws training examples one at a time, uniformly at random and with replacement, from a dataset with four equally common classes. Let $N$ be the number of draws until every class has appeared at least once."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What is $\\mathbb{E}[N]$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Split the draws into four stages. Stage $j$ starts when $j - 1$ classes have appeared and ends at the draw that brings a new one. During stage $j$ each draw is new with probability $(5 - j)/4$, independently of the other draws, so the length of the stage is the number of trials up to and including the first success: Geometric with $p = 1, \\tfrac34, \\tfrac12, \\tfrac14$."
+            },
+            {
+              "p": "$N$ is the sum of the four stage lengths, and linearity adds their means, $1/p$:"
+            },
+            {
+              "tex": "\\mathbb{E}[N] = 1 + \\tfrac43 + 2 + 4 = \\tfrac{25}{3} \\approx 8.33 ."
+            },
+            {
+              "p": "The last class alone takes 4 draws on average, nearly half the total, because by then three draws in four bring a class already seen."
+            },
+            {
+              "result": "8.333"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What is the standard deviation of $N$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The four stage lengths are independent, since each stage only uses its own draws. So their variances add. A Geometric($p$) has variance $(1 - p)/p^2$:"
+            },
+            {
+              "tex": "0 + \\frac{1/4}{9/16} + \\frac{1/2}{1/4} + \\frac{3/4}{1/16} = 0 + \\tfrac49 + 2 + 12 = \\tfrac{130}{9} \\approx 14.44 ."
+            },
+            {
+              "p": "The standard deviation is $\\sqrt{130/9} \\approx 3.80$ draws. The last stage gives 12 of the 14.44, about 83%. Adding the four standard deviations instead, $0 + 0.67 + 1.41 + 3.46 = 5.54$, would overstate the spread, since for independent pieces it is the variances that add."
+            },
+            {
+              "result": "3.80"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ej-hedged-requests",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "Send a Second Request Only When the First Is Slow",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A service answers a request in 1, 2 or 6 milliseconds, with probabilities 0.6, 0.3 and 0.1, so its mean response time is 1.8 ms. A client sends each request to one copy of the service. If that copy has not answered after $d$ ms, that is, if its response time is more than $d$, the client sends the same request to a second copy and uses whichever answer arrives first. The two copies answer independently, each with this distribution, and $d$ is a whole number of milliseconds."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "With $d = 2$, what is the client's expected wait in milliseconds?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Call the response times $T_1$ and $T_2$. The second copy's answer arrives at time $2 + T_2$, so the wait is $W = \\min(T_1,\\ 2 + T_2)$. This also covers the requests that never send a second copy: when $T_1 \\le 2$, the minimum is $T_1$ anyway."
+            },
+            {
+              "p": "The wait is at least $k$ exactly when both answers arrive at $k$ or later, and the two copies are independent, so"
+            },
+            {
+              "tex": "P(W \\ge k) = P(T_1 \\ge k)\\,P(T_2 \\ge k - 2) ."
+            },
+            {
+              "p": "The tails of one copy are $P(T \\ge 1) = 1$, $P(T \\ge 2) = 0.4$, and $P(T \\ge j) = 0.1$ for $j = 3, \\dots, 6$. A tail at $j \\le 1$ is 1. So for $k = 1, \\dots, 6$:"
+            },
+            {
+              "tex": "\\begin{array}{ccccccc}\nk & 1 & 2 & 3 & 4 & 5 & 6 \\\\ \\hline\nP(T_1 \\ge k) & 1 & 0.4 & 0.1 & 0.1 & 0.1 & 0.1 \\\\\nP(T_2 \\ge k - 2) & 1 & 1 & 1 & 0.4 & 0.1 & 0.1 \\\\\nP(W \\ge k) & 1 & 0.4 & 0.1 & 0.04 & 0.01 & 0.01\n\\end{array}"
+            },
+            {
+              "p": "The wait is never above 6, and the tail-sum formula gives $\\mathbb{E}[W] = 1 + 0.4 + 0.1 + 0.04 + 0.01 + 0.01 = 1.56$ ms."
+            },
+            {
+              "p": "Squaring the tails, as if both copies started together, gives 1.2. That is the wait when every request goes to two copies at once, which doubles the load. With $d = 2$ only the requests still waiting at 2 ms, 10% of them, send a second copy, and they cut the mean from 1.8 ms to 1.56 ms."
+            },
+            {
+              "result": "1.56"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "The team wants an expected wait of at most 1.5 ms and as few second copies as possible. Which delay $d$ should it use, and what share of requests then send a second copy?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "A second copy goes out when $T_1 > d$: for every request when $d = 0$, for 40% when $d = 1$, and for 10% when $d$ is 2 to 5. A larger delay sends fewer copies and waits longer, so the answer is the largest $d$ that still meets 1.5 ms."
+            },
+            {
+              "p": "Part 1 gives 1.56 ms at $d = 2$, which misses. At $d = 1$ the same steps with $P(T_2 \\ge k - 1)$ give the tails 1, 0.4, 0.04, 0.01, 0.01 and 0.01, so $\\mathbb{E}[W] = 1.47$ ms, which meets it. The team should use $d = 1$, and 40% of requests send a second copy."
+            },
+            {
+              "p": "The trade-off is uneven. Sending both at once buys 0.6 ms for 100% more requests. A delay of 1 ms buys 0.33 ms for 40%, and a delay of 2 ms buys 0.24 ms for 10%. A delay of 2 ms sends a second copy only for the requests whose first answer will take 6 ms, which is why so few copies still help."
+            },
+            {
+              "result": "0.4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ej-tickets-by-channel",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "Ticket Priority by Channel",
+      "difficulty": "Medium",
+      "minutes": 8,
+      "overview": [
+        "A help desk receives 40% of its tickets by email and 60% by chat, and marks each ticket low, medium or high priority. Among email tickets, 50% are low, 25% medium and 25% high. Over all tickets, 38% are low, 34% medium and 28% high."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What share of chat tickets are high priority?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Build the joint table of channel and priority. The email row is $0.4 \\times (0.50, 0.25, 0.25) = (0.20, 0.10, 0.10)$. The overall shares are the column totals, so the chat row is what each column still needs:"
+            },
+            {
+              "tex": "\\begin{array}{ccccc}\n\\text{} & \\text{Low} & \\text{Medium} & \\text{High} & \\text{Total} \\\\ \\hline\n\\text{Email} & 0.20 & 0.10 & 0.10 & 0.40 \\\\\n\\text{Chat} & 0.18 & 0.24 & 0.18 & 0.60 \\\\\n\\text{Total} & 0.38 & 0.34 & 0.28 & 1\n\\end{array}"
+            },
+            {
+              "p": "The chat row adds to 0.60, as it should. Dividing it by 0.60 gives the priorities of chat tickets: 30% low, 40% medium and 30% high."
+            },
+            {
+              "p": "Two answers come up often. 0.18 is the share of all tickets that are chat and high, not the share of chat tickets. 0.28 is the overall share, which would be right only if channel and priority were independent."
+            },
+            {
+              "result": "0.3"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What share of high-priority tickets came by chat? Are channel and priority independent?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The high column holds 0.10 by email and 0.18 by chat, out of 0.28. So $P(\\text{chat} \\mid \\text{high}) = 0.18 / 0.28 = 9/14 \\approx 0.643$."
+            },
+            {
+              "p": "They are dependent. The email row divided by its total is $(0.5, 0.25, 0.25)$ and the chat row divided by its total is $(0.3, 0.4, 0.3)$, so the priority mix depends on the channel. Cell by cell, $P(\\text{email}, \\text{low}) = 0.20$, while $0.4 \\times 0.38 = 0.152$. The high column alone would not show it: $0.4 \\times 0.28 = 0.112$ is close to 0.10, but one cell that matches, or nearly matches, is not enough. Every cell must equal its product."
+            },
+            {
+              "result": "0.643"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ej-mix-two-sensors",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "Mixing in a Noisier Sensor",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Two thermometers read the same temperature. Thermometer A's error has variance 9, thermometer B's has variance 1, both have mean 0, and the two errors have covariance 1. You report $wA + (1 - w)B$, where $A$ and $B$ are the two readings and $w$ is a weight between 0 and 1. Which weight gives the report with the smallest error variance?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$w = 0$",
+                  "correct": true,
+                  "explain": "The report's error is w·eA + (1 − w)·eB, so its variance is 9w² + (1 − w)² + 2w(1 − w)·1 = 8w² + 1. That is smallest at w = 0, where it is 1. Any weight on A makes the report worse: the covariance 1 equals B's own variance, so A's error is B's error plus extra noise that is uncorrelated with it, with variance 9 − 1 = 8. Mixing in A only adds that extra noise."
+                },
+                {
+                  "text": "$w = 0.1$",
+                  "explain": "This weights each reading by one over its error variance, (1/9) / (1/9 + 1) = 0.1, which is the best weight only when the errors are uncorrelated. With covariance 1 the variance is 8w² + 1, which is 1.08 at w = 0.1, more than B alone."
+                },
+                {
+                  "text": "$w = 0.25$",
+                  "explain": "This weights each reading by one over its standard deviation, (1/3) / (1/3 + 1). A weight that minimizes a variance has to come from the variances and the covariance. Here the variance is 8w² + 1, which is 1.5 at w = 0.25."
+                },
+                {
+                  "text": "$w = 0.5$",
+                  "explain": "Averaging helps when the errors partly cancel, but here they move together and A's is the larger. The variance 9w² + (1 − w)² + 2w(1 − w) = 8w² + 1 is 3 at w = 0.5, three times the error of B alone."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The report's error is w·eA + (1 − w)·eB, so its variance is 9w² + (1 − w)² + 2w(1 − w)·1 = 8w² + 1. That is smallest at w = 0, where it is 1. Any weight on A makes the report worse: the covariance 1 equals B's own variance, so A's error is B's error plus extra noise that is uncorrelated with it, with variance 9 − 1 = 8. Mixing in A only adds that extra noise."
+            },
+            {
+              "result": "$w = 0$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ej-ensemble-floor-from-two-sizes",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "The Ensemble Floor from Two Measurements",
+      "difficulty": "Medium",
+      "minutes": 8,
+      "overview": [
+        "A team measures the variance of an ensemble's averaged error at two sizes. With 2 models it is 3.0, and with 8 models it is 1.5. Every model has the same error variance, and every pair of models has the same correlation."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What value does the variance of the averaged error approach as the ensemble grows without limit?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "With $n$ models the variance is $\\rho\\sigma^2 + (1 - \\rho)\\sigma^2/n$. Write it as $a + b/n$, with $a = \\rho\\sigma^2$ and $b = (1 - \\rho)\\sigma^2$. The two measurements give"
+            },
+            {
+              "tex": "a + \\tfrac{b}{2} = 3, \\qquad a + \\tfrac{b}{8} = 1.5 ."
+            },
+            {
+              "p": "Subtracting, $\\tfrac38 b = 1.5$, so $b = 4$ and $a = 3 - 2 = 1$. As $n$ grows, $b/n$ goes to 0 and the variance approaches $a = 1$."
+            },
+            {
+              "p": "Scaling the 2-model result by $1/n$, as for independent errors, would put the 8-model variance at $3 \\cdot 2/8 = 0.75$. The measured 1.5 is twice that, which already shows a shared part that averaging does not remove."
+            },
+            {
+              "result": "1"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What is the correlation between the errors of two of the models?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The floor $a = 1$ is $\\rho\\sigma^2$, not $\\rho$ itself, so the correlation also needs each model's error variance. That is the case $n = 1$, an ensemble of one: $\\sigma^2 = a + b = 1 + 4 = 5$. Then $\\rho = a / \\sigma^2 = 1/5 = 0.2$."
+            },
+            {
+              "p": "As a check, $5\\,(0.2 + 0.8/2) = 3$ and $5\\,(0.2 + 0.8/8) = 1.5$, the two measurements. A correlation of only 0.2 still leaves a floor of one fifth of a single model's variance, which no number of these models gets below."
+            },
+            {
+              "result": "0.2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ej-predict-by-group-mean",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "How Much the City Explains",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "A delivery company predicts how long each order takes, in minutes, from its city alone. Half of the orders are in city A and a quarter each in cities B and C, with these mean delivery times:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{ccc}\n\\text{City} & \\text{Share of orders} & \\text{Mean time} \\\\ \\hline\n\\text{A} & 0.50 & 60 \\\\\n\\text{B} & 0.25 & 64 \\\\\n\\text{C} & 0.25 & 72\n\\end{array}"
+        },
+        {
+          "p": "Over all orders, the delivery time has variance 40."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "The model predicts each order's time as the mean of its city. What is its mean squared error over all orders?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Within a city the model always predicts that city's mean, so its squared error there averages the variance within that city. Over all orders the mean squared error is the weighted average of the within-city variances, $\\mathbb{E}\\big[\\operatorname{Var}(Y \\mid \\text{city})\\big]$. The table does not give those variances, but the law of total variance links their average to what it does give:"
+            },
+            {
+              "tex": "\\operatorname{Var}(Y) = \\mathbb{E}\\big[\\operatorname{Var}(Y \\mid \\text{city})\\big] + \\operatorname{Var}\\big(\\mathbb{E}[Y \\mid \\text{city}]\\big) ."
+            },
+            {
+              "p": "The overall mean is $0.5 \\cdot 60 + 0.25 \\cdot 64 + 0.25 \\cdot 72 = 64$, and the city means spread around it by"
+            },
+            {
+              "tex": "0.5\\,(60 - 64)^2 + 0.25\\,(64 - 64)^2 + 0.25\\,(72 - 64)^2 = 8 + 0 + 16 = 24 ."
+            },
+            {
+              "p": "So the mean squared error is $40 - 24 = 16$. Measuring the city means from 0 instead of from 64, or leaving out the shares, gives a wrong spread."
+            },
+            {
+              "result": "16"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "A second model ignores the city and predicts the overall mean time for every order. What fraction of the second model's mean squared error does the city model remove?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Predicting 64 for every order gives a mean squared error of $\\mathbb{E}[(Y - 64)^2] = \\operatorname{Var}(Y) = 40$. The city model leaves 16, so it removes $24/40 = 0.6$ of the error. The part it removes is exactly the spread of the city means, and the 16 it leaves is noise within each city that the city alone cannot explain."
+            },
+            {
+              "result": "0.6"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ej-impute-from-arm-span",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "The Spread of Filled-in Values",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A table of athletes has two columns, height $h$ and arm span $s$, both in centimeters. They are jointly Gaussian: $h$ has standard deviation 8, $s$ has standard deviation 10, and their correlation is 0.75. Some heights are missing, and you fill each one with $\\mathbb{E}[h \\mid s]$, computed from that athlete's arm span. Across many athletes, what is the variance of the filled-in heights?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$28$",
+                  "explain": "That is $\\operatorname{Var}(h \\mid s)$ = 64 · (1 − 0.75²), the variance of the true height around the filled-in value. The filled-in values are the other part of the variance of h: the two add up to 64."
+                },
+                {
+                  "text": "$48$",
+                  "explain": "This multiplies the variance of h by the correlation, 0.75 · 64. The filled-in value is a straight-line function of s with slope 0.75 · 8/10 = 0.6, and a slope enters a variance squared: 0.6² · 100 = 36."
+                },
+                {
+                  "text": "$36$",
+                  "correct": true,
+                  "explain": "The filled-in value is μ_h + 0.75 · (8/10) · (s − μ_s), a straight-line function of s with slope 0.6. So its variance is 0.6² · Var(s) = 0.36 · 100 = 36, which is 0.75² of the variance of h. The rest, 64 − 36 = 28, is $\\operatorname{Var}(h \\mid s)$: the spread of the true heights around their filled-in values. Filled-in values vary less than real heights, so a column with many of them has too small a spread."
+                },
+                {
+                  "text": "$64$",
+                  "explain": "This assumes the filled-in heights vary as much as real heights. Each one is a guess pulled toward the mean by the factor 0.75, so they spread less: their variance is 0.6² · 100 = 36. The missing 28 is the part of h that s cannot predict."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The filled-in value is μ_h + 0.75 · (8/10) · (s − μ_s), a straight-line function of s with slope 0.6. So its variance is 0.6² · Var(s) = 0.36 · 100 = 36, which is 0.75² of the variance of h. The rest, 64 − 36 = 28, is $\\operatorname{Var}(h \\mid s)$: the spread of the true heights around their filled-in values. Filled-in values vary less than real heights, so a column with many of them has too small a spread."
+            },
+            {
+              "result": "$36$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ej-permuted-model-kl",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "The Right Probabilities on the Wrong Symbols",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A source emits the symbols a, b, c and d with probabilities $p = (1/2,\\ 1/4,\\ 1/8,\\ 1/8)$. A model assigns them $q = (1/2,\\ 1/8,\\ 1/4,\\ 1/8)$: the same four numbers, with those of b and c swapped. How many bits is the KL divergence of the model from the source, $D_{\\mathrm{KL}}(p \\,\\Vert\\, q)$?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$0$",
+                  "explain": "This takes the KL divergence to be H(q) − H(p). The two entropies are both 1.75 bits, since they use the same four numbers, but KL compares the probabilities symbol by symbol. b happens a quarter of the time and the model gives it only 1/8, which costs a bit each time."
+                },
+                {
+                  "text": "$0.25$",
+                  "explain": "This keeps the term for b, 1/4 · log₂(2) = 0.25, and drops the term for c, as if no term of KL could be negative. Only the total is never negative. The term for c is 1/8 · log₂(1/2) = −0.125, so the total is 0.125."
+                },
+                {
+                  "text": "$1.875$",
+                  "explain": "This is H(p, q), the cross-entropy: how surprised the model is on average by symbols drawn from the source. KL is the extra surprise beyond the source's own entropy of 1.75 bits, so it is 1.875 − 1.75 = 0.125."
+                },
+                {
+                  "text": "$0.125$",
+                  "correct": true,
+                  "explain": "The cross-entropy is the average surprise under q: 1/2 · 1 + 1/4 · 3 + 1/8 · 2 + 1/8 · 3 = 1.875 bits. The entropy of p is 1/2 · 1 + 1/4 · 2 + 1/8 · 3 + 1/8 · 3 = 1.75 bits, so KL = 1.875 − 1.75 = 0.125. Term by term: b adds 1/4 · log₂ 2 = 0.25 and c adds 1/8 · log₂(1/2) = −0.125. The uniform model has KL 0.25, so this model is closer to the source than uniform, and still not equal to it."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The cross-entropy is the average surprise under q: 1/2 · 1 + 1/4 · 3 + 1/8 · 2 + 1/8 · 3 = 1.875 bits. The entropy of p is 1/2 · 1 + 1/4 · 2 + 1/8 · 3 + 1/8 · 3 = 1.75 bits, so KL = 1.875 − 1.75 = 0.125. Term by term: b adds 1/4 · log₂ 2 = 0.25 and c adds 1/8 · log₂(1/2) = −0.125. The uniform model has KL 0.25, so this model is closer to the source than uniform, and still not equal to it."
+            },
+            {
+              "result": "$0.125$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ej-impossible-correlations",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "Three Correlations That Cannot All Be True",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "A data report lists the correlations between three features: $\\operatorname{corr}(A, B) = 0.9$, $\\operatorname{corr}(B, C) = 0.9$ and $\\operatorname{corr}(A, C) = -0.5$."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Show that no three random variables can have these correlations."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Dividing each variable by its standard deviation leaves every correlation unchanged, so assume $A$, $B$ and $C$ have variance 1. Then each covariance equals the correlation, and the covariance matrix is"
+            },
+            {
+              "tex": "\\Sigma = \\begin{pmatrix} 1 & 0.9 & -0.5 \\\\ 0.9 & 1 & 0.9 \\\\ -0.5 & 0.9 & 1 \\end{pmatrix} ."
+            },
+            {
+              "p": "Any combination $\\mathbf{w}^\\top\\mathbf{x}$ has variance $\\mathbf{w}^\\top\\Sigma\\mathbf{w}$, and a variance is never negative. Take $\\mathbf{w} = (1, -1, 1)$, the combination $A - B + C$:"
+            },
+            {
+              "tex": "\\operatorname{Var}(A - B + C) = 1 + 1 + 1 + 2\\big(-0.9 - 0.9 + (-0.5)\\big) = 3 - 4.6 = -1.6 ."
+            },
+            {
+              "p": "No random variables have a negative variance, so the three numbers cannot all be correct. The idea behind the choice of $\\mathbf{w}$: $A$ and $C$ both track $B$ closely, so $A - B$ and $C - B$ are small, yet $A$ and $C$ are claimed to move apart."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Keep $\\operatorname{corr}(A, B) = \\operatorname{corr}(B, C) = 0.9$. What is the smallest value $\\operatorname{corr}(A, C)$ can take?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Call it $c$, keep unit variances, and try the combinations $A - tB + C$ for every number $t$:"
+            },
+            {
+              "tex": "\\operatorname{Var}(A - tB + C) = 1 + t^2 + 1 + 2(-0.9t - 0.9t + c) = t^2 - 3.6t + 2 + 2c ."
+            },
+            {
+              "p": "This must be at least 0 for every $t$. The quadratic is smallest at $t = 1.8$, where it equals $3.24 - 6.48 + 2 + 2c = 2c - 1.24$. So $c \\ge 0.62$."
+            },
+            {
+              "p": "The bound is reached. Take $B$ and $U$ independent with mean 0 and variance 1, and set"
+            },
+            {
+              "tex": "A = 0.9B + \\sqrt{0.19}\\,U, \\qquad C = 0.9B - \\sqrt{0.19}\\,U ."
+            },
+            {
+              "p": "Each has variance $0.81 + 0.19 = 1$, each has covariance 0.9 with $B$, and $\\operatorname{Cov}(A, C) = 0.81 - 0.19 = 0.62$. So the smallest possible value is $0.62$."
+            },
+            {
+              "p": "The same steps with both correlations equal to $r$ give $\\operatorname{corr}(A, C) \\ge 2r^2 - 1$. For $r$ above $1/\\sqrt2 \\approx 0.71$ the bound is positive: two features that both track a third that closely must be positively correlated with each other. Below it, they can be uncorrelated or even negatively correlated."
+            },
+            {
+              "result": "0.62"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ej-grouped-test-set",
+      "moduleId": "expectations-multivariate-distributions",
+      "title": "A Test Set with Five Scans per Patient",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "A model reads medical scans. Its test set has 300 scans, 5 from each of 60 patients, and on a random scan the model is right with probability 0.9. Two scans of the same patient look alike, so whether the model is right on one and whether it is right on the other have correlation 0.5. Scans of different patients are independent. The team reports the accuracy, the share of the 300 scans the model gets right."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What is the standard deviation of the reported accuracy?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Let $J_i$ be 1 if the model is right on scan $i$. Each $J_i$ is Bernoulli with variance $0.9 \\cdot 0.1 = 0.09$. The variance of $J_1 + \\dots + J_{300}$ is the sum of all $300 \\times 300$ covariances:"
+            },
+            {
+              "list": [
+                "The 300 diagonal cells are variances, $300 \\cdot 0.09 = 27$.",
+                "Each scan has 4 other scans of the same patient, so $300 \\cdot 4 = 1{,}200$ cells hold $0.5 \\cdot 0.09 = 0.045$, which adds $54$.",
+                "Every other cell pairs two patients and is 0."
+              ]
+            },
+            {
+              "p": "So the sum has variance 81, the accuracy (the sum divided by 300) has variance $81 / 300^2 = 0.0009$, and its standard deviation is $0.03$, or 3 percentage points."
+            },
+            {
+              "p": "Treating the 300 scans as independent would give $\\sqrt{0.09/300} \\approx 0.017$, too small by a factor of $\\sqrt3$."
+            },
+            {
+              "result": "0.03"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "How many independent scans, each from a different patient, would give the accuracy the same standard deviation?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "With $N$ independent scans the accuracy has variance $0.09/N$. Setting $0.09/N = 0.0009$ gives $N = 100$. The 300 scans carry as much information about the accuracy as 100 independent ones. In general a group of $m$ scans with correlation $\\rho$ multiplies the variance by $1 + (m - 1)\\rho$, here $1 + 4 \\cdot 0.5 = 3$, so the test set counts as $300/3$ scans."
+            },
+            {
+              "result": "100"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "The team keeps the same 60 patients and scans each of them more times. What standard deviation does the accuracy approach as the number of scans per patient grows? Can the team reach 0.015 this way?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "With $m$ scans of each of the 60 patients, the same count of covariance cells gives the accuracy the variance"
+            },
+            {
+              "tex": "\\frac{0.09\\,\\big(1 + 0.5(m - 1)\\big)}{60m} = \\frac{0.09}{60}\\left(0.5 + \\frac{0.5}{m}\\right) ."
+            },
+            {
+              "p": "This is the ensemble formula $\\sigma^2\\big(\\rho + (1 - \\rho)/m\\big)$ for one patient's scans, divided by the 60 independent patients. As $m$ grows it falls toward $0.09 \\cdot 0.5 / 60 = 0.00075$, a standard deviation of $\\sqrt{0.00075} \\approx 0.0274$. Ten scans per patient give 0.0287 and a thousand give 0.0274, never 0.015."
+            },
+            {
+              "p": "What the scans of one patient share does not average away, so only new patients bring the error down. With 5 scans each the accuracy has variance $0.054/k$ for $k$ patients, and a standard deviation of 0.015 takes $k = 0.054 / 0.015^2 = 240$ patients."
+            },
+            {
+              "result": "0.0274"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

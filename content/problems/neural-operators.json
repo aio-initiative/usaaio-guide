@@ -1,0 +1,240 @@
+{
+  "module": "neural-operators",
+  "stage": "Camp",
+  "index": [
+    {
+      "id": "nop-when-the-surrogate-pays-for-itself",
+      "moduleId": "neural-operators",
+      "title": "When the Surrogate Pays for Itself",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=nop-when-the-surrogate-pays-for-itself",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "A reservoir modeling group wants to replace a classical solver with a neural operator, and the amortization sum is what decides whether building it is worth it. The numbers are new, and the last part changes the solver. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "nop-what-the-retained-modes-can-see",
+      "moduleId": "neural-operators",
+      "title": "What the Retained Modes Can See",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=nop-what-the-retained-modes-can-see",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "A 1-D field on 128 points goes through an FNO spectral layer that keeps the lowest 16 modes, and the same layer is then evaluated on 512 points. The parts work out what the layer costs, what it drops, and what it cannot represent. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    }
+  ],
+  "theory": [
+    {
+      "id": "nop-when-the-surrogate-pays-for-itself",
+      "moduleId": "neural-operators",
+      "title": "When the Surrogate Pays for Itself",
+      "difficulty": "Medium",
+      "minutes": 20,
+      "overview": [
+        "A reservoir modeling group wants to replace a classical solver with a neural operator. The lesson's trade is a real one, and the amortization sum is what decides it."
+      ],
+      "setup": [
+        {
+          "p": "The classical solver takes 8 seconds per instance and the trained neural operator takes 40 ms per inference. Training data is 2000 instances solved by the classical solver, and training itself costs 6 hours on one GPU."
+        },
+        {
+          "p": "The group's downstream study needs 50,000 solves. Follow the amortization calculation of the lesson's worked example: the setup is paid back by the saving on each later query."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "How long does the data generation take, and what is the whole setup, data plus training? Each later query saves $8 - 0.04 = 7.96$ s. How many queries does the operator need before it has paid back the setup?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Data generation is 2000 solved instances at 8 s each:"
+            },
+            {
+              "tex": "2000 \\times 8\\text{ s} = 16{,}000\\text{ s} = 4.44\\text{ hours}."
+            },
+            {
+              "p": "Training adds 6 hours, so the setup is 10.44 hours, which is 37,600 s. Each query after that saves the solver's 8 s and spends the operator's 0.04 s, so the saving is 7.96 s and the break-even is"
+            },
+            {
+              "tex": "\\frac{37{,}600}{7.96} = 4724\\text{ queries}."
+            },
+            {
+              "p": "The data is the larger share of the setup, 4.44 of the 10.44 hours, which is the lesson's point about the data cost being the method's main drawback."
+            },
+            {
+              "result": "4724 queries"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "The study needs 50,000 solves. How long does each route take, and how much does the operator save on this one study?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The solver route is 50,000 runs at 8 s:"
+            },
+            {
+              "tex": "50{,}000 \\times 8 = 400{,}000\\text{ s} = 111\\text{ hours}."
+            },
+            {
+              "p": "The operator route pays the 37,600 s setup once and then 0.04 s per query:"
+            },
+            {
+              "tex": "37{,}600 + 50{,}000 \\times 0.04 = 39{,}600\\text{ s} = 11\\text{ hours}."
+            },
+            {
+              "p": "So the operator is $400{,}000/39{,}600 = 10.1\\times$ faster and saves about 100 hours on this one study. The setup is repaid roughly 4724 queries in and the study runs to 50,000, so it clears the break-even by more than a factor of ten."
+            },
+            {
+              "result": "111 h with the solver, 11 h with the operator, about 10× faster"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "A second group wants the same operator for the same 50,000-query study, but their solver is already fast: 0.5 s per instance. The training data and the 6 hours of training are unchanged, so the setup is still 37,600 s. Should they build the operator?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The saving per query shrinks to $0.5 - 0.04 = 0.46$ s, so the break-even becomes"
+            },
+            {
+              "tex": "\\frac{37{,}600}{0.46} = 81{,}739\\text{ queries}."
+            },
+            {
+              "p": "Their study needs 50,000, which is short of that. The totals agree: the solver route is $50{,}000 \\times 0.5 = 25{,}000$ s, about 6.9 hours, while the operator route is still 39,600 s, about 11 hours. The operator is 1.6× more expensive here, so they should keep solving directly."
+            },
+            {
+              "result": "No. Break-even is about 81,739 queries and the study needs 50,000"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Both groups run the same operator against the same 50,000-query study, and the answer flips. Explain what the break-even number is telling them, and name two costs the calculation leaves out, one that pushes the real break-even later and one that pushes it earlier."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The break-even count is the number of times the operator has to be used before its per-query saving has repaid the setup. It is the ratio of the setup to the saving per query, so a solver that is already cheap makes the denominator small and the count large, even for an operator that is a large relative speedup. The first group's solver is $8/0.04 = 200\\times$ slower than its operator and the second group's is only $0.5/0.04 = 12.5\\times$ slower, and the same 37,600 s setup has to be repaid out of a much smaller saving per query in the second case."
+            },
+            {
+              "p": "Pushing the real break-even later, the 6 hours of training counts only the successful run. The tuning, the failed attempts, and any retraining when the physics moves outside the training distribution are not in the sum, and neither is the data generation beyond the 2000 instances if a bigger draw is needed. Pushing it earlier, the 8 s and the 0.5 s buy something the operator's 40 ms does not, which is a solver's convergence guarantee and the error bound that comes with it. Where the operator's accuracy is good enough the comparison stands, and the lesson is explicit that this is inside the training distribution and not outside it, so a study that strays from it needs the solver's number anyway."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nop-what-the-retained-modes-can-see",
+      "moduleId": "neural-operators",
+      "title": "What the Retained Modes Can See",
+      "difficulty": "Medium",
+      "minutes": 18,
+      "overview": [
+        "A 1-D field on 128 points goes through an FNO spectral layer that keeps the lowest 16 modes, and the same layer is then evaluated on 512 points."
+      ],
+      "setup": [
+        {
+          "p": "The field has 128 points. The spectral layer keeps the lowest 16 modes, and its weights are a complex tensor of shape $64 \\times 64 \\times 16$: one entry per input channel, output channel and retained mode."
+        },
+        {
+          "p": "The layer is the lesson's, FFT then multiply the retained modes then inverse FFT, and the comparison it is set against is a dense global convolution with the same 64 channels."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "How many complex coefficients does the FFT of a 128-point real field return, and how many of them are multiplied by learned weights in this layer?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "A real FFT of $n$ points returns the modes from 0 to $n/2$, so for 128 points it returns $128/2 + 1 = 65$ complex coefficients, modes 0 to 64. The layer keeps the lowest 16, so 16 of the 65 are multiplied by learned weights and the other 49 are dropped."
+            },
+            {
+              "result": "65 coefficients, 16 of them weighted"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "How many real parameters does the spectral layer hold, and how many would a dense global convolution on the same 128 points need with the same 64 channels? How do the two compare, and why does the smaller one still reach every point from every other point?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The weights are $64 \\times 64 \\times 16 = 65{,}536$ complex numbers, which is $131{,}072$ real parameters. A dense global convolution on 128 points needs one weight per input channel, output channel and grid point:"
+            },
+            {
+              "tex": "64 \\times 64 \\times 128 = 524{,}288\\text{ real weights}."
+            },
+            {
+              "p": "The frequency parameterization is $4\\times$ smaller. It still has global reach because multiplication in frequency is convolution in real space, so the 16 learned multipliers act as a global kernel and every output point depends on every input point, at $O(n \\log n)$ through the FFT instead of the $O(n^2)$ a dense kernel would cost."
+            },
+            {
+              "result": "131,072 real parameters against 524,288, a factor of 4"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "The trained layer is then evaluated on a 512-point grid, with no retraining. What does the FFT return there, which modes do the learned weights apply to, and what is necessarily absent from the output?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "On 512 points the real FFT returns $512/2 + 1 = 257$ complex coefficients, modes 0 to 256. The learned 16 weights still apply to modes 0 to 15, which mean the same thing physically as they did on 128 points, and modes 16 to 256 are zeroed exactly as modes 16 to 64 were in training. The inverse FFT then returns 512 points and nothing had to be retrained, because the parameters are indexed by mode rather than by grid position."
+            },
+            {
+              "p": "What is necessarily absent is any structure above mode 15. The output is the coarse solution evaluated finely, so if the true solution on the fine grid has content at mode 40 the model cannot produce it. That is discretization invariance rather than resolution gain: the model transfers because its parameters are frequencies, and it is bounded by the same truncation everywhere it is evaluated."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

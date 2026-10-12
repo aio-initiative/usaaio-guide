@@ -1,0 +1,181 @@
+{
+  "module": "sciml-physics-loss",
+  "stage": "Camp",
+  "index": [
+    {
+      "id": "sm-where-the-points-sit",
+      "moduleId": "sciml-physics-loss",
+      "title": "Where the Collocation Points Sit",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=sm-where-the-points-sit",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Camp"
+      ],
+      "prompt": "A candidate for dy/dt = -y with y(0) = 1 on the interval from 0 to 2 is scored on three different sets of collocation points, and the candidate itself never changes. The parts ask what the equation part of the loss comes out as on each set, and what the numbers say about where the points are placed. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    }
+  ],
+  "theory": [
+    {
+      "id": "sm-where-the-points-sit",
+      "moduleId": "sciml-physics-loss",
+      "title": "Where the Collocation Points Sit",
+      "difficulty": "Medium",
+      "minutes": 20,
+      "overview": [
+        "A candidate solution of $dy/dt = -y$ with $y(0) = 1$ on $0 \\le t \\le 2$ is"
+      ],
+      "setup": [
+        {
+          "tex": "y(t) = 1 - t + \\frac{t^2}{2}."
+        },
+        {
+          "p": "Its loss is scored three times on three different sets of collocation points. The candidate itself never changes."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "First work out the residual of this candidate. Then score it on 5 equally spaced collocation points on $[0, 2]$, that is $t = 0, 0.5, 1, 1.5, 2$. What is the equation part of the loss?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The slope is $y' = -1 + t$, so the residual is"
+            },
+            {
+              "tex": "y' + y = (-1 + t) + \\left(1 - t + \\tfrac{t^2}{2}\\right) = \\frac{t^2}{2}."
+            },
+            {
+              "p": "The residual is 0 at $t = 0$ and grows to 2 at $t = 2$, so this candidate is exactly right at the start and wrong at the far end. Squaring and evaluating at the five points gives $t^4/4$:"
+            },
+            {
+              "tex": "\\begin{array}{ccc}\nt & \\text{Residual} & \\text{Squared residual} \\\\ \\hline\n0.0 & 0.000 & 0.000000 \\\\\n0.5 & 0.125 & 0.015625 \\\\\n1.0 & 0.500 & 0.250000 \\\\\n1.5 & 1.125 & 1.265625 \\\\\n2.0 & 2.000 & 4.000000\n\\end{array}"
+            },
+            {
+              "p": "The squared residuals sum to $5.53125$, and the equation part is the mean, so"
+            },
+            {
+              "tex": "L_{\\text{eq}} = \\frac{5.53125}{5} = 1.10625 \\approx 1.106 ."
+            },
+            {
+              "p": "The starting-value part is 0 because $y(0) = 1$ exactly, so the loss here is the equation part."
+            },
+            {
+              "result": "1.106"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The second run keeps the same budget of 5 points but slides them into the right half of the interval, at $t = 1.2, 1.4, 1.6, 1.8, 2$. What is the equation part now?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The residuals at the new points are $t^2/2$, so the squared residuals are"
+            },
+            {
+              "tex": "(0.5184,\\ 0.9604,\\ 1.6384,\\ 2.6244,\\ 4.0000),"
+            },
+            {
+              "p": "which sum to $9.7416$. Dividing by 5 gives"
+            },
+            {
+              "tex": "L_{\\text{eq}} = \\frac{9.7416}{5} = 1.94832 \\approx 1.948 ."
+            },
+            {
+              "p": "The function did not change and neither did its residual, but the equation part rose from 1.106 to 1.948, about 76% higher, from moving the points instead of adding them."
+            },
+            {
+              "result": "1.948"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "The third run goes back to the whole interval with 17 equally spaced points, of spacing 0.125. Find its equation part, and compare all three runs with the value a dense even grid on $[0, 2]$ approaches, which is $\\frac{1}{2} \\int_0^2 \\frac{t^4}{4}\\, dt$. What do the four numbers say about the choices involved in picking collocation points?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Summing $t^4/4$ over $t = 0, 0.125, \\dots, 2$ gives $14.88330078125$, so the mean over 17 points is"
+            },
+            {
+              "tex": "L_{\\text{eq}} = \\frac{14.88330078125}{17} = 0.87548828125 \\approx 0.875 ."
+            },
+            {
+              "p": "The dense even grid reaches"
+            },
+            {
+              "tex": "\\frac{1}{2} \\int_0^2 \\frac{t^4}{4}\\, dt = \\frac{1}{8} \\cdot \\frac{32}{5} = 0.8 ."
+            },
+            {
+              "tex": "\\begin{array}{ccc}\n\\text{Run} & \\text{Points} & \\text{Equation part} \\\\ \\hline\n\\text{A} & \\text{5 on $[0, 2]$} & 1.106 \\\\\n\\text{B} & \\text{5 on $[1.2, 2]$} & 1.948 \\\\\n\\text{C} & \\text{17 on $[0, 2]$} & 0.875 \\\\\n\\text{Limit} & \\text{dense even grid} & 0.800\n\\end{array}"
+            },
+            {
+              "p": "Choosing points is two decisions, and the runs separate them. The count decides how finely the mean is sampled. Refining an even grid walks the number steadily down toward 0.8, because a mean over evenly spaced points is half the Riemann sum of $t^4/4$ over $[0, 2]$, and the error shrinks as the spacing shrinks:"
+            },
+            {
+              "tex": "\\begin{array}{cc}\n\\text{Points} & \\text{Equation part} \\\\ \\hline\n5 & 1.106 \\\\\n9 & 0.952 \\\\\n17 & 0.875 \\\\\n33 & 0.838 \\\\\n65 & 0.819\n\\end{array}"
+            },
+            {
+              "p": "The placement decides what the samples are drawn from. Moving the 5 points right pushed the number up by more than going from 5 points to 65 did, and made the coarse grid look worse than the fine one, which is backwards. The reason is that this residual is smallest at the left end, where it is 0, and largest at the right end, where it is 2. A grid packed into the right half samples only the large values, so it reports the same candidate as worse than a grid over the whole interval does. Run B never looks at $t < 1.2$, so it would not notice a candidate that is badly wrong near the starting value."
+            },
+            {
+              "p": "So the count alone is not the thing to maximize. Cover the interval, and only then worry about density, since a denser grid on part of the range is worth less than a sparse grid over all of it. This is why real runs draw thousands of points across the range rather than reusing a small fixed grid."
+            },
+            {
+              "p": "One thing the runs do not change: the exact solution has residual 0 at every $t$, so its equation part is 0 on all three grids and its loss is 0 on all three. What the point set moves is how wrong the wrong candidates are measured."
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Finally the candidate is scaled to $1.3 y(t)$ and scored on the five points of part 1.1 again. Find the loss and say how much of it comes from each term."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The slope and the candidate both gain a factor of 1.3, so the residual does too, and the squared residual gains $1.3^2 = 1.69$:"
+            },
+            {
+              "tex": "L_{\\text{eq}} = 1.69 \\times 1.10625 = 1.8695625 ."
+            },
+            {
+              "p": "The scaled candidate starts at 1.3, so the starting-value part is"
+            },
+            {
+              "tex": "(1.3 - 1)^2 = 0.09 ."
+            },
+            {
+              "p": "The loss is therefore $1.8695625 + 0.09 = 1.9595625 \\approx 1.960$, of which 1.870 is the equation part and 0.090 is the starting-value part."
+            },
+            {
+              "p": "The split matters because the two terms notice different mistakes, and they can even disagree about direction. A candidate that solves the equation perfectly keeps an equation part of 0 no matter how it is scaled, since a scaled solution is still a solution. Only the starting-value term moves. Here the candidate already had a nonzero residual, so scaling fed into both terms, and the equation part grew by the larger of the two effects because it takes the square of the scale."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

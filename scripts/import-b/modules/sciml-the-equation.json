@@ -1,0 +1,38 @@
+{
+ "aModule": "sciml-the-equation",
+ "stage": "Camp",
+ "order": [
+  "sm-six-steps-to-reach-t-six"
+ ],
+ "fixes": [
+  {
+   "file": "sm-six-steps-to-reach-t-six",
+   "find": "The error at\n$t = 6$ roughly halves each time the step count doubles: 90 percent at 12 steps, 60 percent at 24, 27 percent at 60, 14 percent at 120,",
+   "replace": "The error at $t = 6$ halves each time the step count doubles, once the count is\nlarge: 27 percent at 60 steps, 14 percent at 120, 7 percent at 240, 3.7 percent at 480,",
+   "why": "In the sentence's own list the step counts 12, 24, 60, 120 do not all double (24 to 60 is a factor of 2.5) and the first doubling does not halve anything (90.15 percent at 12 steps, 59.52 at 24). The halving is asymptotic, since the error is about 1 - exp(-18/n), so it holds from 60 upward. The replacement lists only counts that do double and whose errors do halve, and leaves the trailing clause about 175 steps intact. Swarm report bprv-55, confirmed in pack-55."
+  }
+ ],
+ "parts": {
+  "sm-six-steps-to-reach-t-six": {
+   "1.1": {
+    "kind": "computation",
+    "requirement": "Reasoning is not required."
+   },
+   "1.2": {
+    "kind": "computation",
+    "requirement": "Reasoning is not required."
+   },
+   "1.3": {
+    "kind": "computation",
+    "requirement": "Reasoning is not required."
+   },
+   "1.4": {
+    "kind": "derivation",
+    "requirement": "A complete derivation is required."
+   }
+  }
+ },
+ "indexPrompt": {
+  "sm-six-steps-to-reach-t-six": "The model is unchanged, dy/dt = -y with y(0) = 1, but the lab wants the value at t = 6 now instead of t = 2. Euler's method reaches t = 6 only after a whole number of steps, and the analyst's spreadsheet has room for six multiplications, so the step has to be h = 6/n for a whole number n of steps between 1 and 6."
+ }
+}

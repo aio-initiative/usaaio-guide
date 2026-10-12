@@ -1,0 +1,1247 @@
+{
+  "module": "reinforcement-learning",
+  "stage": "Advanced",
+  "index": [
+    {
+      "id": "rf3-target-network",
+      "moduleId": "reinforcement-learning",
+      "title": "Seven States That Break Q-Learning",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=rf3-target-network",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Advanced"
+      ],
+      "prompt": "Run Baird's counterexample to watch off-policy semi-gradient TD diverge on a problem whose exact answer is zero, then measure how much a frozen target network slows it.",
+      "answer": "Auto-graded inside the notebook. Each array is scored against the reference by two scalar checksums at a relative tolerance of 1e-6, with the plain run growing more than 10x and the frozen target more than halving the final norm."
+    },
+    {
+      "id": "rl-the-state-of-a-card-game",
+      "moduleId": "reinforcement-learning",
+      "title": "The State of a Card Game",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=rl-the-state-of-a-card-game",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Advanced"
+      ],
+      "prompt": "A betting game deals a shuffled deck of 4 red and 4 black cards face up, one card per round, and before each card is turned over the agent bets on its color, winning 1 for a right guess and losing 1 for a wrong one. Which of four candidate state definitions makes the game an MDP with the fewest possible states?",
+      "answer": "The counts of red and black cards dealt. With r red and b black cards dealt, the next card is red with probability (4 − r)/(8 − r − b), and the next state is (r + 1, b) or (r, b + 1). The best bet and its expected reward depend only on that chance, so the pair carries everything the past can say about the future. It takes 25 values, from (0, 0) to (4, 4), and no two of them can be merged, because each leaves a different deck."
+    },
+    {
+      "id": "rl-cutting-returns-at-the-horizon",
+      "moduleId": "reinforcement-learning",
+      "title": "Cutting Returns off at the Horizon",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=rl-cutting-returns-at-the-horizon",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Advanced"
+      ],
+      "prompt": "An agent discounts its rewards at gamma = 0.98, and a teammate builds each training target from only the next 50 rewards, arguing nothing is lost because 1/(1 - gamma) = 50 is the agent's horizon. Work out the worst-case error of that truncated target as a fraction of the largest possible return, how many rewards keep the error at or under 1%, and what the horizon actually measures. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "rl-switching-to-always-wait",
+      "moduleId": "reinforcement-learning",
+      "title": "What Always Waiting Is Worth",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=rl-switching-to-always-wait",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Advanced"
+      ],
+      "prompt": "In a state an agent can wait, which pays 1 and leaves it in the same state, or go, which pays 5.6 and ends the episode. Its policy picks each action half the time, the discount is 0.9, and evaluating it gives 6.4 for waiting and 5.6 for going. How much does the value of the state rise when the agent switches to waiting at every visit?",
+      "answer": "4.0. Before the switch, V^π(s) averages the two actions with the policy's probabilities: 0.5(6.4) + 0.5(5.6) = 6. Always waiting earns 1 at every step forever, worth 1 + 0.9 + 0.81 + ... = 1/(1 − 0.9) = 10. The rise is 10 − 6 = 4, ten times the 0.4 that the Q table seems to promise, because Q^π(s, wait) assumes the old policy takes over again from the next step."
+    },
+    {
+      "id": "rl-boost-or-run-normally",
+      "moduleId": "reinforcement-learning",
+      "title": "Boost or Run Normally",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=rl-boost-or-run-normally",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Advanced"
+      ],
+      "prompt": "A game server is cool or hot at the start of each hour, and future rewards are discounted at 0.75 per hour. Boosting a cool server earns 9 that hour but heats it up more often than running it normally, which earns 8, and a hot server must spend the next hour cooling down at a cost of 5. Compute the value of the cool state for the policy that always boosts, and then for the best policy. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "rl-the-impossible-log",
+      "moduleId": "reinforcement-learning",
+      "title": "The Impossible Convergence Log",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=rl-the-impossible-log",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Advanced"
+      ],
+      "prompt": "Four programs run value iteration from a zero start with discount 0.8, and after each of five sweeps each prints the largest change in any state's value. Three of the four printed logs could come from a correct value iteration and one could not. Say which log is impossible and why the contraction bound rules it out.",
+      "answer": "2.000, 1.700, 1.445, 1.228, 1.044. Applying the contraction to the two tables V_k and V_(k−1) gives ‖V_(k+1) − V_k‖ = ‖TV_k − TV_(k−1)‖ ≤ γ‖V_k − V_(k−1)‖, so each change is at most 0.8 times the one before. This log shrinks by a factor of 0.85 per sweep, which no correct value iteration with γ = 0.8 can do. A discount of 0.85 in the code, for example, would produce it."
+    },
+    {
+      "id": "rl-a-run-that-comes-back",
+      "moduleId": "reinforcement-learning",
+      "title": "A Run That Comes Back to the Hall",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=rl-a-run-that-comes-back",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Advanced"
+      ],
+      "prompt": "A cleaning robot works in two rooms and one run goes hall, kitchen, hall, dock, with rewards 4, 0 and 8. Compare what TD(0) and every-visit Monte Carlo learn about the state values from that single run. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "rl-a-log-from-a-random-robot",
+      "moduleId": "reinforcement-learning",
+      "title": "Learning from a Random Robot's Log",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=rl-a-log-from-a-random-robot",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Advanced"
+      ],
+      "prompt": "A robot with two rooms and two moves logs two episodes of random moves, and a Q-learning learner with step size 0.5 and discount 0.9 works through the log once, transition by transition. Give the value of moving left from room B after the log, and the value it settles on as the robot keeps wandering at random. 2 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "rl-schedules-that-stop-exploring",
+      "moduleId": "reinforcement-learning",
+      "title": "Which Schedule Keeps Exploring",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/theory/?id=rl-schedules-that-stop-exploring",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Advanced"
+      ],
+      "prompt": "A Q-learning agent in one state picks among 4 actions with an epsilon-greedy policy whose exploration rate follows a schedule, and one action there is never the greedy choice. Which schedule still tries that action infinitely often with probability 1?",
+      "answer": "epsilon_t = 1/t. At step t the agent tries b with probability 1/(4t). The chance of never trying it after step T is the product of (1 − 1/(4t)) over t > T, which is at most exp(−(1/4)(1/(T+1) + 1/(T+2) + ...)). The harmonic sum has no limit, so the product is 0 for every T: after any step, b is certain to be tried again. ε still goes to 0, just slowly enough."
+    },
+    {
+      "id": "rl-one-weight-chasing-its-target",
+      "moduleId": "reinforcement-learning",
+      "title": "One Weight Chasing Its Own Target",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=rl-one-weight-chasing-its-target",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Advanced"
+      ],
+      "prompt": "One weight w values two states with features 2 and 3, every reward is 0, and each update treats the agent's own live estimate of the next state as a fixed target. The three parts ask where the weight ends up after 10 updates from a buffer holding only one transition, the discount at which it runs away, and what happens when the buffer holds both transitions. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "rl-when-to-stop-sweeping",
+      "moduleId": "reinforcement-learning",
+      "title": "When to Stop Sweeping",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=rl-when-to-stop-sweeping",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Advanced"
+      ],
+      "prompt": "Value iteration stops when the last sweep moved the table by less than a tolerance. Bound how far the returned table can still be from the optimal values, evaluate that bound for a discount of 0.99 with a tolerance of 0.001, test it on a one-state MDP, and find the tolerance that guarantees a chosen accuracy. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "rl-five-games-two-estimates",
+      "moduleId": "reinforcement-learning",
+      "title": "Five Games, Two Estimates",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=rl-five-games-two-estimates",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Advanced"
+      ],
+      "prompt": "Five recorded games through three positions are replayed over and over by a TD(0) learner and a return-averaging learner, both starting from zero. Give each learner's settled value for the start position, say what a sixth game does to each, and say which estimate you would use to predict the next game. 4 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "rl-the-max-of-noisy-estimates",
+      "moduleId": "reinforcement-learning",
+      "title": "The Max of Noisy Estimates",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=rl-the-max-of-noisy-estimates",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Advanced"
+      ],
+      "prompt": "Four actions in a state each have true value 0, but the agent's table holds a single noisy +1 or -1 draw for each. Ask what the maximum of those four entries is worth on average, how that bias passes back through one Q-learning update to the state before it, and what changes when one table picks the action and a second, independent table values it. 5 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "rl-restocking-a-shelf-numpy",
+      "moduleId": "reinforcement-learning",
+      "title": "Restocking a Shelf by Value Iteration",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=rl-restocking-a-shelf-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Advanced"
+      ],
+      "prompt": "Write the shop as an MDP in arrays, with a fixed order fee on top of the price of the units and an overnight cost for units left on the shelf, solve it with value iteration, and read off the best order for every stock level. Write your solution in the marked cells, then run the check cell under each part to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Each check cell prints \"Part N passed\" when that part's function is right, and a worked solution is folded at the end."
+    },
+    {
+      "id": "rl-one-log-two-learners-numpy",
+      "moduleId": "reinforcement-learning",
+      "title": "One Log, Two Learners",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=rl-one-log-two-learners-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Advanced"
+      ],
+      "prompt": "Compute the exact action values of two policies with the model arrays, from a log of 100,000 days on which every action was picked at random, then let Q-learning and SARSA learn from that same log and find out which exact table each of them learns and what that does to the policy it hands you. Write your solution in the marked cells, then run the check cell under each part to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Each check cell prints \"Part N passed\" when that part's function is right, and a worked solution is folded at the end."
+    }
+  ],
+  "theory": [
+    {
+      "id": "rl-the-state-of-a-card-game",
+      "moduleId": "reinforcement-learning",
+      "title": "The State of a Card Game",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A betting game deals a shuffled deck of 4 red and 4 black cards face up, one card per round, until the deck is empty. Before each card is turned over, the agent bets on its color. It wins 1 for a right guess and loses 1 for a wrong one. A first design gives the agent the color of the card just dealt as its state."
+            },
+            {
+              "p": "Which state makes the game an MDP with the fewest possible states?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "The colors of the last two cards dealt",
+                  "explain": "Recent history is the usual repair, but it does not work here. After red, red the deck holds 2 red cards out of 6, so the next card is red with probability 1/3. After black, black, red, red it holds 2 red cards out of 4, probability 1/2. The same state gives two different chances for the next card, so the past still matters."
+                },
+                {
+                  "text": "The number of red cards dealt so far",
+                  "explain": "One red card dealt can mean 3 red cards left out of 7 (after a single red card) or 3 out of 5 (after red, black, black), so the next card is red with probability 3/7 or 3/5. The chance also depends on how many cards are left, which this state does not record."
+                },
+                {
+                  "text": "The counts of red and black cards dealt",
+                  "correct": true,
+                  "explain": "With r red and b black cards dealt, the next card is red with probability (4 − r)/(8 − r − b), and the next state is (r + 1, b) or (r, b + 1). The best bet and its expected reward depend only on that chance, so the pair carries everything the past can say about the future. It takes 25 values, from (0, 0) to (4, 4), and no two of them can be merged, because each leaves a different deck."
+                },
+                {
+                  "text": "The full sequence of colors dealt so far",
+                  "explain": "This state is Markov, since it records everything, but it is far from the smallest. Red then black and black then red leave the same deck and the same future. The sequences take 251 values against 25 pairs of counts, and a table-based agent would have to learn each future several times over."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "With r red and b black cards dealt, the next card is red with probability (4 − r)/(8 − r − b), and the next state is (r + 1, b) or (r, b + 1). The best bet and its expected reward depend only on that chance, so the pair carries everything the past can say about the future. It takes 25 values, from (0, 0) to (4, 4), and no two of them can be merged, because each leaves a different deck."
+            },
+            {
+              "result": "The counts of red and black cards dealt"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rl-cutting-returns-at-the-horizon",
+      "moduleId": "reinforcement-learning",
+      "title": "Cutting Returns off at the Horizon",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "An agent controls the cooling of a data center. It receives a reward every minute, always between $-1$ and $1$, and discounts with $\\gamma = 0.98$. To save compute, a teammate builds each training target from the next 50 rewards only,"
+      ],
+      "setup": [
+        {
+          "tex": "\\tilde G_t = R_{t+1} + \\gamma R_{t+2} + \\dots + \\gamma^{49} R_{t+50} ,"
+        },
+        {
+          "p": "and argues that nothing is lost, because $1/(1 - \\gamma) = 50$ is the agent's horizon."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The largest $|G_t|$ can be is $1/(1 - \\gamma) = 50$. In the worst case, how large is the error $|G_t - \\tilde G_t|$ as a fraction of that largest value? Give it to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The truncated target drops every reward after the 50th, the ones weighted $\\gamma^{50}, \\gamma^{51}, \\dots$ in $G_t$. Each dropped reward is at most 1 in size, so"
+            },
+            {
+              "tex": "|G_t - \\tilde G_t| \\le \\gamma^{50} + \\gamma^{51} + \\cdots\n= \\frac{\\gamma^{50}}{1 - \\gamma} ."
+            },
+            {
+              "p": "As a fraction of $1/(1 - \\gamma)$ that is $\\gamma^{50} = 0.98^{50} \\approx 0.364$. The bound is reached when every reward is 1 (or every reward is $-1$), so a truncated target can miss more than a third of the true return."
+            },
+            {
+              "result": "0.364"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "How many rewards must each target keep for the worst-case error to be at most 1% of the largest $|G_t|$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Keeping $H$ rewards leaves a worst-case fraction of $\\gamma^H$, by the same sum as in Part 1. We need"
+            },
+            {
+              "tex": "0.98^H \\le 0.01 \\quad\\Longleftrightarrow\\quad\nH \\ge \\frac{\\ln 0.01}{\\ln 0.98} = \\frac{-4.6052}{-0.020203} \\approx 227.95 ,"
+            },
+            {
+              "p": "so $H = 228$. A check: $0.98^{227} \\approx 0.0102$ and $0.98^{228} \\approx 0.0100$."
+            },
+            {
+              "result": "228"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Use $\\ln \\gamma \\approx -(1 - \\gamma)$ for $\\gamma$ close to 1 to give the number of rewards needed for 1% in terms of the horizon $1/(1 - \\gamma)$. What does the horizon measure, if not the point after which rewards stop mattering?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "From $\\gamma^H \\le 0.01$,"
+            },
+            {
+              "tex": "H \\ge \\frac{\\ln 100}{-\\ln \\gamma} \\approx \\frac{\\ln 100}{1 - \\gamma}\n\\approx \\frac{4.6}{1 - \\gamma} ,"
+            },
+            {
+              "p": "about 4.6 horizons: 230 here, against the exact 228. A 0.1% target would need $\\ln 1000 \\approx 6.9$ horizons."
+            },
+            {
+              "p": "The horizon sets the scale of the weights. The weights $\\gamma^k$ add up to $1/(1 - \\gamma)$, so a reward stream discounted at $\\gamma$ counts as much as $1/(1 - \\gamma)$ undiscounted rewards. They shrink by a factor of $\\gamma^{1/(1-\\gamma)}$ over each horizon, which here is $\\gamma^{50} = 0.364$ and rises to $e^{-1} = 0.3679$ as $\\gamma$ approaches 1. So about 0.364 of the total weight sits beyond the first horizon, the number Part 1 found."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rl-switching-to-always-wait",
+      "moduleId": "reinforcement-learning",
+      "title": "What Always Waiting Is Worth",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "In state $s$ an agent has two actions. **Wait** pays 1 and leaves it in $s$. **Go** pays 5.6 and ends the episode. Its current policy $\\pi$ picks each action with probability $1/2$ every time it is in $s$, and $\\gamma = 0.9$. Evaluating $\\pi$ gives"
+            },
+            {
+              "tex": "Q^\\pi(s, \\text{wait}) = 6.4, \\qquad Q^\\pi(s, \\text{go}) = 5.6 ."
+            },
+            {
+              "p": "Since waiting has the larger $Q^\\pi$, the agent switches to a policy that always waits. By how much does the value of $s$ go up?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "0.4",
+                  "explain": "This takes Q^π(s, wait) = 6.4 as the value of always waiting, so the rise looks like 6.4 − 6. But Q^π(s, wait) is the return from waiting once and then following π, which goes at the next visit with probability 1/2. The new policy waits at every visit, which is worth more than waiting once."
+                },
+                {
+                  "text": "3.0",
+                  "explain": "This sums the rewards as 0.9 + 0.81 + ..., which discounts the first reward too. The first reward of a return has weight γ⁰ = 1, so always waiting is worth 1 + 0.9 + 0.81 + ... = 10, not 9."
+                },
+                {
+                  "text": "3.6",
+                  "explain": "The new value, 10, is right, but the old value is V^π(s), not Q^π(s, wait). The old policy waits only half the time, so V^π(s) is the average of its two Q values, (6.4 + 5.6)/2 = 6, and the rise is 10 − 6."
+                },
+                {
+                  "text": "4.0",
+                  "correct": true,
+                  "explain": "Before the switch, V^π(s) averages the two actions with the policy's probabilities: 0.5(6.4) + 0.5(5.6) = 6. Always waiting earns 1 at every step forever, worth 1 + 0.9 + 0.81 + ... = 1/(1 − 0.9) = 10. The rise is 10 − 6 = 4, ten times the 0.4 that the Q table seems to promise, because Q^π(s, wait) assumes the old policy takes over again from the next step."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Before the switch, V^π(s) averages the two actions with the policy's probabilities: 0.5(6.4) + 0.5(5.6) = 6. Always waiting earns 1 at every step forever, worth 1 + 0.9 + 0.81 + ... = 1/(1 − 0.9) = 10. The rise is 10 − 6 = 4, ten times the 0.4 that the Q table seems to promise, because Q^π(s, wait) assumes the old policy takes over again from the next step."
+            },
+            {
+              "result": "4.0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rl-boost-or-run-normally",
+      "moduleId": "reinforcement-learning",
+      "title": "Boost or Run Normally",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A game server is either cool ($C$) or hot ($H$) at the start of each hour, and $\\gamma = 0.75$ per hour."
+      ],
+      "setup": [
+        {
+          "list": [
+            "When it is cool, the operator can **boost** it, which earns 9 that hour and leaves it hot the next hour with probability 0.8, or run it **normally**, which earns 8 and leaves it hot with probability 0.4. Otherwise it stays cool.",
+            "When it is hot, it must cool down. That hour costs 5, and the next hour it is cool."
+          ]
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is $V(C)$ for the policy that always boosts?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The Bellman expectation equation gives one linear equation per state:"
+            },
+            {
+              "tex": "\\begin{aligned}\nV(C) &= 9 + 0.75\\big(0.2\\,V(C) + 0.8\\,V(H)\\big) ,\\\\\nV(H) &= -5 + 0.75\\,V(C) .\n\\end{aligned}"
+            },
+            {
+              "p": "Substituting the second into the first,"
+            },
+            {
+              "tex": "V(C) = 9 + 0.15\\,V(C) + 0.6\\big(-5 + 0.75\\,V(C)\\big) = 6 + 0.6\\,V(C) ,"
+            },
+            {
+              "p": "so $0.4\\,V(C) = 6$, $V(C) = 15$ and $V(H) = -5 + 11.25 = 6.25$."
+            },
+            {
+              "result": "15"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is $V^*(C)$, the value of the cool state under the best policy?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The only choice is in $C$, so there are two candidate policies. Evaluate the other one, always normal, the same way:"
+            },
+            {
+              "tex": "\\begin{aligned}\nV(C) &= 8 + 0.75\\big(0.6\\,V(C) + 0.4\\,V(H)\\big) ,\\\\\nV(H) &= -5 + 0.75\\,V(C) ,\n\\end{aligned}"
+            },
+            {
+              "p": "which gives $V(C) = 8 - 1.5 + (0.45 + 0.225)\\,V(C)$, so $0.325\\,V(C) = 6.5$, $V(C) = 20$ and $V(H) = 10$."
+            },
+            {
+              "p": "To confirm that these values are $V^*$, check the Bellman optimality equation, which takes the larger of the two actions in $C$:"
+            },
+            {
+              "tex": "\\begin{aligned}\n\\text{boost:}\\quad & 9 + 0.75\\big(0.2 \\times 20 + 0.8 \\times 10\\big) = 9 + 9 = 18 ,\\\\\n\\text{normal:}\\quad & 8 + 0.75\\big(0.6 \\times 20 + 0.4 \\times 10\\big) = 8 + 12 = 20 .\n\\end{aligned}"
+            },
+            {
+              "p": "The maximum, 20, reproduces $V(C)$, and $V(H) = -5 + 0.75 \\times 20 = 10$ holds too, so the table satisfies the optimality equation. That equation has exactly one solution, so $V^*(C) = 20$ and the best policy runs normally."
+            },
+            {
+              "p": "Boosting earns 1 more in the hour it is chosen, but it doubles the chance that the next hour is a hot one, which earns nothing and costs 5."
+            },
+            {
+              "p": "A single step of lookahead from the boost policy's values points the right way, $8 + 0.75(0.6 \\times 15 + 0.4 \\times 6.25) = 16.625 > 15$, but 16.625 is not $V^*(C)$: it is the value of running normally once and then boosting from the next cool hour on."
+            },
+            {
+              "result": "20"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rl-the-impossible-log",
+      "moduleId": "reinforcement-learning",
+      "title": "The Impossible Convergence Log",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Four programs run value iteration from $V_0 = 0$, each on its own MDP, all with $\\gamma = 0.8$. After every sweep each program prints the largest change in any state's value, $\\|V_k - V_{k-1}\\|_\\infty$ for $k = 1, \\dots, 5$. Three of the programs are correct."
+            },
+            {
+              "p": "Which log cannot come from a correct value iteration?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "2.000, 1.600, 1.280, 1.024, 0.819",
+                  "explain": "Every ratio is 0.8, which is γ, up to rounding in the last digit. The contraction caps each ratio at γ, and an MDP can sit right at the cap, as the lesson's grid did with γ = 0.95. Nothing here is wrong."
+                },
+                {
+                  "text": "2.000, 1.700, 1.445, 1.228, 1.044",
+                  "correct": true,
+                  "explain": "Applying the contraction to the two tables V_k and V_(k−1) gives ‖V_(k+1) − V_k‖ = ‖TV_k − TV_(k−1)‖ ≤ γ‖V_k − V_(k−1)‖, so each change is at most 0.8 times the one before. This log shrinks by a factor of 0.85 per sweep, which no correct value iteration with γ = 0.8 can do. A discount of 0.85 in the code, for example, would produce it."
+                },
+                {
+                  "text": "2.000, 1.200, 0.600, 0.000, 0.000",
+                  "explain": "Changes that reach zero are allowed, because the contraction only bounds each change from above. When every path reaches the end within a few steps, the values become exact after a few sweeps and then stop changing, as the lesson's grid did after six sweeps."
+                },
+                {
+                  "text": "2.000, 0.400, 0.320, 0.256, 0.205",
+                  "explain": "The sharp drop after the first sweep only means the second change is far below its cap of 0.8 × 2.000 = 1.600. Each later change is at most 0.8 times the one before it, which the contraction allows."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Applying the contraction to the two tables V_k and V_(k−1) gives ‖V_(k+1) − V_k‖ = ‖TV_k − TV_(k−1)‖ ≤ γ‖V_k − V_(k−1)‖, so each change is at most 0.8 times the one before. This log shrinks by a factor of 0.85 per sweep, which no correct value iteration with γ = 0.8 can do. A discount of 0.85 in the code, for example, would produce it."
+            },
+            {
+              "result": "2.000, 1.700, 1.445, 1.228, 1.044"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rl-a-run-that-comes-back",
+      "moduleId": "reinforcement-learning",
+      "title": "A Run That Comes Back to the Hall",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A cleaning robot works in two rooms. From the hall ($H$) it either cleans the kitchen ($K$) or returns to its dock, which ends the run. From the kitchen it always goes back to the hall. One run went"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{cccc}\n\\text{Step} & \\text{From} & \\text{To} & \\text{Reward} \\\\ \\hline\n1 & H & K & 4 \\\\\n2 & K & H & 0 \\\\\n3 & H & \\text{dock} & 8\n\\end{array}"
+        },
+        {
+          "p": "The dock has value 0. The agent learns state values from this one run, with $\\gamma = 0.8$, $\\alpha = 0.25$, and both values starting at 0."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The agent uses TD(0), with one update after each step of the run. What is $V(K)$ after the run?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each step applies $V(S_t) \\leftarrow V(S_t) + 0.25\\,[R_{t+1} + 0.8\\,V(S_{t+1}) - V(S_t)]$ with the values as they stand when the step is reached:"
+            },
+            {
+              "tex": "\\begin{array}{ccc}\n\\text{Step} & \\text{Update} & \\text{Result} \\\\ \\hline\n1 & V(H) = 0 + 0.25\\,(4 + 0.8 \\times 0 - 0) & V(H) = 1 \\\\\n2 & V(K) = 0 + 0.25\\,(0 + 0.8 \\times 1 - 0) & V(K) = 0.2 \\\\\n3 & V(H) = 1 + 0.25\\,(8 + 0 - 1) & V(H) = 2.75\n\\end{array}"
+            },
+            {
+              "p": "So $V(K) = 0.2$. The run visits $H$ twice, and step 2 bootstraps from the value that step 1 had just given $H$, so credit reaches $K$ within a single run. Bootstrapping from the values as they were before the run would leave $V(K)$ at 0."
+            },
+            {
+              "p": "$V(K)$ does not yet reflect the 8 at the end. Step 3 raised $V(H)$ after $K$'s update had already been made, and that news reaches $K$ only on a later run through the kitchen."
+            },
+            {
+              "result": "0.2"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A second agent uses every-visit Monte Carlo instead, keeping the same step size. After the run, for each visit to a state in the order the visits happened, it moves the state's value toward the return that followed that visit, $V(s) \\leftarrow V(s) + 0.25\\,[G - V(s)]$. What is its $V(H)$ after the run?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The run gives $H$ two returns, one per visit:"
+            },
+            {
+              "tex": "G_1 = 4 + 0.8 \\times 0 + 0.8^2 \\times 8 = 9.12, \\qquad G_3 = 8 ."
+            },
+            {
+              "p": "The first includes the trip through the kitchen and the second does not. Applying the two updates in visit order,"
+            },
+            {
+              "tex": "V(H) = 0 + 0.25 \\times 9.12 = 2.28, \\qquad\nV(H) = 2.28 + 0.25\\,(8 - 2.28) = 3.71 ."
+            },
+            {
+              "p": "First-visit Monte Carlo would use only $G_1$ and stop at 2.28. The two returns differ because they start at different points of the same run, and every visit gets the full real return that followed it, so the 8 at the end reaches $H$ through both. TD's $V(H) = 2.75$ is lower: its first update of $H$ used $0.8\\,V(K) = 0$ in place of everything after step 1."
+            },
+            {
+              "result": "3.71"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rl-a-log-from-a-random-robot",
+      "moduleId": "reinforcement-learning",
+      "title": "Learning from a Random Robot's Log",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A robot has two rooms, $A$ and $B$, and two moves, left and right."
+      ],
+      "setup": [
+        {
+          "list": [
+            "In $A$, **left** pays 1 and ends the episode, and **right** pays 0 and leads to $B$.",
+            "In $B$, **right** pays 8 and ends the episode, and **left** pays 0 and leads back to $A$."
+          ]
+        },
+        {
+          "p": "The robot picked every move at random, and logged two episodes as (state, move, reward, next state):"
+        },
+        {
+          "tex": "\\begin{array}{cc}\n\\text{Episode} & \\text{Transitions} \\\\ \\hline\n1 & \\text{$(A, \\text{right}, 0, B)$, $(B, \\text{right}, 8, \\text{end})$} \\\\\n2 & \\text{$(A, \\text{right}, 0, B)$, $(B, \\text{left}, 0, A)$, $(A, \\text{left}, 1, \\text{end})$}\n\\end{array}"
+        },
+        {
+          "p": "A learner processes the log once, transition by transition in the order shown, with Q-learning, $\\alpha = 0.5$ and $\\gamma = 0.9$. Every $Q$ starts at 0, and the end has value 0."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is $Q(B, \\text{left})$ after the log?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each transition applies $Q(s, a) \\leftarrow Q(s, a) + 0.5\\,[r + 0.9 \\max_{a'} Q(s', a') - Q(s, a)]$, with the values as they stand when the transition is reached."
+            },
+            {
+              "tex": "\\begin{array}{ccc}\n\\text{Transition} & \\text{Target} & \\text{New value} \\\\ \\hline\n(A, \\text{right}, 0, B) & 0 + 0.9 \\max(0, 0) = 0 & Q(A, \\text{right}) = 0 \\\\\n(B, \\text{right}, 8, \\text{end}) & 8 & Q(B, \\text{right}) = 4 \\\\\n(A, \\text{right}, 0, B) & 0 + 0.9 \\max(0, 4) = 3.6 & Q(A, \\text{right}) = 1.8 \\\\\n(B, \\text{left}, 0, A) & 0 + 0.9 \\max(0, 1.8) = 1.62 & Q(B, \\text{left}) = 0.81 \\\\\n(A, \\text{left}, 1, \\text{end}) & 1 & Q(A, \\text{left}) = 0.5\n\\end{array}"
+            },
+            {
+              "p": "So $Q(B, \\text{left}) = 0.81$. Its target takes the best move from $A$, right, worth 1.8 after the update one row earlier. The robot actually moved left from $A$ next, and a SARSA learner would bootstrap from that move's value, still 0 at that point, and leave $Q(B, \\text{left})$ at 0."
+            },
+            {
+              "result": "0.81"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The robot keeps wandering at random, and the learner keeps running Q-learning on everything it logs, with step sizes that shrink in the usual way. What value does $Q(B, \\text{left})$ approach?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Every pair keeps being tried, so Q-learning converges to $Q^*$ even though the robot never acts greedily. With the best moves, $V^*(B) = 8$ (go right) and $V^*(A) = \\max(1,\\ 0.9 \\times 8) = 7.2$ (go right too), so"
+            },
+            {
+              "tex": "Q^*(B, \\text{left}) = 0 + 0.9\\,V^*(A) = 0.9 \\times 7.2 = 6.48 ."
+            },
+            {
+              "p": "That is the value of moving left from $B$ and then playing well, even though the logged robot never plays well. SARSA on the same log learns the value of the random robot instead. Its values solve $V(A) = 0.5(1) + 0.5(0.9\\,V(B))$ and $V(B) = 0.5(8) + 0.5(0.9\\,V(A))$, which give $V(A) \\approx 2.884$ and $Q(B, \\text{left}) = 0.9\\,V(A) \\approx 2.60$."
+            },
+            {
+              "result": "6.48"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rl-schedules-that-stop-exploring",
+      "moduleId": "reinforcement-learning",
+      "title": "Which Schedule Keeps Exploring",
+      "difficulty": "Hard",
+      "minutes": 10,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A Q-learning agent is in state $s$ at every step $t = 1, 2, 3, \\dots$, and uses $\\varepsilon$-greedy with a schedule $\\varepsilon_t$ over 4 actions. One action, $b$, is never the greedy one in $s$, so the agent tries it only on the steps where it explores and the random pick lands on $b$. The random draws at different steps are independent."
+            },
+            {
+              "p": "Which schedule makes it certain, with probability 1, that $b$ is tried infinitely often?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$\\varepsilon_t = 1/t$",
+                  "correct": true,
+                  "explain": "At step t the agent tries b with probability 1/(4t). The chance of never trying it after step T is the product of (1 − 1/(4t)) over t > T, which is at most exp(−(1/4)(1/(T+1) + 1/(T+2) + ...)). The harmonic sum has no limit, so the product is 0 for every T: after any step, b is certain to be tried again. ε still goes to 0, just slowly enough."
+                },
+                {
+                  "text": "$\\varepsilon_t = 0.999^t$",
+                  "explain": "The expected number of tries of b over all time is the sum of 0.999^t / 4, which is 0.999/(0.001 × 4) ≈ 250. A finite expected count means the tries stop for good after some step, with probability 1. The decay looks slow, but a geometric schedule always has a finite sum."
+                },
+                {
+                  "text": "$\\varepsilon_t = 1/t^2$",
+                  "explain": "The extra power of t makes the expected number of tries finite: the sum of 1/(4t²) over all t is π²/24 ≈ 0.41. So the tries stop for good with probability 1, and with probability 2/π ≈ 0.64 b is never tried at all."
+                },
+                {
+                  "text": "$\\varepsilon_t = \\max(0,\\ 1 - t/10^6)$",
+                  "explain": "Annealing down to zero ends exploration at step one million. About 125,000 tries of b come before that, which looks like plenty, but the guarantee needs tries without end. After the schedule reaches 0, b's estimate is frozen at whatever it was, right or wrong. A floor such as 0.05 is what keeps the guarantee."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "At step t the agent tries b with probability 1/(4t). The chance of never trying it after step T is the product of (1 − 1/(4t)) over t > T, which is at most exp(−(1/4)(1/(T+1) + 1/(T+2) + ...)). The harmonic sum has no limit, so the product is 0 for every T: after any step, b is certain to be tried again. ε still goes to 0, just slowly enough."
+            },
+            {
+              "result": "$\\varepsilon_t = 1/t$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rl-one-weight-chasing-its-target",
+      "moduleId": "reinforcement-learning",
+      "title": "One Weight Chasing Its Own Target",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "An agent estimates state values with a single weight $w$ and one feature per state, $V_w(s) = w\\,x(s)$. Two states matter: $x(X) = 2$ and $x(Y) = 3$. From $X$ the agent moves to $Y$, and from $Y$ the episode ends. Every reward is 0, so the true values are all 0, which $w = 0$ represents exactly."
+      ],
+      "setup": [
+        {
+          "p": "The agent learns the way DQN's regression is set up, without a target network to hold the target still, by regressing on a target that uses its own live estimate of the next state. For a transition from $s$ to $s'$ with reward $r$, it treats $r + \\gamma V_w(s')$ as a fixed target and takes one gradient step on $\\tfrac12\\big(r + \\gamma V_w(s') - V_w(s)\\big)^2$:"
+        },
+        {
+          "tex": "w \\leftarrow w + \\alpha\\,\\big[r + \\gamma V_w(s') - V_w(s)\\big]\\,x(s) ,"
+        },
+        {
+          "p": "with $V_w(\\text{end}) = 0$. Take $\\alpha = 0.1$, $\\gamma = 0.9$ and $w = 1$ to start."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The replay buffer holds only copies of the transition from $X$ to $Y$. What is $w$ after 10 updates? Give it to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "For this transition the bracket is $0 + 0.9(3w) - 2w = 0.7w$, so each update is"
+            },
+            {
+              "tex": "w \\leftarrow w + 0.1 \\times 0.7w \\times 2 = 1.14\\,w ."
+            },
+            {
+              "p": "After 10 updates, $w = 1.14^{10} \\approx 3.707$. The update pulls $V_w(X) = 2w$ toward its target $2.7w$, and the step raises $w$, which raises the target by the same factor. The estimate chases a target that runs ahead of it."
+            },
+            {
+              "result": "3.707"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Above which discount $\\gamma$ does $w$ grow without bound under these updates? Give it to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "In general the bracket is $(3\\gamma - 2)w$, so each update multiplies $w$ by $1 + 2\\alpha(3\\gamma - 2)$. That factor is above 1 exactly when $3\\gamma > 2$, that is $\\gamma > 2/3 \\approx 0.667$, whatever the step size. For a smaller $\\gamma$ the target $3\\gamma w$ is below the estimate $2w$, and with $\\alpha = 0.1$ each update shrinks $w$ toward 0."
+            },
+            {
+              "p": "The threshold is $x(X)/x(Y)$. A change of $\\Delta$ in $w$ moves the estimate $V_w(X)$ by $x(X)\\,\\Delta = 2\\Delta$ and the target $\\gamma V_w(Y)$ by $\\gamma\\,x(Y)\\,\\Delta = 3\\gamma\\Delta$. Once $\\gamma\\,x(Y) > x(X)$, every step that raises the estimate raises the target by more."
+            },
+            {
+              "result": "0.667"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Now the buffer holds both transitions in equal numbers, and the updates alternate: $X$ to $Y$, then $Y$ to the end, and so on, with $\\gamma = 0.9$. By what factor does $w$ change over each pair of updates? What does that say about which transitions a replay buffer should hold?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The update from $Y$ has bracket $0 + 0 - 3w$, so it gives"
+            },
+            {
+              "tex": "w \\leftarrow w + 0.1 \\times (-3w) \\times 3 = 0.1\\,w ."
+            },
+            {
+              "p": "A pair of updates multiplies $w$ by $1.14 \\times 0.1 = 0.114$, so $w$ now shrinks to 0, the true answer."
+            },
+            {
+              "p": "The update at $Y$ uses a target with no estimate in it, the reward 0 at the end, and it pulls $w$ down hard. With only $X$'s transition in the buffer, nothing ever checks the estimate at $Y$ that $X$'s target relies on. The runaway needs three things at once: a target built from the estimate itself, one weight shared by both states, and updates that skip the state the target depends on. Remove any one and $w$ stays bounded, and this part removed the third. Linear TD is known to converge when its updates visit the states in the proportions the agent's own policy does, and a buffer filled from the agent's recent experience stays close to those proportions."
+            },
+            {
+              "result": "0.114"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rl-when-to-stop-sweeping",
+      "moduleId": "reinforcement-learning",
+      "title": "When to Stop Sweeping",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "Value iteration applies the Bellman optimality operator $T$ over and over, $V_k = T V_{k-1}$, and $T$ is a $\\gamma$-contraction in the sup norm. The true $V^*$ is never available while the loop runs, so programs stop when the last change is small: they return $V_k$ at the first sweep where $\\delta_k = \\|V_k - V_{k-1}\\|_\\infty$ falls below a tolerance."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Show that for every $k \\ge 1$,"
+            },
+            {
+              "tex": "\\|V_k - V^*\\|_\\infty \\le \\frac{\\gamma}{1 - \\gamma}\\,\\delta_k ."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Since $V^* = TV^*$ and $V_{k+1} = TV_k$, the triangle inequality and the contraction give"
+            },
+            {
+              "tex": "\\|V_k - V^*\\|_\\infty \\le \\|V_k - V_{k+1}\\|_\\infty + \\|TV_k - TV^*\\|_\\infty\n\\le \\delta_{k+1} + \\gamma\\,\\|V_k - V^*\\|_\\infty ."
+            },
+            {
+              "p": "Move the last term to the left:"
+            },
+            {
+              "tex": "(1 - \\gamma)\\,\\|V_k - V^*\\|_\\infty \\le \\delta_{k+1}\n= \\|TV_k - TV_{k-1}\\|_\\infty \\le \\gamma\\,\\delta_k ,"
+            },
+            {
+              "p": "and divide by $1 - \\gamma > 0$. $\\qquad\\blacksquare$"
+            },
+            {
+              "p": "The bound uses only numbers the loop already has: $\\gamma$ and the last change."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A program uses $\\gamma = 0.99$ and stops at the first sweep with $\\delta_k < 0.001$. How far from $V^*$ can the table it returns be, in the sup norm, by Part 1? Give the bound to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "tex": "\\frac{\\gamma}{1 - \\gamma}\\,\\delta_k < \\frac{0.99}{0.01} \\times 0.001 = 0.099 ."
+            },
+            {
+              "p": "A tolerance of 0.001 promises only that the values are within 0.099, about a hundred times looser. The factor $\\gamma/(1 - \\gamma)$ is about the horizon, 99 here, and it grows as $\\gamma$ approaches 1, just when the slow convergence tempts people to stop early."
+            },
+            {
+              "result": "0.099"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Is the bound reached? Take an MDP with one state and one action that pays 1 every step, $\\gamma = 0.99$ and $V_0 = 0$. Run the same stopping rule. What is $V^* - V_k$ when it stops? Give it to four decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The sweeps give $V_k = 1 + 0.99\\,V_{k-1}$, so"
+            },
+            {
+              "tex": "V_k = \\frac{1 - 0.99^k}{0.01}, \\qquad\n\\delta_k = V_k - V_{k-1} = 0.99^{k-1}, \\qquad\nV^* - V_k = \\frac{0.99^k}{0.01} = 100 \\times 0.99^k ."
+            },
+            {
+              "p": "The loop stops at the first $k$ with $0.99^{k-1} < 0.001$, that is $k - 1 > \\ln 0.001 / \\ln 0.99 \\approx 687.3$, so $k = 689$. There $\\delta_{689} = 0.99^{688} \\approx 0.000993$ and"
+            },
+            {
+              "tex": "V^* - V_{689} = 100 \\times 0.99^{689} \\approx 0.0983 ."
+            },
+            {
+              "p": "Here $V^* - V_k = \\frac{0.99}{0.01}\\,\\delta_k$ exactly, at every $k$: the bound of Part 1 holds with equality. The error is not 0.099 only because $\\delta_{689}$ landed a little below 0.001. So the factor $\\gamma/(1 - \\gamma)$ cannot be improved, because this one-state MDP reaches it."
+            },
+            {
+              "result": "0.0983"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "With $\\gamma = 0.99$, what is the largest tolerance for which the bound of Part 1 guarantees that the returned table is within 0.001 of $V^*$? Give it in millionths (so 0.00002 is 20)."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Part 1 guarantees an error below $\\frac{\\gamma}{1 - \\gamma}\\,\\text{tol}$, and that guarantee is at most 0.001 exactly when"
+            },
+            {
+              "tex": "\\text{tol} \\le 0.001 \\times \\frac{1 - \\gamma}{\\gamma} = 0.001 \\times \\frac{0.01}{0.99}\n\\approx 1.01 \\times 10^{-5} ,"
+            },
+            {
+              "p": "so the largest tolerance is about 10.1 millionths. Part 3 shows this is not overcautious: on the one-state MDP the error is exactly 99 times the last change. Each extra sweep shrinks the change by a factor of only 0.99, so asking for 99 times less change costs $\\ln 99 / \\ln(1/0.99) \\approx 457$ more sweeps."
+            },
+            {
+              "result": "10.1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rl-five-games-two-estimates",
+      "moduleId": "reinforcement-learning",
+      "title": "Five Games, Two Estimates",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "A short game has three positions, $X$, $Y$ and $Z$. A game that starts at $X$ moves to $Y$ or to $Z$ and then ends, and a game can also start at $Y$ or $Z$. Five recorded games, written as position, reward, position, ..., end:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{cc}\n\\text{Game} & \\text{Record} \\\\ \\hline\n1 & \\text{$X$, 0, $Y$, 4, end} \\\\\n2 & \\text{$X$, 0, $Z$, 0, end} \\\\\n3 & \\text{$Y$, 0, end} \\\\\n4 & \\text{$Y$, 0, end} \\\\\n5 & \\text{$Z$, 2, end}\n\\end{array}"
+        },
+        {
+          "p": "Every game ends, so there is no discounting ($\\gamma = 1$), and the end has value 0. Two learners start from $V = 0$ and go over the five games again and again, adding up each pass's updates and applying them together with a small step size, until their values stop changing. One uses the TD(0) update, the other moves each state toward the return that followed it."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Where does the TD learner's $V(X)$ settle? Give it to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The values stop changing when the updates of a pass add up to zero for every state. For TD(0) that means, for each state, the TD errors of its recorded transitions sum to zero, so"
+            },
+            {
+              "tex": "V(s) = \\text{the average over the recorded transitions out of } s \\text{ of } r + V(s') ."
+            },
+            {
+              "list": [
+                "$Y$ has three transitions, rewards 4, 0 and 0, each to the end: $V(Y) = 4/3$.",
+                "$Z$ has two, rewards 0 and 2: $V(Z) = 1$.",
+                "$X$ has two, one to $Y$ and one to $Z$, both with reward 0:"
+              ]
+            },
+            {
+              "tex": "V(X) = \\tfrac12\\big(0 + V(Y)\\big) + \\tfrac12\\big(0 + V(Z)\\big)\n= \\tfrac12\\big(\\tfrac43 + 1\\big) = \\tfrac76 \\approx 1.167 ."
+            },
+            {
+              "p": "These are exactly the values of the MDP that the counts describe: from $X$ the game went to $Y$ half the time, and $Y$ paid 4 in one game out of three. Batch TD fits that model and solves it."
+            },
+            {
+              "result": "1.167"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Where does the other learner's $V(X)$ settle?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Here the updates of a pass add up to zero when each $V(s)$ is the average of the returns that followed $s$. Two games pass through $X$, with returns $0 + 4 = 4$ and $0 + 0 = 0$, so $V(X) = 2$."
+            },
+            {
+              "p": "For $Y$ and $Z$ the two learners agree, $4/3$ and $1$, because their returns are single rewards. They disagree only at $X$. The one game that went from $X$ to $Y$ happened to be the one game out of three in which $Y$ paid 4, and only this learner takes that game at face value."
+            },
+            {
+              "result": "2"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A sixth game is recorded, $Y$, 4, end, and both learners run again on all six games. What is the TD learner's $V(X)$ now? What happens to the other learner's?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "$Y$ now has four transitions, paying 4, 0, 0 and 4, so $V(Y) = 2$. Then"
+            },
+            {
+              "tex": "V(X) = \\tfrac12(2 + 1) = 1.5 ."
+            },
+            {
+              "p": "The other learner's $V(X)$ stays at 2. No new game passes through $X$, and it updates $X$ only from returns that followed $X$. TD's estimate of $X$ moved because it is built from its estimate of $Y$, so everything learned about $Y$ from any game reaches $X$."
+            },
+            {
+              "result": "1.5"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Which of the two estimates of $V(X)$ from the five games would you use to predict the next game that starts at $X$? Describe a way the game could work in which the other estimate is the better one."
+            }
+          ],
+          "answer": [
+            {
+              "p": "If what happens after $Y$ does not depend on how the game reached $Y$, which is the Markov property, then the three games seen from $Y$ all describe the game that starts at $X$ and goes to $Y$. The TD estimate uses all of them, and the Monte Carlo estimate uses only the one that came from $X$. The TD estimate is the better guess, because it rests on three games from $Y$ instead of one."
+            },
+            {
+              "p": "The Monte Carlo estimate is better when the Markov property fails. Suppose strong players start at $X$ and weak players start at $Y$, and position alone does not record the player. Then $Y$ pays more in games that came from $X$ than in games that started there, and games 3 and 4 say little about a game that starts at $X$. TD's estimate leans on them and is biased. Monte Carlo uses only returns that actually followed $X$, so it stays unbiased however the positions are defined, at the price of noise."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rl-the-max-of-noisy-estimates",
+      "moduleId": "reinforcement-learning",
+      "title": "The Max of Noisy Estimates",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "In state $s$ an agent has four actions. Each one ends the episode with a reward of $+1$ or $-1$, with probability $1/2$ each, drawn afresh every time, so every action's true value is 0. The agent has tried each action once, and with step size 1 its table holds that single reward: each $Q(s, a)$ is $+1$ or $-1$, independently."
+      ],
+      "setup": [
+        {
+          "p": "One step before $s$ is a state $s_0$. There the agent can **stop**, which pays 0.5 and ends the episode, or **go**, which pays 0 and leads to $s$. The agent already has $Q(s_0, \\text{stop}) = 0.5$, and $\\gamma = 0.9$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the expected value of $\\max_a Q(s, a)$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The max is $-1$ only when all four entries are $-1$, which has probability $(1/2)^4 = 1/16$. Otherwise it is $+1$. So"
+            },
+            {
+              "tex": "\\mathbb{E}\\big[\\max_a Q(s, a)\\big] = \\tfrac{15}{16}(1) + \\tfrac{1}{16}(-1) = \\tfrac78 = 0.875 ,"
+            },
+            {
+              "p": "although $\\max_a \\mathbb{E}[Q(s, a)] = 0$. Each entry is an unbiased estimate, but the max picks whichever one the noise pushed up."
+            },
+            {
+              "result": "0.875"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "The agent now makes one Q-learning update of $(s_0, \\text{go})$ with step size 1, which sets $Q(s_0, \\text{go}) = 0 + 0.9 \\max_a Q(s, a)$. With what probability does it then prefer go to stop?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Go wins when $0.9 \\max_a Q(s, a) > 0.5$, which happens exactly when the max is $+1$ (then $0.9 > 0.5$), so with probability $15/16 = 0.9375$."
+            },
+            {
+              "p": "The true value of go is 0, below the 0.5 of stopping, so the agent picks the worse action fifteen times out of sixteen. Its expected target is $0.9 \\times 0.875 = 0.7875$. The overestimate in $s$ has been passed back to $s_0$, and every state upstream that bootstraps from $s_0$ can inherit it."
+            },
+            {
+              "result": "0.9375"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Instead, the agent keeps two tables, $Q_A$ and $Q_B$, each filled from its own independent try of every action. It chooses $a^* = \\arg\\max_a Q_A(s, a)$, breaking ties at random, and updates with $Q(s_0, \\text{go}) = 0.9\\,Q_B(s, a^*)$. What is $\\mathbb{E}[Q_B(s, a^*)]$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The choice $a^*$ depends only on $Q_A$, and $Q_B$ is independent of $Q_A$, so whichever action is chosen, its $Q_B$ entry is still a fresh draw of $+1$ or $-1$:"
+            },
+            {
+              "tex": "\\mathbb{E}\\big[Q_B(s, a^*)\\big] = \\sum_a P(a^* = a)\\,\\mathbb{E}\\big[Q_B(s, a)\\big] = 0 ,"
+            },
+            {
+              "p": "the true value. The table that picks the action is not the one that values it, so the noise that made $a^*$ look best does not carry over to its value. This is the idea of double Q-learning."
+            },
+            {
+              "result": "0"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "With the two tables of Part 3, with what probability does the agent now prefer go to stop?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Go wins when $0.9\\,Q_B(s, a^*) > 0.5$, which happens exactly when $Q_B(s, a^*) = +1$, with probability $1/2$."
+            },
+            {
+              "p": "The agent still picks the worse action half the time, because one try per action is very little data, but its error is no longer pushed in one direction: with $Q_B(s, a^*) = -1$ it prefers stop, by a wide margin. More tries shrink the noise around the right value, 0. With the single table of Part 2, more tries shrink the noise too, but the max of the noisy averages stays above 0 on average."
+            },
+            {
+              "result": "0.5"
+            }
+          ]
+        },
+        {
+          "id": "1.5",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Prove the general pattern. Let $\\mu_a$ be the true value of action $a$. Let $Q_A$ and $Q_B$ be independent estimates with $\\mathbb{E}[Q_A(a)] = \\mathbb{E}[Q_B(a)] = \\mu_a$ for every $a$, and let $a^*$ be any action chosen from $Q_A$ alone. Show that"
+            },
+            {
+              "tex": "\\mathbb{E}\\big[\\max_a Q_A(a)\\big] \\ge \\max_a \\mu_a \\ge \\mathbb{E}\\big[Q_B(a^*)\\big] ."
+            }
+          ],
+          "answer": [
+            {
+              "p": "For the first inequality, fix any action $b$. Since $\\max_a Q_A(a) \\ge Q_A(b)$ for every outcome, taking expectations gives $\\mathbb{E}[\\max_a Q_A(a)] \\ge \\mu_b$. This holds for every $b$, so it holds for the $b$ with the largest $\\mu_b$."
+            },
+            {
+              "p": "For the second, condition on $a^*$. Because $a^*$ is a function of $Q_A$, it is independent of $Q_B$, so $\\mathbb{E}[Q_B(a^*) \\mid a^* = a] = \\mu_a$ and"
+            },
+            {
+              "tex": "\\mathbb{E}\\big[Q_B(a^*)\\big] = \\sum_a P(a^* = a)\\,\\mu_a \\le \\max_a \\mu_a ,"
+            },
+            {
+              "p": "since a weighted average with weights that sum to 1 is never above its largest term. $\\qquad\\blacksquare$"
+            },
+            {
+              "p": "Q-learning's target uses one table both to pick and to value, so on average it errs upward or not at all. The two-table target errs downward or not at all, and only when $Q_A$ can pick a worse action. In Part 3 every action is equally good, so it is exactly unbiased."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

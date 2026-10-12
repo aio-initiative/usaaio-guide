@@ -1,0 +1,752 @@
+{
+ "module": "information-theory-core",
+ "stage": "Camp",
+ "index": [
+  {
+   "id": "it-rolls-until-a-six",
+   "moduleId": "information-theory-core",
+   "title": "Rolling until a Six",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=it-rolls-until-a-six",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "A board game makes a player roll a fair die until the first six appears. Let K be the number of rolls this takes, so K can be 1, 2, 3, and so on with no upper limit. 1 part.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "it-mixing-in-a-uniform",
+   "moduleId": "information-theory-core",
+   "title": "A Floor under Every Probability",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=it-mixing-in-a-uniform",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "A language model q predicts the next token from a vocabulary of 50,000 tokens. On a test set of 10,000 tokens, it gives one token probability exactly 0, so its test cross-entropy is infinite. To repair it without retraining, you mix in a little of the uniform distribution: the repaired model gives each token (1 minus eps) of its own probability plus eps/50,000, with eps = 0.02. The loss of a token is minus the log of that, in nats. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "it-merging-outcomes",
+   "moduleId": "information-theory-core",
+   "title": "Coarser Records, Smaller Divergence",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=it-merging-outcomes",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "A weather station records each day as sunny, cloudy or rainy. The true frequencies are p = (0.3, 0.2, 0.5), and a forecasting model predicts q = (0.1, 0.2, 0.7), in the same order. An older archive does not separate sunny from cloudy: it only records \"dry\" or \"rainy\", so it sees p' = (0.5, 0.5) and q' = (0.3, 0.7). Write D(p || q) for the KL divergence of q from p, as in the lesson but without the subscript. 2 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "it-two-models-two-directions",
+   "moduleId": "information-theory-core",
+   "title": "Which Model the Reverse KL Keeps",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=it-two-models-two-directions",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Camp"
+   ],
+   "prompt": "A sensor reports one of four positions, and its true distribution has a peak at each end: p = (0.42, 0.08, 0.08, 0.42). You must replace it with one of three simpler models: A1 = (0.85, 0.05, 0.05, 0.05), A2 = (0.70, 0.10, 0.10, 0.10), B = (0.25, 0.25, 0.25, 0.25). You pick the model q with the smallest reverse KL, D(q || p). Which one do you pick?",
+   "answer": "A2, because it covers one peak of p without overshooting it, and pays little where p is small. The reverse KL weights each log ratio by the model's own probabilities. A2 pays 0.70 × log2(0.70/0.42) = 0.516 bits on its peak and gets back 0.207 bits at the far end, where it puts 0.10 against p's 0.42, for a total of 0.373 bits. B pays heavily in the middle, where it puts 0.25 against 0.08, and totals 0.448 bits. A1 totals 0.643 bits. A2 covers one peak and stays modest elsewhere, so it wins."
+  },
+  {
+   "id": "it-one-bell-for-two-bumps",
+   "moduleId": "information-theory-core",
+   "title": "One Bell Curve for Two Bumps",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=it-one-bell-for-two-bumps",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "A bus's arrival offset from its timetable, in minutes, has two bumps: a quarter of the trips run about 2 minutes early and the rest about 2 minutes late. Its density is a mixture of two normals with variance 1, a quarter of it centered at minus 2 and the rest at plus 2. You approximate it by a single normal q with mean mu and variance sigma squared, chosen so that the KL divergence from the mixture to q is as small as possible. 2 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "it-uncorrelated-feature",
+   "moduleId": "information-theory-core",
+   "title": "An Uncorrelated Feature",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=it-uncorrelated-feature",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Camp"
+   ],
+   "prompt": "A thermostat logs its error X in whole degrees, and X is minus 1, 0 or plus 1 with probability 1/3 each. A service flag Y is 1 when the error is not zero and 0 when it is. A teammate finds that the correlation between X and Y is exactly zero and proposes dropping X as a feature for predicting Y. What is the mutual information I(X; Y) in bits?",
+   "answer": "0.918 bits. Y is 1 with probability 2/3, so H(Y) = −(2/3) log2(2/3) − (1/3) log2(1/3) = 0.918 bits. Knowing X fixes Y, so H(Y | X) = 0 and the mutual information is H(Y) − H(Y | X) = 0.918. The same comes from the other side: H(X) − H(X | Y) = 1.585 − 0.667. X is the most informative feature Y could have, uncorrelated or not."
+  },
+  {
+   "id": "it-two-noisy-inspectors",
+   "moduleId": "information-theory-core",
+   "title": "What a Second Inspector Adds",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=it-two-noisy-inspectors",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "Half of the parts on a production line are defective. Two inspectors label every part. Each one, independently of the other once the part's true status Y is fixed, reports the true status with probability 0.9 and the wrong one with probability 0.1. Call their labels L1 and L2. Work in bits. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "it-most-spread-with-mean-three",
+   "moduleId": "information-theory-core",
+   "title": "The Most Uncertain Count with a Given Mean",
+   "source": "USAAIO-style",
+   "difficulty": "Very Hard",
+   "url": "/theory/?id=it-most-spread-with-mean-three",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "A help desk receives N calls in an hour, where N can be any of 0, 1, 2, and so on. All you know is that the mean is 3. Among all distributions on the nonnegative integers with mean 3, you want the one with the largest entropy, since it assumes nothing beyond the mean. 2 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "information-theory-implementation-task",
+   "moduleId": "information-theory-core",
+   "title": "Mutual Information Feature Selection Practice",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=information-theory",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Camp"
+   ],
+   "prompt": "Entropy & mutual information estimation via histogram binning. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+   "answer": "Auto-graded inside the notebook. Test accuracy must reach the target shown in the evaluation cell."
+  },
+  {
+   "id": "ps3-kl-asymmetry",
+   "moduleId": "information-theory-core",
+   "title": "Which Way Round Does Your KL Go?",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=ps3-kl-asymmetry",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Camp"
+   ],
+   "prompt": "Fit a single Gaussian to a bimodal target under forward and reverse KL, and see mass-covering and mode-seeking behavior fall out of the direction alone.",
+   "answer": "Auto-graded inside the notebook. Both fits and the cross-entropy identity must match to 1e-6, with the forward fit at least twice as wide."
+  },
+  {
+   "id": "foundations-07-entropy-cross-entropy-kl",
+   "moduleId": "information-theory-core",
+   "title": "AI Foundations 07: Entropy, Cross-Entropy and KL Divergence",
+   "source": "AI Foundations",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=foundations-07-entropy-cross-entropy-kl",
+   "tags": [
+    "Coding",
+    "Course",
+    "Notebook",
+    "Camp"
+   ],
+   "prompt": "Course notebook, about ~5 h end to end. Read it top to bottom, then do the exercises marked with a pencil icon - each one checks itself - and finish with the exam-style quiz.",
+   "answer": "Self-checking: every exercise has a checker cell that prints a verdict, and the quiz answers are explained at the end of the notebook."
+  }
+ ],
+ "theory": [
+  {
+   "id": "it-rolls-until-a-six",
+   "moduleId": "information-theory-core",
+   "title": "Rolling until a Six",
+   "difficulty": "Medium",
+   "minutes": 15,
+   "overview": [
+    "A board game makes a player roll a fair die until the first six appears. Let $K$ be the number of rolls this takes, so $K$ can be $1, 2, 3, \\dots$ with no upper limit."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the entropy $H(K)$ in bits? Give it to two decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The first six comes on roll $k$ when the first $k - 1$ rolls miss and roll $k$ hits, so with $p = \\tfrac16$"
+      },
+      {
+       "tex": "P(K = k) = p\\,(1 - p)^{k - 1}, \\qquad\n-\\log_2 P(K = k) = -\\log_2 p - (k - 1)\\log_2(1 - p)."
+      },
+      {
+       "p": "The surprise is a constant plus a multiple of $k - 1$, so its average only needs $\\mathbb{E}[K - 1]$. A geometric variable has $\\mathbb{E}[K] = 1/p = 6$, so $\\mathbb{E}[K - 1] = 5$, and"
+      },
+      {
+       "tex": "H(K) = -\\log_2 \\tfrac16 - 5\\log_2 \\tfrac56\n= 2.585 + 5 \\times 0.263 = 3.90 \\text{ bits}."
+      },
+      {
+       "p": "A sum over every $k$ term by term gives the same 3.9001 bits."
+      },
+      {
+       "p": "The answer is larger than $\\log_2 6 = 2.585$, the entropy of a single roll. That fits: $K$ has infinitely many possible values, and although long waits are unlikely, the tail keeps adding surprise. Written with the binary entropy $h(p) = -p\\log_2 p - (1-p)\\log_2(1-p)$, the result is $H(K) = h(p)/p$, which is the entropy of one roll's \"six or not\" outcome times the expected number of rolls."
+      },
+      {
+       "result": "3.90"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "it-mixing-in-a-uniform",
+   "moduleId": "information-theory-core",
+   "title": "A Floor under Every Probability",
+   "difficulty": "Medium",
+   "minutes": 15,
+   "overview": [
+    "A language model $q$ predicts the next token from a vocabulary of $n = 50{,}000$ tokens. On a test set of 10,000 tokens, it gives one token probability exactly 0, so its test cross-entropy is infinite. To repair it without retraining, you mix in a little of the uniform distribution:"
+   ],
+   "setup": [
+    {
+     "tex": "q_\\varepsilon(x) = (1 - \\varepsilon)\\,q(x) + \\frac{\\varepsilon}{n},\n\\qquad \\varepsilon = 0.02 ."
+    },
+    {
+     "p": "The loss of a token $x$ is $-\\ln q_\\varepsilon(x)$, in nats."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the largest loss a single token can cost under $q_\\varepsilon$, whatever $q$ predicted? Give it to two decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Every token keeps at least the uniform share: $q_\\varepsilon(x) \\ge \\varepsilon / n$, with equality exactly when $q(x) = 0$. So"
+      },
+      {
+       "tex": "-\\ln q_\\varepsilon(x) \\le \\ln\\frac{n}{\\varepsilon} = \\ln(2.5 \\times 10^6) = 14.73 \\text{ nats}."
+      },
+      {
+       "p": "The token that cost an infinite loss now costs 14.73 nats, the most any token can."
+      },
+      {
+       "result": "14.73"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Mixing also takes probability away from tokens the model predicted well. By at most how many nats can it raise the loss of any one token? Give it to four decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The uniform term is never negative, so $q_\\varepsilon(x) \\ge (1 - \\varepsilon)\\,q(x)$ for every $x$. Taking $-\\ln$ of both sides,"
+      },
+      {
+       "tex": "-\\ln q_\\varepsilon(x) \\le -\\ln q(x) - \\ln(1 - \\varepsilon)\n= -\\ln q(x) + 0.0202 ."
+      },
+      {
+       "p": "So no token's loss rises by more than $-\\ln 0.98 = 0.0202$ nats, which is close to $\\varepsilon$ itself. The bound is reached by a token the model was certain of, with $q(x) = 1$. Tokens the model gave little probability to gain, since for them the added $\\varepsilon/n$ outweighs the lost $\\varepsilon\\,q(x)$."
+      },
+      {
+       "result": "0.0202"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Over the 9,999 test tokens it gave positive probability, the original model averaged a loss of 3.10 nats. What is the best upper bound the two parts above give on the average loss of $q_\\varepsilon$ over all 10,000 test tokens? Give it to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Bound each token by the part that applies to it. The 9,999 tokens with $q(x) > 0$ each cost at most their old loss plus $0.0202$, so together at most $9{,}999 \\times (3.10 + 0.0202)$. The one token with $q(x) = 0$ costs exactly $14.73$. The average is at most"
+      },
+      {
+       "tex": "\\frac{9{,}999 \\times 3.1202 + 14.73}{10{,}000}\n= 3.1199 + 0.0015 = 3.121 \\text{ nats}."
+      },
+      {
+       "p": "An infinite test cross-entropy became a finite one, at a price of at most 0.021 nats over the 3.10 the model scored on the tokens it did not rule out. This is the cross-entropy face of the infinite penalty in forward KL: a model trained or evaluated with cross-entropy must leave some probability on everything the data can contain, and a uniform floor is a simple way to guarantee it."
+      },
+      {
+       "result": "3.121"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "it-merging-outcomes",
+   "moduleId": "information-theory-core",
+   "title": "Coarser Records, Smaller Divergence",
+   "difficulty": "Hard",
+   "minutes": 20,
+   "overview": [
+    "A weather station records each day as sunny, cloudy or rainy. The true frequencies are $p = (0.3,\\ 0.2,\\ 0.5)$, and a forecasting model predicts $q = (0.1,\\ 0.2,\\ 0.7)$, in the same order. An older archive does not separate sunny from cloudy: it only records \"dry\" or \"rainy\", so it sees $p' = (0.5,\\ 0.5)$ and $q' = (0.3,\\ 0.7)$. Write $D(p \\Vert q)$ for the KL divergence of $q$ from $p$, as in the lesson but without the subscript."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "By how many bits is $D(p' \\Vert q')$ smaller than $D(p \\Vert q)$? Give it to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "On the three outcomes,"
+      },
+      {
+       "tex": "D(p \\Vert q) = 0.3\\log_2\\frac{0.3}{0.1} + 0.2\\log_2\\frac{0.2}{0.2} + 0.5\\log_2\\frac{0.5}{0.7}\n= 0.4755 + 0 - 0.2427 = 0.2328 ."
+      },
+      {
+       "p": "On the two merged outcomes,"
+      },
+      {
+       "tex": "D(p' \\Vert q') = 0.5\\log_2\\frac{0.5}{0.3} + 0.5\\log_2\\frac{0.5}{0.7}\n= 0.3685 - 0.2427 = 0.1258 ."
+      },
+      {
+       "p": "The rainy term is the same in both, so the drop is $0.4755 - 0.3685 = 0.107$ bits. The fine records show that the model predicts only a third as many sunny days as there are. The merged records see only the dry total, 0.3 against 0.5, and lose the part of the error that lies in how the dry days split."
+      },
+      {
+       "result": "0.107"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Can merging two outcomes into one ever raise the KL divergence between two distributions? Prove your answer for any $p$ and $q$ with $q > 0$ wherever $p > 0$, and say exactly when the KL stays the same."
+      }
+     ],
+     "answer": [
+      {
+       "p": "No. Merge outcomes 1 and 2, and write $a = p_1 + p_2$ and $b = q_1 + q_2$. Assume $a > 0$ (if $a = 0$ both outcomes add nothing before or after, and the KL is unchanged). Split each merged probability into its total and the share of each part:"
+      },
+      {
+       "tex": "p_1 = a\\,r_1,\\quad p_2 = a\\,r_2,\\qquad q_1 = b\\,s_1,\\quad q_2 = b\\,s_2 ,"
+      },
+      {
+       "p": "where $r = (p_1, p_2)/a$ and $s = (q_1, q_2)/b$ are distributions on the two outcomes. Then the two merged terms of $D(p \\Vert q)$ are"
+      },
+      {
+       "tex": "\\sum_{i=1}^{2} a\\,r_i \\log\\frac{a\\,r_i}{b\\,s_i}\n= a\\log\\frac{a}{b}\\sum_i r_i + a\\sum_i r_i\\log\\frac{r_i}{s_i}\n= a\\log\\frac{a}{b} + a\\,D(r \\Vert s)."
+      },
+      {
+       "p": "The first piece is the merged outcome's term in $D(p' \\Vert q')$, and every other outcome contributes the same term to both sides, so"
+      },
+      {
+       "tex": "D(p \\Vert q) = D(p' \\Vert q') + a\\,D(r \\Vert s)."
+      },
+      {
+       "p": "By Gibbs' inequality $D(r \\Vert s) \\ge 0$, so merging can only lower the KL or leave it alone. It stays the same exactly when $r = s$, that is when $p_1 q_2 = p_2 q_1$: the model splits the merged outcome in the same proportion as the truth. In the weather numbers, $r = (0.6, 0.4)$ and $s = (\\tfrac13, \\tfrac23)$, and $0.5 \\times D(r \\Vert s) = 0.107$ bits, the drop from the first part."
+      },
+      {
+       "p": "Applied repeatedly, the result says that any grouping of outcomes, which is any deterministic function of the data, can only hide differences between two distributions, never create them."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "it-two-models-two-directions",
+   "moduleId": "information-theory-core",
+   "title": "Which Model the Reverse KL Keeps",
+   "difficulty": "Medium",
+   "minutes": 8,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A sensor reports one of four positions, and its true distribution has a peak at each end:"
+      },
+      {
+       "tex": "p = (0.42,\\ 0.08,\\ 0.08,\\ 0.42)."
+      },
+      {
+       "p": "You must replace it with one of three simpler models:"
+      },
+      {
+       "list": [
+        "$A_1 = (0.85,\\ 0.05,\\ 0.05,\\ 0.05)$",
+        "$A_2 = (0.70,\\ 0.10,\\ 0.10,\\ 0.10)$",
+        "$B = (0.25,\\ 0.25,\\ 0.25,\\ 0.25)$"
+       ]
+      },
+      {
+       "p": "You pick the model $q$ with the smallest $D_{\\mathrm{KL}}(q \\Vert p)$. Which one do you pick?"
+      },
+      {
+       "choices": [
+        {
+         "text": "B, because it is the only model that spreads its probability over both peaks of p",
+         "explain": "B has the smallest forward KL, D(p‖q) = 0.366 bits against 0.509 for A2 and 0.971 for A1, but the question minimizes the reverse KL D(q‖p), which weights each log ratio by the model's own probabilities. In that direction B pays 0.25 × log2(0.25/0.08) = 0.411 bits on each middle position, which puts it at 0.448 bits, behind A2 at 0.373."
+        },
+        {
+         "text": "A2, because it covers one peak of p without overshooting it, and pays little where p is small",
+         "correct": true,
+         "explain": "The reverse KL weights each log ratio by the model's own probabilities. A2 pays 0.70 × log2(0.70/0.42) = 0.516 bits on its peak and gets back 0.207 bits at the far end, where it puts 0.10 against p's 0.42, for a total of 0.373 bits. B pays heavily in the middle, where it puts 0.25 against 0.08, and totals 0.448 bits. A1 totals 0.643 bits. A2 covers one peak and stays modest elsewhere, so it wins."
+        },
+        {
+         "text": "A1, because the reverse KL is mode-seeking and A1 concentrates the most mass on one mode",
+         "explain": "A1 puts the most mass on a single peak, but mode-seeking does not mean the sharper the better. The reverse KL charges A1 0.85 × log2(0.85/0.42) = 0.865 bits for putting twice p's mass on that peak, and its total of 0.643 bits is the largest of the three. A2 at 0.373 bits is smallest."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "The reverse KL weights each log ratio by the model's own probabilities. A2 pays 0.70 × log2(0.70/0.42) = 0.516 bits on its peak and gets back 0.207 bits at the far end, where it puts 0.10 against p's 0.42, for a total of 0.373 bits. B pays heavily in the middle, where it puts 0.25 against 0.08, and totals 0.448 bits. A1 totals 0.643 bits. A2 covers one peak and stays modest elsewhere, so it wins."
+      },
+      {
+       "result": "A2, because it covers one peak of p without overshooting it, and pays little where p is small"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "it-one-bell-for-two-bumps",
+   "moduleId": "information-theory-core",
+   "title": "One Bell Curve for Two Bumps",
+   "difficulty": "Hard",
+   "minutes": 20,
+   "overview": [
+    "A bus's arrival offset from its timetable, in minutes, has two bumps: a quarter of the trips run about 2 minutes early and the rest about 2 minutes late. With $\\varphi$ the standard normal density, its density is"
+   ],
+   "setup": [
+    {
+     "tex": "p(x) = 0.25\\,\\varphi(x + 2) + 0.75\\,\\varphi(x - 2),"
+    },
+    {
+     "p": "a mixture of two normals with variance 1, centered at $-2$ and $2$. You approximate $p$ by a single normal $q$ with mean $\\mu$ and variance $\\sigma^2$, chosen so that $D_{\\mathrm{KL}}(p \\Vert q)$ is as small as possible."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the best $\\mu$?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Write the KL as two expectations under $p$:"
+      },
+      {
+       "tex": "D_{\\mathrm{KL}}(p \\Vert q) = \\mathbb{E}_p[\\log p(x)] - \\mathbb{E}_p[\\log q(x)] ."
+      },
+      {
+       "p": "The first term does not involve $q$, so minimizing the KL means maximizing $\\mathbb{E}_p[\\log q(x)]$. With $\\log q(x) = -\\tfrac12\\log(2\\pi\\sigma^2) - (x - \\mu)^2 / (2\\sigma^2)$,"
+      },
+      {
+       "tex": "D_{\\mathrm{KL}}(p \\Vert q) = \\text{const} + \\tfrac12\\log(2\\pi\\sigma^2)\n+ \\frac{\\mathbb{E}_p[(x - \\mu)^2]}{2\\sigma^2} ."
+      },
+      {
+       "p": "For any $\\sigma$, only the last term depends on $\\mu$, and $\\mathbb{E}_p[(x - \\mu)^2]$ is smallest at $\\mu = \\mathbb{E}_p[x]$. Each component's mean contributes in proportion to its weight:"
+      },
+      {
+       "tex": "\\mu^* = 0.25 \\times (-2) + 0.75 \\times 2 = 1 ."
+      },
+      {
+       "result": "1"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the best $\\sigma^2$?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "At $\\mu = \\mu^*$, write $v = \\mathbb{E}_p[(x - \\mu^*)^2]$, the variance of $p$. The KL becomes $\\text{const} + \\tfrac12\\log\\sigma^2 + v / (2\\sigma^2)$. Its derivative in $\\sigma^2$ is"
+      },
+      {
+       "tex": "\\frac{1}{2\\sigma^2} - \\frac{v}{2\\sigma^4} = 0\n\\quad\\Longrightarrow\\quad \\sigma^2 = v ,"
+      },
+      {
+       "p": "a minimum, since the derivative is negative below $v$ and positive above it. The variance of the mixture comes from its second moment. Each component has $\\mathbb{E}[x^2] = 1 + (\\pm 2)^2 = 5$, so $\\mathbb{E}_p[x^2] = 5$ and"
+      },
+      {
+       "tex": "\\sigma^{*2} = 5 - 1^2 = 4 ."
+      },
+      {
+       "p": "The fit is $\\mathcal{N}(1, 4)$, with standard deviation 2, twice as wide as either bump. Its peak sits at $x = 1$, between the bumps, and it puts $0.175$ of its mass in $[-0.5, 0.5]$, where $p$ has only $0.061$. That is mass-covering: the forward KL makes $q$ match the mean and variance of all of $p$, so the single bell spans both bumps and fills the valley between them. The same result says that fitting a normal by maximum likelihood, which minimizes this forward KL against the data, returns the sample mean and the sample variance."
+      },
+      {
+       "result": "4"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "it-uncorrelated-feature",
+   "moduleId": "information-theory-core",
+   "title": "An Uncorrelated Feature",
+   "difficulty": "Medium",
+   "minutes": 6,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A thermostat logs its error $X$ in whole degrees, and $X$ is $-1$, $0$ or $+1$ with probability $\\tfrac13$ each. A service flag $Y$ is 1 when the error is not zero and 0 when it is. A teammate finds that the correlation between $X$ and $Y$ is exactly zero and proposes dropping $X$ as a feature for predicting $Y$."
+      },
+      {
+       "p": "What is $I(X; Y)$ in bits?"
+      },
+      {
+       "choices": [
+        {
+         "text": "0 bits",
+         "explain": "Zero correlation only rules out a linear relation. Mutual information is zero only for independent variables, and these are not: P(X = 0, Y = 1) = 0 while P(X = 0) P(Y = 1) = 2/9. Y is a function of X, so knowing X leaves no doubt about Y."
+        },
+        {
+         "text": "1.585 bits",
+         "explain": "That is H(X) = log2 3, which would be the answer if X could be recovered from Y. It cannot: Y = 1 leaves X equal to −1 or +1. Since Y is a function of X, the information X gives about Y is all of H(Y), and H(Y) is less than H(X)."
+        },
+        {
+         "text": "0.667 bits",
+         "explain": "That is $H(X \\mid Y)$: given Y = 1, X is still −1 or +1, worth 1 bit, and that happens with probability 2/3. It is the uncertainty about X that Y leaves. The mutual information is the uncertainty Y removes, H(X) − $H(X \\mid Y)$ = 1.585 − 0.667."
+        },
+        {
+         "text": "0.918 bits",
+         "correct": true,
+         "explain": "Y is 1 with probability 2/3, so H(Y) = −(2/3) log2(2/3) − (1/3) log2(1/3) = 0.918 bits. Knowing X fixes Y, so $H(Y \\mid X)$ = 0 and the mutual information is H(Y) − $H(Y \\mid X)$ = 0.918. The same comes from the other side: H(X) − $H(X \\mid Y)$ = 1.585 − 0.667. X is the most informative feature Y could have, uncorrelated or not."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Y is 1 with probability 2/3, so H(Y) = −(2/3) log2(2/3) − (1/3) log2(1/3) = 0.918 bits. Knowing X fixes Y, so $H(Y \\mid X)$ = 0 and the mutual information is H(Y) − $H(Y \\mid X)$ = 0.918. The same comes from the other side: H(X) − $H(X \\mid Y)$ = 1.585 − 0.667. X is the most informative feature Y could have, uncorrelated or not."
+      },
+      {
+       "result": "0.918 bits"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "it-two-noisy-inspectors",
+   "moduleId": "information-theory-core",
+   "title": "What a Second Inspector Adds",
+   "difficulty": "Hard",
+   "minutes": 25,
+   "overview": [
+    "Half of the parts on a production line are defective. Two inspectors label every part. Each one, independently of the other once the part's true status $Y$ is fixed, reports the true status with probability 0.9 and the wrong one with probability 0.1. Call their labels $L_1$ and $L_2$. Work in bits."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is $I(Y; L_1)$? Give it to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "$L_1$ is a fair coin too: it says \"defective\" with probability $0.5 \\times 0.9 + 0.5 \\times 0.1 = 0.5$, so $H(L_1) = 1$. Given $Y$, the label is wrong with probability 0.1 whatever $Y$ is, so"
+      },
+      {
+       "tex": "H(L_1 \\mid Y) = h(0.1) = -0.1\\log_2 0.1 - 0.9\\log_2 0.9 = 0.469,"
+      },
+      {
+       "p": "and $I(Y; L_1) = H(L_1) - H(L_1 \\mid Y) = 1 - 0.469 = 0.531$ bits."
+      },
+      {
+       "result": "0.531"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is $I(Y; L_1, L_2)$, the information both labels together carry about $Y$? Give it to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Use $I(Y; L_1, L_2) = H(L_1, L_2) - H(L_1, L_2 \\mid Y)$."
+      },
+      {
+       "p": "Given $Y$, the two labels are independent and each has entropy $h(0.1)$, so $H(L_1, L_2 \\mid Y) = 2 \\times 0.469 = 0.938$."
+      },
+      {
+       "p": "For the pair itself, the labels agree when both are right or both are wrong, with probability $0.81 + 0.01 = 0.82$, split evenly between \"both defective\" and \"both fine\". They disagree with probability $0.18$, split evenly between the two orders. So the four pairs have probabilities $0.41, 0.41, 0.09, 0.09$ and"
+      },
+      {
+       "tex": "H(L_1, L_2) = -2 \\times 0.41\\log_2 0.41 - 2 \\times 0.09\\log_2 0.09\n= 1.055 + 0.625 = 1.680 ."
+      },
+      {
+       "p": "Therefore $I(Y; L_1, L_2) = 1.680 - 0.938 = 0.742$ bits."
+      },
+      {
+       "p": "The second inspector adds $0.742 - 0.531 = 0.211$ bits, far less than the 0.531 the first one gave. The two labels are independent only once $Y$ is known. Without $Y$ they agree 82% of the time, so much of what the second label says the first one already said."
+      },
+      {
+       "result": "0.742"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "A classifier sees both labels and outputs a probability that the part is defective. It is scored by its average log loss, in bits, over many parts. What is the lowest average log loss any such classifier can reach? Give it to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Fix one pair of labels $(l_1, l_2)$, and let $r$ be the true conditional distribution of $Y$ given that pair. A classifier that outputs the distribution $s$ for this pair has expected log loss $H(r, s) = H(r) + D_{\\mathrm{KL}}(r \\Vert s)$ on those parts, and Gibbs' inequality makes this at least $H(r)$, with equality only at $s = r$. Averaging over the pairs, no classifier beats"
+      },
+      {
+       "tex": "H(Y \\mid L_1, L_2) = H(Y) - I(Y; L_1, L_2) = 1 - 0.742 = 0.258 \\text{ bits},"
+      },
+      {
+       "p": "and the classifier that outputs the true conditional probabilities reaches it."
+      },
+      {
+       "p": "The number checks directly. When the labels disagree (probability 0.18) the part is equally likely to be either, which costs 1 bit. When they agree (probability 0.82) the shared label is right with probability $0.81 / 0.82 = 81/82$, which costs $h(81/82) = 0.095$ bits. The average is $0.18 + 0.82 \\times 0.095 = 0.258$."
+      },
+      {
+       "p": "A classifier that trusts an agreeing pair only as much as a single inspector, with probability 0.9, averages 0.336 bits: the extra 0.078 bits per part is its average KL from the true conditional."
+      },
+      {
+       "result": "0.258"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "it-most-spread-with-mean-three",
+   "moduleId": "information-theory-core",
+   "title": "The Most Uncertain Count with a Given Mean",
+   "difficulty": "Very Hard",
+   "minutes": 30,
+   "overview": [
+    "A help desk receives $N$ calls in an hour, where $N$ can be any of $0, 1, 2, \\dots$. All you know is that $\\mathbb{E}[N] = 3$. Among all distributions on the nonnegative integers with mean 3, you want the one with the largest entropy, since it assumes nothing beyond the mean."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the largest entropy, in bits, that a distribution on $0, 1, 2, \\dots$ with mean 3 can have? Give it to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The maximum is reached by the geometric distribution $g(n) = \\tfrac14\\left(\\tfrac34\\right)^n$, which has mean $\\frac{3/4}{1/4} = 3$. Its surprise is linear in $n$:"
+      },
+      {
+       "tex": "-\\log_2 g(n) = 2 + n\\log_2\\tfrac43 ,"
+      },
+      {
+       "p": "so its entropy is the average of that, $2 + 3\\log_2\\tfrac43 = 2 + 3 \\times 0.415 = 3.245$ bits. The next part proves that no other distribution with mean 3 reaches it. For comparison, the uniform distribution on $0, \\dots, 6$ has 2.807 bits and the Poisson distribution with mean 3 has 2.787."
+      },
+      {
+       "result": "3.245"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Prove that every distribution $p$ on $0, 1, 2, \\dots$ with mean 3 has $H(p) \\le 3.245$ bits, with equality only for the distribution from the first part."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Compare $p$ with $g$ through the decomposition $H(p, g) = H(p) + D_{\\mathrm{KL}}(p \\Vert g)$, which holds term by term because $g(n) > 0$ for every $n$. Gibbs' inequality gives"
+      },
+      {
+       "tex": "H(p) = H(p, g) - D_{\\mathrm{KL}}(p \\Vert g) \\le H(p, g)."
+      },
+      {
+       "p": "The cross-entropy is the key. Because $-\\log_2 g(n)$ is linear in $n$, its average under $p$ depends on $p$ only through the mean:"
+      },
+      {
+       "tex": "H(p, g) = \\sum_n p(n)\\left(2 + n\\log_2\\tfrac43\\right)\n= 2 + \\mathbb{E}_p[N]\\,\\log_2\\tfrac43 = 2 + 3\\log_2\\tfrac43 = H(g)."
+      },
+      {
+       "p": "So $H(p) \\le H(g) = 3.245$ bits for every $p$ with mean 3. Equality needs $D_{\\mathrm{KL}}(p \\Vert g) = 0$, which by Gibbs means $p = g$."
+      },
+      {
+       "p": "The method is the general one: to find the largest entropy under a constraint on $\\mathbb{E}_p[f(N)]$, look for a $g$ whose surprise $-\\log g(n)$ is a constant plus a multiple of $f(n)$, and that meets the constraint. Then $H(p, g)$ is the same for every allowed $p$, and Gibbs does the rest. With no constraint on a finite set, the surprise is constant and $g$ is uniform, which recovers the lesson's statement that the uniform distribution has the largest entropy."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
+
+

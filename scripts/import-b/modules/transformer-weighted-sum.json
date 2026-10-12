@@ -1,0 +1,11 @@
+{
+  "aModule": "transformer-weighted-sum",
+  "stage": "Round 2",
+  "order": [
+    "tf-which-value-takes-the-blame"
+  ],
+  "fixes": [],
+  "parts": {},
+  "indexPrompt": {},
+  "source": {}
+}

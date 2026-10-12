@@ -1,0 +1,21 @@
+{
+  "aModule": "semantic-segmentation-unet-masks",
+  "stage": "Round 2",
+  "order": ["cv-kernel-four-stride-two"],
+  "fixes": [
+    {
+      "file": "cv-kernel-four-stride-two",
+      "find": "The column 6, 6 is even, and this kernel's copies overlap evenly. Is the output\neven? Explain the pattern, say what the same layer gives for the longer even\ncolumn 6, 6, 6, 6, and find a kernel of size 4 whose output for 6, 6 is even.",
+      "replace": "The column 6, 6 is the same value all the way along, and this kernel's copies\noverlap evenly. Is the output the same value all the way along? If not, say\nwhich values differ and why. Then say what the same layer gives for the longer\ncolumn 6, 6, 6, 6, and find a kernel of size 4 whose output for 6, 6 is the\nsame value all the way along."
+    }
+  ],
+  "parts": {
+    "cv-kernel-four-stride-two": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."},
+      "1.2": {"kind": "derivation", "requirement": "A complete derivation is required."}
+    }
+  },
+  "indexPrompt": {
+    "cv-kernel-four-stride-two": "A transposed convolution with kernel size 4, stride 2 and padding 1 enlarges a map by a factor of 2. Apply it, with the kernel 1, 1, 1, 1, to the column 6, 6 and work out the output."
+  }
+}

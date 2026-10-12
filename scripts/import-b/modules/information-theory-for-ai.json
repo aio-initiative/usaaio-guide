@@ -1,0 +1,33 @@
+{
+  "aModule": "information-theory-core",
+  "stage": "Camp",
+  "order": [
+    "it-rolls-until-a-six",
+    "it-mixing-in-a-uniform",
+    "it-merging-outcomes",
+    "it-two-models-two-directions",
+    "it-one-bell-for-two-bumps",
+    "it-uncorrelated-feature",
+    "it-two-noisy-inspectors",
+    "it-most-spread-with-mean-three"
+  ],
+  "fixes": [
+    {
+      "file": "it-mixing-in-a-uniform",
+      "find": "Tokens the model gave little probability gain,",
+      "replace": "Tokens the model gave little probability to gain,",
+      "why": "The printed sentence has no finite verb, so a student cannot tell what is being claimed; the claim itself is right, since q_eps(x) - q(x) = eps/n - eps q(x) is positive exactly when q(x) < 1/n (bprv-31)."
+    }
+  ],
+  "parts": {},
+  "indexPrompt": {
+    "it-rolls-until-a-six": "A board game makes a player roll a fair die until the first six appears. Let K be the number of rolls this takes, so K can be 1, 2, 3, and so on with no upper limit.",
+    "it-mixing-in-a-uniform": "A language model q predicts the next token from a vocabulary of 50,000 tokens. On a test set of 10,000 tokens, it gives one token probability exactly 0, so its test cross-entropy is infinite. To repair it without retraining, you mix in a little of the uniform distribution: the repaired model gives each token (1 minus eps) of its own probability plus eps/50,000, with eps = 0.02. The loss of a token is minus the log of that, in nats.",
+    "it-merging-outcomes": "A weather station records each day as sunny, cloudy or rainy. The true frequencies are p = (0.3, 0.2, 0.5), and a forecasting model predicts q = (0.1, 0.2, 0.7), in the same order. An older archive does not separate sunny from cloudy: it only records \"dry\" or \"rainy\", so it sees p' = (0.5, 0.5) and q' = (0.3, 0.7). Write D(p || q) for the KL divergence of q from p, as in the lesson but without the subscript.",
+    "it-two-models-two-directions": "A sensor reports one of four positions, and its true distribution has a peak at each end: p = (0.42, 0.08, 0.08, 0.42). You must replace it with one of three simpler models: A1 = (0.85, 0.05, 0.05, 0.05), A2 = (0.70, 0.10, 0.10, 0.10), B = (0.25, 0.25, 0.25, 0.25). You pick the model q with the smallest reverse KL, D(q || p). Which one do you pick?",
+    "it-one-bell-for-two-bumps": "A bus's arrival offset from its timetable, in minutes, has two bumps: a quarter of the trips run about 2 minutes early and the rest about 2 minutes late. Its density is a mixture of two normals with variance 1, a quarter of it centred at minus 2 and the rest at plus 2. You approximate it by a single normal q with mean mu and variance sigma squared, chosen so that the KL divergence from the mixture to q is as small as possible.",
+    "it-uncorrelated-feature": "A thermostat logs its error X in whole degrees, and X is minus 1, 0 or plus 1 with probability 1/3 each. A service flag Y is 1 when the error is not zero and 0 when it is. A teammate finds that the correlation between X and Y is exactly zero and proposes dropping X as a feature for predicting Y. What is the mutual information I(X; Y) in bits?",
+    "it-two-noisy-inspectors": "Half of the parts on a production line are defective. Two inspectors label every part. Each one, independently of the other once the part's true status Y is fixed, reports the true status with probability 0.9 and the wrong one with probability 0.1. Call their labels L1 and L2. Work in bits.",
+    "it-most-spread-with-mean-three": "A help desk receives N calls in an hour, where N can be any of 0, 1, 2, and so on. All you know is that the mean is 3. Among all distributions on the nonnegative integers with mean 3, you want the one with the largest entropy, since it assumes nothing beyond the mean."
+  }
+}

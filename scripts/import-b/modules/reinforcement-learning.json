@@ -1,0 +1,169 @@
+{
+  "aModule": "reinforcement-learning",
+  "stage": "Advanced",
+  "fixes": [],
+  "parts": {
+    "rl-a-log-from-a-random-robot": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "rl-a-run-that-comes-back": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "rl-boost-or-run-normally": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "rl-cutting-returns-at-the-horizon": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "rl-five-games-two-estimates": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.4": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "rl-one-weight-chasing-its-target": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is required."
+      }
+    },
+    "rl-switching-to-always-wait": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "rl-the-impossible-log": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "rl-the-max-of-noisy-estimates": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.4": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.5": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "rl-the-state-of-a-card-game": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "rl-when-to-stop-sweeping": {
+      "1.1": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.4": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "rl-a-log-from-a-random-robot": "A robot with two rooms and two moves logs two episodes of random moves, and a Q-learning learner with step size 0.5 and discount 0.9 works through the log once, transition by transition. Give the value of moving left from room B after the log, and the value it settles on as the robot keeps wandering at random.",
+    "rl-a-run-that-comes-back": "A cleaning robot works in two rooms and one run goes hall, kitchen, hall, dock, with rewards 4, 0 and 8. Compare what TD(0) and every-visit Monte Carlo learn about the state values from that single run.",
+    "rl-boost-or-run-normally": "A game server is cool or hot at the start of each hour, and future rewards are discounted at 0.75 per hour. Boosting a cool server earns 9 that hour but heats it up more often than running it normally, which earns 8, and a hot server must spend the next hour cooling down at a cost of 5. Compute the value of the cool state for the policy that always boosts, and then for the best policy.",
+    "rl-cutting-returns-at-the-horizon": "An agent discounts its rewards at gamma = 0.98, and a teammate builds each training target from only the next 50 rewards, arguing nothing is lost because 1/(1 - gamma) = 50 is the agent's horizon. Work out the worst-case error of that truncated target as a fraction of the largest possible return, how many rewards keep the error at or under 1%, and what the horizon actually measures.",
+    "rl-five-games-two-estimates": "Five recorded games through three positions are replayed over and over by a TD(0) learner and a return-averaging learner, both starting from zero. Give each learner's settled value for the start position, say what a sixth game does to each, and say which estimate you would use to predict the next game.",
+    "rl-one-weight-chasing-its-target": "One weight w values two states with features 2 and 3, every reward is 0, and each update treats the agent's own live estimate of the next state as a fixed target. The three parts ask where the weight ends up after 10 updates from a buffer holding only one transition, the discount at which it runs away, and what happens when the buffer holds both transitions.",
+    "rl-schedules-that-stop-exploring": "A Q-learning agent in one state picks among 4 actions with an epsilon-greedy policy whose exploration rate follows a schedule, and one action there is never the greedy choice. Which schedule still tries that action infinitely often with probability 1?",
+    "rl-switching-to-always-wait": "In a state an agent can wait, which pays 1 and leaves it in the same state, or go, which pays 5.6 and ends the episode; its policy picks each action half the time, the discount is 0.9, and evaluating it gives 6.4 for waiting and 5.6 for going. How much does the value of the state rise when the agent switches to waiting at every visit?",
+    "rl-the-impossible-log": "Four programs run value iteration from a zero start with discount 0.8, and after each of five sweeps each prints the largest change in any state's value. Three of the four printed logs could come from a correct value iteration and one could not. Say which log is impossible and why the contraction bound rules it out.",
+    "rl-the-max-of-noisy-estimates": "Four actions in a state each have true value 0, but the agent's table holds a single noisy +1 or -1 draw for each. Ask what the maximum of those four entries is worth on average, how that bias passes back through one Q-learning update to the state before it, and what changes when one table picks the action and a second, independent table values it.",
+    "rl-the-state-of-a-card-game": "A betting game deals a shuffled deck of 4 red and 4 black cards face up, one card per round, and before each card is turned over the agent bets on its color, winning 1 for a right guess and losing 1 for a wrong one. Which of four candidate state definitions makes the game an MDP with the fewest possible states?",
+    "rl-when-to-stop-sweeping": "Value iteration stops when the last sweep moved the table by less than a tolerance. Bound how far the returned table can still be from the optimal values, evaluate that bound for a discount of 0.99 with a tolerance of 0.001, test it on a one-state MDP, and find the tolerance that guarantees a chosen accuracy."
+  },
+  "order": [
+    "rl-the-state-of-a-card-game",
+    "rl-cutting-returns-at-the-horizon",
+    "rl-switching-to-always-wait",
+    "rl-boost-or-run-normally",
+    "rl-the-impossible-log",
+    "rl-a-run-that-comes-back",
+    "rl-a-log-from-a-random-robot",
+    "rl-schedules-that-stop-exploring",
+    "rl-one-weight-chasing-its-target",
+    "rl-when-to-stop-sweeping",
+    "rl-five-games-two-estimates",
+    "rl-the-max-of-noisy-estimates"
+  ]
+}

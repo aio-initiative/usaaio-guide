@@ -1,0 +1,823 @@
+{
+ "module": "mixture-of-experts",
+ "stage": "Advanced",
+ "index": [
+  {
+   "id": "moe-switch-gate-gradient",
+   "moduleId": "mixture-of-experts",
+   "title": "The Gradient Through a Switch Gate",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=moe-switch-gate-gradient",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Advanced"
+   ],
+   "prompt": "A Switch-style layer sends each token to the one expert with the highest router probability and scales that expert's output by that probability. Given the four router probabilities, the chosen expert's output and the gradient reaching the layer's output, what is the gradient for the four router logits?",
+   "answer": "(0.06, -0.3, 0.09, 0.15). The logits reach the loss only through the weight w = g2, and dL/dw = (dL/dy) · E2(x) = 0.4 − 1.2 − 0.4 = −1.2. The softmax derivative is dg2/dz2 = g2(1 − g2) = 0.25 and dg2/dzj = −g2 gj for the other three. So dL/dz2 = −1.2 × 0.25 = −0.3, and each other logit gets −1.2 × (−0.5 gj) = 0.6 gj: 0.06, 0.09 and 0.15. A descent step raises z2 and lowers the other three, so expert 2's weight grows, because a larger copy of its output lowers the loss. The four entries add to zero: adding the same number to every logit leaves the softmax unchanged."
+  },
+  {
+   "id": "moe-balance-loss-top-two",
+   "moduleId": "mixture-of-experts",
+   "title": "The Balance Loss of a Top-2 Batch",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=moe-balance-loss-top-two",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Advanced"
+   ],
+   "prompt": "A layer with four experts routes each token to its two most probable experts. Given the router probabilities for a batch of four tokens, compute the auxiliary load-balancing loss as a multiple of alpha.",
+   "answer": "1.10 alpha. The top two are experts 4 and 2 for token 1, experts 3 and 1 for token 2, experts 2 and 4 for token 3 and experts 4 and 2 for token 4. That is 1, 3, 1 and 3 of the 8 assignments, so f = (0.125, 0.375, 0.125, 0.375). The column means are P = (0.1625, 0.3125, 0.2375, 0.2875). Then N times the sum of f times P is 4 × (0.0203 + 0.1172 + 0.0297 + 0.1078) = 4 × 0.275 = 1.1, ten percent above the balanced value. Experts 2 and 4 take three quarters of the assignments and also have the larger mean probabilities, and the loss charges for that."
+  },
+  {
+   "id": "moe-capacity-drops",
+   "moduleId": "mixture-of-experts",
+   "title": "What a Capacity Limit Drops",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=moe-capacity-drops",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Advanced"
+   ],
+   "prompt": "A layer with four experts sends each token to its top two, and one batch of 1,000 tokens gives the assignment counts per expert. Work out how many assignments a capacity limit drops, the largest number of tokens that could skip the layer entirely, and the padding left by the smallest limit that drops nothing. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "moe-bias-after-update",
+   "moduleId": "mixture-of-experts",
+   "title": "One Token After a Bias Update",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=moe-bias-after-update",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Advanced"
+   ],
+   "prompt": "A layer with four experts sends each token to its top two and balances its load with the bias rule from the lesson, stepping each bias by 0.05. Going into a step the biases are (-0.10, 0.00, 0.05, 0.15). In that step experts 1 and 2 are overloaded and experts 3 and 4 underloaded, and the biases are updated at the end of it. The next token then arrives with scores (0.85, 0.70, 0.65, 0.60). Which two experts does it go to, and what gate weight does each of them get?",
+   "answer": "Experts 3 and 4, with weights 0.52 and 0.48. The update lowers the biases of the two busy experts by 0.05 and raises the other two: b = (−0.15, −0.05, 0.10, 0.20). The biased scores are s + b = (0.70, 0.65, 0.75, 0.80), so experts 4 and 3 win. The weights come from the scores without the bias: 0.65 / 1.25 = 0.52 for expert 3 and 0.60 / 1.25 = 0.48 for expert 4. On its own scores the token prefers experts 1 and 2. The bias sends it to two quieter experts, but it does not change how much each of them counts."
+  },
+  {
+   "id": "moe-splitting-experts",
+   "moduleId": "mixture-of-experts",
+   "title": "Splitting Every Expert in Four",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=moe-splitting-experts",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Advanced"
+   ],
+   "prompt": "A Switch-style layer with 16 experts is split into 64 smaller ones that hold the same parameters and cost the same FLOPs per token. Work out how many different sets of four experts a token can be sent to, how many bytes of all-to-all traffic one token causes after the split, and how much of that traffic is saved when a device that holds two or more of the token's experts gets the vector only once. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "moe-top-two-router-gradient",
+   "moduleId": "mixture-of-experts",
+   "title": "What a Top-2 Router Learns From",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=moe-top-two-router-gradient",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Advanced"
+   ],
+   "prompt": "A Mixtral-style layer sends each token to its two most probable experts and renormalizes their weights. Given the router probabilities, the two chosen experts' outputs and the gradient reaching the layer's output, find the gradient with respect to every router logit, and say what the router learns at the first step when every expert is an identical copy of one trained network. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "moe-balance-loss-lower-bound",
+   "moduleId": "mixture-of-experts",
+   "title": "How Low the Balance Loss Goes",
+   "source": "USAAIO-style",
+   "difficulty": "Very Hard",
+   "url": "/theory/?id=moe-balance-loss-lower-bound",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Advanced"
+   ],
+   "prompt": "A two-expert layer routes each token to the expert with the higher router probability and adds the lesson's auxiliary loss, alpha times N times the sum over experts of f_i times P_i. Find the loss of one uneven batch, prove the lowest value the loss can take over every possible batch, and compute the gradient that training actually follows. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "moe-bias-settles",
+   "moduleId": "mixture-of-experts",
+   "title": "Where the Routing Bias Settles",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=moe-bias-settles",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Advanced"
+   ],
+   "prompt": "A layer with two experts routes each token to the larger biased score and nudges the two routing biases to even out the load, with the score differences spread uniformly. Find how many updates it takes for the experts to receive equal shares, how many tokens then go to the expert they scored lower on, and what happens when every token has the same score difference. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "moe-balance-loss-gradient",
+   "moduleId": "mixture-of-experts",
+   "title": "The Gradient of the Balance Loss",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=moe-balance-loss-gradient",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Advanced"
+   ],
+   "prompt": "The lesson's balance loss returns a number, and a router trained with it needs that number's gradient: first with respect to the router logits, then with respect to the router's weights. Derive both, check them against finite differences, and then train a collapsed router on the balance loss alone.",
+   "answer": "Auto-graded inside the notebook. Each check cell prints \"Part N passed\" when that part's function is right."
+  },
+  {
+   "id": "moe-capacity-layer-numpy",
+   "moduleId": "mixture-of-experts",
+   "title": "A Capacity-Limited MoE Layer in NumPy",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=moe-capacity-layer-numpy",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Advanced"
+   ],
+   "prompt": "A top-2 MoE layer whose experts have fixed-size buffers routes each token, decides which assignments fit in the buffers, runs every expert on the assignments it kept, and adds the weighted outputs to the residual stream. Write those steps for a batch of 64 tokens and count the tokens the buffers shut out.",
+   "answer": "Auto-graded inside the notebook. Each check cell prints \"Part N passed\" when that part's function is right."
+  },
+  {
+   "id": "tf4-moe-load-balance",
+   "moduleId": "mixture-of-experts",
+   "title": "One Expert Gets All the Traffic",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=tf4-moe-load-balance",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Advanced"
+   ],
+   "prompt": "Simulate the router feedback loop that makes mixture-of-experts collapse onto a few experts, then add the auxiliary load-balancing gradient and measure what it recovers.",
+   "answer": "Auto-graded inside the notebook. All six routing statistics must match to 1e-6, with the plain run collapsing to two live experts and the balanced run keeping all sixteen."
+  }
+ ],
+ "theory": [
+  {
+   "id": "moe-switch-gate-gradient",
+   "moduleId": "mixture-of-experts",
+   "title": "The Gradient Through a Switch Gate",
+   "difficulty": "Medium",
+   "minutes": 8,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A Switch-style layer has four experts. It sends each token to the one expert with the highest router probability and scales that expert's output by the probability itself. For one token the router gives"
+      },
+      {
+       "tex": "\\mathbf{g} = \\operatorname{softmax}(\\mathbf{z}) = (0.10,\\ 0.50,\\ 0.15,\\ 0.25),"
+      },
+      {
+       "p": "so the token goes to expert 2 and the layer outputs $\\mathbf{y} = g_2\\, E_2(\\mathbf{x})$. Expert 2 returns $E_2(\\mathbf{x}) = (1,\\ -2,\\ 0.5)$, and backpropagation reaches the layer's output with"
+      },
+      {
+       "tex": "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{y}} = (0.4,\\ 0.6,\\ -0.8)."
+      },
+      {
+       "p": "What is $\\partial \\mathcal{L} / \\partial \\mathbf{z}$, the gradient for the token's four router logits?"
+      },
+      {
+       "choices": [
+        {
+         "text": "$(0,\\ 0,\\ 0,\\ 0)$",
+         "explain": "Choosing the expert is a discrete step, but the weight is not. The output is g2 times E2(x), and g2 is a smooth function of all four logits, so nudging any of them changes the loss. The zero gradient in the lesson comes from renormalizing a single chosen expert, which makes its weight exactly 1 whatever the logits are."
+        },
+        {
+         "text": "$(0.06,\\ -0.3,\\ 0.09,\\ 0.15)$",
+         "correct": true,
+         "explain": "The logits reach the loss only through the weight w = g2, and dL/dw = (dL/dy) · E2(x) = 0.4 − 1.2 − 0.4 = −1.2. The softmax derivative is dg2/dz2 = g2(1 − g2) = 0.25 and dg2/dzj = −g2 gj for the other three. So dL/dz2 = −1.2 × 0.25 = −0.3, and each other logit gets −1.2 × (−0.5 gj) = 0.6 gj: 0.06, 0.09 and 0.15. A descent step raises z2 and lowers the other three, so expert 2's weight grows, because a larger copy of its output lowers the loss. The four entries add to zero: adding the same number to every logit leaves the softmax unchanged."
+        },
+        {
+         "text": "$(0,\\ -0.3,\\ 0,\\ 0)$",
+         "explain": "The entry for expert 2 is right, −1.2 × 0.5 × 0.5. But an expert does not need to run to receive a gradient. g2 is exp(z2) divided by the sum of exp(zj) over all four experts, so every other logit sits in its denominator, and dg2/dzj = −g2 gj for j other than 2."
+        },
+        {
+         "text": "$(-0.06,\\ 0.3,\\ -0.09,\\ -0.15)$",
+         "explain": "These are the right sizes with the wrong signs. dL/dw = −1.2 is negative, so a larger weight on expert 2 lowers the loss, and raising z2 raises that weight: dL/dz2 must be negative. This vector is the direction a descent step moves the logits, the negative of the gradient."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "The logits reach the loss only through the weight w = g2, and dL/dw = (dL/dy) · E2(x) = 0.4 − 1.2 − 0.4 = −1.2. The softmax derivative is dg2/dz2 = g2(1 − g2) = 0.25 and dg2/dzj = −g2 gj for the other three. So dL/dz2 = −1.2 × 0.25 = −0.3, and each other logit gets −1.2 × (−0.5 gj) = 0.6 gj: 0.06, 0.09 and 0.15. A descent step raises z2 and lowers the other three, so expert 2's weight grows, because a larger copy of its output lowers the loss. The four entries add to zero: adding the same number to every logit leaves the softmax unchanged."
+      },
+      {
+       "result": "$(0.06,\\ -0.3,\\ 0.09,\\ 0.15)$"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "moe-balance-loss-top-two",
+   "moduleId": "mixture-of-experts",
+   "title": "The Balance Loss of a Top-2 Batch",
+   "difficulty": "Medium",
+   "minutes": 8,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A layer with four experts sends each token to its two most probable experts. In one batch of four tokens the router gives these probabilities:"
+      },
+      {
+       "tex": "\\begin{array}{ccccc}\n\\text{Token} & \\text{Expert 1} & \\text{Expert 2} & \\text{Expert 3} & \\text{Expert 4} \\\\ \\hline\n1 & 0.10 & 0.30 & 0.20 & 0.40 \\\\\n2 & 0.30 & 0.10 & 0.55 & 0.05 \\\\\n3 & 0.10 & 0.55 & 0.15 & 0.20 \\\\\n4 & 0.15 & 0.30 & 0.05 & 0.50\n\\end{array}"
+      },
+      {
+       "p": "What is the auxiliary loss $\\mathcal{L}_{\\text{aux}}$ of this batch, as a multiple of $\\alpha$?"
+      },
+      {
+       "choices": [
+        {
+         "text": "$2.20\\,\\alpha$",
+         "explain": "This divides each expert's count by the 4 tokens. With top-2 routing every token makes two assignments, so those fractions add to 2 and the loss doubles. f counts assignments out of all kT = 8 of them, (1, 3, 1, 3) / 8, which adds to 1 and keeps the balanced value of the loss at α."
+        },
+        {
+         "text": "$1.55\\,\\alpha$",
+         "explain": "This averages each expert's probability over only the tokens routed to it, so expert 3 gets 0.55 from token 2 alone. P is a mean over the whole batch, every token included: expert 3's is (0.20 + 0.55 + 0.15 + 0.05) / 4 = 0.2375."
+        },
+        {
+         "text": "$1.25\\,\\alpha$",
+         "explain": "This builds P from the renormalized gate weights, which put all of a token's weight on its two chosen experts and give the other two 0. P averages the router's full softmax probabilities, and those are what carry the gradient to every logit."
+        },
+        {
+         "text": "$1.10\\,\\alpha$",
+         "correct": true,
+         "explain": "The top two are experts 4 and 2 for token 1, experts 3 and 1 for token 2, experts 2 and 4 for token 3 and experts 4 and 2 for token 4. That is 1, 3, 1 and 3 of the 8 assignments, so f = (0.125, 0.375, 0.125, 0.375). The column means are P = (0.1625, 0.3125, 0.2375, 0.2875). Then N times the sum of f times P is 4 × (0.0203 + 0.1172 + 0.0297 + 0.1078) = 4 × 0.275 = 1.1, ten percent above the balanced value. Experts 2 and 4 take three quarters of the assignments and also have the larger mean probabilities, and the loss charges for that."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "The top two are experts 4 and 2 for token 1, experts 3 and 1 for token 2, experts 2 and 4 for token 3 and experts 4 and 2 for token 4. That is 1, 3, 1 and 3 of the 8 assignments, so f = (0.125, 0.375, 0.125, 0.375). The column means are P = (0.1625, 0.3125, 0.2375, 0.2875). Then N times the sum of f times P is 4 × (0.0203 + 0.1172 + 0.0297 + 0.1078) = 4 × 0.275 = 1.1, ten percent above the balanced value. Experts 2 and 4 take three quarters of the assignments and also have the larger mean probabilities, and the loss charges for that."
+      },
+      {
+       "result": "$1.10\\,\\alpha$"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "moe-capacity-drops",
+   "moduleId": "mixture-of-experts",
+   "title": "What a Capacity Limit Drops",
+   "difficulty": "Medium",
+   "minutes": 15,
+   "overview": [
+    "A layer has four experts and sends each token to its top two. In one batch of 1,000 tokens the router makes these assignments:"
+   ],
+   "setup": [
+    {
+     "tex": "\\begin{array}{ccccc}\n\\text{Expert} & 1 & 2 & 3 & 4 \\\\ \\hline\n\\text{Assignments} & 620 & 540 & 470 & 370\n\\end{array}"
+    },
+    {
+     "p": "Each expert accepts assignments up to its capacity and drops the rest, as in the lesson."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "How many assignments are dropped at capacity factor 1.2?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Each token makes $k = 2$ assignments, so a perfectly balanced expert would receive $kT/N = 2 \\times 1000 / 4 = 500$. At capacity factor 1.2 each expert accepts $C = 1.2 \\times 500 = 600$. Only expert 1 is over, by 20."
+      },
+      {
+       "p": "The $k$ matters. Switch's formula, written for $k = 1$, would give $C = 1.2 \\times 1000 / 4 = 300$ here, and all four experts would overflow: $320 + 240 + 170 + 70 = 800$ assignments dropped, two fifths of the batch's assignments."
+      },
+      {
+       "p": "No token skips the layer at this factor. A token's two assignments go to two different experts, and only expert 1 drops anything, so each of the 20 tokens that lose their place at expert 1 keeps its other expert."
+      },
+      {
+       "result": "20"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "At capacity factor 1.0, what is the largest number of tokens that could skip the layer entirely?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Now $C = 500$. Expert 1 drops $620 - 500 = 120$ assignments, expert 2 drops $40$, and experts 3 and 4 drop none."
+      },
+      {
+       "p": "A token skips the layer only when both of its assignments are dropped, so both of its experts must be ones that drop something: it chose experts 1 and 2 and lost its place at both. Expert 2 drops only 40 assignments, so at most 40 tokens skip. All 40 can. The loads force at least $620 + 540 - 1000 = 160$ tokens to choose both experts 1 and 2, since the two experts' 1,160 assignments come from only 1,000 tokens. Suppose 40 of those tokens arrive last at both experts."
+      },
+      {
+       "p": "The fewest is 0, when every token dropped at expert 2 kept its other assignment. The loads alone do not say which case happens. That depends on the order in which the experts fill their buffers."
+      },
+      {
+       "result": "40"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Find the smallest capacity factor that drops nothing. At that factor, what fraction of all the buffer slots is padding? Give it to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Nothing is dropped once $C \\ge 620$, the busiest expert's load, so the smallest factor is $620 / 500 = 1.24$. Every expert then gets 620 slots, which makes $4 \\times 620 = 2480$ slots for $2000$ assignments. The other $480$ are padding:"
+      },
+      {
+       "tex": "\\frac{480}{2480} \\approx 0.194 ."
+      },
+      {
+       "p": "Expert 4 alone leaves 250 of its 620 slots empty. The busiest expert sets the buffer size for all of them, so the factor that drops nothing is the largest load over the fair share, and the padding grows with the imbalance. Padding still costs memory, compute and communication, which is why balancing the router is what lets the capacity factor stay small."
+      },
+      {
+       "result": "0.194"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "moe-bias-after-update",
+   "moduleId": "mixture-of-experts",
+   "title": "One Token After a Bias Update",
+   "difficulty": "Medium",
+   "minutes": 8,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "A layer with four experts sends each token to its top two and balances its load with the bias rule from the lesson, with step $\\gamma = 0.05$. A token's two gate weights are its chosen experts' scores, divided by their sum so that the two add to 1. Going into a training step the biases are"
+      },
+      {
+       "tex": "\\mathbf{b} = (-0.10,\\ 0.00,\\ 0.05,\\ 0.15)."
+      },
+      {
+       "p": "In that step experts 1 and 2 receive more than their fair share of assignments and experts 3 and 4 less, and the biases are updated at the end of the step. In the next step a token arrives with scores"
+      },
+      {
+       "tex": "\\mathbf{s} = (0.85,\\ 0.70,\\ 0.65,\\ 0.60)."
+      },
+      {
+       "p": "Which experts does it go to, and with what gate weights?"
+      },
+      {
+       "choices": [
+        {
+         "text": "Experts 3 and 4, with weights 0.52 and 0.48",
+         "correct": true,
+         "explain": "The update lowers the biases of the two busy experts by 0.05 and raises the other two: b = (−0.15, −0.05, 0.10, 0.20). The biased scores are s + b = (0.70, 0.65, 0.75, 0.80), so experts 4 and 3 win. The weights come from the scores without the bias: 0.65 / 1.25 = 0.52 for expert 3 and 0.60 / 1.25 = 0.48 for expert 4. On its own scores the token prefers experts 1 and 2. The bias sends it to two quieter experts, but it does not change how much each of them counts."
+        },
+        {
+         "text": "Experts 3 and 4, with weights 0.48 and 0.52",
+         "explain": "The experts are right, but these weights come from the biased scores, 0.75 / 1.55 and 0.80 / 1.55. The bias decides only where the token goes. Weighting by the biased scores would let the balancing rule change what the layer computes, and here it would even reverse which of the two experts counts more."
+        },
+        {
+         "text": "Experts 1 and 4, with weights 0.59 and 0.41",
+         "explain": "These come from the biases before the update. With them the biased scores are (0.75, 0.70, 0.70, 0.75), which picks experts 1 and 4. The step ends with the update, in which the busy experts 1 and 2 lose 0.05 and experts 3 and 4 gain 0.05, and the next token is routed with the new biases."
+        },
+        {
+         "text": "Experts 1 and 2, with weights 0.55 and 0.45",
+         "explain": "This moves the biases the wrong way, raising the busy experts and lowering the quiet ones. The biases (−0.05, 0.05, 0.00, 0.10) give biased scores (0.80, 0.75, 0.65, 0.70) and pick experts 1 and 2, the same pair the raw scores pick, so ignoring the biases altogether lands here too. The rule lowers an overloaded expert's bias so that it wins fewer tokens."
+        },
+        {
+         "text": "Experts 1 and 2, with weights 0.52 and 0.48",
+         "explain": "Two slips. The biases moved the wrong way, to (−0.05, 0.05, 0.00, 0.10), which picks experts 1 and 2, and the pair is then weighed by its biased scores, 0.80 / 1.55 and 0.75 / 1.55. The rule lowers an overloaded expert's bias, and the weights come from the scores without the bias."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "The update lowers the biases of the two busy experts by 0.05 and raises the other two: b = (−0.15, −0.05, 0.10, 0.20). The biased scores are s + b = (0.70, 0.65, 0.75, 0.80), so experts 4 and 3 win. The weights come from the scores without the bias: 0.65 / 1.25 = 0.52 for expert 3 and 0.60 / 1.25 = 0.48 for expert 4. On its own scores the token prefers experts 1 and 2. The bias sends it to two quieter experts, but it does not change how much each of them counts."
+      },
+      {
+       "result": "Experts 3 and 4, with weights 0.52 and 0.48"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "moe-splitting-experts",
+   "moduleId": "mixture-of-experts",
+   "title": "Splitting Every Expert in Four",
+   "difficulty": "Hard",
+   "minutes": 25,
+   "overview": [
+    "A Switch-style layer has $N = 16$ experts and sends each token to one of them. Every expert is a feed-forward network of the lesson's form, $W_2\\,\\sigma(W_1 \\mathbf{x})$ without biases, with $d_{\\text{model}} = 2048$ and $d_{\\text{ff}} = 8192$. A team proposes to split every expert into four smaller ones with $d_{\\text{ff}} = 2048$, which gives 64 experts holding the same expert parameters as before."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "How many of the 64 experts must each token use to keep the expert FLOPs per token as they were? How many different sets of experts can a token then be sent to? Enter the number of sets."
+      }
+     ],
+     "answer": [
+      {
+       "p": "A feed-forward network costs about $4\\, d_{\\text{model}}\\, d_{\\text{ff}}$ FLOPs per token, so a small expert costs a quarter of a large one, and a token must use 4 small experts to cost what one large expert did. The parameters match too: $64 \\times 2 \\times 2048 \\times 2048 = 16 \\times 2 \\times 2048 \\times 8192 = 536{,}870{,}912$. Only the router grows, from $16 \\times 2048$ to $64 \\times 2048$ weights, which is small next to the experts."
+      },
+      {
+       "p": "A token can now be sent to any 4 of the 64 experts:"
+      },
+      {
+       "tex": "\\binom{64}{4} = \\frac{64 \\cdot 63 \\cdot 62 \\cdot 61}{4 \\cdot 3 \\cdot 2 \\cdot 1} = 635{,}376"
+      },
+      {
+       "p": "sets, against 16 before, for the same parameters and the same FLOPs. This is the gain in combinations that makes fine-grained experts attractive."
+      },
+      {
+       "result": "635376"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "The experts are spread over 16 devices: one large expert per device before the split, and four small ones per device after it. Sending a token to an expert on another device moves the token's vector of $d_{\\text{model}}$ numbers there and the expert's output vector back, in 16-bit floats of 2 bytes each. An expert on the token's own device costs nothing. Assume the router spreads tokens uniformly, so that every set of experts is equally likely. If each of a token's assignments is sent separately, how many bytes of traffic does one token cause in the split layer, on average?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "One round trip moves $2 \\times 2048 \\times 2 = 8192$ bytes. Each of the token's 4 experts is equally likely to be any of the 64, and 60 of those sit on other devices, so each assignment leaves the device with probability $60/64 = 15/16$. By linearity of expectation,"
+      },
+      {
+       "tex": "4 \\times \\frac{15}{16} \\times 8192 = 30{,}720 \\text{ bytes}."
+      },
+      {
+       "p": "The layer before the split costs $\\frac{15}{16} \\times 8192 = 7680$ bytes per token. The split keeps the FLOPs and quadruples the all-to-all traffic, because communication grows with the number of experts each token visits."
+      },
+      {
+       "result": "30720"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "A device that holds two or more of a token's experts needs the token's vector only once: it can run all of them and send back one weighted sum. With this change, how many other devices does a token's vector go to, on average? Give it to three decimal places, and say what the result means for the traffic."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Count devices instead of assignments. A device receives the token if it holds at least one of the token's 4 experts. It holds 4 of the 64, so the token misses all of them with probability"
+      },
+      {
+       "tex": "\\frac{\\binom{60}{4}}{\\binom{64}{4}} = \\frac{487{,}635}{635{,}376} \\approx 0.7675 ,"
+      },
+      {
+       "p": "and each of the 15 other devices receives the token with probability $0.2325$. By linearity of expectation the token goes to $15 \\times 0.2325 \\approx 3.488$ other devices on average, against 3.75 when every assignment travels on its own."
+      },
+      {
+       "p": "The traffic falls from 30,720 to about $3.488 \\times 8192 \\approx 28{,}573$ bytes, only 7%, and stays 3.7 times that of the layer before the split. Four experts drawn from 64 rarely share a device, so sharing a trip saves little. Cutting the traffic would need a router that confines each token's experts to a few devices, and that would give up part of the 635,376 sets from Part 1: the routing's flexibility and its traffic grow together."
+      },
+      {
+       "result": "3.488"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "moe-top-two-router-gradient",
+   "moduleId": "mixture-of-experts",
+   "title": "What a Top-2 Router Learns From",
+   "difficulty": "Hard",
+   "minutes": 25,
+   "overview": [
+    "A Mixtral-style layer sends each token to its two most probable experts and renormalizes. With router probabilities $\\mathbf{g} = \\operatorname{softmax}(\\mathbf{z})$ over $N$ experts and chosen experts $a$ and $b$, the layer outputs"
+   ],
+   "setup": [
+    {
+     "tex": "\\mathbf{y} = w_a\\, E_a(\\mathbf{x}) + w_b\\, E_b(\\mathbf{x}), \\qquad\nw_a = \\frac{g_a}{g_a + g_b}, \\quad w_b = \\frac{g_b}{g_a + g_b} ."
+    },
+    {
+     "p": "Write $\\mathbf{u} = \\partial \\mathcal{L} / \\partial \\mathbf{y}$ for the gradient that backpropagation brings to the layer's output, and assume no two logits are equal."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Find $\\partial \\mathcal{L} / \\partial z_j$ for every expert $j$, in terms of $w_a$, $w_b$, $\\mathbf{u}$, $E_a(\\mathbf{x})$ and $E_b(\\mathbf{x})$."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Write out the weights. The softmax denominator appears in both $g_a$ and $g_a + g_b$, so it cancels:"
+      },
+      {
+       "tex": "w_a = \\frac{e^{z_a}}{e^{z_a} + e^{z_b}} = \\sigma(z_a - z_b), \\qquad w_b = 1 - w_a ."
+      },
+      {
+       "p": "The weights depend on the two chosen logits and nothing else. A small change in any other logit keeps the token's top two as they were, since no logits tie, so $\\partial \\mathcal{L} / \\partial z_j = 0$ for every $j$ other than $a$ and $b$."
+      },
+      {
+       "p": "With $\\sigma' = \\sigma(1 - \\sigma)$, $\\partial w_a / \\partial z_a = w_a w_b$ and $\\partial w_b / \\partial z_a = -w_a w_b$. The expert outputs do not depend on $\\mathbf{z}$, so"
+      },
+      {
+       "tex": "\\frac{\\partial \\mathcal{L}}{\\partial z_a}\n= \\mathbf{u} \\cdot \\Big( w_a w_b\\, E_a(\\mathbf{x}) - w_a w_b\\, E_b(\\mathbf{x}) \\Big)\n= w_a w_b\\; \\mathbf{u} \\cdot \\big( E_a(\\mathbf{x}) - E_b(\\mathbf{x}) \\big),"
+      },
+      {
+       "p": "and by the same steps $\\partial \\mathcal{L} / \\partial z_b$ is its negative."
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "A short justification is required.",
+     "prompt": [
+      {
+       "p": "One token has router probabilities $\\mathbf{g} = (0.10,\\ 0.45,\\ 0.30,\\ 0.15)$ over four experts. Its chosen experts return $E_2(\\mathbf{x}) = (1,\\ -0.5,\\ 2)$ and $E_3(\\mathbf{x}) = (0.5,\\ 1,\\ 1)$, and $\\mathbf{u} = (0.4,\\ 0.2,\\ -0.3)$. Find $\\partial \\mathcal{L} / \\partial z_2$, and say what a descent step does to the token's routing."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The top two are experts 2 and 3, with weights $0.45 / 0.75 = 0.6$ and $0.30 / 0.75 = 0.4$, so $w_a w_b = 0.24$. The difference of the outputs is $E_2(\\mathbf{x}) - E_3(\\mathbf{x}) = (0.5,\\ -1.5,\\ 1)$, and"
+      },
+      {
+       "tex": "\\mathbf{u} \\cdot (0.5,\\ -1.5,\\ 1) = 0.2 - 0.3 - 0.3 = -0.4 ,\n\\qquad\n\\frac{\\partial \\mathcal{L}}{\\partial z_2} = 0.24 \\times (-0.4) = -0.096 ."
+      },
+      {
+       "p": "So $\\partial \\mathcal{L} / \\partial z_3 = 0.096$, and the entries for experts 1 and 4 are 0. A descent step raises $z_2$, lowers $z_3$ and leaves the other two alone, which moves weight from expert 3 to expert 2. Shifting weight between the two changes $\\mathbf{y}$ along $E_2(\\mathbf{x}) - E_3(\\mathbf{x})$, and $\\mathbf{u}$ says that direction lowers the loss."
+      },
+      {
+       "p": "The router learns which of its two chosen experts did better on this token, and only that. If both outputs moved by the same vector, the gradient would not change. The experts it did not choose get no signal at all."
+      },
+      {
+       "result": "$-0.096$"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "A team builds an MoE layer from a trained dense model by copying its feed-forward network into all eight experts and adding a new router, then keeps training with the task loss. Leave the balance loss out. What gradient does the router receive at the first step? Does it stay that way?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "At the first step every expert computes the same function, so $E_a(\\mathbf{x}) = E_b(\\mathbf{x})$ for every token and every pair. By Part 1 every token's router gradient is $w_a w_b\\, \\mathbf{u} \\cdot \\mathbf{0} = 0$, and the router does not move."
+      },
+      {
+       "p": "It does not stay that way, because the experts drift apart. Expert $a$'s parameters receive the gradient of $\\mathbf{u} \\cdot E_a(\\mathbf{x})$, scaled by $w_a$, summed over the tokens routed to it. Each expert sees its own tokens with its own weights, so after one step the copies differ. From then on $E_a(\\mathbf{x}) - E_b(\\mathbf{x})$ is nonzero and the router gets a gradient. It is small at first, in proportion to how far the experts have drifted, so the router starts out learning slowly."
+      },
+      {
+       "p": "The balance loss would give the router a gradient from the first step, since its gradient flows through the probabilities directly. But that gradient only spreads the tokens evenly. It says nothing about which expert suits which token. For that the router needs experts that differ."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "moe-balance-loss-lower-bound",
+   "moduleId": "mixture-of-experts",
+   "title": "How Low the Balance Loss Goes",
+   "difficulty": "Very Hard",
+   "minutes": 30,
+   "overview": [
+    "A layer with two experts sends each token to the expert with the higher router probability, and a token whose two probabilities are equal may go to either one. The layer adds the lesson's auxiliary loss $\\mathcal{L}_{\\text{aux}} = \\alpha N \\sum_i f_i P_i$, here with $N = 2$."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "In one batch a fifth of the tokens go to expert 1, each with router probabilities $(0.95,\\ 0.05)$, and the rest go to expert 2, each with $(0.45,\\ 0.55)$. Find $\\mathcal{L}_{\\text{aux}} / \\alpha$."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The token fractions are $f = (0.2,\\ 0.8)$. The mean probabilities are"
+      },
+      {
+       "tex": "P_1 = 0.2 \\times 0.95 + 0.8 \\times 0.45 = 0.55, \\qquad P_2 = 0.45 ,"
+      },
+      {
+       "p": "so"
+      },
+      {
+       "tex": "\\frac{\\mathcal{L}_{\\text{aux}}}{\\alpha} = 2\\,(0.2 \\times 0.55 + 0.8 \\times 0.45) = 2 \\times 0.47 = 0.94 ."
+      },
+      {
+       "p": "Expert 2 receives four times as many tokens as expert 1, and the loss is still below its balanced value of 1. The confident tokens on expert 1 lift $P_1$ far above $f_1$, and $P_1$ carries the smaller of the two weights in the loss."
+      },
+      {
+       "result": "0.94"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Find the largest number $m$ such that $\\mathcal{L}_{\\text{aux}} / \\alpha \\ge m$ for every batch, prove the bound, and describe batches that come as close to $m$ as you like."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Write $a = f_1$, so $f_2 = 1 - a$, and $p = P_1$, so $P_2 = 1 - p$:"
+      },
+      {
+       "tex": "\\frac{\\mathcal{L}_{\\text{aux}}}{\\alpha} = 2\\big(a p + (1 - a)(1 - p)\\big) = 2(1 - a) - 2p(1 - 2a) ."
+      },
+      {
+       "p": "Take $a \\le \\tfrac12$ first. The loss falls as $p$ rises, so look for the largest $p$ a batch with this $a$ allows. A token that went to expert 2 gave expert 1 a probability of at most $\\tfrac12$, and a token that went to expert 1 gave it at most 1. So"
+      },
+      {
+       "tex": "p \\le a \\cdot 1 + (1 - a) \\cdot \\tfrac12 = \\frac{1 + a}{2} ,"
+      },
+      {
+       "p": "and"
+      },
+      {
+       "tex": "\\frac{\\mathcal{L}_{\\text{aux}}}{\\alpha} \\ge 2(1 - a) - (1 + a)(1 - 2a) = 1 - a + 2a^2\n= \\frac78 + 2\\Big(a - \\frac14\\Big)^2 \\ge \\frac78 ."
+      },
+      {
+       "p": "For $a \\ge \\tfrac12$, swap the names of the experts: the same argument with $1 - a$ in place of $a$ gives the same bound. So $m = 7/8 = 0.875$."
+      },
+      {
+       "p": "Equality needs $a = \\tfrac14$ and both inequalities for $p$ tight: a quarter of the tokens go to expert 1 with probability 1 for it, and the other three quarters sit exactly at $(\\tfrac12,\\ \\tfrac12)$ and go to expert 2. A softmax never outputs exactly 1, but probabilities $(1 - \\epsilon,\\ \\epsilon)$ and $(\\tfrac12,\\ \\tfrac12)$ get within any distance of $0.875$. The minimum is a split of one quarter to three quarters, not the even split."
+      },
+      {
+       "result": "0.875"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is required.",
+     "prompt": [
+      {
+       "p": "Training treats $f$ as a constant and lets the gradient flow through $P$. For a token in Part 1's batch that went to expert 2, compute $(T/\\alpha)\\, \\partial \\mathcal{L}_{\\text{aux}} / \\partial z_1$, where $T$ is the number of tokens in the batch and $z_1$ is the token's logit for expert 1. Then say which way a descent step pushes the routing of Part 1's batch, toward balance or away from it, given that its loss is already below the balanced value."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Only the token's own probabilities depend on its logits, through $P_i = \\frac1T \\sum_t g_{ti}$. With two experts, $\\partial g_1 / \\partial z_1 = g_1 g_2$ and $\\partial g_2 / \\partial z_1 = -g_1 g_2$, so"
+      },
+      {
+       "tex": "\\frac{\\partial \\mathcal{L}_{\\text{aux}}}{\\partial z_1} = \\frac{2\\alpha}{T}\\,(f_1 - f_2)\\, g_1 g_2 ."
+      },
+      {
+       "p": "For the token at $(0.45,\\ 0.55)$ that is $\\frac{\\alpha}{T} \\times 2 \\times (0.2 - 0.8) \\times 0.2475 = -0.297\\,\\frac{\\alpha}{T}$, and $\\partial \\mathcal{L}_{\\text{aux}} / \\partial z_2$ is its negative."
+      },
+      {
+       "p": "Descent raises $z_1$ and lowers $z_2$ for every token, since $f_1 - f_2 < 0$ for the whole batch. It moves probability toward expert 1, the expert with the smaller $f$, which is the direction of balance, even though the loss is already below the balanced value. The push is strongest where $g_1 g_2$ is largest, near the tie: the tokens at $(0.45,\\ 0.55)$ get $0.2475$ out of a possible $0.25$, while the confident tokens at $(0.95,\\ 0.05)$ get $0.0475$, less than a fifth as much."
+      },
+      {
+       "p": "The direction is right, but the gradient cannot see how many tokens a step will move across the tie. In this batch all the tokens on expert 2 are identical, so they cross together: $f$ jumps from $(0.2,\\ 0.8)$ to $(1,\\ 0)$, the gradient reverses, and the routing swings back and forth. Tokens with different margins cross a few at a time, and then the fractions can settle near $(0.5,\\ 0.5)$."
+      },
+      {
+       "p": "The value and the gradient disagree because they answer different questions. Part 2 minimized over $f$ and $P$ together. Training holds $f$ fixed, and with $f$ fixed the loss is linear in $P$ with weights $f$, so it always falls by moving probability toward the expert with the smaller $f$. The loss does its work through that gradient. Its value is not a measure of balance, which is why the fractions $f$ themselves are the thing to watch."
+      },
+      {
+       "result": "$-0.297$"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "moe-bias-settles",
+   "moduleId": "mixture-of-experts",
+   "title": "Where the Routing Bias Settles",
+   "difficulty": "Hard",
+   "minutes": 20,
+   "overview": [
+    "A layer with two experts sends each token to the expert with the larger biased score $s_i + b_i$ and balances its load with the bias rule from the lesson: after each step, an expert that received more than half of the tokens has its bias lowered by $\\gamma = 0.004$, and one that received less has its bias raised by $\\gamma$. Write $\\Delta = s_1 - s_2$ for a token's score difference. In every batch $\\Delta$ is spread uniformly between $-0.2$ and $0.6$, and the batches are large enough that each expert's share of the tokens equals its probability. Both biases start at 0."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "After how many updates do the two experts receive equal shares of the tokens?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "A token goes to expert 1 when $s_1 + b_1 > s_2 + b_2$, that is when $\\Delta > c$ with $c = b_2 - b_1$. Only this difference of the biases matters. With $\\Delta$ uniform on $[-0.2,\\ 0.6]$, expert 1's share is"
+      },
+      {
+       "tex": "\\frac{0.6 - c}{0.8} ."
+      },
+      {
+       "p": "At the start $c = 0$ and expert 1 gets $0.75$ of the tokens. Each update then lowers $b_1$ by $0.004$ and raises $b_2$ by $0.004$, so $c$ grows by $0.008$. The shares are equal when $(0.6 - c)/0.8 = 0.5$, at $c = 0.2$, the median of $\\Delta$. That takes $0.2 / 0.008 = 25$ updates. After that neither expert is over its share and the biases stop moving. With batches of finite size the shares would wobble, and $c$ would hover within a step or two of $0.2$."
+      },
+      {
+       "result": "25"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Once the shares are equal, what fraction of all tokens goes to the expert with the lower score?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The tokens with $0 < \\Delta < 0.2$ score higher on expert 1 but have $\\Delta < c$, so they go to expert 2. They make up $0.2 / 0.8 = 0.25$ of the tokens: a third of the $0.75$ that prefer expert 1. No token that prefers expert 2 moves."
+      },
+      {
+       "p": "These are the tokens with the weakest preference. The bias moves one boundary shared by every token, and the tokens it moves are the ones that sat closest to it, each giving up at most 0.2 in score. Their gate weights still come from their scores without the bias, so the layer weighs expert 2's output by what the token really scored there."
+      },
+      {
+       "result": "0.25"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "In another layer every token has $\\Delta = 0.3$ exactly. Describe what the bias rule does, starting from biases of 0, and say whether the two experts' loads ever balance."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Every token makes the same comparison, $0.3 > c$, so in every step all the tokens go to the same expert. For the first 38 steps $c$ is below $0.3$: expert 1 gets every token, and $c$ climbs by $0.008$ a step to $0.304$. In step 39 every token goes to expert 2, and the update brings $c$ back to $0.296$. In step 40 every token goes to expert 1 again, and so on: from step 39 on, the experts take turns receiving the whole batch."
+      },
+      {
+       "p": "The loads never balance within a step. They balance only on average over two steps, which does nothing for the device that must hold a full batch's worth of assignments in one step, and a smaller $\\gamma$ only makes the swings start later. The bias can balance a layer only by moving the tokens nearest the boundary to the other expert, and that needs tokens whose preferences differ. Here the scores do not tell the tokens apart, so the problem lies with the router, and no choice of bias can fix it."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,137 @@
+{
+  "aModule": "principal-component-analysis",
+  "stage": "Round 2",
+  "fixes": [
+    {
+      "file": "pca-line-between-regressions",
+      "find": "multiplied by\n10. What is",
+      "replace": "multiplied by 10.\nWhat is"
+    }
+  ],
+  "parts": {
+    "pca-best-single-column": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "pca-components-for-noise": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "pca-duplicated-column": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.4": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "pca-line-between-regressions": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "pca-points-on-a-parabola": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "pca-twenty-faces": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "pca-two-new-readings": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "pca-best-single-column": "A centered dataset of three features has covariance matrix with diagonal entries 5, 2 and 3, and the only nonzero off-diagonal entries are the pair of 2s between the first two features. The parts ask what fraction of the total variance the first principal component explains, how much more of it the first two components keep than the two widest original columns, and whether a single original column can ever beat the first component.",
+    "pca-components-for-noise": "A dataset has 100 features whose covariance is a rank-five signal of variance 8 on each of its directions plus independent noise of variance 0.6 in every coordinate. Find the share of the variance the first five principal components explain, how many components a 95 percent variance target keeps, and what reconstructing a row from few components does to its noise.",
+    "pca-duplicated-column": "A weather dataset has uncorrelated temperature and humidity columns, and a join brings in identical copies of humidity so it appears m times. Find the variance fraction of the first component at m = 2, the smallest m for which the first component stops being temperature, and what changes after standardizing.",
+    "pca-line-between-regressions": "Five points centered at the origin give three candidate lines through them: the two least-squares regression lines and the line of the first principal component. Compute the first-component slope, prove it always lands between the two regression slopes when the two columns are positively correlated, and recompute it after changing the unit one column is recorded in.",
+    "pca-points-on-a-parabola": "Five points lie on the curve y = x squared. Run PCA on them and keep one component: what fraction of the variance does the first component explain, how many distinct values do the five scores take, and why does PCA not pick the axis that would keep the points in order along the curve?",
+    "pca-rain-and-river": "A dataset pairs daily rainfall in millimeters (standard deviation 5) with river level in meters (standard deviation 1), and their correlation is 0.7. Give the fraction of the variance the first principal component explains on the raw columns, and the fraction after standardizing both columns.",
+    "pca-twenty-faces": "Twenty centered face images of ten thousand pixels each form a 20 by 10,000 matrix, and the covariance matrix would be 10,000 by 10,000. Find how many principal components can have nonzero variance, build one from an eigenvector of the 20 by 20 Gram matrix, and compare the cost of that route with forming the covariance matrix.",
+    "pca-two-new-readings": "PCA on three machine measurements keeps two components, and each new reading is compared with its two-component reconstruction. For two readings, find the residual length and say what the whitened scores add that the residual does not.",
+    "pca-uncentered-rectangle": "A logger records four readings, (-2, 2), (2, 2), (-2, 4) and (2, 4), and a script runs PCA on them without subtracting the column means, taking the top eigenvector of the raw Gram matrix over n minus 1. Which component does the script report as the first one, and what fraction of the variance does it print?"
+  },
+  "order": [
+    "pca-uncentered-rectangle",
+    "pca-best-single-column",
+    "pca-two-new-readings",
+    "pca-components-for-noise",
+    "pca-rain-and-river",
+    "pca-twenty-faces",
+    "pca-points-on-a-parabola",
+    "pca-duplicated-column",
+    "pca-line-between-regressions"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "aModule": "vision-transformers-vit-attention",
+  "stage": "Camp",
+  "fixes": [],
+  "parts": {},
+  "indexPrompt": {
+    "cv-attention-with-smaller-patches": "The running example is cut into 2 by 2 patches instead of 3 by 3, so the 6 by 6 image becomes a 3 by 3 grid of nine patches and each patch flattens to four numbers. With the patches used directly as queries and keys and each dot product divided by the square root of the vector length, what attention weight does the top-middle patch give to itself?"
+  }
+}

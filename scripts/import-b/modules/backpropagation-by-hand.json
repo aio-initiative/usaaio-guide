@@ -1,0 +1,99 @@
+{
+  "aModule": "backpropagation-mechanics",
+  "stage": "Round 2",
+  "fixes": [],
+  "parts": {
+    "bp-cost-of-the-backward-pass": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "bp-input-from-first-layer-gradient": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "bp-mean-and-variance-head": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "bp-one-step-moves-the-logits": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "bp-rank-of-output-gradient": {
+      "1.1": {
+        "kind": "mcq",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "bp-residual-block-backward": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "bp-same-matrix-ten-layers": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "bp-cost-of-the-backward-pass": "A digit classifier has layer widths 784, 256, 128 and 10, and the cost of a pass for one image is the number of multiply-adds in its matrices and outer products, with the biases and activations ignored. With the forward pass at 234,752, count what the backward pass costs when it computes only the training gradients, what it costs once you also need the gradient with respect to the input image, and how many forward passes a central-difference estimate of every gradient would take instead.",
+    "bp-input-from-first-layer-gradient": "A hospital backpropagates one patient's record through a 3-unit ReLU first layer and sends the server only that layer's weight and bias gradients. Recover the record from the outer-product shape of the gradient, then say what the server gets when the hospital averages the gradient over two records instead.",
+    "bp-mean-and-variance-head": "A network predicts a parcel's delivery time with two outputs, a mean and a log-variance, and is trained on the Gaussian negative log-likelihood. Find the error at each output, the value the variance head settles on, and what a large predicted variance does to how hard the parcel pulls on the mean head's weights.",
+    "bp-one-step-moves-the-logits": "A three-class classifier ends in a linear layer and a softmax, and you take one gradient descent step on a single example with the earlier layers frozen. Work out how far each logit moves even though the weights are unknown, and what probability the updated layer then gives the true class.",
+    "bp-rank-of-output-gradient": "A ten-class image classifier ends in a linear layer with a 10 by 256 weight matrix, followed by a softmax and the mean cross-entropy loss over a batch of 32 images. What is the largest rank the weight gradient can have on one batch, and what property of the per-image output errors caps it there?",
+    "bp-residual-block-backward": "A residual block adds a small two-layer branch to its input with no biases, and its output is scored against a target by a squared-error loss. Run the block forward, then find the gradient at the input and in both weight matrices, and say what changes when the second layer's weights are initialized to zero.",
+    "bp-same-matrix-ten-layers": "One weight matrix is applied as a ReLU layer ten times in a width-2 network with no biases, and an error arriving at the tenth layer is carried back to the input. Compute the input gradient for a given error, compare two errors of the same length, and decide whether a single constant scaling of the matrix can keep both from growing or shrinking.",
+    "bp-tanh-layer-backward": "A regression network has three tanh hidden units and three linear outputs and is trained on half the squared error. On one example the hidden activations are 0.8, -0.6 and 0.5, the prediction is 2.5, -1, 1.5 against the target 2, 0, 1, and the rows of the output weight matrix are given. Working backward through the tanh, what is the error at the pre-activation of the second hidden unit?"
+  }
+}

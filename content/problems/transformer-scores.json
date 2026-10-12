@@ -1,0 +1,241 @@
+{
+ "module": "transformer-scores",
+ "stage": "Round 2",
+ "index": [
+  {
+   "id": "tf-a-head-whose-queries-are-its-keys",
+   "moduleId": "transformer-scores",
+   "title": "A Head Whose Queries Are Its Keys",
+   "source": "Custom",
+   "difficulty": "Easy",
+   "url": "/theory/?id=tf-a-head-whose-queries-are-its-keys",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 2"
+   ],
+   "prompt": "Head 2 of the running example makes its queries and keys with the same weights, so every token's query equals its own key. Picture a head built the same way, but with a head size of 48, in which every number of every query is +1 or −1, independently and with equal chance. A token's score against itself is its query times its own key, divided by $\\sqrt{48}$. What is that score?",
+   "answer": "6.928. The query times itself adds 48 squares, each equal to 1, so it is exactly 48 every time, and the score is 48 divided by the square root of 48, which is the square root of 48 again, about 6.928. A score against another token adds 48 products of +1 or −1 that average 0, so after the division it averages 0 with a typical size of 1. The token's own score sits far above the others, so the softmax of Step 6 puts almost all the weight on the token itself. The gap grows with the square root of the head size, so a larger head makes it worse. Separate query and key weights avoid this."
+  },
+  {
+   "id": "tf-which-key-a-query-picks",
+   "moduleId": "transformer-scores",
+   "title": "Which Key a Query Picks",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=tf-which-key-a-query-picks",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "A model reads one short sentence, \"The lantern swung as rigging and hull held in the tide\", as four tokens: lantern, rigging, hull and tide. A single head gives each of them a query of 16 numbers and a key of 16 numbers. Queries and keys come out of different weight matrices, so nothing forces a token's query to match its own key. The head size is 16, so the divisor is the square root of 16, which is 4. Every score is one dot product of a query with a key divided by 4, and the score table has a row for each query and a column for each key. 5 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  }
+ ],
+ "theory": [
+  {
+   "id": "tf-a-head-whose-queries-are-its-keys",
+   "moduleId": "transformer-scores",
+   "title": "A Head Whose Queries Are Its Keys",
+   "difficulty": "Easy",
+   "minutes": 8,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "Head 2 of the running example makes its queries and keys with the same weights, so every token's query equals its own key. Picture a head built the same way, but with a head size of 48, in which every number of every query is +1 or −1, independently and with equal chance. A token's score against itself is its query times its own key, divided by $\\sqrt{48}$. What is that score?"
+      },
+      {
+       "choices": [
+        {
+         "text": "$0$",
+         "explain": "The products in a token's score against itself are its own numbers squared, and the square of +1 or −1 is always 1. The argument on this page needs products that average 0, which holds between two different tokens, whose numbers are independent, but not between a token and itself."
+        },
+        {
+         "text": "$1$",
+         "explain": "The divisor brings scores to a typical size of about 1 when the products average 0, as they do between two different tokens. Against itself every product is a square, so the 48 products add up to exactly 48 every time, and dividing by the square root of the head size leaves a score far from 1."
+        },
+        {
+         "text": "$48$",
+         "explain": "48 is the dot product before the division. The score divides it by the square root of the head size, not by the head size itself."
+        },
+        {
+         "text": "$6.928$",
+         "correct": true,
+         "explain": "The query times itself adds 48 squares, each equal to 1, so it is exactly 48 every time, and the score is 48 divided by the square root of 48, which is the square root of 48 again, about 6.928. A score against another token adds 48 products of +1 or −1 that average 0, so after the division it averages 0 with a typical size of 1. The token's own score sits far above the others, so the softmax of Step 6 puts almost all the weight on the token itself. The gap grows with the square root of the head size, so a larger head makes it worse. Separate query and key weights avoid this."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "The query times itself adds 48 squares, each equal to 1, so it is exactly 48 every time, and the score is 48 divided by the square root of 48, which is the square root of 48 again, about 6.928. A score against another token adds 48 products of +1 or −1 that average 0, so after the division it averages 0 with a typical size of 1. The token's own score sits far above the others, so the softmax of Step 6 puts almost all the weight on the token itself. The gap grows with the square root of the head size, so a larger head makes it worse. Separate query and key weights avoid this."
+      },
+      {
+       "result": "$6.928$"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "tf-which-key-a-query-picks",
+   "moduleId": "transformer-scores",
+   "title": "Which Key a Query Picks",
+   "difficulty": "Medium",
+   "minutes": 10,
+   "overview": [
+    "A model reads one short sentence, \"The lantern swung as rigging and hull held in the tide\", as four tokens: lantern, rigging, hull and tide. A single head gives each of them a query of 16 numbers and a key of 16 numbers. Queries and keys come out of different weight matrices, so nothing forces a token's query to match its own key."
+   ],
+   "setup": [
+    {
+     "tex": "\\begin{array}{cc}\n\\text{Token} & \\text{Query} \\\\ \\hline\n\\text{lantern} & \\text{(−1, −1, 0, −1, 0, −1, 0, 0, 1, 0, 0, −1, −1, 0, 0, 1)} \\\\\n\\text{rigging} & \\text{(0, −1, 1, 1, 0, −1, 0, −1, 0, 1, −1, −1, 0, 1, 0, 0)} \\\\\n\\text{hull} & \\text{(0, 0, −1, 1, 1, 1, 1, 0, 1, −1, 1, −1, 0, 1, 1, −1)} \\\\\n\\text{tide} & \\text{(0, 0, −1, 1, 0, 0, 0, 0, −1, 0, 0, 0, −1, 0, 1, −1)}\n\\end{array}"
+    },
+    {
+     "tex": "\\begin{array}{cc}\n\\text{Token} & \\text{Key} \\\\ \\hline\n\\text{lantern} & \\text{(1, 1, −1, 0, 1, −1, 1, 1, 0, 0, −1, −1, 1, 1, 1, 0)} \\\\\n\\text{rigging} & \\text{(−1, 0, −1, −1, 1, 1, 1, 0, 0, −1, −1, 0, 1, 1, 1, 0)} \\\\\n\\text{hull} & \\text{(−1, 1, −1, −1, −1, 1, 1, 0, 1, −1, 0, 0, 0, 1, −1, 0)} \\\\\n\\text{tide} & \\text{(1, −1, 0, 0, 0, 1, 0, −1, 0, 1, 1, 1, 1, 0, 0, −1)}\n\\end{array}"
+    },
+    {
+     "p": "The head size is 16, so the divisor is $\\sqrt{16} = 4$. Every score is one dot product of a query with a key divided by 4. The score table has a row for each query and a column for each key."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Which key does lantern's query score highest against? Type the name of the token, not the number of its row."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Every entry is −1, 0 or 1, so every dot product is a whole number. Against the key of hull the 16 products are"
+      },
+      {
+       "tex": "\\begin{aligned}\n&(-1)(-1) + (-1)(1) + 0(-1) + (-1)(-1) + 0(-1) + (-1)(1) \\\\[4pt]\n&\\quad + 0(1) + 0(0) + (1)(1) + 0(-1) + 0(0) + (-1)(0) \\\\[4pt]\n&\\quad + (-1)(0) + 0(1) + 0(-1) + (1)(0) = 1 .\n\\end{aligned}"
+      },
+      {
+       "p": "The other three dot products are −1 against lantern's own key, 0 against rigging's and −4 against tide's. Dividing each whole number by 4:"
+      },
+      {
+       "tex": "\\begin{array}{ccc}\n\\text{lantern's query against the key of} & \\text{Dot product} & \\text{Score, divided by 4} \\\\ \\hline\n\\text{lantern} & \\text{−1} & \\text{−0.25} \\\\\n\\text{rigging} & 0 & 0.00 \\\\\n\\text{hull} & 1 & \\text{**0.25**} \\\\\n\\text{tide} & \\text{−4} & \\text{−1.00}\n\\end{array}"
+      },
+      {
+       "p": "**hull** wins, and only just. Rigging is 0.25 behind it and lantern's own key is 0.50 behind."
+      },
+      {
+       "p": "The divisor does not show up in this part at all. Dividing one row by any positive number leaves the order of that row alone, so a reader who never divided by 4 would still name hull. Only the numbers in the next two parts can catch a missing divisor."
+      },
+      {
+       "result": "hull"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Add up the four scores in the tide column, which measure how well the key of tide does against all four queries. Give two decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Read the tide column down the table, one score for each query:"
+      },
+      {
+       "tex": "\\begin{array}{ccc}\n\\text{Query of} & \\text{Dot product with tide's key} & \\text{Score, divided by 4} \\\\ \\hline\n\\text{lantern} & \\text{−4} & \\text{−1.00} \\\\\n\\text{rigging} & 0 & 0.00 \\\\\n\\text{hull} & 1 & 0.25 \\\\\n\\text{tide} & 0 & 0.00\n\\end{array}"
+      },
+      {
+       "p": "Adding in that order: −1.00 + 0.00 + 0.25 + 0.00 = **−0.75**. Add the four dot products in the middle column instead and their total is −3, and dividing that by the head size of 16 rather than by its square root gives −0.1875."
+      },
+      {
+       "p": "Neither of those is −0.75, so a column total does pin the divisor down. The totals of the other three columns are 1.25 for lantern, 0.75 for rigging and −0.50 for hull. All four are distinct, and lantern's is the largest, so lantern's key does best over the whole head. Dividing by 4 is what holds such a total near a few units instead of letting it grow with the head size."
+      },
+      {
+       "result": "$-0.75$"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the lowest score anywhere in the table? Give two decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "All 16 dot products, then each one divided by 4:"
+      },
+      {
+       "tex": "\\begin{array}{ccccc}\n\\text{Query of} & \\text{lantern} & \\text{rigging} & \\text{hull} & \\text{tide} \\\\ \\hline\n\\text{lantern} & \\text{−1} & 0 & 1 & \\text{−4} \\\\\n\\text{rigging} & 1 & \\text{−2} & \\text{−4} & 0 \\\\\n\\text{hull} & 4 & 5 & 3 & 1 \\\\\n\\text{tide} & 1 & 0 & \\text{−2} & 0\n\\end{array}"
+      },
+      {
+       "tex": "\\begin{array}{ccccc}\n\\text{Query of} & \\text{lantern} & \\text{rigging} & \\text{hull} & \\text{tide} \\\\ \\hline\n\\text{lantern} & \\text{−0.25} & 0.00 & 0.25 & \\text{**−1.00**} \\\\\n\\text{rigging} & 0.25 & \\text{−0.50} & \\text{**−1.00**} & 0.00 \\\\\n\\text{hull} & 1.00 & \\text{**1.25**} & 0.75 & 0.25 \\\\\n\\text{tide} & 0.25 & 0.00 & \\text{−0.50} & 0.00\n\\end{array}"
+      },
+      {
+       "p": "The lowest score is **−1.00**, and two cells reach it. Lantern's query against tide's key has a dot product of −4, and rigging's query against hull's key is another −4. Undivided the answer would be −4, and divided by 16 it would be −0.25."
+      },
+      {
+       "p": "Every entry of the second table is a multiple of 0.25, because every dot product is a whole number and the divisor is 4. The highest cell is 1.25, where hull's query meets rigging's key."
+      },
+      {
+       "result": "$-1.00$"
+      }
+     ]
+    },
+    {
+     "id": "1.4",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "For each of the four tokens, find the key that scores highest in its own row. Which of the four tokens, if any, has its own key first? Type none if that set is empty."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The winner of each row:"
+      },
+      {
+       "tex": "\\begin{array}{cc}\n\\text{Row} & \\text{Key that wins the row} \\\\ \\hline\n\\text{lantern} & \\text{hull} \\\\\n\\text{rigging} & \\text{lantern} \\\\\n\\text{hull} & \\text{rigging} \\\\\n\\text{tide} & \\text{lantern}\n\\end{array}"
+      },
+      {
+       "p": "**none**. No row is won by the column with the same name, so the set is empty. Lantern's key wins two rows and hull's key wins one, and lantern's own row goes to hull's key. Rigging and hull make the sharpest pair: hull's query scores rigging's key at 1.25, the highest cell in the table, and rigging's query scores hull's key at −1.00, the lowest. The strongest single pull in this head therefore runs one way only."
+      },
+      {
+       "result": "none"
+      }
+     ]
+    },
+    {
+     "id": "1.5",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Why does no token here rank its own key first, and what does the softmax of the next step make of a table shaped like this one?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Queries and keys come from different weight matrices. A token matches itself only when its own query happens to point at what its own key offers, and in this head it never does. Reusing one set of weights for both is what makes a token's score against itself a sum of squares, large and hard to beat, and that is the arrangement the earlier problem in this module warns against."
+      },
+      {
+       "p": "The softmax reads the gaps inside a row and nothing else, so a key gains no weight from a column total. Tide's key has the worst total of the four at −0.75 and lantern's has the best at 1.25, and neither fact reaches any row. Step 6's softmax turns a row of scores into weights by raising e to each score and dividing by the row's total of those powers. Take the row of hull, whose scores are 1.00, 1.25, 0.75 and 0.25. Its own key scores 0.75, third of four, and the softmax gives it a weight of 0.22. Rigging's key scores 1.25 and takes 0.363, and lantern's key takes 0.283. So hull's own key gets less of hull's row than two other keys do."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,23 @@
+{
+ "module": "state-space-models",
+ "stage": "Advanced",
+ "index": [
+  {
+   "id": "xt3-ssm-duality",
+   "moduleId": "state-space-models",
+   "title": "The Same Model, Twice",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=xt3-ssm-duality",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Advanced"
+   ],
+   "prompt": "Implement a state-space model as both a recurrence and an FFT convolution, verify they agree to machine precision, and show a nonlinearity destroys the equivalence.",
+   "answer": "Auto-graded inside the notebook. Outputs and kernel statistics must match to 1e-8, with the two linear forms agreeing to 1e-9 and the nonlinear one diverging."
+  }
+ ],
+ "theory": []
+}

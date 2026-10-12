@@ -1,0 +1,2271 @@
+{
+  "module": "linear-logistic-regression",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "llr-broadcast-mse",
+      "moduleId": "linear-logistic-regression",
+      "title": "The Mean Squared Error a Shape Bug Reports",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/theory/?id=llr-broadcast-mse",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A least-squares fit with an intercept on 100 rows has training R^2 0.8 and targets with variance 5. The fitted weights come back as a column, so pred = X @ w has shape (100, 1) while y has shape (100,), and mse = np.mean((pred - y) ** 2) broadcasts instead of matching: what does it print?",
+      "answer": "9. Broadcasting makes entry (i, j) equal to pred_i - y_j, every prediction against every target. The mean over all pairs of (p_i - y_j)^2 is mean(p^2) - 2 mean(p) mean(y) + mean(y^2) = Var(p) + Var(y) + (mean(p) - mean(y))^2. With an intercept the residuals sum to zero, so the two means match, and the residuals are uncorrelated with the predictions, so Var(y) = Var(p) + MSE and Var(p) = R^2 Var(y) = 4. The code prints 4 + 5 = 9. Worse, it rises as the fit improves, since a better fit spreads the predictions more."
+    },
+    {
+      "id": "llr-copied-column-hessian",
+      "moduleId": "linear-logistic-regression",
+      "title": "The Hessian with a Copied Column",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=llr-copied-column-hessian",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A logistic regression's design matrix has three columns: ones, the soil temperature in degrees, and, through a merge mistake, the same temperature column again. The two classes overlap in temperature, so no line separates them. Which statement about its log loss J is right?",
+      "answer": "J is convex, its Hessian is singular at every w, and its minimizers form a line. With v = (0, 1, -1), Xv is the copy minus the original, a column of zeros, so X^T S X v = 0 at every w: the Hessian is singular everywhere. J is still convex, and flat along v, because moving weight from one copy to the other leaves every prediction unchanged. So J has a minimum value, reached on a whole line of weights with the same sum of the two temperature weights. Newton's solve fails at the first step, gradient descent from zero converges to the point of the line with the two weights equal, and a small ridge penalty restores a unique minimizer."
+    },
+    {
+      "id": "llr-copied-feature-naive-bayes",
+      "moduleId": "linear-logistic-regression",
+      "title": "A Copied Feature in Naive Bayes",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=llr-copied-feature-naive-bayes",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A mail filter is trained on 500 spam and 500 genuine messages with one yes-no feature, whether a message contains a link, and 300 of the spam and 100 of the genuine messages have one. A pipeline bug then copies the feature, so every message has two identical link columns, and both a no-smoothing naive Bayes and an unpenalised logistic regression with an intercept are refitted on the two columns. Say what probability of spam each model now gives a message with a link.",
+      "answer": "Naive Bayes 0.9, logistic regression 0.75. Each copy has likelihood ratio P(link | spam) / P(link | genuine) = 0.6 / 0.2 = 3, and naive Bayes treats the copies as independent evidence, so it multiplies the prior odds of 1 by 3 \u00d7 3 = 9: probability 9 / 10 = 0.9. The copy carries no new information, and 300 of the 400 messages with a link are spam, 0.75. Logistic regression's predictions do not change: only the sum of the two link weights enters the predictions, and the fit sets it where the single weight was, giving 0.75 again. Naive Bayes still predicts spam, but it has become overconfident."
+    },
+    {
+      "id": "llr-first-newton-step",
+      "moduleId": "linear-logistic-regression",
+      "title": "The First Newton Step Is a Least-Squares Fit",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=llr-first-newton-step",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Five points with one feature and labels are fitted to logistic regression with Newton's method starting from zero weights. Compute the gradient component and the weights after the first step, then show that the first step is four times the least-squares fit of the shifted targets. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "llr-gd-feature-scale",
+      "moduleId": "linear-logistic-regression",
+      "title": "Gradient Descent on Unscaled Features",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=llr-gd-feature-scale",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A linear regression with two centered features and no intercept is fitted by gradient descent on the mean squared error. The two uncorrelated features have standard deviations 1 and 10. Work out the largest step size that converges from every start, how many steps a half-size step needs to bring the error down to 1 percent, and what dividing the second feature by 10 changes. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "llr-hours-of-sun-odds",
+      "moduleId": "linear-logistic-regression",
+      "title": "Hours of Sun on the Odds Scale",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=llr-hours-of-sun-odds",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A logistic regression predicts whether a seedling survives its first month, and one feature is hours of direct sun per day, with weight ln 2, about 0.693. A seedling in the shade has a predicted survival probability of 0.2, and only its hours of sun change. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "llr-lasso-path-two-features",
+      "moduleId": "linear-logistic-regression",
+      "title": "The Lasso Path of Two Correlated Features",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=llr-lasso-path-two-features",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Two standardized features come with a small Gram matrix and two target inner products, and the lasso penalty falls from a level that pins both weights at zero. Find the level where both sit at zero, the surviving weight partway down, and where the second feature enters and with which sign. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "llr-new-baseline-category",
+      "moduleId": "linear-logistic-regression",
+      "title": "Weights After Changing the Baseline",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=llr-new-baseline-category",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A courier fits an unpenalized logistic regression for whether a parcel arrives late on the distance and the region, with the region one-hot encoded and north as the dropped baseline. The same data is then refit with west dropped instead, keeping indicators for north and south. What are the new intercept and the new weight on south?",
+      "answer": "Intercept -1.5, south 0.7. The predictions cannot change, because the two encodings span the same columns and there is no penalty to tell them apart. So match the log-odds of each region at distance 0. North was -1.2, south -1.2 + 0.4 = -0.8 and west -1.2 - 0.3 = -1.5. The new intercept is the baseline's log-odds, -1.5, and each indicator's weight is its region minus the baseline: south -0.8 - (-1.5) = 0.7, north -1.2 - (-1.5) = 0.3. The distance weight stays at 0.05."
+    },
+    {
+      "id": "llr-one-bad-reading",
+      "moduleId": "linear-logistic-regression",
+      "title": "One Reading Corrected",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=llr-one-bad-reading",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A technician fits a least-squares line to five gauge readings, then finds the reading farthest from the mean was logged 5 units too high. Work out how the slope and the fitted values move when she corrects it, without refitting the line from scratch. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "llr-one-solve-models",
+      "moduleId": "linear-logistic-regression",
+      "title": "The Model One Solve Can Fit",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=llr-one-solve-models",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "Each model below has unknown parameters named by letters and is to be fitted to data by minimizing the sum of squared residuals. Which one can be fitted exactly by building a design matrix and solving the normal equations once, with a unique answer, taking A at least 0 and the angle phi from 0 up to but not including 2 pi?",
+      "answer": "y\u0302 = A sin(x + phi) + C. The phase looks like a parameter inside the function, but the angle-addition formula moves it out: A sin(x + \u03c6) = (A cos \u03c6) sin x + (A sin \u03c6) cos x. Fit \u03b1, \u03b2 and C on the columns sin x, cos x and 1, which are independent for spread-out x, then A = \u221a(\u03b1\u00b2 + \u03b2\u00b2) and \u03c6 is the angle whose cosine and sine are \u03b1 / A and \u03b2 / A. Every pair (\u03b1, \u03b2) comes from some (A, \u03c6), so this minimizes the stated loss."
+    },
+    {
+      "id": "llr-ridge-two-scales",
+      "moduleId": "linear-logistic-regression",
+      "title": "Ridge on Two Columns of Different Size",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=llr-ridge-two-scales",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A model has two orthogonal columns of squared length 4 and 36 and a mean-zero target, fitted with ridge at lambda 12. Compute the two ridge weights, then explain why the wider column keeps more of its least-squares weight and what the shrinkage factors become if it is rescaled to the narrower column's size. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "llr-softmax-regions-1d",
+      "moduleId": "linear-logistic-regression",
+      "title": "Three Classes on a Line",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=llr-softmax-regions-1d",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A softmax regression sorts a single reading x into classes A, B and C with scores 0, x minus 1 and 2x minus 4, and predicts the class with the largest probability. Find where class A stops winning, how low B's offset must go for B to never win at all, and where A then gives way to C. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "llr-two-group-mle",
+      "moduleId": "linear-logistic-regression",
+      "title": "Maximum Likelihood with One Yes-No Feature",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=llr-two-group-mle",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A clinic texted a reminder before some appointments: 28 of the 40 patients who got one attended, and 15 of the 60 who did not. Fit attendance with a logistic regression on this single yes-no feature by maximum likelihood. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "llr-which-fit-is-finite",
+      "moduleId": "linear-logistic-regression",
+      "title": "The Data Set with a Finite Fit",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=llr-which-fit-is-finite",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "Four data sets of four points each, one feature x and a binary label, are each fitted with an unpenalized logistic regression p = sigmoid(w0 + w1 x) by maximum likelihood. For which data set do finite weights minimize the log loss?",
+      "answer": "x = 1, 2, 3, 4 with labels 0, 1, 0, 1. No threshold puts the labels on two sides, in either direction: a 1 sits between two 0s. Any weights that grow without bound make some point confidently wrong and its loss unbounded, so the loss rises in every direction far from the origin and has a minimum at finite weights, about w0 = -2.27 and w1 = 0.91."
+    },
+    {
+      "id": "llr-which-residuals",
+      "moduleId": "linear-logistic-regression",
+      "title": "Residuals a Least-Squares Line Can Leave",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=llr-which-residuals",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "Four points at x = 1, 2, 3, 4 are fitted with a least-squares line that has an intercept, and the y values are not given. Decide which of four lists could be the residuals in order of x, using what the normal equations force the residuals to satisfy.",
+      "answer": "1, -1, -1, 1. The normal equations are X^T r = 0: one equation per column of X. The ones column says the residuals add up to zero, 1 - 1 - 1 + 1 = 0, and the x column says the residuals times x add up to zero, 1 - 2 - 3 + 4 = 0. Both hold, so these are the residuals of some data, for example y = 4, 4, 6, 10 around the line 1 + 2x. The curved pattern says a straight line is the wrong model, not that the fit is wrong."
+    },
+    {
+      "id": "llr-newton-logistic-numpy",
+      "moduleId": "linear-logistic-regression",
+      "title": "Newton's Method for Logistic Regression",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=llr-newton-logistic-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "A nursery records whether each seed tray germinated, with the soil temperature and the moisture, both already standardized. Write the loss of a logistic regression with a ridge penalty that leaves the intercept alone, its gradient and its Hessian, then fit it with Newton's method and see the penalty give a finite answer on data that a line separates.",
+      "answer": "Auto-graded inside the notebook. The unpenalized fit on the 400 trays takes 6 Newton steps and converges to weights [-1.095, 1.49, -0.954], while the penalized fit on the separable trays at lam = 0.1 converges in 5 steps to weights [0.062, 1.448]."
+    },
+    {
+      "id": "llr-ridge-path-numpy",
+      "moduleId": "linear-logistic-regression",
+      "title": "A Ridge Path with an Unpenalized Intercept",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=llr-ridge-path-numpy",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "An engineer predicts a building's daily energy use from 25 sensor readings, many of them correlated, with only 40 days of training data. Least squares overfits, so fit ridge regression with the intercept left out of the penalty, compute the weights for a whole list of penalty strengths from one SVD, and let a validation set choose the strength.",
+      "answer": "Auto-graded inside the notebook. Under np.random.default_rng(11) the validation mean squared error falls from 92.1 at lam = 0 to 48.3 at lam = 30 and rises again to 66.0 at lam = 100, so the strength the path selects is lam = 30."
+    },
+    {
+      "id": "linear-regression-implementation-task",
+      "moduleId": "linear-logistic-regression",
+      "title": "Ridge Regression Practice",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=linear-regression",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Ridge (L2-regularized) linear regression. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Test R\u00b2 must reach the target shown in the evaluation cell."
+    },
+    {
+      "id": "logistic-regression-implementation-task",
+      "moduleId": "linear-logistic-regression",
+      "title": "Logistic Regression by Gradient Descent",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=logistic-regression",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Sigmoid + binary cross-entropy + your own gradient descent loop. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Test accuracy must reach the target shown in the evaluation cell."
+    },
+    {
+      "id": "theory-linear-regression-ols",
+      "moduleId": "linear-logistic-regression",
+      "title": "Linear Regression: Normal Equations and Geometry",
+      "source": "USAAIO-style",
+      "difficulty": "Easy",
+      "url": "/theory/?id=theory-linear-regression-ols",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Includes code",
+        "Round 1"
+      ],
+      "prompt": "Derive the normal equations, prove the hat matrix is an orthogonal projection, and fit a three-point dataset entirely by hand. 7 parts, each with its own grading instruction. Solutions revealed part by part.",
+      "answer": "Worked solutions are given part by part on the problem page: full derivations, not just final values. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "theory-regularization-ridge-lasso",
+      "moduleId": "linear-logistic-regression",
+      "title": "Ridge, Lasso, and Where Sparsity Comes From",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=theory-regularization-ridge-lasso",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Includes code",
+        "Round 1"
+      ],
+      "prompt": "Derive the ridge solution and read it through the SVD, then derive the soft-thresholding rule that makes Lasso coefficients exactly zero. 7 parts, each with its own grading instruction. Solutions revealed part by part.",
+      "answer": "Worked solutions are given part by part on the problem page: full derivations, not just final values. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "theory-logistic-regression-crossentropy",
+      "moduleId": "linear-logistic-regression",
+      "title": "Logistic Regression, Log-Odds, and Convexity",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=theory-logistic-regression-crossentropy",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Includes code",
+        "Round 1"
+      ],
+      "prompt": "Derive the gradient and Hessian of logistic regression, prove the loss is convex, and show why perfectly separable data has no solution. 6 parts, each with its own grading instruction. Solutions revealed part by part.",
+      "answer": "Worked solutions are given part by part on the problem page: full derivations, not just final values. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ml2-huber-irls",
+      "moduleId": "linear-logistic-regression",
+      "title": "Five Bad Rows Ruin Least Squares",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=ml2-huber-irls",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Five rows corrupted by 1000x wreck least squares. Fit Huber regression by iteratively reweighted least squares and measure how much closer it lands to the true coefficients.",
+      "answer": "Auto-graded inside the notebook. Both coefficient vectors must match to 1e-6 and the Huber fit must be more than 10x closer to truth."
+    },
+    {
+      "id": "foundations-05-linear-regression",
+      "moduleId": "linear-logistic-regression",
+      "title": "AI Foundations 05: Simple Linear Regression, Step by Step",
+      "source": "AI Foundations",
+      "difficulty": "Easy",
+      "url": "/editor/?nb=foundations-05-linear-regression",
+      "tags": [
+        "Coding",
+        "Course",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Course notebook, about ~4 h end to end. Read it top to bottom, then do the exercises marked with a pencil icon - each one checks itself - and finish with the exam-style quiz.",
+      "answer": "Self-checking: every exercise has a checker cell that prints a verdict, and the quiz answers are explained at the end of the notebook."
+    },
+    {
+      "id": "foundations-06-multiple-regression",
+      "moduleId": "linear-logistic-regression",
+      "title": "AI Foundations 06: Multiple Linear Regression: Vectorization, Scaling and GD Variants",
+      "source": "AI Foundations",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=foundations-06-multiple-regression",
+      "tags": [
+        "Coding",
+        "Course",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Course notebook, about ~5 h end to end. Read it top to bottom, then do the exercises marked with a pencil icon - each one checks itself - and finish with the exam-style quiz.",
+      "answer": "Self-checking: every exercise has a checker cell that prints a verdict, and the quiz answers are explained at the end of the notebook."
+    },
+    {
+      "id": "foundations-08-logistic-regression",
+      "moduleId": "linear-logistic-regression",
+      "title": "AI Foundations 08: Logistic Regression",
+      "source": "AI Foundations",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=foundations-08-logistic-regression",
+      "tags": [
+        "Coding",
+        "Course",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Course notebook, about ~6 h end to end. Read it top to bottom, then do the exercises marked with a pencil icon - each one checks itself - and finish with the exam-style quiz.",
+      "answer": "Self-checking: every exercise has a checker cell that prints a verdict, and the quiz answers are explained at the end of the notebook."
+    },
+    {
+      "id": "foundations-09-softmax-regression",
+      "moduleId": "linear-logistic-regression",
+      "title": "AI Foundations 09: Softmax Regression",
+      "source": "AI Foundations",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=foundations-09-softmax-regression",
+      "tags": [
+        "Coding",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Softmax regression from scratch: the softmax function and its properties, categorical cross-entropy, the p - y gradient, and full-batch gradient descent by hand and in NumPy. Do the exercises marked with a pencil icon - each one checks itself - and finish with the quiz.",
+      "answer": "Self-checking: every exercise has a checker cell that prints a verdict, and the quiz answers are explained at the end of the notebook."
+    },
+    {
+      "id": "nlp-foundations-implementation-task",
+      "moduleId": "linear-logistic-regression",
+      "title": "TF-IDF Text Classification Practice",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=nlp-foundations",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "TF-IDF / bag-of-n-grams + linear classifier. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Test accuracy must reach the target shown in the evaluation cell."
+    }
+  ],
+  "theory": [
+    {
+      "id": "llr-broadcast-mse",
+      "moduleId": "linear-logistic-regression",
+      "title": "The Mean Squared Error a Shape Bug Reports",
+      "difficulty": "Hard",
+      "minutes": 10,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A least-squares fit with an intercept, on 100 rows, has a training $R^2$ of 0.8, and the targets have variance 5 (dividing by $n$). The fitted weights come back as a column, and the error is computed as"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "pred = X @ w                      # X is (100, 3), w is (3, 1), so pred is (100, 1)",
+                  "mse = np.mean((pred - y) ** 2)    # y is (100,)"
+                ]
+              }
+            },
+            {
+              "p": "What does `mse` come out as?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$1$",
+                  "explain": "That is the true mean squared error, (1 - R^2) times the variance of y. It needs pred and y to have the same shape. A (100, 1) column minus a (100,) row broadcasts to a 100 by 100 table, and the mean runs over all 10,000 entries."
+                },
+                {
+                  "text": "$9$",
+                  "correct": true,
+                  "explain": "Broadcasting makes entry (i, j) equal to pred_i - y_j, every prediction against every target. The mean over all pairs of (p_i - y_j)^2 is mean(p^2) - 2 mean(p) mean(y) + mean(y^2) = Var(p) + Var(y) + (mean(p) - mean(y))^2. With an intercept the residuals sum to zero, so the two means match, and the residuals are uncorrelated with the predictions, so Var(y) = Var(p) + MSE and Var(p) = R^2 Var(y) = 4. The code prints 4 + 5 = 9. Worse, it rises as the fit improves, since a better fit spreads the predictions more."
+                },
+                {
+                  "text": "$5$",
+                  "explain": "This is the result if every prediction were the mean of y: each broadcast entry would then compare one target with the center of y, and the average over all pairs would be the variance of the targets alone, which is the number in this option. The error is the assumption that the fit predicts nothing. A training R^2 of 0.8 says the fitted values track y, so they sit spread out around the mean of y rather than all on it."
+                },
+                {
+                  "text": "`ValueError`",
+                  "explain": "Broadcasting lines the shapes up from the right: (100, 1) against (100,) compares the trailing 1 with 100, and a dimension of size 1 stretches to match. The difference is a (100, 100) table and no error is raised. That is why the bug is silent: the code runs and prints a plausible number."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Broadcasting makes entry (i, j) equal to pred_i - y_j, every prediction against every target. The mean over all pairs of (p_i - y_j)^2 is mean(p^2) - 2 mean(p) mean(y) + mean(y^2) = Var(p) + Var(y) + (mean(p) - mean(y))^2. With an intercept the residuals sum to zero, so the two means match, and the residuals are uncorrelated with the predictions, so Var(y) = Var(p) + MSE and Var(p) = R^2 Var(y) = 4. The code prints 4 + 5 = 9. Worse, it rises as the fit improves, since a better fit spreads the predictions more."
+            },
+            {
+              "result": "$9$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "llr-copied-column-hessian",
+      "moduleId": "linear-logistic-regression",
+      "title": "The Hessian with a Copied Column",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A logistic regression's design matrix has three columns: ones, the soil temperature in degrees, and, through a merge mistake, the same temperature column again. The two classes overlap in temperature, so no line separates them. Which statement about its log loss $J$ is right?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$J$ is no longer convex, so gradient descent can stop at a local minimum that is not the global one.",
+                  "explain": "The copy cannot break convexity. For any X, v^T X^T S X v is a sum of S_ii (Xv)_i^2, which is never negative, so the Hessian stays positive semidefinite and J stays a bowl with no false bottoms. What the copy breaks is that the Hessian is invertible and the minimizer unique."
+                },
+                {
+                  "text": "$J$ is convex, its Hessian is singular at every $\\mathbf{w}$, and its minimizers form a line.",
+                  "correct": true,
+                  "explain": "With v = (0, 1, -1), Xv is the copy minus the original, a column of zeros, so X^T S X v = 0 at every w: the Hessian is singular everywhere. J is still convex, and flat along v, because moving weight from one copy to the other leaves every prediction unchanged. So J has a minimum value, reached on a whole line of weights with the same sum of the two temperature weights. Newton's solve fails at the first step, gradient descent from zero converges to the point of the line with the two weights equal, and a small ridge penalty restores a unique minimizer."
+                },
+                {
+                  "text": "$J$ has no minimum, because its Hessian is singular, as happens with separable data.",
+                  "explain": "A singular Hessian is not the same as a loss with no minimum. Here the labels are mixed, so J does reach its smallest value, on a whole line of weights with the same sum of the two temperature weights. The weights run away only when the classes can be separated."
+                },
+                {
+                  "text": "$J$ has one minimizer, because $S$ has positive entries, which makes $X^\\top S X$ invertible.",
+                  "explain": "Every S_ii = p_i(1 - p_i) is positive, but X^T S X can still be singular, because the zero comes from X: for v = (0, 1, -1), Xv = 0, so X^T S X v = 0 whatever S is. Positive weights on the examples cannot fix a design whose columns are dependent."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "With v = (0, 1, -1), Xv is the copy minus the original, a column of zeros, so X^T S X v = 0 at every w: the Hessian is singular everywhere. J is still convex, and flat along v, because moving weight from one copy to the other leaves every prediction unchanged. So J has a minimum value, reached on a whole line of weights with the same sum of the two temperature weights. Newton's solve fails at the first step, gradient descent from zero converges to the point of the line with the two weights equal, and a small ridge penalty restores a unique minimizer."
+            },
+            {
+              "result": "$J$ is convex, its Hessian is singular at every $\\mathbf{w}$, and its minimizers form a line."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "llr-copied-feature-naive-bayes",
+      "moduleId": "linear-logistic-regression",
+      "title": "A Copied Feature in Naive Bayes",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A mail filter is trained on 500 spam and 500 genuine messages with one yes-no feature, whether the message contains a link: 300 of the spam and 100 of the genuine messages do. Then a pipeline bug copies the feature, so every message has two identical link columns. Naive Bayes, with no smoothing, and a logistic regression with an intercept and no penalty are both refitted on the two columns. What probability of spam does each now give a message with a link?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Naive Bayes $0.75$, logistic regression $0.75$",
+                  "explain": "Naive Bayes does not notice that the two columns are the same. It estimates each column's probability given the class on its own, 0.6 for spam and 0.2 for genuine, and multiplies them, so the link's likelihood ratio of 3 is applied a second time. The evidence it works from is then the duplicated column rather than the messages, so its estimate leans on the link harder than the messages support."
+                },
+                {
+                  "text": "Naive Bayes $0.9$, logistic regression $0.9$",
+                  "explain": "The naive Bayes half is right: it multiplies a likelihood ratio once per column, so the duplicate is counted twice. Logistic regression has no per-column multiplication. Its score is a single linear sum, and duplicating a column adds a second coefficient rather than a second copy of the evidence, so the two estimates need not agree once the feature is copied."
+                },
+                {
+                  "text": "Naive Bayes $0.857$, logistic regression $0.75$",
+                  "explain": "This adds the evidence instead of multiplying it. Naive Bayes adds log-likelihoods, so the two copies each add the same ln 3 to the log-odds, and the prior odds of 1 sit underneath both. Adding the likelihood ratios rather than the log-likelihoods gives a different number, and 0.857 is what that route produces."
+                },
+                {
+                  "text": "Naive Bayes $0.9$, logistic regression $0.75$",
+                  "correct": true,
+                  "explain": "Each copy has likelihood ratio $P(\\text{link} \\mid \\text{spam}) / P(\\text{link} \\mid \\text{genuine}) = 0.6 / 0.2 = 3$, and naive Bayes treats the copies as independent evidence, so it multiplies the prior odds of 1 by 3 \u00d7 3 = 9: probability 9 / 10 = 0.9. The copy carries no new information, and 300 of the 400 messages with a link are spam, 0.75. Logistic regression's predictions do not change: only the sum of the two link weights enters the predictions, and the fit sets it where the single weight was, giving 0.75 again. Naive Bayes still predicts spam, but it has become overconfident."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each copy has likelihood ratio $P(\\text{link} \\mid \\text{spam}) / P(\\text{link} \\mid \\text{genuine}) = 0.6 / 0.2 = 3$, and naive Bayes treats the copies as independent evidence, so it multiplies the prior odds of 1 by 3 \u00d7 3 = 9: probability 9 / 10 = 0.9. The copy carries no new information, and 300 of the 400 messages with a link are spam, 0.75. Logistic regression's predictions do not change: only the sum of the two link weights enters the predictions, and the fit sets it where the single weight was, giving 0.75 again. Naive Bayes still predicts spam, but it has become overconfident."
+            },
+            {
+              "result": "Naive Bayes $0.9$, logistic regression $0.75$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "llr-first-newton-step",
+      "moduleId": "linear-logistic-regression",
+      "title": "The First Newton Step Is a Least-Squares Fit",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "Five points with one feature and labels:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{cccccc}\nx & -2 & -1 & 0 & 1 & 2 \\\\ \\hline\ny & 0 & 0 & 1 & 0 & 1\n\\end{array}"
+        },
+        {
+          "p": "A logistic regression $p = \\sigma(w_0 + w_1 x)$ is fitted to the summed log loss $J$ by Newton's method with $\\eta = 1$, starting from $\\mathbf{w} = \\mathbf{0}$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is $\\partial J / \\partial w_1$ at $\\mathbf{w} = \\mathbf{0}$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "At $\\mathbf{w} = \\mathbf{0}$ every $p_i = 0.5$, so $\\nabla J = X^\\top(\\mathbf{p} - \\mathbf{y})$ has components"
+            },
+            {
+              "tex": "\\sum_i (0.5 - y_i) = 2.5 - 2 = 0.5, \\qquad\n\\sum_i (0.5 - y_i)\\,x_i = 0.5 \\cdot \\sum_i x_i - \\sum_i y_i x_i = 0 - (0 + 2) = -2 ."
+            },
+            {
+              "result": "$-2$"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is $w_1$ after the first Newton step?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Every $p_i(1 - p_i) = 1/4$, so the Hessian is $X^\\top X / 4$. With $\\sum_i 1 = 5$, $\\sum_i x_i = 0$ and $\\sum_i x_i^2 = 10$,"
+            },
+            {
+              "tex": "\\nabla^2 J = \\frac14 \\begin{pmatrix} 5 & 0 \\\\ 0 & 10 \\end{pmatrix},"
+            },
+            {
+              "p": "which is diagonal, with entries 1.25 and 2.5."
+            },
+            {
+              "p": "The step is $-(\\nabla^2 J)^{-1} \\nabla J = -(0.5 / 1.25,\\ -2 / 2.5) = (-0.4,\\ 0.8)$, so $w_0 = -0.4$ and $w_1 = 0.8$."
+            },
+            {
+              "result": "0.8"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Show that from $\\mathbf{w} = \\mathbf{0}$ the first Newton step, for any data set with $X^\\top X$ invertible, is 4 times the least-squares fit of the targets $y_i - \\tfrac12$ on the same design matrix. Check it on the data above."
+            }
+          ],
+          "answer": [
+            {
+              "p": "At $\\mathbf{w} = \\mathbf{0}$, $\\mathbf{p} = \\tfrac12 \\mathbf{1}$ and $S = \\tfrac14 I$, so $\\nabla J = -X^\\top(\\mathbf{y} - \\tfrac12\\mathbf{1})$ and $\\nabla^2 J = \\tfrac14 X^\\top X$. The Newton step is"
+            },
+            {
+              "tex": "-\\big(\\tfrac14 X^\\top X\\big)^{-1}\\big(-X^\\top(\\mathbf{y} - \\tfrac12\\mathbf{1})\\big)\n= 4\\,(X^\\top X)^{-1} X^\\top\\big(\\mathbf{y} - \\tfrac12\\mathbf{1}\\big),"
+            },
+            {
+              "p": "which is 4 times the normal-equations solution for the targets $\\mathbf{y} - \\tfrac12\\mathbf{1}$. $\\qquad\\blacksquare$"
+            },
+            {
+              "p": "On the data, the targets $y_i - \\tfrac12$ are $-0.5, -0.5, 0.5, -0.5, 0.5$. With $\\bar{x} = 0$ the least-squares slope is $\\sum_i x_i (y_i - \\tfrac12) / \\sum_i x_i^2 = 2/10 = 0.2$ and the intercept is their mean, $-0.1$. Four times $(-0.1, 0.2)$ is $(-0.4, 0.8)$, as in Part 2."
+            },
+            {
+              "p": "So Newton's first step from zero is a linear regression on the labels, scaled by 4, the inverse of the sigmoid's slope $\\sigma'(0) = 1/4$. The later steps reweight the points by $p_i(1 - p_i)$, which is why the method is also called iteratively reweighted least squares."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "llr-gd-feature-scale",
+      "moduleId": "linear-logistic-regression",
+      "title": "Gradient Descent on Unscaled Features",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "A linear regression has two centered features, no intercept, and is fitted by gradient descent on the mean squared error $L(\\mathbf{w}) = \\tfrac1n \\lVert X\\mathbf{w} - \\mathbf{y} \\rVert^2$. The features are uncorrelated, the first has standard deviation 1 and the second, recorded in smaller units, has standard deviation 10, so"
+      ],
+      "setup": [
+        {
+          "tex": "\\frac1n X^\\top X = \\begin{pmatrix} 1 & 0 \\\\ 0 & 100 \\end{pmatrix}."
+        },
+        {
+          "p": "Write $\\hat{\\mathbf{w}}$ for the least-squares weights and $\\mathbf{e} = \\mathbf{w} - \\hat{\\mathbf{w}}$ for the error of the current weights."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Gradient descent with step $\\eta$ converges from every start when $\\eta$ is below some value. What is that value?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The gradient is $\\tfrac2n X^\\top(X\\mathbf{w} - \\mathbf{y})$. Since $X^\\top X \\hat{\\mathbf{w}} = X^\\top \\mathbf{y}$, it equals $\\tfrac2n X^\\top X\\,\\mathbf{e}$, so one step maps the error to"
+            },
+            {
+              "tex": "\\mathbf{e} \\leftarrow \\Big(I - \\tfrac{2\\eta}{n} X^\\top X\\Big)\\mathbf{e},\n\\qquad e_1 \\leftarrow (1 - 2\\eta)\\,e_1, \\quad e_2 \\leftarrow (1 - 200\\eta)\\,e_2 ."
+            },
+            {
+              "p": "Both factors must have size below 1. The second needs $\\lvert 1 - 200\\eta \\rvert < 1$, so $0 < \\eta < 0.01$, and the first then holds too. The steep direction, the large feature, sets the limit."
+            },
+            {
+              "result": "0.01"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "With $\\eta = 0.005$, how many steps until $\\lvert e_1 \\rvert$ is at most 1% of its starting value?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "At $\\eta = 0.005$ the second factor is $1 - 200 \\times 0.005 = 0$, so $e_2$ is gone after one step. The first factor is $1 - 0.01 = 0.99$, so after $k$ steps $\\lvert e_1 \\rvert$ is $0.99^k$ of its start, and $0.99^k \\le 0.01$ needs"
+            },
+            {
+              "tex": "k \\ge \\frac{\\ln 100}{-\\ln 0.99} = \\frac{4.605}{0.01005} \\approx 458.2,"
+            },
+            {
+              "p": "so 459 steps. A larger $\\eta$ would speed up $e_1$, but past 0.01 the $e_2$ factor exceeds 1 in size and the second weight blows up. The ratio of the two curvatures, 100, is what costs the hundreds of steps."
+            },
+            {
+              "result": "459"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Now divide the second feature by 10 before fitting, so both features have standard deviation 1. With the best step size, how many steps does gradient descent need to reach $\\hat{\\mathbf{w}}$ exactly? Then say whether the fitted predictions differ from the unscaled fit."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Now $\\tfrac1n X^\\top X = I$, and both factors are $1 - 2\\eta$. At $\\eta = 0.5$ both are 0, so one step lands on the minimizer from any start."
+            },
+            {
+              "p": "The predictions are the same as before. Dividing a column by 10 lets its weight grow by 10, so the set of possible predictions $X\\mathbf{w}$ does not change, and least squares picks the same point of it. Scaling changes the weights and how fast gradient descent finds them, not the fitted line. With a penalty that would no longer hold, since ridge or lasso charge the weights themselves."
+            },
+            {
+              "result": "1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "llr-hours-of-sun-odds",
+      "moduleId": "linear-logistic-regression",
+      "title": "Hours of Sun on the Odds Scale",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "A logistic regression predicts whether a seedling survives its first month. One feature is the number of hours of direct sun per day, with weight $\\ln 2 \\approx 0.693$. A seedling in the shade has a predicted survival probability of 0.2. Change only its hours of sun."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "How many extra hours of sun per day raise its predicted probability to 0.8?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Work with odds. At $p = 0.2$ the odds are $0.2 / 0.8 = 1/4$, and at $p = 0.8$ they are $4$, a factor of 16. Each extra hour adds $\\ln 2$ to the log-odds, which multiplies the odds by $e^{\\ln 2} = 2$. Since $2^4 = 16$, it takes 4 hours."
+            },
+            {
+              "result": "4"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "How much probability does the first of those hours add? Give it to four decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "One hour doubles the odds from $1/4$ to $1/2$, so the probability goes from 0.2 to $\\frac{1/2}{1 + 1/2} = 1/3$, a gain of $2/15 \\approx 0.1333$."
+            },
+            {
+              "result": "0.1333"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Find the gain from each of the four hours. A teammate says that, since the weight is fixed, every hour adds the same probability. Explain what is wrong."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The odds go $1/4, 1/2, 1, 2, 4$, so the probabilities are $0.2, 0.333, 0.5, 0.667, 0.8$ and the gains are"
+            },
+            {
+              "tex": "0.133, \\quad 0.167, \\quad 0.167, \\quad 0.133 ."
+            },
+            {
+              "p": "The weight is fixed on the log-odds scale, not on the probability scale. Each hour adds the same $\\ln 2$ to $z$, and the probability changes at the rate $dp/dz = p(1 - p)$, which is largest, $1/4$, at $p = 0.5$ and smaller toward 0 or 1. So the hours that move the seedling through $p = 0.5$ add the most, and the gains are symmetric about it. Far out, where $p$ is near 1, an extra hour adds almost nothing."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "llr-lasso-path-two-features",
+      "moduleId": "linear-logistic-regression",
+      "title": "The Lasso Path of Two Correlated Features",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "Two standardized features, centered along with the target so no intercept is needed, have"
+      ],
+      "setup": [
+        {
+          "tex": "X^\\top X = \\begin{pmatrix} 10 & 6 \\\\ 6 & 10 \\end{pmatrix}\n\\quad\\text{and}\\quad\nX^\\top \\mathbf{y} = (8,\\ 4)^\\top ."
+        },
+        {
+          "p": "Lasso minimizes $\\lVert \\mathbf{y} - X\\mathbf{w} \\rVert^2 + \\lambda\\,(\\lvert w_1 \\rvert + \\lvert w_2 \\rvert)$. The one-weight argument from the lesson extends to several weights as two conditions on the vector $\\mathbf{g} = 2X^\\top(\\mathbf{y} - X\\mathbf{w})$: $\\mathbf{w}$ is the minimizer exactly when every nonzero $w_j$ has $g_j = \\lambda \\operatorname{sign}(w_j)$ and every zero $w_j$ has $\\lvert g_j \\rvert \\le \\lambda$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the smallest $\\lambda$ at which both weights are zero?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "At $\\mathbf{w} = \\mathbf{0}$, $\\mathbf{g} = 2X^\\top\\mathbf{y} = (16, 8)$. Both weights are zero exactly when $\\lvert g_1 \\rvert \\le \\lambda$ and $\\lvert g_2 \\rvert \\le \\lambda$, so when $\\lambda \\ge 16$. In general the lasso keeps every weight at zero for $\\lambda \\ge 2\\max_j \\lvert \\mathbf{x}_j^\\top \\mathbf{y} \\rvert$, and the first feature to enter as $\\lambda$ falls is the one most correlated with the target, here feature 1."
+            },
+            {
+              "result": "16"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is $w_1$ at $\\lambda = 8$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Try $w_2 = 0$ and $w_1 > 0$. Then $g_1 = 2(8 - 10 w_1) = \\lambda$, so $w_1 = (16 - \\lambda)/20 = 0.4$. Check that $w_2 = 0$ is allowed: $g_2 = 2(4 - 6 w_1) = 2(4 - 2.4) = 3.2$, and $\\lvert 3.2 \\rvert \\le 8$. Both conditions hold, so $\\mathbf{w} = (0.4, 0)$."
+            },
+            {
+              "p": "Least squares on feature 1 alone would give $w_1 = 8/10 = 0.8$, so the lasso has also shrunk the surviving weight, by $\\lambda / 20$."
+            },
+            {
+              "result": "0.4"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "As $\\lambda$ falls further, below what value does $w_2$ become nonzero? Say with which sign, and explain the sign, given that feature 2 is positively correlated with the target."
+            }
+          ],
+          "answer": [
+            {
+              "p": "While $w_2 = 0$, Part 2's solution holds with $w_1 = (16 - \\lambda)/20$, and"
+            },
+            {
+              "tex": "g_2 = 2\\Big(4 - 6 \\cdot \\frac{16 - \\lambda}{20}\\Big) = 0.6\\lambda - 1.6 ."
+            },
+            {
+              "p": "$w_2$ may stay at zero while $\\lvert 0.6\\lambda - 1.6 \\rvert \\le \\lambda$. For $\\lambda < 1.6/0.6$ the left side is $1.6 - 0.6\\lambda$, and $1.6 - 0.6\\lambda \\le \\lambda$ holds for $\\lambda \\ge 1$. So $w_2$ enters below $\\lambda = 1$, and since $g_2$ is negative there, it enters with a negative sign. At $\\lambda = 0$ the fit is least squares, $\\mathbf{w} = (0.875, -0.125)$."
+            },
+            {
+              "p": "Feature 2 alone predicts the target positively, $\\mathbf{x}_2^\\top\\mathbf{y} = 4 > 0$, but most of what it knows it shares with feature 1, their correlation being $0.6$. With feature 1 alone at weight 0.8, the fitted values have inner product $6 \\times 0.8 = 4.8$ with feature 2, more than the target's 4. So the residuals are negatively correlated with feature 2, and feature 2 enters with a negative weight to take back some of what feature 1 overshot. A weight's sign in a multiple regression describes the feature with the others held fixed, which can differ from the sign of its correlation with the target."
+            },
+            {
+              "result": "1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "llr-new-baseline-category",
+      "moduleId": "linear-logistic-regression",
+      "title": "Weights After Changing the Baseline",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A courier fits a logistic regression, with no penalty, for whether a parcel arrives late. The features are the distance and the region, which is north, south or west. The region is one-hot encoded with `drop_first=True`, so north is the baseline, and the fit gives"
+            },
+            {
+              "tex": "\\begin{array}{cc}\n\\text{Term} & \\text{Weight} \\\\ \\hline\n\\text{intercept} & -1.2 \\\\\n\\text{distance} & 0.05 \\\\\n\\text{south} & 0.4 \\\\\n\\text{west} & -0.3\n\\end{array}"
+            },
+            {
+              "p": "The courier refits the same data with west as the baseline instead, keeping indicators for north and south. What are the new intercept and the new weight on south?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "Intercept $-1.2$, south $0.4$",
+                  "explain": "The weights do depend on the baseline. Each indicator's weight is the log-odds change relative to the dropped region, so changing which region is dropped changes what every weight measures. The predictions do not change, so the new weights must reproduce the same log-odds for each region."
+                },
+                {
+                  "text": "Intercept $-1.5$, south $0.4$",
+                  "explain": "This one moves the intercept but leaves the south weight where it was. Each indicator's weight is one region's log-odds minus the dropped region's, so changing which region is dropped means every remaining indicator has to be re-expressed against the new one rather than carried over."
+                },
+                {
+                  "text": "Intercept $-1.5$, south $0.7$",
+                  "correct": true,
+                  "explain": "The predictions cannot change, because the two encodings span the same columns and there is no penalty to tell them apart. So match the log-odds of each region at distance 0. North was -1.2, south -1.2 + 0.4 = -0.8 and west -1.2 - 0.3 = -1.5. The new intercept is the baseline's log-odds, -1.5, and each indicator's weight is its region minus the baseline: south -0.8 - (-1.5) = 0.7, north -1.2 - (-1.5) = 0.3. The distance weight stays at 0.05."
+                },
+                {
+                  "text": "Intercept $-0.9$, south $0.1$",
+                  "explain": "This treats the baseline change as a shift by west's weight instead of a re-expression against west. With west dropped, the intercept is west's own log-odds at distance 0, not north's intercept adjusted by west's weight, and each surviving indicator is a difference between two regions rather than an old weight moved by west's."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The predictions cannot change, because the two encodings span the same columns and there is no penalty to tell them apart. So match the log-odds of each region at distance 0. North was -1.2, south -1.2 + 0.4 = -0.8 and west -1.2 - 0.3 = -1.5. The new intercept is the baseline's log-odds, -1.5, and each indicator's weight is its region minus the baseline: south -0.8 - (-1.5) = 0.7, north -1.2 - (-1.5) = 0.3. The distance weight stays at 0.05."
+            },
+            {
+              "result": "Intercept $-1.5$, south $0.7$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "llr-one-bad-reading",
+      "moduleId": "linear-logistic-regression",
+      "title": "One Reading Corrected",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A technician fits the least-squares line $\\hat{y} = w_0 + w_1 x$ to five readings of a gauge:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{cccccc}\nx & 0 & 1 & 2 & 3 & 9 \\\\ \\hline\ny & 2 & 3 & 5 & 6 & 17\n\\end{array}"
+        },
+        {
+          "p": "Later she finds that the reading at $x = 9$ was logged 5 units too high, so the true value is 12. She corrects it and fits the line again. Work out how the fit moves without refitting from scratch. With the deviations $d_i = x_i - \\bar{x}$, the fit is $w_1 = \\sum_i d_i\\,(y_i - \\bar{y}) \\big/ \\sum_i d_i^2$ and $w_0 = \\bar{y} - w_1 \\bar{x}$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "By how much does the slope change (new minus old)?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The deviations add up to zero, so the $\\bar{y}$ in the numerator drops out and $w_1 = \\sum_i d_i y_i / S$, with $S = \\sum_i d_i^2$. The slope is therefore linear in the readings: changing reading $k$ by $\\delta$ changes it by $\\delta\\, d_k / S$."
+            },
+            {
+              "p": "Here $\\bar{x} = 3$, the deviations are $-3, -2, -1, 0, 6$, and $S = 9 + 4 + 1 + 0 + 36 = 50$. With $\\delta = -5$ at $x_k = 9$:"
+            },
+            {
+              "tex": "\\Delta w_1 = \\frac{(-5)(6)}{50} = -0.6 ."
+            },
+            {
+              "p": "The old fit is $\\hat{y} = 1.5 + 1.7x$ and the new one $\\hat{y} = 2.3 + 1.1x$, which agrees."
+            },
+            {
+              "result": "$-0.6$"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "By how much does the fitted value at $x = 9$ change (new minus old)?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The intercept changes by $\\Delta w_0 = \\delta / n - \\bar{x}\\,\\Delta w_1$, so the fitted value at any $x$ changes by"
+            },
+            {
+              "tex": "\\Delta \\hat{y}(x) = \\delta\\left(\\frac{1}{n} + \\frac{(x - \\bar{x})\\, d_k}{S}\\right)."
+            },
+            {
+              "p": "At $x = x_k = 9$ the bracket is $\\tfrac15 + 36/50 = 0.92$, so the fitted value falls by $5 \\times 0.92 = 4.6$. That bracket, $h_{kk} = 1/n + d_k^2 / S$, is the point's **leverage**: the share of a change in its own reading that the line passes on to its own fitted value. A point far from $\\bar{x}$ has leverage near 1 and drags the line with it. The other four readings have leverage 0.38, 0.28, 0.22 and 0.20."
+            },
+            {
+              "result": "$-4.6$"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "By how much does the fitted value at $x = 0$ change (new minus old)?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The same formula with $x = 0$:"
+            },
+            {
+              "tex": "\\Delta \\hat{y}(0) = -5\\left(\\frac15 + \\frac{(-3)(6)}{50}\\right) = -5\\,(0.2 - 0.36) = 0.8 ."
+            },
+            {
+              "p": "Lowering the reading at $x = 9$ raises the line at $x = 0$: the line pivots about the point where the bracket is zero, $x = 3 - 50 / (5 \\cdot 6) \\approx 1.33$. One bad reading far out on the $x$ axis moved the fit at the other end, where the readings were all correct."
+            },
+            {
+              "result": "0.8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "llr-one-solve-models",
+      "moduleId": "linear-logistic-regression",
+      "title": "The Model One Solve Can Fit",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Each model below has unknown parameters, named by letters, and is to be fitted to data $(x_i, y_i)$ by minimizing $\\sum_i (y_i - \\hat{y}_i)^2$. Which one can be fitted exactly by building a design matrix and solving the normal equations once, with a unique answer (take $A \\ge 0$ and $0 \\le \\varphi < 2\\pi$)?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$\\hat{y} = a\\,e^{bx}$",
+                  "explain": "Taking logs gives log y = log a + bx, which is linear, and one solve fits it. But that solve minimizes the squared error of log y, which weights the points differently and gives different a and b. The stated loss, with b inside the exponential, has no closed-form minimizer."
+                },
+                {
+                  "text": "$\\hat{y} = a + b x + c\\,(x - 3)$",
+                  "explain": "This one is linear in a, b and c, but its columns 1, x and x - 3 are dependent: the third is the second minus 3 times the first. X^T X is singular, the solve fails, and any split of the weights with the same b + c and a - 3c fits equally well."
+                },
+                {
+                  "text": "$\\hat{y} = a + b\\,x^{c}$",
+                  "explain": "The exponent c sits inside the function, like the frequency in sin(\u03c9x), so changing it changes the column itself. For a fixed c the fit is linear in a and b, but c has to be searched for."
+                },
+                {
+                  "text": "$\\hat{y} = A \\sin(x + \\varphi) + C$",
+                  "correct": true,
+                  "explain": "The phase looks like a parameter inside the function, but the angle-addition formula moves it out: A sin(x + \u03c6) = (A cos \u03c6) sin x + (A sin \u03c6) cos x. Fit \u03b1, \u03b2 and C on the columns sin x, cos x and 1, which are independent for spread-out x, then A = \u221a(\u03b1\u00b2 + \u03b2\u00b2) and \u03c6 is the angle whose cosine and sine are \u03b1 / A and \u03b2 / A. Every pair (\u03b1, \u03b2) comes from some (A, \u03c6), so this minimizes the stated loss."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The phase looks like a parameter inside the function, but the angle-addition formula moves it out: A sin(x + \u03c6) = (A cos \u03c6) sin x + (A sin \u03c6) cos x. Fit \u03b1, \u03b2 and C on the columns sin x, cos x and 1, which are independent for spread-out x, then A = \u221a(\u03b1\u00b2 + \u03b2\u00b2) and \u03c6 is the angle whose cosine and sine are \u03b1 / A and \u03b2 / A. Every pair (\u03b1, \u03b2) comes from some (A, \u03c6), so this minimizes the stated loss."
+            },
+            {
+              "result": "$\\hat{y} = A \\sin(x + \\varphi) + C$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "llr-ridge-two-scales",
+      "moduleId": "linear-logistic-regression",
+      "title": "Ridge on Two Columns of Different Size",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A model has two features and no intercept. The columns and the target all have mean zero, so an intercept would come out as 0 anyway:"
+      ],
+      "setup": [
+        {
+          "tex": "\\mathbf{u} = \\begin{pmatrix} 1 \\\\ 1 \\\\ -1 \\\\ -1 \\end{pmatrix}, \\quad\n\\mathbf{v} = \\begin{pmatrix} 3 \\\\ -3 \\\\ 3 \\\\ -3 \\end{pmatrix}, \\quad\n\\mathbf{y} = \\begin{pmatrix} 8 \\\\ -4 \\\\ 4 \\\\ -8 \\end{pmatrix},"
+        },
+        {
+          "p": "with $X = (\\mathbf{u}\\ \\mathbf{v})$. Ridge minimizes $\\lVert \\mathbf{y} - X\\mathbf{w} \\rVert^2 + \\lambda\\,(w_u^2 + w_v^2)$, and its weights solve $(X^\\top X + \\lambda I)\\,\\mathbf{w} = X^\\top \\mathbf{y}$. Take $\\lambda = 12$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the ridge weight on $\\mathbf{u}$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The columns are orthogonal, $\\mathbf{u}^\\top\\mathbf{v} = 3 - 3 - 3 + 3 = 0$, so $X^\\top X$ is diagonal, with the squared lengths $4$ and $36$ on its diagonal, and $X^\\top \\mathbf{y}$ has entries $\\mathbf{u}^\\top\\mathbf{y} = 8$ and $\\mathbf{v}^\\top\\mathbf{y} = 72$."
+            },
+            {
+              "p": "The system splits into one equation per weight. Least squares gives $8/4 = 2$ and $72/36 = 2$, the same weight on both. Ridge gives"
+            },
+            {
+              "tex": "w_u = \\frac{8}{4 + 12} = 0.5 ."
+            },
+            {
+              "result": "0.5"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the ridge weight on $\\mathbf{v}$?"
+            }
+          ],
+          "answer": [
+            {
+              "tex": "w_v = \\frac{72}{36 + 12} = 1.5 ."
+            },
+            {
+              "p": "Each weight is its least-squares value times $s / (s + \\lambda)$, where $s$ is the column's squared length: $4/16 = 1/4$ for $\\mathbf{u}$ and $36/48 = 3/4$ for $\\mathbf{v}$."
+            },
+            {
+              "result": "1.5"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Both features had least-squares weight 2, yet ridge cut one to a quarter and the other to three quarters. Explain why, and say what the shrinkage factors become if $\\mathbf{v}$ is first rescaled to the same size as $\\mathbf{u}$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The penalty charges $\\lambda w^2$ whatever the column, while the fit term charges $s\\,(w - 2)^2$, so a column with more spread has more fit to lose and keeps more of its weight. $\\mathbf{v}$ is three times larger than $\\mathbf{u}$ entry by entry, so its squared length is 9 times larger."
+            },
+            {
+              "p": "Divide $\\mathbf{v}$ by 3, as standardizing would. Its least-squares weight becomes 6, because the same prediction now needs a weight 3 times larger, and its squared length becomes 4. Ridge gives $6 \\times 4/16 = 1.5$ on the new column, which is $0.5$ per unit of the old $\\mathbf{v}$. Both features are now shrunk by the same factor, $1/4$."
+            },
+            {
+              "p": "So how much ridge shrinks a feature depends on the unit it was recorded in. Standardizing first puts every feature on the same footing before the penalty is applied, which is why the lesson gives it as the first rule."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "llr-softmax-regions-1d",
+      "moduleId": "linear-logistic-regression",
+      "title": "Three Classes on a Line",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A softmax regression sorts a reading $x$ into three classes, A, B and C. Class A is the reference class, with its weights fixed at zero, and the scores are"
+      ],
+      "setup": [
+        {
+          "tex": "z_A = 0, \\qquad z_B = x - 1, \\qquad z_C = 2x - 4 ."
+        },
+        {
+          "p": "The model predicts the class with the largest probability."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Class A is predicted for every $x$ below some value. What is that value?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The softmax is increasing in each score, so the predicted class is the one with the largest score. Compare the scores in pairs:"
+            },
+            {
+              "list": [
+                "B beats A when $x - 1 > 0$, so for $x > 1$.",
+                "C beats A when $2x - 4 > 0$, so for $x > 2$.",
+                "C beats B when $2x - 4 > x - 1$, so for $x > 3$."
+              ]
+            },
+            {
+              "p": "A wins only where it beats both, which is $x < 1$. The crossing of A and C at $x = 2$ is not a boundary of the prediction, because B has the largest score there. So A is predicted for $x < 1$, B for $1 < x < 3$ and C for $x > 3$. In one dimension the regions come in the order of the slopes, 0, 1 and 2."
+            },
+            {
+              "result": "1"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Now change B's score to $z_B = x + c$ and leave the others alone. Below which value of $c$ is B never predicted?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "B beats A when $x > -c$ and beats C when $x + c > 2x - 4$, that is $x < c + 4$. B wins on the interval $-c < x < c + 4$, which is empty when $-c \\ge c + 4$, that is $c \\le -2$."
+            },
+            {
+              "p": "At $c = -2$ the interval shrinks to the single point $x = 2$, where all three scores are 0 and the classes tie. Below that, A and C share the line and B, with the middle slope, never has the largest score."
+            },
+            {
+              "result": "$-2$"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "With $c = -3$, where does the prediction change from A to C?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "B never wins, so the boundary is where A and C tie: $2x - 4 = 0$, at $x = 2$. For $x < 2$ the model predicts A and for $x > 2$ it predicts C. B still gets some probability everywhere, largest near $x = 2$, where the softmax gives $e^{-1} / (1 + e^{-1} + 1) \\approx 0.16$, but it is never the largest of the three."
+            },
+            {
+              "result": "2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "llr-two-group-mle",
+      "moduleId": "linear-logistic-regression",
+      "title": "Maximum Likelihood with One Yes-No Feature",
+      "difficulty": "Medium",
+      "minutes": 15,
+      "overview": [
+        "A clinic sent a reminder text before some appointments. Of 40 patients who got a reminder, 28 attended. Of 60 who did not, 15 attended. It fits a logistic regression for attendance, $p = \\sigma(w_0 + w_1 x)$, with $x = 1$ for a reminder and $x = 0$ otherwise, by maximum likelihood."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What probability of attending does the fitted model give a patient who got a reminder?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The model gives every reminded patient the same probability $q_1 = \\sigma(w_0 + w_1)$ and every other patient $q_0 = \\sigma(w_0)$. So the log-likelihood splits into two groups:"
+            },
+            {
+              "tex": "\\big[28 \\log q_1 + 12 \\log(1 - q_1)\\big] + \\big[15 \\log q_0 + 45 \\log(1 - q_0)\\big]."
+            },
+            {
+              "p": "As $w_0$ and $w_1$ range over all numbers, $q_0$ and $q_1$ range over $(0, 1)$ independently, so each bracket can be maximized on its own. Setting the derivative of the first to zero, $28/q_1 - 12/(1 - q_1) = 0$, gives $q_1 = 28/40 = 0.7$. Each group gets its own attendance rate."
+            },
+            {
+              "result": "0.7"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is $w_1$? Give it to three decimal places."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The second bracket gives $q_0 = 15/60 = 0.25$. The log-odds are $w_0 = \\log(0.25/0.75) = -\\ln 3$ and $w_0 + w_1 = \\log(0.7/0.3) = \\ln(7/3)$, so"
+            },
+            {
+              "tex": "w_1 = \\ln\\frac73 - (-\\ln 3) = \\ln 7 \\approx 1.946 ."
+            },
+            {
+              "p": "$e^{w_1} = 7$ is the odds ratio: the odds of attending are $7/3$ with a reminder and $1/3$ without, seven times larger."
+            },
+            {
+              "result": "1.946"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Suppose all 40 reminded patients had attended. What would maximum likelihood do with $w_1$?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The first bracket becomes $40 \\log q_1$, which keeps rising as $q_1 \\to 1$. No finite weights give $q_1 = 1$, so the likelihood has no maximum: the fit pushes $w_0 + w_1$ toward infinity, with $w_0$ still at $-\\ln 3$, so $w_1 \\to \\infty$. Gradient descent would keep growing $w_1$ for as long as it runs. A penalty on $w_1$, or a fixed number of steps, gives a finite answer."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "llr-which-fit-is-finite",
+      "moduleId": "linear-logistic-regression",
+      "title": "The Data Set with a Finite Fit",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Each data set below has four points with one feature $x$ and a label. A logistic regression $p = \\sigma(w_0 + w_1 x)$, with an intercept and no penalty, is fitted to each by maximum likelihood. For which data set do finite weights minimize the log loss?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$x = 1, 2, 3, 4$ with labels $0, 1, 0, 1$",
+                  "correct": true,
+                  "explain": "No threshold puts the labels on two sides, in either direction: a 1 sits between two 0s. Any weights that grow without bound make some point confidently wrong and its loss unbounded, so the loss rises in every direction far from the origin and has a minimum at finite weights, about w0 = -2.27 and w1 = 0.91."
+                },
+                {
+                  "text": "$x = 1, 2, 3, 4$ with labels $0, 0, 1, 1$",
+                  "explain": "A threshold at 2.5 separates the classes. Take w1 = t and w0 = -2.5t and let t grow: every probability moves toward its label and the loss falls toward 0, which no finite weights reach."
+                },
+                {
+                  "text": "$x = 1, 2, 2, 3$ with labels $0, 0, 1, 1$",
+                  "explain": "The two points at x = 2 have different labels, so no threshold separates the classes perfectly, but it does separate them except for the tie. With the boundary at x = 2 and the slope growing, the outer points' loss goes to 0 while the two tied points stay at p = 0.5. The loss falls toward 2 ln 2 = 1.386, and any finite weights do worse than that limit, so the infimum is not attained."
+                },
+                {
+                  "text": "$x = 1, 2, 3, 4$ with labels $1, 1, 1, 1$",
+                  "explain": "With one class only, w0 can grow forever: every p moves toward 1 and the loss toward 0. A data set with no negatives is the extreme case of separable data, with the boundary off to one side of all the points."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "No threshold puts the labels on two sides, in either direction: a 1 sits between two 0s. Any weights that grow without bound make some point confidently wrong and its loss unbounded, so the loss rises in every direction far from the origin and has a minimum at finite weights, about w0 = -2.27 and w1 = 0.91."
+            },
+            {
+              "result": "$x = 1, 2, 3, 4$ with labels $0, 1, 0, 1$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "llr-which-residuals",
+      "moduleId": "linear-logistic-regression",
+      "title": "Residuals a Least-Squares Line Can Leave",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "Four points with $x = 1, 2, 3, 4$ get the least-squares line $\\hat{y} = w_0 + w_1 x$. The $y$ values are not given. Which list could be the residuals $y_i - \\hat{y}_i$, in order of $x$?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "$1,\\ -1,\\ 1,\\ -1$",
+                  "explain": "These add up to zero, which the intercept's equation demands, but the slope's equation also demands that the residuals times x add up to zero, and here 1 - 2 + 3 - 4 = -2. A line with a slightly different slope would fit these points better."
+                },
+                {
+                  "text": "$0.2,\\ -0.1,\\ 0.1,\\ 0$",
+                  "explain": "These are small and look like noise, but the size of the residuals depends on the y values, which are not given. What least squares guarantees is the two sums from the normal equations, and both fail here: the residuals add up to 0.2 and the residuals times x to 0.3."
+                },
+                {
+                  "text": "$1,\\ -1,\\ -1,\\ 1$",
+                  "correct": true,
+                  "explain": "The normal equations are X^T r = 0: one equation per column of X. The ones column says the residuals add up to zero, 1 - 1 - 1 + 1 = 0, and the x column says the residuals times x add up to zero, 1 - 2 - 3 + 4 = 0. Both hold, so these are the residuals of some data, for example y = 4, 4, 6, 10 around the line 1 + 2x. The curved pattern says a straight line is the wrong model, not that the fit is wrong."
+                },
+                {
+                  "text": "$1,\\ 0.5,\\ 0,\\ -0.5$",
+                  "explain": "The residuals times x add up to zero, 1 + 1 + 0 - 2 = 0, but the residuals themselves add up to 1. That is what a line through the origin, fitted without an intercept, leaves: its only column is x. With the intercept the ones column adds the equation that the residuals sum to zero."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The normal equations are X^T r = 0: one equation per column of X. The ones column says the residuals add up to zero, 1 - 1 - 1 + 1 = 0, and the x column says the residuals times x add up to zero, 1 - 2 - 3 + 4 = 0. Both hold, so these are the residuals of some data, for example y = 4, 4, 6, 10 around the line 1 + 2x. The curved pattern says a straight line is the wrong model, not that the fit is wrong."
+            },
+            {
+              "result": "$1,\\ -1,\\ -1,\\ 1$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "theory-linear-regression-ols",
+      "moduleId": "linear-logistic-regression",
+      "title": "Linear Regression: Normal Equations and Geometry",
+      "difficulty": "Easy",
+      "minutes": 45,
+      "overview": [
+        "Derive the normal equations, prove the hat matrix is an orthogonal projection, and fit a three-point dataset entirely by hand."
+      ],
+      "setup": [
+        {
+          "p": "Let $X \\in \\mathbb{R}^{N \\times d}$ and $y \\in \\mathbb{R}^N$. Ordinary least squares chooses"
+        },
+        {
+          "tex": "\\hat{\\theta} = \\arg\\min_{\\theta \\in \\mathbb{R}^d} \\ \\lVert y - X\\theta \\rVert_2^2."
+        },
+        {
+          "p": "For the numerical parts, use the three observations $(x, y) = (1, 2), (2, 3), (3, 5)$ and the model $y \\approx a + bx$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "11.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Derive the normal equations $X^\\top X \\hat{\\theta} = X^\\top y$ by setting the gradient of the objective to zero."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Expand the objective:"
+            },
+            {
+              "tex": "\\lVert y - X\\theta \\rVert_2^2 = (y - X\\theta)^\\top (y - X\\theta) = y^\\top y - 2 y^\\top X \\theta + \\theta^\\top (X^\\top X)\\theta,"
+            },
+            {
+              "p": "using $y^\\top X\\theta = \\theta^\\top X^\\top y$ (both are scalars, so each equals its own transpose)."
+            },
+            {
+              "p": "Differentiate with the rules from Problem 5, Part 5, noting $X^\\top X$ is symmetric:"
+            },
+            {
+              "tex": "\\nabla_\\theta \\lVert y - X\\theta \\rVert_2^2 = -2X^\\top y + 2X^\\top X\\theta."
+            },
+            {
+              "p": "Setting this to zero gives the normal equations $X^\\top X \\hat{\\theta} = X^\\top y$."
+            },
+            {
+              "p": "This stationary point is a global minimum, not merely a critical point, because the Hessian $2X^\\top X$ is positive semidefinite (Problem 5, Part 6), so the objective is convex and Problem 10, Part 1 applies. When $X^\\top X$ is invertible the solution is unique, $\\hat{\\theta} = (X^\\top X)^{-1}X^\\top y$."
+            }
+          ]
+        },
+        {
+          "id": "11.2",
+          "kind": "derivation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Prove that $X^\\top X$ is invertible if and only if $X$ has full column rank, and describe what happens to the solution set when it does not."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The key claim is $\\mathcal{N}(X^\\top X) = \\mathcal{N}(X)$. One inclusion is trivial: $Xz = 0 \\Rightarrow X^\\top X z = 0$. For the converse, suppose $X^\\top X z = 0$. Then"
+            },
+            {
+              "tex": "0 = z^\\top X^\\top X z = \\lVert Xz \\rVert_2^2 \\ \\Longrightarrow \\ Xz = 0."
+            },
+            {
+              "p": "So the null spaces coincide. Now $X^\\top X$ (which is $d \\times d$) is invertible exactly when its null space is trivial, which by the above happens exactly when $\\mathcal{N}(X) = \\{0\\}$. That is, when $X$ has full column rank $d$."
+            },
+            {
+              "p": "When rank is deficient, the normal equations remain consistent (a solution always exists, since $X^\\top y \\in \\mathcal{C}(X^\\top X)$) but the solution set is an entire affine subspace $\\hat{\\theta} + \\mathcal{N}(X)$. Every member gives identical predictions $X\\hat\\theta$ and identical residuals, so the fit is unique even though the coefficients are not."
+            },
+            {
+              "p": "This happens whenever $d > N$ or when features are exactly collinear, e.g. including both \"height in cm\" and \"height in m\". Near-collinearity is worse in practice than exact collinearity: $X^\\top X$ is technically invertible but ill-conditioned, so coefficients become huge and unstable. Ridge regression fixes both cases at once by solving $(X^\\top X + \\lambda I)\\theta = X^\\top y$, invertible for any $\\lambda > 0$ by the eigenvalue shift of Problem 3, Part 8."
+            }
+          ]
+        },
+        {
+          "id": "11.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Assume $X$ has full column rank and define the hat matrix $H = X(X^\\top X)^{-1}X^\\top$, so that $\\hat{y} = Hy$. Prove that $H$ is symmetric and idempotent ($H^2 = H$), and state what these two properties mean geometrically."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Symmetry. Using $(ABC)^\\top = C^\\top B^\\top A^\\top$ and the fact that the inverse of a symmetric matrix is symmetric:"
+            },
+            {
+              "tex": "H^\\top = \\big( X(X^\\top X)^{-1}X^\\top \\big)^\\top = X \\big((X^\\top X)^{-1}\\big)^\\top X^\\top = X(X^\\top X)^{-1}X^\\top = H."
+            },
+            {
+              "p": "Idempotence. The inner pair cancels:"
+            },
+            {
+              "tex": "H^2 = X(X^\\top X)^{-1}\\underbrace{X^\\top X (X^\\top X)^{-1}}_{= I}X^\\top = X(X^\\top X)^{-1}X^\\top = H."
+            },
+            {
+              "p": "Together, symmetric plus idempotent means $H$ is the orthogonal projection onto the column space $\\mathcal{C}(X)$. Idempotence says projecting twice equals projecting once: once you are in the subspace you stay put. Symmetry says the projection is orthogonal rather than oblique, i.e. it minimizes distance."
+            },
+            {
+              "p": "Consequences worth knowing: the eigenvalues of $H$ are all $0$ or $1$ (from $\\lambda^2 = \\lambda$), and $\\operatorname{tr}(H) = \\operatorname{rank}(H) = d$ counts the effective number of parameters. The residual maker $I - H$ is the complementary projection onto $\\mathcal{C}(X)^\\perp$, and the diagonal entries $H_{nn}$ are the leverage scores that flag influential observations."
+            }
+          ]
+        },
+        {
+          "id": "11.4",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Prove that the residual vector $r = y - X\\hat{\\theta}$ is orthogonal to every column of $X$. Then show that when the model includes an intercept, the residuals sum to zero."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The normal equations say $X^\\top X\\hat\\theta = X^\\top y$, which rearranges directly to"
+            },
+            {
+              "tex": "X^\\top r = X^\\top(y - X\\hat{\\theta}) = X^\\top y - X^\\top X \\hat{\\theta} = 0."
+            },
+            {
+              "p": "Each entry of $X^\\top r$ is the inner product of one column of $X$ with $r$, so every column is orthogonal to the residual: $r \\perp \\mathcal{C}(X)$."
+            },
+            {
+              "p": "This is the geometric content of least squares. $X\\hat\\theta$ is the point of $\\mathcal{C}(X)$ closest to $y$, and the shortest path from a point to a subspace is perpendicular to it. The Pythagorean identity of Problem 1, Part 5 then gives $\\lVert y \\rVert^2 = \\lVert \\hat{y} \\rVert^2 + \\lVert r \\rVert^2$."
+            },
+            {
+              "p": "Intercept. If the model has an intercept, one column of $X$ is the all-ones vector $\\mathbf{1}$, and orthogonality to that column reads"
+            },
+            {
+              "tex": "\\mathbf{1}^\\top r = \\sum_{n=0}^{N-1} r_n = 0."
+            },
+            {
+              "p": "So the residuals sum to exactly zero, which is a free correctness check on any implementation. Without an intercept this fails and the fitted line is forced through the origin. It also means a nonzero mean residual on the training set indicates a bug, not underfitting."
+            }
+          ]
+        },
+        {
+          "id": "11.5",
+          "kind": "mcq",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Fit $y \\approx a + bx$ by least squares to the three points $(1, 2), (2, 3), (3, 5)$. What is the value of $b$?"
+            },
+            {
+              "choices": [
+                "A. $1$.",
+                "B. $\\tfrac{4}{3}$.",
+                "C. $\\tfrac{3}{2}$.",
+                "D. $\\tfrac{5}{3}$.",
+                "E. $2$."
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "For simple linear regression the normal equations reduce to"
+            },
+            {
+              "tex": "\\hat{b} = \\frac{\\sum_n (x_n - \\bar{x})(y_n - \\bar{y})}{\\sum_n (x_n - \\bar{x})^2}, \\qquad \\hat{a} = \\bar{y} - \\hat{b}\\bar{x}."
+            },
+            {
+              "p": "Here $\\bar{x} = 2$ and $\\bar{y} = 10/3$. The centered values are $x_n - \\bar{x} = (-1, 0, 1)$ and $y_n - \\bar{y} = (-4/3, -1/3, 5/3)$, so"
+            },
+            {
+              "tex": "\\sum_n (x_n - \\bar{x})(y_n - \\bar{y}) = \\tfrac{4}{3} + 0 + \\tfrac{5}{3} = 3, \\qquad \\sum_n (x_n - \\bar{x})^2 = 1 + 0 + 1 = 2."
+            },
+            {
+              "p": "Therefore $\\hat{b} = 3/2$ and $\\hat{a} = \\frac{10}{3} - \\frac{3}{2}\\cdot 2 = \\frac{1}{3}$, giving the fitted line $\\hat{y} = \\frac{1}{3} + \\frac{3}{2}x$."
+            },
+            {
+              "result": "C. $b = \\tfrac{3}{2}$."
+            }
+          ]
+        },
+        {
+          "id": "11.6",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "For the fit in Part 5, compute the three residuals, verify the properties proved in Part 4, and compute the coefficient of determination"
+            },
+            {
+              "tex": "R^2 = 1 - \\frac{\\text{RSS}}{\\text{TSS}} = 1 - \\frac{\\sum_n (y_n - \\hat{y}_n)^2}{\\sum_n (y_n - \\bar{y})^2}."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The fitted values from $\\hat{y} = \\frac{1}{3} + \\frac{3}{2}x$ are"
+            },
+            {
+              "tex": "\\hat{y} = \\left( \\tfrac{11}{6},\\ \\tfrac{10}{3},\\ \\tfrac{29}{6} \\right), \\qquad r = y - \\hat{y} = \\left( \\tfrac{1}{6},\\ -\\tfrac{1}{3},\\ \\tfrac{1}{6} \\right)."
+            },
+            {
+              "p": "Check Part 4: the residuals sum to $\\frac{1}{6} - \\frac{2}{6} + \\frac{1}{6} = 0$, and orthogonality to the $x$ column gives $1(\\frac{1}{6}) + 2(-\\frac{1}{3}) + 3(\\frac{1}{6}) = \\frac{1}{6} - \\frac{4}{6} + \\frac{3}{6} = 0$. Both hold."
+            },
+            {
+              "p": "Now the two sums of squares:"
+            },
+            {
+              "tex": "\\text{RSS} = \\tfrac{1}{36} + \\tfrac{4}{36} + \\tfrac{1}{36} = \\tfrac{1}{6}, \\qquad \\text{TSS} = \\tfrac{16}{9} + \\tfrac{1}{9} + \\tfrac{25}{9} = \\tfrac{42}{9} = \\tfrac{14}{3}."
+            },
+            {
+              "p": "Therefore"
+            },
+            {
+              "tex": "R^2 = 1 - \\frac{1/6}{14/3} = 1 - \\frac{1}{6}\\cdot\\frac{3}{14} = 1 - \\frac{1}{28} = \\frac{27}{28} \\approx 0.964."
+            },
+            {
+              "p": "Interpretation: the line explains about $96.4\\%$ of the variance in $y$. TSS is the error of the best constant predictor $\\bar{y}$, so $R^2$ measures improvement over that baseline. Two cautions: $R^2$ never decreases when you add features, so it cannot be used for model selection (use adjusted $R^2$ or held-out error), and on a test set $R^2$ can go negative, which simply means the model is worse than predicting the mean."
+            }
+          ]
+        },
+        {
+          "id": "11.7",
+          "kind": "coding",
+          "requirement": "You may use np.linalg. Do not use scikit-learn and do not use any loop.",
+          "prompt": [
+            {
+              "p": "Run the following starter code:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "import numpy as np",
+                  "",
+                  "x = np.array([1.0, 2.0, 3.0])",
+                  "y = np.array([2.0, 3.0, 5.0])"
+                ]
+              }
+            },
+            {
+              "p": "Build the design matrix with an intercept column and solve for $\\hat{\\theta} = (a, b)$. Explain why $\\texttt{np.linalg.solve}$ on the normal equations is preferable to explicitly forming $(X^\\top X)^{-1}$, and why $\\texttt{np.linalg.lstsq}$ is better still."
+            }
+          ],
+          "answer": [
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "X = np.column_stack([np.ones_like(x), x])      # shape (3, 2)",
+                  "theta = np.linalg.solve(X.T @ X, X.T @ y)      # -> array([0.3333, 1.5])",
+                  "",
+                  "# better in practice:",
+                  "theta, *_ = np.linalg.lstsq(X, y, rcond=None)"
+                ]
+              }
+            },
+            {
+              "p": "Why not the explicit inverse. Computing $(X^\\top X)^{-1}$ and multiplying costs more arithmetic than a direct solve and is numerically worse: forming an inverse amplifies rounding error, which is then compounded by the subsequent multiplication. The rule of thumb is never to write $\\texttt{np.linalg.inv(A) @ b}$ when $\\texttt{np.linalg.solve(A, b)}$ will do."
+            },
+            {
+              "p": "Why lstsq is better still. Forming $X^\\top X$ squares the condition number: $\\kappa(X^\\top X) = \\kappa(X)^2$. If $X$ has condition number $10^8$, not unusual with unscaled features, then $X^\\top X$ has $10^{16}$, at the edge of double precision, and essentially all significant digits are lost. $\\texttt{lstsq}$ works on $X$ directly via QR or SVD, so it only ever sees $\\kappa(X)$. It also returns the minimum-norm solution when $X$ is rank deficient, where $\\texttt{solve}$ would fail outright with a singular-matrix error."
+            },
+            {
+              "p": "Both routes give $\\hat{\\theta} = (1/3, 3/2)$, matching the hand computation in Part 5."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "theory-regularization-ridge-lasso",
+      "moduleId": "linear-logistic-regression",
+      "title": "Ridge, Lasso, and Where Sparsity Comes From",
+      "difficulty": "Hard",
+      "minutes": 50,
+      "overview": [
+        "Derive the ridge solution and read it through the SVD, then derive the soft-thresholding rule that makes Lasso coefficients exactly zero."
+      ],
+      "setup": [
+        {
+          "p": "With $X \\in \\mathbb{R}^{N \\times d}$ and $y \\in \\mathbb{R}^N$, the two regularized problems are"
+        },
+        {
+          "tex": "\\hat{\\theta}_{\\text{ridge}} = \\arg\\min_\\theta \\ \\lVert y - X\\theta \\rVert_2^2 + \\lambda \\lVert \\theta \\rVert_2^2, \\qquad \\hat{\\theta}_{\\text{lasso}} = \\arg\\min_\\theta \\ \\tfrac{1}{2}\\lVert y - X\\theta \\rVert_2^2 + \\lambda \\lVert \\theta \\rVert_1,"
+        },
+        {
+          "p": "with $\\lambda > 0$ in both cases."
+        }
+      ],
+      "parts": [
+        {
+          "id": "12.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Derive the closed-form ridge solution, and prove that the matrix you must invert is always invertible for $\\lambda > 0$, even when $X^\\top X$ is singular."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Differentiate the objective using the rules of Problem 5, Part 5, noting $\\nabla_\\theta \\lVert\\theta\\rVert_2^2 = 2\\theta$:"
+            },
+            {
+              "tex": "\\nabla_\\theta \\Big( \\lVert y - X\\theta \\rVert_2^2 + \\lambda\\lVert\\theta\\rVert_2^2 \\Big) = -2X^\\top y + 2X^\\top X \\theta + 2\\lambda\\theta = 0,"
+            },
+            {
+              "p": "which rearranges to $(X^\\top X + \\lambda I)\\hat{\\theta} = X^\\top y$, so"
+            },
+            {
+              "tex": "\\hat{\\theta}_{\\text{ridge}} = \\big( X^\\top X + \\lambda I \\big)^{-1} X^\\top y."
+            },
+            {
+              "p": "Invertibility. $X^\\top X$ is symmetric positive semidefinite, so its eigenvalues satisfy $\\mu_i \\ge 0$. By the eigenvalue-shift result of Problem 3, Part 8, the eigenvalues of $X^\\top X + \\lambda I$ are $\\mu_i + \\lambda \\ge \\lambda > 0$. All eigenvalues are strictly positive, so the matrix is positive definite, hence invertible."
+            },
+            {
+              "p": "Equivalently, for any $z \\ne 0$, $z^\\top(X^\\top X + \\lambda I)z = \\lVert Xz\\rVert_2^2 + \\lambda\\lVert z\\rVert_2^2 \\ge \\lambda \\lVert z \\rVert_2^2 > 0$, so no nonzero vector is in the null space. This is why ridge works when $d > N$: OLS has infinitely many solutions there, ridge has exactly one."
+            }
+          ]
+        },
+        {
+          "id": "12.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Let $X = U\\Sigma V^\\top$ be the thin SVD. Express the ridge fitted values $X\\hat{\\theta}_{\\text{ridge}}$ in terms of $U$, $\\Sigma$, and $y$, and compare with OLS."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Substitute the SVD, and assume for the moment that $X$ has full column rank, so the thin SVD carries square orthogonal $V$ with $V^\\top V = I$ and $VV^\\top = I$. Then"
+            },
+            {
+              "tex": "X^\\top X + \\lambda I = V\\Sigma^2 V^\\top + \\lambda V V^\\top = V\\big(\\Sigma^2 + \\lambda I\\big)V^\\top,"
+            },
+            {
+              "p": "so its inverse is $V(\\Sigma^2 + \\lambda I)^{-1}V^\\top$, and since $X^\\top y = V\\Sigma U^\\top y$,"
+            },
+            {
+              "tex": "\\hat{\\theta}_{\\text{ridge}} = V\\big(\\Sigma^2 + \\lambda I\\big)^{-1}\\Sigma\\, U^\\top y = \\sum_{i} \\frac{\\sigma_i}{\\sigma_i^2 + \\lambda}\\big(u_i^\\top y\\big) v_i."
+            },
+            {
+              "p": "When $\\operatorname{rank}(X) = r < d$ (the $d > N$ case of Part 7), $VV^\\top$ is only the projection onto $\\mathcal{C}(V)$, so the line above is not literally true. But $X^\\top y = V\\Sigma U^\\top y$ already lies in $\\mathcal{C}(V)$, and on that subspace $X^\\top X + \\lambda I_d$ acts as $V(\\Sigma^2 + \\lambda I_r)V^\\top$ since $(V\\Sigma^2V^\\top + \\lambda I_d)Vc = V(\\Sigma^2 + \\lambda I_r)c$, so the same formula for $\\hat{\\theta}_{\\text{ridge}}$ still follows."
+            },
+            {
+              "p": "Multiplying by $X = U\\Sigma V^\\top$ gives the fitted values"
+            },
+            {
+              "tex": "X\\hat{\\theta}_{\\text{ridge}} = \\sum_{i} \\frac{\\sigma_i^2}{\\sigma_i^2 + \\lambda}\\big(u_i^\\top y\\big)\\, u_i, \\qquad \\text{versus} \\qquad X\\hat{\\theta}_{\\text{OLS}} = \\sum_i \\big(u_i^\\top y\\big) u_i."
+            },
+            {
+              "p": "So ridge keeps the same directions $u_i$ but multiplies each by a shrinkage factor $\\sigma_i^2/(\\sigma_i^2 + \\lambda) \\in (0, 1)$. The shrinkage is direction-dependent and this is the whole story:"
+            },
+            {
+              "list": [
+                "Where $\\sigma_i^2 \\gg \\lambda$ the factor is near $1$: high-variance, well-determined directions pass through nearly untouched.",
+                "Where $\\sigma_i^2 \\ll \\lambda$ the factor is near $0$: the noisy, poorly-determined directions are crushed."
+              ]
+            },
+            {
+              "p": "OLS divides by $\\sigma_i$, so a tiny singular value produces an enormous coefficient driven entirely by noise. Ridge replaces $1/\\sigma_i$ with $\\sigma_i/(\\sigma_i^2 + \\lambda)$, which stays bounded by $1/(2\\sqrt{\\lambda})$. No factor is ever exactly zero, which is precisely why ridge shrinks but never selects."
+            }
+          ]
+        },
+        {
+          "id": "12.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Assume $X$ has orthonormal columns, so $X^\\top X = I$, and let $z = X^\\top y$ be the OLS solution."
+            },
+            {
+              "p": "Derive the Lasso solution coordinate by coordinate, and show that it is exactly zero whenever $\\lvert z_j \\rvert \\le \\lambda$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "With $X^\\top X = I$, expand the squared-error term:"
+            },
+            {
+              "tex": "\\tfrac{1}{2}\\lVert y - X\\theta\\rVert_2^2 = \\tfrac{1}{2}\\lVert y \\rVert^2 - \\theta^\\top X^\\top y + \\tfrac{1}{2}\\theta^\\top \\theta = \\text{const} + \\sum_j \\left( \\tfrac{1}{2}\\theta_j^2 - \\theta_j z_j \\right)."
+            },
+            {
+              "p": "The $\\ell_1$ penalty is also separable, so the whole objective decouples into $d$ independent scalar problems:"
+            },
+            {
+              "tex": "\\min_{\\theta_j} \\ g(\\theta_j), \\qquad g(\\theta_j) = \\tfrac{1}{2}\\theta_j^2 - \\theta_j z_j + \\lambda\\lvert\\theta_j\\rvert."
+            },
+            {
+              "p": "Case $\\theta_j > 0$: $g'(\\theta_j) = \\theta_j - z_j + \\lambda = 0$ gives $\\theta_j = z_j - \\lambda$, which is consistent with $\\theta_j > 0$ only if $z_j > \\lambda$."
+            },
+            {
+              "p": "Case $\\theta_j < 0$: $g'(\\theta_j) = \\theta_j - z_j - \\lambda = 0$ gives $\\theta_j = z_j + \\lambda$, consistent only if $z_j < -\\lambda$."
+            },
+            {
+              "p": "Case $\\theta_j = 0$: here $\\lvert\\theta_j\\rvert$ is not differentiable, so use the subdifferential $\\partial\\lvert\\theta_j\\rvert = [-1, 1]$ at $0$. Optimality requires $0 \\in \\{-z_j + \\lambda s : s \\in [-1,1]\\}$, i.e. $z_j = \\lambda s$ for some $s \\in [-1,1]$, which holds exactly when $\\lvert z_j \\rvert \\le \\lambda$."
+            },
+            {
+              "p": "Combining the three cases gives the soft-thresholding operator"
+            },
+            {
+              "tex": "\\hat{\\theta}_j = \\operatorname{sign}(z_j)\\max\\big( \\lvert z_j \\rvert - \\lambda,\\ 0 \\big)."
+            },
+            {
+              "p": "This is the proof that Lasso produces exact zeros. The kink in $\\lvert\\theta\\rvert$ at the origin means the penalty's slope does not vanish as $\\theta \\to 0$, it stays at $\\pm\\lambda$, so it can hold a coefficient pinned at zero against a data pull of up to $\\lambda$. Ridge's penalty $\\theta^2$ has derivative $2\\theta \\to 0$, which can never overcome a nonzero data term. The corresponding ridge solution here is $\\hat{\\theta}_j = z_j/(1+\\lambda)$: every coefficient shrunk by the same ratio, none of them zero."
+            }
+          ]
+        },
+        {
+          "id": "12.4",
+          "kind": "mcq",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Consider two regularized linear regression models trained on the same dataset. Model A uses $\\ell_1$-regularization, and Model B uses $\\ell_2$-regularization. Both use the same regularization strength $\\lambda > 0$. Which statement is most likely true?"
+            },
+            {
+              "choices": [
+                "A. Models A and B have the same number of non-zero weights.",
+                "B. Model A has fewer non-zero weights than Model B.",
+                "C. Model B has fewer non-zero weights than Model A.",
+                "D. Neither model can produce zero weights.",
+                "E. There is no way to know which model has fewer non-zero weights."
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "By Part 3, $\\ell_1$ sets a coefficient to exactly zero whenever the data signal for it is below $\\lambda$, while $\\ell_2$ shrinks every coefficient by the factor $1/(1+\\lambda)$ and produces exact zeros only in the measure-zero case $z_j = 0$. So Model A (Lasso) has fewer non-zero weights."
+            },
+            {
+              "p": "The geometric picture says the same thing. Both problems can be written as minimizing the squared error subject to a budget on $\\theta$. The $\\ell_1$ budget region is a cross-polytope with vertices on the coordinate axes, and the elliptical error contours typically first touch it at a vertex. At a vertex, some coordinates are exactly zero. The $\\ell_2$ region is a smooth ball with no corners, so the contact point almost never has a zero coordinate."
+            },
+            {
+              "result": "B. Model A has fewer non-zero weights than Model B."
+            }
+          ]
+        },
+        {
+          "id": "12.5",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Explain why, before fitting either regularized model, you should (a) standardize the features and (b) leave the intercept out of the penalty."
+            }
+          ],
+          "answer": [
+            {
+              "p": "(a) Standardize. The penalties $\\lVert\\theta\\rVert_2^2$ and $\\lVert\\theta\\rVert_1$ treat all coefficients on one scale, but coefficients carry the inverse units of their features. Measuring a length in metres rather than millimetres multiplies its coefficient by $1000$ and thus its penalty contribution by $10^6$ for ridge. The model would then be penalized for an arbitrary choice of units, effectively regularizing large-scale features into oblivion. Standardizing each column to zero mean and unit variance makes the penalty scale-invariant and the single shared $\\lambda$ meaningful."
+            },
+            {
+              "p": "(b) Do not penalize the intercept. The intercept sets the overall level of the predictions, and shrinking it toward zero would bias predictions toward zero, which is meaningless unless zero happens to be a special value of $y$. Concretely, if you added a constant $c$ to every $y_n$, an unpenalized intercept would simply absorb it and leave the slopes unchanged. A penalized intercept would not, so the fit would depend on where you happened to put the origin."
+            },
+            {
+              "p": "The standard implementation centres $X$ and $y$, fits the penalized slopes on the centered data, and recovers $\\hat{a} = \\bar{y} - \\hat{b}^\\top \\bar{x}$ afterwards. Standardization must be fitted on the training fold only: computing means and standard deviations over the full dataset before splitting leaks test information, a point Problem 14, Part 5 returns to."
+            }
+          ]
+        },
+        {
+          "id": "12.6",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Ridge regression is a biased estimator, while OLS is unbiased. Explain why one would ever prefer the biased estimator."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Because prediction error depends on bias *and* variance, and OLS can have enormous variance. Squared error decomposes as $\\text{Bias}^2 + \\text{Variance} + \\sigma^2$ (derived in Problem 14, Part 1), and minimizing it does not mean driving bias to zero."
+            },
+            {
+              "p": "Part 2 makes the trade explicit. In a direction with a tiny singular value $\\sigma_i$, the OLS coefficient is $(u_i^\\top y)/\\sigma_i$: since $u_i^\\top y$ contains noise of standard deviation $\\sigma$, that coefficient has standard deviation $\\sigma/\\sigma_i$, which blows up. Ridge multiplies it by $\\sigma_i^2/(\\sigma_i^2 + \\lambda)$, accepting a small bias in exchange for a large variance reduction in exactly the directions where the data are least informative."
+            },
+            {
+              "p": "There is a theoretical guarantee behind this: for every $X$, $y$ and noise variance $\\sigma^2 > 0$ there exists some $\\lambda > 0$ whose ridge estimator has strictly smaller expected squared error than OLS. The gain is largest when features are collinear or $d$ is comparable to $N$, and negligible when $N \\gg d$ with well-conditioned features. Since the optimal $\\lambda$ depends on unknown quantities, it is chosen by cross-validation."
+            }
+          ]
+        },
+        {
+          "id": "12.7",
+          "kind": "coding",
+          "requirement": "You may use np.linalg. Do not use scikit-learn and do not use any loop.",
+          "prompt": [
+            {
+              "p": "Run the following starter code:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "import numpy as np",
+                  "",
+                  "rng = np.random.default_rng(0)",
+                  "X = rng.normal(size=(50, 200))     # d > N: OLS is underdetermined",
+                  "theta_true = np.zeros(200)",
+                  "theta_true[:5] = 3.0",
+                  "y = X @ theta_true + rng.normal(scale=0.1, size=50)",
+                  "lam = 1.0"
+                ]
+              }
+            },
+            {
+              "p": "Write code computing $\\hat{\\theta}_{\\text{ridge}}$, and explain why the $d \\times d$ formula of Part 1 is the wrong one to use here."
+            }
+          ],
+          "answer": [
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "# Dual form: solve the N x N system instead of the d x d one.",
+                  "theta_ridge = X.T @ np.linalg.solve(X @ X.T + lam * np.eye(X.shape[0]), y)"
+                ]
+              }
+            },
+            {
+              "p": "The identity being used is"
+            },
+            {
+              "tex": "\\big(X^\\top X + \\lambda I_d\\big)^{-1}X^\\top = X^\\top\\big(XX^\\top + \\lambda I_N\\big)^{-1},"
+            },
+            {
+              "p": "which can be verified by multiplying both sides by $(X^\\top X + \\lambda I_d)$ on the left and $(XX^\\top + \\lambda I_N)$ on the right: both reduce to $X^\\top(XX^\\top + \\lambda I_N) = (X^\\top X + \\lambda I_d)X^\\top$, which is true since both equal $X^\\top X X^\\top + \\lambda X^\\top$."
+            },
+            {
+              "p": "Why it matters here: $d = 200$ and $N = 50$, so the primal form inverts a $200 \\times 200$ matrix while the dual inverts a $50 \\times 50$ one, which is $64\\times$ less work at cubic cost. In the regime $d \\gg N$ that gap is the difference between feasible and not, and this dual form is exactly the door to kernel ridge regression, since $XX^\\top$ is a Gram matrix of inner products that can be replaced by a kernel."
+            },
+            {
+              "p": "Running it, $\\hat{\\theta}_{\\text{ridge}}$ recovers large values on the first five coordinates and small but strictly nonzero values elsewhere, which is the shrink-everything behavior of Part 2. Lasso on the same data would zero out most of the $195$ irrelevant coordinates outright."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "theory-logistic-regression-crossentropy",
+      "moduleId": "linear-logistic-regression",
+      "title": "Logistic Regression, Log-Odds, and Convexity",
+      "difficulty": "Medium",
+      "minutes": 50,
+      "overview": [
+        "Derive the gradient and Hessian of logistic regression, prove the loss is convex, and show why perfectly separable data has no solution."
+      ],
+      "setup": [
+        {
+          "p": "Given $X \\in \\mathbb{R}^{N \\times d}$ and labels $y_n \\in \\{0, 1\\}$, logistic regression models"
+        },
+        {
+          "tex": "p_n = P(y_n = 1 \\mid X[n]) = \\sigma\\big(\\theta^\\top X[n]\\big), \\qquad \\sigma(t) = \\frac{1}{1 + e^{-t}}."
+        },
+        {
+          "p": "The negative log-likelihood (equivalently, the binary cross-entropy loss) is"
+        },
+        {
+          "tex": "L(\\theta) = -\\sum_{n=0}^{N-1} \\Big[ y_n \\log p_n + (1 - y_n)\\log(1 - p_n) \\Big]."
+        }
+      ],
+      "parts": [
+        {
+          "id": "13.1",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Prove that the model is equivalent to asserting that the log-odds are linear:"
+            },
+            {
+              "tex": "\\log \\frac{p_n}{1 - p_n} = \\theta^\\top X[n]."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write $t = \\theta^\\top X[n]$, so $p = \\sigma(t) = 1/(1 + e^{-t})$. Then"
+            },
+            {
+              "tex": "1 - p = 1 - \\frac{1}{1 + e^{-t}} = \\frac{e^{-t}}{1 + e^{-t}},"
+            },
+            {
+              "p": "so the odds ratio is"
+            },
+            {
+              "tex": "\\frac{p}{1-p} = \\frac{1/(1 + e^{-t})}{e^{-t}/(1 + e^{-t})} = \\frac{1}{e^{-t}} = e^{t}."
+            },
+            {
+              "p": "Taking logarithms gives $\\log\\frac{p}{1-p} = t = \\theta^\\top X[n]$, as claimed. The map $p \\mapsto \\log\\frac{p}{1-p}$ is the logit, and it is exactly $\\sigma^{-1}$."
+            },
+            {
+              "p": "This is what makes coefficients interpretable: increasing feature $j$ by one unit adds $\\theta_j$ to the log-odds, i.e. multiplies the odds by $e^{\\theta_j}$, regardless of the other features. It is also the reason the model is called *linear* even though the output is manifestly nonlinear in the inputs: linearity lives on the log-odds scale."
+            }
+          ]
+        },
+        {
+          "id": "13.2",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Derive $\\nabla_\\theta L$ and express it in matrix form."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Let $t_n = \\theta^\\top X[n]$ so $p_n = \\sigma(t_n)$. First simplify the per-example loss by substituting $\\log p_n = \\log\\sigma(t_n)$ and $\\log(1 - p_n)$, then differentiate through $t_n$."
+            },
+            {
+              "p": "By Problem 5, Part 2, $\\frac{\\partial p_n}{\\partial t_n} = p_n(1 - p_n)$, and $\\frac{\\partial t_n}{\\partial \\theta_j} = X_{nj}$. The derivative of the $n$-th term with respect to $p_n$ is"
+            },
+            {
+              "tex": "\\frac{\\partial}{\\partial p_n}\\Big( -y_n \\log p_n - (1-y_n)\\log(1-p_n) \\Big) = -\\frac{y_n}{p_n} + \\frac{1 - y_n}{1 - p_n}."
+            },
+            {
+              "p": "Multiply by $\\partial p_n / \\partial t_n = p_n(1-p_n)$ and watch the cancellation:"
+            },
+            {
+              "tex": "\\frac{\\partial L_n}{\\partial t_n} = \\left( -\\frac{y_n}{p_n} + \\frac{1-y_n}{1-p_n} \\right) p_n(1-p_n) = -y_n(1 - p_n) + (1 - y_n)p_n = p_n - y_n."
+            },
+            {
+              "p": "Then by the chain rule through $t_n$,"
+            },
+            {
+              "tex": "\\frac{\\partial L}{\\partial \\theta_j} = \\sum_{n=0}^{N-1}(p_n - y_n)X_{nj} \\qquad \\Longrightarrow \\qquad \\nabla_\\theta L = X^\\top\\big( \\sigma(X\\theta) - y \\big)."
+            },
+            {
+              "p": "This is the same \"predicted minus actual\" structure found in Problem 6, Part 3 for softmax, and for the same reason: the logarithm in the loss inverts the exponential in the link function. Note the striking similarity to the least-squares gradient $-\\frac{2}{N}X^\\top(y - X\\theta)$: the only change is that the raw prediction $X\\theta$ is replaced by $\\sigma(X\\theta)$. Both are instances of the general exponential-family result $\\nabla L = X^\\top(\\text{prediction} - \\text{target})$."
+            }
+          ]
+        },
+        {
+          "id": "13.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Compute the Hessian $\\nabla^2_\\theta L$ and prove that $L$ is convex."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Differentiate the gradient again. Since $\\frac{\\partial p_n}{\\partial \\theta_k} = p_n(1-p_n)X_{nk}$,"
+            },
+            {
+              "tex": "\\frac{\\partial^2 L}{\\partial\\theta_j \\partial\\theta_k} = \\sum_{n} X_{nj}\\, \\frac{\\partial p_n}{\\partial \\theta_k} = \\sum_n p_n(1 - p_n) X_{nj}X_{nk},"
+            },
+            {
+              "p": "which in matrix form is"
+            },
+            {
+              "tex": "\\nabla^2_\\theta L = X^\\top D X, \\qquad D = \\operatorname{diag}\\big( p_0(1-p_0), \\dots, p_{N-1}(1-p_{N-1}) \\big)."
+            },
+            {
+              "p": "Convexity. For any $z \\in \\mathbb{R}^d$, writing $w = Xz$,"
+            },
+            {
+              "tex": "z^\\top X^\\top D X z = w^\\top D w = \\sum_n p_n(1 - p_n)\\, w_n^2 \\ \\ge \\ 0,"
+            },
+            {
+              "p": "because each $p_n \\in (0,1)$ makes $p_n(1-p_n) > 0$. The Hessian is positive semidefinite everywhere, so by Problem 10, Part 2 the loss is convex, and by Problem 10, Part 1 any local minimum is global."
+            },
+            {
+              "p": "Two caveats. The Hessian depends on $\\theta$ through $D$ (unlike least squares, where it is constant), which is why there is no closed-form solution: setting $\\nabla L = 0$ gives $X^\\top\\sigma(X\\theta) = X^\\top y$, transcendental in $\\theta$. And $L$ is strictly convex only if $X$ has full column rank. Otherwise there are flat directions, which is one route to the non-existence problem in Part 4."
+            }
+          ]
+        },
+        {
+          "id": "13.4",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Call the data linearly separable if there exists $\\theta_0$ with $\\theta_0^\\top X[n] > 0$ whenever $y_n = 1$ and $\\theta_0^\\top X[n] < 0$ whenever $y_n = 0$."
+            },
+            {
+              "p": "Prove that in this case the maximum likelihood estimate does not exist, and state the standard fix."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Consider the scaled parameter $\\theta = c\\,\\theta_0$ for $c > 0$, and examine each term of the loss."
+            },
+            {
+              "p": "If $y_n = 1$, then $t_n = c\\,\\theta_0^\\top X[n] \\to +\\infty$ as $c \\to \\infty$, so $p_n = \\sigma(t_n) \\to 1$ and $-\\log p_n \\to 0$. If $y_n = 0$, then $t_n \\to -\\infty$, so $p_n \\to 0$ and $-\\log(1 - p_n) \\to 0$. Therefore"
+            },
+            {
+              "tex": "L(c\\,\\theta_0) \\longrightarrow 0 \\quad \\text{as } c \\to \\infty."
+            },
+            {
+              "p": "Since $L > 0$ strictly for every finite $\\theta$ (each $p_n$ lies strictly in $(0,1)$, so every term is strictly positive), the infimum $0$ is approached but never attained. The optimizer therefore drives $\\lVert\\theta\\rVert \\to \\infty$ and no maximum likelihood estimate exists."
+            },
+            {
+              "p": "In practice you see the loss decreasing toward zero while the weights grow without bound, the sigmoid saturates, the Hessian entries $p_n(1-p_n) \\to 0$, and gradients underflow. The fitted probabilities become $0$ or $1$. They are perfectly confident and perfectly uncalibrated."
+            },
+            {
+              "p": "The fix is regularization: minimizing $L(\\theta) + \\lambda\\lVert\\theta\\rVert_2^2$ makes the objective coercive (it tends to $+\\infty$ as $\\lVert\\theta\\rVert \\to \\infty$) and strictly convex, so a unique finite minimizer always exists. Among the infinitely many separating hyperplanes, the penalty selects the one with the smallest norm, which is close to the maximum-margin choice made by an SVM. Separability is common precisely when $d \\ge N$, so this is the normal case in high dimensions, not an exotic one."
+            }
+          ]
+        },
+        {
+          "id": "13.5",
+          "kind": "mcq",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A fitted logistic regression predicting loan default has coefficient $\\theta_j = 0.7$ for a feature measured in standardized units. Which interpretation is correct?"
+            },
+            {
+              "choices": [
+                "A. A one-unit increase in feature $j$ raises the probability of default by $0.7$.",
+                "B. A one-unit increase in feature $j$ raises the probability of default by $70\\%$.",
+                "C. A one-unit increase in feature $j$ multiplies the odds of default by $e^{0.7} \\approx 2.01$.",
+                "D. A one-unit increase in feature $j$ multiplies the probability of default by $0.7$.",
+                "E. Feature $j$ accounts for $70\\%$ of the model's predictions."
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "By Part 1 the model is linear in the log-odds, so adding one unit to feature $j$ adds $\\theta_j$ to the log-odds and therefore multiplies the odds by $e^{\\theta_j} = e^{0.7} \\approx 2.01$."
+            },
+            {
+              "p": "A, B, and D are wrong because the effect on the *probability* is not constant: it depends on where you start. The derivative $\\partial p/\\partial x_j = \\theta_j\\, p(1-p)$ is largest at $p = 0.5$ (giving $0.7 \\times 0.25 = 0.175$) and nearly zero when $p$ is close to $0$ or $1$. Moving someone from $p = 0.5$ to $p \\approx 0.67$ is a large change. Moving someone from $p = 0.99$ barely moves them at all."
+            },
+            {
+              "p": "This constant-effect-on-odds property is exactly what the logit link buys, and it is why odds ratios are the standard reporting unit for logistic models."
+            },
+            {
+              "result": "C. The odds are multiplied by $e^{0.7} \\approx 2.01$."
+            }
+          ]
+        },
+        {
+          "id": "13.6",
+          "kind": "coding",
+          "requirement": "Do not use scipy. Your implementation must not overflow or produce nan for large-magnitude inputs.",
+          "prompt": [
+            {
+              "p": "Run the following starter code:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "import numpy as np",
+                  "",
+                  "t = np.array([-800.0, -1.0, 0.0, 1.0, 800.0])",
+                  "y = np.array([0.0, 1.0, 1.0, 0.0, 1.0])"
+                ]
+              }
+            },
+            {
+              "p": "Explain what goes wrong in the direct implementation below, and write a stable version."
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "loss = -y * np.log(sigmoid(t)) - (1 - y) * np.log(1 - sigmoid(t))"
+                ]
+              }
+            }
+          ],
+          "answer": [
+            {
+              "p": "Two failures. For $t = -800$, $\\texttt{np.exp(800)}$ overflows to $\\texttt{inf}$ inside the sigmoid, and for $t = 800$ the sigmoid rounds to exactly $1.0$, so $\\log(1 - p) = \\log 0 = -\\infty$. Multiplying $-\\infty$ by a zero coefficient then gives $\\texttt{nan}$, so even examples whose term should not matter poison the total."
+            },
+            {
+              "p": "The stable route rewrites the loss in terms of $t$ directly. Substituting $p = \\sigma(t)$ into the per-example loss and simplifying gives"
+            },
+            {
+              "tex": "L_n = \\log\\big(1 + e^{t_n}\\big) - y_n t_n = \\max(t_n, 0) + \\log\\big(1 + e^{-\\lvert t_n \\rvert}\\big) - y_n t_n."
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "loss = np.maximum(t, 0) - y * t + np.log1p(np.exp(-np.abs(t)))",
+                  "print(loss)   # [0. 1.31326169 0.69314718 1.31326169 0.]"
+                ]
+              }
+            },
+            {
+              "p": "The identity is the log-sum-exp trick applied to $\\log(1 + e^t)$: factoring out $e^{\\max(t,0)}$ leaves an exponential of $-\\lvert t\\rvert \\le 0$, which can only underflow harmlessly toward $0$, never overflow. $\\texttt{np.log1p}$ then computes $\\log(1 + x)$ accurately for tiny $x$, where $\\texttt{np.log(1 + x)}$ would lose all precision to rounding."
+            },
+            {
+              "p": "This is why frameworks expose $\\texttt{binary\\_cross\\_entropy\\_with\\_logits}$ rather than asking you to apply a sigmoid first: passing raw logits lets the library use this formulation, whereas passing probabilities has already destroyed the information needed for it."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

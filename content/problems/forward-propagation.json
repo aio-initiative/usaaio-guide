@@ -1,0 +1,516 @@
+{
+  "module": "forward-propagation",
+  "stage": "Round 2",
+  "index": [
+    {
+      "id": "fp-cache-outgrows-weights",
+      "moduleId": "forward-propagation",
+      "title": "When the Cache Outgrows the Weights",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=fp-cache-outgrows-weights",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A tabular network with 64 inputs, three hidden layers of 512 ReLU units and 8 outputs keeps the input batch plus the pre-activation and the activation of every layer during training. Find the smallest batch size at which that cache holds more numbers than the network has parameters. 1 part.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "fp-copy-a-classifier",
+      "moduleId": "forward-propagation",
+      "title": "A Classifier Copied from Its Probabilities",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=fp-copy-a-classifier",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A web service runs a linear softmax classifier with two input features and three classes and returns only the three probabilities, keeping its weights and biases secret. Three queries come back with their probabilities to four decimals, which is enough to answer questions about inputs never sent and to say exactly what the queries do and do not determine. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "fp-diagnose-from-the-cache",
+      "moduleId": "forward-propagation",
+      "title": "Reading a Bug off the Logits",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=fp-diagnose-from-the-cache",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A teammate's forward pass for a three-class classifier runs without errors, but its probabilities disagree with a reference implementation. The logits in the cache match the reference, so the bug is in the line that turns them into probabilities. Which one of four softmax bugs reproduces the returned matrix exactly?",
+      "answer": "ReLU is applied to the logits before the softmax. Clipping the negative logits to 0 turns the first row into (1.2, 0, 0.4). Its exponentials are 3.320, 1 and 1.492, which sum to 5.812, giving 0.5713, 0.1721 and 0.2567. The second row becomes (0, 0.9, 2.1) and matches the same way. The correct first row is 0.6254, 0.0935 and 0.2810: the clipped logit of minus 0.7 gained probability and the others lost it."
+    },
+    {
+      "id": "fp-loss-at-initialization",
+      "moduleId": "forward-propagation",
+      "title": "A First Loss of 147",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=fp-loss-at-initialization",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A classifier for 10 classes prints a loss of 147.4 on the first batch of 64 images before any training, with every logit within 0.01 of zero. Pick the bug that explains that number.",
+      "answer": "The loss adds up the 64 losses of the images in the batch instead of averaging them. Near-zero logits give every class a probability of about 1/10, so each image's loss is minus ln 0.1 = ln 10 = 2.303, whatever its label. Adding up 64 of them gives 64 × 2.303 = 147.4, while the batch mean the training loop expects is 2.303. Comparing the first loss with ln C for C classes catches this before training starts."
+    },
+    {
+      "id": "fp-solve-for-the-input",
+      "moduleId": "forward-propagation",
+      "title": "The Input Behind an Output",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=fp-solve-for-the-input",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 2"
+      ],
+      "prompt": "A small regression network with two inputs, three hidden ReLU units and one linear output returned 14 for one input, and the log kept only the fact that the second input is the constant 1. Recover the missing first input. 1 part.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "fp-weights-copied-from-pytorch",
+      "moduleId": "forward-propagation",
+      "title": "Weights Moved from PyTorch to NumPy",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=fp-weights-copied-from-pytorch",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 2"
+      ],
+      "prompt": "A teammate trains a classifier in PyTorch with three linear layers of sizes 6 to 6 to 6 to 2 and ReLU between them, then ports it to NumPy by putting each layer's weight and bias in exactly as PyTorch stores them, with each layer running as A @ W + b on a batch of shape (32, 6). PyTorch stores each weight with shape (out_features, in_features) and computes x W transpose plus b, so what happens when the ported network runs?",
+      "answer": "The first two layers run but compute wrong values, and NumPy raises a ValueError at the third layer. The first two weights are 6 by 6, so A @ W is defined, but it multiplies by the transpose of the trained matrix and every hidden value is wrong. The third weight has shape (2, 6), and (32, 6) @ (2, 6) has inner sizes 6 and 2, so the error comes there. Every weight needs a transpose, not only the one the error names."
+    },
+    {
+      "id": "fp-prune-and-merge-units",
+      "moduleId": "forward-propagation",
+      "title": "Removing Units Without Changing the Output",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=fp-prune-and-merge-units",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "A small classifier for machine-health readings has to run on a microcontroller, and every parameter costs memory. Some of its hidden units are never used on the readings it will see, and some duplicate the work of another unit. You will find the first kind with a forward pass over the data, remove them, and then merge the second kind, checking each time that the network's outputs do not change.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "fp-weights-from-an-export",
+      "moduleId": "forward-propagation",
+      "title": "A Network from an Exported State Dict",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=fp-weights-from-an-export",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "A soil classifier was trained in PyTorch and exported to JSON so that a field device with only NumPy can run it. The device needs the network's three class probabilities for each reading. You will turn the exported file into the layers of this lesson's forward pass and run it on five readings, whose probabilities the original PyTorch model also recorded.",
+      "answer": "Self-checking: each part ends with a check cell that says whether your code is right. A worked solution is folded at the end of the notebook."
+    },
+    {
+      "id": "py3-batched-forward",
+      "moduleId": "forward-propagation",
+      "title": "Shapes, Broadcasting, and One Off-by-One Axis",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=py3-batched-forward",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Write one batched forward pass by hand: linear layer, numerically stable softmax, cross-entropy, and the softmax+CE gradient, on logits spanning roughly -80 to +80.",
+      "answer": "Auto-graded inside the notebook. Probabilities, loss, and dZ must pass the notebook's sum-and-projection check at 1e-6, with no NaN or inf."
+    }
+  ],
+  "theory": [
+    {
+      "id": "fp-cache-outgrows-weights",
+      "moduleId": "forward-propagation",
+      "title": "When the Cache Outgrows the Weights",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [
+        "A network for tabular data has 64 inputs, three hidden layers of 512 ReLU units each, and 8 outputs, with a bias in every layer. During training its forward pass on a batch of $N$ examples keeps the cache this lesson describes: the input batch, and the pre-activation and the activation of every layer, the output layer included. Count stored numbers, not bytes."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the smallest batch size $N$ for which the cache holds more numbers than the network has parameters?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "**Parameters.** A layer of width $n_l$ fed by $n_{l-1}$ units holds $n_{l-1} n_l$ weights plus $n_l$ biases:"
+            },
+            {
+              "tex": "\\underbrace{64 \\cdot 512 + 512}_{33{,}280}\n+ 2 \\cdot \\underbrace{(512 \\cdot 512 + 512)}_{262{,}656}\n+ \\underbrace{512 \\cdot 8 + 8}_{4{,}104}\n= 562{,}696 ."
+            },
+            {
+              "p": "**Cache per example.** The input row has 64 numbers. Each layer stores $\\mathbf{z}^{(l)}$ and $\\mathbf{a}^{(l)}$, both of the layer's width:"
+            },
+            {
+              "tex": "64 + 2\\,(512 + 512 + 512 + 8) = 64 + 3{,}088 = 3{,}152 ."
+            },
+            {
+              "p": "**The crossing.** The parameters do not depend on $N$, while the cache grows in proportion to it:"
+            },
+            {
+              "tex": "3{,}152\\,N > 562{,}696 \\iff N > 178.52 ,"
+            },
+            {
+              "p": "so $N = 179$. At $N = 178$ the cache holds 561,056 numbers, just below the parameter count, and at $N = 179$ it holds 564,208."
+            },
+            {
+              "p": "At a batch of 256 the cache is already 1.43 times the size of the model, which is why a larger batch can run out of memory while the model itself fits easily. Two common miscounts: leaving out the input gives $N = 183$, and keeping one array per layer instead of two gives $N = 350$."
+            },
+            {
+              "result": "179"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fp-copy-a-classifier",
+      "moduleId": "forward-propagation",
+      "title": "A Classifier Copied from Its Probabilities",
+      "difficulty": "Hard",
+      "minutes": 25,
+      "overview": [
+        "A web service runs a linear softmax classifier with two input features and three classes. It computes the logits $W\\mathbf{x} + \\mathbf{b}$, where $W$ is $3 \\times 2$, and it returns only the three probabilities. $W$ and $\\mathbf{b}$ are secret. Three queries return, to four decimals:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{cccc}\n\\text{Input $\\mathbf{x}$} & p_0 & p_1 & p_2 \\\\ \\hline\n(0, 0) & 0.2447 & 0.6652 & 0.0900 \\\\\n(1, 0) & 0.0453 & 0.9094 & 0.0453 \\\\\n(0, 1) & 0.2119 & 0.2119 & 0.5761\n\\end{array}"
+        },
+        {
+          "p": "Write $\\mathbf{w}_k$ for row $k$ of $W$ and $b_k$ for entry $k$ of $\\mathbf{b}$."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Without sending another query, find the probability the service gives class 1 for the input $(-1, 1)$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The softmax denominator is the same for every class, so it cancels in a ratio of two probabilities:"
+            },
+            {
+              "tex": "\\ln \\frac{p_k}{p_0} = z_k - z_0 = (\\mathbf{w}_k - \\mathbf{w}_0)^\\top \\mathbf{x} + (b_k - b_0) ."
+            },
+            {
+              "p": "Each log-ratio is a linear function of $\\mathbf{x}$, and the three queries pin it down. The log-ratios for classes 1 and 2 are"
+            },
+            {
+              "tex": "\\begin{array}{ccc}\n\\text{Input} & \\ln(p_1/p_0) & \\ln(p_2/p_0) \\\\ \\hline\n(0, 0) & 1.000 & -1.000 \\\\\n(1, 0) & 3.000 & 0.000 \\\\\n(0, 1) & 0.000 & 1.000\n\\end{array}"
+            },
+            {
+              "p": "to within 0.001, which is the rounding of the probabilities. The first row gives the intercepts $b_1 - b_0 = 1$ and $b_2 - b_0 = -1$. Subtracting it from the other two gives the slopes: $\\mathbf{w}_1 - \\mathbf{w}_0 = (2, -1)$ and $\\mathbf{w}_2 - \\mathbf{w}_0 = (1, 2)$. So for every input"
+            },
+            {
+              "tex": "z_1 - z_0 = 2x_1 - x_2 + 1, \\qquad z_2 - z_0 = x_1 + 2x_2 - 1 ."
+            },
+            {
+              "p": "At $(-1, 1)$ these are $-2$ and $0$. Taking $z_0 = 0$, which changes no probability,"
+            },
+            {
+              "tex": "p_1 = \\frac{e^{-2}}{1 + e^{-2} + e^{0}} = \\frac{0.1353}{2.1353} = 0.0634 ."
+            },
+            {
+              "result": "0.0634"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Find the value of $x_2$ for which the service gives classes 1 and 2 the same probability at the input $(0, x_2)$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Classes 1 and 2 tie where $z_1 = z_2$. Subtracting the two lines from Part 1,"
+            },
+            {
+              "tex": "z_1 - z_2 = (2x_1 - x_2 + 1) - (x_1 + 2x_2 - 1) = x_1 - 3x_2 + 2 ."
+            },
+            {
+              "p": "With $x_1 = 0$ this is zero at $x_2 = 2/3 \\approx 0.667$. The probabilities there are 0.264, 0.368 and 0.368. The tie between classes 1 and 2 is a line in the input plane, and the class 0 probability plays no part in where it lies."
+            },
+            {
+              "result": "0.6667"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "A teammate wants $W$ and $\\mathbf{b}$ themselves. Show that no number of queries can recover them, and say exactly what the queries do determine."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Take any vector $\\mathbf{u}$ and number $c$, and add $\\mathbf{u}$ to every row of $W$ and $c$ to every entry of $\\mathbf{b}$. Every logit changes by the same amount, $z_k + \\mathbf{u}^\\top\\mathbf{x} + c$, and a softmax is unchanged when the same number is added to all its inputs, because the factor $e^{\\mathbf{u}^\\top\\mathbf{x} + c}$ cancels between top and bottom. So the shifted classifier returns exactly the same probabilities for every input, and no query can tell it from the original. The service's $W$ and $\\mathbf{b}$ are one member of a family with three free numbers ($\\mathbf{u}$ and $c$), and queries cannot say which member."
+            },
+            {
+              "p": "What the probabilities do fix are the differences $\\mathbf{w}_k - \\mathbf{w}_0$ and $b_k - b_0$, six numbers here, because every log-ratio is built from them, and Part 1 found all six. Any classifier with those differences, for example $\\mathbf{w}_0 = \\mathbf{0}$, $b_0 = 0$, $\\mathbf{w}_1 = (2, -1)$, $b_1 = 1$, $\\mathbf{w}_2 = (1, 2)$, $b_2 = -1$, is a perfect copy. Three queries were enough because they do not lie on one line: each class's log-ratio has three unknowns, a slope in two directions and an intercept, and each query adds one equation for it."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fp-diagnose-from-the-cache",
+      "moduleId": "forward-propagation",
+      "title": "Reading a Bug off the Logits",
+      "difficulty": "Medium",
+      "minutes": 10,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A teammate's forward pass for a three-class classifier runs without errors, but its probabilities disagree with a reference implementation. For a batch of two examples the cache holds the logits"
+            },
+            {
+              "tex": "Z^{(2)} = \\begin{pmatrix} 1.2 & -0.7 & 0.4 \\\\ -1.5 & 0.9 & 2.1 \\end{pmatrix},"
+            },
+            {
+              "p": "which match the reference, and the function returns"
+            },
+            {
+              "tex": "\\texttt{out} = \\begin{pmatrix} 0.5713 & 0.1721 & 0.2567 \\\\ 0.0860 & 0.2116 & 0.7024 \\end{pmatrix}."
+            },
+            {
+              "p": "Which bug produces exactly these outputs?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "The shift subtracts each column's largest logit, taking the max along axis 0, while the sum runs along each row.",
+                  "explain": "Subtracting each column's largest logit shifts the entries of one row by different amounts, so it does change the probabilities, but not to these. For the first row it gives 0.7222, 0.1458 and 0.1319."
+                },
+                {
+                  "text": "The exponentials are divided by the sum of their column instead of the sum of their row.",
+                  "explain": "Dividing by column sums makes each column of out add up to 1. Here each row does instead, for example 0.5713 + 0.1721 + 0.2567 = 1, and the first column adds up to only 0.6573."
+                },
+                {
+                  "text": "ReLU is applied to the logits before the softmax.",
+                  "correct": true,
+                  "explain": "Clipping the negative logits to 0 turns the first row into (1.2, 0, 0.4). Its exponentials are 3.320, 1 and 1.492, which sum to 5.812, giving 0.5713, 0.1721 and 0.2567. The second row becomes (0, 0.9, 2.1) and matches the same way. The correct first row is 0.6254, 0.0935 and 0.2810: the clipped logit of minus 0.7 gained probability and the others lost it."
+                },
+                {
+                  "text": "The softmax exponentiates the logits without first subtracting the largest one.",
+                  "explain": "Subtracting the largest logit changes no probability. It only keeps the exponentials from overflowing, and logits this small cannot overflow. Without it the first row comes out as the correct 0.6254, 0.0935 and 0.2810, not the printed values."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Clipping the negative logits to 0 turns the first row into (1.2, 0, 0.4). Its exponentials are 3.320, 1 and 1.492, which sum to 5.812, giving 0.5713, 0.1721 and 0.2567. The second row becomes (0, 0.9, 2.1) and matches the same way. The correct first row is 0.6254, 0.0935 and 0.2810: the clipped logit of minus 0.7 gained probability and the others lost it."
+            },
+            {
+              "result": "ReLU is applied to the logits before the softmax."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fp-loss-at-initialization",
+      "moduleId": "forward-propagation",
+      "title": "A First Loss of 147",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A teammate builds a classifier for 10 classes of images and, before any training, runs one forward pass on the first batch of 64 images. The output layer was initialized with very small weights, so every logit of every image is within 0.01 of zero. The loss the code prints for the batch is 147.4."
+            },
+            {
+              "p": "Which bug explains that number?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "The loss takes the base-10 logarithm of the true class probability instead of the natural logarithm.",
+                  "explain": "With every logit near zero each class gets a probability of about 0.1, and the base-10 log of 0.1 is minus 1. Each image would then contribute a loss of 1, and the batch mean would be about 1.0, far from 147.4."
+                },
+                {
+                  "text": "The loss adds up the 64 losses of the images in the batch instead of averaging them.",
+                  "correct": true,
+                  "explain": "Near-zero logits give every class a probability of about 1/10, so each image's loss is minus ln 0.1 = ln 10 = 2.303, whatever its label. Adding up 64 of them gives 64 × 2.303 = 147.4, while the batch mean the training loop expects is 2.303. Comparing the first loss with ln C for C classes catches this before training starts."
+                },
+                {
+                  "text": "The model's last layer applies a softmax, and the loss function applies a second softmax to its output.",
+                  "explain": "A softmax of probabilities that are all about 0.1 gives probabilities that are again all about 0.1, so the loss stays near ln 10 = 2.30. A double softmax hurts later, when it flattens confident predictions, but it cannot produce 147.4 on the first batch."
+                },
+                {
+                  "text": "The loss adds up minus the log probability of all 10 classes for each image, instead of taking only the true class.",
+                  "explain": "With every probability about 0.1, adding minus the log probability over all 10 classes gives 10 × 2.303 = 23.03 for each image, so the batch mean would be about 23.0, not 147.4. The loss should take only the true class, which a one-hot label picks out of the sum."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "Near-zero logits give every class a probability of about 1/10, so each image's loss is minus ln 0.1 = ln 10 = 2.303, whatever its label. Adding up 64 of them gives 64 × 2.303 = 147.4, while the batch mean the training loop expects is 2.303. Comparing the first loss with ln C for C classes catches this before training starts."
+            },
+            {
+              "result": "The loss adds up the 64 losses of the images in the batch instead of averaging them."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fp-solve-for-the-input",
+      "moduleId": "forward-propagation",
+      "title": "The Input Behind an Output",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A regression network takes two inputs, passes them through three hidden ReLU units, and ends in one output unit with no activation, so its output is $y = \\mathbf{w}^{(2)\\top} \\mathbf{a}^{(1)} + b^{(2)}$. Its parameters are"
+      ],
+      "setup": [
+        {
+          "tex": "W^{(1)} = \\begin{pmatrix} 2 & -1 \\\\ 1 & 1 \\\\ -1 & 3 \\end{pmatrix}\n\\text{ and } \\mathbf{b}^{(1)} = (-1, 0, -1)^\\top \\text{ in the hidden layer}, \\qquad\n\\mathbf{w}^{(2)} = (1, 2, -3)^\\top, \\quad\nb^{(2)} = 0 ."
+        },
+        {
+          "p": "The second input is a constant feature, always 1. A log shows that for one input $\\mathbf{x} = (t, 1)^\\top$ the network returned $y = 14$, but the value of $t$ was not recorded."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Find $t$."
+            }
+          ],
+          "answer": [
+            {
+              "p": "With $\\mathbf{x} = (t, 1)^\\top$ the three pre-activations are lines in $t$:"
+            },
+            {
+              "tex": "z_1 = 2t - 2, \\qquad z_2 = t + 1, \\qquad z_3 = 2 - t ."
+            },
+            {
+              "p": "Each unit switches on or off at one value of $t$: unit 1 at $t = 1$, unit 2 at $t = -1$ and unit 3 at $t = 2$. Between those points the set of active units is fixed, so the output is a line on each piece:"
+            },
+            {
+              "tex": "\\begin{array}{ccc}\n\\text{Range of $t$} & \\text{Active units} & y \\\\ \\hline\nt \\le -1 & 3 & -3(2 - t) = 3t - 6 \\\\\n-1 \\le t \\le 1 & \\text{2, 3} & 2(t + 1) - 3(2 - t) = 5t - 4 \\\\\n1 \\le t \\le 2 & \\text{1, 2, 3} & (2t - 2) + 2(t + 1) - 3(2 - t) = 7t - 6 \\\\\nt \\ge 2 & \\text{1, 2} & (2t - 2) + 2(t + 1) = 4t\n\\end{array}"
+            },
+            {
+              "p": "Every piece has a positive slope, so $y$ increases with $t$ and exactly one input gives 14. At the switch points $y(1) = 1$ and $y(2) = 8$, so 14 lies on the last piece: $4t = 14$ and $t = 3.5$."
+            },
+            {
+              "p": "A forward pass confirms it: $\\mathbf{z}^{(1)} = (5, 4.5, -1.5)$, $\\mathbf{a}^{(1)} = (5, 4.5, 0)$ and $y = 5 + 9 - 0 = 14$."
+            },
+            {
+              "p": "Solving with every unit on, $7t - 6 = 14$, gives $t = 20/7 \\approx 2.86$. That is not an answer. At $t = 20/7$ unit 3 has $z_3 = 2 - 20/7 < 0$, so ReLU turns it off, and the forward pass there returns $4 \\cdot 20/7 \\approx 11.43$. The solution of one piece's equation counts only if it lands inside that piece's range of $t$."
+            },
+            {
+              "result": "3.5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fp-weights-copied-from-pytorch",
+      "moduleId": "forward-propagation",
+      "title": "Weights Moved from PyTorch to NumPy",
+      "difficulty": "Medium",
+      "minutes": 6,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "prompt": [
+            {
+              "p": "A teammate trains a classifier in PyTorch with three `nn.Linear` layers of sizes $6 \\to 6 \\to 6 \\to 2$ and ReLU between them. `nn.Linear` keeps its weight as an array of shape (out_features, in_features), and its output is $\\mathbf{x} W^\\top + \\mathbf{b}$."
+            },
+            {
+              "p": "To run the network in NumPy, the teammate puts each layer's weight and bias into `params` exactly as PyTorch stores them, and calls the lesson's `forward` on a batch `X` of shape (32, 6). It runs each layer as `A @ W + b`, with ReLU after the first two and a softmax after the last. What happens?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "NumPy raises a ValueError at the first layer, because its weight is stored in PyTorch's layout.",
+                  "explain": "The first weight has shape (6, 6) in either layout, so X @ W is defined and runs. A shape error needs the inner sizes of a product to differ, and here they first differ at the third layer."
+                },
+                {
+                  "text": "Every layer runs and the probabilities are correct, because transposing a square weight does not change its shape.",
+                  "explain": "The shape is the same but the numbers are not. X @ W uses the columns of W, while PyTorch's product with the transpose uses its rows, so unit j gets column j of W where it should get row j, and the two differ unless W is symmetric."
+                },
+                {
+                  "text": "The first two layers compute the right values and the third raises a ValueError, so transposing that one weight fixes it.",
+                  "explain": "Only the third layer's shapes disagree, but the first two layers were already wrong: each computed A @ W where the trained network computes A times the transpose of W. After transposing only the third weight the code runs without an error and returns wrong probabilities."
+                },
+                {
+                  "text": "The first two layers run but compute wrong values, and NumPy raises a ValueError at the third layer.",
+                  "correct": true,
+                  "explain": "The first two weights are 6 by 6, so A @ W is defined, but it multiplies by the transpose of the trained matrix and every hidden value is wrong. The third weight has shape (2, 6), and (32, 6) @ (2, 6) has inner sizes 6 and 2, so the error comes there. Every weight needs a transpose, not only the one the error names."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The first two weights are 6 by 6, so A @ W is defined, but it multiplies by the transpose of the trained matrix and every hidden value is wrong. The third weight has shape (2, 6), and (32, 6) @ (2, 6) has inner sizes 6 and 2, so the error comes there. Every weight needs a transpose, not only the one the error names."
+            },
+            {
+              "result": "The first two layers run but compute wrong values, and NumPy raises a ValueError at the third layer."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

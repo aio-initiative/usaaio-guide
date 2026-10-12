@@ -1,0 +1,894 @@
+{
+  "module": "tree-based-models-ensembles",
+  "stage": "Round 1",
+  "index": [
+    {
+      "id": "ml4-problems-notebook",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "ML4 Problems Notebook",
+      "source": "USAAIO Guide",
+      "difficulty": "Easy",
+      "url": "/editor/?nb=ml4-problems",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Problem Set",
+        "Round 1"
+      ],
+      "problemList": [
+        "Compute Gini impurity for a node with 8 class-0 examples and 2 class-1 examples.",
+        "Given a parent node and two child nodes, compute information gain.",
+        "Train decision trees with different max_depth values and compute train/test accuracy.",
+        "Train a random forest with oob_score=True and report test accuracy and OOB score.",
+        "Compare decision tree, random forest, and gradient boosting on the same dataset.",
+        "Explain why boosting can overfit if the learning rate is too high or the number of trees is too large."
+      ],
+      "prompt": "Problems-only notebook for decision trees and ensembles, including impurity, information gain, depth tuning, random forests, OOB score, and boosting comparisons.",
+      "answer": "Open the notebook and work the problems in order. Problems 1 to 5 each end in a check cell: work Problems 1 and 2 on paper and type in the number, and complete the code cells of Problems 3, 4 and 5. Problem 6 is answered on paper. A worked solution follows the problems. Use the Download .ipynb button in the editor to export this notebook."
+    },
+    {
+      "id": "decision-trees-implementation-task",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "Decision Tree Classification Practice",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=decision-trees",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Decision tree with depth tuning (sklearn allowed). Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Test accuracy must reach the target shown in the evaluation cell."
+    },
+    {
+      "id": "random-forests-implementation-task",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "Random Forest Practice",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=random-forests",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Random forest (bagging + feature subsampling). Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Test accuracy must reach the target shown in the evaluation cell."
+    },
+    {
+      "id": "gradient-boosting-implementation-task",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "Gradient Boosting Regression Practice",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=gradient-boosting",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Gradient-boosted trees for regression. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Test R² must reach the target shown in the evaluation cell."
+    },
+    {
+      "id": "ml8-id-column-split",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "The Feature That Splits Everything Perfectly",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ml8-id-column-split",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Implement multi-way information gain and watch a unique customer-ID column score the maximum possible gain, then find out which of gain ratio and a minimum branch size actually defeats it.",
+      "answer": "Auto-graded inside the notebook. Gains and gain ratios must match to 1e-6, with raw gain picking the ID, gain ratio cutting its lead by more than 10x without dethroning it, and the minimum branch size rejecting it."
+    },
+    {
+      "id": "ml9-bagging-variance",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "Bagging Cuts Variance, Not Bias",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=ml9-bagging-variance",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Estimate bias and variance separately over 60 training sets for a single deep tree and for a 25-tree bag, and show which term bagging actually reduces.",
+      "answer": "Auto-graded inside the notebook. All five components must match to 1e-6, with variance down at least 40% and the bag's squared bias under 5% of the single model's variance."
+    },
+    {
+      "id": "ml9-boosting-shrinkage",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "Boosting Without the Brakes",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=ml9-boosting-shrinkage",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Build gradient boosting from stumps at learning rates 1.0 and 0.1, and show shrinkage reaches a lower test minimum while needing far more rounds.",
+      "answer": "Auto-graded inside the notebook. Both test curves, their minima and the best round numbers must match to 1e-6, with shrinkage winning and converging more slowly."
+    },
+    {
+      "id": "ens-two-teams-of-models",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "Two Teams Average Their Nets",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ens-two-teams-of-models",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Team 1 trains small neural nets on the full training set, each from a different random seed, and averages their predictions. Averaging 5 nets gives a variance of 0.8 at one test input and averaging 15 gives 0.6. Assume every net's prediction has the same variance and every pair of nets the same correlation. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ens-trees-that-skip-a-row",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "Out-of-Bag Votes in a Small Bag",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ens-trees-that-skip-a-row",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A bag of 10 trees is trained on 1,000 rows, each tree on its own bootstrap sample of 1,000 draws with replacement. Its out-of-bag score predicts every row with the trees whose bootstrap sample did not contain that row. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ens-copied-column-importance",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "Importance After a Column Is Copied",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ens-copied-column-importance",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "A RandomForestClassifier with 300 trees and max_features=\"sqrt\" is fit on 9 features, so every split chooses among 3 of them. Feature x0 drives most of the label, and feature_importances_ gives it 0.43. Each of the other eight gets between 0.06 and 0.09. A teammate appends an exact copy of x0 as a tenth column and refits the same forest. Every split still chooses among 3 columns. What do feature_importances_ report for x0 and its copy?",
+      "answer": "Both are near 0.23, because every split that uses the shared signal gives its credit to one of the two columns, and each column is picked about equally often. A split that uses the shared signal is credited to whichever copy it chose, and the two copies are chosen equally often. One run gives x0 0.23 and the copy 0.24, and the exact values shift with the data and the seed. Together they hold a little more than x0 held alone, 0.47, because the signal is now offered at more splits: a set of 3 columns out of 10 contains at least one copy with probability 8/15, against 1/3 before. A strong feature with a copy, or with a near copy, can look half as important as it is."
+    },
+    {
+      "id": "ens-adaboost-after-one-round",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "AdaBoost Weights After One Round",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ens-adaboost-after-one-round",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Partway through AdaBoost, eight training rows carry weights that add up to 1. This round's stump misclassifies rows 4 and 6 and gets the other six right. AdaBoost gives it its vote and updates the weights as in the lesson. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ens-absolute-error-first-round",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "One Round of Boosting on Absolute Error",
+      "source": "USAAIO-style",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ens-absolute-error-first-round",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Five deliveries took 12, 14, 15, 17 and 62 minutes. You fit gradient boosting to them with the absolute error $L(y, F) = |y - F|$ in place of squared error, following the lesson's three steps, with a learning rate of $\\nu = 0.1$. The first tree is a stump that puts the 62-minute delivery in one leaf and the other four in the other. Each leaf predicts the mean of the pseudo-residuals of its rows. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ens-rounds-to-fit-training-set",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "Rounds Until the Training Set Is Memorized",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/theory/?id=ens-rounds-to-fit-training-set",
+      "tags": [
+        "Theory",
+        "Multiple choice",
+        "Round 1"
+      ],
+      "prompt": "Gradient boosting for squared error starts from F_0 = ȳ, where the training MSE is 4.0, the variance of the targets. Every round fits a tree grown until each leaf holds one training row, so the tree reproduces the current residuals exactly on the training rows, and the learning rate is nu = 0.2. After how many rounds does the training MSE first fall below 0.01?",
+      "answer": "14 rounds. The tree reproduces the residuals r, so the step F + 0.2 r leaves residuals of 0.8 r. After m rounds every residual is 0.8 to the m times its start and the MSE is 4 times 0.64 to the m. That is 0.0121 after 13 rounds and 0.0077 after 14. A run with real trees on 200 rows gives 0.0076 after 14 rounds too."
+    },
+    {
+      "id": "ens-three-voters-one-test-set",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "What Three Equal Models Can Vote",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=ens-three-voters-one-test-set",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "Three classifiers of a yes-or-no label each get 13 of the same 20 test rows right, an accuracy of 0.65. A hard voting ensemble predicts the label that at least two of them predict. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ens-patients-out-of-bag",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "Out-of-Bag Rows from Repeat Visits",
+      "source": "USAAIO-style",
+      "difficulty": "Hard",
+      "url": "/theory/?id=ens-patients-out-of-bag",
+      "tags": [
+        "Theory",
+        "Multi-part",
+        "Round 1"
+      ],
+      "prompt": "A clinic's table has 300 patients with three visits each, one row per visit, 900 rows in all. A patient's three rows are nearly identical, and they carry the same label. A random forest of 200 deep trees is trained on the 900 rows with oob_score=True, and the model will be used on patients the clinic has not seen yet. 3 parts.",
+      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+    },
+    {
+      "id": "ens-log-loss-boosting",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "Gradient Boosting on Log Loss",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=ens-log-loss-boosting",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Write gradient boosting for a yes-or-no label under log loss, fit each tree to the pseudo-residuals of that loss, then read the staged losses to choose the number of rounds and watch validation turn up before training stops falling.",
+      "answer": "Auto-graded inside the notebook. The 8-row fit must match the expected scores to 1e-5, the staged losses must match to 1e-5 on the stand-in trees, and the validation loss must turn up well before round 300."
+    },
+    {
+      "id": "ens-bag-bias-variance",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "Bias and Variance of a Bag, Measured",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=ens-bag-bias-variance",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 1"
+      ],
+      "prompt": "Measure squared bias and variance separately over 30 training sets for one deep tree and for a bag of 20 trees, then solve the lesson's variance identity for the correlation the bag implies between its members.",
+      "answer": "Auto-graded inside the notebook. The bias and variance asserts must pass on the given inputs, and the simulation must cut the tree's variance to roughly half and land the implied correlation between 0.3 and 0.7."
+    }
+  ],
+  "theory": [
+    {
+      "id": "ens-two-teams-of-models",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "Two Teams Average Their Nets",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "Team 1 trains small neural nets on the full training set, each from a different random seed, and averages their predictions. To see how much the averaging helps, it repeats the whole run many times and measures, at one test input, the variance of the averaged prediction:"
+      ],
+      "setup": [
+        {
+          "list": [
+            "averaging 5 nets gives a variance of 0.8,",
+            "averaging 15 nets gives a variance of 0.6."
+          ]
+        },
+        {
+          "p": "Assume every net's prediction has the same variance and every pair of nets the same correlation."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the variance of one net's prediction?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Write $a = \\rho\\sigma^2$ and $b = (1 - \\rho)\\sigma^2$, so the variance of an average of $B$ nets is $a + b/B$. The two measurements give two equations:"
+            },
+            {
+              "tex": "a + \\frac{b}{5} = 0.8, \\qquad a + \\frac{b}{15} = 0.6 ."
+            },
+            {
+              "p": "Subtracting, $b\\,(1/5 - 1/15) = 0.2$, so $b \\cdot 2/15 = 0.2$ and $b = 1.5$. Then $a = 0.8 - 0.3 = 0.5$. One net is the average of $B = 1$, so its variance is $\\sigma^2 = a + b = 2$."
+            },
+            {
+              "p": "Averaging 5 nets has already cut the variance from 2 to 0.8, and tripling the count to 15 only takes off another 0.2."
+            },
+            {
+              "result": "2"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the correlation between two of team 1's nets?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "$a = \\rho\\sigma^2 = 0.5$ with $\\sigma^2 = 2$, so $\\rho = 0.5 / 2 = 0.25$."
+            },
+            {
+              "p": "The term $a = 0.5$ is the floor: no number of nets trained this way gets the variance below 0.5."
+            },
+            {
+              "result": "0.25"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Team 2 trains each net on its own random half of the training set. Each of its nets is noisier, with variance 3, but two of them correlate at only 0.1. What is the smallest number of nets for which team 2's average has a strictly lower variance than an average of the same number of team 1's nets?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "For team 2, $\\rho\\sigma^2 = 0.1 \\times 3 = 0.3$ and $(1 - \\rho)\\sigma^2 = 2.7$. Team 2 is lower when"
+            },
+            {
+              "tex": "0.3 + \\frac{2.7}{B} < 0.5 + \\frac{1.5}{B}\n\\iff \\frac{1.2}{B} < 0.2\n\\iff B > 6 ."
+            },
+            {
+              "p": "At $B = 6$ the two are level at 0.75, and at $B = 7$ team 2 gives 0.686 against team 1's 0.714. The answer is 7."
+            },
+            {
+              "p": "Halving the data raised every net's variance from 2 to 3, so with only a few nets team 2 is worse: at $B = 5$ it gives 0.84 against 0.80. But the floor dropped from 0.5 to 0.3, and the floor is what remains once there are enough nets. A random forest makes the same trade when it hides features from each split: every tree gets a little worse on its own, and the trees get less alike."
+            },
+            {
+              "result": "7"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ens-trees-that-skip-a-row",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "Out-of-Bag Votes in a Small Bag",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "A bag of 10 trees is trained on 1,000 rows, each tree on its own bootstrap sample of 1,000 draws with replacement. Its out-of-bag score predicts every row with the trees whose bootstrap sample did not contain that row."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "About how many of the 1,000 rows get no out-of-bag prediction at all?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "A row is missed by one draw with probability $1 - 1/1000$, so it is missing from a whole bootstrap sample with probability"
+            },
+            {
+              "tex": "\\left(1 - \\frac{1}{1000}\\right)^{1000} = 0.3677,"
+            },
+            {
+              "p": "and it is in that sample with probability $0.6323$. The ten samples are drawn independently, so the row is in all ten with probability $0.6323^{10} = 0.0102$. Over 1,000 rows that is about $10.2$ rows that every tree has seen. No tree can give them an honest prediction, and scikit-learn warns about them and leaves them out of the score."
+            },
+            {
+              "result": "10.2"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "On average, how many trees vote in one row's out-of-bag prediction?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Each of the 10 trees left the row out with probability $0.3677$, so the expected number of out-of-bag trees is $10 \\times 0.3677 = 3.68$."
+            },
+            {
+              "result": "3.68"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "The out-of-bag accuracy of this 10-tree bag comes out below its accuracy on a large test set, and the gap closes when the bag grows to 200 trees. Explain both, using part 2."
+            }
+          ],
+          "answer": [
+            {
+              "p": "Every test row is predicted by all 10 trees, but an out-of-bag prediction is a vote of about 3.7 of them. The out-of-bag score therefore measures a bag of about 3.7 trees. While the ensemble is small, accuracy still climbs quickly with each tree added, so a 3.7-tree vote is worse than a 10-tree vote and the score comes out low."
+            },
+            {
+              "p": "With 200 trees each row gets a vote of about $200 \\times 0.3677 \\approx 74$ trees. Accuracy has flattened long before 74 trees, so a 74-tree vote and a 200-tree vote are almost equally good and the gap disappears. The out-of-bag score is a pessimistic estimate for a small bag and a fair one for a large one."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ens-copied-column-importance",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "Importance After a Column Is Copied",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "A `RandomForestClassifier` with 300 trees and `max_features=\"sqrt\"` is fit on 9 features, so every split chooses among 3 of them. Feature `x0` drives most of the label, and `feature_importances_` gives it 0.43. Each of the other eight gets between 0.06 and 0.09."
+            },
+            {
+              "p": "A teammate appends an exact copy of `x0` as a tenth column and refits the same forest. Every split still chooses among 3 columns. What do `feature_importances_` report for `x0` and its copy?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "`x0` stays near 0.43 and the copy gets almost nothing, because when both columns are offered at a split the tie goes to the column that comes first",
+                  "explain": "Even if every tie went to x0, the copy would be the only strong column on offer at the splits that draw the copy but not x0, which is 28 of every 120 possible sets of three columns, as often as x0 is drawn without the copy. scikit-learn also visits the candidate features in a random order at each split, so ties do not favor the first column either. The copy ends near 0.24 and x0 drops to 0.23."
+                },
+                {
+                  "text": "Both are near 0.43, because each of the two columns carries all of the information that `x0` carried alone before the copy was added",
+                  "explain": "Each column does carry everything x0 carried, but impurity importance does not measure what a column knows. It adds up the impurity removed by the splits that used the column, and each split that uses the shared signal is credited to one of the two columns. The credit is shared, so neither column keeps 0.43."
+                },
+                {
+                  "text": "Both are near 0.23, because every split that uses the shared signal gives its credit to one of the two columns, and each column is picked about equally often",
+                  "correct": true,
+                  "explain": "A split that uses the shared signal is credited to whichever copy it chose, and the two copies are chosen equally often. One run gives x0 0.23 and the copy 0.24, and the exact values shift with the data and the seed. Together they hold a little more than x0 held alone, 0.47, because the signal is now offered at more splits: a set of 3 columns out of 10 contains at least one copy with probability 8/15, against 1/3 before. A strong feature with a copy, or with a near copy, can look half as important as it is."
+                },
+                {
+                  "text": "Both fall to about 0.07, the level of the weak columns, because removing either copy leaves the other one, so the forest loses almost nothing without it",
+                  "explain": "This is how permutation importance or dropping a column behaves: shuffle one copy and the forest still reads the signal from the other, so the score barely moves. The forest's own importances are computed differently, from the impurity its splits removed, and splits on either copy still remove a great deal of it."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "A split that uses the shared signal is credited to whichever copy it chose, and the two copies are chosen equally often. One run gives x0 0.23 and the copy 0.24, and the exact values shift with the data and the seed. Together they hold a little more than x0 held alone, 0.47, because the signal is now offered at more splits: a set of 3 columns out of 10 contains at least one copy with probability 8/15, against 1/3 before. A strong feature with a copy, or with a near copy, can look half as important as it is."
+            },
+            {
+              "result": "Both are near 0.23, because every split that uses the shared signal gives its credit to one of the two columns, and each column is picked about equally often"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ens-adaboost-after-one-round",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "AdaBoost Weights After One Round",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "Partway through AdaBoost, eight training rows carry these weights, which add up to 1:"
+      ],
+      "setup": [
+        {
+          "tex": "\\begin{array}{ccccccccc}\n\\text{Row} & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\\\ \\hline\n\\text{Weight} & 0.10 & 0.05 & 0.20 & 0.15 & 0.10 & 0.05 & 0.25 & 0.10\n\\end{array}"
+        },
+        {
+          "p": "This round's stump misclassifies rows 4 and 6 and gets the other six right. AdaBoost gives it its vote and updates the weights as in the lesson."
+        }
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the weight of row 4 after the update and the renormalization?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The weighted error is $\\varepsilon = 0.15 + 0.05 = 0.20$, so the vote is"
+            },
+            {
+              "tex": "\\alpha = \\tfrac12 \\ln \\frac{0.8}{0.2} = \\tfrac12 \\ln 4 = \\ln 2 ,"
+            },
+            {
+              "p": "and $e^{\\alpha} = 2$, $e^{-\\alpha} = 1/2$. Before renormalizing, the two misclassified rows hold $2 \\times 0.20 = 0.40$ and the six correct rows $0.80 / 2 = 0.40$, a total of 0.80. Row 4 becomes $0.15 \\times 2 / 0.80 = 0.375$."
+            },
+            {
+              "result": "0.375"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Under the new weights, what is the weighted error of this same stump?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The stump's errors are still rows 4 and 6, now worth $0.375 + 0.125 = 0.5$. Its weighted error has gone from 0.2 to 0.5."
+            },
+            {
+              "result": "0.5"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "derivation",
+          "requirement": "A complete derivation is required.",
+          "prompt": [
+            {
+              "p": "Show that the answer to part 2 does not depend on the weights or on $\\varepsilon$, as long as $0 < \\varepsilon < 1$. What does it mean for the learner chosen in the next round?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Before renormalizing, the misclassified rows hold $\\varepsilon e^{\\alpha}$ and the correct rows $(1 - \\varepsilon)e^{-\\alpha}$. With $e^{\\alpha} = \\sqrt{(1 - \\varepsilon)/\\varepsilon}$,"
+            },
+            {
+              "tex": "\\varepsilon e^{\\alpha} = \\sqrt{\\varepsilon(1 - \\varepsilon)}\n= (1 - \\varepsilon)\\sqrt{\\frac{\\varepsilon}{1 - \\varepsilon}}\n= (1 - \\varepsilon) e^{-\\alpha} ."
+            },
+            {
+              "p": "The two halves are equal, so after renormalizing the misclassified rows always hold exactly half the weight. The vote $\\alpha$ is the value that makes this happen."
+            },
+            {
+              "p": "So under the new weights the stump just added is no better than a coin, and fitting it again would give it a vote of $\\tfrac12 \\ln(0.5/0.5) = 0$. The next round has to find a learner that does better than chance on the new weights, which means one that gets a good share of rows 4 and 6 right, so it will not pick the same stump again."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ens-absolute-error-first-round",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "One Round of Boosting on Absolute Error",
+      "difficulty": "Medium",
+      "minutes": 12,
+      "overview": [
+        "Five deliveries took 12, 14, 15, 17 and 62 minutes. You fit gradient boosting to them with the absolute error $L(y, F) = |y - F|$ in place of squared error, following the lesson's three steps, with a learning rate of $\\nu = 0.1$. The first tree is a stump that puts the 62-minute delivery in one leaf and the other four in the other. Each leaf predicts the mean of the pseudo-residuals of its rows."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is $F_0$, the best constant prediction under absolute error?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "$F_0$ minimizes $\\sum_i |y_i - c|$. Moving $c$ up by a small amount adds that amount for every delivery below $c$ and removes it for every delivery above $c$, so the sum falls while more deliveries lie above $c$ than below it. It stops falling at the middle value: the median, $F_0 = 15$."
+            },
+            {
+              "p": "The mean, 24, is the best constant for squared error, and it sits above four of the five deliveries because of the 62."
+            },
+            {
+              "result": "15"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What does the model predict for the 62-minute delivery after the first round?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "The pseudo-residual is minus the slope of the loss as a function of the prediction:"
+            },
+            {
+              "tex": "r_i = -\\frac{\\partial |y_i - F|}{\\partial F} = \\operatorname{sign}(y_i - F) ."
+            },
+            {
+              "p": "At $F_0 = 15$ the 62-minute delivery has $r = \\operatorname{sign}(47) = +1$. It is alone in its leaf, so the leaf predicts 1, and the step gives $15 + 0.1 \\times 1 = 15.1$."
+            },
+            {
+              "result": "15.1"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "computation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "Do the same round with squared error. What does that model predict for the 62-minute delivery after one round, and what does the comparison say about each loss?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "With squared error, $F_0 = 24$ and the pseudo-residual is the residual, $62 - 24 = 38$. The leaf predicts 38, and the model moves to $24 + 0.1 \\times 38 = 27.8$."
+            },
+            {
+              "p": "Squared error pulls on each row in proportion to how far off it is. The 62-minute delivery's pseudo-residual, 38, is more than three times any other row's, and the same delivery has already moved the start from the median, 15, to the mean, 24. Absolute error sees only the direction: the 62-minute delivery pulls exactly as hard as the 17-minute one. The squared-error model starts at 24, above four of the five deliveries, and its early rounds are spent mostly on the 62. The absolute-error model starts at the typical delivery and moves toward the 62 by only 0.1 per round. When a few targets are far off and should not steer the model, absolute error (or Huber loss, which is squared near zero and absolute far out) is the safer choice."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ens-rounds-to-fit-training-set",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "Rounds Until the Training Set Is Memorized",
+      "difficulty": "Medium",
+      "minutes": 5,
+      "overview": [],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "mcq",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Gradient boosting for squared error starts from $F_0 = \\bar{y}$, where the training MSE is 4.0, the variance of the targets. Every round fits a tree grown until each leaf holds one training row, so the tree reproduces the current residuals exactly on the training rows, and the learning rate is $\\nu = 0.2$."
+            },
+            {
+              "p": "After how many rounds does the training MSE first fall below 0.01?"
+            },
+            {
+              "choices": [
+                {
+                  "text": "27 rounds",
+                  "explain": "27 is what you get if the MSE shrinks by 0.8 each round. It is the residuals that shrink by 0.8, and the MSE is their mean square, so it shrinks by 0.8 squared, 0.64, which is a different rate."
+                },
+                {
+                  "text": "14 rounds",
+                  "correct": true,
+                  "explain": "The tree reproduces the residuals r, so the step F + 0.2 r leaves residuals of 0.8 r. After m rounds every residual is 0.8 to the m times its start and the MSE is 4 times 0.64 to the m. That is 0.0121 after 13 rounds and 0.0077 after 14. A run with real trees on 200 rows gives 0.0076 after 14 rounds too."
+                },
+                {
+                  "text": "5 rounds",
+                  "explain": "This treats each round as removing a fixed 20% of the starting MSE, so that five rounds remove all of it. Each round removes 20% of what is left of each residual, and what is left keeps shrinking, so the MSE falls geometrically and never reaches exactly zero."
+                },
+                {
+                  "text": "2 rounds",
+                  "explain": "This multiplies the residuals by the learning rate, as if 0.2 were the part left over. The step adds 0.2 times the residual to the prediction, so 0.8 of each residual is left, not 0.2."
+                }
+              ]
+            }
+          ],
+          "answer": [
+            {
+              "p": "The tree reproduces the residuals r, so the step F + 0.2 r leaves residuals of 0.8 r. After m rounds every residual is 0.8 to the m times its start and the MSE is 4 times 0.64 to the m. That is 0.0121 after 13 rounds and 0.0077 after 14. A run with real trees on 200 rows gives 0.0076 after 14 rounds too."
+            },
+            {
+              "result": "14 rounds"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ens-three-voters-one-test-set",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "What Three Equal Models Can Vote",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "Three classifiers of a yes-or-no label each get 13 of the same 20 test rows right, an accuracy of 0.65. A hard voting ensemble predicts the label that at least two of them predict."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the highest accuracy the vote can have on these 20 rows?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Let $x_k$ be the number of rows that exactly $k$ of the three get right. Then"
+            },
+            {
+              "tex": "x_0 + x_1 + x_2 + x_3 = 20, \\qquad x_1 + 2x_2 + 3x_3 = 3 \\times 13 = 39 ,"
+            },
+            {
+              "p": "and the vote is right on the $x_2 + x_3$ rows that two or three of them get right. Each such row uses at least two of the 39 correct answers, so $2(x_2 + x_3) \\le 39$ and $x_2 + x_3 \\le 19$."
+            },
+            {
+              "p": "Nineteen is reached. Each model is wrong on 7 rows, 21 wrong answers in all, so let 19 rows take one wrong answer each and the 20th take two:"
+            },
+            {
+              "list": [
+                "model A is wrong on rows 1 to 6 and row 20,",
+                "model B is wrong on rows 7 to 12 and row 20,",
+                "model C is wrong on rows 13 to 19."
+              ]
+            },
+            {
+              "p": "Each model is right on 13 rows. Rows 1 to 19 each have two right answers and row 20 has one, so the vote is right on 19 rows: accuracy $0.95$."
+            },
+            {
+              "result": "0.95"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "What is the lowest accuracy the vote can have?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "Let $v = x_2 + x_3$ be the rows the vote gets right. A row the vote gets wrong holds at most one correct answer, and a row it gets right holds at most three, so"
+            },
+            {
+              "tex": "39 \\le (20 - v) + 3v = 20 + 2v \\quad\\Longrightarrow\\quad v \\ge 9.5 ,"
+            },
+            {
+              "p": "and $v \\ge 10$. To get there, waste the correct answers: put them in rows where all three are right, which use one more than the vote needs, and in rows where only one is right, which lose the vote anyway."
+            },
+            {
+              "p": "Ten is reached: all three are right on rows 1 to 10, model A alone on rows 11 to 13, model B alone on rows 14 to 16, model C alone on rows 17 to 19, and none on row 20. Each model is right on $10 + 3 = 13$ rows. The vote is right on 10 rows: accuracy $0.5$, worse than any one of the three."
+            },
+            {
+              "result": "0.5"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "If the three models made their mistakes independently, each right with probability 0.65 on every row, the vote would be right with probability $3(0.65)^2(0.35) + 0.65^3 = 0.718$. Explain where that number falls between your two answers, and what the two extremes say about choosing the members of a voting ensemble."
+            }
+          ],
+          "answer": [
+            {
+              "p": "The vote ranges from 0.50 to 0.95 with the same three accuracies, so the accuracy of the members alone does not settle what the vote can do. What settles it is how their mistakes overlap."
+            },
+            {
+              "p": "The best case spreads the mistakes out so that no row is missed by two models: every mistake is outvoted. The worst case stacks them: the rows where one model is right are rows where the other two are wrong, so each correct answer is outvoted. Independent mistakes sit in between at 0.718, a gain of 0.07 over one model."
+            },
+            {
+              "p": "Models trained on the same data with similar methods tend to fail on the same hard rows, which pushes toward the worst case. A vote pays off when its members are about equally good and make different mistakes, for example a forest, a boosted model and a nearest-neighbor model, and it can lose to its best member when they share them. Before adding a member, check on validation data how often it is wrong on the rows the others get wrong."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ens-patients-out-of-bag",
+      "moduleId": "tree-based-models-ensembles",
+      "title": "Out-of-Bag Rows from Repeat Visits",
+      "difficulty": "Hard",
+      "minutes": 20,
+      "overview": [
+        "A clinic's table has 300 patients with three visits each, one row per visit, 900 rows in all. A patient's three rows are nearly identical, and they carry the same label. A random forest of 200 deep trees is trained on the 900 rows with `oob_score=True`, and the model will be used on patients the clinic has not seen yet."
+      ],
+      "parts": [
+        {
+          "id": "1.1",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "Take one row and one tree for which that row is out of bag. What is the probability that the tree's bootstrap sample contains neither of the same patient's other two rows?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "A bootstrap sample is 900 draws with replacement from the 900 rows. One draw misses a given row with probability $1 - 1/900$ and misses all three of a patient's rows with probability $1 - 3/900$. So"
+            },
+            {
+              "tex": "P(\\text{row out}) = \\left(1 - \\tfrac{1}{900}\\right)^{900} = 0.3677, \\qquad\nP(\\text{all three out}) = \\left(1 - \\tfrac{3}{900}\\right)^{900} = 0.0495,"
+            },
+            {
+              "p": "and the conditional probability is $0.0495 / 0.3677 = 0.135$, close to $e^{-3}/e^{-1} = e^{-2}$. When a row is out of bag, the tree has still seen another visit of the same patient about 87% of the time."
+            },
+            {
+              "result": "0.135"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "kind": "computation",
+          "requirement": "Reasoning is not required.",
+          "prompt": [
+            {
+              "p": "On average, how many of the 200 trees have seen none of a given patient's three rows?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "$200 \\times 0.0495 = 9.9$. A row's out-of-bag vote comes from about $200 \\times 0.3677 = 73.5$ trees, and only about 9.9 of them have never seen the patient."
+            },
+            {
+              "result": "9.9"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "kind": "explanation",
+          "requirement": "Reasoning is required.",
+          "prompt": [
+            {
+              "p": "What does the out-of-bag accuracy measure here, will it be above or below the accuracy on new patients, and how would you get an honest estimate from these 900 rows?"
+            }
+          ],
+          "answer": [
+            {
+              "p": "About 64 of the 74 trees in a row's out-of-bag vote trained on a near copy of that row with the same label. A deep tree reproduces its training rows, so those trees vote for the label they were shown. The out-of-bag accuracy is close to an accuracy on rows the forest has already seen, and it will be well above the accuracy on new patients. The bootstrap treats rows as independent draws, and here the patient is the unit that is independent."
+            },
+            {
+              "p": "An honest estimate holds out whole patients:"
+            },
+            {
+              "list": [
+                "**Bootstrap patients, not rows.** Draw 300 patients with replacement and give each tree all the rows of the patients it drew. A patient is then out of bag for a tree with probability $(1 - 1/300)^{300} = 0.367$, and out of bag now means the tree has never seen that patient. scikit-learn's forests have no option for this, so it takes a short loop of your own.",
+                "**Cross-validate by patient.** `GroupKFold` with the patient id as the group keeps all three visits of a patient in the same fold."
+              ]
+            },
+            {
+              "p": "Either way the estimate answers the question the clinic is asking: how well the forest does on a patient it has never seen."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

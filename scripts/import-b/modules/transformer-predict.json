@@ -1,0 +1,16 @@
+{
+  "aModule": "transformer-predict",
+  "stage": "Round 2",
+  "fixes": [],
+  "parts": {
+    "tf-the-loss-of-a-longer-text": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "tf-the-loss-of-a-longer-text": "The training text grows to \"the cat sat on the\", so the model reads four tokens and each position predicts the one after it. The causal mask keeps the first three losses as they were, and the new position, whose input is \"on\", gets a final vector of its own. Compute the cross-entropy loss averaged over all four positions."
+  }
+}

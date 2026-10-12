@@ -1,0 +1,55 @@
+{
+  "module": "transformer-fundamentals",
+  "stage": "Round 2",
+  "index": [
+    {
+      "id": "attention-mechanisms-implementation-task",
+      "moduleId": "transformer-fundamentals",
+      "title": "Scaled Dot-Product Attention with a Causal Mask",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=attention-mechanisms",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Softmax attention with a causal mask, implemented in NumPy. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+      "answer": "Auto-graded inside the notebook. Max absolute difference from the reference must be below 1e-6."
+    },
+    {
+      "id": "tf1-masked-softmax-nan",
+      "moduleId": "transformer-fundamentals",
+      "title": "The Attention Row That Masks Everything",
+      "source": "Custom",
+      "difficulty": "Medium",
+      "url": "/editor/?nb=tf1-masked-softmax-nan",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Implement causal plus padding masked attention, find the query rows where every key is masked, and fix the 0/0 that turns the loss into NaN.",
+      "answer": "Auto-graded inside the notebook. n_dead_rows, n_nonfinite_naive, n_nonfinite_safe, safe_out_sum and row_sum_max_err must each match the reference within 1e-6 * (1 + |reference|), row_sum_max_err must be below 1e-9, and the naive version must produce non-finite entries while the safe one produces none."
+    },
+    {
+      "id": "tf2-prenorm-postnorm",
+      "moduleId": "transformer-fundamentals",
+      "title": "Why Every Transformer Moved the LayerNorm",
+      "source": "Custom",
+      "difficulty": "Hard",
+      "url": "/editor/?nb=tf2-prenorm-postnorm",
+      "tags": [
+        "Coding",
+        "Implementation",
+        "Notebook",
+        "Round 2"
+      ],
+      "prompt": "Backpropagate through 48 pre-norm and 48 post-norm residual blocks and measure how much gradient each design delivers to the first layer.",
+      "answer": "Auto-graded inside the notebook. The sum and one fixed random projection of the pre-norm and post-norm gradient-norm curves, and the pre-norm ratio, must each match the reference within 1e-6 * (1 + |reference|), an absolute 1e-6 floor for the near-zero post-norm curve, and pre-norm must deliver at least 1000 times more gradient to block 1 than post-norm does."
+    }
+  ],
+  "theory": []
+}

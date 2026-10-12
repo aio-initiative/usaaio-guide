@@ -1,0 +1,16 @@
+{
+  "aModule": "transformer-stack",
+  "stage": "Round 2",
+  "order": [
+    "tf-counting-gpt2-large"
+  ],
+  "fixes": [],
+  "parts": {
+    "tf-counting-gpt2-large": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is not required."}
+    }
+  },
+  "indexPrompt": {
+    "tf-counting-gpt2-large": "GPT-2 large keeps GPT-2 small's design, its vocabulary of 50,257 tokens and its 1,024 positions, but has a width of 1,280, 20 heads of 64 numbers and 36 blocks, and its feed-forward network widens to four times the width. Count its weights the way this module's table counts GPT-2 small, offsets included, and give the total in millions to two decimal places."
+  }
+}

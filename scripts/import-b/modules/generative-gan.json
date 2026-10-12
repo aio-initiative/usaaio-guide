@@ -1,0 +1,37 @@
+{
+  "aModule": "generative-adversarial-networks",
+  "stage": "Camp",
+  "fixes": [
+    {
+      "file": "gen-a-generator-leaner-than-collapse",
+      "find": "Weighting the generator's two terms by\none half each gives $-0.7576$, and dropping the averaging to keep only the two\nterms the page computes for a single real image and a single generated image\ngives $-2.2083$.",
+      "replace": "Averaging the four logarithms with equal weight, a quarter each, gives\n$-0.7576$, and weighting the generator's two terms by one half each instead of\n$0.8$ and $0.2$ gives $-1.5151$, while dropping the averaging to keep only the\ntwo terms the page computes for a single real image and a single generated image\ngives $-2.2083$.",
+      "why": "The four logs sum to -3.0302544; a quarter each gives -0.7576 and one half each gives -1.5151, so the original sentence attached the wrong label to -0.7576. bprv-25 finding 1."
+    },
+    {
+      "file": "gen-a-generator-leaner-than-collapse",
+      "find": "The score has risen because the generator now rarely produces\nLEFT, so a LEFT image carries more evidence that it is real.",
+      "replace": "The score has risen because the generator produces LEFT less often than the\ncollapsed generator does, $0.8$ instead of $1$, so a LEFT image carries more\nevidence that it is real.",
+      "why": "The problem's own setup has the generator return LEFT on four of every five inputs, so 'rarely' contradicts it. bprv-25 finding 2."
+    }
+  ],
+  "parts": {
+    "gen-a-generator-leaner-than-collapse": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "gen-a-generator-leaner-than-collapse": "The data is LEFT or RIGHT with probability one half each. A generator leans without collapsing: it returns LEFT on four of every five random inputs and RIGHT on the fifth. Find the score the best discriminator gives each image and the value it attains."
+  }
+}

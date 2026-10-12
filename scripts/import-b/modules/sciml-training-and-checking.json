@@ -1,0 +1,16 @@
+{
+  "aModule": "sciml-training-and-checking",
+  "stage": "Camp",
+  "order": ["sm-between-the-training-points"],
+  "parts": {
+    "sm-between-the-training-points": {
+      "1.1": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.2": {"kind": "computation", "requirement": "Reasoning is required."},
+      "1.3": {"kind": "derivation", "requirement": "A complete derivation is required."},
+      "1.4": {"kind": "derivation", "requirement": "A complete derivation is required."}
+    }
+  },
+  "indexPrompt": {
+    "sm-between-the-training-points": "A colleague replaces the trained network of the running example by a curve worked out in closed form. It starts where the problem starts and scores a loss of 0 on the 9 training points, so the question is what it gets wrong between them."
+  }
+}

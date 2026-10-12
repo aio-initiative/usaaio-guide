@@ -1,0 +1,130 @@
+{
+  "aModule": "decision-trees-knn",
+  "stage": "Round 1",
+  "fixes": [
+    {
+      "file": "dtknn-one-wrong-label",
+      "find": "the vote is two to one for class 0 either way.",
+      "replace": "the vote is two to one for class 0 even with the wrong label."
+    }
+  ],
+  "parts": {
+    "dtknn-cube-distance-spread": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "dtknn-hallway-lamp-greedy": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "dtknn-importances-by-hand": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "dtknn-leave-one-out-two-ends": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "derivation",
+        "requirement": "A complete derivation is required."
+      }
+    },
+    "dtknn-oat-milk-regression-tree": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "dtknn-one-wrong-label": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "dtknn-pruning-path": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.3": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    },
+    "dtknn-staircase-leaves": {
+      "1.1": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      },
+      "1.2": {
+        "kind": "computation",
+        "requirement": "Reasoning is not required."
+      }
+    }
+  },
+  "indexPrompt": {
+    "dtknn-bike-nearest-after-scaling": "Five sold bikes differ in weight in kilograms and price in dollars, and the two features are standardized the way StandardScaler does, fit on those five. A bike weighing 12 kg and priced at 450 dollars comes in. Which sold bike is its nearest neighbor?",
+    "dtknn-cube-distance-spread": "Two points are drawn independently and uniformly from the unit cube in d dimensions, and their squared distance is a sum of d independent terms. The parts ask for the variance of one term, the smallest d at which the spread of that sum relative to its mean is at most 0.1, and what the answer means for a kNN vote.",
+    "dtknn-gini-entropy-disagree": "A tree sorts photos of fruit into four classes, and two of its leaves hold ten training photos each: leaf P with 5 apples and 5 pears, leaf Q with 7 apples, 1 pear, 1 plum and 1 fig. Which leaf is more impure by Gini impurity, and which by entropy?",
+    "dtknn-hallway-lamp-greedy": "A hallway lamp is wired to two switches, one at each end, and a logger records eight readings of both switch positions, the hour, and whether the lamp is on. A classification tree grown with Gini impurity takes the split with the largest gain at each node and stops at depth 2. Find the largest gain at the root and the tree's training accuracy.",
+    "dtknn-importances-by-hand": "A classification tree grown on 200 training rows with Gini impurity has four splits: the root splits 200 rows (100 positive, 100 negative) on x1 into 120 rows (90, 30) and 80 rows (10, 70), the 120-row node splits on x2 into 60 pure rows and 60 rows (30, 30), the 80-row node splits on x2 into 20 rows (10, 10) and 60 pure rows, and the 60-row node splits on x3 into 40 rows (30, 10) and 20 pure rows. A split's credit is its own rows times its Gini impurity minus the same quantity for its two children, and a feature's importance is the total credit of its splits divided by the total credit of all four splits.",
+    "dtknn-leave-one-out-two-ends": "Six training points on a line have targets 2, 4, 3, 7, 9 and 5. Compute the leave-one-out mean squared error of a kNN regressor at k = 1 and at k = 5, then say which k you would pick and what each end of the range gets wrong.",
+    "dtknn-oat-milk-regression-tree": "A cafe ordered oat milk for six weeks and fits a depth-1 regression tree to predict the cartons ordered from the week number. Work out the threshold the tree splits on, how much that split lowers the mean squared error, and what the tree predicts for a week far past the end of the data.",
+    "dtknn-one-wrong-label": "Nine training points sit on a line at x = 0, 1, 2, 4, 5, 7, 8, 10 and 11, with true class 0 on the first five and class 1 on the last four, but the point at x = 2 was recorded as class 1 by mistake. A kNN classifier with plain majority voting is trained on the recorded labels; for k = 1, 3 and 5, find the total length of the set of queries whose prediction differs from what the true labels would give.",
+    "dtknn-pruning-path": "A classification tree grown on 100 rows is given as a table of class counts at each node. As the cost-complexity penalty ccp_alpha grows, find where the full tree stops being cheapest, how many leaves the cheapest tree keeps, and where it collapses to a single leaf.",
+    "dtknn-staircase-leaves": "Points of a 5 by 5 grid are class 1 strictly above the diagonal and class 0 on and below it, and a classification tree is grown until every leaf is pure. Count the fewest leaves such a tree can have, first on the 5 by 5 grid and then on a 20 by 20 grid.",
+    "dtknn-weighted-vote-three-classes": "Seven labeled points in the plane are classified with a 6-nearest-neighbor classifier using Euclidean distance and distance-weighted votes. Work out which class the weighted vote picks for the query (1, 2)."
+  }
+}

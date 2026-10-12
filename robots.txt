@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# The dashboard, planner, editor, search and mock pages carry a noindex
+# meta tag rather than a Disallow. Blocking them here would stop crawlers
+# fetching the page, so they would never see the noindex and could still
+# list the bare URL.
+
+Sitemap: https://www.aioinitiative.com/sitemap.xml
