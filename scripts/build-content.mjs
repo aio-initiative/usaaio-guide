@@ -69,6 +69,21 @@ const STAGES = [
 // its lesson file exists is skipped with a note instead of failing the build.
 const CHAPTERS = loadChapters();
 
+// How often each module's topic has come up on past papers, 0 to 4, in
+// usaco.guide's sense ("Has Not Appeared" up to "Very Frequent"). The levels
+// are set by hand from the past papers in content/frequency.json, keyed by
+// module id. A module missing from the file carries no label.
+const FREQUENCY = loadFrequency();
+
+function loadFrequency() {
+  const file = path.join(repoRoot, "content/frequency.json");
+  if (!fs.existsSync(file)) return {};
+  const levels = JSON.parse(fs.readFileSync(file, "utf8"));
+  const bad = Object.entries(levels).filter(([, level]) => !Number.isInteger(level) || level < 0 || level > 4);
+  if (bad.length) throw new Error(`content/frequency.json: levels must be 0 to 4 (${bad.map(([id]) => id).join(", ")})`);
+  return levels;
+}
+
 function loadChapters() {
   const file = path.join(repoRoot, "content/chapters.json");
   if (!fs.existsSync(file)) {
@@ -822,6 +837,9 @@ function parseModule(stage, filename, sharedContext) {
       file: `${stage.dir}/${filename}`,
       code,
       number,
+      ...(Number.isInteger(FREQUENCY[context.idByFilename.get(filename)])
+        ? { frequency: FREQUENCY[context.idByFilename.get(filename)] }
+        : {}),
     },
     lesson: { anchors: sections.map((section) => section.id), sections },
     problemSections,

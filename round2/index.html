@@ -14,29 +14,29 @@
     <meta name="twitter:description" content="What to cover for USAAIO Round 2: optimization, the classical models in depth, validation, and enough PyTorch to build things." />
     <link rel="canonical" href="https://www.aioinitiative.com/round2/" />
     <meta property="og:url" content="https://www.aioinitiative.com/round2/" />
-    <meta property="og:image" content="https://www.aioinitiative.com/public/assets/og-card.png?v=20261012-review" />
+    <meta property="og:image" content="https://www.aioinitiative.com/public/assets/og-card.png?v=20261012-about" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="USAAIO Guide — lessons and practice for the USA AI Olympiad" />
-    <meta name="twitter:image" content="https://www.aioinitiative.com/public/assets/og-card.png?v=20261012-review" />
+    <meta name="twitter:image" content="https://www.aioinitiative.com/public/assets/og-card.png?v=20261012-about" />
     <meta name="theme-color" content="#b84e30" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Outfit:wght@100..900&family=JetBrains+Mono:wght@400;600&display=swap" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
-    <link rel="icon" type="image/svg+xml" href="../public/assets/logo.svg?v=20261012-review" />
+    <link rel="icon" type="image/svg+xml" href="../public/assets/logo.svg?v=20261012-about" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="stylesheet" href="../src/styles/main.css?v=20261012-review" />
-    <link rel="stylesheet" href="../src/styles/polish.css?v=20261012-review" />
-    <link rel="stylesheet" href="../src/styles/ui.css?v=20261012-review" />
+    <link rel="stylesheet" href="../src/styles/main.css?v=20261012-about" />
+    <link rel="stylesheet" href="../src/styles/polish.css?v=20261012-about" />
+    <link rel="stylesheet" href="../src/styles/ui.css?v=20261012-about" />
   </head>
   <body data-page="section" data-section="round2" data-root="../">
     <a class="skip-link" href="#main">Skip to Content</a>
     <header class="site-header">
       <nav class="nav-shell" aria-label="Primary navigation">
-        <a class="brand" href="../" aria-label="USAAIO Guide home">
-          <img class="brand-mark" src="../public/assets/logo.svg?v=20261012-review" alt="" aria-hidden="true" width="40" height="40" />
-          <span><strong>USAAIO Guide</strong><small>AI Olympiad prep</small></span>
+        <a class="brand" href="../" aria-label="AIO Initiative home">
+          <img class="brand-mark" src="../public/assets/logo.svg?v=20261012-about" alt="" aria-hidden="true" width="40" height="40" />
+          <span><strong>AIO Initiative</strong><small>USAAIO Guide</small></span>
         </a>
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Main menu">
           <svg class="nav-toggle-icon nav-toggle-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
@@ -58,7 +58,6 @@
           <h1 id="sectionTitle">Round 2</h1>
           <p id="sectionDescription">Backpropagation, model evaluation, computer vision, and transformers.</p>
           <div class="stage-progress" id="sectionProgressCards" aria-live="polite"></div>
-          <div class="chapter-table-wrap" id="sectionChapterTable"></div>
         </div>
       </section>
       <section class="division-roadmap-wrap" aria-label="Round 2 roadmap">
@@ -68,10 +67,11 @@
     <footer class="site-footer">
       <div class="footer-inner">
         <div class="footer-brand">
-          <a class="footer-brand-link" href="../" aria-label="USAAIO Guide home">
-            <img class="footer-brand-mark" src="../public/assets/logo.svg?v=20261012-review" alt="" aria-hidden="true" width="38" height="38" />
-            <span><strong>USAAIO Guide</strong><small>AI Olympiad prep</small></span>
+          <a class="footer-brand-link" href="../" aria-label="AIO Initiative home">
+            <img class="footer-brand-mark" src="../public/assets/logo.svg?v=20261012-about" alt="" aria-hidden="true" width="38" height="38" />
+            <span><strong>AIO Initiative</strong><small>USAAIO Guide</small></span>
           </a>
+          <p class="footer-org">USAAIO Guide is run by <a href="https://aioinitiative.org">AIO Initiative</a>.</p>
           <p class="footer-disclaimer">An unofficial, independent study guide. Not affiliated with, endorsed by, or sponsored by the USA Artificial Intelligence Olympiad (USAAIO).</p>
           <p class="footer-official">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" /></svg>
@@ -122,16 +122,16 @@
       </div>
 
       <div class="footer-bar">
-        <p class="footer-copyright">&copy; 2026 USAAIO Guide. All rights reserved.</p>
-        <p class="footer-disclaimer-full">This is an unofficial, independently written study guide. We are not affiliated with, endorsed by, sponsored by, or in any way officially connected to the USA Artificial Intelligence Olympiad (USAAIO), the International Olympiad in Artificial Intelligence, or the International Artificial Intelligence Olympiad. The names of those organisations and their contests are their trademarks. We use them here only to identify what our lessons prepare students for. Nothing on this site has been reviewed or approved by any of those organisations. For the official contest, its rules, its dates and its past papers, go to <a href="https://www.usaaio.org/">https://www.usaaio.org/</a>.</p>
+        <p class="footer-copyright">&copy; 2026 AIO Initiative. All rights reserved.</p>
+        <p class="footer-disclaimer-full">The same goes for the International Olympiad in Artificial Intelligence and the International Artificial Intelligence Olympiad. Contest names are their owners’ trademarks, used here only to say what our lessons prepare students for. For official rules, dates and past papers, go to <a href="https://www.usaaio.org/">usaaio.org</a>.</p>
       </div>
     </footer>
-    <script src="../content/ordering.js?v=20261012-review" defer></script>
-    <script src="../content/catalog.js?v=20261012-review" defer></script>
-    <script src="../content/problems.js?v=20261012-review" defer></script>
-    <script src="../src/data/site-data.js?v=20261012-review" defer></script>
-    <script src="../src/lib/progress.js?v=20261012-review" defer></script>
-    <script src="../src/components/renderers.js?v=20261012-review" defer></script>
-    <script src="../src/app.js?v=20261012-review" defer></script>
+    <script src="../content/ordering.js?v=20261012-about" defer></script>
+    <script src="../content/catalog.js?v=20261012-about" defer></script>
+    <script src="../content/problems.js?v=20261012-about" defer></script>
+    <script src="../src/data/site-data.js?v=20261012-about" defer></script>
+    <script src="../src/lib/progress.js?v=20261012-about" defer></script>
+    <script src="../src/components/renderers.js?v=20261012-about" defer></script>
+    <script src="../src/app.js?v=20261012-about" defer></script>
   </body>
 </html>

@@ -275,33 +275,94 @@
     return `difficulty-${String(difficulty || "").toLowerCase().replace(/\s+/g, "-")}`;
   }
 
-  // One problem as a link card: the same card the module's Problems list uses.
-  function renderProblemLinkCard(problem, root) {
-    const { href, external } = problemHref(problem, root, true);
-    const type = (problem.tags || []).includes("Theory") ? "Theory" : "Coding";
+  // How often a module's topic has come up on past papers, as usaco.guide
+  // shows it: four dots, filled up to the level, then the label. Labels and
+  // hints match the main guide's Frequency component; the levels are set by
+  // hand in content/frequency.json.
+  const FREQUENCY_LABELS = ["Has Not Appeared", "Rare", "Not Frequent", "Somewhat Frequent", "Very Frequent"];
+  const FREQUENCY_HINTS = [
+    "Has not appeared on a past paper, but could still show up.",
+    "Barely tested so far: at most a small part of one past paper.",
+    "Appears infrequently on past papers.",
+    "Appears somewhat frequently on past papers.",
+    "Has appeared on nearly every past paper for its round. No guarantee for future ones.",
+  ];
+
+  function frequencyBadge(module) {
+    const level = module && Number.isInteger(module.frequency) ? module.frequency : null;
+    if (level === null || !FREQUENCY_LABELS[level]) return "";
+    const dots = [1, 2, 3, 4].map((step) => `<i class="${step <= level ? "is-on" : ""}"></i>`).join("");
+    return `<span class="frequency" data-frequency="${level}" title="${escapeHtml(FREQUENCY_HINTS[level])}"><span class="frequency-dots" aria-hidden="true">${dots}</span><span class="frequency-label">${FREQUENCY_LABELS[level]}</span><span class="sr-only">. ${escapeHtml(FREQUENCY_HINTS[level])}</span></span>`;
+  }
+
+  const NOTEBOOK_ICON = '<svg viewBox="0 0 24 24"><path d="M6 3.5h9.5L19 7v13.5H6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 11.5l2 1.5-2 1.5M12.5 15.5h3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  // One problem inside a lesson, as a full-width row like usaco.guide's: the
+  // status control on the left (the same dropdown as everywhere else), then
+  // the link to the problem with its kind, title and difficulty. The status
+  // sits outside the link, since a button cannot live inside an anchor.
+  // "Round 1 - Medium": the problem's stage, from its module, then its
+  // difficulty, the way usaco.guide writes "Bronze - Easy".
+  function problemStageLine(problem) {
+    if (!problem) return "";
+    const ordering = window.AIO_ORDERING || {};
+    const sectionId = (ordering.moduleIdToSectionMap || {})[problem.moduleId];
+    const section = sectionId && (ordering.sectionOrdering || {})[sectionId];
+    const stage = section
+      ? section.label
+      : ["Round 1", "Round 2", "Camp", "Advanced"].find((label) => (problem.tags || []).includes(label)) || "";
+    return [stage, problem.difficulty].filter(Boolean).join(" - ");
+  }
+
+  function lessonProblemRow({ problem, href, external, title, anchorId, status, notebook }) {
+    const control = problem ? statusCircle(problem.id, problem.title, status, "lesson-problem-status") : "";
+    const line = problemStageLine(problem);
     return `
-      <a class="reader-focus-card reader-similar-card lesson-problem-card" id="card-${escapeHtml(problem.id)}" href="${escapeHtml(href)}"${external ? ' target="_blank" rel="noopener"' : ""}>
-        <span class="reader-focus-copy">
-          <small>${escapeHtml(type)}</small>
-          <strong>${escapeHtml(problem.title)}</strong>
-        </span>
-        <span class="problem-chip ${escapeHtml(difficultyClass(problem.difficulty))}">${escapeHtml(problem.difficulty)}</span>
-      </a>
+      <div class="lesson-problem-card${notebook ? " lesson-notebook-card" : ""}"${anchorId ? ` id="${escapeHtml(anchorId)}"` : ""}>
+        <div class="lesson-problem-main">
+          ${control}
+          <a class="lesson-problem-link" href="${escapeHtml(href)}"${external ? ' target="_blank" rel="noopener"' : ""}>
+            ${notebook ? `<span class="lesson-notebook-icon" aria-hidden="true">${NOTEBOOK_ICON}</span>` : ""}
+            <span class="lesson-problem-copy">
+              <strong>${escapeHtml(title)}</strong>
+              ${line ? `<span class="lesson-problem-meta">${escapeHtml(line)}</span>` : ""}
+            </span>
+            <span class="lesson-problem-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+        <p class="lesson-problem-note">Focus Problem – try your best to solve this problem before continuing!</p>
+      </div>
     `;
+  }
+
+  function renderProblemLinkCard(problem, root, appState) {
+    const { href, external } = problemHref(problem, root, true);
+    return lessonProblemRow({
+      problem,
+      href,
+      external,
+      title: problem.title,
+      anchorId: `card-${problem.id}`,
+      status: appState && appState.problemStatus ? appState.problemStatus[problem.id] : "",
+    });
   }
 
   const CHOICE_LETTERS = "ABCDEFGHIJ";
 
-  // The one status control for a problem, on every page that shows one: an
-  // empty circle, half filled while in progress, filled green with a tick once
-  // the problem is done. app.js cycles it through data-cycle-problem-status and
-  // keeps every copy of it on the page in step with storage (see
-  // patchProblemStatus there).
+  // The one status control for a problem, on every page that shows one: a
+  // button whose icon reads the current status (empty circle, half filled
+  // while in progress, filled green with a tick once done) and which opens a
+  // dropdown to set the status directly. app.js owns one shared menu for the
+  // whole page and keeps every copy of the button in step with storage (see
+  // openStatusMenu and patchProblemStatus there).
   const PROBLEM_STATUS_LABELS = {
     "not-started": "Not Started",
     "in-progress": "In Progress",
     complete: "Done",
   };
+
+  // Menu order, top to bottom.
+  const PROBLEM_STATUS_ORDER = ["not-started", "in-progress", "complete"];
 
   const PROBLEM_STATUS_PRESSED = { "not-started": "false", "in-progress": "mixed", complete: "true" };
 
@@ -315,6 +376,15 @@
     return PROBLEM_STATUS_LABELS[problemStatusValue(status)];
   }
 
+  function statusIcon(extraClass) {
+    return `
+      <svg class="pcheck-icon${extraClass ? ` ${extraClass}` : ""}" viewBox="0 0 24 24" aria-hidden="true">
+        <circle class="pcheck-ring" cx="12" cy="12" r="10" />
+        <path class="pcheck-half" d="M12 4a8 8 0 0 1 0 16z" />
+        <path class="pcheck-tick" d="M7.4 12.4l3.1 3.1 6.1-6.7" />
+      </svg>`;
+  }
+
   function statusCircle(problemId, title, status, extraClass) {
     const value = problemStatusValue(status);
     return `
@@ -322,15 +392,24 @@
         data-cycle-problem-status="${escapeHtml(problemId)}"
         data-problem-title="${escapeHtml(title)}"
         data-status="${value}"
+        aria-haspopup="menu"
+        aria-expanded="false"
         aria-pressed="${PROBLEM_STATUS_PRESSED[value]}"
-        aria-label="${statusTitle(value)}: ${escapeHtml(title)}"
+        aria-label="${statusTitle(value)}: ${escapeHtml(title)}. Change status"
         title="${statusTitle(value)}">
-        <svg class="pcheck-icon" viewBox="0 0 24 24" aria-hidden="true">
-          <circle class="pcheck-ring" cx="12" cy="12" r="10" />
-          <path class="pcheck-half" d="M12 4a8 8 0 0 1 0 16z" />
-          <path class="pcheck-tick" d="M7.4 12.4l3.1 3.1 6.1-6.7" />
-        </svg>
+        ${statusIcon()}
       </button>`;
+  }
+
+  // The shared dropdown app.js moves to whichever button is open.
+  function statusMenu() {
+    const items = PROBLEM_STATUS_ORDER.map((value) => `
+      <button class="pstatus-item" type="button" role="menuitemradio" aria-checked="false"
+        data-set-problem-status="${value}">
+        ${statusIcon("pstatus-item-icon")}
+        <span>${PROBLEM_STATUS_LABELS[value]}</span>
+      </button>`).join("");
+    return `<div class="pstatus-menu" role="menu" aria-label="Set problem status" hidden>${items}</div>`;
   }
 
   // Previous and next problem for a problem page, in the problem bank's order.
@@ -401,6 +480,7 @@
       ? `
         <div class="mcq-head">
           ${statusCircle(spec.problemId, spec.title || "this question", spec.status, "mcq-status")}
+          <span class="mcq-kicker">Question</span>
         </div>`
       : "";
     const options = (spec.choices || [])
@@ -529,7 +609,7 @@
     const prompt = card.mcq && Array.isArray(card.mcq.prompt) ? card.mcq.prompt : null;
     const choicesBlock = prompt && prompt.find((block) => block && Array.isArray(block.choices));
     if (!choicesBlock || !choicesBlock.choices.every((choice) => choice && typeof choice === "object")) {
-      return renderProblemLinkCard(problem, root);
+      return renderProblemLinkCard(problem, root, options.appState);
     }
     const status = options.appState && options.appState.problemStatus ? options.appState.problemStatus[problem.id] : "";
     return renderChoiceQuestion(
@@ -552,24 +632,24 @@
     );
   }
 
-  // <NotebookCard id>: the lesson's notebook, opened in the editor.
-  function renderNotebookCard(card, root) {
+  // <NotebookCard id>: the lesson's notebook, opened in the editor. It is a
+  // problem like any other, so it carries the same status control.
+  function renderNotebookCard(card, root, options = {}) {
     if (!card || !card.id || !card.title) return "";
-    const facts = [
-      card.parts ? `${card.parts} part${card.parts === 1 ? "" : "s"}` : "",
-      card.minutes ? `${card.minutes} min` : "",
-    ].filter(Boolean);
-    return `
-      <a class="reader-focus-card lesson-notebook-card" href="${escapeHtml(`${root || ""}editor/?nb=${encodeURIComponent(card.id)}`)}">
-        <span class="lesson-notebook-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M6 3.5h9.5L19 7v13.5H6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 11.5l2 1.5-2 1.5M12.5 15.5h3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <span class="reader-focus-copy">
-          ${facts.length ? `<small>${escapeHtml(facts.join(" · "))}</small>` : ""}
-          <strong>${escapeHtml(card.title)}</strong>
-        </span>
-      </a>
-    `;
+    const lookup = options.problemLookup;
+    const url = `/editor/?nb=${card.id}`;
+    let problem = lookup ? lookup.get(card.id) : null;
+    if ((!problem || problem.url !== url) && lookup) {
+      problem = Array.from(lookup.values()).find((entry) => entry.url === url) || null;
+    }
+    return lessonProblemRow({
+      problem,
+      href: `${root || ""}editor/?nb=${encodeURIComponent(card.id)}`,
+      title: card.title,
+      anchorId: problem ? `card-${problem.id}` : "",
+      status: problem && options.appState && options.appState.problemStatus ? options.appState.problemStatus[problem.id] : "",
+      notebook: true,
+    });
   }
 
   function renderBlocks(blocks, root, options = {}) {
@@ -589,7 +669,7 @@
         if (block.callout) return renderCallout(block.callout, root, options);
         if (block.pyEditor) return renderPyEditor(block.pyEditor, root, options, index);
         if (block.problemCard) return renderProblemCardBlock(block.problemCard, root, options);
-        if (block.notebookCard) return renderNotebookCard(block.notebookCard, root);
+        if (block.notebookCard) return renderNotebookCard(block.notebookCard, root, options);
         if (block.resources) return renderResourceList(block.resources, root);
         if (block.output) return renderOutputBlock(block.output);
         if (block.tex) {
@@ -885,6 +965,7 @@
                   <span class="topic-copy">
                     <strong>${escapeHtml(title)}</strong>
                     <small>${escapeHtml(meta)}</small>
+                    ${frequencyBadge(module)}
                     <em>${escapeHtml(summary)}</em>
                   </span>
                   ${renderModuleIllustration(moduleId, module ? module.section : "", root)}
@@ -1083,54 +1164,6 @@
     `;
   }
 
-  function renderChapterTable(sectionId, ordering, moduleLookup, appState, root = "") {
-    const section = ordering.sectionOrdering[sectionId];
-    if (!section) return "";
-    const rows = section.chapters
-      .map((chapter, index) => {
-        const completeCount = chapter.items.filter(
-          (moduleId) => appState.moduleStatus[moduleId] === "complete",
-        ).length;
-        const percent = chapter.items.length ? Math.round((completeCount / chapter.items.length) * 100) : 0;
-        const firstModule = chapter.items[0];
-        const href = firstModule ? `${root}module/?id=${encodeURIComponent(firstModule)}` : "";
-        return `
-          <tr>
-            <th scope="row">
-              ${firstModule
-                ? `<a href="${escapeHtml(href)}" data-open-module="${escapeHtml(firstModule)}">
-                <span class="chapter-table-name">${escapeHtml(chapter.name)}</span>
-                <span class="chapter-table-link">Start Chapter <span aria-hidden="true">→</span></span>
-              </a>`
-                : `<span class="chapter-table-name">${escapeHtml(chapter.name)}</span>`}
-            </th>
-            <td data-label="Modules">${escapeHtml(chapter.items.length)}</td>
-            <td data-label="Complete">${escapeHtml(completeCount)}</td>
-            <td data-label="Progress">
-              <span class="glance-bar" role="img" aria-label="${escapeHtml(percent)} percent of ${escapeHtml(chapter.name)} complete"><i style="width: ${escapeHtml(percent)}%"></i></span>
-              <span class="glance-pct">${escapeHtml(percent)}%</span>
-            </td>
-          </tr>
-        `;
-      })
-      .join("");
-
-    return `
-      <table class="chapter-table">
-        <caption>${escapeHtml(section.label)} chapters</caption>
-        <thead>
-          <tr>
-            <th scope="col">Chapter</th>
-            <th scope="col">Modules</th>
-            <th scope="col">Complete</th>
-            <th scope="col">Progress</th>
-          </tr>
-        </thead>
-        <tbody>${rows}</tbody>
-      </table>
-    `;
-  }
-
   function dateKey(date) {
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
@@ -1204,110 +1237,33 @@
     `;
   }
 
-  function dashboardProgressBar(complete, total, label) {
-    const percent = total ? (complete / total) * 100 : 0;
-    return `
-      <span class="pprog-track" role="progressbar" aria-label="${escapeHtml(label)}" aria-valuemin="0" aria-valuemax="${total || 1}" aria-valuenow="${complete}" aria-valuetext="${complete} of ${total} completed">
-        <span class="pprog-fill" style="width: ${percent.toFixed(2)}%"></span>
-      </span>
-    `;
-  }
-
-  function dashboardModuleRow(module, appState, context) {
-    const section = context.ordering.sectionOrdering[module.section];
-    const status = STATUS_LABELS[appState.moduleStatus[module.id]] || STATUS_LABELS["not-started"];
-    return `
-      <li>
-        <a class="dash-module-row" href="${escapeHtml(`${context.root}module/?id=${encodeURIComponent(module.id)}`)}" data-open-module="${escapeHtml(module.id)}">
-          ${renderModuleIllustration(module.id, module.section, context.root)}
-          <span class="dash-module-copy">
-            <small>${escapeHtml(section.label)} <span aria-hidden="true">·</span> ${escapeHtml(status)}</small>
-            <strong>${escapeHtml(module.title)}</strong>
-            <span>${escapeHtml(module.summary)}</span>
-          </span>
-          <span class="dash-row-arrow" aria-hidden="true">→</span>
-        </a>
-      </li>
-    `;
-  }
-
   function renderDashboard(stats, nextModules, appState, context) {
     const lastModule = context.moduleLookup.get(appState.lastModuleId);
     const continueModule = lastModule || nextModules[0] || context.moduleOrder[0];
     const activity = buildActivity(appState);
     const modulePercent = stats.modules.total ? Math.round((stats.modules.complete / stats.modules.total) * 100) : 0;
     const problemPercent = stats.problems.total ? Math.round((stats.problems.complete / stats.problems.total) * 100) : 0;
-    const hasProgress = stats.modules.complete > 0 || stats.problems.complete > 0;
-    const stageRows = context.stageProgress.map((stage, index) => `
-      <div class="dash-stage" data-stage="${escapeHtml(stage.id)}">
-        <div class="dash-stage-heading">
-          <a href="${escapeHtml(context.root + stage.route)}"><span class="dash-stage-number" aria-hidden="true">0${index + 1}</span>${escapeHtml(stage.label)} <span class="dash-stage-arrow" aria-hidden="true">↗</span></a>
-          <span class="pprog-count"><strong>${stage.complete}</strong> / ${stage.total}</span>
-        </div>
-        ${dashboardProgressBar(stage.complete, stage.total, `${stage.label} modules completed`)}
-      </div>
-    `).join("");
-    const typeRows = context.problemTypeProgress.map((type) => `
-      <div class="pprog-type pprog-type--${escapeHtml(type.id)}">
-        <div class="pprog-line">
-          <span class="pprog-label">${escapeHtml(type.label)}</span>
-          <span class="pprog-count"><strong>${type.complete}</strong> / ${type.total}</span>
-        </div>
-        ${dashboardProgressBar(type.complete, type.total, `${type.label} problems completed`)}
-      </div>
-    `).join("");
 
     return `
       <section class="dash-hero">
         <div>
-          <h1>Welcome Back</h1>
-          ${continueModule ? `<p>${lastModule ? "Keep going with" : "Start with"} <strong>${escapeHtml(continueModule.title)}</strong>.</p>` : ""}
+          <h1>Welcome back</h1>
+          ${continueModule ? `<p>Your last opened module is "${escapeHtml(continueModule.title)}".</p>` : ""}
         </div>
         ${continueModule ? `
           <a class="dashboard-continue" href="${escapeHtml(`${context.root}module/?id=${encodeURIComponent(continueModule.id)}`)}" data-open-module="${escapeHtml(continueModule.id)}">
-            Continue Learning <span aria-hidden="true">→</span>
+            Continue learning
           </a>
         ` : ""}
       </section>
       <div class="kpi-grid">
-        ${kpiTile("Modules done", stats.modules.complete, stats.modules.total, modulePercent)}
-        ${kpiTile("Problems done", stats.problems.complete, stats.problems.total, problemPercent)}
+        ${kpiTile("Modules completed", stats.modules.complete, stats.modules.total, modulePercent)}
+        ${kpiTile("Problems completed", stats.problems.complete, stats.problems.total, problemPercent)}
         ${kpiTile("Day streak", activity.streak, "", null, "")}
-      </div>
-      <div class="dash-overview">
-        <section class="dashboard-card dash-stages" aria-labelledby="dash-stages-title">
-          <div class="dash-card-head">
-            <h2 id="dash-stages-title">Progress by Stage</h2>
-          </div>
-          <div class="dash-stage-grid">${stageRows}</div>
-        </section>
-        <section class="dashboard-card dash-problems" aria-labelledby="dash-problems-title">
-          <div class="dash-card-head dash-card-head-link">
-            <h2 id="dash-problems-title">Problems by Type</h2>
-            <a class="dash-text-link" href="${escapeHtml(context.root)}problems/">Practice <span aria-hidden="true">→</span></a>
-          </div>
-          <div class="pprog-types">${typeRows}</div>
-        </section>
-        <section class="dashboard-card dash-next" aria-labelledby="dash-next-title">
-          <div class="dash-card-head">
-            <h2 id="dash-next-title">Next Up</h2>
-          </div>
-          ${nextModules.length ? `
-            <ol class="dash-module-list">${nextModules.map((module) => dashboardModuleRow(module, appState, context)).join("")}</ol>
-          ` : `
-            <div class="dash-complete">
-              <span aria-hidden="true">✓</span>
-              <h3>Every Module Complete</h3>
-              <a class="dash-text-link" href="${escapeHtml(context.root)}problems/">Explore the Problem Bank <span aria-hidden="true">→</span></a>
-            </div>
-          `}
-        </section>
       </div>
       <article class="dashboard-card activity-card">
         <div class="activity-head">
-          <div class="dash-card-head">
-            <h2>Activity</h2>
-          </div>
+          <h2>Activity</h2>
           <div class="activity-legend" aria-hidden="true">
             <span>Less</span>
             <i class="activity-square level-0"></i>
@@ -1322,9 +1278,6 @@
           <div class="activity-months">${activity.monthLabels}</div>
           <div class="activity-heatmap" role="group" aria-label="Problems solved by day over the last 52 weeks. ${activity.completedToday} solved today. Current streak: ${activity.streak} days.">${activity.squares}</div>
         </div>
-        ${activity.completedToday
-          ? `<p class="dash-card-note">${activity.completedToday} problem${activity.completedToday === 1 ? "" : "s"} solved today.</p>`
-          : ""}
       </article>
     `;
   }
@@ -1788,7 +1741,7 @@
         <div class="reader-nav-top">
           <a class="reader-logo" href="${escapeHtml(`${context.root || "../"}dashboard/`)}">
             ${logoMark}
-            <strong>USAAIO Guide</strong>
+            <span class="reader-logo-text"><strong>AIO Initiative</strong><small>USAAIO Guide</small></span>
           </a>
           <button class="reader-nav-toggle" type="button" data-reader-nav aria-label="Collapse sidebar" title="Collapse sidebar">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1830,6 +1783,7 @@
         <div class="reader-meta-row">
           <p class="reader-meta">
             <span>${escapeHtml(section.label)} · module ${escapeHtml(moduleIndex + 1)} of ${escapeHtml(stageModules.length)}</span>
+            ${frequencyBadge(module)}
           </p>
           <div class="reader-head-actions">
             <button class="definition-bank-button" type="button" data-definition-bank aria-haspopup="dialog">Definition Bank</button>
@@ -2176,6 +2130,9 @@
     renderChoiceQuestion,
     choiceText,
     statusCircle,
+    statusMenu,
+    frequencyBadge,
+    PROBLEM_STATUS_ORDER,
     PROBLEM_STATUS_LABELS,
     statusTitle,
     problemStatusPressed: (status) => PROBLEM_STATUS_PRESSED[problemStatusValue(status)],
@@ -2188,7 +2145,6 @@
     renderModuleCard,
     renderStageCards,
     renderGlanceTable,
-    renderChapterTable,
     renderDashboard,
     renderModuleReader,
     renderPlannerLibrary,

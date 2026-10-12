@@ -202,12 +202,6 @@
   ],
   "advanced": [
     {
-      "name": "Probability and Statistics",
-      "items": [
-        "applied-information-theory"
-      ]
-    },
-    {
       "name": "Transformers and Attention",
       "items": [
         "gqa-mla-attention-complexity",

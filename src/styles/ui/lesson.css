@@ -95,7 +95,10 @@
 
 .reader-article .reader-code-block pre {
   max-height: 640px;
-  padding: 1rem 0;
+  /* .reader-article pre adds a 1rem margin for bare code; inside a block the
+     padding is the whole gap, or the first and last lines float in space. */
+  margin: 0;
+  padding: 0.85rem 0;
   font-size: 0.85rem;
   line-height: 1.65;
 }
@@ -132,6 +135,7 @@
 
 .reader-article .reader-output pre {
   max-height: 480px;
+  margin: 0;
   padding: 0.25rem 1rem 0.9rem;
   font-size: 0.85rem;
 }
@@ -140,8 +144,19 @@
 
 .reader-article .reader-math-display {
   margin: 1.5rem 0;
-  padding: 0.75rem 1rem;
+  padding: 0.25rem 1rem;
   overflow-x: auto;
+}
+
+/* The box's padding is the only gap around an equation; KaTeX's own display
+   margin on top of it split short derivations into separate islands. */
+.reader-article .reader-math-display .katex-display {
+  margin: 0;
+}
+
+/* Equations written one after another read as one derivation. */
+.reader-article .reader-math-display + .reader-math-display {
+  margin-top: -0.75rem;
 }
 
 .reader-article figure,
@@ -304,6 +319,22 @@
   border-left: 4px solid var(--brand);
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
+}
+
+/* The editable box reads like the static code blocks around it: same text
+   size and line height, and room between the code and the frame. */
+.reader-article .lesson-py-editor-code {
+  padding: 0.85rem 1.1rem;
+  font-size: 0.85rem;
+  line-height: 1.65;
+}
+
+.reader-article .lesson-py-editor-actions {
+  padding: 0.65rem 1.1rem;
+}
+
+.reader-article .lesson-py-editor-output {
+  margin: 0 1.1rem 1rem;
 }
 
 .reader-article .lesson-py-editor-actions button {
@@ -533,6 +564,13 @@
   margin: 0;
 }
 
+.reader-article .reader-meta-row .reader-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 1rem;
+}
+
 .reader-article .reader-head-actions {
   display: flex;
   align-items: center;
@@ -635,7 +673,7 @@
 }
 
 /* The module's problem count is a pill so it reads as a status, not a stray
-   number: neutral at zero, green once problems are solved, filled when done. */
+   number. It stays neutral throughout; only a tick marks it finished. */
 .reader-article .reader-progress-count {
   display: inline-flex;
   align-items: baseline;
@@ -660,26 +698,6 @@
 .reader-article .reader-progress-count span {
   margin-left: 0.2rem;
   font-weight: 600;
-}
-
-.reader-article .reader-progress-count.is-started {
-  border-color: color-mix(in srgb, var(--green) 45%, var(--line));
-  background: var(--green-soft);
-  color: var(--green);
-}
-
-.reader-article .reader-progress-count.is-started b {
-  color: var(--green);
-}
-
-.reader-article .reader-progress-count.is-done {
-  border-color: var(--green);
-  background: var(--green);
-  color: #fff;
-}
-
-.reader-article .reader-progress-count.is-done b {
-  color: #fff;
 }
 
 .reader-article .reader-progress-count.is-done::before {

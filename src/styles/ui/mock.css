@@ -143,6 +143,8 @@
 /* --- setup page ------------------------------------------------------------ */
 
 .page-hero.mock-hero {
+  /* Same column as the setup form below it, so the title lines up with it. */
+  width: min(100% - var(--page-gutter), 940px);
   align-items: center;
 }
 

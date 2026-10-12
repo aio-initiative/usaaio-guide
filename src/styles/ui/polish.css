@@ -56,11 +56,6 @@
 
 /* On a wide screen the search and login buttons sit at the right edge of the
    bar, so the header spans the same width as the page below it. */
-@media (min-width: 1100px) {
-  .site-header .nav-divider {
-    margin-left: auto;
-  }
-}
 
 /* --- module reader: one accent color ---------------------------------------- */
 
@@ -360,7 +355,6 @@ body[data-page="editor"] .page-hero p:not(.eyebrow) {
 /* The → glyph sits low in the display font, under the middle of the label it
    follows. A tenth of an em up centres it on the capitals beside it. */
 .glossary-module > span[aria-hidden="true"],
-.chapter-table-link > span[aria-hidden="true"],
 .stage-card-cta > span[aria-hidden="true"],
 .pp-head .theory-meta-link.pp-action::after,
 body[data-page="contact"] .report-issue-link::after,
@@ -456,39 +450,36 @@ html {
 }
 
 html .pp-head .pp-fact dt,
-html .pp-panel-title,
 html .mcq-submit-card .mcq-legend,
 html .mcq-submit-card .mcq-tag {
   text-transform: none;
   letter-spacing: 0;
 }
 
-/* --- one green for done (owner, 2026-10-12 12:30 PM) ----------------------
-   Anything the reader has finished reads in the site's one green, var(--green):
+/* --- one accent for done (owner, 2026-10-12) ------------------------------
+   Anything the reader has finished reads in the site's one green, var(--done):
    every progress fill, the module problem meter, the status circle, completed
-   chips and the activity grid (tints of the same green, not terracotta). */
+   chips and the activity grid (tints of the same orange). */
 html .pprog-fill,
 html .pprog-type--code .pprog-fill,
 html .pprog-type--mcq .pprog-fill,
 html .pprog-type--text .pprog-fill,
-html [data-page="dashboard"] .dash-stage .pprog-fill,
 html .reader-article .reader-progress-fill,
 html .meter-fill,
 html .stage-meter .meter-fill,
 html [data-page="dashboard"] .kpi-tile .meter-fill,
-html .glance-bar i,
-html .chapter-table tbody tr:hover .glance-bar i {
-  background: var(--green);
+html .glance-bar i {
+  background: var(--done);
 }
 
 html .activity-square.level-1,
-html [data-page="dashboard"] .activity-square.level-1 { background: color-mix(in srgb, var(--green) 22%, var(--paper)); }
+html [data-page="dashboard"] .activity-square.level-1 { background: color-mix(in srgb, var(--done) 22%, var(--paper)); }
 html .activity-square.level-2,
-html [data-page="dashboard"] .activity-square.level-2 { background: color-mix(in srgb, var(--green) 45%, var(--paper)); }
+html [data-page="dashboard"] .activity-square.level-2 { background: color-mix(in srgb, var(--done) 45%, var(--paper)); }
 html .activity-square.level-3,
-html [data-page="dashboard"] .activity-square.level-3 { background: color-mix(in srgb, var(--green) 70%, var(--paper)); }
+html [data-page="dashboard"] .activity-square.level-3 { background: color-mix(in srgb, var(--done) 70%, var(--paper)); }
 html .activity-square.level-4,
-html [data-page="dashboard"] .activity-square.level-4 { background: var(--green); }
+html [data-page="dashboard"] .activity-square.level-4 { background: var(--done); }
 
 /* Inline code on problem pages, the mock run and coding statements looks like
    it does in lessons: a grey chip with a little padding (owner, 2026-10-12).

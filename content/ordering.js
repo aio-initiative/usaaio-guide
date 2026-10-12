@@ -241,11 +241,6 @@
       "route": "advanced/",
       "chapters": [
         {
-          "name": "Probability and Statistics",
-          "description": "",
-          "items": []
-        },
-        {
           "name": "Transformers and Attention",
           "description": "",
           "items": [

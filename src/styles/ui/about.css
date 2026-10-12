@@ -38,6 +38,39 @@ body[data-page="about"] .section-heading p {
   line-height: 1.6;
 }
 
+/* --- who we are: the AIO Initiative mark above a short blurb, centred ----- */
+
+.about-section.about-org {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  text-align: center;
+}
+
+.about-org-mark {
+  flex: none;
+  width: clamp(88px, 10vw, 112px);
+  height: auto;
+  border-radius: 50%;
+  box-shadow: var(--shadow-brand);
+}
+
+body[data-page="about"] .about-org .section-heading {
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+body[data-page="about"] .about-org .section-heading p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body[data-page="about"] .about-org .section-heading h2::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 /* --- link tiles: the four stages and the contact options ------------------- */
 
 .about-tiles {

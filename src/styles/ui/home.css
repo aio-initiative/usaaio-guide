@@ -261,8 +261,7 @@ body[data-page="home"] .splash-foot {
   overflow-x: auto;
 }
 
-.glance-table,
-.chapter-table {
+.glance-table {
   width: 100%;
   margin: 0;
   border: 0;
@@ -270,8 +269,7 @@ body[data-page="home"] .splash-foot {
   font-variant-numeric: tabular-nums;
 }
 
-.glance-table caption,
-.chapter-table caption {
+.glance-table caption {
   padding: 1.05rem 1.25rem 0.85rem;
   border-bottom: 1px solid var(--line-soft);
   color: var(--ink);
@@ -281,8 +279,7 @@ body[data-page="home"] .splash-foot {
   caption-side: top;
 }
 
-.glance-table thead th,
-.chapter-table thead th {
+.glance-table thead th {
   padding: 0.7rem 1.25rem;
   border-bottom: 2px solid var(--line);
   background: var(--surface-2);
@@ -296,9 +293,7 @@ body[data-page="home"] .splash-foot {
 }
 
 .glance-table tbody th,
-.glance-table tbody td,
-.chapter-table tbody th,
-.chapter-table tbody td {
+.glance-table tbody td {
   padding: 0.9rem 1.25rem;
   border-bottom: 1px solid var(--line-soft);
   color: var(--ink-2);
@@ -307,14 +302,12 @@ body[data-page="home"] .splash-foot {
   text-align: left;
 }
 
-.glance-table tbody th,
-.chapter-table tbody th {
+.glance-table tbody th {
   color: var(--ink);
   font-weight: 650;
 }
 
-.glance-table tbody th a,
-.chapter-table tbody th a {
+.glance-table tbody th a {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -322,22 +315,17 @@ body[data-page="home"] .splash-foot {
   text-decoration: none;
 }
 
-.glance-table tbody th a:hover,
-.chapter-table tbody th a:hover {
+.glance-table tbody th a:hover {
   color: var(--brand-strong);
 }
 
 .glance-table tbody tr:last-child td,
-.glance-table tbody tr:last-child th,
-.chapter-table tbody tr:last-child td,
-.chapter-table tbody tr:last-child th {
+.glance-table tbody tr:last-child th {
   border-bottom: 0;
 }
 
 .glance-table tbody tr:hover td,
-.glance-table tbody tr:hover th,
-.chapter-table tbody tr:hover td,
-.chapter-table tbody tr:hover th {
+.glance-table tbody tr:hover th {
   background: var(--surface-2);
 }
 
@@ -349,22 +337,7 @@ body[data-page="home"] .splash-foot {
 
 .glance-total th {
   color: var(--ink);
-}
-
-.chapter-table-name {
-  color: var(--ink);
-  font-size: 0.98rem;
-  font-weight: 650;
-}
-
-.chapter-table-link {
-  color: var(--brand);
-  font-size: 0.84rem;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-.glance-bar {
+}.glance-bar {
   display: inline-block;
   width: 7rem;
   height: 8px;
@@ -392,8 +365,7 @@ body[data-page="home"] .splash-foot {
   vertical-align: middle;
 }
 
-.glance-table tbody tr:hover .glance-bar i,
-.chapter-table tbody tr:hover .glance-bar i {
+.glance-table tbody tr:hover .glance-bar i {
   background: var(--brand-strong);
 }
 
@@ -444,7 +416,6 @@ body[data-page="home"] .splash-foot {
 
 .stage-switch a:focus-visible,
 .stage-card:focus-visible,
-.chapter-table tbody th a:focus-visible,
 .glance-table tbody th a:focus-visible {
   box-shadow: 0 0 0 3px var(--brand-ring);
 }
@@ -547,28 +518,7 @@ body[data-page="home"] .splash-foot {
   margin-top: 0.6rem;
   color: var(--muted);
   font-size: 0.86rem;
-}
-
-/* --- section chapter table ------------------------------------------------ */
-
-.chapter-table-wrap {
-  margin-top: 1.9rem;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: var(--paper);
-  box-shadow: var(--shadow-sm);
-  overflow-x: auto;
-}
-
-.chapter-table-wrap .chapter-table {
-  border: 0;
-}
-
-.chapter-table thead th {
-  border-radius: 0;
-}
-
-/* --- section roadmap ------------------------------------------------------ */
+}/* --- section roadmap ------------------------------------------------------ */
 
 .division-roadmap-wrap {
   background: var(--surface-2);
@@ -665,6 +615,12 @@ body[data-page="home"] .splash-foot {
   font-size: 0.75rem;
   font-weight: 600;
   vertical-align: 0.1rem;
+}
+
+/* Frequency sits beside the level pill, like usaco.guide's syllabus rows. */
+.topic-row .topic-copy .frequency {
+  margin-left: 1.25rem;
+  vertical-align: 0.05rem;
 }
 
 .topic-row .topic-copy em {
@@ -801,8 +757,7 @@ body[data-page="home"] .splash-foot {
   }
 
   /* Tables stack into one labelled block per row, so nothing scrolls sideways. */
-  .glance-table thead,
-  .chapter-table thead {
+  .glance-table thead {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -811,8 +766,7 @@ body[data-page="home"] .splash-foot {
     white-space: nowrap;
   }
 
-  .glance-table tbody tr,
-  .chapter-table tbody tr {
+  .glance-table tbody tr {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.35rem 1rem;
@@ -820,15 +774,12 @@ body[data-page="home"] .splash-foot {
     border-bottom: 1px solid var(--line-soft);
   }
 
-  .glance-table tbody tr:last-child,
-  .chapter-table tbody tr:last-child {
+  .glance-table tbody tr:last-child {
     border-bottom: 0;
   }
 
   .glance-table tbody th,
-  .glance-table tbody td,
-  .chapter-table tbody th,
-  .chapter-table tbody td {
+  .glance-table tbody td {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -839,37 +790,27 @@ body[data-page="home"] .splash-foot {
   }
 
   .glance-table tbody th,
-  .chapter-table tbody th,
-  .glance-table tbody td[data-label="Progress"],
-  .chapter-table tbody td[data-label="Progress"] {
+  .glance-table tbody td[data-label="Progress"] {
     grid-column: 1 / -1;
   }
 
-  .glance-table tbody th,
-  .chapter-table tbody th {
+  .glance-table tbody th {
     margin-bottom: 0.2rem;
     font-size: 1.02rem;
   }
 
-  .chapter-table tbody th a {
-    flex-wrap: wrap;
-  }
-
-  .glance-table tbody td::before,
-  .chapter-table tbody td::before {
+  .glance-table tbody td::before {
     content: attr(data-label);
     color: var(--muted);
     font-size: 0.86rem;
     font-weight: 600;
   }
 
-  .glance-table tbody td[data-label="Progress"]::before,
-  .chapter-table tbody td[data-label="Progress"]::before {
+  .glance-table tbody td[data-label="Progress"]::before {
     content: none;
   }
 
-  .glance-table tbody td[data-label="Progress"] .glance-bar,
-  .chapter-table tbody td[data-label="Progress"] .glance-bar {
+  .glance-table tbody td[data-label="Progress"] .glance-bar {
     flex: 1;
     width: auto;
   }

@@ -13,11 +13,11 @@
   --clay: #816040;
   --clay-soft: #ebe4d6;
 
-  /* stage accents: earth-tone family shared by section pages and cards */
+  /* stage accents: one shared accent across every stage */
   --stage-round1: #d63200;
-  --stage-round2: #ad5c00;
-  --stage-camp: #6d7500;
-  --stage-advanced: #008216;
+  --stage-round2: var(--stage-round1);
+  --stage-camp: var(--stage-round1);
+  --stage-advanced: var(--stage-round1);
 
   /* brand glow (flat fills only — this design uses no gradients) */
   --shadow-brand: 0 10px 24px -10px rgba(184, 78, 48, 0.5);
@@ -25,6 +25,11 @@
 
   /* status */
   --green: #04835c;
+
+  /* "Finished" accent: every progress fill, meter, status circle and activity
+     square. The site's own orange, not green (owner, 2026-10-12). */
+  --done: var(--brand);
+  --done-soft: color-mix(in srgb, var(--brand) 12%, var(--paper));
   --green-soft: #ecfdf5;
   --navy: #35507a;
   --navy-soft: #eef2f9;
@@ -311,13 +316,6 @@ textarea {
 .nav-auth {
   display: inline-flex;
   align-items: center;
-}
-
-.nav-divider {
-  width: 1px;
-  height: 1.6rem;
-  margin-left: auto;
-  background: var(--line);
 }
 
 .nav-search svg {
@@ -1003,7 +1001,6 @@ body[data-page="dashboard"] {
   font-weight: 600;
 }
 
-
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1148,7 +1145,6 @@ body[data-page="dashboard"] {
 .activity-square.level-4 {
   background: #216e39;
 }
-
 
 /* ----------------------------- section (division) -------------------------- */
 
@@ -1476,6 +1472,42 @@ body[data-page="dashboard"] {
   max-width: 690px;
 }
 
+/* --- module frequency ----------------------------------------------------
+   Four dots filled up to the level, then the label, as on usaco.guide. Ink
+   tones only: the dot count carries the level. */
+.frequency {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.frequency[data-frequency="3"],
+.frequency[data-frequency="4"] {
+  color: var(--ink-2);
+}
+
+.frequency-dots {
+  display: inline-flex;
+  gap: 0.2rem;
+}
+
+.frequency-dots i {
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.45;
+}
+
+.frequency-dots i.is-on {
+  background: currentColor;
+  opacity: 1;
+}
+
 .topic-illustration {
   width: 64px;
   height: 46px;
@@ -1754,7 +1786,6 @@ body[data-page="dashboard"] {
   color: var(--ink);
 }
 
-
 .status-summary {
   grid-template-columns: repeat(4, 1fr);
   margin-top: 1rem;
@@ -1990,7 +2021,6 @@ body[data-page="dashboard"] {
   gap: 0.75rem;
 }
 
-
 .module-card,
 .resource-card {
   position: relative;
@@ -2143,7 +2173,6 @@ body[data-page="dashboard"] {
   outline: none;
 }
 
-
 .status-select {
   min-height: 40px;
   border: 1px solid var(--line);
@@ -2186,7 +2215,6 @@ body[data-page="dashboard"] {
   grid-template-columns: 280px minmax(0, 1fr);
   gap: 1.1rem;
 }
-
 
 .reader-sidebar {
   align-self: start;
@@ -2388,6 +2416,19 @@ body[data-page="module"] {
   font-size: 1.02rem;
   font-weight: 700;
   letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.reader-logo-text {
+  display: grid;
+  min-width: 0;
+  line-height: 1.15;
+}
+
+.reader-logo-text small {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 600;
   white-space: nowrap;
 }
 
@@ -2810,7 +2851,6 @@ body[data-page="module"] {
   margin-left: 0.35rem;
 }
 
-
 .reader-chip {
   display: inline-flex;
   align-items: center;
@@ -2852,7 +2892,6 @@ body[data-page="module"] {
   font-size: 0.78rem;
   padding: 0.25rem 1.9rem 0.25rem 0.75rem;
 }
-
 
 /* --- sections -------------------------------------------------------------- */
 
@@ -3136,7 +3175,6 @@ h4.reader-subhead {
   text-transform: none;
 }
 
-
 @media (max-width: 620px) {
 
 }
@@ -3340,7 +3378,6 @@ h4.reader-subhead {
   white-space: nowrap;
 }
 
-
 /* --- prev / next ------------------------------------------------------------ */
 
 .reader-pagenav {
@@ -3427,7 +3464,6 @@ h4.reader-subhead {
   text-decoration: underline;
   outline: none;
 }
-
 
 .reader-nav-footer a:hover,
 .reader-nav-footer a:focus-visible {
@@ -3658,7 +3694,6 @@ h4.reader-subhead {
   letter-spacing: -0.01em;
   transition: color var(--t-fast) var(--ease);
 }
-
 
 .pcard-appears {
   color: var(--muted);
@@ -4621,7 +4656,6 @@ details p {
     grid-column: 3;
   }
 
-
   .dashboard-shell {
     width: min(100% - var(--page-gutter), 900px);
   }
@@ -4658,10 +4692,6 @@ details p {
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
     padding: 0.5rem;
-  }
-
-  .nav-divider {
-    display: none;
   }
 
   .nav-links.open {
@@ -4820,7 +4850,6 @@ details p {
     margin: 0 auto;
     padding: 1.7rem 0 4rem;
   }
-
 
   .reader-toolbar .status-select {
     max-width: none;
@@ -5662,8 +5691,6 @@ body[data-page="editor"] .page-hero p:not(.eyebrow) {
 /* Camp is a tag, not a frame: the gold frame stays reserved for an
    international team result. */
 
-
-
 .team-camp-tag {
   border-color: color-mix(in srgb, var(--green) 62%, var(--line));
   background: var(--green-soft);
@@ -5713,7 +5740,6 @@ body[data-page="editor"] .page-hero p:not(.eyebrow) {
     min-height: 25rem;
   }
 }
-
 
 /* ------------------------------- splash (home) ------------------------------ */
 
@@ -5977,7 +6003,6 @@ body[data-page="home"] .splash-foot {
     var(--paper);
 }
 
-
 @keyframes splash-rise {
   from {
     opacity: 0;
@@ -5997,11 +6022,9 @@ body[data-page="home"] .splash-foot {
 
 @media (max-width: 900px) {
 
-
 }
 
 @media (max-width: 640px) {
-
 
 }
 
@@ -7301,7 +7324,6 @@ body.mock-fs-active .site-header {
   font-weight: 800;
 }
 
-
 /* --- module reader typography ----------------------------------------------
    Mirrors usaco.guide's `.markdown` scale so a module reads the same way:
    Inter at 1rem/1.5, 1.875rem bold section headings in gray-700, 1.5rem
@@ -7462,7 +7484,6 @@ body.mock-fs-active .site-header {
   padding: 0.25rem 0.75rem;
   border: 1px solid var(--reader-rule);
 }
-
 
 /* --- module header, matched to usaco.guide -------------------------------
    Values taken from the live page's Tailwind classes: the level/progress row
@@ -8167,21 +8188,97 @@ body.mock-fs-active .site-header {
   font-size: 0.85rem;
 }
 
-.reader-article .lesson-notebook-card {
-  justify-content: flex-start;
-  gap: 0.9rem;
+/* --- problems inside a lesson ------------------------------------------------
+   A full-width row like usaco.guide's: status control, then a link carrying
+   the kind, the title and the difficulty. Notebooks use the same row with an
+   icon. */
+.reader-article .lesson-problem-card {
   margin: 1.25rem 0 1.5rem;
-  color: var(--ink);
-  font-weight: 400;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--brand);
+  border-radius: var(--radius);
+  background: var(--panel);
+  transition: border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
 }
 
-.reader-article .lesson-notebook-card:hover {
+.reader-article .lesson-problem-card:hover,
+.reader-article .lesson-problem-card:focus-within {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+}
+
+.reader-article .lesson-problem-main {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-left: 1.15rem;
+}
+
+/* The usaco.guide "focus problem" strip under the row. */
+.reader-article .lesson-problem-note {
+  margin: 0;
+  padding: 0.7rem 1.25rem 0.75rem 1.15rem;
+  border-top: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-style: italic;
+}
+
+.reader-article .lesson-problem-status {
+  --pcheck-size: 1.9rem;
+}
+
+.reader-article .lesson-problem-link {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+  padding: 1.15rem 1.25rem 1.15rem 0;
+  color: var(--ink);
+  font-weight: 400;
   text-decoration: none;
 }
 
-.lesson-notebook-card .reader-focus-copy {
+.reader-article .lesson-problem-link:hover {
+  text-decoration: none;
+}
+
+.reader-article .lesson-problem-link:focus-visible {
+  outline: none;
+}
+
+.reader-article .lesson-problem-copy {
+  display: grid;
   flex: 1;
+  gap: 0.3rem;
   min-width: 0;
+}
+
+.reader-article .lesson-problem-copy strong {
+  font-size: 1.15rem;
+  line-height: 1.3;
+}
+
+/* "Round 1 - Medium" under the title, as usaco.guide writes "Bronze - Easy". */
+.reader-article .lesson-problem-meta {
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.lesson-problem-arrow {
+  flex: none;
+  color: var(--brand-strong);
+  font-size: 1.15rem;
+  font-weight: 700;
+  transition: transform var(--t-fast) var(--ease);
+}
+
+.lesson-problem-link:hover .lesson-problem-arrow {
+  transform: translateX(3px);
 }
 
 .lesson-notebook-icon {
@@ -8189,26 +8286,40 @@ body.mock-fs-active .site-header {
   flex: none;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
   border-radius: var(--radius-sm);
   background: var(--brand-soft);
   color: var(--brand-strong);
 }
 
 .lesson-notebook-icon svg {
-  width: 1.4rem;
-  height: 1.4rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
-.reader-article .lesson-problem-card {
-  margin: 1rem 0 1.25rem;
-  color: var(--ink);
-  font-weight: 400;
-}
+@media (max-width: 640px) {
+  .reader-article .lesson-problem-main {
+    padding-left: 0.85rem;
+  }
 
-.reader-article .lesson-problem-card:hover {
-  text-decoration: none;
+  .reader-article .lesson-problem-note {
+    padding-left: 0.85rem;
+  }
+
+  .reader-article .lesson-problem-link {
+    flex-wrap: wrap;
+    gap: 0.6rem 0.8rem;
+    padding: 0.95rem 0.95rem 0.95rem 0;
+  }
+
+  .reader-article .lesson-problem-copy {
+    flex-basis: calc(100% - 3.5rem);
+  }
+
+  .lesson-problem-arrow {
+    margin-left: auto;
+  }
 }
 
 /* --- multiple choice, judged in the page (lesson cards and theory page) --- */
@@ -8232,6 +8343,16 @@ body.mock-fs-active .site-header {
 .mcq-card .mcq-status {
   width: 22px;
   height: 22px;
+}
+
+/* Names the row the status sits in, so it reads as the card's header rather
+   than a stray circle above the prompt. */
+.mcq-kicker {
+  color: var(--brand-strong);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .mcq-card .mcq-status:focus-visible {

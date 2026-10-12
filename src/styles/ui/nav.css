@@ -121,13 +121,6 @@
 
 /* --- search and auth ------------------------------------------------------- */
 
-.site-header .nav-divider {
-  width: 1px;
-  height: 1.75rem;
-  margin-left: 0.55rem;
-  background: var(--line);
-}
-
 /* Search reads as a control, not as plain text. */
 .site-header .nav-search {
   min-height: 2.5rem;
@@ -154,6 +147,13 @@
 .site-header .nav-auth {
   display: inline-flex;
   align-items: center;
+}
+
+/* Search and Login sit together at the right end of the bar. */
+@media (min-width: 1025px) {
+  .site-header .nav-search {
+    margin-left: auto;
+  }
 }
 
 .site-header .nav-login-button {
@@ -427,10 +427,6 @@ body[data-page="home"] .site-header .nav-links.open {
   .site-header .nav-login-button {
     padding: 0.5rem 0.9rem;
   }
-
-  .site-header .nav-divider {
-    margin-left: 0.35rem;
-  }
 }
 
 /* --- mobile menu (390 to 1024) --------------------------------------------- */
@@ -521,14 +517,6 @@ body[data-page="home"] .site-header .nav-links.open {
     left: 0.45rem;
     width: 3px;
     height: auto;
-  }
-
-  .site-header .nav-divider {
-    display: block;
-    width: 100%;
-    height: 1px;
-    margin: 0.45rem 0;
-    background: var(--line-soft);
   }
 
   .site-header .nav-search {

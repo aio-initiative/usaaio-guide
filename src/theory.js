@@ -329,8 +329,6 @@
   const ICONS = {
     eye: '<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 3C4.7 3 2 5.4 1 8c1 2.6 3.7 5 7 5s6-2.4 7-5c-1-2.6-3.7-5-7-5zm0 8a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0-1.6a1.4 1.4 0 1 0 0-2.8 1.4 1.4 0 0 0 0 2.8z"/></svg>',
     download: '<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 2.25a.75.75 0 0 1 .75.75v5.19l1.72-1.72a.75.75 0 1 1 1.06 1.06l-3 3a.75.75 0 0 1-1.06 0l-3-3a.75.75 0 0 1 1.06-1.06l1.72 1.72V3A.75.75 0 0 1 8 2.25zM3.5 12a.75.75 0 0 0 0 1.5h9a.75.75 0 0 0 0-1.5z"/></svg>',
-    book: '<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" d="M2.5 3.2c1.9-.6 3.8-.4 5.5.8v9c-1.7-1.2-3.6-1.4-5.5-.8zM13.5 3.2c-1.9-.6-3.8-.4-5.5.8v9c1.7-1.2 3.6-1.4 5.5-.8z"/></svg>',
-    tick: '<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m3.8 8.3 2.7 2.7 5.7-6"/></svg>',
   };
 
   // The lesson part that asks this problem, from content/problem-sections.js:
@@ -344,87 +342,16 @@
 
   // A few problems to try next: the nearest ones in the same module, then
   // problems of the same type and stage from the modules closest to it.
-  function similarProblems(problems, limit) {
-    const renderers = window.AIO_RENDERERS;
-    const here = problems.indexOf(registered);
-    if (!registered || here < 0 || !renderers) return [];
-    const moduleOrder = new Map((catalog.modules || []).map((module, index) => [module.id, index]));
-    const moduleAt = (entry) => (moduleOrder.has(entry.moduleId) ? moduleOrder.get(entry.moduleId) : 1e6);
-    const near = (a, b) => Math.abs(problems.indexOf(a) - here) - Math.abs(problems.indexOf(b) - here);
-    const sameModule = problems
-      .filter((entry) => entry.moduleId === problem.moduleId && entry.id !== problem.id)
-      .sort(near)
-      .slice(0, limit - 1);
-    const type = renderers.problemType(registered);
-    const stage = (registered.tags || []).find((tag) => ["Round 1", "Round 2", "Camp", "Advanced"].includes(tag));
-    const myModule = moduleAt(registered);
-    const elsewhere = problems
-      .filter(
-        (entry) =>
-          entry.moduleId !== problem.moduleId &&
-          renderers.problemType(entry) === type &&
-          (!stage || (entry.tags || []).includes(stage)),
-      )
-      .sort((a, b) => Math.abs(moduleAt(a) - myModule) - Math.abs(moduleAt(b) - myModule) || near(a, b))
-      .slice(0, limit - sameModule.length);
-    return [...sameModule, ...elsewhere];
-  }
-
-  function renderAside(module, problems, appState) {
-    const renderers = window.AIO_RENDERERS;
+  // Where "review" sends the reader: the part of the lesson that teaches this
+  // problem when there is one, otherwise the module.
+  function reviewLink(module) {
     const place = lessonPlace();
-    const sourceModule = (place && place.module) || module;
-    const reviewHref = place
+    const href = place
       ? `${root}module/?id=${escapeHtml(place.module.id)}#${escapeHtml(place.anchor)}`
       : module
         ? `${root}module/?id=${escapeHtml(problem.moduleId)}`
         : "";
-    const source = sourceModule
-      ? `
-        <section class="pp-panel pp-source" aria-labelledby="ppSourceTitle">
-          <h2 class="pp-panel-title" id="ppSourceTitle">From the Lesson</h2>
-          <a class="pp-source-module" href="${root}module/?id=${escapeHtml(sourceModule.id)}">
-            <span class="pp-source-icon">${ICONS.book}</span>
-            <span><small>Module ${escapeHtml(sourceModule.number || "")}</small><strong>${escapeHtml(sourceModule.title)}</strong></span>
-          </a>
-          ${
-            place
-              ? `<p class="pp-source-part"><span>Taught In</span> <a href="${reviewHref}">${inline(place.title)}</a></p>`
-              : `<p class="pp-source-part">${inline(sourceModule.summary || "")}</p>`
-          }
-          <a class="pp-panel-button" href="${reviewHref}">${place ? "Review This Part" : "Review the Module"}<span aria-hidden="true"> →</span></a>
-        </section>`
-      : "";
-    const similar = similarProblems(problems, 4);
-    const done = (entry) => (appState.problemStatus || {})[entry.id] === "complete";
-    const list = similar.length
-      ? `
-        <section class="pp-panel pp-similar" aria-labelledby="ppSimilarTitle">
-          <h2 class="pp-panel-title" id="ppSimilarTitle">Similar Problems</h2>
-          <ul class="pp-similar-list">
-            ${similar
-              .map((entry) => {
-                const sameModule = entry.moduleId === problem.moduleId;
-                const href = renderers.problemHref(entry, root, fromModule && sameModule).href;
-                const other = sameModule ? "" : moduleLookup.get(entry.moduleId);
-                return `
-              <li>
-                <a class="pp-similar-item" href="${escapeHtml(href)}">
-                  <span class="pp-similar-title">${escapeHtml(entry.title)}${done(entry) ? `<span class="pp-similar-done" title="Done"><span class="sr-only"> (done)</span>${ICONS.tick}</span>` : ""}</span>
-                  <span class="pp-similar-meta">
-                    ${renderers.typePill(entry)}
-                    <span class="problem-chip ${escapeHtml(renderers.difficultyClass(entry.difficulty))}">${escapeHtml(entry.difficulty)}</span>
-                    ${other ? `<span class="pp-similar-module">${escapeHtml(other.title)}</span>` : ""}
-                  </span>
-                </a>
-              </li>`;
-              })
-              .join("")}
-          </ul>
-          ${module ? `<a class="pp-panel-more" href="${root}problems/?module=${escapeHtml(problem.moduleId)}">All ${escapeHtml(module.title)} problems<span aria-hidden="true"> →</span></a>` : ""}
-        </section>`
-      : "";
-    return { html: source + list, reviewHref, reviewLabel: place ? "Review This Part of the Lesson" : "Review the Module" };
+    return { reviewHref: href, reviewLabel: place ? "Review This Part of the Lesson" : "Review the Module" };
   }
 
   function render() {
@@ -448,15 +375,15 @@
       problem.minutes && !singleQuestion ? fact("Time", `About ${escapeHtml(problem.minutes)} min`) : "",
     ].join("");
 
-    const aside = renderAside(module, problems, appState);
+    const review = reviewLink(module);
     const stepper = renderers && renderers.renderProblemStepper ? renderers.renderProblemStepper(problem.id, problems, root, fromModule) : "";
     // The question card's Next problem button goes where the header's next arrow does.
     const scope = fromModule ? problems.filter((entry) => entry.moduleId === problem.moduleId) : problems;
     const next = registered ? scope[scope.indexOf(registered) + 1] : null;
     questionLinks = {
       nextHref: next && renderers ? renderers.problemHref(next, root, fromModule).href : "",
-      reviewHref: aside.reviewHref.replaceAll("&amp;", "&"),
-      reviewLabel: aside.reviewLabel,
+      reviewHref: review.reviewHref.replaceAll("&amp;", "&"),
+      reviewLabel: review.reviewLabel,
       status: complete ? "complete" : "",
     };
 
@@ -494,7 +421,6 @@
           }
           <div class="theory-parts">${problem.parts.map(renderPart).join("")}</div>
         </div>
-        <aside class="pp-aside" aria-label="About this problem">${aside.html}</aside>
       </div>
     `;
 

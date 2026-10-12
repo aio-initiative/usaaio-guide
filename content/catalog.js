@@ -12,6 +12,7 @@
       "file": "content/1_Round_1/1.23-PY7-python-basics.md",
       "code": "PY7",
       "number": "1.23",
+      "frequency": 4,
       "prerequisiteTitles": []
     },
     {
@@ -28,6 +29,7 @@
       "file": "content/1_Round_1/1.1-PY1-programming-essentials.md",
       "code": "PY1",
       "number": "1.1",
+      "frequency": 4,
       "prerequisiteTitles": [
         "Python Basics"
       ]
@@ -46,6 +48,7 @@
       "file": "content/1_Round_1/1.2-PY2-pandas-data-cleaning-storing.md",
       "code": "PY2",
       "number": "1.2",
+      "frequency": 3,
       "prerequisiteTitles": [
         "NumPy Programming"
       ]
@@ -65,6 +68,7 @@
       "file": "content/1_Round_1/1.3-PY3-plotting-matplotlib-seaborn.md",
       "code": "PY3",
       "number": "1.3",
+      "frequency": 3,
       "prerequisiteTitles": [
         "NumPy Programming",
         "Pandas Data Cleaning"
@@ -82,6 +86,7 @@
       "file": "content/1_Round_1/1.4-PY4-colab-markdown-notebooks.md",
       "code": "PY4",
       "number": "1.4",
+      "frequency": 3,
       "prerequisiteTitles": []
     },
     {
@@ -99,6 +104,7 @@
       "file": "content/1_Round_1/1.5-PY5-scikit-learn-api-ml-pipelines.md",
       "code": "PY5",
       "number": "1.5",
+      "frequency": 3,
       "prerequisiteTitles": [
         "NumPy Programming",
         "Pandas Data Cleaning"
@@ -119,6 +125,7 @@
       "file": "content/1_Round_1/1.24-PY8-why-pytorch-not-tensorflow.md",
       "code": "PY8",
       "number": "1.24",
+      "frequency": 1,
       "prerequisiteTitles": [
         "Calculus and Gradients",
         "NumPy Programming"
@@ -139,6 +146,7 @@
       "file": "content/1_Round_1/1.25-PY9-pytorch-tensors-autograd.md",
       "code": "PY9",
       "number": "1.25",
+      "frequency": 4,
       "prerequisiteTitles": [
         "Why PyTorch, not TensorFlow",
         "NumPy Programming"
@@ -159,6 +167,7 @@
       "file": "content/1_Round_1/1.26-PY10-training-loop-in-pytorch.md",
       "code": "PY10",
       "number": "1.26",
+      "frequency": 4,
       "prerequisiteTitles": [
         "PyTorch Tensors & Autograd",
         "Loss Functions"
@@ -178,6 +187,7 @@
       "file": "content/1_Round_1/1.7-MA1-linear-algebra-i-vectors-matrices-systems-transformations.md",
       "code": "MA1",
       "number": "1.7",
+      "frequency": 4,
       "prerequisiteTitles": [
         "NumPy Programming"
       ]
@@ -196,6 +206,7 @@
       "file": "content/1_Round_1/1.8-MA2-linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory.md",
       "code": "MA2",
       "number": "1.8",
+      "frequency": 4,
       "prerequisiteTitles": [
         "Vectors and Matrices"
       ]
@@ -215,6 +226,7 @@
       "file": "content/1_Round_1/1.9-MA3-calculus-gradients.md",
       "code": "MA3",
       "number": "1.9",
+      "frequency": 4,
       "prerequisiteTitles": [
         "Vectors and Matrices",
         "Eigenvalues and Spectral Theory"
@@ -235,6 +247,7 @@
       "file": "content/1_Round_1/1.10-PS1-probability-foundations.md",
       "code": "PS1",
       "number": "1.10",
+      "frequency": 2,
       "prerequisiteTitles": [
         "Eigenvalues and Spectral Theory",
         "NumPy Programming"
@@ -255,6 +268,7 @@
       "file": "content/1_Round_1/1.11-PS2-expectations-multivariate-distributions.md",
       "code": "PS2",
       "number": "1.11",
+      "frequency": 3,
       "prerequisiteTitles": [
         "Probability and Bayes",
         "Vectors and Matrices"
@@ -274,6 +288,7 @@
       "file": "content/1_Round_1/1.12-PS3-statistics-hypothesis-testing.md",
       "code": "PS3",
       "number": "1.12",
+      "frequency": 1,
       "prerequisiteTitles": [
         "Expectation and Joint Distributions"
       ]
@@ -293,6 +308,7 @@
       "file": "content/1_Round_1/1.13-ML1-data-processing-features.md",
       "code": "ML1",
       "number": "1.13",
+      "frequency": 3,
       "prerequisiteTitles": [
         "Pandas Data Cleaning",
         "Decision Trees & k-Nearest Neighbors"
@@ -314,6 +330,7 @@
       "file": "content/1_Round_1/1.27-ML8-linear-logistic-regression.md",
       "code": "ML8",
       "number": "1.27",
+      "frequency": 4,
       "prerequisiteTitles": [
         "Vectors and Matrices",
         "Calculus and Gradients",
@@ -335,6 +352,7 @@
       "file": "content/1_Round_1/1.28-ML9-loss-functions.md",
       "code": "ML9",
       "number": "1.28",
+      "frequency": 3,
       "prerequisiteTitles": [
         "Statistical Inference",
         "Linear & Logistic Regression"
@@ -354,6 +372,7 @@
       "file": "content/1_Round_1/1.15-ML3-kernel-methods-svms.md",
       "code": "ML3",
       "number": "1.15",
+      "frequency": 1,
       "prerequisiteTitles": [
         "Linear & Logistic Regression"
       ]
@@ -373,6 +392,7 @@
       "file": "content/1_Round_1/1.29-ML10-decision-trees-knn.md",
       "code": "ML10",
       "number": "1.29",
+      "frequency": 3,
       "prerequisiteTitles": [
         "Expectation and Joint Distributions",
         "NumPy Programming"
@@ -392,6 +412,7 @@
       "file": "content/1_Round_1/1.16-ML4-tree-based-models-ensembles.md",
       "code": "ML4",
       "number": "1.16",
+      "frequency": 1,
       "prerequisiteTitles": [
         "Decision Trees & k-Nearest Neighbors"
       ]
@@ -411,6 +432,7 @@
       "file": "content/1_Round_1/1.17-ML5-clustering.md",
       "code": "ML5",
       "number": "1.17",
+      "frequency": 2,
       "prerequisiteTitles": [
         "Vectors and Matrices",
         "NumPy Programming"
@@ -446,6 +468,7 @@
       "file": "content/1_Round_1/1.18-DL1-neural-networks-perceptrons-mlps-activations.md",
       "code": "DL1",
       "number": "1.18",
+      "frequency": 4,
       "prerequisiteTitles": [
         "Vectors and Matrices",
         "Linear & Logistic Regression",
@@ -467,6 +490,7 @@
       "file": "content/1_Round_1/1.19-DL2-neural-network-regularization-dropout-batchnorm.md",
       "code": "DL2",
       "number": "1.19",
+      "frequency": 3,
       "prerequisiteTitles": [
         "The Multilayer Perceptron",
         "Expectation and Joint Distributions"
@@ -487,6 +511,7 @@
       "file": "content/1_Round_1/1.21-DL4-optimization-adam-sgd.md",
       "code": "DL4",
       "number": "1.21",
+      "frequency": 3,
       "prerequisiteTitles": [
         "Writing a Training Loop in PyTorch",
         "Convex Optimization"
@@ -509,6 +534,7 @@
       "file": "content/1_Round_1/1.30-CV7-convolutional-neural-networks.md",
       "code": "CV7",
       "number": "1.30",
+      "frequency": 3,
       "prerequisiteTitles": [
         "The Multilayer Perceptron",
         "Core Layers (Affine, Normalization, Dropout)",
@@ -531,6 +557,7 @@
       "file": "content/2_Round_2/2.15-MA6-forward-propagation.md",
       "code": "MA6",
       "number": "2.15",
+      "frequency": 3,
       "prerequisiteTitles": [
         "The Multilayer Perceptron",
         "Vectors and Matrices"
@@ -551,6 +578,7 @@
       "file": "content/2_Round_2/2.1-MA4-backpropagation-mechanics.md",
       "code": "MA4",
       "number": "2.1",
+      "frequency": 2,
       "prerequisiteTitles": [
         "Forward Propagation",
         "Calculus and Gradients"
@@ -571,6 +599,7 @@
       "file": "content/2_Round_2/2.3-ML6-model-evaluation.md",
       "code": "ML6",
       "number": "2.3",
+      "frequency": 3,
       "prerequisiteTitles": [
         "Linear & Logistic Regression",
         "Bias-Variance Tradeoff & Cross-Validation"
@@ -591,6 +620,7 @@
       "file": "content/2_Round_2/2.16-ML11-bias-variance-cross-validation.md",
       "code": "ML11",
       "number": "2.16",
+      "frequency": 3,
       "prerequisiteTitles": [
         "Statistical Inference",
         "Linear & Logistic Regression"
@@ -610,6 +640,7 @@
       "file": "content/2_Round_2/2.17-ML12-principal-component-analysis.md",
       "code": "ML12",
       "number": "2.17",
+      "frequency": 3,
       "prerequisiteTitles": [
         "Eigenvalues and Spectral Theory"
       ]
@@ -628,6 +659,7 @@
       "file": "content/2_Round_2/2.18-ML13-nonlinear-dimensionality-reduction.md",
       "code": "ML13",
       "number": "2.18",
+      "frequency": 1,
       "prerequisiteTitles": [
         "Principal Component Analysis"
       ]
@@ -649,6 +681,7 @@
       "file": "content/2_Round_2/2.19-ML14-semi-supervised-learning.md",
       "code": "ML14",
       "number": "2.19",
+      "frequency": 3,
       "prerequisiteTitles": [
         "Decision Trees & k-Nearest Neighbors",
         "Support Vector Machines",
@@ -672,6 +705,7 @@
       "file": "content/2_Round_2/2.20-ML15-time-series.md",
       "code": "ML15",
       "number": "2.20",
+      "frequency": 2,
       "prerequisiteTitles": [
         "Bias-Variance Tradeoff & Cross-Validation",
         "Feature Engineering & Data Preparation",
@@ -693,6 +727,7 @@
       "file": "content/2_Round_2/2.5-DL5-advanced-optimization.md",
       "code": "DL5",
       "number": "2.5",
+      "frequency": 2,
       "prerequisiteTitles": [
         "Calculus and Gradients",
         "Eigenvalues and Spectral Theory"
@@ -730,6 +765,7 @@
       "file": "content/2_Round_2/2.21-CV8-vision-setup.md",
       "code": "CV8",
       "number": "2.21",
+      "frequency": 3,
       "prerequisiteTitles": []
     },
     {
@@ -744,6 +780,7 @@
       "file": "content/2_Round_2/2.22-CV9-vision-pixels.md",
       "code": "CV9",
       "number": "2.22",
+      "frequency": 3,
       "prerequisiteTitles": []
     },
     {
@@ -763,6 +800,7 @@
       "file": "content/2_Round_2/2.23-CV10-vision-convolution.md",
       "code": "CV10",
       "number": "2.23",
+      "frequency": 3,
       "prerequisiteTitles": [
         "The Multilayer Perceptron",
         "Optimizers & Training Tricks",
@@ -782,6 +820,7 @@
       "file": "content/2_Round_2/2.24-CV11-vision-relu-and-pooling.md",
       "code": "CV11",
       "number": "2.24",
+      "frequency": 2,
       "prerequisiteTitles": []
     },
     {
@@ -796,6 +835,7 @@
       "file": "content/2_Round_2/2.25-CV12-vision-classify.md",
       "code": "CV12",
       "number": "2.25",
+      "frequency": 3,
       "prerequisiteTitles": []
     },
     {
@@ -810,6 +850,7 @@
       "file": "content/2_Round_2/2.26-CV13-vision-deeper-networks.md",
       "code": "CV13",
       "number": "2.26",
+      "frequency": 3,
       "prerequisiteTitles": []
     },
     {
@@ -824,6 +865,7 @@
       "file": "content/2_Round_2/2.27-CV14-vision-transfer-learning.md",
       "code": "CV14",
       "number": "2.27",
+      "frequency": 3,
       "prerequisiteTitles": []
     },
     {
@@ -854,6 +896,7 @@
       "file": "content/2_Round_2/2.7-CV3-semantic-segmentation-unet-masks.md",
       "code": "CV3",
       "number": "2.7",
+      "frequency": 1,
       "prerequisiteTitles": [
         "Convolutional Neural Networks"
       ]
@@ -870,6 +913,7 @@
       "file": "content/2_Round_2/2.29-CV16-vision-adversarial-attacks.md",
       "code": "CV16",
       "number": "2.29",
+      "frequency": 0,
       "prerequisiteTitles": []
     },
     {
@@ -910,6 +954,7 @@
       "file": "content/2_Round_2/2.30-TF10-transformer-setup.md",
       "code": "TF10",
       "number": "2.30",
+      "frequency": 4,
       "prerequisiteTitles": []
     },
     {
@@ -924,6 +969,7 @@
       "file": "content/2_Round_2/2.31-TF11-transformer-tokenize.md",
       "code": "TF11",
       "number": "2.31",
+      "frequency": 2,
       "prerequisiteTitles": []
     },
     {
@@ -940,6 +986,7 @@
       "file": "content/2_Round_2/2.32-TF12-transformer-embed.md",
       "code": "TF12",
       "number": "2.32",
+      "frequency": 3,
       "prerequisiteTitles": [
         "1. Tokenize"
       ]
@@ -958,6 +1005,7 @@
       "file": "content/2_Round_2/2.33-TF13-transformer-add-position.md",
       "code": "TF13",
       "number": "2.33",
+      "frequency": 2,
       "prerequisiteTitles": [
         "2. Embed"
       ]
@@ -974,6 +1022,7 @@
       "file": "content/2_Round_2/2.34-TF14-transformer-qkv.md",
       "code": "TF14",
       "number": "2.34",
+      "frequency": 4,
       "prerequisiteTitles": []
     },
     {
@@ -988,6 +1037,7 @@
       "file": "content/2_Round_2/2.35-TF15-transformer-scores.md",
       "code": "TF15",
       "number": "2.35",
+      "frequency": 4,
       "prerequisiteTitles": []
     },
     {
@@ -1002,6 +1052,7 @@
       "file": "content/2_Round_2/2.36-TF16-transformer-mask-and-softmax.md",
       "code": "TF16",
       "number": "2.36",
+      "frequency": 3,
       "prerequisiteTitles": []
     },
     {
@@ -1016,6 +1067,7 @@
       "file": "content/2_Round_2/2.37-TF17-transformer-weighted-sum.md",
       "code": "TF17",
       "number": "2.37",
+      "frequency": 4,
       "prerequisiteTitles": []
     },
     {
@@ -1033,6 +1085,7 @@
       "file": "content/2_Round_2/2.38-TF18-transformer-multi-head.md",
       "code": "TF18",
       "number": "2.38",
+      "frequency": 4,
       "prerequisiteTitles": [
         "Self-Attention Fundamentals",
         "7. Weighted sum"
@@ -1050,6 +1103,7 @@
       "file": "content/2_Round_2/2.39-TF19-transformer-residual-and-layernorm.md",
       "code": "TF19",
       "number": "2.39",
+      "frequency": 3,
       "prerequisiteTitles": []
     },
     {
@@ -1068,6 +1122,7 @@
       "file": "content/2_Round_2/2.40-TF20-transformer-feed-forward.md",
       "code": "TF20",
       "number": "2.40",
+      "frequency": 3,
       "prerequisiteTitles": [
         "Self-Attention Fundamentals",
         "9. Residual and LayerNorm",
@@ -1086,6 +1141,7 @@
       "file": "content/2_Round_2/2.41-TF21-transformer-stack.md",
       "code": "TF21",
       "number": "2.41",
+      "frequency": 3,
       "prerequisiteTitles": []
     },
     {
@@ -1100,6 +1156,7 @@
       "file": "content/2_Round_2/2.42-TF22-transformer-predict.md",
       "code": "TF22",
       "number": "2.42",
+      "frequency": 2,
       "prerequisiteTitles": []
     },
     {
@@ -1114,6 +1171,7 @@
       "file": "content/2_Round_2/2.43-TF23-transformer-generate.md",
       "code": "TF23",
       "number": "2.43",
+      "frequency": 1,
       "prerequisiteTitles": []
     },
     {
@@ -1158,6 +1216,7 @@
       "file": "content/2_Round_2/2.10-TF2-transformer-architectures-bert-mlm.md",
       "code": "TF2",
       "number": "2.10",
+      "frequency": 2,
       "prerequisiteTitles": [
         "11. Stack"
       ]
@@ -1176,6 +1235,7 @@
       "file": "content/2_Round_2/2.44-TF24-gpt-causal-lm.md",
       "code": "TF24",
       "number": "2.44",
+      "frequency": 1,
       "prerequisiteTitles": [
         "11. Stack"
       ]
@@ -1195,6 +1255,7 @@
       "file": "content/2_Round_2/2.12-TF4-transformer-architectures-t5-encoder-decoder.md",
       "code": "TF4",
       "number": "2.12",
+      "frequency": 1,
       "prerequisiteTitles": [
         "BERT and Masked Language Modeling",
         "GPT and Causal Language Modeling"
@@ -1219,6 +1280,7 @@
       "file": "content/2_Round_2/2.14-RP2-contrastive-learning.md",
       "code": "RP2",
       "number": "2.14",
+      "frequency": 3,
       "prerequisiteTitles": [
         "Linear & Logistic Regression",
         "Convolutional Neural Networks",
@@ -1242,6 +1304,7 @@
       "file": "content/3_Camp/3.1-PS4-information-theory-core.md",
       "code": "PS4",
       "number": "3.1",
+      "frequency": 2,
       "prerequisiteTitles": [
         "Statistical Inference"
       ]
@@ -1262,6 +1325,7 @@
       "file": "content/3_Camp/3.3-CV6-vision-transformers-vit-attention.md",
       "code": "CV6",
       "number": "3.3",
+      "frequency": 2,
       "prerequisiteTitles": [
         "ResNets and Transfer Learning",
         "Self-Attention Fundamentals",
@@ -1284,6 +1348,7 @@
       "file": "content/3_Camp/3.2-CV5-object-detection-fpn-yolo.md",
       "code": "CV5",
       "number": "3.2",
+      "frequency": 1,
       "prerequisiteTitles": [
         "Convolutional Neural Networks",
         "Classification Metrics",
@@ -1305,6 +1370,7 @@
       "file": "content/3_Camp/3.4-NL1-natural-language-processing-tokenization-embeddings.md",
       "code": "NL1",
       "number": "3.4",
+      "frequency": 2,
       "prerequisiteTitles": [
         "1. Tokenize",
         "2. Embed"
@@ -1325,6 +1391,7 @@
       "file": "content/3_Camp/3.14-NL3-pre-training-fine-tuning.md",
       "code": "NL3",
       "number": "3.14",
+      "frequency": 2,
       "prerequisiteTitles": [
         "11. Stack",
         "Writing a Training Loop in PyTorch"
@@ -1345,6 +1412,7 @@
       "file": "content/3_Camp/3.5-NL2-sequence-models-transfer-learning.md",
       "code": "NL2",
       "number": "3.5",
+      "frequency": 0,
       "prerequisiteTitles": [
         "The Multilayer Perceptron",
         "Backpropagation by Hand"
@@ -1365,6 +1433,7 @@
       "file": "content/3_Camp/3.6-TF5-rag-retrieval-embeddings.md",
       "code": "TF5",
       "number": "3.6",
+      "frequency": 0,
       "prerequisiteTitles": [
         "GPT and Causal Language Modeling",
         "Tokenization & Word Embeddings"
@@ -1386,6 +1455,7 @@
       "file": "content/3_Camp/3.7-TF6-relative-position-rope-positional-methods.md",
       "code": "TF6",
       "number": "3.7",
+      "frequency": 3,
       "prerequisiteTitles": [
         "3. Add position",
         "4. Q, K, V",
@@ -1408,6 +1478,7 @@
       "file": "content/3_Camp/3.8-TF7-cross-attention-multimodal-attention.md",
       "code": "TF7",
       "number": "3.8",
+      "frequency": 0,
       "prerequisiteTitles": [
         "7. Vision Transformer",
         "Contrastive Learning and CLIP",
@@ -1433,6 +1504,7 @@
       "file": "content/3_Camp/2.13-RP1-representation-learning-autoencoders-vaes-latent-spaces.md",
       "code": "RP1",
       "number": "2.13",
+      "frequency": 2,
       "prerequisiteTitles": [
         "k-Means Clustering",
         "Principal Component Analysis",
@@ -1461,6 +1533,7 @@
       "file": "content/3_Camp/3.10-RP3-vae-encoder-decoder-generation.md",
       "code": "RP3",
       "number": "3.10",
+      "frequency": 2,
       "prerequisiteTitles": [
         "k-Means Clustering",
         "1. Autoencoder",
@@ -1516,6 +1589,7 @@
       "file": "content/3_Camp/3.15-GM3-generative-setup.md",
       "code": "GM3",
       "number": "3.15",
+      "frequency": 3,
       "prerequisiteTitles": []
     },
     {
@@ -1539,6 +1613,7 @@
       "file": "content/3_Camp/3.11-GM1-generative-adversarial-networks.md",
       "code": "GM1",
       "number": "3.11",
+      "frequency": 1,
       "prerequisiteTitles": [
         "1. Autoencoder",
         "GPT and Causal Language Modeling",
@@ -1566,6 +1641,7 @@
       "file": "content/3_Camp/3.16-GM4-generative-adding-noise.md",
       "code": "GM4",
       "number": "3.16",
+      "frequency": 3,
       "prerequisiteTitles": [
         "2. VAE",
         "3. GAN",
@@ -1587,6 +1663,7 @@
       "file": "content/3_Camp/3.17-GM5-generative-removing-noise.md",
       "code": "GM5",
       "number": "3.17",
+      "frequency": 3,
       "prerequisiteTitles": [
         "4. Adding noise",
         "Information Theory for AI"
@@ -1604,6 +1681,7 @@
       "file": "content/3_Camp/3.18-GM6-generative-guidance-and-stable-diffusion.md",
       "code": "GM6",
       "number": "3.18",
+      "frequency": 1,
       "prerequisiteTitles": []
     },
     {
@@ -1632,6 +1710,7 @@
       "file": "content/3_Camp/3.19-XT3-sciml-setup.md",
       "code": "XT3",
       "number": "3.19",
+      "frequency": 3,
       "prerequisiteTitles": []
     },
     {
@@ -1646,6 +1725,7 @@
       "file": "content/3_Camp/3.20-XT4-sciml-the-equation.md",
       "code": "XT4",
       "number": "3.20",
+      "frequency": 2,
       "prerequisiteTitles": []
     },
     {
@@ -1660,6 +1740,7 @@
       "file": "content/3_Camp/3.21-XT5-sciml-network-as-solution.md",
       "code": "XT5",
       "number": "3.21",
+      "frequency": 2,
       "prerequisiteTitles": []
     },
     {
@@ -1674,6 +1755,7 @@
       "file": "content/3_Camp/3.22-XT6-sciml-derivatives.md",
       "code": "XT6",
       "number": "3.22",
+      "frequency": 2,
       "prerequisiteTitles": []
     },
     {
@@ -1688,6 +1770,7 @@
       "file": "content/3_Camp/3.23-XT7-sciml-physics-loss.md",
       "code": "XT7",
       "number": "3.23",
+      "frequency": 3,
       "prerequisiteTitles": []
     },
     {
@@ -1702,6 +1785,7 @@
       "file": "content/3_Camp/3.24-XT8-sciml-training-and-checking.md",
       "code": "XT8",
       "number": "3.24",
+      "frequency": 3,
       "prerequisiteTitles": []
     },
     {
@@ -1758,6 +1842,7 @@
       "file": "content/4_Advanced/4.7-TF25-efficient-setup.md",
       "code": "TF25",
       "number": "4.7",
+      "frequency": 3,
       "prerequisiteTitles": []
     },
     {
@@ -1774,6 +1859,7 @@
       "file": "content/4_Advanced/4.8-TF26-efficient-prefill-and-decode.md",
       "code": "TF26",
       "number": "4.8",
+      "frequency": 1,
       "prerequisiteTitles": [
         "Self-Attention Fundamentals"
       ]
@@ -1792,6 +1878,7 @@
       "file": "content/4_Advanced/4.9-TF27-efficient-kv-cache.md",
       "code": "TF27",
       "number": "4.9",
+      "frequency": 2,
       "prerequisiteTitles": [
         "1. Prefill and decode"
       ]
@@ -1813,6 +1900,7 @@
       "file": "content/4_Advanced/4.10-TF28-efficient-sharing-keys-and-values.md",
       "code": "TF28",
       "number": "4.10",
+      "frequency": 3,
       "prerequisiteTitles": [
         "Self-Attention Fundamentals",
         "GPT and Causal Language Modeling",
@@ -1834,6 +1922,7 @@
       "file": "content/4_Advanced/4.11-TF29-efficient-flashattention.md",
       "code": "TF29",
       "number": "4.11",
+      "frequency": 0,
       "prerequisiteTitles": [
         "Self-Attention Fundamentals"
       ]
@@ -1850,6 +1939,7 @@
       "file": "content/4_Advanced/4.12-TF30-efficient-linear-attention.md",
       "code": "TF30",
       "number": "4.12",
+      "frequency": 3,
       "prerequisiteTitles": []
     },
     {
@@ -1895,6 +1985,7 @@
       "file": "content/4_Advanced/4.15-TF33-mixture-of-experts.md",
       "code": "TF33",
       "number": "4.15",
+      "frequency": 0,
       "prerequisiteTitles": [
         "11. Stack",
         "The Multilayer Perceptron"
@@ -1915,6 +2006,7 @@
       "file": "content/4_Advanced/4.16-RF2-reinforcement-learning.md",
       "code": "RF2",
       "number": "4.16",
+      "frequency": 0,
       "prerequisiteTitles": [
         "Expectation and Joint Distributions",
         "The Multilayer Perceptron"
@@ -1935,6 +2027,7 @@
       "file": "content/4_Advanced/4.17-RF3-policy-gradients.md",
       "code": "RF3",
       "number": "4.17",
+      "frequency": 0,
       "prerequisiteTitles": [
         "Reinforcement Learning: MDPs and Q-Learning",
         "Backpropagation by Hand"
@@ -1969,6 +2062,7 @@
       "file": "content/4_Advanced/4.6-XT2-graph-neural-networks.md",
       "code": "XT2",
       "number": "4.6",
+      "frequency": 1,
       "prerequisiteTitles": [
         "The Multilayer Perceptron",
         "Eigenvalues and Spectral Theory"

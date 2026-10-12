@@ -67,7 +67,6 @@
     filterRow: document.querySelector("#filterRow"),
     sectionProgressCards: document.querySelector("#sectionProgressCards"),
     sectionRoadmap: document.querySelector("#sectionRoadmap"),
-    sectionChapterTable: document.querySelector("#sectionChapterTable"),
     homeStageCards: document.querySelector("#homeStageCards"),
     homeGlanceTable: document.querySelector("#homeGlanceTable"),
     moduleReader: document.querySelector("#moduleReader"),
@@ -173,7 +172,6 @@
           <a href="${localPath("contact/#sponsors")}">Sponsors</a>
         </div>
       </details>
-      <span class="nav-divider" aria-hidden="true"></span>
       ${navSearchLink()}
       <span class="nav-auth" id="authNavSlot" aria-live="polite">
         <button class="nav-login-button" type="button" data-auth-open>Login</button>
@@ -803,26 +801,6 @@
   function renderDashboard() {
     if (!els.dashboardGrid) return;
     const stats = getStats();
-    const stageProgress = ordering.sections.map((id) => {
-      const section = ordering.sectionOrdering[id];
-      const moduleIds = section.chapters.flatMap((chapter) => chapter.items).filter((moduleId) => moduleLookup.has(moduleId));
-      return {
-        id,
-        label: section.label,
-        route: section.route,
-        complete: moduleIds.filter((moduleId) => state.appState.moduleStatus[moduleId] === "complete").length,
-        total: moduleIds.length,
-      };
-    });
-    const problemTypeProgress = PROBLEM_TYPES.map((label) => {
-      const problems = problemData.problems.filter((problem) => problemType(problem) === label);
-      return {
-        id: label.toLowerCase(),
-        label,
-        complete: problems.filter((problem) => state.appState.problemStatus[problem.id] === "complete").length,
-        total: problems.length,
-      };
-    });
     const nextModules = moduleOrder
       .filter((module) => (state.appState.moduleStatus[module.id] || "not-started") !== "complete")
       .slice(0, 3);
@@ -835,8 +813,6 @@
         problemLookup,
         moduleOrder,
         ordering,
-        stageProgress,
-        problemTypeProgress,
         root,
       },
     );
@@ -873,15 +849,6 @@
     }
     if (els.sectionRoadmap) {
       els.sectionRoadmap.innerHTML = renderers.renderSectionTimeline(sectionId, ordering, moduleLookup, state.appState, root);
-    }
-    if (els.sectionChapterTable) {
-      els.sectionChapterTable.innerHTML = renderers.renderChapterTable(
-        sectionId,
-        ordering,
-        moduleLookup,
-        state.appState,
-        root,
-      );
     }
     renderModules();
   }
@@ -943,6 +910,9 @@
   const READER_NAV_KEY = "usaaio-reader-nav-collapsed";
 
   function readerNavCollapsed() {
+    // On a phone the sidebar stacks above the lesson, so open it would put a
+    // screen of links before the title. There it starts closed every time.
+    if (window.matchMedia && window.matchMedia("(max-width: 760px)").matches) return true;
     try {
       return localStorage.getItem(READER_NAV_KEY) === "1";
     } catch (error) {
@@ -1475,6 +1445,127 @@
     dot.addEventListener("animationend", () => dot.classList.remove("is-popping"), { once: true });
   }
 
+  // ---- the shared status dropdown -----------------------------------------
+  // One menu serves every status button on the page, so a 700-row problem
+  // table carries 700 buttons and a single menu rather than 700 menus. It is
+  // moved under whichever button is open and closed on Escape, an outside
+  // click, a scroll or a resize.
+  let statusMenuEl = null;
+  let statusMenuOwner = null;
+  // Focusing the first item can scroll the page, which would otherwise close
+  // the menu through the scroll handler below the moment it opened.
+  let statusMenuOpenedAt = 0;
+
+  function ensureStatusMenu() {
+    if (statusMenuEl) return statusMenuEl;
+    const host = document.createElement("div");
+    host.innerHTML = renderers.statusMenu();
+    statusMenuEl = host.firstElementChild;
+    document.body.appendChild(statusMenuEl);
+    return statusMenuEl;
+  }
+
+  function placeStatusMenu(trigger) {
+    const menu = statusMenuEl;
+    const box = trigger.getBoundingClientRect();
+    menu.hidden = false;
+    const width = menu.offsetWidth;
+    const height = menu.offsetHeight;
+    const margin = 8;
+    // Below the button by default, above it when the bottom is close.
+    let top = box.bottom + 6;
+    if (top + height > window.innerHeight - margin) top = Math.max(margin, box.top - height - 6);
+    // Left-aligned with the button, pulled in when it would run off the side.
+    let left = box.left;
+    if (left + width > window.innerWidth - margin) left = window.innerWidth - width - margin;
+    if (left < margin) left = margin;
+    // The menu is fixed, so these are viewport coordinates and no page or
+    // inner-container scroll offset comes into it.
+    top = Math.min(Math.max(top, margin), Math.max(margin, window.innerHeight - height - margin));
+    menu.style.top = `${Math.round(top)}px`;
+    menu.style.left = `${Math.round(left)}px`;
+  }
+
+  function openStatusMenu(trigger) {
+    const menu = ensureStatusMenu();
+    const problemId = trigger.dataset.cycleProblemStatus;
+    const current = state.appState.problemStatus[problemId] || "not-started";
+    menu.dataset.problemId = problemId;
+    menu.querySelectorAll("[data-set-problem-status]").forEach((item) => {
+      const mine = item.dataset.setProblemStatus === current;
+      item.setAttribute("aria-checked", mine ? "true" : "false");
+      item.classList.toggle("is-current", mine);
+      item.dataset.status = item.dataset.setProblemStatus;
+    });
+    if (statusMenuOwner && statusMenuOwner !== trigger) statusMenuOwner.setAttribute("aria-expanded", "false");
+    statusMenuOwner = trigger;
+    trigger.setAttribute("aria-expanded", "true");
+    placeStatusMenu(trigger);
+    statusMenuOpenedAt = Date.now();
+    const checked = menu.querySelector('[aria-checked="true"]') || menu.querySelector("[data-set-problem-status]");
+    if (checked) checked.focus({ preventScroll: true });
+  }
+
+  function closeStatusMenu(returnFocus) {
+    if (!statusMenuEl || statusMenuEl.hidden) return;
+    statusMenuEl.hidden = true;
+    if (statusMenuOwner) {
+      statusMenuOwner.setAttribute("aria-expanded", "false");
+      if (returnFocus) statusMenuOwner.focus();
+    }
+    statusMenuOwner = null;
+  }
+
+  function setProblemStatusFromMenu(next) {
+    const problemId = statusMenuEl && statusMenuEl.dataset.problemId;
+    if (!problemId) return;
+    closeStatusMenu(true);
+    // A lesson or problem page holds open answers and folded boxes that a
+    // full re-render would close, so there the change is patched in place.
+    if (PATCH_STATUS_PAGES.includes(page)) {
+      state.appState = storage.setProblemStatus(problemId, next);
+      patchProblemStatus(problemId);
+    } else {
+      syncAppState(storage.setProblemStatus(problemId, next));
+      // The table drew new buttons, so the pop plays on the new one.
+      if (next === "complete") {
+        document.querySelectorAll(`[data-cycle-problem-status="${CSS.escape(problemId)}"]`).forEach(popStatus);
+      }
+    }
+  }
+
+  // Arrow keys walk the menu, Escape closes it, and Enter or Space picks.
+  document.addEventListener("keydown", (event) => {
+    if (!statusMenuEl || statusMenuEl.hidden) return;
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeStatusMenu(true);
+      return;
+    }
+    if (event.key !== "ArrowDown" && event.key !== "ArrowUp" && event.key !== "Home" && event.key !== "End") return;
+    const items = Array.from(statusMenuEl.querySelectorAll("[data-set-problem-status]"));
+    if (!items.length) return;
+    event.preventDefault();
+    const here = items.indexOf(document.activeElement);
+    let next = 0;
+    if (event.key === "ArrowDown") next = here < 0 ? 0 : (here + 1) % items.length;
+    else if (event.key === "ArrowUp") next = here < 0 ? items.length - 1 : (here - 1 + items.length) % items.length;
+    else if (event.key === "End") next = items.length - 1;
+    items[next].focus();
+  });
+
+  document.addEventListener("pointerdown", (event) => {
+    if (!statusMenuEl || statusMenuEl.hidden) return;
+    if (event.target.closest(".pstatus-menu") || event.target.closest("[data-cycle-problem-status]")) return;
+    closeStatusMenu();
+  });
+
+  window.addEventListener("resize", () => closeStatusMenu());
+  window.addEventListener("scroll", () => {
+    if (Date.now() - statusMenuOpenedAt < 250) return;
+    closeStatusMenu();
+  }, true);
+
   // Brings every control showing a problem's status up to date without
   // re-rendering the page: the status circles, the module's solved meter, and
   // (through the event) the problem pages.
@@ -1486,7 +1577,7 @@
       const turnedDone = complete && dot.dataset.status !== "complete";
       dot.dataset.status = renderers.PROBLEM_STATUS_LABELS[status] ? status : "not-started";
       dot.setAttribute("aria-pressed", renderers.problemStatusPressed(status));
-      dot.setAttribute("aria-label", `${label}: ${dot.dataset.problemTitle || ""}`);
+      dot.setAttribute("aria-label", `${label}: ${dot.dataset.problemTitle || ""}. Change status`);
       dot.title = label;
       if (turnedDone) popStatus(dot);
     });
@@ -1915,24 +2006,16 @@
       return;
     }
 
+    const statusItem = event.target.closest("[data-set-problem-status]");
+    if (statusItem) {
+      setProblemStatusFromMenu(statusItem.dataset.setProblemStatus);
+      return;
+    }
+
     const statusDot = event.target.closest("[data-cycle-problem-status]");
     if (statusDot) {
-      // Not started, then in progress, then done, then round again.
-      const NEXT_STATUS = { "not-started": "in-progress", "in-progress": "complete", complete: "not-started" };
-      const next = NEXT_STATUS[statusDot.dataset.status] || "in-progress";
-      const problemId = statusDot.dataset.cycleProblemStatus;
-      // A lesson or problem page holds open answers and folded boxes that a
-      // full re-render would close, so there the change is patched in place.
-      if (PATCH_STATUS_PAGES.includes(page)) {
-        state.appState = storage.setProblemStatus(problemId, next);
-        patchProblemStatus(problemId);
-      } else {
-        syncAppState(storage.setProblemStatus(problemId, next));
-        // The table drew new circles, so the pop plays on the new one.
-        if (next === "complete") {
-          document.querySelectorAll(`[data-cycle-problem-status="${CSS.escape(problemId)}"]`).forEach(popStatus);
-        }
-      }
+      if (statusMenuOwner === statusDot) closeStatusMenu();
+      else openStatusMenu(statusDot);
       return;
     }
 
@@ -2075,10 +2158,6 @@
   document.addEventListener("change", (event) => {
     if (event.target.matches("[data-module-status]")) {
       syncAppState(storage.setModuleStatus(event.target.dataset.moduleStatus, event.target.value));
-      return;
-    }
-    if (event.target.matches("[data-problem-status]")) {
-      syncAppState(storage.setProblemStatus(event.target.dataset.problemStatus, event.target.value));
       return;
     }
     if (event.target.matches("#problemStatusFilter")) {

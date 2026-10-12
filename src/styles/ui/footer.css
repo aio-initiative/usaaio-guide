@@ -80,8 +80,14 @@
   font-weight: 600;
 }
 
-.footer-brand .footer-disclaimer {
+.footer-brand .footer-org {
   margin: 1rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.footer-brand .footer-disclaimer {
+  margin: 0.45rem 0 0;
   font-size: 0.88rem;
   line-height: 1.6;
 }

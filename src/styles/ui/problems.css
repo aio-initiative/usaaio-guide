@@ -24,7 +24,7 @@
 }
 
 /* Progress under the lede: one bar for the whole bank, then a smaller bar
-   for each type, in the type's own colour. Completed reads green, like the
+   for each type, in the type's own colour. Completed reads in the site orange, like the
    status circles in the table. */
 .pprog {
   display: grid;
@@ -63,7 +63,7 @@
 
 .pprog-pct {
   margin-left: auto;
-  color: var(--green);
+  color: var(--done);
   font-size: 0.88rem;
   font-weight: 750;
 }
@@ -81,7 +81,7 @@
   height: 100%;
   min-width: 0;
   border-radius: inherit;
-  background: var(--green);
+  background: var(--done);
   transition: width 360ms var(--ease);
 }
 
@@ -324,11 +324,92 @@
   line-height: 1.2;
 }
 
+/* ------------------------------ status menu -------------------------------- */
+
+/* One dropdown serves every status button on the page; app.js moves it under
+   whichever button is open. It is fixed, so it is placed in viewport
+   coordinates and does not drift when an inner pane scrolls. */
+.pstatus-menu {
+  position: fixed;
+  z-index: 60;
+  display: grid;
+  gap: 0.15rem;
+  min-width: 11rem;
+  padding: 0.4rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--panel);
+  box-shadow: var(--shadow-lg);
+}
+
+.pstatus-menu[hidden] {
+  display: none;
+}
+
+.pstatus-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: 100%;
+  min-height: 2.25rem;
+  padding: 0.35rem 0.55rem;
+  border: 0;
+  border-radius: var(--radius);
+  background: none;
+  color: var(--ink-2);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.pstatus-item:hover {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+
+.pstatus-item:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+.pstatus-item.is-current {
+  color: var(--ink);
+  background: var(--surface-2);
+}
+
+/* Beats .pcheck-icon's 100% sizing, which is set for the button. */
+.pstatus-item .pcheck-icon.pstatus-item-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: none;
+}
+
+/* Each row previews the state it sets, same drawing as the button. */
+.pstatus-item[data-status="in-progress"] .pcheck-ring {
+  stroke: var(--amber);
+}
+
+.pstatus-item[data-status="in-progress"] .pcheck-half {
+  fill: var(--amber);
+}
+
+.pstatus-item[data-status="complete"] .pcheck-ring {
+  fill: var(--done);
+  stroke: var(--done);
+}
+
+.pstatus-item[data-status="complete"] .pcheck-tick {
+  stroke: #fff;
+  stroke-dashoffset: 0;
+}
+
 /* ------------------------------ status circle ------------------------------ */
 
 /* One control for a problem's status wherever it shows: an empty ring, half
-   filled amber while in progress, filled green with a white tick when done.
-   It pops once as it fills green (the class is added by app.js). */
+   filled amber while in progress, filled orange with a white tick when done.
+   It pops once as it fills (the class is added by app.js). */
 .pcheck {
   --pcheck-size: 1.65rem;
   position: relative;
@@ -398,8 +479,8 @@
 
 /* Hovering an in-progress circle previews the next state, done. */
 .pcheck[data-status="in-progress"]:hover .pcheck-ring {
-  fill: var(--green-soft);
-  stroke: var(--green);
+  fill: var(--done-soft);
+  stroke: var(--done);
 }
 
 .pcheck[data-status="in-progress"]:hover .pcheck-half {
@@ -407,13 +488,13 @@
 }
 
 .pcheck[data-status="in-progress"]:hover .pcheck-tick {
-  stroke: color-mix(in srgb, var(--green) 55%, transparent);
+  stroke: color-mix(in srgb, var(--done) 55%, transparent);
   stroke-dashoffset: 0;
 }
 
 .pcheck[data-status="complete"] .pcheck-ring {
-  fill: var(--green);
-  stroke: var(--green);
+  fill: var(--done);
+  stroke: var(--done);
 }
 
 .pcheck[data-status="complete"] .pcheck-tick {
@@ -422,8 +503,8 @@
 }
 
 .pcheck[data-status="complete"]:hover .pcheck-ring {
-  fill: color-mix(in srgb, var(--green) 86%, var(--ink));
-  stroke: color-mix(in srgb, var(--green) 86%, var(--ink));
+  fill: color-mix(in srgb, var(--done) 86%, var(--ink));
+  stroke: color-mix(in srgb, var(--done) 86%, var(--ink));
 }
 
 .pcheck:focus-visible {
