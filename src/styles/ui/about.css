@@ -38,19 +38,38 @@ body[data-page="about"] .section-heading p {
   line-height: 1.6;
 }
 
+/* --- first screen: the team should show without scrolling ---------------- */
+
+body[data-page="about"] .about-hero-inner {
+  padding: clamp(1.25rem, 2.5vw, 1.75rem) 0;
+}
+
+body[data-page="about"] .about-section.about-org {
+  padding-top: clamp(1.5rem, 2.5vw, 1.75rem);
+  padding-bottom: clamp(1.5rem, 2.5vw, 1.75rem);
+}
+
+body[data-page="about"] .about-section.about-team {
+  padding-top: clamp(1.5rem, 2.5vw, 1.75rem);
+}
+
+body[data-page="about"] .about-team .section-heading {
+  margin-bottom: 1rem;
+}
+
 /* --- who we are: the AIO Initiative mark above a short blurb, centred ----- */
 
 .about-section.about-org {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.25rem;
+  gap: 0.9rem;
   text-align: center;
 }
 
 .about-org-mark {
   flex: none;
-  width: clamp(88px, 10vw, 112px);
+  width: clamp(64px, 6vw, 80px);
   height: auto;
   border-radius: 50%;
   box-shadow: var(--shadow-brand);
@@ -69,6 +88,81 @@ body[data-page="about"] .about-org .section-heading p {
 body[data-page="about"] .about-org .section-heading h2::after {
   left: 50%;
   transform: translateX(-50%);
+}
+
+/* --- team: one group per team, each row centred --------------------------
+   A row of one, two or three cards sits in the middle, so a director alone on
+   a row reads as the head of the cards under it. */
+body[data-page="about"] .about-team .section-heading {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body[data-page="about"] .about-team .section-heading h2::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.team-group + .team-group {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.team-group-title {
+  margin: 0 0 1.25rem;
+  color: var(--brand-strong);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Each card is a subgrid spanning four rows (photo, tags, text, links), so
+   the row must be a grid. Fixed-width tracks with auto-fit drop the empty
+   columns, which lets a row of one or two cards centre. */
+.team-row {
+  --team-cols: 3;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, calc((100% - (var(--team-cols) - 1) * 1.25rem) / var(--team-cols)));
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+.team-row + .team-row {
+  margin-top: 1.25rem;
+}
+
+/* A card left alone on the last line of a three-wide row takes the middle. */
+@media (min-width: 901px) {
+  .team-row > .team-card:last-child:nth-child(3n + 1):not(:first-child) {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 900px) {
+  .team-row {
+    --team-cols: 2;
+  }
+
+  /* Same for an odd card out at two wide. */
+  .team-row > .team-card:last-child:nth-child(2n + 1):not(:first-child) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc((100% - 1.25rem) / 2);
+  }
+}
+
+@media (max-width: 560px) {
+  .team-row > .team-card:last-child:nth-child(2n + 1):not(:first-child) {
+    width: 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  .team-row {
+    --team-cols: 1;
+  }
 }
 
 /* --- link tiles: the four stages and the contact options ------------------- */
@@ -257,6 +351,12 @@ body[data-page="about"] .team-card-body {
   align-self: start;
   margin: 0;
   min-height: 0;
+}
+
+/* A card with no badges would keep an empty badge row the height of its
+   neighbour's badges, so its name starts right under the photo instead. */
+body[data-page="about"] .team-card:not(:has(.team-tags)) .team-card-body {
+  grid-row: 2 / span 2;
 }
 
 body[data-page="about"] .team-card h3 {
