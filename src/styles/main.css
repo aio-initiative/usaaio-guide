@@ -8196,7 +8196,8 @@ body.mock-fs-active .site-header {
   margin: 1.25rem 0 1.5rem;
   overflow: hidden;
   border: 1px solid var(--line);
-  border-left: 3px solid var(--brand);
+  /* The accent runs along the top edge, as on usaco.guide's focus problems. */
+  border-top: 4px solid var(--brand);
   border-radius: var(--radius);
   background: var(--panel);
   transition: border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
