@@ -705,3 +705,169 @@
   margin-right: 0.3rem;
   font-weight: 800;
 }
+
+/* --- module resources: a card at the top of the lesson ---------------------
+   usaco.guide's layout: a header band, then one row per resource with a
+   status square, the source, a star for the recommended ones, and the link. */
+
+.reader-article .mres {
+  margin: 1.5rem 0 2rem;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: var(--shadow-sm);
+}
+
+.reader-article .mres-head {
+  margin: 0;
+  padding: 0.7rem 1.1rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+/* The section-heading underline main.css draws under every h2 does not
+   belong inside the band. */
+.reader-article .mres-head::after {
+  content: none;
+}
+
+.reader-article .mres-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.reader-article .mres-row {
+  display: grid;
+  grid-template-columns: auto minmax(7.5rem, 10rem) minmax(0, 1fr);
+  align-items: center;
+  column-gap: 1rem;
+  margin: 0;
+  padding: 0.7rem 1.1rem;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.reader-article .mres-row + .mres-row {
+  border-top: 1px solid var(--line-soft);
+}
+
+.reader-article .mres-row::before {
+  content: none;
+}
+
+.reader-article .mres-source {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reader-article .mres-title {
+  min-width: 0;
+}
+
+.reader-article .mres-title a {
+  color: var(--brand-strong);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.reader-article .mres-title a:hover,
+.reader-article .mres-title a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.reader-article .mres-star {
+  margin-right: 0.3rem;
+  color: var(--amber);
+}
+
+/* --- the status square ------------------------------------------------------ */
+
+.rstatus {
+  --rs-color: transparent;
+  display: inline-grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  padding: 0;
+  border: 1.5px solid color-mix(in srgb, var(--ink) 25%, transparent);
+  border-radius: 0.4rem;
+  background: var(--paper);
+  color: #fff;
+  cursor: pointer;
+  transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+}
+
+.rstatus:hover {
+  border-color: var(--brand);
+}
+
+.rstatus:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+.rstatus:not([data-status="not-started"]) {
+  border-color: var(--rs-color);
+  background: var(--rs-color);
+}
+
+.rstatus svg,
+.rstatus-item-icon svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* One colour per state, shared by the square and its row in the menu. */
+[data-status="reading"] { --rs-color: var(--amber); }
+[data-status="practicing"] { --rs-color: var(--navy); }
+[data-status="complete"] { --rs-color: var(--done); }
+[data-status="skipped"] { --rs-color: color-mix(in srgb, var(--ink) 45%, var(--paper)); }
+[data-status="reviewing"] { --rs-color: var(--coral); }
+[data-status="ignored"] { --rs-color: color-mix(in srgb, var(--ink) 28%, var(--paper)); }
+
+.rstatus-menu {
+  min-width: 12rem;
+}
+
+.rstatus-item-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: none;
+  color: var(--rs-color, transparent);
+}
+
+/* --- phones: the source sits above the title ------------------------------ */
+
+@media (max-width: 560px) {
+  .reader-article .mres-row {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas: "status source" "status title";
+    row-gap: 0.15rem;
+    column-gap: 0.85rem;
+  }
+
+  .reader-article .mres-row .rstatus { grid-area: status; }
+  .reader-article .mres-source { grid-area: source; }
+  .reader-article .mres-title { grid-area: title; }
+}

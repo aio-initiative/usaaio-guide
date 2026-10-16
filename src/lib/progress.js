@@ -6,6 +6,9 @@
   const DEFAULT_STATE = {
     moduleStatus: {},
     problemStatus: {},
+    // Where a reader is with each module resource, keyed by the resource's
+    // URL: reading, practicing, complete and so on, as on usaco.guide.
+    resourceStatus: {},
     scratchpad: "",
     plan: [],
     activityLog: [],
@@ -20,6 +23,7 @@
     const state = { ...cloneDefaultState(), ...(rawState || {}) };
     state.moduleStatus = state.moduleStatus || {};
     state.problemStatus = state.problemStatus || {};
+    state.resourceStatus = state.resourceStatus && typeof state.resourceStatus === "object" ? state.resourceStatus : {};
     state.plan = Array.isArray(state.plan)
       ? state.plan.filter(
           (item) => item && (item.type === "module" || item.type === "problem") && typeof item.id === "string",
@@ -211,6 +215,15 @@
     });
   }
 
+  // Resources are reading, not solving, so they stay out of the activity log
+  // that feeds the streak and the heatmap.
+  function setResourceStatus(url, status) {
+    return updateState((state) => {
+      if (!status || status === "not-started") delete state.resourceStatus[url];
+      else state.resourceStatus[url] = status;
+    });
+  }
+
   function setPlan(plan) {
     return updateState((state) => {
       state.plan = Array.isArray(plan) ? plan : [];
@@ -232,6 +245,7 @@
     toggle,
     setModuleStatus,
     setProblemStatus,
+    setResourceStatus,
     setPlan,
     saveScratchpad,
     syncWithSession,

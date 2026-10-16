@@ -119,49 +119,57 @@ body[data-page="about"] .about-team .section-heading h2::after {
 }
 
 /* Each card is a subgrid spanning four rows (photo, tags, text, links), so
-   the row must be a grid. Fixed-width tracks with auto-fit drop the empty
-   columns, which lets a row of one or two cards centre. */
-.team-row {
-  --team-cols: 3;
+   the row must be a grid. It has twice as many columns as cards per line and
+   each card spans two, which lets a short line (a director alone, two VPs,
+   the last one or two members) start half a card in and sit centred. */
+body[data-page="about"] .team-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, calc((100% - (var(--team-cols) - 1) * 1.25rem) / var(--team-cols)));
-  justify-content: center;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 1.25rem;
 }
 
-.team-row + .team-row {
+body[data-page="about"] .team-row > .team-card {
+  grid-column: span 2;
+}
+
+body[data-page="about"] .team-row + .team-row {
   margin-top: 1.25rem;
 }
 
-/* A card left alone on the last line of a three-wide row takes the middle. */
 @media (min-width: 901px) {
-  .team-row > .team-card:last-child:nth-child(3n + 1):not(:first-child) {
-    grid-column: 2;
+  /* one card left on the last line */
+  body[data-page="about"] .team-row > .team-card:nth-child(3n + 1):last-child {
+    grid-column: 3 / span 2;
+  }
+
+  /* two cards left on the last line */
+  body[data-page="about"] .team-row > .team-card:nth-child(3n + 1):nth-last-child(2) {
+    grid-column: 2 / span 2;
+  }
+
+  body[data-page="about"] .team-row > .team-card:nth-child(3n + 2):last-child {
+    grid-column: 4 / span 2;
   }
 }
 
 @media (max-width: 900px) {
-  .team-row {
-    --team-cols: 2;
+  body[data-page="about"] .team-row {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  /* Same for an odd card out at two wide. */
-  .team-row > .team-card:last-child:nth-child(2n + 1):not(:first-child) {
-    grid-column: 1 / -1;
-    justify-self: center;
-    width: calc((100% - 1.25rem) / 2);
+  body[data-page="about"] .team-row > .team-card:nth-child(2n + 1):last-child {
+    grid-column: 2 / span 2;
   }
 }
 
 @media (max-width: 560px) {
-  .team-row > .team-card:last-child:nth-child(2n + 1):not(:first-child) {
-    width: 100%;
+  body[data-page="about"] .team-row {
+    grid-template-columns: minmax(0, 1fr);
   }
-}
 
-@media (max-width: 560px) {
-  .team-row {
-    --team-cols: 1;
+  body[data-page="about"] .team-row > .team-card,
+  body[data-page="about"] .team-row > .team-card:nth-child(2n + 1):last-child {
+    grid-column: 1;
   }
 }
 
@@ -253,7 +261,6 @@ body[data-page="about"] .team-card {
   position: relative;
   display: grid;
   justify-items: center;
-  grid-column: auto;
   /* Each card spans four rows of the team grid and shares them through
      subgrid, so photo, tags, name and links line up across a row even
      when one card has two tags and its neighbour has none. */
@@ -268,13 +275,6 @@ body[data-page="about"] .team-card {
   box-shadow: var(--shadow-sm);
   text-align: center;
   transition: border-color var(--t-mid) var(--ease), box-shadow var(--t-mid) var(--ease), transform var(--t-mid) var(--ease);
-}
-
-/* The old grid sat each card across two of six slots and offset the first
-   row, which made the section lean left. One card per column now. */
-body[data-page="about"] .team-card:nth-child(1),
-body[data-page="about"] .team-card:nth-child(2) {
-  grid-column: auto;
 }
 
 body[data-page="about"] .team-card:hover,

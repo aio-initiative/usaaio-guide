@@ -401,11 +401,89 @@
       </button>`;
   }
 
+  // ---- module resources ---------------------------------------------------
+  // usaco.guide's resource states. Each has an icon that shows in the row's
+  // status square and in the dropdown, so the two always agree.
+  const RESOURCE_STATUS_ORDER = ["not-started", "reading", "practicing", "complete", "skipped", "reviewing", "ignored"];
+  const RESOURCE_STATUS_LABELS = {
+    "not-started": "Not Started",
+    reading: "Reading",
+    practicing: "Practicing",
+    complete: "Complete",
+    skipped: "Skipped",
+    reviewing: "Reviewing",
+    ignored: "Ignored",
+  };
+  const RESOURCE_STATUS_ICONS = {
+    "not-started": "",
+    reading: '<path d="M3.5 5.5c2.9-.9 5.7-.6 8.5 1v12c-2.8-1.6-5.6-1.9-8.5-1z" /><path d="M20.5 5.5c-2.9-.9-5.7-.6-8.5 1v12c2.8-1.6 5.6-1.9 8.5-1z" />',
+    practicing: '<path d="M8.5 7.5 4 12l4.5 4.5" /><path d="M15.5 7.5 20 12l-4.5 4.5" /><path d="m13.5 5-3 14" />',
+    complete: '<path d="M5.5 12.5 10 17l8.5-9.5" />',
+    skipped: '<path d="m6 6.5 5.5 5.5L6 17.5" /><path d="m12.5 6.5 5.5 5.5-5.5 5.5" />',
+    reviewing: '<path d="m18 6.5-5.5 5.5 5.5 5.5" /><path d="m11.5 6.5-5.5 5.5 5.5 5.5" />',
+    ignored: '<path d="m7 7 10 10" /><path d="M17 7 7 17" />',
+  };
+
+  function resourceStatusValue(status) {
+    return RESOURCE_STATUS_LABELS[status] ? status : "not-started";
+  }
+
+  function resourceStatusIcon(status) {
+    const paths = RESOURCE_STATUS_ICONS[resourceStatusValue(status)];
+    return paths ? `<svg viewBox="0 0 24 24" aria-hidden="true">${paths}</svg>` : "";
+  }
+
+  function resourceStatusButton(url, title, status) {
+    const value = resourceStatusValue(status);
+    return `<button class="rstatus" type="button" data-resource-status="${escapeHtml(url)}" data-resource-title="${escapeHtml(title)}"
+        data-status="${value}" aria-haspopup="menu" aria-expanded="false"
+        aria-label="${RESOURCE_STATUS_LABELS[value]}: ${escapeHtml(title)}. Change status" title="${RESOURCE_STATUS_LABELS[value]}">${resourceStatusIcon(value)}</button>`;
+  }
+
+  function resourceStatusMenu() {
+    const items = RESOURCE_STATUS_ORDER.map((value) => `
+      <button class="pstatus-item rstatus-item" type="button" role="menuitemradio" aria-checked="false"
+        data-status-item data-set-resource-status="${value}" data-status="${value}">
+        <span class="rstatus-item-icon">${resourceStatusIcon(value)}</span>
+        <span>${RESOURCE_STATUS_LABELS[value]}</span>
+      </button>`).join("");
+    return `<div class="pstatus-menu rstatus-menu" role="menu" aria-label="Set resource status" hidden>${items}</div>`;
+  }
+
+  // The module's resources as one card at the top of the page: a status
+  // square, the source, a star for the recommended ones, and the link.
+  function renderModuleResources(resources, appState, root) {
+    const list = (resources || []).filter((resource) => resource && resource.url);
+    if (!list.length) return "";
+    const statuses = (appState && appState.resourceStatus) || {};
+    const rows = list
+      .map((resource) => {
+        const external = !/^[/#]/.test(resource.url);
+        const href = resource.url.startsWith("/") ? `${root || ""}${resource.url.slice(1)}` : resource.url;
+        return `
+          <li class="mres-row">
+            ${resourceStatusButton(resource.url, resource.title, statuses[resource.url])}
+            <span class="mres-source">${escapeHtml(resource.source || "")}</span>
+            <span class="mres-title">
+              ${resource.starred ? '<span class="mres-star" title="Recommended"><span aria-hidden="true">★</span><span class="sr-only">Recommended: </span></span>' : ""}
+              <a href="${escapeHtml(href)}"${external ? ' target="_blank" rel="noopener"' : ""}>${escapeHtml(resource.title)}</a>
+            </span>
+          </li>`;
+      })
+      .join("");
+    return `
+      <section class="mres" id="lesson-resources" aria-labelledby="lesson-resources-title">
+        <h2 class="mres-head" id="lesson-resources-title">Resources</h2>
+        <ul class="mres-list">${rows}</ul>
+      </section>
+    `;
+  }
+
   // The shared dropdown app.js moves to whichever button is open.
   function statusMenu() {
     const items = PROBLEM_STATUS_ORDER.map((value) => `
       <button class="pstatus-item" type="button" role="menuitemradio" aria-checked="false"
-        data-set-problem-status="${value}">
+        data-status-item data-set-problem-status="${value}">
         ${statusIcon("pstatus-item-icon")}
         <span>${PROBLEM_STATUS_LABELS[value]}</span>
       </button>`).join("");
@@ -1576,7 +1654,14 @@
     // Prerequisites are hoisted out of the section flow into a box directly
     // under the title, so the reader sees what it needs before the prose
     // starts rather than as body section two.
-    const bodySections = lesson.sections.filter((entry) => entry.id !== "prerequisites");
+    const bodySections = lesson.sections.filter((entry) => entry.id !== "prerequisites" && entry.id !== "resources");
+    // Resources move from the end of the lesson to a card at the top, as on
+    // usaco.guide, so a reader sees what to read alongside before starting.
+    const resourceSection = lesson.sections.find((entry) => entry.id === "resources");
+    const resourceList = resourceSection
+      ? resourceSection.blocks.flatMap((block) => (block && Array.isArray(block.resources) ? block.resources : []))
+      : [];
+    const resourcesCard = renderModuleResources(resourceList, context.appState, context.root);
     const sections = `${bodySections
       .map((section) => renderLessonSection(section, problemLookup, context.root, context.appState))
       .join("")}
@@ -1792,6 +1877,7 @@
         </div>
         <p class="reader-lede">${escapeHtml(module.summary)}</p>
         ${prerequisites}
+        ${resourcesCard}
         ${sections}
         ${pageNav}
         <aside class="reader-help">
@@ -2131,6 +2217,9 @@
     choiceText,
     statusCircle,
     statusMenu,
+    resourceStatusMenu,
+    resourceStatusButton,
+    RESOURCE_STATUS_LABELS,
     frequencyBadge,
     PROBLEM_STATUS_ORDER,
     PROBLEM_STATUS_LABELS,

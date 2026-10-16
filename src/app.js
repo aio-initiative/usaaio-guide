@@ -1450,19 +1450,23 @@
   // table carries 700 buttons and a single menu rather than 700 menus. It is
   // moved under whichever button is open and closed on Escape, an outside
   // click, a scroll or a resize.
+  // Problems and resources each get one menu; statusMenuEl is whichever is
+  // open (or was last opened).
+  const statusMenus = {};
   let statusMenuEl = null;
   let statusMenuOwner = null;
   // Focusing the first item can scroll the page, which would otherwise close
   // the menu through the scroll handler below the moment it opened.
   let statusMenuOpenedAt = 0;
 
-  function ensureStatusMenu() {
-    if (statusMenuEl) return statusMenuEl;
-    const host = document.createElement("div");
-    host.innerHTML = renderers.statusMenu();
-    statusMenuEl = host.firstElementChild;
-    document.body.appendChild(statusMenuEl);
-    return statusMenuEl;
+  function ensureStatusMenu(kind) {
+    if (!statusMenus[kind]) {
+      const host = document.createElement("div");
+      host.innerHTML = kind === "resource" ? renderers.resourceStatusMenu() : renderers.statusMenu();
+      statusMenus[kind] = host.firstElementChild;
+      document.body.appendChild(statusMenus[kind]);
+    }
+    return statusMenus[kind];
   }
 
   function placeStatusMenu(trigger) {
@@ -1487,22 +1491,31 @@
   }
 
   function openStatusMenu(trigger) {
-    const menu = ensureStatusMenu();
-    const problemId = trigger.dataset.cycleProblemStatus;
-    const current = state.appState.problemStatus[problemId] || "not-started";
-    menu.dataset.problemId = problemId;
-    menu.querySelectorAll("[data-set-problem-status]").forEach((item) => {
-      const mine = item.dataset.setProblemStatus === current;
+    const kind = trigger.dataset.resourceStatus !== undefined ? "resource" : "problem";
+    if (statusMenuEl && statusMenuEl !== statusMenus[kind]) closeStatusMenu();
+    const menu = ensureStatusMenu(kind);
+    statusMenuEl = menu;
+    let current;
+    if (kind === "resource") {
+      menu.dataset.resourceUrl = trigger.dataset.resourceStatus;
+      current = (state.appState.resourceStatus || {})[trigger.dataset.resourceStatus] || "not-started";
+    } else {
+      menu.dataset.problemId = trigger.dataset.cycleProblemStatus;
+      current = state.appState.problemStatus[trigger.dataset.cycleProblemStatus] || "not-started";
+    }
+    menu.querySelectorAll("[data-status-item]").forEach((item) => {
+      const value = item.dataset.setProblemStatus || item.dataset.setResourceStatus;
+      const mine = value === current;
       item.setAttribute("aria-checked", mine ? "true" : "false");
       item.classList.toggle("is-current", mine);
-      item.dataset.status = item.dataset.setProblemStatus;
+      item.dataset.status = value;
     });
     if (statusMenuOwner && statusMenuOwner !== trigger) statusMenuOwner.setAttribute("aria-expanded", "false");
     statusMenuOwner = trigger;
     trigger.setAttribute("aria-expanded", "true");
     placeStatusMenu(trigger);
     statusMenuOpenedAt = Date.now();
-    const checked = menu.querySelector('[aria-checked="true"]') || menu.querySelector("[data-set-problem-status]");
+    const checked = menu.querySelector('[aria-checked="true"]') || menu.querySelector("[data-status-item]");
     if (checked) checked.focus({ preventScroll: true });
   }
 
@@ -1534,6 +1547,23 @@
     }
   }
 
+  // A resource's status lives only in its own row's square, so the change is
+  // patched there and nothing else re-renders.
+  function setResourceStatusFromMenu(next) {
+    const url = statusMenuEl && statusMenuEl.dataset.resourceUrl;
+    if (!url) return;
+    closeStatusMenu(true);
+    state.appState = storage.setResourceStatus(url, next);
+    document.querySelectorAll(`[data-resource-status="${CSS.escape(url)}"]`).forEach((button) => {
+      const host = document.createElement("div");
+      host.innerHTML = renderers.resourceStatusButton(url, button.dataset.resourceTitle || "", next);
+      const fresh = host.firstElementChild;
+      const hadFocus = document.activeElement === button;
+      button.replaceWith(fresh);
+      if (hadFocus) fresh.focus();
+    });
+  }
+
   // Arrow keys walk the menu, Escape closes it, and Enter or Space picks.
   document.addEventListener("keydown", (event) => {
     if (!statusMenuEl || statusMenuEl.hidden) return;
@@ -1543,7 +1573,7 @@
       return;
     }
     if (event.key !== "ArrowDown" && event.key !== "ArrowUp" && event.key !== "Home" && event.key !== "End") return;
-    const items = Array.from(statusMenuEl.querySelectorAll("[data-set-problem-status]"));
+    const items = Array.from(statusMenuEl.querySelectorAll("[data-status-item]"));
     if (!items.length) return;
     event.preventDefault();
     const here = items.indexOf(document.activeElement);
@@ -1556,7 +1586,7 @@
 
   document.addEventListener("pointerdown", (event) => {
     if (!statusMenuEl || statusMenuEl.hidden) return;
-    if (event.target.closest(".pstatus-menu") || event.target.closest("[data-cycle-problem-status]")) return;
+    if (event.target.closest(".pstatus-menu") || event.target.closest("[data-cycle-problem-status], [data-resource-status]")) return;
     closeStatusMenu();
   });
 
@@ -2003,6 +2033,19 @@
         const first = card.querySelector(".mcq-radio");
         if (first) first.focus();
       }
+      return;
+    }
+
+    const resourceItem = event.target.closest("[data-set-resource-status]");
+    if (resourceItem) {
+      setResourceStatusFromMenu(resourceItem.dataset.setResourceStatus);
+      return;
+    }
+
+    const resourceSquare = event.target.closest("[data-resource-status]");
+    if (resourceSquare) {
+      if (statusMenuOwner === resourceSquare) closeStatusMenu();
+      else openStatusMenu(resourceSquare);
       return;
     }
 
