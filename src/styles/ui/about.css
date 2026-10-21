@@ -104,18 +104,39 @@ body[data-page="about"] .about-team .section-heading h2::after {
   transform: translateX(-50%);
 }
 
-.team-group + .team-group {
-  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+/* No rule between the blurb and the team: they read as one introduction. */
+body[data-page="about"] .about-org + .about-team {
+  border-top: 0;
 }
 
+.team-group + .team-group {
+  margin-top: clamp(3.5rem, 7vw, 5rem);
+}
+
+/* Each team is named like a heading, with the same short underline as the
+   section titles, so the groups are easy to find while scrolling. */
 .team-group-title {
-  margin: 0 0 1.25rem;
-  color: var(--brand-strong);
-  font-size: 0.85rem;
+  position: relative;
+  margin: 0 0 1.75rem;
+  padding-bottom: 0.6rem;
+  color: var(--ink);
+  font-size: clamp(1.3rem, 2.4vw, 1.6rem);
   font-weight: 800;
-  letter-spacing: 0.1em;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
   text-align: center;
-  text-transform: uppercase;
+}
+
+.team-group-title::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 32px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--brand);
+  transform: translateX(-50%);
 }
 
 /* Each card is a subgrid spanning four rows (photo, tags, text, links), so
