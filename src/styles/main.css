@@ -168,11 +168,11 @@ body[data-section="advanced"] {
   --division-accent: var(--stage-advanced);
 }
 
-/* On desktop the whole site renders at 85%, the density it was designed at:
-   more of a lesson fits on screen without the reader zooming out. Phones and
-   tablets keep full size. */
+/* The About page renders at 85% on desktop, so the team shows without much
+   scrolling. Every other page is full size, and phones and tablets keep full
+   size everywhere. */
 @media (min-width: 1025px) {
-  html {
+  html:has(> body[data-page="about"]) {
     zoom: 0.85;
     /* Viewport units shrink with the zoom too, so full-screen heights divide
        by this to still fill the window. */
