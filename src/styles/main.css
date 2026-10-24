@@ -168,6 +168,18 @@ body[data-section="advanced"] {
   --division-accent: var(--stage-advanced);
 }
 
+/* On desktop the whole site renders at 85%, the density it was designed at:
+   more of a lesson fits on screen without the reader zooming out. Phones and
+   tablets keep full size. */
+@media (min-width: 1025px) {
+  html {
+    zoom: 0.85;
+    /* Viewport units shrink with the zoom too, so full-screen heights divide
+       by this to still fill the window. */
+    --page-zoom: 0.85;
+  }
+}
+
 img,
 svg {
   display: block;
@@ -1188,16 +1200,6 @@ body[data-page="dashboard"] {
   color: var(--division-accent);
 }
 
-.stage-switch a.active::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  height: 2px;
-  background: var(--division-accent);
-}
-
 .division-hero h1 {
   margin: 0;
   color: var(--ink);
@@ -1852,23 +1854,10 @@ body[data-page="dashboard"] {
 }
 
 .section-heading h2 {
-  position: relative;
   margin: 0;
-  padding-bottom: 0.6rem;
   font-size: 1.3rem;
   line-height: 1.2;
   letter-spacing: -0.015em;
-}
-
-.section-heading h2::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 42px;
-  height: 3px;
-  border-radius: 999px;
-  background: var(--brand);
 }
 
 .section-heading p {
@@ -2041,26 +2030,6 @@ body[data-page="dashboard"] {
   transform: translateY(-3px);
   box-shadow: var(--shadow-md);
   border-color: color-mix(in srgb, var(--brand) 35%, var(--line));
-}
-
-.module-card::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 4px;
-  background: var(--stage-round1);
-}
-
-.module-card[data-category="round2"]::before {
-  background: var(--stage-round2);
-}
-
-.module-card[data-category="camp"]::before {
-  background: var(--stage-camp);
-}
-
-.module-card[data-category="advanced"]::before {
-  background: var(--stage-advanced);
 }
 
 .card-kicker,
@@ -2311,7 +2280,7 @@ body[data-page="dashboard"] {
 body[data-page="module"] {
   /* Reader inherits the site's warm palette, at documentation density: 16px
      body text on a ~760px measure, the way usaco.guide sets a module. */
-  --reader-zoom: 1;
+  --reader-zoom: var(--page-zoom, 1);
   background: var(--paper);
 }
 
@@ -3173,10 +3142,6 @@ h4.reader-subhead {
   font-weight: 750;
   letter-spacing: 0;
   text-transform: none;
-}
-
-@media (max-width: 620px) {
-
 }
 
 .reader-problems-empty {
@@ -4827,7 +4792,7 @@ details p {
   }
 
   body[data-page="module"] {
-    --reader-zoom: 1;
+    --reader-zoom: var(--page-zoom, 1);
   }
 
   .usaco-reader {
@@ -5483,11 +5448,6 @@ body[data-page="editor"] .page-hero p:not(.eyebrow) {
   width: fit-content;
 }
 
-.section-heading.centered h2::after {
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 .team-grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 9.2rem));
@@ -5840,8 +5800,8 @@ body[data-page="home"] .nav-toggle {
 
 .splash {
   position: relative;
-  min-height: calc(100vh - 58px);
-  min-height: calc(100dvh - 58px);
+  min-height: calc(100vh / var(--page-zoom, 1) - 58px);
+  min-height: calc(100dvh / var(--page-zoom, 1) - 58px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -5852,8 +5812,8 @@ body[data-page="home"] .nav-toggle {
 
 body[data-page="home"] .splash {
   background: var(--paper);
-  min-height: 100vh;
-  min-height: 100dvh;
+  min-height: calc(100vh / var(--page-zoom, 1));
+  min-height: calc(100dvh / var(--page-zoom, 1));
 }
 
 .splash-media,
@@ -6018,14 +5978,6 @@ body[data-page="home"] .splash-foot {
   .splash-content {
     animation: none;
   }
-}
-
-@media (max-width: 900px) {
-
-}
-
-@media (max-width: 640px) {
-
 }
 
 /* ------------------------------ theory problems ---------------------------- */
@@ -6768,7 +6720,7 @@ body[data-page="home"] .splash-foot {
 .mock-ide {
   display: block;
   width: 100%;
-  height: min(78vh, 900px);
+  height: min(78vh / var(--page-zoom, 1), 900px);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--paper);
@@ -7281,7 +7233,7 @@ body.mock-fs-active .site-header {
 }
 
 .mock-run-shell.mock-fs .mock-ide {
-  height: calc(100vh - 250px);
+  height: calc(100vh / var(--page-zoom, 1) - 250px);
   min-height: 460px;
 }
 
@@ -8996,7 +8948,7 @@ body.mock-fs-active .site-header {
 dialog.figure-zoom {
   width: 100vw;
   max-width: none;
-  height: 100dvh;
+  height: calc(100dvh / var(--page-zoom, 1));
   max-height: none;
   margin: 0;
   padding: 1rem;
@@ -9032,7 +8984,7 @@ dialog.figure-zoom:focus {
 @media (min-width: 900px) {
   dialog.figure-zoom img {
     max-width: 100%;
-    max-height: calc(100dvh - 2rem);
+    max-height: calc(100dvh / var(--page-zoom, 1) - 2rem);
     width: auto !important;
   }
 }

@@ -38,8 +38,8 @@
    as extra top padding: the content then centres in the visible area below the
    header, with equal space above and below. */
 body[data-page="home"] .splash {
-  min-height: 100vh;
-  min-height: 100dvh;
+  min-height: calc(100vh / var(--page-zoom, 1));
+  min-height: calc(100dvh / var(--page-zoom, 1));
   padding: calc(var(--header-h, 68px) + 1.5rem) 1.5rem 1.5rem;
 }
 
@@ -424,10 +424,6 @@ body[data-page="home"] .splash-foot {
   border-color: var(--division-accent);
   background: var(--division-accent);
   color: #fff;
-}
-
-.stage-switch a.active::after {
-  display: none;
 }
 
 .division-hero h1 {

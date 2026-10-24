@@ -37,11 +37,14 @@
     tip.hidden = false;
     tipTrigger = button;
     button.setAttribute('aria-describedby', tip.id);
+    // Measured in screen pixels; the desktop page zoom scales style values
+    // again, so positions are divided by it.
+    const zoom = parseFloat(getComputedStyle(document.documentElement).zoom) || 1;
     const rect = button.getBoundingClientRect();
     const width = tip.getBoundingClientRect().width;
-    tip.style.left = `${Math.max(8, Math.min(rect.left, innerWidth - width - 8))}px`;
+    tip.style.left = `${Math.max(8, Math.min(rect.left, innerWidth - width - 8)) / zoom}px`;
     const height = tip.getBoundingClientRect().height;
-    tip.style.top = `${Math.max(8, rect.bottom + height + 12 < innerHeight ? rect.bottom + 8 : rect.top - height - 8)}px`;
+    tip.style.top = `${Math.max(8, rect.bottom + height + 12 < innerHeight ? rect.bottom + 8 : rect.top - height - 8) / zoom}px`;
   }
   function typeset() {
     if (!window.katex) return;

@@ -85,11 +85,6 @@ body[data-page="about"] .about-org .section-heading p {
   margin-right: auto;
 }
 
-body[data-page="about"] .about-org .section-heading h2::after {
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 /* --- team: one group per team, each row centred --------------------------
    A row of one, two or three cards sits in the middle, so a director alone on
    a row reads as the head of the cards under it. */
@@ -97,11 +92,6 @@ body[data-page="about"] .about-team .section-heading {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-}
-
-body[data-page="about"] .about-team .section-heading h2::after {
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 /* No rule between the blurb and the team: they read as one introduction. */
@@ -116,27 +106,13 @@ body[data-page="about"] .about-org + .about-team {
 /* Each team is named like a heading, with the same short underline as the
    section titles, so the groups are easy to find while scrolling. */
 .team-group-title {
-  position: relative;
   margin: 0 0 1.75rem;
-  padding-bottom: 0.6rem;
   color: var(--ink);
   font-size: clamp(1.3rem, 2.4vw, 1.6rem);
   font-weight: 800;
   letter-spacing: -0.01em;
   line-height: 1.2;
   text-align: center;
-}
-
-.team-group-title::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  width: 32px;
-  height: 3px;
-  border-radius: 999px;
-  background: var(--brand);
-  transform: translateX(-50%);
 }
 
 /* Each card is a subgrid spanning four rows (photo, tags, text, links), so
@@ -219,18 +195,6 @@ body[data-page="about"] .team-row + .team-row {
   text-decoration: none;
   transition: border-color var(--t-mid) var(--ease), box-shadow var(--t-mid) var(--ease), transform var(--t-mid) var(--ease);
 }
-
-.about-tile::before {
-  content: "";
-  height: 4px;
-  border-radius: 999px;
-  background: var(--brand);
-}
-
-.about-tile[data-stage="round1"]::before { background: var(--stage-round1); }
-.about-tile[data-stage="round2"]::before { background: var(--stage-round2); }
-.about-tile[data-stage="camp"]::before { background: var(--stage-camp); }
-.about-tile[data-stage="advanced"]::before { background: var(--stage-advanced); }
 
 .about-tile:hover,
 .about-tile:focus-visible {
@@ -391,26 +355,12 @@ body[data-page="about"] .team-card h3 {
 /* Sentence case. The old rule was uppercase with wide tracking, which is
    both quieter and off-brief. */
 body[data-page="about"] .team-position {
-  position: relative;
   margin: 0.4rem 0 0;
-  padding-bottom: 0.55rem;
   color: var(--brand-strong);
   font-size: 0.95rem;
   font-weight: 700;
   letter-spacing: 0;
   text-transform: none;
-}
-
-body[data-page="about"] .team-position::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  width: 28px;
-  height: 2px;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--brand) 45%, var(--line));
-  transform: translateX(-50%);
 }
 
 body[data-page="about"] .team-description {

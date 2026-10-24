@@ -376,9 +376,6 @@ body[data-page="contact"] .report-issue-link::after,
 }
 
 /* Dropdowns: the current page is shown by its tinted row alone, no side bar. */
-.site-header .nav-menu-panel a.active::before {
-  display: none;
-}
 
 /* Mock minutes: no spinner arrows, so the number stays centred. */
 .mock-minutes {

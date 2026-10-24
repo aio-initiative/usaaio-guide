@@ -1118,7 +1118,8 @@
     const box = scroll.getBoundingClientRect();
     const rect = item.getBoundingClientRect();
     if (rect.bottom <= box.bottom - 8 && rect.top >= box.top + 8) return;
-    scroll.scrollTop += rect.top + rect.height / 2 - (box.top + box.height / 2);
+    const zoom = parseFloat(getComputedStyle(document.documentElement).zoom) || 1;
+    scroll.scrollTop += (rect.top + rect.height / 2 - (box.top + box.height / 2)) / zoom;
   }
 
   /**
@@ -1469,12 +1470,20 @@
     return statusMenus[kind];
   }
 
+  // The page is zoomed on desktop (main.css). Measurements come back in screen
+  // pixels, but a position written to style is scaled by the zoom again, so
+  // writes divide by it.
+  function pageZoom() {
+    return parseFloat(getComputedStyle(document.documentElement).zoom) || 1;
+  }
+
   function placeStatusMenu(trigger) {
     const menu = statusMenuEl;
     const box = trigger.getBoundingClientRect();
     menu.hidden = false;
-    const width = menu.offsetWidth;
-    const height = menu.offsetHeight;
+    const size = menu.getBoundingClientRect();
+    const width = size.width;
+    const height = size.height;
     const margin = 8;
     // Below the button by default, above it when the bottom is close.
     let top = box.bottom + 6;
@@ -1486,8 +1495,9 @@
     // The menu is fixed, so these are viewport coordinates and no page or
     // inner-container scroll offset comes into it.
     top = Math.min(Math.max(top, margin), Math.max(margin, window.innerHeight - height - margin));
-    menu.style.top = `${Math.round(top)}px`;
-    menu.style.left = `${Math.round(left)}px`;
+    const zoom = pageZoom();
+    menu.style.top = `${Math.round(top / zoom)}px`;
+    menu.style.left = `${Math.round(left / zoom)}px`;
   }
 
   function openStatusMenu(trigger) {

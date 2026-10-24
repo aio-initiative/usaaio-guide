@@ -735,9 +735,6 @@
 
 /* The section-heading underline main.css draws under every h2 does not
    belong inside the band. */
-.reader-article .mres-head::after {
-  content: none;
-}
 
 .reader-article .mres-list {
   margin: 0;

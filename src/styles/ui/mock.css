@@ -991,7 +991,7 @@
 .mock-ide {
   display: block;
   width: 100%;
-  height: 70vh;
+  height: calc(70vh / var(--page-zoom, 1));
   border: 0;
   background: transparent;
 }

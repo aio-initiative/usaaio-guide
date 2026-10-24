@@ -31,7 +31,7 @@ button.definition-term:hover { color: #174478; text-decoration-color: currentCol
   box-shadow: 0 3px 12px #00000014; font: .875rem/1.5 var(--font-body, sans-serif);
 }
 .definition-dialog {
-  width: min(640px, calc(100vw - 24px)); max-height: min(85dvh, 850px);
+  width: min(640px, calc(100vw - 24px)); max-height: min(85dvh / var(--page-zoom, 1), 850px);
   padding: 0; border: 1px solid var(--line, #ddd); border-radius: 6px;
   color: var(--ink, #111); background: var(--paper, white);
   box-shadow: 0 12px 50px #0002;
