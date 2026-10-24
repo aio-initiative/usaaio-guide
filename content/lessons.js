@@ -3,9 +3,20 @@
     "python-basics": {
       "anchors": [
         "intro",
-        "example-a-leaderboard-from-messy-results",
-        "explanation",
-        "implementation",
+        "printing-and-comments",
+        "variables-and-types",
+        "numbers-and-operators",
+        "strings",
+        "lists-and-tuples",
+        "if-elif-and-else",
+        "loops",
+        "dictionaries-and-sets",
+        "functions",
+        "errors-and-try-except",
+        "classes",
+        "names-and-copies",
+        "importing-libraries",
+        "putting-it-together",
         "resources"
       ],
       "sections": [
@@ -14,64 +25,39 @@
           "title": "",
           "blocks": [
             {
-              "p": "An experiment log has seven lines, and some of them are broken. How do you find the three best models without your program crashing on the bad lines?"
+              "p": "Every USAAIO coding task is a Python notebook, and the tools the rest of this guide uses (NumPy, pandas, scikit-learn and PyTorch) are Python libraries. So Python comes first."
             },
             {
-              "p": "Every USAAIO coding task is answered in Python, and Round 1 tests more than loops. The 2025 paper asked for a hand-written logistic-regression class that raises an error for an invalid `solver` setting. It also used `copy.deepcopy` to copy a pandas DataFrame before changing it. The 2026 paper asked for custom PyTorch modules, which are Python classes too."
+              "p": "The sections run in the usual order for learning the language, from printing a value to writing a class. If you have programmed before, skim until you reach classes and copies. Those two matter most once you start writing models."
             },
             {
-              "p": "You need no programming background. Every editable code box below runs in your browser, so change the code and run it again."
+              "p": "The editable code boxes run in your browser. Change the code and run it again."
             }
           ]
         },
         {
-          "id": "example-a-leaderboard-from-messy-results",
-          "title": "Example: a leaderboard from messy results",
+          "id": "printing-and-comments",
+          "title": "Printing and comments",
           "blocks": [
             {
-              "p": "An experiment log has one line per run, as `\"model,score\"`. Some lines are broken:"
-            },
-            {
-              "code": {
-                "language": "python",
-                "lines": [
-                  "lines = [\"resnet,0.91\", \"vit,0.94\", \"resnet,0.93\", \"mlp,n/a\", \"vit,0.92\", \"cnn,0.88\", \"badline\"]"
-                ]
-              }
-            },
-            {
-              "p": "Write a `Leaderboard` class with two methods. `add(line)` keeps each model's best score and counts the lines it had to skip. `top(k)` returns the `k` best models, highest score first."
-            },
-            {
-              "p": "Before reading on, work out by hand what `top(3)` should return for these seven lines, and how many lines get skipped."
-            }
-          ]
-        },
-        {
-          "id": "explanation",
-          "title": "Explanation",
-          "blocks": [
-            {
-              "heading": "Running code and printing",
-              "level": 3
-            },
-            {
-              "p": "A Python program is a list of statements run top to bottom. `print(...)` writes values to the screen, and `#` starts a comment that Python ignores."
+              "p": "A program runs top to bottom, one line at a time. `print(...)` writes values to the screen, and `#` starts a comment, which Python ignores."
             },
             {
               "pyEditor": {
-                "code": "# This is a comment. The line below is a statement.\nprint(\"hello, olympiad\")\nprint(2 + 2)          # arithmetic works as you'd expect\nprint(\"2\" + \"2\")      # but on strings, + means \"join\" -> 22"
+                "code": "# This line is a comment.\nprint(\"hello, olympiad\")\nprint(2 + 2)\nprint(\"2\" + \"2\")      # + joins text, so this prints 22"
               }
             },
             {
-              "p": "The same symbol `+` does different things depending on the **type** of the values on each side, such as number or text."
-            },
+              "p": "The last two lines use the same `+` but do different things, because `2` is a number and `\"2\"` is text. What kind of thing a value is, number or text or something else, is its **type**."
+            }
+          ]
+        },
+        {
+          "id": "variables-and-types",
+          "title": "Variables and types",
+          "blocks": [
             {
-              "heading": "Variables, types and operators",
-              "level": 3
-            },
-            {
-              "p": "A **variable** is a name bound to a value with `=`. You never declare a type, because Python works it out."
+              "p": "A **variable** is a name for a value, set with `=`. You don't declare a type. Python works it out from the value."
             },
             {
               "code": {
@@ -81,31 +67,34 @@
                   "pi = 3.14159       # float: a decimal number",
                   "name = \"Ada\"       # str: text, in single or double quotes",
                   "ready = True       # bool: True or False",
-                  "nothing = None     # NoneType: the \"no value\" value"
+                  "nothing = None     # None: \"no value\""
                 ]
               }
             },
             {
-              "p": "`type(x)` tells you the type. `int()`, `float()`, `str()` and `bool()` convert between types. Data often arrives as text, and `\"42\"` is not `42` until you call `int(\"42\")`."
-            },
+              "p": "`type(x)` shows the type, and `int()`, `float()`, `str()` and `bool()` convert between types. Data read from a file arrives as text, so `\"42\"` is not the number `42` until you call `int(\"42\")`."
+            }
+          ]
+        },
+        {
+          "id": "numbers-and-operators",
+          "title": "Numbers and operators",
+          "blocks": [
             {
-              "p": "The arithmetic operators are `+ - * /`, plus three that trip up beginners:"
+              "p": "`+ - * /` work as usual. Python has three more you will use all the time:"
             },
             {
               "list": [
-                "`**` is exponentiation: `2 ** 10` is `1024`.",
-                "`//` is **floor division** (divide and round towards minus infinity): `7 // 2` is `3` and `-7 // 2` is `-4`.",
+                "`**` is a power: `2 ** 10` is `1024`.",
+                "`//` is **floor division**, which divides and rounds down: `7 // 2` is `3`, and `-7 // 2` is `-4`.",
                 "`%` is the **remainder**: `7 % 2` is `1`, so `n % 2 == 0` tests whether `n` is even."
               ]
             },
             {
-              "p": "Plain `/` always gives a float: `4 / 2` is `2.0`. On strings and lists, `+` joins and `*` repeats: `\"ab\" * 3` is `\"ababab\"` and `[0] * 3` is `[0, 0, 0]`."
+              "p": "`/` always gives a float, so `4 / 2` is `2.0`. In a longer expression Python does `**` first, then `*`, `/`, `//` and `%`, then `+` and `-`. So `2 + 3 * 2 ** 2` is `2 + 12`, which is `14`. When in doubt, add parentheses."
             },
             {
-              "p": "When an expression mixes operators, Python does `**` first, then `*`, `/`, `//` and `%` from left to right, then `+` and `-`. So `2 + 3 * 2 ** 2` is `2 + 3 * 4`, which is `14`. Add parentheses when in doubt."
-            },
-            {
-              "p": "Comparisons (`== != < <= > >=`) give a `bool`, and bools combine with the words `and`, `or` and `not`."
+              "p": "Comparisons (`==`, `!=`, `<`, `<=`, `>`, `>=`) give a bool, and bools combine with `and`, `or` and `not`."
             },
             {
               "problemCard": {
@@ -142,27 +131,91 @@
                   ]
                 }
               }
-            },
+            }
+          ]
+        },
+        {
+          "id": "strings",
+          "title": "Strings",
+          "blocks": [
             {
-              "heading": "Strings and f-strings",
-              "level": 3
-            },
-            {
-              "p": "To build a string from values, use an **f-string**: put `f` before the quote and write expressions inside `{...}`."
+              "p": "A string is text. To build one from values, use an **f-string**: put `f` before the quote and write expressions inside `{...}`."
             },
             {
               "pyEditor": {
-                "code": "model = \"resnet\"\nacc = 0.9376\n\nprint(f\"{model} reached {acc:.1%} accuracy\")   # -> resnet reached 93.8% accuracy\nprint(f\"{model:<8}|{acc:.2f}\")                   # pad to 8 characters, 2 decimals\nprint(\"vit,0.94\".split(\",\"))                     # cut at the comma\nprint(\"edge\".upper(), len(\"attention\"))          # a method, and the length"
+                "code": "model = \"resnet\"\nacc = 0.9376\nprint(f\"{model} reached {acc:.1%} accuracy\")   # resnet reached 93.8% accuracy\nprint(f\"{model:<8}|{acc:.2f}\")                   # pad to 8 characters, 2 decimals\nprint(\"vit,0.94\".split(\",\"))                     # cut at the comma\nprint(\"edge\".upper(), len(\"attention\"))"
               }
             },
             {
-              "p": "After the colon inside `{...}` comes a **format spec**: `.1%` means a percentage with one decimal, `.2f` means two decimals, and `<8` pads to 8 characters."
+              "p": "After the colon inside `{...}` comes a **format**: `.1%` is a percentage with one decimal, `.2f` is two decimals, and `<8` pads to 8 characters."
             },
             {
-              "p": "`\"vit,0.94\".split(\",\")` cuts the string at every comma and returns the pieces as a list, `[\"vit\", \"0.94\"]`. A string with no comma comes back as a one-item list. With nothing inside the parentheses, `.split()` cuts at any run of spaces, tabs or newlines. `.split` and `.upper` are **methods**: functions that belong to a value and are called with a dot."
+              "p": "`\"vit,0.94\".split(\",\")` cuts the string at every comma and returns the pieces as a list, `[\"vit\", \"0.94\"]`. With nothing inside the parentheses, `.split()` cuts at spaces. `.split` and `.upper` are **methods**, which are functions that belong to a value and are called with a dot."
             },
             {
-              "p": "Strings are **sequences**: ordered collections you can index by position. Counting starts at 0: `s[0]` is the first character and `s[-1]` is the last. The **slice** `s[1:4]` gives characters 1, 2 and 3, because the end index is excluded. Lists and tuples index and slice the same way."
+              "p": "You can pick characters out by position, counting from 0. `s[0]` is the first character and `s[-1]` is the last. The **slice** `s[1:4]` gives characters 1, 2 and 3, because a slice stops just before its end index."
+            }
+          ]
+        },
+        {
+          "id": "lists-and-tuples",
+          "title": "Lists and tuples",
+          "blocks": [
+            {
+              "p": "A **list** holds values in order: `nums = [3, 1, 4]`. It indexes and slices like a string, and unlike a string it can change:"
+            },
+            {
+              "list": [
+                "`nums.append(5)` adds to the end, and `nums[0] = 7` replaces an item.",
+                "`len(nums)` counts the items, and `4 in nums` tests whether `4` is there.",
+                "`+` joins two lists, and `[0] * 3` is `[0, 0, 0]`."
+              ]
+            },
+            {
+              "p": "A **tuple** is like a list but cannot change: `shape = (28, 28)`. Tuples hold small fixed groups, like the height and width of an image. You can **unpack** a tuple or list into names: `h, w = shape` sets both `h` and `w` to `28`."
+            }
+          ]
+        },
+        {
+          "id": "if-elif-and-else",
+          "title": "if, elif and else",
+          "blocks": [
+            {
+              "pyEditor": {
+                "code": "loss = 0.42\nif loss < 0.1:\n    print(\"great\")\nelif loss < 0.5:\n    print(\"okay, keep training\")\nelse:\n    print(\"something is wrong\")"
+              }
+            },
+            {
+              "p": "A line ending in a colon starts a **block**, and the indented lines under it belong to it. Python groups lines by indentation rather than braces, so the spacing is part of the code. Indent each level by four spaces."
+            },
+            {
+              "p": "`if` also accepts values that are not bools. `0`, `0.0`, `\"\"`, empty lists and dicts, and `None` count as false, and almost everything else counts as true. That is why `if not values:` catches an empty list."
+            }
+          ]
+        },
+        {
+          "id": "loops",
+          "title": "Loops",
+          "blocks": [
+            {
+              "pyEditor": {
+                "code": "for i in range(5):            # i = 0, 1, 2, 3, 4\n    if i == 3:\n        break                 # leave the loop early\n    print(\"step\", i)\n\nn = 20\nwhile n > 1:                  # repeat while the condition holds\n    n = n // 2\nprint(\"n is now\", n)\n\nwords = [\"cat\", \"sat\", \"mat\"]\nfor i, w in enumerate(words):              # index and item together\n    print(i, w)\nfor x, y in zip([1, 2, 3], [10, 20, 30]):  # two lists in step\n    print(x, \"->\", y)"
+              }
+            },
+            {
+              "list": [
+                "A `for` loop runs once per item, and `range(n)` gives `0` to `n - 1`.",
+                "A `while` loop repeats while its condition is true.",
+                "`break` leaves the loop, and `continue` jumps to the next item.",
+                "`enumerate(xs)` gives (index, item) pairs counting from 0, or from 1 with `enumerate(xs, start=1)`.",
+                "`zip(xs, ys)` pairs items in step and stops at the end of the shorter list, with no error."
+              ]
+            },
+            {
+              "p": "A line indented one level too little runs once after the loop instead of on every pass, and Python raises no error. When a loop misbehaves, check the indentation first."
+            },
+            {
+              "p": "A **list comprehension** builds a list in one line. `[x * x for x in range(6)]` gives the squares from 0 to 25, and `[x for x in nums if x > 2]` keeps only the items above 2."
             },
             {
               "problemCard": {
@@ -211,56 +264,36 @@
               }
             },
             {
-              "heading": "Control flow and loops",
-              "level": 3
-            },
-            {
-              "p": "`if`, `elif` and `else` choose which code runs. A line ending in a colon starts a **block**: the indented lines under it belong to that `if`, loop or function. Indent each level by four spaces. Many languages group lines with curly braces, but Python uses only the indentation. A line indented one level too little runs once after a loop instead of on every pass, with no error."
-            },
-            {
-              "pyEditor": {
-                "code": "loss = 0.42\nif loss < 0.1:\n    print(\"great\")\nelif loss < 0.5:\n    print(\"okay, keep training\")\nelse:\n    print(\"something is wrong\")\n\nfor i in range(5):            # i = 0, 1, 2, 3, 4\n    if i == 3:\n        break                 # leave the loop early\n    print(\"step\", i)\n\nn = 20\nwhile n > 1:                  # repeat while the condition holds\n    n = n // 2\nprint(\"n is now\", n)\n\nwords = [\"cat\", \"sat\", \"mat\"]\nfor idx, w in enumerate(words):     # index and value together\n    print(idx, w)\nfor x, y in zip([1, 2, 3], [10, 20, 30]):   # two lists in step\n    print(x, \"->\", y)"
-              }
-            },
-            {
-              "p": "A `for` loop runs once per item. `range(n)` gives `0, 1, ..., n - 1`. A `while` loop repeats as long as its condition holds. `break` leaves a loop and `continue` skips to the next item."
-            },
-            {
-              "p": "`enumerate(xs)` gives (index, item) pairs counting from 0, or from 1 with `enumerate(xs, start=1)`. `zip(xs, ys)` pairs items in step and stops when the shorter list runs out. `zip([1, 2, 3], [10, 20])` gives only two pairs, with no error."
-            },
-            {
-              "p": "`if` also accepts values that are not bools. Empty strings, empty containers, `0`, `0.0`, `False` and `None` count as false, and everything else counts as true unless its class sets its own rule. So `if s:` skips blank strings, and `if not values:` catches an empty list."
-            },
-            {
               "problemCard": {
                 "id": "py-early-stopping-trace"
               }
-            },
+            }
+          ]
+        },
+        {
+          "id": "dictionaries-and-sets",
+          "title": "Dictionaries and sets",
+          "blocks": [
             {
-              "heading": "The four built-in containers",
-              "level": 3
+              "p": "A **dictionary** maps keys to values: `best = {\"vit\": 0.94}`."
             },
             {
               "list": [
-                "A **list** is an ordered, changeable sequence: `nums = [3, 1, 4]`. Index it with `nums[0]`, add with `nums.append(5)`, measure with `len(nums)`.",
-                "A **tuple** is an ordered sequence that cannot change: `point = (2, 5)`. Use it for fixed groups, like a shape `(28, 28)`. Tuples can be **unpacked**: `x, y = point`.",
-                "A **dictionary** maps **keys to values**: `best = {\"vit\": 0.94}`. Read with `best[\"vit\"]`, write with `best[\"cnn\"] = 0.88`, and use `best.get(key, default)` when the key might be missing. Without a default, `best.get(key)` gives `None` for a missing key. `best.items()` gives `(key, value)` pairs. A `for` loop over a dict, or `sorted(best)` or `max(best)`, goes through its keys.",
-                "A **set** holds unique values: `{1, 2, 2, 3}` is `{1, 2, 3}`. Use it to remove duplicates or to test membership quickly with `in`."
+                "`best[\"vit\"]` reads a value, and `best[\"cnn\"] = 0.88` writes one.",
+                "`best.get(key, default)` gives `default` when the key is missing, where `best[key]` would raise an error.",
+                "`best.items()` gives (key, value) pairs. Looping over a dict goes through its keys, and so do `sorted(best)` and `max(best)`."
               ]
             },
             {
-              "p": "Lists, dicts and sets are **mutable**: you can change them in place. Numbers, strings and tuples are **immutable**: a change builds a new object instead."
+              "p": "A **set** holds unique values: `{1, 2, 2, 3}` is `{1, 2, 3}`. Use it to drop duplicates or to test membership quickly with `in`."
             },
             {
               "pyEditor": {
-                "code": "nums = [3, 1, 4, 1, 5]\ncounts = {}\nfor x in nums:\n    counts[x] = counts.get(x, 0) + 1    # count occurrences\nprint(counts)\nprint(set(nums), 4 in set(nums))\nfor key, value in counts.items():\n    print(key, value)"
+                "code": "nums = [3, 1, 4, 1, 5]\ncounts = {}\nfor x in nums:\n    counts[x] = counts.get(x, 0) + 1    # count each number\nprint(counts)                           # {3: 1, 1: 2, 4: 1, 5: 1}\nprint(set(nums), 4 in set(nums))"
               }
             },
             {
-              "p": "`counts.get(x, 0)` gives 0 the first time a number appears, so the tally starts at zero instead of raising an error. The first line printed is `{3: 1, 1: 2, 4: 1, 5: 1}`: the number 1 appeared twice."
-            },
-            {
-              "p": "A **comprehension** builds a container in one line. `[x * x for x in range(6)]` gives the squares 0 to 25, and `[x for x in nums if x > 2]` keeps only the items above 2, giving `[3, 4, 5]`. `{w: len(w) for w in words}` builds a dict the same way."
+              "p": "`counts.get(x, 0)` gives `0` the first time a number appears, so the count starts at zero instead of raising an error. A dict comprehension works like a list one: `{w: len(w) for w in words}`."
             },
             {
               "problemCard": {
@@ -307,24 +340,28 @@
                   ]
                 }
               }
-            },
+            }
+          ]
+        },
+        {
+          "id": "functions",
+          "title": "Functions",
+          "blocks": [
             {
-              "heading": "Functions",
-              "level": 3
-            },
-            {
-              "p": "A **function** packages code for reuse. Define it with `def`, take **arguments**, and send back a result with `return`. Arguments can have **default values**, and returning a tuple returns several values at once."
+              "p": "A **function** gives a piece of code a name so you can run it again with different inputs."
             },
             {
               "pyEditor": {
-                "code": "def min_max(values, scale=1.0):\n    \"\"\"Return the smallest and largest value, times scale.\"\"\"\n    return min(values) * scale, max(values) * scale\n\nlo, hi = min_max([10, 12, 16])               # unpack the returned tuple\nprint(lo, hi)\nprint(min_max([10, 12, 16], scale=0.5))      # override the default by name"
+                "code": "def min_max(values, scale=1.0):\n    \"\"\"Return the smallest and largest value, times scale.\"\"\"\n    return min(values) * scale, max(values) * scale\n\nlo, hi = min_max([10, 12, 16])               # unpack the two results\nprint(lo, hi)                                # 10.0 16.0\nprint(min_max([10, 12, 16], scale=0.5))      # (5.0, 8.0)"
               }
             },
             {
-              "p": "The first call prints `10.0 16.0` and the second prints `(5.0, 8.0)`. The triple-quoted line is a **docstring**, a description for people reading the code."
-            },
-            {
-              "p": "`print` shows a value on the screen. `return` hands a value back to the code that called the function, so it can be stored or used again. A function with no `return` gives back `None`."
+              "list": [
+                "`def` names the function and its **arguments**. `scale=1.0` is a **default**, used when the caller leaves it out.",
+                "`return` hands a value back to the caller, which can store it or use it again. `print` only shows a value on the screen. Mixing the two up is one of the most common beginner bugs. A function with no `return` gives back `None`.",
+                "`return a, b` returns a tuple, which the caller can unpack.",
+                "The triple-quoted line is a **docstring**, a note for people reading the code."
+              ]
             },
             {
               "problemCard": {
@@ -378,14 +415,14 @@
               }
             },
             {
-              "heading": "Sorting with a key, and lambda",
+              "heading": "Sorting with a key",
               "level": 3
             },
             {
-              "p": "`sorted(xs)` returns a new sorted list, and `reverse=True` flips the order. To sort by something other than the items themselves, pass a **key function**: Python calls it on each item and sorts by the results. `sorted([\"bb\", \"a\", \"ccc\"], key=len)` gives `[\"a\", \"bb\", \"ccc\"]`."
+              "p": "`sorted(xs)` returns a new sorted list, and `reverse=True` flips the order. To sort by something else, pass a **key**: a function that Python calls on each item before comparing. `sorted([\"bb\", \"a\", \"ccc\"], key=len)` gives `[\"a\", \"bb\", \"ccc\"]`."
             },
             {
-              "p": "A **lambda** is a one-line function with no name, handy as a key. `lambda item: item[1]` takes an item and returns its second entry. So to rank `(name, score)` pairs by score, highest first:"
+              "p": "A **lambda** is a one-line function with no name, often used as a key. This ranks (name, score) pairs by score, highest first:"
             },
             {
               "code": {
@@ -396,33 +433,35 @@
               }
             },
             {
-              "p": "`max` and `min` accept `key` too: `max(best, key=best.get)` is the key with the largest value. Python's sort is **stable**: items with equal keys keep their original order."
+              "p": "`max` and `min` take a key too: `max(best, key=best.get)` is the key with the largest value."
             },
             {
-              "p": "A key can also return a tuple. Tuples compare entry by entry, like words in a dictionary: `(1, 5) < (2, 0)` and `(1, 5) < (1, 7)` are both `True`. So `sorted(words, key=lambda w: (-len(w), w))` puts longer words first and breaks ties alphabetically. The minus sign flips the order of one entry only, while `reverse=True` would flip both."
+              "p": "A key can also return a tuple. Tuples compare entry by entry, the way words are ordered in a dictionary. So `sorted(words, key=lambda w: (-len(w), w))` puts longer words first and breaks ties alphabetically. The minus sign flips one entry only, while `reverse=True` would flip both. Python's sort is **stable**: items with equal keys keep their original order."
             },
             {
               "problemCard": {
                 "id": "py-sort-reverse-flips-both"
               }
-            },
+            }
+          ]
+        },
+        {
+          "id": "errors-and-try-except",
+          "title": "Errors and try / except",
+          "blocks": [
             {
-              "heading": "Errors and try / except",
-              "level": 3
-            },
-            {
-              "p": "When something goes wrong, Python **raises an exception** and stops. `float(\"n/a\")` raises `ValueError`, `best[\"mlp\"]` raises `KeyError` when the key is missing, and `1 / 0` raises `ZeroDivisionError`. To handle an error instead of crashing, put the risky code under `try` and say what to do under `except`:"
+              "p": "When something goes wrong, Python **raises an exception** and stops. `float(\"n/a\")` raises `ValueError`, a missing dict key raises `KeyError`, and `1 / 0` raises `ZeroDivisionError`. To handle an error instead of crashing, put the risky code under `try` and say what to do under `except`:"
             },
             {
               "pyEditor": {
-                "code": "for text in [\"0.91\", \"n/a\", \"badline\", \"0.88\"]:\n    try:\n        score = float(text)\n    except ValueError as err:\n        print(\"skipping\", text, \"->\", err)\n        continue\n    print(\"score\", score)"
+                "code": "for text in [\"0.91\", \"n/a\", \"0.88\"]:\n    try:\n        score = float(text)\n    except ValueError as err:\n        print(\"skipping\", text, \"->\", err)\n        continue\n    print(\"score\", score)"
               }
             },
             {
-              "p": "`except ValueError as err` stores the error in `err`, so you can print its message. `continue` then skips the `print(\"score\", ...)` line for that item."
+              "p": "`as err` stores the error so you can print its message. Catch only the error you expect. A bare `except:` catches everything, including a misspelled variable name, so a real bug fails silently."
             },
             {
-              "p": "Catch only the error you expect. A bare `except:` catches every error, including a misspelled name (`NameError`), so a real bug passes silently."
+              "p": "Your own code stops with an error using `raise`, for example `raise ValueError(\"lr must be positive\")`."
             },
             {
               "problemCard": {
@@ -476,13 +515,15 @@
                   ]
                 }
               }
-            },
+            }
+          ]
+        },
+        {
+          "id": "classes",
+          "title": "Classes",
+          "blocks": [
             {
-              "heading": "Classes: bundling data with the functions that use it",
-              "level": 3
-            },
-            {
-              "p": "A **class** is a blueprint for objects that carry their own data, called **attributes**, and their own methods. PyTorch models are classes, and you will write many of them in later modules."
+              "p": "A **class** bundles data together with the functions that work on it. Every PyTorch model is a class, so you will write one in almost every deep-learning task."
             },
             {
               "code": {
@@ -493,24 +534,31 @@
                   "        self.count = start          # an attribute, stored on this object",
                   "",
                   "    def add(self, k=1):",
-                  "        self.count += k             # methods read and change the object's attributes",
+                  "        self.count += k             # methods read and change attributes",
                   "",
                   "c = Counter()",
                   "c.add()",
                   "c.add(5)",
-                  "print(c.count)                      # 6"
+                  "print(c.count)"
+                ]
+              }
+            },
+            {
+              "output": {
+                "lines": [
+                  "6"
                 ]
               }
             },
             {
               "list": [
-                "`__init__` runs automatically when you create an object with `Counter()`. It sets up the attributes.",
-                "`self` is the object itself. Every method takes it as its first argument, and `self.count` means \"this object's count\". Python passes it for you: `c.add(5)` calls `Counter.add(c, 5)`.",
-                "Each object has its own attributes: two `Counter()` objects count separately."
+                "`__init__` runs when you create an object with `Counter()`. It sets up the object's **attributes**, the values stored on it.",
+                "`self` is the object itself. Every method takes it first, and Python passes it for you: `c.add(5)` runs `Counter.add(c, 5)`.",
+                "Each object keeps its own attributes, so two counters count separately."
               ]
             },
             {
-              "p": "`__init__` is also the place to check the settings a user passes in. Your own code can stop with an error using `raise`. The 2025 Round 1 paper asked for this check in a logistic-regression class: a bad `solver` had to raise an error."
+              "p": "`__init__` is also the place to check the settings someone passes in. The 2025 Round 1 paper asked for exactly that in a logistic-regression class, where an unknown `solver` had to raise an error."
             },
             {
               "code": {
@@ -541,10 +589,48 @@
               }
             },
             {
-              "p": "`not in` is the opposite of `in`. The good call builds an object. The bad call stops at `raise`, so no half-built object comes back."
+              "heading": "Inheritance and nn.Module",
+              "level": 3
             },
             {
-              "p": "A class can **inherit** from another class, its **parent**. The new class is called the **child** or **subclass**. It gets all the parent's methods and can add new ones or replace some. Inside the child, `super()` reaches the parent. `super().__init__(...)` runs the parent's `__init__`, so the parent's attributes get set up. `super().update(x)` runs the parent's version of a method called `update`. A PyTorch layer uses the same pattern:"
+              "p": "A class can **inherit** from a parent class. It gets all the parent's methods and can add new ones or replace some. Inside the child, `super()` reaches the parent, so `super().__init__(...)` runs the parent's setup. And `__call__` is the method Python runs when you put parentheses after an object."
+            },
+            {
+              "p": "PyTorch builds every model out of these three ideas. Here they are in plain Python first:"
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "class Layer:",
+                  "    def __init__(self, name):",
+                  "        self.name = name",
+                  "",
+                  "    def __call__(self, x):           # lets you write layer(x)",
+                  "        return self.forward(x)",
+                  "",
+                  "class Scale(Layer):                  # Scale inherits from Layer",
+                  "    def __init__(self, factor):",
+                  "        super().__init__(\"scale\")    # run Layer's __init__ first",
+                  "        self.factor = factor",
+                  "",
+                  "    def forward(self, x):",
+                  "        return [self.factor * v for v in x]",
+                  "",
+                  "s = Scale(3)",
+                  "print(s.name, s([1, 2, 5]))"
+                ]
+              }
+            },
+            {
+              "output": {
+                "lines": [
+                  "scale [3, 6, 15]"
+                ]
+              }
+            },
+            {
+              "p": "`s([1, 2, 5])` ran `Layer.__call__`, which called `Scale.forward`. PyTorch's `nn.Module` does the job of `Layer` here, so a real layer looks almost the same:"
             },
             {
               "code": {
@@ -552,36 +638,67 @@
                 "lines": [
                   "import torch.nn as nn",
                   "",
-                  "class MyLayer(nn.Module):           # inherit from PyTorch's Module",
+                  "class MyLayer(nn.Module):",
                   "    def __init__(self, d_in, d_out):",
-                  "        super().__init__()          # must come before you set attributes",
+                  "        super().__init__()                    # always first",
                   "        self.linear = nn.Linear(d_in, d_out)",
                   "",
-                  "    def forward(self, x):           # called when you write layer(x)",
+                  "    def forward(self, x):                     # layer(x) calls this",
                   "        return self.linear(x).relu()"
                 ]
               }
             },
             {
-              "p": "`__call__` is the method Python runs when you put parentheses after an object. `nn.Module` defines `__call__` to run your `forward`, so `layer(x)` ends up calling `forward(x)`. You will define a real model with `nn.Module` in [The Multilayer Perceptron](/module/?id=neural-networks-perceptrons-mlps-activations)."
+              "p": "You will build a full model this way in [The Multilayer Perceptron](/module/?id=neural-networks-perceptrons-mlps-activations)."
             },
             {
               "problemCard": {
                 "id": "py-warmup-scheduler"
               }
-            },
+            }
+          ]
+        },
+        {
+          "id": "names-and-copies",
+          "title": "Names and copies",
+          "blocks": [
             {
-              "heading": "Names, references and copies",
-              "level": 3
-            },
-            {
-              "p": "`b = a` does not copy anything. It gives the same object a second name, so changing a list through `b` changes `a` too. There are two kinds of real copy:"
+              "p": "`b = a` does not copy anything. It gives the same object a second name, so changing a list through `b` changes `a` too. This only bites with values that can change in place, like lists, dicts, sets and most objects. Numbers, strings and tuples never change in place, so sharing them is harmless."
             },
             {
               "list": [
-                "A **shallow copy**, `a.copy()` or `list(a)`, makes a new outer container, but the items inside are still shared. For a list of numbers that is enough.",
-                "A **deep copy**, `copy.deepcopy(a)` after `import copy`, copies everything inside as well. Use it for nested data: a dict of lists, a list of lists, or a model whose best weights you want to keep while training continues."
+                "A **shallow copy**, `a.copy()` or `list(a)`, makes a new outer container but shares the items inside.",
+                "A **deep copy**, `copy.deepcopy(a)`, copies everything inside as well. Use it for nested data, or to keep a model's best weights while training continues."
               ]
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
+                  "import copy",
+                  "",
+                  "weights = {\"layer1\": [0.5, -0.2], \"layer2\": [1.0]}",
+                  "alias = weights                  # same dict, two names",
+                  "shallow = weights.copy()         # new dict, same inner lists",
+                  "deep = copy.deepcopy(weights)    # new dict, new lists",
+                  "weights[\"layer1\"][0] = 99.0",
+                  "print(\"alias  \", alias[\"layer1\"])",
+                  "print(\"shallow\", shallow[\"layer1\"])",
+                  "print(\"deep   \", deep[\"layer1\"])"
+                ]
+              }
+            },
+            {
+              "output": {
+                "lines": [
+                  "alias   [99.0, -0.2]",
+                  "shallow [99.0, -0.2]",
+                  "deep    [0.5, -0.2]"
+                ]
+              }
+            },
+            {
+              "p": "The shallow copy changed along with the original because the two share their inner lists. Only the deep copy kept `0.5`."
             },
             {
               "problemCard": {
@@ -633,129 +750,69 @@
               }
             },
             {
-              "p": "The same \"names, not copies\" rule causes two common bugs. First, `[[0] * 3] * 3` repeats one row three times. All three rows are the same list, so `grid[0][0] = 5` changes every row. `[[0] * 3 for _ in range(3)]` builds a new row on each pass. The name `_` is the usual choice for a loop variable you never use."
+              "p": "Two common bugs come from the same rule:"
             },
             {
-              "p": "Second, a default argument like `def f(x, seen=[])` is created once, when the function is defined. Every call that leaves `seen` out shares that one list. Use `None` as the default and make the list inside the function:"
-            },
-            {
-              "code": {
-                "language": "python",
-                "lines": [
-                  "def f(x, seen=None):",
-                  "    if seen is None:   # `is` asks: is this the very same object as None?",
-                  "        seen = []      # a new list on every call",
-                  "    ..."
-                ]
-              }
+              "list": [
+                "`[[0] * 3] * 3` repeats one row three times, so changing `grid[0][0]` changes every row. Write `[[0] * 3 for _ in range(3)]` instead. The name `_` is the usual choice for a loop variable you never use.",
+                "A default like `def f(x, seen=[])` is created once and shared by every call. Use `seen=None` and make the list inside the function."
+              ]
             },
             {
               "problemCard": {
                 "id": "py-confusion-grid-aliasing"
               }
-            },
+            }
+          ]
+        },
+        {
+          "id": "importing-libraries",
+          "title": "Importing libraries",
+          "blocks": [
             {
-              "heading": "Using libraries: import",
-              "level": 3
-            },
-            {
-              "p": "Functions like `len` and `sorted` are always available. Other tools live in **modules**, files of Python code that you load with `import`. A PyTorch `nn.Module` is something else: a class."
+              "p": "Built-in functions like `len` and `sorted` are always there. Everything else lives in **modules**, which you load with `import`:"
             },
             {
               "code": {
                 "language": "python",
                 "lines": [
-                  "import copy                    # the standard library's copying tools",
-                  "import numpy as np             # NumPy, under the conventional short name np",
-                  "from math import sqrt          # one name from a module"
+                  "import copy               # from Python's standard library",
+                  "import numpy as np        # NumPy, under its usual short name",
+                  "from math import sqrt     # one name from a module"
                 ]
               }
             },
             {
               "p": "[NumPy Programming](/module/?id=programming-essentials) starts from `import numpy as np`."
-            },
-            {
-              "heading": "Solving the focus problem",
-              "level": 3
-            },
-            {
-              "p": "For each line, `add` splits at the comma and unpacks the pieces into a name and a score text. It converts the text with `float`, and keeps the new score if it beats `best.get(name, float(\"-inf\"))`. `float(\"-inf\")` is negative infinity, smaller than any real score, so a model's first score always wins. The table follows all seven lines:"
-            },
-            {
-              "table": {
-                "head": [
-                  "line",
-                  "after `split(\",\")`",
-                  "what happens",
-                  "skipped so far"
-                ],
-                "rows": [
-                  [
-                    "`resnet,0.91`",
-                    "`[\"resnet\", \"0.91\"]`",
-                    "new model: resnet 0.91",
-                    "0"
-                  ],
-                  [
-                    "`vit,0.94`",
-                    "`[\"vit\", \"0.94\"]`",
-                    "new model: vit 0.94",
-                    "0"
-                  ],
-                  [
-                    "`resnet,0.93`",
-                    "`[\"resnet\", \"0.93\"]`",
-                    "0.93 beats 0.91, so resnet becomes 0.93",
-                    "0"
-                  ],
-                  [
-                    "`mlp,n/a`",
-                    "`[\"mlp\", \"n/a\"]`",
-                    "`float(\"n/a\")` raises `ValueError`",
-                    "1"
-                  ],
-                  [
-                    "`vit,0.92`",
-                    "`[\"vit\", \"0.92\"]`",
-                    "0.92 does not beat 0.94, no change",
-                    "1"
-                  ],
-                  [
-                    "`cnn,0.88`",
-                    "`[\"cnn\", \"0.88\"]`",
-                    "new model: cnn 0.88",
-                    "1"
-                  ],
-                  [
-                    "`badline`",
-                    "`[\"badline\"]`",
-                    "one item cannot fill two names: `ValueError`",
-                    "2"
-                  ]
-                ]
-              }
-            },
-            {
-              "p": "Both kinds of bad line raise `ValueError`, so one `except` catches them. The dict ends with three models. Sorting their `(name, score)` pairs by score, highest first, gives vit 0.94, then resnet 0.93, then cnn 0.88. That is `top(3)`, with 2 lines skipped."
             }
           ]
         },
         {
-          "id": "implementation",
-          "title": "Implementation",
+          "id": "putting-it-together",
+          "title": "Putting it together",
           "blocks": [
             {
-              "p": "The class below carries out that trace. `add` combines unpacking, `try` and `except`, and `dict.get` with a default. `top` sorts with a lambda key."
+              "p": "A training log has one line per run, as `\"model,score\"`, and some lines are broken:"
             },
             {
               "code": {
                 "language": "python",
                 "lines": [
-                  "lines = [\"resnet,0.91\", \"vit,0.94\", \"resnet,0.93\", \"mlp,n/a\", \"vit,0.92\", \"cnn,0.88\", \"badline\"]",
-                  "",
+                  "lines = [\"resnet,0.91\", \"vit,0.94\", \"resnet,0.93\", \"mlp,n/a\", \"vit,0.92\", \"cnn,0.88\", \"badline\"]"
+                ]
+              }
+            },
+            {
+              "p": "The task is to keep each model's best score, skip the broken lines without crashing, and list the top 3. It needs `split` and unpacking, `try` and `except`, a dict with `get`, sorting with a key, and a class. Try it yourself before reading on."
+            },
+            {
+              "p": "Two lines are broken. `\"mlp,n/a\"` fails at `float(\"n/a\")`, and `\"badline\"` has no comma, so it cannot be unpacked into two names. Both raise `ValueError`, so a single `except` handles them. Among the good lines, resnet's best score is 0.93 and vit's is 0.94."
+            },
+            {
+              "code": {
+                "language": "python",
+                "lines": [
                   "class Leaderboard:",
-                  "    \"\"\"Keeps each model's best score.\"\"\"",
-                  "",
                   "    def __init__(self):",
                   "        self.best = {}          # model name -> best score so far",
                   "        self.skipped = 0",
@@ -777,7 +834,6 @@
                   "board = Leaderboard()",
                   "for line in lines:",
                   "    board.add(line)",
-                  "print(board.top(3))",
                   "print(\"skipped:\", board.skipped)",
                   "for rank, (name, score) in enumerate(board.top(3), start=1):",
                   "    print(f\"{rank}. {name:<7}{score:.2f}\")"
@@ -787,7 +843,6 @@
             {
               "output": {
                 "lines": [
-                  "[('vit', 0.94), ('resnet', 0.93), ('cnn', 0.88)]",
                   "skipped: 2",
                   "1. vit    0.94",
                   "2. resnet 0.93",
@@ -796,89 +851,7 @@
               }
             },
             {
-              "p": "The ranking matches the trace. In the last loop, `enumerate(..., start=1)` numbers the models from 1, and `{name:<7}` pads each name so the scores line up."
-            },
-            {
-              "p": "The next block makes an alias, a shallow copy and a deep copy of a dict of lists, then changes one number in the original."
-            },
-            {
-              "code": {
-                "language": "python",
-                "lines": [
-                  "import copy",
-                  "",
-                  "weights = {\"layer1\": [0.5, -0.2], \"layer2\": [1.0]}",
-                  "alias = weights                  # same dict, two names",
-                  "shallow = weights.copy()         # new dict, same inner lists",
-                  "deep = copy.deepcopy(weights)    # new dict and new lists",
-                  "weights[\"layer1\"][0] = 99.0",
-                  "print(\"alias  \", alias[\"layer1\"])",
-                  "print(\"shallow\", shallow[\"layer1\"])",
-                  "print(\"deep   \", deep[\"layer1\"])"
-                ]
-              }
-            },
-            {
-              "output": {
-                "lines": [
-                  "alias   [99.0, -0.2]",
-                  "shallow [99.0, -0.2]",
-                  "deep    [0.5, -0.2]"
-                ]
-              }
-            },
-            {
-              "p": "The alias and the shallow copy both show `99.0`, because they share the inner list. Only the deep copy kept `0.5`."
-            },
-            {
-              "p": "Last, the `nn.Module` pattern in plain Python. `Layer.__call__` runs `forward`, and the child class `Scale` sets its own attribute after `super().__init__`."
-            },
-            {
-              "code": {
-                "language": "python",
-                "lines": [
-                  "class Layer:",
-                  "    def __init__(self, name):",
-                  "        self.name = name",
-                  "",
-                  "    def __call__(self, x):           # lets you write layer(x)",
-                  "        return self.forward(x)",
-                  "",
-                  "class Scale(Layer):",
-                  "    def __init__(self, factor):",
-                  "        super().__init__(\"scale\")    # run Layer's __init__ first",
-                  "        self.factor = factor",
-                  "",
-                  "    def forward(self, x):",
-                  "        return [self.factor * v for v in x]",
-                  "",
-                  "s = Scale(3)",
-                  "print(s.name, s([1, 2, 5]))",
-                  "print(isinstance(s, Layer))"
-                ]
-              }
-            },
-            {
-              "output": {
-                "lines": [
-                  "scale [3, 6, 15]",
-                  "True"
-                ]
-              }
-            },
-            {
-              "p": "`s([1, 2, 5])` ran `Layer.__call__`, which called `Scale.forward`. The name `scale` came from `Layer.__init__`, reached through `super()`. `isinstance(s, Layer)` asks whether `s` is a `Layer`. It is `True`, because an object of a child class also counts as an object of its parent."
-            },
-            {
-              "callout": {
-                "variant": "warning",
-                "label": "Warning",
-                "blocks": [
-                  {
-                    "p": "`b = a` gives one list two names, so `b.append(4)` changes `a` too. Before you change data that other code still uses, copy it: `a.copy()` for a flat list or dict, and `copy.deepcopy(a)` for anything nested."
-                  }
-                ]
-              }
+              "p": "`float(\"-inf\")` is smaller than any real score, so a model's first score always wins. In the last loop, `start=1` numbers the models from 1, and `{name:<7}` pads each name so the scores line up."
             }
           ]
         },
