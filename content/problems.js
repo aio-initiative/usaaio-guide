@@ -7510,7 +7510,7 @@
     },
     {
       "id": "foundations-19-table-extraction",
-      "moduleId": "vision-pixels",
+      "moduleId": "vision-setup",
       "title": "AI Foundations 19: Table Extraction from Document Images",
       "source": "AI Foundations",
       "difficulty": "Hard",
@@ -7557,7 +7557,7 @@
     },
     {
       "id": "cv-every-column-the-line-can-take",
-      "moduleId": "vision-relu-and-pooling",
+      "moduleId": "vision-convolution",
       "title": "Every Column the Line Can Take",
       "source": "USAAIO-style",
       "difficulty": "Medium",
@@ -7587,7 +7587,7 @@
     },
     {
       "id": "cv-first-block-of-stage-2",
-      "moduleId": "vision-deeper-networks",
+      "moduleId": "vision-classify",
       "title": "The First Block of Stage 2",
       "source": "USAAIO-style",
       "difficulty": "Medium",
@@ -7602,7 +7602,7 @@
     },
     {
       "id": "modern-cnn-architectures-implementation-task",
-      "moduleId": "vision-deeper-networks",
+      "moduleId": "vision-classify",
       "title": "Residual CNN Practice",
       "source": "Custom",
       "difficulty": "Hard",
@@ -7618,7 +7618,7 @@
     },
     {
       "id": "cv-two-lines-through-a-frozen-backbone",
-      "moduleId": "vision-transfer-learning",
+      "moduleId": "vision-classify",
       "title": "Two Lines Through a Frozen Backbone",
       "source": "USAAIO-style",
       "difficulty": "Medium",
@@ -7696,7 +7696,7 @@
     },
     {
       "id": "cv-faint-lines-alone",
-      "moduleId": "vision-adversarial-attacks",
+      "moduleId": "semantic-segmentation-unet-masks",
       "title": "Faint Lines Without Dimming",
       "source": "USAAIO-style",
       "difficulty": "Hard",
@@ -7727,7 +7727,7 @@
     },
     {
       "id": "tf-tokenize-a-new-word",
-      "moduleId": "transformer-tokenize",
+      "moduleId": "transformer-setup",
       "title": "A Word the Tokenizer Never Saw",
       "source": "Custom",
       "difficulty": "Easy",
@@ -7742,7 +7742,7 @@
     },
     {
       "id": "tf-a-token-used-twice",
-      "moduleId": "transformer-embed",
+      "moduleId": "transformer-setup",
       "title": "A Token Used Twice",
       "source": "Custom",
       "difficulty": "Medium",
@@ -7757,7 +7757,7 @@
     },
     {
       "id": "tf-position-least-like-the-first",
-      "moduleId": "transformer-add-position",
+      "moduleId": "transformer-setup",
       "title": "The Position Least Like the First",
       "source": "USAAIO-style",
       "difficulty": "Easy",
@@ -7772,7 +7772,7 @@
     },
     {
       "id": "transformer-fundamentals-implementation-task",
-      "moduleId": "transformer-add-position",
+      "moduleId": "transformer-setup",
       "title": "Sinusoidal Positional Encoding Practice",
       "source": "Custom",
       "difficulty": "Medium",
@@ -7803,7 +7803,7 @@
     },
     {
       "id": "tf-a-head-whose-queries-are-its-keys",
-      "moduleId": "transformer-scores",
+      "moduleId": "transformer-qkv",
       "title": "A Head Whose Queries Are Its Keys",
       "source": "Custom",
       "difficulty": "Easy",
@@ -7818,7 +7818,7 @@
     },
     {
       "id": "tf-which-key-a-query-picks",
-      "moduleId": "transformer-scores",
+      "moduleId": "transformer-qkv",
       "title": "Which Key a Query Picks",
       "source": "USAAIO-style",
       "difficulty": "Medium",
@@ -7833,7 +7833,7 @@
     },
     {
       "id": "tf-a-pad-at-the-start",
-      "moduleId": "transformer-mask-and-softmax",
+      "moduleId": "transformer-qkv",
       "title": "A Pad at the Start",
       "source": "USAAIO-style",
       "difficulty": "Medium",
@@ -7863,7 +7863,7 @@
     },
     {
       "id": "tf-one-wide-head",
-      "moduleId": "transformer-multi-head",
+      "moduleId": "transformer-weighted-sum",
       "title": "One Wide Head in Place of Two",
       "source": "Custom",
       "difficulty": "Medium",
@@ -7893,7 +7893,7 @@
     },
     {
       "id": "tf-weights-that-learn-from-cat",
-      "moduleId": "transformer-feed-forward",
+      "moduleId": "transformer-residual-and-layernorm",
       "title": "The Weights That Learn from One Token",
       "source": "USAAIO-style",
       "difficulty": "Medium",
@@ -7908,7 +7908,7 @@
     },
     {
       "id": "tf-counting-gpt2-large",
-      "moduleId": "transformer-stack",
+      "moduleId": "transformer-residual-and-layernorm",
       "title": "Counting the Weights of GPT-2 Large",
       "source": "USAAIO-style",
       "difficulty": "Medium",
@@ -7923,7 +7923,7 @@
     },
     {
       "id": "transformers-implementation-task",
-      "moduleId": "transformer-stack",
+      "moduleId": "transformer-residual-and-layernorm",
       "title": "Transformer Sequence Classification Practice",
       "source": "Custom",
       "difficulty": "Hard",
@@ -7954,7 +7954,7 @@
     },
     {
       "id": "tf-rows-a-training-step-changes",
-      "moduleId": "transformer-generate",
+      "moduleId": "transformer-predict",
       "title": "The Rows a Training Step Changes",
       "source": "Custom",
       "difficulty": "Medium",
@@ -7969,7 +7969,7 @@
     },
     {
       "id": "tf-word-order-without-positions",
-      "moduleId": "transformer-generate",
+      "moduleId": "transformer-predict",
       "title": "Word Order Without Position Values",
       "source": "USAAIO-style",
       "difficulty": "Hard",
@@ -7984,7 +7984,7 @@
     },
     {
       "id": "tf-transformer-in-numpy",
-      "moduleId": "transformer-generate",
+      "moduleId": "transformer-predict",
       "title": "The Running Example's Transformer in NumPy",
       "source": "Custom",
       "difficulty": "Medium",
@@ -8000,7 +8000,7 @@
     },
     {
       "id": "tf-sampling-from-the-logit-table",
-      "moduleId": "transformer-generate",
+      "moduleId": "transformer-predict",
       "title": "Sampling from the Running Example's Logits",
       "source": "USAAIO-style",
       "difficulty": "Medium",
@@ -8936,7 +8936,7 @@
     },
     {
       "id": "cv-anchor-for-a-horizontal-line",
-      "moduleId": "object-detection-fpn-yolo",
+      "moduleId": "vision-transformers-vit-attention",
       "title": "The Anchor for a Horizontal Line",
       "source": "Custom",
       "difficulty": "Medium",
@@ -8951,7 +8951,7 @@
     },
     {
       "id": "cv-average-precision-and-nms",
-      "moduleId": "object-detection-fpn-yolo",
+      "moduleId": "vision-transformers-vit-attention",
       "title": "What NMS Does to Average Precision",
       "source": "USAAIO-style",
       "difficulty": "Hard",
@@ -8966,7 +8966,7 @@
     },
     {
       "id": "cv-anchor-targets-numpy",
-      "moduleId": "object-detection-fpn-yolo",
+      "moduleId": "vision-transformers-vit-attention",
       "title": "Anchor Labels and Offsets in NumPy",
       "source": "Custom",
       "difficulty": "Hard",
@@ -8982,7 +8982,7 @@
     },
     {
       "id": "advanced-computer-vision-implementation-task",
-      "moduleId": "object-detection-fpn-yolo",
+      "moduleId": "vision-transformers-vit-attention",
       "title": "Object Localization Practice",
       "source": "Custom",
       "difficulty": "Hard",
@@ -8998,7 +8998,7 @@
     },
     {
       "id": "cv2-nms",
-      "moduleId": "object-detection-fpn-yolo",
+      "moduleId": "vision-transformers-vit-attention",
       "title": "A Dozen Boxes, One Object",
       "source": "Custom",
       "difficulty": "Medium",
@@ -10121,7 +10121,7 @@
     },
     {
       "id": "gen-the-range-a-kl-weight-picks",
-      "moduleId": "vae-encoder-decoder-generation",
+      "moduleId": "representation-learning-autoencoders-vaes-latent-spaces",
       "title": "The Range a Weight on the KL Term Picks",
       "source": "USAAIO-style",
       "difficulty": "Hard",
@@ -10136,7 +10136,7 @@
     },
     {
       "id": "rp2-reparam-variance",
-      "moduleId": "vae-encoder-decoder-generation",
+      "moduleId": "representation-learning-autoencoders-vaes-latent-spaces",
       "title": "Two Gradient Estimators, One 100× Noisier",
       "source": "Custom",
       "difficulty": "Hard",
@@ -10198,7 +10198,7 @@
     },
     {
       "id": "gen-the-weight-of-the-two-images",
-      "moduleId": "generative-removing-noise",
+      "moduleId": "generative-adding-noise",
       "title": "The Weight the Best Network Puts on Each Training Image",
       "source": "USAAIO-style",
       "difficulty": "Medium",
@@ -10213,7 +10213,7 @@
     },
     {
       "id": "gen-the-guided-value-at-step-500",
-      "moduleId": "generative-guidance-and-stable-diffusion",
+      "moduleId": "generative-adding-noise",
       "title": "The Guided Value at Step 500 of a Prompted Run",
       "source": "USAAIO-style",
       "difficulty": "Medium",
@@ -10228,7 +10228,7 @@
     },
     {
       "id": "gen-reweighting-an-imperfect-prompt",
-      "moduleId": "generative-guidance-and-stable-diffusion",
+      "moduleId": "generative-adding-noise",
       "title": "Reweighting by a Prompt the Classifier Is Unsure About",
       "source": "Custom",
       "difficulty": "Medium",
@@ -10243,7 +10243,7 @@
     },
     {
       "id": "gen-two-starts-with-the-same-contrast",
-      "moduleId": "generative-guidance-and-stable-diffusion",
+      "moduleId": "generative-adding-noise",
       "title": "Two Starts with the Same Contrast",
       "source": "USAAIO-style",
       "difficulty": "Hard",
@@ -10258,7 +10258,7 @@
     },
     {
       "id": "gen-diffusion-in-numpy",
-      "moduleId": "generative-guidance-and-stable-diffusion",
+      "moduleId": "generative-adding-noise",
       "title": "The Chapter's Diffusion Model in NumPy",
       "source": "USAAIO Guide",
       "difficulty": "Medium",
@@ -10274,7 +10274,7 @@
     },
     {
       "id": "gm5-cfg-scale",
-      "moduleId": "generative-guidance-and-stable-diffusion",
+      "moduleId": "generative-adding-noise",
       "title": "Turning Up the Guidance Until It Breaks",
       "source": "Custom",
       "difficulty": "Medium",
@@ -10305,7 +10305,7 @@
     },
     {
       "id": "sm-six-steps-to-reach-t-six",
-      "moduleId": "sciml-the-equation",
+      "moduleId": "sciml-setup",
       "title": "Six Steps to Reach t = 6",
       "source": "USAAIO-style",
       "difficulty": "Medium",
@@ -10320,7 +10320,7 @@
     },
     {
       "id": "sm-which-unit-sets-the-output",
-      "moduleId": "sciml-network-as-solution",
+      "moduleId": "sciml-setup",
       "title": "Which Unit Sets the Output",
       "source": "USAAIO-style",
       "difficulty": "Medium",
@@ -10350,7 +10350,7 @@
     },
     {
       "id": "sm-where-the-points-sit",
-      "moduleId": "sciml-physics-loss",
+      "moduleId": "sciml-derivatives",
       "title": "Where the Collocation Points Sit",
       "source": "USAAIO-style",
       "difficulty": "Medium",
@@ -10442,7 +10442,7 @@
     },
     {
       "id": "eff-scores-for-a-prompt-and-a-reply",
-      "moduleId": "efficient-prefill-and-decode",
+      "moduleId": "efficient-setup",
       "title": "The Scores a Prompt and a Reply Cost",
       "source": "USAAIO-style",
       "difficulty": "Medium",
@@ -10487,7 +10487,7 @@
     },
     {
       "id": "mha-gqa-implementation-task",
-      "moduleId": "efficient-sharing-keys-and-values",
+      "moduleId": "efficient-kv-cache",
       "title": "Grouped-Query Attention Practice",
       "source": "Custom",
       "difficulty": "Hard",
@@ -10503,7 +10503,7 @@
     },
     {
       "id": "mla-implementation-task",
-      "moduleId": "efficient-sharing-keys-and-values",
+      "moduleId": "efficient-kv-cache",
       "title": "Multi-Head Latent Attention Practice",
       "source": "Custom",
       "difficulty": "Hard",
@@ -10519,7 +10519,7 @@
     },
     {
       "id": "tf5-kv-cache-budget",
-      "moduleId": "efficient-sharing-keys-and-values",
+      "moduleId": "efficient-kv-cache",
       "title": "The Cache Is Bigger than the Model",
       "source": "Custom",
       "difficulty": "Medium",
@@ -10535,7 +10535,7 @@
     },
     {
       "id": "eff-two-schemes-four-numbers",
-      "moduleId": "efficient-sharing-keys-and-values",
+      "moduleId": "efficient-kv-cache",
       "title": "Two Schemes That Store the Same Four Numbers",
       "source": "USAAIO-style",
       "difficulty": "Medium",
@@ -10565,7 +10565,7 @@
     },
     {
       "id": "linear-attention-round2-implementation-task",
-      "moduleId": "efficient-linear-attention",
+      "moduleId": "efficient-flashattention",
       "title": "Linear Attention Practice",
       "source": "Custom",
       "difficulty": "Hard",
@@ -10581,7 +10581,7 @@
     },
     {
       "id": "eff-cut-after-degree-six",
-      "moduleId": "efficient-linear-attention",
+      "moduleId": "efficient-flashattention",
       "title": "Cutting the List After Degree Six",
       "source": "USAAIO-style",
       "difficulty": "Hard",
@@ -10596,7 +10596,7 @@
     },
     {
       "id": "eff-the-state-after-the-next-token",
-      "moduleId": "efficient-linear-attention",
+      "moduleId": "efficient-flashattention",
       "title": "The State After the Next Token",
       "source": "USAAIO-style",
       "difficulty": "Medium",
@@ -10611,7 +10611,7 @@
     },
     {
       "id": "eff-three-caches-implementation-task",
-      "moduleId": "efficient-linear-attention",
+      "moduleId": "efficient-flashattention",
       "title": "Three Ways to Keep Earlier Tokens in NumPy",
       "source": "Custom",
       "difficulty": "Medium",

@@ -93,16 +93,11 @@
       "name": "Computer Vision",
       "items": [
         "vision-setup",
-        "vision-pixels",
         "vision-convolution",
-        "vision-relu-and-pooling",
         "vision-classify",
-        "vision-deeper-networks",
-        "vision-transfer-learning",
         "hierarchical-vision-models",
         "computer-vision-classification-augmentation",
         "semantic-segmentation-unet-masks",
-        "vision-adversarial-attacks",
         "modern-vision-architectures-resnet-efficientnet-transfer"
       ]
     },
@@ -110,19 +105,10 @@
       "name": "Transformers and Attention",
       "items": [
         "transformer-setup",
-        "transformer-tokenize",
-        "transformer-embed",
-        "transformer-add-position",
         "transformer-qkv",
-        "transformer-scores",
-        "transformer-mask-and-softmax",
         "transformer-weighted-sum",
-        "transformer-multi-head",
         "transformer-residual-and-layernorm",
-        "transformer-feed-forward",
-        "transformer-stack",
         "transformer-predict",
-        "transformer-generate",
         "transformer-fundamentals",
         "transformer-architectures-bert-mlm",
         "gpt-causal-lm",
@@ -147,8 +133,7 @@
     {
       "name": "Computer Vision",
       "items": [
-        "vision-transformers-vit-attention",
-        "object-detection-fpn-yolo"
+        "vision-transformers-vit-attention"
       ]
     },
     {
@@ -171,7 +156,6 @@
       "name": "Representation Learning",
       "items": [
         "representation-learning-autoencoders-vaes-latent-spaces",
-        "vae-encoder-decoder-generation",
         "autoregressive-generative-models"
       ]
     },
@@ -181,8 +165,6 @@
         "generative-setup",
         "generative-adversarial-networks",
         "generative-adding-noise",
-        "generative-removing-noise",
-        "generative-guidance-and-stable-diffusion",
         "evaluating-generative-models",
         "diffusion-models"
       ]
@@ -191,10 +173,7 @@
       "name": "Extra",
       "items": [
         "sciml-setup",
-        "sciml-the-equation",
-        "sciml-network-as-solution",
         "sciml-derivatives",
-        "sciml-physics-loss",
         "sciml-training-and-checking",
         "neural-operators"
       ]
@@ -207,11 +186,8 @@
         "gqa-mla-attention-complexity",
         "efficient-attention-long-context",
         "efficient-setup",
-        "efficient-prefill-and-decode",
         "efficient-kv-cache",
-        "efficient-sharing-keys-and-values",
         "efficient-flashattention",
-        "efficient-linear-attention",
         "sparse-attention-sinks-and-eviction",
         "state-space-models",
         "mixture-of-experts"

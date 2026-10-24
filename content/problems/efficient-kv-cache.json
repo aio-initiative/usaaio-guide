@@ -1,225 +1,383 @@
 {
-  "module": "efficient-kv-cache",
-  "stage": "Advanced",
-  "index": [
+ "module": "efficient-kv-cache",
+ "stage": "Advanced",
+ "index": [
+  {
+   "id": "eff-mask-built-for-the-wrong-start",
+   "moduleId": "efficient-kv-cache",
+   "title": "A Mask Built for the Wrong Start",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=eff-mask-built-for-the-wrong-start",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Advanced"
+   ],
+   "prompt": "A decoder serves a chunk of two new tokens with three tokens already cached, but the causal mask is built as if the chunk were the start of the conversation. Compute what the second new token returns under that wrong mask and under the correct shifted mask, and say what the service should be passing instead. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "eff-how-long-a-session-takes",
+   "moduleId": "efficient-kv-cache",
+   "title": "How Long a Session Takes",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=eff-how-long-a-session-takes",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Advanced"
+   ],
+   "prompt": "An 80-layer model with 64 heads of 128 two-byte numbers is served on an accelerator that does 312 trillion operations and reads 2 trillion bytes a second. A request has a 4,096-token prompt read in one prefill run and a 200-token reply written one decode run at a time, with a multiply and an add counted as two operations. Time one decode run, time the prefill, then say which phase costs more and what grouped-query attention with 8 groups does to that balance. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "mha-gqa-implementation-task",
+   "moduleId": "efficient-kv-cache",
+   "title": "Grouped-Query Attention Practice",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=mha-gqa",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Advanced"
+   ],
+   "prompt": "Multi-head reshaping + KV-head sharing (GQA) in NumPy. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+   "answer": "Auto-graded inside the notebook. Max absolute difference from the reference must be below 1e-6."
+  },
+  {
+   "id": "mla-implementation-task",
+   "moduleId": "efficient-kv-cache",
+   "title": "Multi-Head Latent Attention Practice",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=mla",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Advanced"
+   ],
+   "prompt": "Low-rank latent compression of keys/values (DeepSeek-style MLA) in NumPy. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+   "answer": "Auto-graded inside the notebook. Max absolute difference from the reference must be below 1e-6."
+  },
+  {
+   "id": "tf5-kv-cache-budget",
+   "moduleId": "efficient-kv-cache",
+   "title": "The Cache Is Bigger than the Model",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=tf5-kv-cache-budget",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Advanced"
+   ],
+   "prompt": "Compute the KV cache footprint of MHA, GQA-8, MQA, and MLA across three context lengths and convert each into the largest batch that fits on one card.",
+   "answer": "Auto-graded inside the notebook. Per-token bytes, cache sizes and maximum batches must match the reference at a relative tolerance of 1e-6, in the order MHA, GQA-8, MQA, MLA, with MLA below MHA (with these dimensions MLA is 32x smaller than MHA but still 2x larger than MQA)."
+  },
+  {
+   "id": "eff-two-schemes-four-numbers",
+   "moduleId": "efficient-kv-cache",
+   "title": "Two Schemes That Store the Same Four Numbers",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=eff-two-schemes-four-numbers",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Advanced"
+   ],
+   "prompt": "The running example's 2 heads cost 8 numbers of cache per token, and both multi-query attention and multi-head latent attention bring that down to 4. Compute what head 2 returns for \"cat\" under each scheme, and say which one changes the head's answer and what each gives up in return. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  }
+ ],
+ "theory": [
+  {
+   "id": "eff-mask-built-for-the-wrong-start",
+   "moduleId": "efficient-kv-cache",
+   "title": "A Mask Built for the Wrong Start",
+   "difficulty": "Medium",
+   "minutes": 15,
+   "overview": [
+    "A decoder has already served a prompt and its cache holds three tokens, \"the cat sat\". A follow-up message \"dog ran\" now arrives and the service processes both new tokens in one run. In head 1 the scores of the two new rows, over the five keys of the conversation, and the values behind them are:"
+   ],
+   "setup": [
     {
-      "id": "eff-mask-built-for-the-wrong-start",
-      "moduleId": "efficient-kv-cache",
-      "title": "A Mask Built for the Wrong Start",
-      "source": "USAAIO-style",
-      "difficulty": "Medium",
-      "url": "/theory/?id=eff-mask-built-for-the-wrong-start",
-      "tags": [
-        "Theory",
-        "Multi-part",
-        "Advanced"
-      ],
-      "prompt": "A decoder serves a chunk of two new tokens with three tokens already cached, but the causal mask is built as if the chunk were the start of the conversation. Compute what the second new token returns under that wrong mask and under the correct shifted mask, and say what the service should be passing instead. 3 parts.",
-      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+     "tex": "\\begin{array}{ccccccc}\n\\text{Key of} & \\text{the} & \\text{cat} & \\text{sat} & \\text{dog} & \\text{ran} & \\text{Value} \\\\ \\hline\n\\text{Score of \"dog\"} & 0.021 & 1.461 & 1.434 & 0.043 & 1.457 & \\text{(0.141, 0.010)} \\\\\n\\text{Score of \"ran\"} & 0.735 & 1.846 & 0.415 & 0.029 & 0.254 & \\text{(0.243, −0.654)}\n\\end{array}"
     },
     {
-      "id": "eff-how-long-a-session-takes",
-      "moduleId": "efficient-kv-cache",
-      "title": "How Long a Session Takes",
-      "source": "USAAIO-style",
-      "difficulty": "Hard",
-      "url": "/theory/?id=eff-how-long-a-session-takes",
-      "tags": [
-        "Theory",
-        "Multi-part",
-        "Advanced"
-      ],
-      "prompt": "An 80-layer model with 64 heads of 128 two-byte numbers is served on an accelerator that does 312 trillion operations and reads 2 trillion bytes a second. A request has a 4,096-token prompt read in one prefill run and a 200-token reply written one decode run at a time, with a multiply and an add counted as two operations. Time one decode run, time the prefill, then say which phase costs more and what grouped-query attention with 8 groups does to that balance. 3 parts.",
-      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
-    }
-  ],
-  "theory": [
-    {
-      "id": "eff-mask-built-for-the-wrong-start",
-      "moduleId": "efficient-kv-cache",
-      "title": "A Mask Built for the Wrong Start",
-      "difficulty": "Medium",
-      "minutes": 15,
-      "overview": [
-        "A decoder has already served a prompt and its cache holds three tokens, \"the cat sat\". A follow-up message \"dog ran\" now arrives and the service processes both new tokens in one run. In head 1 the scores of the two new rows, over the five keys of the conversation, and the values behind them are:"
-      ],
-      "setup": [
-        {
-          "tex": "\\begin{array}{ccccccc}\n\\text{Key of} & \\text{the} & \\text{cat} & \\text{sat} & \\text{dog} & \\text{ran} & \\text{Value} \\\\ \\hline\n\\text{Score of \"dog\"} & 0.021 & 1.461 & 1.434 & 0.043 & 1.457 & \\text{(0.141, 0.010)} \\\\\n\\text{Score of \"ran\"} & 0.735 & 1.846 & 0.415 & 0.029 & 0.254 & \\text{(0.243, −0.654)}\n\\end{array}"
-        },
-        {
-          "p": "The values of the three cached keys are (1.000, 1.000) for \"the\", (0.841, 1.540) for \"cat\" and (0.909, −0.416) for \"sat\". The scores in the table are already divided by 1.414, so the softmax reads them as they are."
-        },
-        {
-          "p": "A mask is built for the run the way it is built when there is no cache at all, as if the two new tokens were the first two tokens of the conversation."
-        }
-      ],
-      "parts": [
-        {
-          "id": "1.1",
-          "kind": "computation",
-          "requirement": "Reasoning is not required.",
-          "prompt": [
-            {
-              "p": "With that mask, what does \"ran\" return from head 1? Give the first of its two numbers."
-            }
-          ],
-          "answer": [
-            {
-              "p": "The mask was built as if the chunk started at position 1, so the row of \"dog\" keeps 1 key and the row of \"ran\" keeps 2: the mask keeps the first keys of the actual key list, so \"ran\" sees only the keys of \"the\" and \"cat\"."
-            },
-            {
-              "p": "Its two scores are 0.735 and 1.846, already divided by 1.414. The softmax gives $e^{0.735} = 2.085$ against $e^{1.846} = 6.334$, so the weights are 0.248 for \"the\" and 0.752 for \"cat\". The weighted sum is"
-            },
-            {
-              "tex": "0.248 \\times (1.000,\\ 1.000) + 0.752 \\times (0.841,\\ 1.540)\n= (0.880,\\ 1.406),"
-            },
-            {
-              "p": "so the first number is 0.880. The token returns a blend of the first two tokens of the conversation. It cannot see \"dog\", the word in front of it, and it never looks at \"sat\" either."
-            },
-            {
-              "result": "0.88"
-            }
-          ]
-        },
-        {
-          "id": "1.2",
-          "kind": "computation",
-          "requirement": "Reasoning is not required.",
-          "prompt": [
-            {
-              "p": "With the mask shifted by the three cached tokens, what does \"ran\" return from head 1? Give the first of its two numbers."
-            }
-          ],
-          "answer": [
-            {
-              "p": "Now the row of \"ran\" keeps all five keys, so its weights come from the five scores 0.735, 1.846, 0.415, 0.029 and 0.254. With the largest, 1.846, subtracted, the terms are"
-            },
-            {
-              "tex": "\\begin{array}{cccccc}\n\\text{Key of} & \\text{the} & \\text{cat} & \\text{sat} & \\text{dog} & \\text{ran} \\\\ \\hline\n\\text{Score} & 0.735 & 1.846 & 0.415 & 0.029 & 0.254 \\\\\n\\text{$e$ to the difference} & 0.329 & 1.000 & 0.239 & 0.163 & 0.204\n\\end{array}"
-            },
-            {
-              "p": "They total 1.935, so the weights are 0.170, 0.517, 0.124, 0.084 and 0.105. The weighted sum of the values is"
-            },
-            {
-              "tex": "0.170 \\cdot (1.000,\\ 1.000) + 0.517 \\cdot (0.841,\\ 1.540)\n+ 0.124 \\cdot (0.909,\\ {-0.416}) + 0.084 \\cdot (0.141,\\ 0.010)\n+ 0.105 \\cdot (0.243,\\ {-0.654}) = (0.755,\\ 0.847)."
-            },
-            {
-              "p": "All five keys are in both tables, but this row now blends every one of them where the first part blended only two, and the second number has moved from 1.406 to 0.847."
-            },
-            {
-              "result": "0.755"
-            }
-          ]
-        },
-        {
-          "id": "1.3",
-          "kind": "derivation",
-          "requirement": "A complete derivation is required.",
-          "prompt": [
-            {
-              "p": "Nothing raises, the output has the shape the caller expects, and the service passes its tests. What has gone wrong, and what should the service pass instead?"
-            }
-          ],
-          "answer": [
-            {
-              "p": "The mask counts positions from the start of the chunk instead of from the start of the conversation. A causal mask built for $n$ queries over $n$ keys hides everything above the diagonal, so with 2 queries and 5 keys it says the first new token may look at 1 key and the second at 2, as if the three cached tokens did not exist. Every shape is still right, which is why this passes tests: the table is 2 by 5 and the output is 2 by 2. Nothing in the service ever looks at the number of keys, so the wrong rows look like ordinary attention weights."
-            },
-            {
-              "p": "The service should build the mask from the number of keys already cached, so that row $i$ of the chunk, counting $i$ from 0, may see the 3 cached keys plus its own key plus the $i$ tokens of the chunk ahead of it. That is 4 keys for \"dog\" and all 5 for \"ran\"."
-            },
-            {
-              "p": "Passing that shifted mask is the usual fix, since `scaled_dot_product_attention` with `is_causal=True` and fewer queries than keys builds the unshifted one instead. A chunk of one token needs no mask at all, since it may see every cached key."
-            }
-          ]
-        }
-      ]
+     "p": "The values of the three cached keys are (1.000, 1.000) for \"the\", (0.841, 1.540) for \"cat\" and (0.909, −0.416) for \"sat\". The scores in the table are already divided by 1.414, so the softmax reads them as they are."
     },
     {
-      "id": "eff-how-long-a-session-takes",
-      "moduleId": "efficient-kv-cache",
-      "title": "How Long a Session Takes",
-      "difficulty": "Hard",
-      "minutes": 26,
-      "overview": [
-        "One server holds a model of 80 layers with 64 heads of 128 numbers each, and keeps numbers at 2 bytes. Its accelerator does about 312 trillion operations a second and reads about 2 trillion bytes a second, so it can do 156 operations in the time it reads one byte."
-      ],
-      "setup": [
-        {
-          "p": "A request arrives with a prompt of 4,096 tokens. The model reads it in one prefill run, then writes a reply of 200 tokens, one decode run each. Take the size of the cache at the start of the reply and ignore the fact that it grows while the reply is written. Count one multiply and one add as two operations, as on the page that gave the ratio of 156."
-        }
-      ],
-      "parts": [
-        {
-          "id": "1.1",
-          "kind": "computation",
-          "requirement": "Reasoning is not required.",
-          "prompt": [
-            {
-              "p": "How long does one decode run take, in milliseconds?"
-            }
-          ],
-          "answer": [
-            {
-              "p": "A decode run reads the whole cache and its arithmetic is negligible beside that. The cache holds a key and a value per token, per head, per layer:"
-            },
-            {
-              "tex": "2 \\times 80 \\times 64 \\times 128 \\times 4{,}096 \\times 2\n= 10{,}737{,}418{,}240 \\text{ bytes} = 10 \\text{ GiB}."
-            },
-            {
-              "p": "At 2 trillion bytes a second that is $10.74 / 2 = 5.37$ milliseconds. Every cached number is used in one multiply-add, so the run also performs $10{,}737{,}418{,}240$ operations, which at 312 trillion a second take 0.034 milliseconds. That is 0.6% of the time, so decode waits on memory, and the 34 microseconds of arithmetic are invisible beside the 5.37 milliseconds of reading."
-            },
-            {
-              "result": "5.37"
-            }
-          ]
-        },
-        {
-          "id": "1.2",
-          "kind": "computation",
-          "requirement": "Reasoning is not required.",
-          "prompt": [
-            {
-              "p": "How long does the prefill take, in milliseconds?"
-            }
-          ],
-          "answer": [
-            {
-              "p": "The prefill computes the whole $4{,}096 \\times 4{,}096$ table per head, 16.8 million scores, each a dot product of 128 numbers, and then as many multiply-adds for the weighted sums. In multiplies that is $2 \\times 4{,}096^2 \\times 128$ per head, so $4 \\times 4{,}096^2 \\times 128 \\times 64 \\times 80 = 4.4 \\times 10^{13}$ operations in all. At 312 trillion a second that is"
-            },
-            {
-              "tex": "\\frac{4.4 \\times 10^{13}}{312 \\times 10^{12}} = 0.141 \\text{ s} = 141 \\text{ ms}."
-            },
-            {
-              "p": "The keys and values are read once, 10.74 GB, which takes 5.4 milliseconds, so the prefill spends 141 milliseconds of arithmetic against 5.4 of reading and is limited by arithmetic. Read another way, a prefill uses each key it reads for every later query, so its intensity is 4,096 operations per byte, 26 times the accelerator's balance of 156."
-            },
-            {
-              "result": "141"
-            }
-          ]
-        },
-        {
-          "id": "1.3",
-          "kind": "derivation",
-          "requirement": "A complete derivation is required.",
-          "prompt": [
-            {
-              "p": "The request writes 200 tokens. Which of the two phases takes more time, by about how many times, and what happens to the answer if the model is converted to grouped-query attention with 8 groups?"
-            }
-          ],
-          "answer": [
-            {
-              "p": "The reply takes $200 \\times 5.37 = 1{,}074$ milliseconds of reading, against 141 milliseconds of arithmetic for the prefill. The decode phase costs 7.6 times as much time as the prefill, even though the prefill computes 4,096 times as much arithmetic as one decode run. Reading the cache once per new token is what the reply pays, and there is no way to make that arithmetic do the work instead."
-            },
-            {
-              "p": "With 8 groups the cache holds an eighth as much, 1.25 GiB, so a decode run takes 0.67 milliseconds and the whole reply 134 milliseconds, slightly less than the prefill's 141. The balance has turned over: the phase that computes almost all the arithmetic now costs slightly more time than the phase that writes the answer. One group would take the reply down to 17 milliseconds, and the prefill would then be eight times the reply."
-            },
-            {
-              "p": "This is why a service that writes long replies cares most about the cache and a service that reads long prompts cares most about the arithmetic. Sharing keys and values only helps the first, and a window or linear attention only helps where the work itself is the cost."
-            }
-          ]
-        }
-      ]
+     "p": "A mask is built for the run the way it is built when there is no cache at all, as if the two new tokens were the first two tokens of the conversation."
     }
-  ]
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "With that mask, what does \"ran\" return from head 1? Give the first of its two numbers."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The mask was built as if the chunk started at position 1, so the row of \"dog\" keeps 1 key and the row of \"ran\" keeps 2: the mask keeps the first keys of the actual key list, so \"ran\" sees only the keys of \"the\" and \"cat\"."
+      },
+      {
+       "p": "Its two scores are 0.735 and 1.846, already divided by 1.414. The softmax gives $e^{0.735} = 2.085$ against $e^{1.846} = 6.334$, so the weights are 0.248 for \"the\" and 0.752 for \"cat\". The weighted sum is"
+      },
+      {
+       "tex": "0.248 \\times (1.000,\\ 1.000) + 0.752 \\times (0.841,\\ 1.540)\n= (0.880,\\ 1.406),"
+      },
+      {
+       "p": "so the first number is 0.880. The token returns a blend of the first two tokens of the conversation. It cannot see \"dog\", the word in front of it, and it never looks at \"sat\" either."
+      },
+      {
+       "result": "0.88"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "With the mask shifted by the three cached tokens, what does \"ran\" return from head 1? Give the first of its two numbers."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Now the row of \"ran\" keeps all five keys, so its weights come from the five scores 0.735, 1.846, 0.415, 0.029 and 0.254. With the largest, 1.846, subtracted, the terms are"
+      },
+      {
+       "tex": "\\begin{array}{cccccc}\n\\text{Key of} & \\text{the} & \\text{cat} & \\text{sat} & \\text{dog} & \\text{ran} \\\\ \\hline\n\\text{Score} & 0.735 & 1.846 & 0.415 & 0.029 & 0.254 \\\\\n\\text{$e$ to the difference} & 0.329 & 1.000 & 0.239 & 0.163 & 0.204\n\\end{array}"
+      },
+      {
+       "p": "They total 1.935, so the weights are 0.170, 0.517, 0.124, 0.084 and 0.105. The weighted sum of the values is"
+      },
+      {
+       "tex": "0.170 \\cdot (1.000,\\ 1.000) + 0.517 \\cdot (0.841,\\ 1.540)\n+ 0.124 \\cdot (0.909,\\ {-0.416}) + 0.084 \\cdot (0.141,\\ 0.010)\n+ 0.105 \\cdot (0.243,\\ {-0.654}) = (0.755,\\ 0.847)."
+      },
+      {
+       "p": "All five keys are in both tables, but this row now blends every one of them where the first part blended only two, and the second number has moved from 1.406 to 0.847."
+      },
+      {
+       "result": "0.755"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Nothing raises, the output has the shape the caller expects, and the service passes its tests. What has gone wrong, and what should the service pass instead?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The mask counts positions from the start of the chunk instead of from the start of the conversation. A causal mask built for $n$ queries over $n$ keys hides everything above the diagonal, so with 2 queries and 5 keys it says the first new token may look at 1 key and the second at 2, as if the three cached tokens did not exist. Every shape is still right, which is why this passes tests: the table is 2 by 5 and the output is 2 by 2. Nothing in the service ever looks at the number of keys, so the wrong rows look like ordinary attention weights."
+      },
+      {
+       "p": "The service should build the mask from the number of keys already cached, so that row $i$ of the chunk, counting $i$ from 0, may see the 3 cached keys plus its own key plus the $i$ tokens of the chunk ahead of it. That is 4 keys for \"dog\" and all 5 for \"ran\"."
+      },
+      {
+       "p": "Passing that shifted mask is the usual fix, since `scaled_dot_product_attention` with `is_causal=True` and fewer queries than keys builds the unshifted one instead. A chunk of one token needs no mask at all, since it may see every cached key."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "eff-how-long-a-session-takes",
+   "moduleId": "efficient-kv-cache",
+   "title": "How Long a Session Takes",
+   "difficulty": "Hard",
+   "minutes": 26,
+   "overview": [
+    "One server holds a model of 80 layers with 64 heads of 128 numbers each, and keeps numbers at 2 bytes. Its accelerator does about 312 trillion operations a second and reads about 2 trillion bytes a second, so it can do 156 operations in the time it reads one byte."
+   ],
+   "setup": [
+    {
+     "p": "A request arrives with a prompt of 4,096 tokens. The model reads it in one prefill run, then writes a reply of 200 tokens, one decode run each. Take the size of the cache at the start of the reply and ignore the fact that it grows while the reply is written. Count one multiply and one add as two operations, as on the page that gave the ratio of 156."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "How long does one decode run take, in milliseconds?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "A decode run reads the whole cache and its arithmetic is negligible beside that. The cache holds a key and a value per token, per head, per layer:"
+      },
+      {
+       "tex": "2 \\times 80 \\times 64 \\times 128 \\times 4{,}096 \\times 2\n= 10{,}737{,}418{,}240 \\text{ bytes} = 10 \\text{ GiB}."
+      },
+      {
+       "p": "At 2 trillion bytes a second that is $10.74 / 2 = 5.37$ milliseconds. Every cached number is used in one multiply-add, so the run also performs $10{,}737{,}418{,}240$ operations, which at 312 trillion a second take 0.034 milliseconds. That is 0.6% of the time, so decode waits on memory, and the 34 microseconds of arithmetic are invisible beside the 5.37 milliseconds of reading."
+      },
+      {
+       "result": "5.37"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "How long does the prefill take, in milliseconds?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The prefill computes the whole $4{,}096 \\times 4{,}096$ table per head, 16.8 million scores, each a dot product of 128 numbers, and then as many multiply-adds for the weighted sums. In multiplies that is $2 \\times 4{,}096^2 \\times 128$ per head, so $4 \\times 4{,}096^2 \\times 128 \\times 64 \\times 80 = 4.4 \\times 10^{13}$ operations in all. At 312 trillion a second that is"
+      },
+      {
+       "tex": "\\frac{4.4 \\times 10^{13}}{312 \\times 10^{12}} = 0.141 \\text{ s} = 141 \\text{ ms}."
+      },
+      {
+       "p": "The keys and values are read once, 10.74 GB, which takes 5.4 milliseconds, so the prefill spends 141 milliseconds of arithmetic against 5.4 of reading and is limited by arithmetic. Read another way, a prefill uses each key it reads for every later query, so its intensity is 4,096 operations per byte, 26 times the accelerator's balance of 156."
+      },
+      {
+       "result": "141"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "The request writes 200 tokens. Which of the two phases takes more time, by about how many times, and what happens to the answer if the model is converted to grouped-query attention with 8 groups?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The reply takes $200 \\times 5.37 = 1{,}074$ milliseconds of reading, against 141 milliseconds of arithmetic for the prefill. The decode phase costs 7.6 times as much time as the prefill, even though the prefill computes 4,096 times as much arithmetic as one decode run. Reading the cache once per new token is what the reply pays, and there is no way to make that arithmetic do the work instead."
+      },
+      {
+       "p": "With 8 groups the cache holds an eighth as much, 1.25 GiB, so a decode run takes 0.67 milliseconds and the whole reply 134 milliseconds, slightly less than the prefill's 141. The balance has turned over: the phase that computes almost all the arithmetic now costs slightly more time than the phase that writes the answer. One group would take the reply down to 17 milliseconds, and the prefill would then be eight times the reply."
+      },
+      {
+       "p": "This is why a service that writes long replies cares most about the cache and a service that reads long prompts cares most about the arithmetic. Sharing keys and values only helps the first, and a window or linear attention only helps where the work itself is the cost."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "eff-two-schemes-four-numbers",
+   "moduleId": "efficient-kv-cache",
+   "title": "Two Schemes That Store the Same Four Numbers",
+   "difficulty": "Medium",
+   "minutes": 14,
+   "overview": [
+    "The running example has one layer, 2 heads of 2 numbers, and a token vector of 4 numbers, so a token costs 8 numbers of cache when every head keeps its own keys and values. Two schemes bring that down to 4 numbers per token:"
+   ],
+   "setup": [
+    {
+     "list": [
+      "**Multi-query attention.** One stored set, head 1's, which both heads read. Head 2 keeps its own queries.",
+      "**Multi-head latent attention.** One stored vector per token, the token vector itself, and every head's key and value are computed from it with that head's own weights."
+     ]
+    },
+    {
+     "p": "The three tokens carry the vectors (1.000, 1.000, 0.000, 1.000) for \"the\", (0.841, 1.540, 1.010, 1.000) for \"cat\" and (0.909, −0.416, 1.020, 2.000) for \"sat\". Head 2's query for \"cat\" is (1.540, 1.000). Its key of a token is the second and fourth numbers of the token vector and its value the third and fourth. In head 1 the key of a token is the second and third numbers and its value the first and second."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Under multi-head latent attention, what does head 2 return for \"cat\"? Give the first of its two numbers."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The rebuild uses head 2's own weights, so nothing about the head changes: it sees the same query and the same keys and values it would have stored for itself. Its key of \"cat\" is (1.540, 1.000) and its value is (1.010, 1.000)."
+      },
+      {
+       "p": "Against the three keys of head 2, (1.000, 1.000), (1.540, 1.000) and (−0.416, 2.000), the dot products are 2.540, 3.372 and 1.359, and dividing by 1.414 gives 1.796, 2.384 and 0.961. With the largest subtracted the terms are 0.555, 1.000 and 0.241, which total 1.796, giving weights 0.309, 0.557 and 0.134. The weighted sum of the values is"
+      },
+      {
+       "tex": "0.309 (0.000,\\ 1.000) + 0.557 (1.010,\\ 1.000) + 0.134 (1.020,\\ 2.000)\n= (0.699,\\ 1.134)."
+      },
+      {
+       "p": "The first number is 0.699, and it is the head's own answer, unchanged."
+      },
+      {
+       "result": "0.699"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Under multi-query attention, what does head 2 return for \"cat\"? Give the first of its two numbers."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Now the keys and values behind head 2 are head 1's. The query is still head 2's own, (1.540, 1.000), and the keys are now (1.000, 0.000), (1.540, 1.010) and (−0.416, 1.020). The dot products are 1.540, 3.382 and 0.379, so the scores are 1.089, 2.391 and 0.268. With the largest subtracted the terms are 0.272, 1.000 and 0.120, which total 1.392, giving weights 0.195, 0.719 and 0.086 when each is worked out before rounding."
+      },
+      {
+       "p": "The values are head 1's, (1.000, 1.000), (0.841, 1.540) and (0.909, −0.416), so the weighted sum is"
+      },
+      {
+       "tex": "0.195 (1.000,\\ 1.000) + 0.719 (0.841,\\ 1.540) + 0.086 (0.909,\\ {-0.416})\n= (0.878,\\ 1.266)."
+      },
+      {
+       "p": "The first number is 0.878, up from 0.699. The weights moved from (0.309, 0.557, 0.134) to (0.195, 0.719, 0.086), so part of the change is where the head looks, and the rest is the values it brings back."
+      },
+      {
+       "result": "0.878"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Both schemes store 4 numbers per token. One of them changes what head 2 returns and the other does not. Which is which, and what does the comparison say about what each of them has to give up?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Multi-query attention changes head 2's answer, from (0.699, 1.134) to (0.878, 1.266), and it changes it for every token in the text. Head 2 still chooses where to look, but the numbers it brings back are head 1's, so a head whose job was to fetch something else now returns something else. Multi-head latent attention leaves every head's answer exactly as it was, since each head rebuilds its own key and value from the shared vector with its own weights."
+      },
+      {
+       "p": "So the two schemes spend the same 4 numbers per token and buy different things. Multi-query attention saves memory by giving up per-head values. Multi-head latent attention keeps them, so its saving has to come from somewhere else: from one compressed vector per token instead of a stored set for every head. That is what DeepSeek-V2 does, storing 512 numbers of latent and 64 more for the position, 576 in all, against 256 for one shared set of 128, and 576 ÷ 256 = 2.25 shared sets rather than one. A real latent also has to lose something, since it is a compressed copy, and the open question is how much each head can afford to lose."
+      }
+     ]
+    }
+   ]
+  }
+ ]
 }

@@ -733,9 +733,11 @@ function parseBlocks(rawLines, context) {
 function rewriteLinks(text, context) {
   return text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, label, href) => {
     if (/^(https?:|mailto:|#|\/)/.test(href)) return match;
-    const moduleId = context.idByFilename.get(path.basename(href.split("#")[0]));
+    const [file, hash] = href.split("#");
+    const moduleId = context.idByFilename.get(path.basename(file));
     if (!moduleId) return label;
-    return `[${label}](/module/?id=${moduleId})`;
+    // "#lesson-..." names a section of that module; the reader scrolls to it.
+    return `[${label}](/module/?id=${moduleId}${hash ? `#${hash}` : ""})`;
   });
 }
 

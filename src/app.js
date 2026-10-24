@@ -1103,6 +1103,29 @@
     scrollSidebarToActive();
     window.AIO_DEFINITION_LINKS?.annotate(els.moduleReader.querySelector('.reader-article'));
     setPageMeta(`${module.title} | USAAIO Guide`, module.summary);
+    scrollToHashOnce();
+  }
+
+  // The lesson is drawn by script after the page loads, so the browser's own
+  // jump to "#lesson-..." finds nothing. Do it once, after the first render;
+  // later re-renders (sign-in, progress sync) must not yank the reader back.
+  let hashScrolled = false;
+  function scrollToHashOnce() {
+    if (hashScrolled || !location.hash) return;
+    hashScrolled = true;
+    let target = null;
+    try {
+      target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    } catch (error) {
+      return;
+    }
+    if (!target) return;
+    target.scrollIntoView({ block: "start" });
+    // Figures load after the text and push the section down, so settle once
+    // more when they are in.
+    if (document.readyState !== "complete") {
+      window.addEventListener("load", () => target.scrollIntoView({ block: "start" }), { once: true });
+    }
   }
 
   /**

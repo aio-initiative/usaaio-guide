@@ -112,15 +112,10 @@
           "description": "",
           "items": [
             "vision-setup",
-            "vision-pixels",
             "vision-convolution",
-            "vision-relu-and-pooling",
             "vision-classify",
-            "vision-deeper-networks",
-            "vision-transfer-learning",
             "hierarchical-vision-models",
             "semantic-segmentation-unet-masks",
-            "vision-adversarial-attacks",
             "modern-vision-architectures-resnet-efficientnet-transfer"
           ]
         },
@@ -129,19 +124,10 @@
           "description": "",
           "items": [
             "transformer-setup",
-            "transformer-tokenize",
-            "transformer-embed",
-            "transformer-add-position",
             "transformer-qkv",
-            "transformer-scores",
-            "transformer-mask-and-softmax",
             "transformer-weighted-sum",
-            "transformer-multi-head",
             "transformer-residual-and-layernorm",
-            "transformer-feed-forward",
-            "transformer-stack",
             "transformer-predict",
-            "transformer-generate",
             "transformer-fundamentals",
             "transformer-architectures-bert-mlm",
             "gpt-causal-lm",
@@ -175,8 +161,7 @@
           "name": "Computer Vision",
           "description": "",
           "items": [
-            "vision-transformers-vit-attention",
-            "object-detection-fpn-yolo"
+            "vision-transformers-vit-attention"
           ]
         },
         {
@@ -202,7 +187,6 @@
           "description": "",
           "items": [
             "representation-learning-autoencoders-vaes-latent-spaces",
-            "vae-encoder-decoder-generation",
             "autoregressive-generative-models"
           ]
         },
@@ -213,8 +197,6 @@
             "generative-setup",
             "generative-adversarial-networks",
             "generative-adding-noise",
-            "generative-removing-noise",
-            "generative-guidance-and-stable-diffusion",
             "evaluating-generative-models"
           ]
         },
@@ -223,10 +205,7 @@
           "description": "",
           "items": [
             "sciml-setup",
-            "sciml-the-equation",
-            "sciml-network-as-solution",
             "sciml-derivatives",
-            "sciml-physics-loss",
             "sciml-training-and-checking",
             "neural-operators"
           ]
@@ -246,11 +225,8 @@
           "items": [
             "efficient-attention-long-context",
             "efficient-setup",
-            "efficient-prefill-and-decode",
             "efficient-kv-cache",
-            "efficient-sharing-keys-and-values",
             "efficient-flashattention",
-            "efficient-linear-attention",
             "sparse-attention-sinks-and-eviction",
             "state-space-models",
             "mixture-of-experts"

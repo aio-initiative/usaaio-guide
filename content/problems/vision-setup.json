@@ -1,0 +1,23 @@
+{
+ "module": "vision-setup",
+ "stage": "Round 2",
+ "index": [
+  {
+   "id": "foundations-19-table-extraction",
+   "moduleId": "vision-setup",
+   "title": "AI Foundations 19: Table Extraction from Document Images",
+   "source": "AI Foundations",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=foundations-19-table-extraction",
+   "tags": [
+    "Coding",
+    "Course",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "Course notebook (about 5 h): turn scanned table pixels back into structured tables with a classical computer-vision pipeline built from scratch, and measure it honestly with TEDS.",
+   "answer": "Self-checking: every exercise has a checker cell that prints a verdict, and each quiz answer is explained in a hidden block under its question."
+  }
+ ],
+ "theory": []
+}

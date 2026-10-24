@@ -11107,7 +11107,7 @@
                     "p": "**Affine maps stay Gaussian.** If $\\mathbf{x} \\sim \\mathcal{N}(\\boldsymbol\\mu, \\Sigma)$, then for a matrix $A$ and vector $\\mathbf{c}$, $A\\mathbf{x} + \\mathbf{c} \\sim \\mathcal{N}(A\\boldsymbol\\mu + \\mathbf{c},\\ A\\Sigma A^\\top)$. Picking out some coordinates is such a map, so a marginal keeps the matching entries of $\\boldsymbol\\mu$ and $\\Sigma$."
                   },
                   {
-                    "p": "**Sampling.** When $\\Sigma$ is positive definite ($\\mathbf{w}^\\top\\Sigma\\mathbf{w} > 0$ for every nonzero $\\mathbf{w}$), it factors as $\\Sigma = BB^\\top$ with $B$ lower triangular. This is the **Cholesky factorization**, `np.linalg.cholesky` in NumPy. Set $\\mathbf{x} = \\boldsymbol\\mu + B\\mathbf{z}$ with $\\mathbf{z} \\sim \\mathcal{N}(\\mathbf{0}, I)$. By the affine rule its covariance is $BIB^\\top = \\Sigma$. A VAE (see [Build a Generative Model: 2. VAE](/module/?id=vae-encoder-decoder-generation)) samples this way in the diagonal case, writing each coordinate as $\\mu_i + \\sigma_i z_i$. All the randomness is in $\\mathbf{z}$, so gradients can flow back to $\\mu_i$ and $\\sigma_i$."
+                    "p": "**Sampling.** When $\\Sigma$ is positive definite ($\\mathbf{w}^\\top\\Sigma\\mathbf{w} > 0$ for every nonzero $\\mathbf{w}$), it factors as $\\Sigma = BB^\\top$ with $B$ lower triangular. This is the **Cholesky factorization**, `np.linalg.cholesky` in NumPy. Set $\\mathbf{x} = \\boldsymbol\\mu + B\\mathbf{z}$ with $\\mathbf{z} \\sim \\mathcal{N}(\\mathbf{0}, I)$. By the affine rule its covariance is $BIB^\\top = \\Sigma$. A VAE (see [Build a Generative Model: VAE](/module/?id=representation-learning-autoencoders-vaes-latent-spaces#lesson-vae)) samples this way in the diagonal case, writing each coordinate as $\\mu_i + \\sigma_i z_i$. All the randomness is in $\\mathbf{z}$, so gradients can flow back to $\\mu_i$ and $\\sigma_i$."
                   },
                   {
                     "p": "**Conditioning.** Split $\\mathbf{x}$ into blocks $\\mathbf{x}_a$ and $\\mathbf{x}_b$, with $\\boldsymbol\\mu$ and $\\Sigma$ split to match. Then $\\mathbf{x}_a$ given $\\mathbf{x}_b$ is Gaussian with mean and covariance"
@@ -12009,14 +12009,14 @@
               "level": 3
             },
             {
-              "p": "The median in (a), the mean and standard deviation in (b) and the list of categories in (c) are all learned from data. They are parameters, like weights, and they are fitted on the training rows only. Validation and test rows are then transformed with the fitted values, never with their own. The [bias-variance module](/module/?id=bias-variance-cross-validation) explains why validation rows must stay unseen, and a scaler that has used the test rows' mean has seen the test rows. The grader's hidden rows are transformed with the training statistics too, because those are the only statistics the submission has."
+              "p": "The median in (a), the mean and standard deviation in (b) and the list of categories in (c) are all learned from data. They are parameters, like weights, and they are fitted on the training rows only. Validation and test rows are then transformed with the fitted values, never with their own. The [bias-variance module](/module/?id=bias-variance-cross-validation#the-split) explains why validation rows must stay unseen, and a scaler that has used the test rows' mean has seen the test rows. The grader's hidden rows are transformed with the training statistics too, because those are the only statistics the submission has."
             },
             {
               "heading": "Scaling",
               "level": 3
             },
             {
-              "p": "Distance models and gradient descent both care about the units of a column. A squared Euclidean distance adds $(x_j - x'_j)^2$ over columns, so a column in cents outvotes a column in years by the square of the ratio. The [kNN module](/module/?id=decision-trees-knn) measured the effect on the breast cancer data: 0.951 with a scaler, 0.916 without. Gradient descent on logistic regression needs a learning rate small enough for the largest column and then crawls along the rest, and the [regression module](/module/?id=linear-logistic-regression) measured 0.895 on raw columns against 0.965 scaled. Penalties care as well. Ridge shrinks every weight by the same rule, and the same effect needs a weight a thousand times larger on a column in kilometers than on one in meters. Trees are the exception. A split at $x > 3$ is the split $300x > 900$, and no rescaling that keeps the order of the values changes a tree."
+              "p": "Distance models and gradient descent both care about the units of a column. A squared Euclidean distance adds $(x_j - x'_j)^2$ over columns, so a column in cents outvotes a column in years by the square of the ratio. The [kNN module](/module/?id=decision-trees-knn#distance-needs-comparable-features) measured the effect on the breast cancer data: 0.951 with a scaler, 0.916 without. Gradient descent on logistic regression needs a learning rate small enough for the largest column and then crawls along the rest, and the [regression module](/module/?id=linear-logistic-regression#the-pipeline-a-contest-asks-for) measured 0.895 on raw columns against 0.965 scaled. Penalties care as well. Ridge shrinks every weight by the same rule, and the same effect needs a weight a thousand times larger on a column in kilometers than on one in meters. Trees are the exception. A split at $x > 3$ is the split $300x > 900$, and no rescaling that keeps the order of the values changes a tree."
             },
             {
               "p": "The transforms, and when each one fits:"
@@ -12085,7 +12085,7 @@
               "p": "A model cannot multiply S by a weight. **One-hot encoding** turns a column with $K$ values into $K$ indicator columns, one per value, each 1 on the rows with that value and 0 elsewhere. Coding the values as integers instead, C as 0, Q as 1, S as 2, is wrong for unordered categories. It tells a distance model that S is twice as far from C as Q is, and a linear model that the effect of S is twice the effect of Q. Integer codes are right when the order is real, small, medium, large, and `OrdinalEncoder` exists for that case."
             },
             {
-              "p": "With a ones column in the matrix, the $K$ indicators add up to the ones column. The columns are then linearly dependent, and the normal equations of the [regression module](/module/?id=linear-logistic-regression) have no unique solution. Dropping one indicator removes the dependence: `drop_first=True` in `pd.get_dummies`, `drop=\"first\"` in `OneHotEncoder`. The dropped category is the baseline, and its effect lives in the intercept. For the example the categories in sorted order are C, Q, S, C is dropped, and the columns are `port_Q` and `port_S`. Row 2, port C, is $(0, 0)$, row 4, port Q, is $(1, 0)$, and the three S rows are $(0, 1)$. That is step (c). The drop is only needed for an unregularized linear fit. `OneHotEncoder`'s default `drop=None` keeps all $K$, which is right for trees, nearest neighbors and penalized models, because dropping one level makes it the all-zero row and breaks the symmetry between categories."
+              "p": "With a ones column in the matrix, the $K$ indicators add up to the ones column. The columns are then linearly dependent, and the normal equations of the [regression module](/module/?id=linear-logistic-regression#one-hot-encoding) have no unique solution. Dropping one indicator removes the dependence: `drop_first=True` in `pd.get_dummies`, `drop=\"first\"` in `OneHotEncoder`. The dropped category is the baseline, and its effect lives in the intercept. For the example the categories in sorted order are C, Q, S, C is dropped, and the columns are `port_Q` and `port_S`. Row 2, port C, is $(0, 0)$, row 4, port Q, is $(1, 0)$, and the three S rows are $(0, 1)$. That is step (c). The drop is only needed for an unregularized linear fit. `OneHotEncoder`'s default `drop=None` keeps all $K$, which is right for trees, nearest neighbors and penalized models, because dropping one level makes it the all-zero row and breaks the symmetry between categories."
             },
             {
               "p": "Two things go wrong at test time. A test row with a value the training table never had has no column, and `OneHotEncoder(handle_unknown=\"ignore\")` gives such a row all zeros. `pd.get_dummies` run on the test table alone builds its columns from the test table's own values, a different set of columns. The implementation shows both."
@@ -12167,7 +12167,7 @@
                 "for a cyclic quantity such as an angle or a time of day $t$ with period $T$, encode it as $\\big(\\sin\\tfrac{2\\pi t}{T}, \\cos\\tfrac{2\\pi t}{T}\\big)$, so that hour 23 and hour 0 are adjacent, which a raw integer encoding gets badly wrong",
                 "an aggregate over a group, such as a customer's mean order",
                 "the product of two columns that a domain reason says should interact",
-                "the polynomial columns of the [regression module](/module/?id=linear-logistic-regression), which let a linear model fit a curve"
+                "the polynomial columns of the [regression module](/module/?id=linear-logistic-regression#linear-in-the-weights), which let a linear model fit a curve"
               ]
             },
             {
@@ -13823,7 +13823,7 @@
                     }
                   },
                   {
-                    "p": "The last row is where the name comes from. Naive Bayes can draw new examples: pick a class from $P(y)$, then each feature from $P(x_j \\mid y)$. [VAEs](/module/?id=vae-encoder-decoder-generation) and [diffusion models](/module/?id=generative-adding-noise) are generative in the same sense, with far richer models of how the data is produced."
+                    "p": "The last row is where the name comes from. Naive Bayes can draw new examples: pick a class from $P(y)$, then each feature from $P(x_j \\mid y)$. [VAEs](/module/?id=representation-learning-autoencoders-vaes-latent-spaces#lesson-vae) and [diffusion models](/module/?id=generative-adding-noise#lesson-adding-noise) are generative in the same sense, with far richer models of how the data is produced."
                   },
                   {
                     "p": "**Counting words.** In text classification the features are word counts. For each class, naive Bayes keeps a probability for every word $v$ in the vocabulary $V$: $P(v \\mid y)$ is the chance that a word drawn from a class-$y$ message is $v$. Fitting is counting. $P(y)$ is the fraction of training messages in class $y$, and"
@@ -19227,7 +19227,7 @@
               }
             },
             {
-              "p": "At depth 20 the plain network sits at chance, and the last column says why. The gradient reaching its first layer is $4 \\times 10^{-10}$, so the early layers receive almost no signal. That is the vanishing gradient, measured. With normalization the same network gets 99.8%, and the first-layer gradient is about ten million times larger. Each normalization layer resets its input to a fixed scale, so no layer's output drifts into the range where the next activation function has no slope. The other standard fix for depth is the residual connection, which adds a layer's input back to its output. ResNets and Transformers use it together with normalization, and [Build a Vision Model: 5. Deeper networks](/module/?id=vision-deeper-networks) covers it."
+              "p": "At depth 20 the plain network sits at chance, and the last column says why. The gradient reaching its first layer is $4 \\times 10^{-10}$, so the early layers receive almost no signal. That is the vanishing gradient, measured. With normalization the same network gets 99.8%, and the first-layer gradient is about ten million times larger. Each normalization layer resets its input to a fixed scale, so no layer's output drifts into the range where the next activation function has no slope. The other standard fix for depth is the residual connection, which adds a layer's input back to its output. ResNets and Transformers use it together with normalization, and [Build a Vision Model: Deeper networks](/module/?id=vision-classify#lesson-deeper-networks) covers it."
             },
             {
               "heading": "Batch normalization",
@@ -19927,7 +19927,7 @@
               "level": 3
             },
             {
-              "p": "**Weight decay** shrinks every weight by a small fraction on each step, so weights stay small unless the data pushes back. The usual way to get it is [L2 regularization](/module/?id=linear-logistic-regression): add $\\frac{\\lambda}{2} \\lVert \\theta \\rVert^2$, half of $\\lambda$ times the sum of the squared weights, to the loss. That adds $\\lambda \\theta$ to the gradient, and the SGD step becomes"
+              "p": "**Weight decay** shrinks every weight by a small fraction on each step, so weights stay small unless the data pushes back. The usual way to get it is [L2 regularization](/module/?id=linear-logistic-regression#ridge-and-lasso): add $\\frac{\\lambda}{2} \\lVert \\theta \\rVert^2$, half of $\\lambda$ times the sum of the squared weights, to the loss. That adds $\\lambda \\theta$ to the gradient, and the SGD step becomes"
             },
             {
               "tex": "\\begin{aligned}\n\\theta_{t+1} &= \\theta_t - \\eta\\,(g_t + \\lambda\\, \\theta_t) \\\\\n&= (1 - \\eta \\lambda)\\, \\theta_t - \\eta\\, g_t.\n\\end{aligned}"
@@ -20574,7 +20574,7 @@
               "p": "A [multilayer perceptron](/module/?id=neural-networks-perceptrons-mlps-activations) treats an image as a flat vector of pixels: a $28\\times28$ grayscale image becomes a $784$-dimensional input, with the first dense layer connecting every pixel to every hidden unit. That ignores the fact that nearby pixels belong together, and it needs an enormous number of weights. A **convolutional neural network (CNN)** fixes both problems with one idea: slide a small filter across the image, using the same weights at every position, instead of giving every pixel its own weights."
             },
             {
-              "p": "The parts below are what Round 1 asks about convolutional networks, and [Build a Vision Model](/module/?id=vision-setup) in Round 2 gives the full treatment."
+              "p": "The parts below are what Round 1 asks about convolutional networks, and [Build a Vision Model](/module/?id=vision-setup#lesson-setup) in Round 2 gives the full treatment."
             },
             {
               "heading": "Convolution",
@@ -20979,7 +20979,7 @@
               }
             },
             {
-              "p": "Deeper networks repeat this pattern many times, and [Build a Vision Model: 5. Deeper networks](/module/?id=vision-deeper-networks) shows how they are made trainable."
+              "p": "Deeper networks repeat this pattern many times, and [Build a Vision Model: Deeper networks](/module/?id=vision-classify#lesson-deeper-networks) shows how they are made trainable."
             },
             {
               "p": "**Training data.** A network like this needs examples of the variations the task permits. A horizontal flip often preserves an animal's identity but may change a symbol, and a crop can preserve a class label until it removes the object. Choose each augmentation by checking what it does to the label, and apply it to the training images only."
@@ -21034,7 +21034,7 @@
               "level": 3
             },
             {
-              "p": "**Shortcut.** A residual block adds its input back to the output of its layers, $y = x + F(x)$. The shortcut is an addition, so it has no parameters. [Build a Vision Model: 5. Deeper networks](/module/?id=vision-deeper-networks) explains why it lets networks such as ResNet-50 train with 50 layers."
+              "p": "**Shortcut.** A residual block adds its input back to the output of its layers, $y = x + F(x)$. The shortcut is an addition, so it has no parameters. [Build a Vision Model: Deeper networks](/module/?id=vision-classify#lesson-deeper-networks) explains why it lets networks such as ResNet-50 train with 50 layers."
             },
             {
               "p": "**Bottleneck.** After its stem, ResNet-50 has 16 blocks in four stages, `layer1` to `layer4`. Each block is a bottleneck: a $1\\times1$ convolution sets an inner width, a $3\\times3$ convolution works at that width, and a second $1\\times1$ convolution expands to $4$ times the inner width. A $1\\times1$ convolution combines channels at each location without looking at adjacent locations. The convolutions have no bias, because a [batch norm](/module/?id=neural-network-regularization-dropout-batchnorm) follows each one and its mean subtraction would remove a bias anyway. A batch norm on $C$ channels has $2C$ parameters, a scale and a shift per channel."
@@ -21127,7 +21127,7 @@
               "level": 3
             },
             {
-              "p": "**Backbone and head.** A trained network can be reused for a new task. Its convolutional layers, the **backbone**, are kept, and its last layer, the **head**, is replaced by a new one for the new classes. **Freezing** the backbone stops its parameters from changing, so only the head trains. [Build a Vision Model: 6. Transfer learning](/module/?id=vision-transfer-learning) explains why the features carry over and when to fine-tune the frozen layers."
+              "p": "**Backbone and head.** A trained network can be reused for a new task. Its convolutional layers, the **backbone**, are kept, and its last layer, the **head**, is replaced by a new one for the new classes. **Freezing** the backbone stops its parameters from changing, so only the head trains. [Build a Vision Model: Transfer learning](/module/?id=vision-classify#lesson-transfer-learning) explains why the features carry over and when to fine-tune the frozen layers."
             },
             {
               "p": "**Truncating.** The backbone can stop at any layer, and the head has to match what comes out there. Global average pooling turns each channel into one number, as ResNet-50 does before its last layer, so a head on $m$ channels for $c$ classes has $m\\cdot c + c$ parameters. It supports varying spatial sizes as long as the earlier layers can process them."
@@ -21922,7 +21922,7 @@
               "p": "To reach an early layer from the output, the error is multiplied by one weight matrix and one set of activation slopes at every layer in between. Multiplying by many factors acts like raising a number to a power. If the factors are mostly below 1, the gradient shrinks by a constant factor per layer and the early layers stop learning, which is the **vanishing gradient**. If they are mostly above 1, it grows by a constant factor per layer, the **exploding gradient**."
             },
             {
-              "p": "The sigmoid's slope is at most $\\tfrac14$, so a stack of $L$ sigmoid layers shrinks the gradient by at least $4^{L-1}$ from the slopes alone. The deep sigmoid network in the [MLP activation experiment](/module/?id=neural-networks-perceptrons-mlps-activations) never learns at all. ReLU's slope is exactly 1 wherever a unit is on, which is the main reason it replaced sigmoid between layers. The weight factors are handled by initialization, in [Optimizers & Training Tricks](/module/?id=optimization-adam-sgd), and the exploding case by gradient clipping, in [Recurrent Networks](/module/?id=sequence-models-transfer-learning)."
+              "p": "The sigmoid's slope is at most $\\tfrac14$, so a stack of $L$ sigmoid layers shrinks the gradient by at least $4^{L-1}$ from the slopes alone. The deep sigmoid network in the [MLP activation experiment](/module/?id=neural-networks-perceptrons-mlps-activations#card-mlp-activations) never learns at all. ReLU's slope is exactly 1 wherever a unit is on, which is the main reason it replaced sigmoid between layers. The weight factors are handled by initialization, in [Optimizers & Training Tricks](/module/?id=optimization-adam-sgd), and the exploding case by gradient clipping, in [Recurrent Networks](/module/?id=sequence-models-transfer-learning)."
             },
             {
               "problemCard": {
@@ -25258,7 +25258,7 @@
               "p": "A **time series** is a sequence of measurements in time order: daily sales, a sensor sampled at 1 kHz, a heartbeat. Two tasks come up. **Forecasting** predicts future values of a series from its past. **Classification** gives a label to a whole series, as in telling a healthy engine's vibration trace from a faulty one. Forecasting breaks the assumption the rest of classical ML leans on, that rows are exchangeable. Neighboring values are correlated, so a random split lets a model interpolate between known neighbors and score better than it will on the future. Everything below follows from one rule: at every point, use only what was known at that time."
             },
             {
-              "p": "[2026 Round 2, Day 1](https://www.usaaio.org/attachments/past-problems/2026/usaaio-2026-round-2-day-1-problems.pdf), Problem 1 classified the FordA engine series with an encoder-only transformer built from the contestant's own [linear attention](/module/?id=efficient-linear-attention), scored by macro-F1. The decisions this module covers, normalizing each series, choosing the tokens and pooling for the label, were left to the contestant."
+              "p": "[2026 Round 2, Day 1](https://www.usaaio.org/attachments/past-problems/2026/usaaio-2026-round-2-day-1-problems.pdf), Problem 1 classified the FordA engine series with an encoder-only transformer built from the contestant's own [linear attention](/module/?id=efficient-flashattention#lesson-linear-attention), scored by macro-F1. The decisions this module covers, normalizing each series, choosing the tokens and pooling for the label, were left to the contestant."
             }
           ]
         },
@@ -25527,7 +25527,7 @@
               }
             },
             {
-              "p": "Deep models get the same property from their architecture. A 1-D convolution slides one filter along the series, and global average or max pooling afterwards discards where the filter fired. A transformer encoder treats time steps, or short patches of them, as tokens, with a [class token or mean pooling](/module/?id=vision-transformers-vit-attention) for the label. Patching $p$ steps into one token divides the sequence length by $p$ and softmax attention's cost by $p^2$."
+              "p": "Deep models get the same property from their architecture. A 1-D convolution slides one filter along the series, and global average or max pooling afterwards discards where the filter fired. A transformer encoder treats time steps, or short patches of them, as tokens, with a [class token or mean pooling](/module/?id=vision-transformers-vit-attention#lesson-vision-transformer) for the label. Patching $p$ steps into one token divides the sequence length by $p$ and softmax attention's cost by $p^2$."
             },
             {
               "problemCard": {
@@ -27448,17 +27448,19 @@
     },
     "vision-setup": {
       "anchors": [
-        "the-problem",
-        "history",
-        "the-intuition",
-        "roadmap",
+        "setup",
+        "pixels",
         "resources"
       ],
       "sections": [
         {
-          "id": "the-problem",
-          "title": "The problem",
+          "id": "setup",
+          "title": "Setup",
           "blocks": [
+            {
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "To a computer, an image is a grid of numbers: a 224 × 224 color photo is 224 × 224 × 3 = 150,528 of them. A model has to say what is in the image even though the same thing can appear anywhere, at any size and in any light."
             },
@@ -27476,13 +27478,11 @@
             },
             {
               "p": "A model that compares images number by number would treat these as unrelated. It has to learn what the object looks like, apart from where it is."
-            }
-          ]
-        },
-        {
-          "id": "history",
-          "title": "History",
-          "blocks": [
+            },
+            {
+              "heading": "History",
+              "level": 3
+            },
             {
               "table": {
                 "head": [
@@ -27531,132 +27531,113 @@
             },
             {
               "p": "Much of this progress was measured on the ImageNet challenge (ILSVRC), run on a 1,000-class subset of ImageNet with about 1.2 million training images. AlexNet's win in 2012 is usually taken as the start of deep learning's success in vision."
-            }
-          ]
-        },
-        {
-          "id": "the-intuition",
-          "title": "The intuition",
-          "blocks": [
+            },
+            {
+              "heading": "The intuition",
+              "level": 3
+            },
             {
               "heading": "Local patterns",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Nearby pixels belong together, so a model can start by looking at small patches. A 3 × 3 patch is enough to spot an edge: a bright column next to dark ones is a vertical edge."
             },
             {
               "heading": "The same filter everywhere",
-              "level": 3
+              "level": 4
             },
             {
               "p": "A pattern means the same thing wherever it appears, so the same small set of weights, a **filter**, can slide across the whole image. One 3 × 3 filter has 9 weights, whatever the size of the image, and finds a cat's ear in any corner."
             },
             {
               "heading": "From edges to objects",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Stacking layers builds bigger patterns out of smaller ones: edges, then shapes, then parts, then objects. Each layer sees a wider area than the last: two stacked 3 × 3 layers already see a 5 × 5 patch of the image."
-            }
-          ]
-        },
-        {
-          "id": "roadmap",
-          "title": "Roadmap",
-          "blocks": [
+            },
+            {
+              "heading": "Roadmap",
+              "level": 3
+            },
+            {
+              "p": "The track has five parts. Parts 1 to 4 are in Round 2 and part 5 is in Camp."
+            },
             {
               "table": {
                 "head": [
-                  "Step",
+                  "Part",
+                  "Section",
                   "What it does"
                 ],
                 "rows": [
                   [
-                    "[1. Pixels](/module/?id=vision-pixels)",
+                    "1",
+                    "[Pixels](#lesson-pixels)",
                     "Represents an image as a grid of numbers"
                   ],
                   [
-                    "[2. Convolution](/module/?id=vision-convolution)",
+                    "2",
+                    "[Convolution](/module/?id=vision-convolution#lesson-convolution)",
                     "Slides small filters over the image to find patterns"
                   ],
                   [
-                    "[3. ReLU and pooling](/module/?id=vision-relu-and-pooling)",
+                    "2",
+                    "[ReLU and pooling](/module/?id=vision-convolution#lesson-relu-and-pooling)",
                     "Keeps the useful responses and shrinks the maps"
                   ],
                   [
-                    "[4. Classify](/module/?id=vision-classify)",
+                    "3",
+                    "[Classify](/module/?id=vision-classify#lesson-classify)",
                     "Turns the maps into a label with a probability"
                   ],
                   [
-                    "[5. Deeper networks](/module/?id=vision-deeper-networks)",
+                    "3",
+                    "[Deeper networks](/module/?id=vision-classify#lesson-deeper-networks)",
                     "Stacks many layers, with shortcuts that keep them trainable"
                   ],
                   [
-                    "[6. Transfer learning](/module/?id=vision-transfer-learning)",
+                    "3",
+                    "[Transfer learning](/module/?id=vision-classify#lesson-transfer-learning)",
                     "Reuses a trained network for a new task"
                   ],
                   [
-                    "[7. Vision Transformer](/module/?id=vision-transformers-vit-attention)",
-                    "Treats patches of an image as tokens"
-                  ],
-                  [
-                    "[8. Object detection](/module/?id=object-detection-fpn-yolo)",
-                    "Finds every object with a box and a label"
-                  ],
-                  [
-                    "[9. Segmentation](/module/?id=semantic-segmentation-unet-masks)",
+                    "4",
+                    "[Segmentation](/module/?id=semantic-segmentation-unet-masks#lesson-segmentation)",
                     "Labels every pixel"
                   ],
                   [
-                    "[10. Adversarial attacks](/module/?id=vision-adversarial-attacks)",
+                    "4",
+                    "[Adversarial attacks](/module/?id=semantic-segmentation-unet-masks#lesson-adversarial-attacks)",
                     "Shows how tiny changes can fool a network"
+                  ],
+                  [
+                    "5",
+                    "[Vision Transformer](/module/?id=vision-transformers-vit-attention#lesson-vision-transformer)",
+                    "Treats patches of an image as tokens"
+                  ],
+                  [
+                    "5",
+                    "[Object detection](/module/?id=vision-transformers-vit-attention#lesson-object-detection)",
+                    "Finds every object with a box and a label"
                   ]
                 ]
               }
             },
             {
-              "p": "The steps that follow explore these ideas one at a time, from how an image is stored to how a network can be fooled."
+              "p": "The sections that follow explore these ideas one at a time, from how an image is stored to how a network finds objects."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "pixels",
+          "title": "Pixels",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "Convolutional Networks (course notes)",
-                  "url": "https://cs231n.github.io/convolutional-networks/",
-                  "source": "Stanford CS231n",
-                  "starred": true
-                },
-                {
-                  "title": "But what is a convolution?",
-                  "url": "https://www.3blue1brown.com/lessons/convolutions",
-                  "source": "3Blue1Brown"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "vision-pixels": {
-      "anchors": [
-        "the-problem",
-        "earlier-approaches",
-        "images-as-grids",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "A model can only take numbers as input, so an image has to become numbers first."
             },
@@ -27677,33 +27658,29 @@
             },
             {
               "p": "Neighboring pixels are what make up edges, lines and shapes, so the model needs a form that keeps them together."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "Hand-made features",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Before deep learning, engineers wrote rules to describe images, for example counting how many edges point in each direction in each part of the image, and fed those counts to a classifier. Methods such as SIFT (2004) and HOG (2005) worked well on narrow tasks like finding pedestrians, but every new kind of image needed new rules."
             },
             {
               "heading": "A plain network on all the pixels",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Treating the 150,528 numbers as one long list and using a fully connected network throws away which pixels are neighbors. It is also huge: one hidden layer of 1,000 units already needs about 150 million weights, and a pattern learned in one corner has to be learned again for every other position."
-            }
-          ]
-        },
-        {
-          "id": "images-as-grids",
-          "title": "Images as grids",
-          "blocks": [
+            },
+            {
+              "heading": "Images as grids",
+              "level": 3
+            },
             {
               "p": "**The grid.** An image is kept as a grid of numbers with three sizes: height × width × **channels**. Keeping the grid keeps the neighbors: the pixel at row 2, column 3 sits next to the pixel at row 2, column 4."
             },
@@ -27750,13 +27727,11 @@
                 "width": 503,
                 "height": 254
               }
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "p": "The image used through this chapter is 6 × 6, black and white, with a bright vertical line in its third column. 1 is bright and 0 is dark:"
             },
@@ -27843,13 +27818,11 @@
                   "print(image)"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Why scale the values to between 0 and 1?** Training is more stable when the inputs are small and on a similar scale. Values up to 255 would make the first layer's outputs about 255 times larger than with scaled inputs, which throws off the balance of activations and gradients through the network."
             },
@@ -27860,7 +27833,7 @@
               "p": "**What does a list of pixels lose?** The neighbors. In the grid, the pixel at row 2, column 3 is next to row 3, column 3. In a list of 36 numbers they are 6 places apart, and nothing marks them as related."
             },
             {
-              "p": "[Step 2](/module/?id=vision-convolution) looks for patterns in the running example."
+              "p": "[Part 2](/module/?id=vision-convolution#lesson-convolution) looks for patterns in the running example."
             }
           ]
         },
@@ -27875,6 +27848,11 @@
                   "url": "https://cs231n.github.io/convolutional-networks/",
                   "source": "Stanford CS231n",
                   "starred": true
+                },
+                {
+                  "title": "But what is a convolution?",
+                  "url": "https://www.3blue1brown.com/lessons/convolutions",
+                  "source": "3Blue1Brown"
                 }
               ]
             }
@@ -27885,11 +27863,8 @@
     "vision-convolution": {
       "anchors": [
         "prerequisites",
-        "the-problem",
-        "earlier-approaches",
         "convolution",
-        "running-example",
-        "common-questions",
+        "relu-and-pooling",
         "resources"
       ],
       "sections": [
@@ -27908,9 +27883,13 @@
           ]
         },
         {
-          "id": "the-problem",
-          "title": "The problem",
+          "id": "convolution",
+          "title": "Convolution",
           "blocks": [
+            {
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "An image is recognized by its local patterns: edges, strokes, corners. The model needs to find a pattern, such as a bright vertical stroke, wherever it appears."
             },
@@ -27928,33 +27907,29 @@
             },
             {
               "p": "A model with a separate set of weights for every position has to learn the stroke again for each place it could be. A 3 × 3 pattern fits in 16 places in a 6 × 6 image, and in about 50,000 places in a 224 × 224 photo. The model needs one set of weights that finds the pattern at every position."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "Hand-designed filters",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Image processing used fixed filters chosen by people. The Sobel filter, for example, finds vertical edges with the numbers −1, 0, 1 in each row, weighted 1, 2, 1 down the rows. It works for edges, but nobody can design by hand the filters needed to recognize a cat."
             },
             {
               "heading": "Fully connected layers",
-              "level": 3
+              "level": 4
             },
             {
               "p": "A fully connected layer gives every pixel its own weight for every unit, so it cannot reuse what it learned about a stroke in one place for a stroke somewhere else."
-            }
-          ]
-        },
-        {
-          "id": "convolution",
-          "title": "Convolution",
-          "blocks": [
+            },
+            {
+              "heading": "Convolution",
+              "level": 3
+            },
             {
               "p": "**One position.** A **convolution** slides a small grid of weights, a **filter**, across the image. At each position it multiplies the filter with the patch underneath, number by number, and adds up the results:"
             },
@@ -27993,16 +27968,14 @@
             },
             {
               "p": "**Output size.** An image of $n \\times n$ pixels and a filter of $k \\times k$ give a feature map of $(n - k + 1) \\times (n - k + 1)$, because that is how many positions the filter fits in. For our image, 6 − 3 + 1 = 4, so 4 × 4. For a 224 × 224 photo and a 3 × 3 filter, 222 × 222."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "heading": "The filters",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The model has two filters, one for vertical lines and one for horizontal ones:"
@@ -28033,7 +28006,7 @@
             },
             {
               "heading": "One position, then every position",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Placed over columns 2 to 4 of the image, the vertical filter has the bright column under its middle, so each of its three rows gives 2 × 1 = 2, and the total is 6. Placed over columns 1 to 3, the bright column is under its right edge, so each row gives −1 × 1 = −1, and the total is −3. Sliding it over every position gives the vertical feature map:"
@@ -28060,7 +28033,7 @@
             },
             {
               "heading": "The horizontal filter",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The horizontal filter gives 0 everywhere. Where the line is under it, the line crosses all three of its rows, which contribute −1, 2 and −1, for a total of 0. In the rightmost position the line has slid out of the window, so the patch is all zeros. So the vertical filter fires on this image and the horizontal one does not."
@@ -28118,13 +28091,11 @@
                   ]
                 }
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Why does the filter have negative numbers?** So that it responds to a line and not just to brightness. Over a patch that is bright everywhere, each row of the vertical filter gives −1 + 2 − 1 = 0. It gives a large output only when the middle column is brighter than its neighbors."
             },
@@ -28138,55 +28109,26 @@
               "p": "**What is the stride?** How far the filter moves between positions. This page moves it 1 pixel at a time. A stride of 2 skips every other position and roughly halves each side of the map."
             },
             {
-              "p": "[Step 3](/module/?id=vision-relu-and-pooling) cleans up and shrinks these maps."
+              "p": "The next section, [ReLU and pooling](#lesson-relu-and-pooling), cleans up and shrinks these maps."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "relu-and-pooling",
+          "title": "ReLU and pooling",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "But what is a convolution?",
-                  "url": "https://www.3blue1brown.com/lessons/convolutions",
-                  "source": "3Blue1Brown",
-                  "starred": true
-                },
-                {
-                  "title": "A guide to convolution arithmetic for deep learning (Dumoulin and Visin, 2016)",
-                  "url": "https://arxiv.org/abs/1603.07285",
-                  "source": "arXiv"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "vision-relu-and-pooling": {
-      "anchors": [
-        "the-problem",
-        "earlier-approaches",
-        "relu-and-max-pooling",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
-              "p": "Step 2 produced a feature map for each filter. For the vertical filter, every row of the map is −3, 6, −3, 0."
+              "p": "Convolution produced a feature map for each filter. For the vertical filter, every row of the map is −3, 6, −3, 0."
             },
             {
               "figure": {
                 "src": "assets/module-media/vision-problem-relu-pool.svg",
                 "alt": "A bar chart of one row of the vertical feature map. Column 2 has a tall bar of 6, labeled found it. Columns 1 and 3 have bars of -3, labeled not this pattern. Column 4 is 0, labeled nothing.",
-                "caption": "One row of the vertical feature map from Step 2.",
+                "caption": "One row of the vertical feature map from the convolution above.",
                 "width": 553,
                 "height": 323
               }
@@ -28202,33 +28144,29 @@
             },
             {
               "p": "The model needs to keep the responses that mean \"found it\" and shrink the map, so that later layers work on less and care less about exact positions."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "Sigmoid and tanh",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Earlier networks squashed every value into a fixed range with sigmoid or tanh. In deep networks these slow training down, because their slope is nearly flat for large values. AlexNet switched to ReLU and trained several times faster."
             },
             {
               "heading": "Average pooling",
-              "level": 3
+              "level": 4
             },
             {
               "p": "LeNet shrank its maps by averaging neighboring values. That blurs a strong response with weak ones: averaging 6 and 0 gives 3."
-            }
-          ]
-        },
-        {
-          "id": "relu-and-max-pooling",
-          "title": "ReLU and max pooling",
-          "blocks": [
+            },
+            {
+              "heading": "ReLU and max pooling",
+              "level": 3
+            },
             {
               "p": "**ReLU.** **ReLU** replaces every negative number with 0 and keeps the rest:"
             },
@@ -28251,20 +28189,18 @@
               }
             },
             {
-              "p": "**What pooling gives up.** The pooled map still says \"found a vertical line here\", but no longer exactly where inside each block. That is useful: a small shift of the image often leaves the pooled map unchanged. It is also a loss, which Step 9 has to work around."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+              "p": "**What pooling gives up.** The pooled map still says \"found a vertical line here\", but no longer exactly where inside each block. That is useful: a small shift of the image often leaves the pooled map unchanged. It is also a loss, which segmentation, in [part 4](/module/?id=semantic-segmentation-unet-masks#lesson-segmentation), has to work around."
+            },
             {
-              "heading": "ReLU",
+              "heading": "Running example",
               "level": 3
             },
             {
-              "p": "After ReLU, the vertical feature map from Step 2 keeps only the 6s:"
+              "heading": "ReLU",
+              "level": 4
+            },
+            {
+              "p": "After ReLU, the vertical feature map from the convolution above keeps only the 6s:"
             },
             {
               "table": {
@@ -28288,7 +28224,7 @@
             },
             {
               "heading": "Max pooling",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Max pooling takes each 2 × 2 block. The top-left block holds 0, 6, 0 and 6, so it keeps 6. The top-right block is all 0:"
@@ -28319,7 +28255,7 @@
             },
             {
               "heading": "A small shift",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Moving the line one column left, into column 2, moves each 6 from map column 2 to map column 1. Both columns fall in the same 2 × 2 blocks, so the pooled map is still 6, 0 in each row."
@@ -28341,13 +28277,11 @@
               "problemCard": {
                 "id": "cv-every-column-the-line-can-take"
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Does the order of ReLU and max pooling matter?** Not for the result. The largest value of a block is the same before or after the negatives are set to 0, unless the whole block is negative, and then both orders give 0."
             },
@@ -28358,10 +28292,10 @@
               "p": "**Why keep the maximum and not the average?** The maximum answers \"was the pattern found anywhere in this block\". The block 0, 6, 0, 6 keeps its 6. Averaging would give 3 and blur a strong response with the places where nothing was found."
             },
             {
-              "p": "**Do all networks use max pooling?** No. Many newer networks shrink their maps with a convolution of stride 2 instead, and Vision Transformers (Step 7) have no pooling layers between their blocks: they shrink the image once, when they cut it into patches."
+              "p": "**Do all networks use max pooling?** No. Many newer networks shrink their maps with a convolution of stride 2 instead, and Vision Transformers ([part 5](/module/?id=vision-transformers-vit-attention#lesson-vision-transformer)) have no pooling layers between their blocks: they shrink the image once, when they cut it into patches."
             },
             {
-              "p": "[Step 4](/module/?id=vision-classify) turns the pooled maps into a decision."
+              "p": "[Part 3](/module/?id=vision-classify#lesson-classify) turns the pooled maps into a decision."
             }
           ]
         },
@@ -28371,6 +28305,17 @@
           "blocks": [
             {
               "resources": [
+                {
+                  "title": "But what is a convolution?",
+                  "url": "https://www.3blue1brown.com/lessons/convolutions",
+                  "source": "3Blue1Brown",
+                  "starred": true
+                },
+                {
+                  "title": "A guide to convolution arithmetic for deep learning (Dumoulin and Visin, 2016)",
+                  "url": "https://arxiv.org/abs/1603.07285",
+                  "source": "arXiv"
+                },
                 {
                   "title": "Convolutional Networks (course notes)",
                   "url": "https://cs231n.github.io/convolutional-networks/",
@@ -28385,20 +28330,22 @@
     },
     "vision-classify": {
       "anchors": [
-        "the-problem",
-        "earlier-approaches",
-        "the-classification-layer",
-        "running-example",
-        "common-questions",
+        "classify",
+        "deeper-networks",
+        "transfer-learning",
         "resources"
       ],
       "sections": [
         {
-          "id": "the-problem",
-          "title": "The problem",
+          "id": "classify",
+          "title": "Classify",
           "blocks": [
             {
-              "p": "After Step 3, the image has become two small pooled maps, one per filter. For the running example the vertical map is 6, 0, 6, 0 and the horizontal one is 0, 0, 0, 0."
+              "heading": "The problem",
+              "level": 3
+            },
+            {
+              "p": "After part 2, the image has become two small pooled maps, one per filter. For the running example the vertical map is 6, 0, 6, 0 and the horizontal one is 0, 0, 0, 0."
             },
             {
               "p": "The maps say which patterns were found, and roughly where. They are not yet an answer. The task is to decide whether the line is vertical or horizontal."
@@ -28407,40 +28354,36 @@
               "figure": {
                 "src": "assets/module-media/vision-problem-classify.svg",
                 "alt": "On the left, the vertical pooled map with rows 6, 0 and the horizontal pooled map with all zeros. An arrow with a question mark leads to two boxes: p(vertical) = ? and p(horizontal) = ?. A note says: two probabilities that add up to 1.",
-                "caption": "What this step has to produce from the two pooled maps.",
+                "caption": "What this section has to produce from the two pooled maps.",
                 "width": 598,
                 "height": 215
               }
             },
             {
               "p": "The model has to turn the 8 numbers into a decision with a probability for each class, two numbers that add up to 1. From these maps it should answer \"vertical\" with a probability close to 1. The way of deciding also has to be learned from examples, because for real images nobody can write the rule by hand."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "Hand-written rules",
-              "level": 3
+              "level": 4
             },
             {
               "p": "A rule such as \"vertical if the vertical map has the larger total\" works for lines, but nobody can write such rules for \"cat\" or \"dog\"."
             },
             {
               "heading": "A separate classifier",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Older systems fed their features into a classifier trained on its own, such as HOG features into a support vector machine for finding pedestrians. The features could not improve to help the classifier."
-            }
-          ]
-        },
-        {
-          "id": "the-classification-layer",
-          "title": "The classification layer",
-          "blocks": [
+            },
+            {
+              "heading": "The classification layer",
+              "level": 3
+            },
             {
               "p": "**Flatten.** The pooled maps are laid out as one list, called **flattening**. Two 2 × 2 maps become a list of 8 numbers."
             },
@@ -28454,7 +28397,7 @@
               "p": "For example, with weights of 0.25 on the first four numbers and 0 on the rest, the list 6, 0, 6, 0, 0, 0, 0, 0 gives 0.25 × 6 + 0.25 × 6 = 3."
             },
             {
-              "p": "**Probabilities.** A softmax turns the scores into probabilities, as in Step 6 of Build a Transformer. Scores of 3 and 0 give $e^3 = 20.09$ and $e^0 = 1$, so the probabilities are 20.09 ÷ 21.09 = 0.953 and 0.047."
+              "p": "**Probabilities.** A softmax turns the scores into probabilities, as in [Mask and softmax](/module/?id=transformer-qkv#lesson-mask-and-softmax) in Build a Transformer. Scores of 3 and 0 give $e^3 = 20.09$ and $e^0 = 1$, so the probabilities are 20.09 ÷ 21.09 = 0.953 and 0.047."
             },
             {
               "figure": {
@@ -28470,13 +28413,11 @@
             },
             {
               "p": "**Deeper networks.** Real networks repeat convolution, ReLU and pooling several times before this layer, and each repeat covers a wider area of the image. In this chapter's network, each pooled number already covers a 4 × 4 patch of the image."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "p": "Flattening the two pooled maps gives 8 numbers: 6, 0, 6, 0 from the vertical map and 0, 0, 0, 0 from the horizontal one. In the running example the weights are 0.25 on the four numbers of a class's own map and 0 on the other map's, so each score is a quarter of the total of its own map:"
             },
@@ -28526,13 +28467,11 @@
               "problemCard": {
                 "id": "cv-a-gray-line"
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**How many weights does this layer have?** One per input number for every class. With 8 numbers and 2 classes that is 16 weights, plus 2 offsets if they are used. The running example sets them to 0.25 or 0 by hand."
             },
@@ -28543,44 +28482,18 @@
               "p": "**What would a horizontal line give?** The two maps swap roles. The horizontal pooled map totals 12 and the vertical one 0, so the scores are 0 and 3, and the network is 95.3% sure the line is horizontal."
             },
             {
-              "p": "[Step 5](/module/?id=vision-deeper-networks) makes the network deeper."
+              "p": "The next section, [Deeper networks](#lesson-deeper-networks), makes the network deeper."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "deeper-networks",
+          "title": "Deeper networks",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "Dive into Deep Learning: Convolutional Neural Networks",
-                  "url": "https://d2l.ai/chapter_convolutional-neural-networks/index.html",
-                  "source": "d2l.ai",
-                  "starred": true
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "vision-deeper-networks": {
-      "anchors": [
-        "the-problem",
-        "earlier-approaches",
-        "shortcut-connections",
-        "resnet-50",
-        "counting-parameters",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "One convolution layer finds simple patterns such as edges. Recognizing a face or a car needs patterns built from patterns: edges make corners and curves, those make eyes and wheels, and those make faces and cars. Each stage needs at least one more layer, so a network that recognizes real objects has to be deep."
             },
@@ -28595,33 +28508,29 @@
             },
             {
               "p": "But simply stacking more layers stopped working. He et al. trained a 20-layer and a 56-layer network of the same design on CIFAR-10, and the 56-layer one had the higher error, even on its own training images. A deeper network can do everything a shallower one can, so the extra layers should not hurt. The deep network was not too powerful. It could not be trained well."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "AlexNet",
-              "level": 3
+              "level": 4
             },
             {
               "p": "AlexNet (2012) had 8 layers with learned weights, 5 convolutional and 3 fully connected, and about 60 million weights. It used large filters, 11 × 11 in its first layer, and showed that depth trained on GPUs pays off."
             },
             {
               "heading": "VGG",
-              "level": 3
+              "level": 4
             },
             {
               "p": "VGG (2014) used only 3 × 3 filters and went to 16 and 19 layers. Two stacked 3 × 3 layers cover the same 5 × 5 area as one 5 × 5 filter with fewer weights, 2 × 9 = 18 instead of 25, and they put a ReLU after each layer, two where the single filter has one. But the VGG authors found that error stopped improving at 19 layers."
-            }
-          ]
-        },
-        {
-          "id": "shortcut-connections",
-          "title": "Shortcut connections",
-          "blocks": [
+            },
+            {
+              "heading": "Shortcut connections",
+              "level": 3
+            },
             {
               "p": "**Why depth is hard.** The gradient reaches early layers by passing back through every layer above them, and each layer can shrink it. If every layer scales it by 0.8, after $n$ layers $0.8^n$ of it is left:"
             },
@@ -28670,13 +28579,11 @@
             },
             {
               "p": "**The result.** With shortcuts, networks of 152 layers trained well, and an ensemble of six ResNets won the 2015 ImageNet challenge with 3.57% top-5 error."
-            }
-          ]
-        },
-        {
-          "id": "resnet-50",
-          "title": "ResNet-50",
-          "blocks": [
+            },
+            {
+              "heading": "ResNet-50",
+              "level": 3
+            },
             {
               "p": "**Stem and stages.** ResNet-50 starts with a **stem**, a 7 × 7 convolution with stride 2 and then a 3 × 3 max pooling with stride 2, which turn a 224 × 224 image into 64 maps of 56 × 56. Four **stages** of blocks follow, with 3, 4, 6 and 3 blocks. Stage 1 keeps the maps at 56 × 56 and gives 256 channels, and stage 4 ends with 2,048 maps of 7 × 7."
             },
@@ -28694,13 +28601,11 @@
             },
             {
               "p": "**The last layer.** After stage 4, **global average pooling** turns each of the 2,048 maps of 7 × 7 into one number, its average, and a fully connected layer turns those 2,048 numbers into scores for the 1,000 ImageNet classes."
-            }
-          ]
-        },
-        {
-          "id": "counting-parameters",
-          "title": "Counting parameters",
-          "blocks": [
+            },
+            {
+              "heading": "Counting parameters",
+              "level": 3
+            },
             {
               "p": "**The rules.** A network's **parameters** are the numbers training adjusts. Each kind of layer has a fixed count:"
             },
@@ -28730,7 +28635,7 @@
               "p": "ResNet's convolutions have no offsets, because the [batch normalization](/module/?id=neural-network-regularization-dropout-batchnorm) after each one adds its own shift."
             },
             {
-              "p": "**The running example.** The two 3 × 3 filters have 3 × 3 × 1 × 2 = 18 weights and the classification layer 8 × 2 = 16, so the network of Steps 2 to 4 has 34. Suppose the extra block of this step is two 3 × 3 convolutions from the 2 pooled maps to 2 maps, padded so the maps stay 2 × 2, each followed by batch normalization. It adds 2 × (3 × 3 × 2 × 2 + 2 × 2) = 2 × (36 + 4) = 80, and the shortcut adds none."
+              "p": "**The running example.** The two 3 × 3 filters have 3 × 3 × 1 × 2 = 18 weights and the classification layer 8 × 2 = 16, so the network built so far has 34. Suppose the extra block of this section is two 3 × 3 convolutions from the 2 pooled maps to 2 maps, padded so the maps stay 2 × 2, each followed by batch normalization. It adds 2 × (3 × 3 × 2 × 2 + 2 × 2) = 2 × (36 + 4) = 80, and the shortcut adds none."
             },
             {
               "p": "**One block of ResNet-50.** The first block of stage 1, `layer1[0]` in torchvision's `resnet50`, from the figure:"
@@ -28776,15 +28681,13 @@
             },
             {
               "p": "**Where the parameters are.** Counted the same way, stage 4 has 14,964,736 parameters, 58.6% of the network's 25.6 million, because a convolution's count grows with the product of its channel numbers. The work is spread far more evenly. A 3 × 3 convolution in stage 4 has 64 times the weights of one in stage 1 but runs at 1/64 as many positions, so each does 3 × 3 × 64 × 64 × 56 × 56 = 3 × 3 × 512 × 512 × 7 × 7 = 115,605,504 multiply-adds for one image."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
             {
-              "p": "Add one more block after the pooling of Step 3, and suppose its weights are all 0, as if it has learned nothing yet. The vertical pooled map going into it is 6, 0, 6, 0:"
+              "heading": "Running example",
+              "level": 3
+            },
+            {
+              "p": "Add one more block after the pooling from part 2, and suppose its weights are all 0, as if it has learned nothing yet. The vertical pooled map going into it is 6, 0, 6, 0:"
             },
             {
               "table": {
@@ -28824,13 +28727,11 @@
                   "    print(name, (np.exp(scores) / np.exp(scores).sum()).round(3))"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Is the 56-layer network overfitting?** No. Overfitting would mean a lower error on the training images and a higher one on new images. Here the deeper network was worse on its own training images, so the problem is that it was not trained well, not that it memorized."
             },
@@ -28841,50 +28742,21 @@
               "p": "**Does a shortcut add weights?** Not when the input and the output of the block have the same shape: it is an addition, with no weights. Where they differ, ResNet puts a 1 × 1 convolution on the shortcut to match them, and that convolution has weights, as the first block of each stage shows."
             },
             {
-              "p": "**Is this the same as the residual connection in a Transformer?** Yes. Step 9 of Build a Transformer adds the input of each layer back to its output in the same way, and for the same reason."
+              "p": "**Is this the same as the residual connection in a Transformer?** Yes. [Residual and LayerNorm](/module/?id=transformer-residual-and-layernorm#lesson-residual-and-layernorm) in Build a Transformer adds the input of each layer back to its output in the same way, and for the same reason."
             },
             {
-              "p": "[Step 6](/module/?id=vision-transfer-learning) reuses a trained network for a new task."
+              "p": "The next section, [Transfer learning](#lesson-transfer-learning), reuses a trained network for a new task."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "transfer-learning",
+          "title": "Transfer learning",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "Deep Residual Learning for Image Recognition (He et al., 2015)",
-                  "url": "https://arxiv.org/abs/1512.03385",
-                  "source": "arXiv",
-                  "starred": true
-                },
-                {
-                  "title": "Dive into Deep Learning: Modern Convolutional Neural Networks",
-                  "url": "https://d2l.ai/chapter_convolutional-modern/index.html",
-                  "source": "d2l.ai"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "vision-transfer-learning": {
-      "anchors": [
-        "the-problem",
-        "earlier-approaches",
-        "reusing-a-trained-network",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "A large network learns well from ImageNet's 1.2 million labeled photos. Most real tasks have far fewer. For example, a hospital might have a few hundred labeled X-rays."
             },
@@ -28899,16 +28771,14 @@
             },
             {
               "p": "ResNet-50 has about 25.6 million weights. With a few hundred images there are tens of thousands of weights for every image, so the network can simply memorize the training images: it scores well on them and fails on new ones. Collecting and labeling a million X-rays is not an option. The model needs a way to learn a new task from a small number of examples."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "Training from scratch",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Starting from random weights on a small dataset is the obvious approach, and it overfits: the network scores well on the training images and badly on new ones."
@@ -28939,17 +28809,15 @@
             },
             {
               "heading": "Hand-made features",
-              "level": 3
+              "level": 4
             },
             {
-              "p": "The older answer was to describe each image with hand-made features, as in Step 1, and train a small classifier on them. It needs little data but is limited by how good the hand-made features are."
-            }
-          ]
-        },
-        {
-          "id": "reusing-a-trained-network",
-          "title": "Reusing a trained network",
-          "blocks": [
+              "p": "The older answer was to describe each image with hand-made features, as in [part 1](/module/?id=vision-setup#lesson-pixels), and train a small classifier on them. It needs little data but is limited by how good the hand-made features are."
+            },
+            {
+              "heading": "Reusing a trained network",
+              "level": 3
+            },
             {
               "p": "**What carries over.** The early layers of a network trained on ImageNet have learned edges, textures and shapes, which are useful for almost any kind of image. The same holds outside vision: in text, early layers learn syntax and morphology, while late layers learn task-specific facts that do not transfer. **Transfer learning** keeps those layers, the **backbone**, and replaces only the last layer, the **head**, with a new one for the new classes."
             },
@@ -28976,23 +28844,21 @@
             },
             {
               "p": "**A shorter backbone.** The frozen network can also be cut before its last stage. Cut after stage 1, ResNet-50 keeps 225,344 parameters and ends with 256 maps of 56 × 56. Averaging each map gives 256 features, and a new 2-class layer on them has 256 × 2 + 2 = 514 weights. The earlier stages hold more general patterns such as edges and textures, so a shorter backbone can suit images that look little like ImageNet's."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "heading": "The new task",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The new task has three classes: vertical, horizontal and a cross of both. The old layer cannot handle the cross: its two pooled maps total 10 each, so the old scores are 2.5 and 2.5, a tie."
             },
             {
               "heading": "The frozen features",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Keep the two filters, ReLU and pooling, and use the totals of the two pooled maps as features:"
@@ -29025,7 +28891,7 @@
             },
             {
               "heading": "The new layer",
-              "level": 3
+              "level": 4
             },
             {
               "p": "A new layer of 2 × 3 = 6 weights is trained on these three images for 100 steps. Rounded, it learns:"
@@ -29083,13 +28949,11 @@
               "problemCard": {
                 "id": "cv-two-lines-through-a-frozen-backbone"
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**When should the old layers be fine-tuned?** Images close to the ones the network was trained on need only the new layer. Images of a different kind, such as X-rays, usually benefit from fine-tuning the old layers as well. How much target data justifies unfreezing them is measured in [ResNets and Transfer Learning](/module/?id=modern-vision-architectures-resnet-efficientnet-transfer), which sweeps the crossover and sets the per-block rates."
             },
@@ -29100,7 +28964,7 @@
               "p": "**Why could the old layer not handle the cross?** It had one score per line direction. A cross lights up both pooled maps equally, 10 and 10, so the two scores tie at 2.5. The new layer has a third class that responds when both totals are high."
             },
             {
-              "p": "[Step 7](/module/?id=vision-transformers-vit-attention) replaces convolutions with a Transformer."
+              "p": "[Part 4](/module/?id=semantic-segmentation-unet-masks#lesson-segmentation) labels every pixel instead of the whole image."
             }
           ]
         },
@@ -29110,6 +28974,23 @@
           "blocks": [
             {
               "resources": [
+                {
+                  "title": "Dive into Deep Learning: Convolutional Neural Networks",
+                  "url": "https://d2l.ai/chapter_convolutional-neural-networks/index.html",
+                  "source": "d2l.ai",
+                  "starred": true
+                },
+                {
+                  "title": "Deep Residual Learning for Image Recognition (He et al., 2015)",
+                  "url": "https://arxiv.org/abs/1512.03385",
+                  "source": "arXiv",
+                  "starred": true
+                },
+                {
+                  "title": "Dive into Deep Learning: Modern Convolutional Neural Networks",
+                  "url": "https://d2l.ai/chapter_convolutional-modern/index.html",
+                  "source": "d2l.ai"
+                },
                 {
                   "title": "PyTorch Transfer Learning",
                   "url": "https://www.learnpytorch.io/06_pytorch_transfer_learning/",
@@ -29650,11 +29531,8 @@
     "semantic-segmentation-unet-masks": {
       "anchors": [
         "prerequisites",
-        "the-problem",
-        "earlier-approaches",
-        "u-net",
-        "running-example",
-        "common-questions",
+        "segmentation",
+        "adversarial-attacks",
         "resources"
       ],
       "sections": [
@@ -29670,9 +29548,13 @@
           ]
         },
         {
-          "id": "the-problem",
-          "title": "The problem",
+          "id": "segmentation",
+          "title": "Segmentation",
           "blocks": [
+            {
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "Some tasks need a label for every pixel: which pixels are tumor in a scan, or which are road in a dashcam frame. The output is a map the same size as the image."
             },
@@ -29689,39 +29571,35 @@
               }
             },
             {
-              "p": "The network of Steps 2 to 4 works against this. It shrinks the image as it goes, from 6 × 6 to a 4 × 4 feature map to a 2 × 2 pooled map. The shrinking is useful, because it lets the network take in large areas cheaply. But the pooled map, 6, 0 in each row, only says that the line is somewhere in the left part of the image. The exact column has been thrown away, and a label for every pixel needs it back."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+              "p": "The network of parts 2 and 3 works against this. It shrinks the image as it goes, from 6 × 6 to a 4 × 4 feature map to a 2 × 2 pooled map. The shrinking is useful, because it lets the network take in large areas cheaply. But the pooled map, 6, 0 in each row, only says that the line is somewhere in the left part of the image. The exact column has been thrown away, and a label for every pixel needs it back."
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "One patch per pixel",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Classify a small patch around each pixel, one pixel at a time. This works but is slow, because neighboring patches overlap and the same work is repeated for every pixel."
             },
             {
               "heading": "Growing the small map back",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Fully convolutional networks (Long et al., 2015) run the image through a normal CNN and then enlarge the small final map back to full size. This is fast, but the enlarged map alone is blurry, because the small map no longer knows exactly where things were. The FCN paper fixes this by fusing the coarse map with finer maps from earlier layers, and U-Net's skip connections do the same job."
-            }
-          ]
-        },
-        {
-          "id": "u-net",
-          "title": "U-Net",
-          "blocks": [
+            },
+            {
+              "heading": "U-Net",
+              "level": 3
+            },
             {
               "p": "**Two halves.** **U-Net** (2015) has two halves. The **encoder** shrinks the image with convolution and pooling, as before, learning what is in it. The **decoder** grows the map back to full size, step by step."
             },
             {
-              "p": "**Skip connections.** **Skip connections** copy each encoder map across to the decoder at the same size, so the decoder gets back the exact positions that pooling threw away. Drawn out, the two halves and the connections between them form a U. The skip connections also give the gradient a short path back to the early layers, as the shortcuts of Step 5 do."
+              "p": "**Skip connections.** **Skip connections** copy each encoder map across to the decoder at the same size, so the decoder gets back the exact positions that pooling threw away. Drawn out, the two halves and the connections between them form a U. The skip connections also give the gradient a short path back to the early layers, as the shortcuts in [Deeper networks](/module/?id=vision-classify#lesson-deeper-networks) do."
             },
             {
               "figure": {
@@ -29739,7 +29617,7 @@
               "p": "**Bilinear enlarging.** Instead of repeating, **bilinear** enlarging blends the two nearest values in each direction. The second of the four new values sits a quarter of the way from the 6 to the 0, and the third three quarters of the way, so it is 6 × 0.75 + 0 × 0.25 = 4.5, and the row 6, 0 becomes 6, 4.5, 1.5, 0. The result is smoother, but the 6 is spread over three columns. Label maps are usually enlarged by repeating, because blending two class labels gives a value that is neither."
             },
             {
-              "p": "**Transposed convolution.** A **transposed convolution** learns how to enlarge. Each input value multiplies a small kernel, and the result is added into the output starting at the value's position times the stride. With stride 2 and the kernel (1, 1), the row 6, 0 becomes 6, 6, 0, 0, the same as repeating. With the kernel (0, 1) it becomes 0, 6, 0, 0, which matches the map from before pooling. But the kernel is the same for every block, so it cannot know where in its block the line was. For the line moved one column left, as in Step 3, the pooled row is still 6, 0 and the output is still 0, 6, 0, 0, while the map before pooling is now 6, 0, 0, 0. The skip connection carries that position. An input of $n$ values gives $(n - 1) \\times \\text{stride} - 2 \\times \\text{padding} + \\text{kernel size}$ values, (2 − 1) × 2 − 0 + 2 = 4 here. Padding $p$ drops the first $p$ and the last $p$ of the sums, hence its term. A layer from 2 channels to 2 with a 2 × 2 kernel has 2 × 2 × 2 × 2 = 16 weights, counted like a convolution."
+              "p": "**Transposed convolution.** A **transposed convolution** learns how to enlarge. Each input value multiplies a small kernel, and the result is added into the output starting at the value's position times the stride. With stride 2 and the kernel (1, 1), the row 6, 0 becomes 6, 6, 0, 0, the same as repeating. With the kernel (0, 1) it becomes 0, 6, 0, 0, which matches the map from before pooling. But the kernel is the same for every block, so it cannot know where in its block the line was. For the line moved one column left, as in [ReLU and pooling](/module/?id=vision-convolution#lesson-relu-and-pooling), the pooled row is still 6, 0 and the output is still 0, 6, 0, 0, while the map before pooling is now 6, 0, 0, 0. The skip connection carries that position. An input of $n$ values gives $(n - 1) \\times \\text{stride} - 2 \\times \\text{padding} + \\text{kernel size}$ values, (2 − 1) × 2 − 0 + 2 = 4 here. Padding $p$ drops the first $p$ and the last $p$ of the sums, hence its term. A layer from 2 channels to 2 with a 2 × 2 kernel has 2 × 2 × 2 × 2 = 16 weights, counted like a convolution."
             },
             {
               "p": "**Checkerboard pattern.** When the kernel size is not a multiple of the stride, the copies of the kernel overlap unevenly. Down the first column of the pooled map, 6, 6, the line runs the whole height, so the enlarged column should be even. With the kernel (1, 1, 1) and stride 2, the two copies overlap at the third of five values, which gets 12 where the rest get 6: a stripe across the map. In two directions the stripes form a checkerboard. The kernel (1, 1) gives 6, 6, 6, 6. A kernel size that is a multiple of the stride makes the overlaps even but does not make the output even, since a learned kernel such as (1, 0.3) still gives 6, 1.8, 6, 1.8. Repeating or bilinear enlarging followed by an ordinary convolution cannot turn an even column into stripes, which is why many networks enlarge that way."
@@ -29806,22 +29684,20 @@
             },
             {
               "heading": "Instance segmentation",
-              "level": 3
+              "level": 4
             },
             {
               "p": "**Semantic and instance.** U-Net does **semantic segmentation**: every pixel gets a class, and touching objects of one class merge. Put a second line next to the running example's, in column 4. Semantic segmentation marks one region of 12 line pixels and cannot say where one line ends. **Instance segmentation** gives one mask per object, two masks of 6 pixels here, so the lines can be counted. **Panoptic segmentation** asks for both: a mask for each countable object and a class for every other pixel, such as road or sky."
             },
             {
-              "p": "**Mask R-CNN.** Mask R-CNN (2017) gets instance segmentation from a detector. It adds a third head to Faster R-CNN (Step 8), next to the class and the box, that predicts a small mask, 28 × 28, inside each box, from features read with RoIAlign. Each class has its own mask with its own sigmoid, so deciding what the object is and deciding which pixels it covers do not compete. For box A of Step 8, the mask marks the 5 pixels of column 3 in rows 2 to 6."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+              "p": "**Mask R-CNN.** Mask R-CNN (2017) gets instance segmentation from a detector. It adds a third head to Faster R-CNN (see [Object detection](/module/?id=vision-transformers-vit-attention#lesson-object-detection)), next to the class and the box, that predicts a small mask, 28 × 28, inside each box, from features read with RoIAlign. Each class has its own mask with its own sigmoid, so deciding what the object is and deciding which pixels it covers do not compete. For box A from [Object detection](/module/?id=vision-transformers-vit-attention#lesson-object-detection), the mask marks the 5 pixels of column 3 in rows 2 to 6."
+            },
             {
-              "p": "The pooled vertical map from Step 3 is 2 × 2. The decoder enlarges it back to 4 × 4 by repeating each number in a 2 × 2 block. The skip connection brings across the 4 × 4 map from before pooling:"
+              "heading": "Running example",
+              "level": 3
+            },
+            {
+              "p": "The pooled vertical map from part 2 is 2 × 2. The decoder enlarges it back to 4 × 4 by repeating each number in a 2 × 2 block. The skip connection brings across the 4 × 4 map from before pooling:"
             },
             {
               "table": {
@@ -29860,19 +29736,17 @@
                   "import numpy as np",
                   "",
                   "pooled = np.array([[6.0, 0.0], [6.0, 0.0]])",
-                  "skip = np.tile([0.0, 6.0, 0.0, 0.0], (4, 1))     # ReLU map from Step 3",
+                  "skip = np.tile([0.0, 6.0, 0.0, 0.0], (4, 1))     # ReLU map from part 2",
                   "",
                   "enlarged = np.kron(pooled, np.ones((2, 2)))      # repeat each value in a 2 x 2 block",
                   "print(enlarged[0], skip[0])                      # [6. 6. 0. 0.] [0. 6. 0. 0.]"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**How is this different from detection?** Detection draws a box around each object. Segmentation labels every pixel, so it gives the exact outline. For the running example, detection returns one box and segmentation returns a 6 × 6 map with column 3 marked."
             },
@@ -29886,47 +29760,18 @@
               "p": "**What does a skip connection do with the two maps?** It places them side by side as channels, and the next convolution reads both. Here the decoder sees the enlarged map, 6, 6, 0, 0, and the skipped map, 0, 6, 0, 0, for the same row."
             },
             {
-              "p": "[Step 10](/module/?id=vision-adversarial-attacks) shows how easily a network can be fooled."
+              "p": "The next section, [Adversarial attacks](#lesson-adversarial-attacks), shows how easily a network can be fooled."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "adversarial-attacks",
+          "title": "Adversarial attacks",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "U-Net: Convolutional Networks for Biomedical Image Segmentation (Ronneberger et al., 2015)",
-                  "url": "https://arxiv.org/abs/1505.04597",
-                  "source": "arXiv",
-                  "starred": true
-                },
-                {
-                  "title": "Deconvolution and Checkerboard Artifacts",
-                  "url": "https://distill.pub/2016/deconv-checkerboard/",
-                  "source": "Distill"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "vision-adversarial-attacks": {
-      "anchors": [
-        "the-problem",
-        "earlier-approaches",
-        "gradient-attacks",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "A network that classifies images well can still be fooled by changes too small for a person to notice. Szegedy et al. found this in 2013."
             },
@@ -29944,33 +29789,29 @@
             },
             {
               "p": "The change is not random noise. It is chosen, pixel by pixel, to push the network toward the wrong answer. For systems such as self-driving cars, this is a security problem. The questions are how such changes are found, and how to defend against them."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "Optimizing each image",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Szegedy et al. found their examples with a slow optimization run separately for every image. It showed the problem existed but was too slow to use widely, for example to make many attacked images for training."
             },
             {
               "heading": "Nonlinearity as the cause",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Szegedy et al. suggested these images were rare pockets caused by how nonlinear deep networks are. Goodfellow et al. argued the opposite: networks behave almost linearly, so many tiny pushes in the same direction add up. That explanation led directly to a fast attack."
-            }
-          ]
-        },
-        {
-          "id": "gradient-attacks",
-          "title": "Gradient attacks",
-          "blocks": [
+            },
+            {
+              "heading": "Gradient attacks",
+              "level": 3
+            },
             {
               "p": "**The idea.** Training uses the gradient of the loss with respect to the weights to make the right answer more likely. An attack uses the gradient with respect to the **pixels** to make the right answer less likely."
             },
@@ -30021,16 +29862,14 @@
             },
             {
               "p": "**Gradient masking.** A defense can seem to work only because it hides the gradient. Multiply the running example's scores by 100. Every decision stays the same, but p(vertical) for the original image rounds to exactly 1 and the gradient is 0 at every pixel, so FGSM changes nothing and PGD has no direction to follow. The attacked image found on the original network still makes the scaled one say horizontal, with p(vertical) below $10^{-26}$. This is **gradient masking**. Athalye et al. (2018) found it in 7 of the 9 defenses they examined from one conference, and by estimating the hidden gradients their attacks completely got around 6 of them."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "heading": "FGSM and PGD",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The attack aims to lower p(vertical), which is 0.953 on the original image. For each ε, every pixel may move by at most ε:"
@@ -30068,7 +29907,7 @@
             },
             {
               "heading": "The attacked image",
-              "level": 3
+              "level": 4
             },
             {
               "p": "At ε = 0.4, PGD makes the network say horizontal. Its main change is two faint horizontal lines across rows 2 and 5, with the vertical line dimmed:"
@@ -30185,13 +30024,11 @@
               "problemCard": {
                 "id": "cv-faint-lines-alone"
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**How large is ε on a real photo?** Small. A common choice is 8 ÷ 255 = 0.031 on pixel values between 0 and 1, which the eye cannot see. The toy image needs 0.4 only because it has 36 pixels to add up, not 150,528."
             },
@@ -30212,6 +30049,17 @@
           "blocks": [
             {
               "resources": [
+                {
+                  "title": "U-Net: Convolutional Networks for Biomedical Image Segmentation (Ronneberger et al., 2015)",
+                  "url": "https://arxiv.org/abs/1505.04597",
+                  "source": "arXiv",
+                  "starred": true
+                },
+                {
+                  "title": "Deconvolution and Checkerboard Artifacts",
+                  "url": "https://distill.pub/2016/deconv-checkerboard/",
+                  "source": "Distill"
+                },
                 {
                   "title": "Explaining and Harnessing Adversarial Examples (Goodfellow et al., 2014)",
                   "url": "https://arxiv.org/abs/1412.6572",
@@ -30254,7 +30102,7 @@
             {
               "list": [
                 "[CNN Fundamentals](/module/?id=convolutional-neural-networks)",
-                "[U-Net Segmentation](/module/?id=semantic-segmentation-unet-masks)",
+                "[U-Net Segmentation](/module/?id=semantic-segmentation-unet-masks#lesson-segmentation)",
                 "[Regularization and BatchNorm](/module/?id=neural-network-regularization-dropout-batchnorm)",
                 "[Training and Generalization](/module/?id=bias-variance-cross-validation)",
                 "[Supervised Learning Basics](/module/?id=linear-logistic-regression)"
@@ -30267,7 +30115,7 @@
           "title": "",
           "blocks": [
             {
-              "p": "We will ask how a pretrained backbone should be adapted to a new dataset. ResNets are taught in [5. Deeper networks](/module/?id=vision-deeper-networks) and EfficientNet's compound scaling in [Hierarchical vision models](/module/?id=hierarchical-vision-models). Neither architecture is rederived here: this module is the strategy half, and every recommendation below is about which prior computation to reuse and how much of it to retrain, not about how the backbone is built."
+              "p": "We will ask how a pretrained backbone should be adapted to a new dataset. ResNets are taught in [Deeper networks](/module/?id=vision-classify#lesson-deeper-networks) and EfficientNet's compound scaling in [Hierarchical vision models](/module/?id=hierarchical-vision-models). Neither architecture is rederived here: this module is the strategy half, and every recommendation below is about which prior computation to reuse and how much of it to retrain, not about how the backbone is built."
             }
           ]
         },
@@ -30280,7 +30128,7 @@
               "level": 3
             },
             {
-              "p": "[6. Transfer learning](/module/?id=vision-transfer-learning) covers the basics: an ImageNet network's early layers have learned edges, textures and shapes that are useful for almost any image, so freezing them and training only a new head already works, and the linear probe and fine-tuning are defined there. What it leaves open is how much of the network you can afford to retrain."
+              "p": "[Transfer learning](/module/?id=vision-classify#lesson-transfer-learning) covers the basics: an ImageNet network's early layers have learned edges, textures and shapes that are useful for almost any image, so freezing them and training only a new head already works, and the linear probe and fine-tuning are defined there. What it leaves open is how much of the network you can afford to retrain."
             },
             {
               "p": "This has been measured directly. Freeze the first $k$ layers of a pretrained network, retrain the rest on a different task, and accuracy is essentially unaffected for small $k$ and degrades as $k$ approaches the output. The crossover marks where the representation stops being general. In vision that is typically around two-thirds of the way up."
@@ -30571,21 +30419,24 @@
     },
     "transformer-setup": {
       "anchors": [
-        "the-problem",
-        "history",
-        "the-intuition-behind-the-transformer",
-        "roadmap",
-        "architecture",
+        "setup",
+        "tokenize",
+        "embed",
+        "add-position",
         "resources"
       ],
       "sections": [
         {
-          "id": "the-problem",
-          "title": "The problem",
+          "id": "setup",
+          "title": "Setup",
           "blocks": [
             {
-              "heading": "The task",
+              "heading": "The problem",
               "level": 3
+            },
+            {
+              "heading": "The task",
+              "level": 4
             },
             {
               "p": "A **language model** reads a sequence of tokens $x_1, x_2, \\dots, x_t$ and predicts the next token, $x_{t+1}$. It assigns a probability to every token in its vocabulary as the possible next token, written"
@@ -30607,7 +30458,7 @@
             },
             {
               "heading": "What makes it hard",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The token that decides the next one can be far back. In"
@@ -30631,13 +30482,11 @@
             },
             {
               "p": "So the model has to reach tokens far back, and judge from their meaning which one matters. Models that lean on recent words get this wrong: Linzen et al. (2016) found recurrent networks made more of these mistakes the more nouns like \"exam\" came in between."
-            }
-          ]
-        },
-        {
-          "id": "history",
-          "title": "History",
-          "blocks": [
+            },
+            {
+              "heading": "History",
+              "level": 3
+            },
             {
               "p": "Each generation of language model fixed the main weakness of the one before. For example, a 3-gram model predicting the word after \"The students who failed the exam\" sees only \"the exam\", so it cannot know the subject is plural."
             },
@@ -30691,23 +30540,21 @@
             },
             {
               "p": "The key change came in 2017, when Vaswani et al. dropped the recurrent network and kept only attention. Every position could then be processed at once, so models could be trained on far more text. Three years later the same design, scaled up, was GPT-3, and Kaplan et al. (2020) showed that such models keep improving predictably as they grow."
-            }
-          ]
-        },
-        {
-          "id": "the-intuition-behind-the-transformer",
-          "title": "The intuition behind the Transformer",
-          "blocks": [
+            },
+            {
+              "heading": "The intuition behind the Transformer",
+              "level": 3
+            },
             {
               "heading": "Token vectors",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Each token becomes a vector, and every layer adjusts those vectors a little. By the last layer, the vector at the end of the text holds enough about everything before it to predict the next token. In \"the cat sat\", the vector at \"sat\" picks up who sat, which helps predict \"on\"."
             },
             {
               "heading": "Attention and feed-forward",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Each block has two parts. In attention, each token gathers information from the tokens before it. This is how \"sat\" finds \"cat\". In the feed-forward network, each token then processes what it gathered on its own, for example turning \"the cat sat\" into a sense that a place, such as \"on the mat\", comes next. Stacking blocks repeats this, so later layers can build on what earlier ones found."
@@ -30723,14 +30570,14 @@
             },
             {
               "heading": "Learned relationships",
-              "level": 3
+              "level": 4
             },
             {
               "p": "A convolutional network assumes that nearby inputs are related, and a recurrent network favors recent words, so both lean toward \"exam\" in \"The students who failed the exam ___\". A Transformer assumes neither. It learns from data which tokens matter to which, such as a verb and its subject."
             },
             {
               "heading": "Next-token prediction",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The model is trained only to predict the next token, but doing that well takes grammar, facts and more:"
@@ -30766,173 +30613,144 @@
             },
             {
               "heading": "Costs",
-              "level": 3
+              "level": 4
             },
             {
               "list": [
-                "**Length.** The score matrix has an entry for every pair of tokens, so the work grows with the square of the sequence length: 1,000 tokens need a million scores per head, and 2,000 need four million (Step 5).",
-                "**Order.** Attention on its own cannot tell \"dog bites man\" from \"man bites dog\", so position information has to be added (Step 3).",
+                "**Length.** The score matrix has an entry for every pair of tokens, so the work grows with the square of the sequence length: 1,000 tokens need a million scores per head, and 2,000 need four million (see [Scores](/module/?id=transformer-qkv#lesson-scores)).",
+                "**Order.** Attention on its own cannot tell \"dog bites man\" from \"man bites dog\", so position information has to be added (see [Add position](#lesson-add-position)).",
                 "**Data.** A model that assumes little has to learn everything from data: GPT-3 was trained on about 300 billion tokens."
               ]
-            }
-          ]
-        },
-        {
-          "id": "roadmap",
-          "title": "Roadmap",
-          "blocks": [
+            },
             {
-              "p": "Each component is introduced in its own step, in the order the data flows through the model."
+              "heading": "Roadmap",
+              "level": 3
+            },
+            {
+              "p": "Each component has its own section, in the order the data flows through the model. The sections are grouped into five parts."
             },
             {
               "table": {
                 "head": [
-                  "Step",
+                  "Part",
+                  "Section",
                   "Component",
                   "Role"
                 ],
                 "rows": [
                   [
-                    "[1. Tokenize](/module/?id=transformer-tokenize)",
+                    "1",
+                    "[Tokenize](#lesson-tokenize)",
                     "Text to token IDs",
                     "Defines the sequence the model reads"
                   ],
                   [
-                    "[2. Embed](/module/?id=transformer-embed)",
+                    "1",
+                    "[Embed](#lesson-embed)",
                     "Token IDs to vectors",
                     "Gives each token a learned representation"
                   ],
                   [
-                    "[3. Add position](/module/?id=transformer-add-position)",
+                    "1",
+                    "[Add position](#lesson-add-position)",
                     "Position information",
                     "Supplies the order that attention lacks"
                   ],
                   [
-                    "[4. Q, K, V](/module/?id=transformer-qkv)",
+                    "2",
+                    "[Q, K, V](/module/?id=transformer-qkv#lesson-q-k-v)",
                     "Query, key and value vectors",
                     "How each token describes what it looks for and what it offers"
                   ],
                   [
-                    "[5. Scores](/module/?id=transformer-scores)",
+                    "2",
+                    "[Scores](/module/?id=transformer-qkv#lesson-scores)",
                     "A score for every pair of tokens",
                     "Every pair of tokens compared in one step"
                   ],
                   [
-                    "[6. Mask and softmax](/module/?id=transformer-mask-and-softmax)",
+                    "2",
+                    "[Mask and softmax](/module/?id=transformer-qkv#lesson-mask-and-softmax)",
                     "Hiding later tokens, converting scores to weights",
                     "No looking ahead, so every position trains at once"
                   ],
                   [
-                    "[7. Weighted sum](/module/?id=transformer-weighted-sum)",
+                    "3",
+                    "[Weighted sum](/module/?id=transformer-weighted-sum#lesson-weighted-sum)",
                     "Combining tokens by their weights",
                     "Each token's new representation"
                   ],
                   [
-                    "[8. Multi-head](/module/?id=transformer-multi-head)",
+                    "3",
+                    "[Multi-head](/module/?id=transformer-weighted-sum#lesson-multi-head)",
                     "Several attention patterns side by side",
                     "Several relationships at once"
                   ],
                   [
-                    "[9. Residual and LayerNorm](/module/?id=transformer-residual-and-layernorm)",
+                    "4",
+                    "[Residual and LayerNorm](/module/?id=transformer-residual-and-layernorm#lesson-residual-and-layernorm)",
                     "Skip connections and normalization",
                     "Stable training at depth"
                   ],
                   [
-                    "[10. Feed-forward](/module/?id=transformer-feed-forward)",
+                    "4",
+                    "[Feed-forward](/module/?id=transformer-residual-and-layernorm#lesson-feed-forward)",
                     "A small network applied to each token",
                     "Further processing of each position"
                   ],
                   [
-                    "[11. Stack](/module/?id=transformer-stack)",
+                    "4",
+                    "[Stack](/module/?id=transformer-residual-and-layernorm#lesson-stack)",
                     "Repeating the block",
                     "Depth"
                   ],
                   [
-                    "[12. Predict](/module/?id=transformer-predict)",
+                    "5",
+                    "[Predict](/module/?id=transformer-predict#lesson-predict)",
                     "Probabilities for the next token, and the training loss",
                     "The task above"
                   ],
                   [
-                    "[13. Generate](/module/?id=transformer-generate)",
+                    "5",
+                    "[Generate](/module/?id=transformer-predict#lesson-generate)",
                     "Producing text token by token",
                     "Using the trained model"
                   ]
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "architecture",
-          "title": "Architecture",
-          "blocks": [
+            },
+            {
+              "heading": "Architecture",
+              "level": 3
+            },
             {
               "figure": {
                 "src": "assets/module-media/transformer-steps.svg",
-                "alt": "A Transformer drawn bottom to top. The text 'the cat sat' goes through 1. Tokenize, 2. Embed and 3. Add position, then into a dashed frame marked 'one block, times N (11. Stack)' that holds 4 to 8. Masked multi-head attention, 9. Add and norm, 10. Feed-forward and 9. Add and norm, with dashed residual lines on the left. Above the frame is 12. Predict, which outputs the next word 'on'. A dashed line on the right, labelled 13. Generate, carries the word back to the input.",
-                "caption": "A decoder-only Transformer, labelled with the step that covers each component.",
+                "alt": "A Transformer drawn bottom to top. The text 'the cat sat' goes through Tokenize, Embed and Add position, then into a dashed frame marked 'one block, times N (Stack)' that holds Masked multi-head attention, Add and norm, Feed-forward and Add and norm, with dashed residual lines on the left. Above the frame is Predict, which outputs the next word 'on'. A dashed line on the right, labelled Generate, carries the word back to the input.",
+                "caption": "A decoder-only Transformer, labelled with the section that covers each component.",
                 "width": 391,
                 "height": 626
               }
             },
             {
-              "p": "Text enters at the bottom and the predicted next token leaves at the top. The dashed frame is one **block**. Production models stack many of them. The dashed lines on the left carry each part's input around it (Step 9), and the dashed loop on the right is generation (Step 13)."
+              "p": "Text enters at the bottom and the predicted next token leaves at the top. The dashed frame is one **block**. Production models stack many of them. The dashed lines on the left carry each part's input around it (see [Residual and LayerNorm](/module/?id=transformer-residual-and-layernorm#lesson-residual-and-layernorm)), and the dashed loop on the right is generation (see [Generate](/module/?id=transformer-predict#lesson-generate))."
             },
             {
-              "p": "This is a **decoder-only** Transformer, the design used by GPT models. The original 2017 model also had an encoder, because it was built for translation. The diagram follows the original paper in normalizing after each part. Step 9 covers the variant GPT-2 uses."
+              "p": "This is a **decoder-only** Transformer, the design used by GPT models. The original 2017 model also had an encoder, because it was built for translation. The diagram follows the original paper in normalizing after each part. [Residual and LayerNorm](/module/?id=transformer-residual-and-layernorm#lesson-residual-and-layernorm) covers the variant GPT-2 uses."
             },
             {
-              "p": "The steps that follow explore this architecture one part at a time, in the order the data flows through it."
+              "p": "The sections that follow explore this architecture one component at a time, in the order the data flows through it."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "tokenize",
+          "title": "Tokenize",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "Attention Is All You Need (Vaswani et al., 2017)",
-                  "url": "https://arxiv.org/abs/1706.03762",
-                  "source": "arXiv",
-                  "starred": true
-                },
-                {
-                  "title": "Neural Machine Translation by Jointly Learning to Align and Translate (Bahdanau et al., 2014)",
-                  "url": "https://arxiv.org/abs/1409.0473",
-                  "source": "arXiv"
-                },
-                {
-                  "title": "Scaling Laws for Neural Language Models (Kaplan et al., 2020)",
-                  "url": "https://arxiv.org/abs/2001.08361",
-                  "source": "arXiv"
-                },
-                {
-                  "title": "The Illustrated Transformer",
-                  "url": "https://jalammar.github.io/illustrated-transformer/",
-                  "source": "Jay Alammar"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "transformer-tokenize": {
-      "anchors": [
-        "the-problem",
-        "earlier-approaches",
-        "byte-pair-encoding",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "A model works with numbers, not text. Before anything else, the text has to be cut into pieces and each piece replaced by a number."
             },
@@ -30955,28 +30773,26 @@
               "list": [
                 "**Any text.** A word that was not in the training text, such as \"lowest\", must still come out as IDs the model knows.",
                 "**Few tokens.** Attention compares every token with every token, itself included, so its work grows with the square of the count. A text cut into 11 tokens needs 11 × 11 = 121 comparisons where 3 tokens need 9.",
-                "**A vocabulary of reasonable size.** Every entry needs its own row in the embedding table of Step 2. The smallest GPT-2's 50,257 entries cost 38.6 million weights."
+                "**A vocabulary of reasonable size.** Every entry needs its own row in the embedding table (see [Embed](#lesson-embed)). The smallest GPT-2's 50,257 entries cost 38.6 million weights."
               ]
             },
             {
               "p": "Large pieces give few tokens but need a huge vocabulary and still miss words. Small pieces cover every text but give many tokens."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "Words",
-              "level": 3
+              "level": 4
             },
             {
               "p": "One token per word gives short sequences, but the vocabulary is huge, any word missing from it becomes an unknown `<unk>` token, and related forms such as \"run\" and \"running\" share nothing. A vocabulary that saw \"Transformer\" but not \"Transformers\" loses the second word entirely."
             },
             {
               "heading": "Characters",
-              "level": 3
+              "level": 4
             },
             {
               "p": "One token per character never meets an unknown word, but for typical English the text becomes about five times longer, and the model has to learn spelling before meaning. The words of \"the cat sat\" are shorter than average, so it grows less: 11 tokens (t, h, e, space, c, a, t, space, s, a, t) instead of 3, about three and two-thirds times."
@@ -31010,19 +30826,17 @@
                   ]
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "byte-pair-encoding",
-          "title": "Byte-pair encoding",
-          "blocks": [
+            },
+            {
+              "heading": "Byte-pair encoding",
+              "level": 3
+            },
             {
               "p": "**Subword** tokenization keeps common words whole and splits rare words into common pieces. **Byte-pair encoding** (BPE, Sennrich et al., 2016) finds those pieces by starting from single characters and repeatedly joining the two pieces that appear next to each other most often."
             },
             {
               "heading": "An example",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Suppose the training text contains only four words, each many times:"
@@ -31196,7 +31010,7 @@
             },
             {
               "heading": "Tokenizing a new word",
-              "level": 3
+              "level": 4
             },
             {
               "p": "To tokenize new text, split it into characters and apply the joins in order. \"lowest\" never appeared in the training text, but it can still be built:"
@@ -31266,15 +31080,13 @@
                   ]
                 }
               }
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
             {
-              "p": "From here on, each step follows one sentence, \"the cat sat\", through a tiny model whose numbers can be checked by hand. Its vocabulary is eight entries, seven whole words plus an end-of-text marker, so tokenizing is a simple lookup:"
+              "heading": "Running example",
+              "level": 3
+            },
+            {
+              "p": "From here on, every section follows one sentence, \"the cat sat\", through a tiny model whose numbers can be checked by hand. Its vocabulary is eight entries, seven whole words plus an end-of-text marker, so tokenizing is a simple lookup:"
             },
             {
               "table": {
@@ -31295,7 +31107,7 @@
               }
             },
             {
-              "p": "These are the tokens $x_1$, $x_2$ and $x_3$ of Step 0. The target, \"on\", has ID 4."
+              "p": "These are the tokens $x_1$, $x_2$ and $x_3$ from the setup. The target, \"on\", has ID 4."
             },
             {
               "code": {
@@ -31308,85 +31120,38 @@
                   "print(ids)  # [1, 2, 3]"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
-            {
-              "p": "**Why does the running example use whole words?** So that every token can be read. Its vocabulary has only 8 entries, and a real tokenizer would split text into subword pieces as in the \"lowest\" example above. Nothing in the later steps depends on which kind of token is used."
             },
             {
-              "p": "**Does the model see the letters of a token?** No. After this step the model has only the IDs. \"cat\" is 2 and \"sat\" is 3, and nothing tells it that both end in \"at\". Anything it knows about spelling it has to learn from how tokens are used. So if a model misspells a word or cannot count its letters, suspect the tokenization before the transformer."
+              "heading": "Common questions",
+              "level": 3
+            },
+            {
+              "p": "**Why does the running example use whole words?** So that every token can be read. Its vocabulary has only 8 entries, and a real tokenizer would split text into subword pieces as in the \"lowest\" example above. Nothing in the later sections depends on which kind of token is used."
+            },
+            {
+              "p": "**Does the model see the letters of a token?** No. After tokenizing, the model has only the IDs. \"cat\" is 2 and \"sat\" is 3, and nothing tells it that both end in \"at\". Anything it knows about spelling it has to learn from how tokens are used. So if a model misspells a word or cannot count its letters, suspect the tokenization before the transformer."
             },
             {
               "p": "**How many tokens is a text?** For English and GPT-style tokenizers, a token is about 4 characters, or three-quarters of a word, on average. A 750-word essay is roughly 1,000 tokens."
             },
             {
-              "p": "**Is the vocabulary fixed?** Yes. It is built once, before training, and never changes afterwards, because every entry has its own row in the embedding table of Step 2."
+              "p": "**Is the vocabulary fixed?** Yes. It is built once, before training, and never changes afterwards, because every entry has its own row in the embedding table (see [Embed](#lesson-embed))."
             },
             {
-              "p": "[Step 2](/module/?id=transformer-embed) turns these three IDs into vectors. WordPiece and Unigram, the subword methods used by BERT and T5, are covered in [Tokenization and Word Embeddings](/module/?id=natural-language-processing-tokenization-embeddings)."
+              "p": "The next section, [Embed](#lesson-embed), turns these three IDs into vectors. WordPiece and Unigram, the subword methods used by BERT and T5, are covered in [Tokenization and Word Embeddings](/module/?id=natural-language-processing-tokenization-embeddings)."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "embed",
+          "title": "Embed",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "Neural Machine Translation of Rare Words with Subword Units (Sennrich et al., 2016)",
-                  "url": "https://arxiv.org/abs/1508.07909",
-                  "source": "arXiv",
-                  "starred": true
-                },
-                {
-                  "title": "Byte-Pair Encoding tokenization",
-                  "url": "https://huggingface.co/learn/nlp-course/chapter6/5",
-                  "source": "Hugging Face"
-                },
-                {
-                  "title": "Language Models are Unsupervised Multitask Learners (Radford et al., 2019)",
-                  "url": "https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf",
-                  "source": "OpenAI"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "transformer-embed": {
-      "anchors": [
-        "prerequisites",
-        "the-problem",
-        "earlier-approaches",
-        "the-embedding-table",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "prerequisites",
-          "title": "Prerequisites",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
-              "list": [
-                "[1. Tokenize](/module/?id=transformer-tokenize)"
-              ]
-            }
-          ]
-        },
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
-            {
-              "p": "After Step 1, each token is an ID. An ID is a label. It says which entry of the vocabulary a token is, and nothing about what the token means."
+              "p": "After tokenizing, each token is an ID. An ID is a label. It says which entry of the vocabulary a token is, and nothing about what the token means."
             },
             {
               "p": "Two things go wrong if the IDs are used as numbers:"
@@ -31411,26 +31176,22 @@
             },
             {
               "p": "The model needs each token as a vector it can calculate with, in which tokens used in similar ways are close together."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
             {
-              "heading": "One-hot vectors",
+              "heading": "Earlier approaches",
               "level": 3
             },
             {
+              "heading": "One-hot vectors",
+              "level": 4
+            },
+            {
               "p": "A **one-hot vector** has one number for every token in the vocabulary, all 0 except a single 1 at the token's ID. With 8 words, \"cat\" is (0, 0, 1, 0, 0, 0, 0, 0) and \"dog\" is (0, 0, 0, 0, 0, 0, 1, 0). Every two words are equally different: \"cat\" is no closer to \"dog\" than to \"the\". The vectors are also as long as the vocabulary, 50,257 numbers per token for GPT-2, nearly all of them 0."
-            }
-          ]
-        },
-        {
-          "id": "the-embedding-table",
-          "title": "The embedding table",
-          "blocks": [
+            },
+            {
+              "heading": "The embedding table",
+              "level": 3
+            },
             {
               "p": "A Transformer keeps a table $E$ with one row per token in the vocabulary. Each row is a vector of $d$ numbers, the token's **embedding**, where $d$ is the model's **width**. The numbers are learned in training, like every other weight in the model."
             },
@@ -31448,7 +31209,7 @@
             },
             {
               "heading": "Lookup",
-              "level": 3
+              "level": 4
             },
             {
               "p": "To embed a text, replace each token ID with its row of the table. A text of $T$ tokens becomes $X$, with $T$ rows and $d$ columns. In the running example the width is 4, and \"cat\", with ID 2, becomes row 2 of the table, (0, 1, 1, 0)."
@@ -31489,7 +31250,7 @@
             },
             {
               "heading": "Similarity",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Because the rows are learned, two tokens can have rows that are close. How close is measured by the **cosine similarity**, the dot product divided by the two lengths:"
@@ -31517,7 +31278,7 @@
             },
             {
               "heading": "Training",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The rows start as small random numbers, so at first no two tokens are similar. Each training step then moves the rows of the tokens in the text a little, in the direction that makes the model's prediction better:"
@@ -31580,13 +31341,11 @@
                 "width": 503,
                 "height": 311
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Does one number in a row mean anything?** Usually not. No single dimension stands for \"animal\" or \"plural\". Meaning is carried by the direction of the whole vector, which is why rows are compared with the cosine similarity and not number by number."
             },
@@ -31594,7 +31353,7 @@
               "p": "**How is the width chosen?** It is a design choice. A larger width lets each vector hold more, and costs more computation in every later step. GPT-2 small uses 768 and GPT-2 XL uses 1,600."
             },
             {
-              "p": "**Does the same token always get the same vector?** Yes, at this step. \"the\" gets row 1 wherever it appears and whatever the sentence means. Step 3 adds the position, and attention, from Step 4 on, adds the context."
+              "p": "**Does the same token always get the same vector?** Yes, at this point. \"the\" gets row 1 wherever it appears and whatever the sentence means. [Add position](#lesson-add-position) adds the position, and attention, from [part 2](/module/?id=transformer-qkv#lesson-q-k-v) on, adds the context."
             },
             {
               "p": "**Why not keep the one-hot vectors?** They are as long as the vocabulary, 50,257 numbers for GPT-2, and any two of them have a dot product of 0, so no two tokens can be similar. An embedding is shorter and can be learned."
@@ -31602,59 +31361,18 @@
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "add-position",
+          "title": "Add position",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "Efficient Estimation of Word Representations in Vector Space (Mikolov et al., 2013)",
-                  "url": "https://arxiv.org/abs/1301.3781",
-                  "source": "arXiv",
-                  "starred": true
-                },
-                {
-                  "title": "The Illustrated Word2vec",
-                  "url": "https://jalammar.github.io/illustrated-word2vec/",
-                  "source": "Jay Alammar"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "transformer-add-position": {
-      "anchors": [
-        "prerequisites",
-        "the-problem",
-        "earlier-approaches",
-        "sinusoidal-position-encodings",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "prerequisites",
-          "title": "Prerequisites",
-          "blocks": [
-            {
-              "list": [
-                "[2. Embed](/module/?id=transformer-embed)"
-              ]
-            }
-          ]
-        },
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "Attention compares tokens by their contents only. It has no idea of order."
             },
             {
-              "p": "For example, \"dog bites man\" and \"man bites dog\" mean opposite things, but after Step 2 they are the same three vectors. Only the order differs."
+              "p": "For example, \"dog bites man\" and \"man bites dog\" mean opposite things, but after embedding they are the same three vectors. Only the order differs."
             },
             {
               "figure": {
@@ -31681,23 +31399,21 @@
                 "**Any length.** It works for a text of 10 tokens or of 100,000.",
                 "**Distances easy to use.** \"One token back\" looks the same at position 5 as at position 500."
               ]
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "The position as a number",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The simplest signal is the position itself: 0, 1, 2 and so on. The numbers grow far larger than the rest of the vector. At position 1,000 the value is 1,000, while the token's own numbers are around 1."
             },
             {
               "heading": "A fraction of the length",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Dividing by the length keeps the values between 0 and 1: for $n$ tokens, the values are 0, $1/(n-1)$, and so on up to 1, either added to the vector or appended as an extra number. \"the cat sat\" gets 0, 0.5 and 1. This fails in three ways."
@@ -31713,17 +31429,15 @@
             },
             {
               "heading": "A learned position table",
-              "level": 3
+              "level": 4
             },
             {
               "p": "GPT-2 and BERT learn one row per position, like the embedding table, and add row $p$ to the token at position $p$. This works well, but there is no row past the last position, so GPT-2 cannot read more than 1,024 tokens."
-            }
-          ]
-        },
-        {
-          "id": "sinusoidal-position-encodings",
-          "title": "Sinusoidal position encodings",
-          "blocks": [
+            },
+            {
+              "heading": "Sinusoidal position encodings",
+              "level": 3
+            },
             {
               "p": "The original Transformer adds a fixed pattern of sine and cosine waves. The $d$ numbers of the vector come in pairs, and each pair has its own speed $w$. At position $p$ the pair holds"
             },
@@ -31747,7 +31461,7 @@
             },
             {
               "heading": "Distances",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The pattern also makes distances easy to read. Take the fast pair at two positions and compute the dot product:"
@@ -31786,7 +31500,7 @@
             },
             {
               "heading": "Repeats",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Every wave repeats, so two positions could end up with the same pattern. How soon that happens depends on how many pairs there are."
@@ -31983,20 +31697,18 @@
             },
             {
               "heading": "Rotary position embeddings",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Most recent models, including the LLaMA family, use **rotary position embeddings** (RoPE, Su et al., 2021) instead, which turn each query and key by an angle that depends on its position. Then \"cat\" and \"sat\", one position apart, are compared the same way wherever they appear in the text. [Positional Encoding and RoPE](/module/?id=relative-position-rope-positional-methods) covers it in detail."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "heading": "The position values",
-              "level": 3
+              "level": 4
             },
             {
               "p": "With a width of 4 there are two pairs: a fast one using the position $p$ and a slow one using $p/100$. The three tokens sit at positions 0, 1 and 2:"
@@ -32040,10 +31752,10 @@
             },
             {
               "heading": "Adding them to the tokens",
-              "level": 3
+              "level": 4
             },
             {
-              "p": "Adding these values to the token vectors from Step 2 gives $H$:"
+              "p": "Adding these values to the token vectors from [Embed](#lesson-embed) gives $H$:"
             },
             {
               "table": {
@@ -32081,7 +31793,7 @@
             },
             {
               "heading": "The same word in another place",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The same word now looks different in a different place: in \"the sat cat\", \"cat\" would become (0.909, 0.584, 1.020, 1.000)."
@@ -32105,13 +31817,11 @@
                   "print(H.round(3))"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Why add the position and not append it?** Appending works too, but it makes every vector longer. Adding keeps the width at $d$. With hundreds of dimensions, training can keep the token part and the position part in different directions, so the model can still read each one."
             },
@@ -32125,7 +31835,7 @@
               "p": "**Does the first token sit at position 0 or 1?** Position 0 here. Token $x_1$ = \"the\" gets $p = 0$, \"cat\" gets 1 and \"sat\" gets 2."
             },
             {
-              "p": "$H$ is the input to the attention block. [Step 4](/module/?id=transformer-qkv) computes the queries, keys and values from it."
+              "p": "$H$ is the input to the attention block. [Part 2](/module/?id=transformer-qkv#lesson-q-k-v) computes the queries, keys and values from it."
             }
           ]
         },
@@ -32142,6 +31852,48 @@
                   "starred": true
                 },
                 {
+                  "title": "Neural Machine Translation by Jointly Learning to Align and Translate (Bahdanau et al., 2014)",
+                  "url": "https://arxiv.org/abs/1409.0473",
+                  "source": "arXiv"
+                },
+                {
+                  "title": "Scaling Laws for Neural Language Models (Kaplan et al., 2020)",
+                  "url": "https://arxiv.org/abs/2001.08361",
+                  "source": "arXiv"
+                },
+                {
+                  "title": "The Illustrated Transformer",
+                  "url": "https://jalammar.github.io/illustrated-transformer/",
+                  "source": "Jay Alammar"
+                },
+                {
+                  "title": "Neural Machine Translation of Rare Words with Subword Units (Sennrich et al., 2016)",
+                  "url": "https://arxiv.org/abs/1508.07909",
+                  "source": "arXiv",
+                  "starred": true
+                },
+                {
+                  "title": "Byte-Pair Encoding tokenization",
+                  "url": "https://huggingface.co/learn/nlp-course/chapter6/5",
+                  "source": "Hugging Face"
+                },
+                {
+                  "title": "Language Models are Unsupervised Multitask Learners (Radford et al., 2019)",
+                  "url": "https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf",
+                  "source": "OpenAI"
+                },
+                {
+                  "title": "Efficient Estimation of Word Representations in Vector Space (Mikolov et al., 2013)",
+                  "url": "https://arxiv.org/abs/1301.3781",
+                  "source": "arXiv",
+                  "starred": true
+                },
+                {
+                  "title": "The Illustrated Word2vec",
+                  "url": "https://jalammar.github.io/illustrated-word2vec/",
+                  "source": "Jay Alammar"
+                },
+                {
                   "title": "RoFormer: Enhanced Transformer with Rotary Position Embedding (Su et al., 2021)",
                   "url": "https://arxiv.org/abs/2104.09864",
                   "source": "arXiv"
@@ -32154,20 +31906,22 @@
     },
     "transformer-qkv": {
       "anchors": [
-        "the-problem",
-        "earlier-approaches",
-        "queries-keys-and-values",
-        "running-example",
-        "common-questions",
+        "q-k-v",
+        "scores",
+        "mask-and-softmax",
         "resources"
       ],
       "sections": [
         {
-          "id": "the-problem",
-          "title": "The problem",
+          "id": "q-k-v",
+          "title": "Q, K, V",
           "blocks": [
             {
-              "p": "After Step 3, every token has a vector that says what it is and where it is. But each vector was made from its own token alone. \"sat\" knows nothing yet about \"cat\"."
+              "heading": "The problem",
+              "level": 3
+            },
+            {
+              "p": "After part 1, every token has a vector that says what it is and where it is. But each vector was made from its own token alone. \"sat\" knows nothing yet about \"cat\"."
             },
             {
               "p": "To predict what follows \"the cat sat\", the model has to combine them. Each token has to pull in information from the earlier tokens that matter to it. For \"sat\", that is \"cat\", which says who sat, and not \"the\"."
@@ -32193,19 +31947,17 @@
             },
             {
               "p": "One vector per token cannot do all three well, as the earlier approaches show."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
             {
-              "heading": "Comparing the vectors directly",
+              "heading": "Earlier approaches",
               "level": 3
             },
             {
-              "p": "The simplest comparison is the dot product of the two tokens' vectors from Step 3: multiply matching numbers and add. It has two problems."
+              "heading": "Comparing the vectors directly",
+              "level": 4
+            },
+            {
+              "p": "The simplest comparison is the dot product of the two tokens' vectors from part 1: multiply matching numbers and add. It has two problems."
             },
             {
               "p": "It works in both directions equally. For \"sat\", (0.909, −0.416, 1.020, 2.000), and \"cat\", (0.841, 1.540, 1.010, 1.000):"
@@ -32224,7 +31976,7 @@
             },
             {
               "heading": "A small network for every pair",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Bahdanau et al. (2014) scored each pair with a small learned network. The two vectors go in together and one score comes out:"
@@ -32272,14 +32024,12 @@
               }
             },
             {
-              "p": "That is about half a million passes for a 1,000-token text. The dot product of Step 5 gets all of those scores from one matrix multiplication."
-            }
-          ]
-        },
-        {
-          "id": "queries-keys-and-values",
-          "title": "Queries, keys and values",
-          "blocks": [
+              "p": "That is about half a million passes for a 1,000-token text. The dot product in [Scores](#lesson-scores) gets all of those scores from one matrix multiplication."
+            },
+            {
+              "heading": "Queries, keys and values",
+              "level": 3
+            },
             {
               "p": "A Transformer turns each token's vector into three new vectors, each made with its own table of learned weights."
             },
@@ -32295,7 +32045,7 @@
             {
               "figure": {
                 "src": "assets/module-media/transformer-qkv.svg",
-                "alt": "The vector of sat from Step 3, (0.909, -0.416, 1.020, 2.000), with three arrows leading out of it through the weight tables W Q, W K and W V. Each arrow ends in four numbers split into two for head 1 and two for head 2. The query is (1.020, 2.000) and (-0.416, 2.000). The key is (-0.416, 1.020) and (-0.416, 2.000). The value is (0.909, -0.416) and (1.020, 2.000).",
+                "alt": "The vector of sat from part 1, (0.909, -0.416, 1.020, 2.000), with three arrows leading out of it through the weight tables W Q, W K and W V. Each arrow ends in four numbers split into two for head 1 and two for head 2. The query is (1.020, 2.000) and (-0.416, 2.000). The key is (-0.416, 1.020) and (-0.416, 2.000). The value is (0.909, -0.416) and (1.020, 2.000).",
                 "caption": "The three vectors made from the vector of \"sat\" in the running example, each split between the two heads.",
                 "width": 662,
                 "height": 361
@@ -32305,17 +32055,15 @@
               "p": "**Why three and not one.** Because queries and keys come from different weights, looking is not symmetric. In head 1 of the running example, the query of \"sat\" against the key of \"cat\" gives a dot product of 3.591, but the query of \"cat\" against the key of \"sat\" gives only 0.600. So the verb looks for its subject without the subject looking back just as hard. Comparing the token vectors directly could not do this: $a \\cdot b$ and $b \\cdot a$ are always equal."
             },
             {
-              "p": "**Heads.** The numbers of each vector are split into groups, one per **attention head**. With a width of 4 and 2 heads, each head gets 2 numbers of the query, 2 of the key and 2 of the value. GPT-2 small splits 768 numbers into 12 heads of 64. Step 8 explains why."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+              "p": "**Heads.** The numbers of each vector are split into groups, one per **attention head**. With a width of 4 and 2 heads, each head gets 2 numbers of the query, 2 of the key and 2 of the value. GPT-2 small splits 768 numbers into 12 heads of 64. [Multi-head](/module/?id=transformer-weighted-sum#lesson-multi-head) explains why."
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "heading": "The weights",
-              "level": 3
+              "level": 4
             },
             {
               "p": "In the running example, each number of a query, key or value simply copies one of the token's four numbers from $H$. Trained weights mix all four."
@@ -32356,7 +32104,7 @@
             },
             {
               "heading": "One token, then every token",
-              "level": 3
+              "level": 4
             },
             {
               "p": "For example, \"sat\" is (0.909, −0.416, 1.020, 2.000), so its head 1 query is (1.020, 2.000) and its head 1 key is (−0.416, 1.020). For every token:"
@@ -32404,7 +32152,7 @@
               }
             },
             {
-              "p": "Head 2's queries and keys are identical. Step 8 shows what that does."
+              "p": "Head 2's queries and keys are identical. [Multi-head](/module/?id=transformer-weighted-sum#lesson-multi-head) shows what that does."
             },
             {
               "problemCard": {
@@ -32455,13 +32203,11 @@
                   "Q2, K2, V2 = Q[:, 2:], K[:, 2:], V[:, 2:]      # head 2"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Do the query, key and value depend on the position?** Yes. They are computed from $H$, which holds the token and its position together. \"cat\" at position 1 and \"cat\" at position 5 would have different queries, keys and values."
             },
@@ -32469,65 +32215,26 @@
               "p": "**Why is the value separate from the key?** What a token is found by need not be what it passes on. A key can say \"I am a noun that can be a subject\", while the value carries which noun it is. With one vector for both, the model could only pass on what it matched on."
             },
             {
-              "p": "**Why are head 2's queries and keys identical?** They were set that way on purpose, to show what goes wrong. When the query and key weights are the same, a token tends to match itself, which is the problem of comparing vectors directly. Step 8 shows the result."
+              "p": "**Why are head 2's queries and keys identical?** They were set that way on purpose, to show what goes wrong. When the query and key weights are the same, a token tends to match itself, which is the problem of comparing vectors directly. [Multi-head](/module/?id=transformer-weighted-sum#lesson-multi-head) shows the result."
             },
             {
               "p": "**Do real weights copy single dimensions?** No. Each number of a trained query is a mix of all $d$ numbers of the token vector. The copying here only keeps the arithmetic short."
             },
             {
-              "p": "[Step 5](/module/?id=transformer-scores) compares every query with every key."
+              "p": "The next section, [Scores](#lesson-scores), compares every query with every key."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "scores",
+          "title": "Scores",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "Attention Is All You Need (Vaswani et al., 2017)",
-                  "url": "https://arxiv.org/abs/1706.03762",
-                  "source": "arXiv",
-                  "starred": true
-                },
-                {
-                  "title": "Neural Machine Translation by Jointly Learning to Align and Translate (Bahdanau et al., 2014)",
-                  "url": "https://arxiv.org/abs/1409.0473",
-                  "source": "arXiv"
-                },
-                {
-                  "title": "Effective Approaches to Attention-based Neural Machine Translation (Luong et al., 2015)",
-                  "url": "https://arxiv.org/abs/1508.04025",
-                  "source": "arXiv"
-                },
-                {
-                  "title": "Attention in transformers, step-by-step (video)",
-                  "url": "https://www.youtube.com/watch?v=eMlx5fFNoYc",
-                  "source": "3Blue1Brown"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "transformer-scores": {
-      "anchors": [
-        "the-problem",
-        "earlier-approaches",
-        "scaled-dot-product-scores",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
-              "p": "After Step 4, every token has a query, which says what it is looking for, and a key, which says what it offers. Nothing has been compared yet."
+              "p": "After [Q, K, V](#lesson-q-k-v), every token has a query, which says what it is looking for, and a key, which says what it offers. Nothing has been compared yet."
             },
             {
               "p": "\"sat\" needs to find out which token matters most to it. To do that, the model compares the query of \"sat\" with the key of every token and gives each comparison one number, a **score**. A high score means the key is a good match for the query."
@@ -32561,7 +32268,7 @@
               "list": [
                 "**Cheap.** There is a score for every pair of tokens: 3 × 3 = 9 for \"the cat sat\", and 1,000 × 1,000 = 1,000,000 per head for a 1,000-token text.",
                 "**All at once.** A GPU is fast when it does one large calculation, not a million small ones.",
-                "**Not too large.** Step 6 turns the scores into weights, and that works badly when the scores are far apart."
+                "**Not too large.** [Mask and softmax](#lesson-mask-and-softmax) turns the scores into weights, and that works badly when the scores are far apart."
               ]
             },
             {
@@ -32572,23 +32279,21 @@
                 "width": 557,
                 "height": 327
               }
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "A small network for every pair",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Scoring each pair with its own network works but is slow. A dot product gives every score at once from a single matrix multiplication, which is what GPUs do best."
             },
             {
               "heading": "The plain dot product",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The dot product of a query and a key is cheap, but its size depends on how many numbers the query and key have. That count is the **head size**: 2 in the running example and 64 in GPT-2."
@@ -32619,7 +32324,7 @@
               }
             },
             {
-              "p": "**Why big scores are a problem.** Step 6 turns each row of scores into weights that add up to 1, and what matters there is the gap between scores. A small gap shares the weight. A large gap gives everything to one token:"
+              "p": "**Why big scores are a problem.** [Mask and softmax](#lesson-mask-and-softmax) turns each row of scores into weights that add up to 1, and what matters there is the gap between scores. A small gap shares the weight. A large gap gives everything to one token:"
             },
             {
               "table": {
@@ -32644,13 +32349,11 @@
             },
             {
               "p": "With a head size of 64, gaps like 16 are common. The token then ignores all but one of the others. Training also stalls, because a small change to the scores no longer changes the weights, so there is nothing to tell the model which way to adjust."
-            }
-          ]
-        },
-        {
-          "id": "scaled-dot-product-scores",
-          "title": "Scaled dot-product scores",
-          "blocks": [
+            },
+            {
+              "heading": "Scaled dot-product scores",
+              "level": 3
+            },
             {
               "p": "**One score.** The fix is to divide the dot product by its typical size, the square root of the head size. The score of one token against another is the dot product of the first token's query with the second token's key, divided by that:"
             },
@@ -32674,7 +32377,7 @@
             },
             {
               "heading": "The divisor",
-              "level": 3
+              "level": 4
             },
             {
               "p": "**Why a square root.** Suppose each of the products in a dot product is +1 or −1, with equal chance. Positive and negative products partly cancel, so the total is usually much smaller than the head size. With a head size of 4 there are 16 equally likely cases:"
@@ -32792,7 +32495,7 @@
             },
             {
               "heading": "Every score at once",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Stack the queries as the rows of $Q$ and the keys as the rows of $K$. One matrix multiplication then gives every pair:"
@@ -32807,16 +32510,14 @@
               "problemCard": {
                 "id": "tf-which-key-a-query-picks"
               }
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "heading": "One row of scores",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The query of \"sat\" in head 1 is (1.020, 2.000). Comparing it with each key:"
@@ -32856,7 +32557,7 @@
             },
             {
               "heading": "Every score in head 1",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Doing the same for every row gives head 1's full table of scores:"
@@ -32893,7 +32594,7 @@
             },
             {
               "heading": "Every score in head 2",
-              "level": 3
+              "level": 4
             },
             {
               "table": {
@@ -32926,7 +32627,7 @@
               }
             },
             {
-              "p": "In head 2 the queries and keys are the same, so a token tends to match itself: \"cat\" and \"sat\" both score themselves highest. \"the\" is the exception. Its vector is the shortest, and it scores \"cat\" at 1.796, above its own 1.414. Scores against later tokens, such as this one, are removed in Step 6, so \"the\" still ends up attending only to itself."
+              "p": "In head 2 the queries and keys are the same, so a token tends to match itself: \"cat\" and \"sat\" both score themselves highest. \"the\" is the exception. Its vector is the shortest, and it scores \"cat\" at 1.796, above its own 1.414. Scores against later tokens, such as this one, are removed by the mask in [Mask and softmax](#lesson-mask-and-softmax), so \"the\" still ends up attending only to itself."
             },
             {
               "code": {
@@ -32942,18 +32643,16 @@
                   "print(S1.round(3))"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
-            {
-              "p": "**Can a score be negative?** Yes. A query of (1, 0) and a key of (−1, 0) have a dot product of −1 and a score of −0.707. A negative score only means a poor match, and the softmax of Step 6 turns it into a small weight."
             },
             {
-              "p": "**Is a score a probability?** No. A score has no fixed range and means something only next to the other scores in its row. Step 6 turns each row into weights that add up to 1."
+              "heading": "Common questions",
+              "level": 3
+            },
+            {
+              "p": "**Can a score be negative?** Yes. A query of (1, 0) and a key of (−1, 0) have a dot product of −1 and a score of −0.707. A negative score only means a poor match, and the softmax (see [Mask and softmax](#lesson-mask-and-softmax)) turns it into a small weight."
+            },
+            {
+              "p": "**Is a score a probability?** No. A score has no fixed range and means something only next to the other scores in its row. [Mask and softmax](#lesson-mask-and-softmax) turns each row into weights that add up to 1."
             },
             {
               "p": "**Is the table symmetric?** No. In head 1, \"sat\" scores \"cat\" at 2.539, but \"cat\" scores \"sat\" at only 0.424, because queries and keys come from different weights. Head 2's table is symmetric, because its queries and keys are the same."
@@ -32962,49 +32661,20 @@
               "p": "**Does a token score itself?** Yes. The diagonal of the table is each token against itself: \"sat\" scores itself 1.142 in head 1."
             },
             {
-              "p": "[Step 6](/module/?id=transformer-mask-and-softmax) turns each row of scores into weights."
+              "p": "The next section, [Mask and softmax](#lesson-mask-and-softmax), turns each row of scores into weights."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "mask-and-softmax",
+          "title": "Mask and softmax",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "Attention Is All You Need (Vaswani et al., 2017)",
-                  "url": "https://arxiv.org/abs/1706.03762",
-                  "source": "arXiv",
-                  "starred": true
-                },
-                {
-                  "title": "Effective Approaches to Attention-based Neural Machine Translation (Luong et al., 2015)",
-                  "url": "https://arxiv.org/abs/1508.04025",
-                  "source": "arXiv"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "transformer-mask-and-softmax": {
-      "anchors": [
-        "the-problem",
-        "earlier-approaches",
-        "causal-mask-and-softmax",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
-              "p": "After Step 5, each head has a table of scores, one row per token. Two things stand between those scores and usable weights."
+              "p": "After [Scores](#lesson-scores), each head has a table of scores, one row per token. Two things stand between those scores and usable weights."
             },
             {
               "p": "**Looking ahead.** In training, the model reads a whole text, and every position predicts its next token in the same run. For \"the cat sat on\", \"the\" has to predict \"cat\", \"cat\" has to predict \"sat\", and \"sat\" has to predict \"on\". The token to be predicted is right there in the input, one place to the right. If \"the\" could look at \"cat\", it would copy the answer and learn nothing. So a position must not see the tokens after it."
@@ -33019,34 +32689,30 @@
               }
             },
             {
-              "p": "**Scores are not weights.** Step 7 averages the values of the tokens, and an average needs weights that are never negative and add up to 1. Scores are neither. The row of \"sat\" in head 1 is 0.721, 2.539 and 1.142, which adds up to 4.402, and a score can be negative. Something has to turn each row into proper weights, while keeping the highest score the highest weight."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+              "p": "**Scores are not weights.** [Weighted sum](/module/?id=transformer-weighted-sum#lesson-weighted-sum) averages the values of the tokens, and an average needs weights that are never negative and add up to 1. Scores are neither. The row of \"sat\" in head 1 is 0.721, 2.539 and 1.142, which adds up to 4.402, and a score can be negative. Something has to turn each row into proper weights, while keeping the highest score the highest weight."
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "One prefix at a time",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Running the model separately on \"the\", \"the cat\", \"the cat sat\" avoids looking ahead but takes one run per token."
             },
             {
               "heading": "Picking the best token",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Putting all the weight on the highest score gives valid weights, but small changes to the scores then change nothing, so the model cannot be trained. Scores of 2.0 and 1.9 give weights of 1 and 0, and they stay 1 and 0 until the second score overtakes the first."
-            }
-          ]
-        },
-        {
-          "id": "causal-mask-and-softmax",
-          "title": "Causal mask and softmax",
-          "blocks": [
+            },
+            {
+              "heading": "Causal mask and softmax",
+              "level": 3
+            },
             {
               "p": "**The mask.** The **causal mask** hides every score for a later token by setting it to $-\\infty$. In the row for \"cat\", the score against \"sat\" is hidden, and in the row for \"the\", both later scores are."
             },
@@ -33062,9 +32728,9 @@
             {
               "figure": {
                 "src": "assets/module-media/transformer-mask-softmax.svg",
-                "alt": "Three tables with rows and columns the, cat, sat. The first holds the scores from Step 5. In the second, after the mask, the three scores above the diagonal are marked hidden. In the third, after the softmax, each row holds weights that add up to 1: 1.000 for the, then 0.250 and 0.750 for cat, then 0.115, 0.709 and 0.175 for sat, with 0 wherever a score was hidden.",
+                "alt": "Three tables with rows and columns the, cat, sat. The first holds the scores from the Scores section. In the second, after the mask, the three scores above the diagonal are marked hidden. In the third, after the softmax, each row holds weights that add up to 1: 1.000 for the, then 0.250 and 0.750 for cat, then 0.115, 0.709 and 0.175 for sat, with 0 wherever a score was hidden.",
                 "caption": "Head 1 of the running example. The mask hides the later tokens, and the softmax turns each row into weights that add up to 1.",
-                "width": 603,
+                "width": 599,
                 "height": 215
               }
             },
@@ -33093,13 +32759,13 @@
               }
             },
             {
-              "p": "The three changes add up to 0, so the weights still add up to 1. The slope is largest when a weight is near 0.5 and vanishes near 0 or 1. With the scores 2 and 0 of Step 5, the top weight 0.88 has a slope of 0.88 × 0.12, about 0.1. With 16 and 0 it is 0.9999999 × 0.0000001, about 0.0000001, so training can barely move the weights, which is why Step 5 divides the scores. [Calculus and Gradients](/module/?id=calculus-gradients) derives these slopes."
+              "p": "The three changes add up to 0, so the weights still add up to 1. The slope is largest when a weight is near 0.5 and vanishes near 0 or 1. With the scores 2 and 0 from [Scores](#lesson-scores), the top weight 0.88 has a slope of 0.88 × 0.12, about 0.1. With 16 and 0 it is 0.9999999 × 0.0000001, about 0.0000001, so training can barely move the weights, which is why [Scores](#lesson-scores) divides the scores. [Calculus and Gradients](/module/?id=calculus-gradients) derives these slopes."
             },
             {
               "p": "**One run for every position.** With the mask in place, the model makes a prediction at every position in one run, and none of them can see its own answer. On \"the cat sat\" that is 3 predictions from 1 run in place of 3 runs."
             },
             {
-              "p": "**Checking the mask.** A hidden score gets a weight of exactly 0, so the token behind it has no effect at all. Changing \"sat\" to \"ran\" shows it. In head 2, the score of \"the\" against the third token changes from 1.120 to 0.413, but it is hidden either way, so \"the\" keeps the weights 1, 0 and 0. Every number at the first two positions comes out the same to the last digit, all the way to the predictions of Step 12, and only the third row changes. Without the mask, as in BERT, \"the\" would put 0.232 of its head 2 weight on \"sat\", and changing the third token would change every row."
+              "p": "**Checking the mask.** A hidden score gets a weight of exactly 0, so the token behind it has no effect at all. Changing \"sat\" to \"ran\" shows it. In head 2, the score of \"the\" against the third token changes from 1.120 to 0.413, but it is hidden either way, so \"the\" keeps the weights 1, 0 and 0. Every number at the first two positions comes out the same to the last digit, all the way to the predictions in part 5, and only the third row changes. Without the mask, as in BERT, \"the\" would put 0.232 of its head 2 weight on \"sat\", and changing the third token would change every row."
             },
             {
               "p": "**Padding.** Texts in a batch have different lengths, so the shorter ones are filled up with a pad token, and a second mask hides the pads as keys, columns of the table. Padding \"the cat\" with `<end>` to the length of \"the cat sat\" adds a pad at the third position. The causal mask already hides that pad from \"the\" and \"cat\". Pads at the start, or a model with no causal mask such as [BERT and Masked Language Modeling](/module/?id=transformer-architectures-bert-mlm), need the padding mask."
@@ -33138,19 +32804,17 @@
             },
             {
               "p": "One NaN spreads through training to every weight of the model in a single step. So pads are hidden as keys only, and code often uses a large negative number such as $-10^9$ in place of $-\\infty$. That works only because each row's maximum is subtracted first, as the running example's code does: an all-hidden row becomes all zeros, and the softmax gives equal weights instead of NaN. The positions whose target is a pad are left out of the loss."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
             {
-              "heading": "The mask",
+              "heading": "Running example",
               "level": 3
             },
             {
-              "p": "The scores of head 1 from Step 5, with the later tokens hidden:"
+              "heading": "The mask",
+              "level": 4
+            },
+            {
+              "p": "The scores of head 1 from [Scores](#lesson-scores), with the later tokens hidden:"
             },
             {
               "table": {
@@ -33184,7 +32848,7 @@
             },
             {
               "heading": "The softmax",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Row by row:"
@@ -33254,7 +32918,7 @@
             },
             {
               "heading": "Head 2",
-              "level": 3
+              "level": 4
             },
             {
               "table": {
@@ -33334,13 +32998,11 @@
                   "print(A1.round(3))"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Why set hidden scores to −∞ and not to 0?** A score of 0 is not \"no attention\". $e^0 = 1$, so it would still get a weight. If the row of \"the\" were 0, 0, 0, the softmax would give 0.333 to each token, including the two it must not see. Only $-\\infty$ gives a weight of exactly 0."
             },
@@ -33357,7 +33019,7 @@
               "p": "**Why $e$ and not another base?** Any base above 1 gives valid weights. Changing the base is the same as multiplying every score by a constant, which the model can learn to do itself. $e$ is the convention, and it makes the derivative simple."
             },
             {
-              "p": "[Step 7](/module/?id=transformer-weighted-sum) uses these weights to combine the values."
+              "p": "[Part 3](/module/?id=transformer-weighted-sum#lesson-weighted-sum) uses these weights to combine the values."
             }
           ]
         },
@@ -33374,6 +33036,21 @@
                   "starred": true
                 },
                 {
+                  "title": "Neural Machine Translation by Jointly Learning to Align and Translate (Bahdanau et al., 2014)",
+                  "url": "https://arxiv.org/abs/1409.0473",
+                  "source": "arXiv"
+                },
+                {
+                  "title": "Effective Approaches to Attention-based Neural Machine Translation (Luong et al., 2015)",
+                  "url": "https://arxiv.org/abs/1508.04025",
+                  "source": "arXiv"
+                },
+                {
+                  "title": "Attention in transformers, step-by-step (video)",
+                  "url": "https://www.youtube.com/watch?v=eMlx5fFNoYc",
+                  "source": "3Blue1Brown"
+                },
+                {
                   "title": "The Illustrated GPT-2",
                   "url": "https://jalammar.github.io/illustrated-gpt2/",
                   "source": "Jay Alammar"
@@ -33386,26 +33063,39 @@
     },
     "transformer-weighted-sum": {
       "anchors": [
-        "the-problem",
-        "earlier-approaches",
-        "the-weighted-sum",
-        "running-example",
-        "common-questions",
+        "prerequisites",
+        "weighted-sum",
+        "multi-head",
         "resources"
       ],
       "sections": [
         {
-          "id": "the-problem",
-          "title": "The problem",
+          "id": "prerequisites",
+          "title": "Prerequisites",
           "blocks": [
             {
-              "p": "After Step 6, each token has a weight for every token it can see. For \"sat\" in head 1 the weights are 0.115 for \"the\", 0.709 for \"cat\" and 0.175 for itself. Each of those tokens also has a value from Step 4."
+              "list": [
+                "[Self-Attention Fundamentals](/module/?id=transformer-fundamentals)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "weighted-sum",
+          "title": "Weighted sum",
+          "blocks": [
+            {
+              "heading": "The problem",
+              "level": 3
+            },
+            {
+              "p": "After part 2, each token has a weight for every token it can see. For \"sat\" in head 1 the weights are 0.115 for \"the\", 0.709 for \"cat\" and 0.175 for itself. Each of those tokens also has a value from [Q, K, V](/module/?id=transformer-qkv#lesson-q-k-v)."
             },
             {
               "figure": {
                 "src": "assets/module-media/transformer-problem-weighted-sum.svg",
                 "alt": "A bar chart of the weights of sat on three tokens: 0.115 on the, 0.709 on cat and 0.175 on sat. Under each bar is the value of that token: (1.000, 1.000) for the, (0.841, 1.540) for cat and (0.909, -0.416) for sat.",
-                "caption": "What \"sat\" has in head 1 after Step 6: three weights and three values, and no result yet.",
+                "caption": "What \"sat\" has in head 1 after part 2: three weights and three values, and no result yet.",
                 "width": 557,
                 "height": 312
               }
@@ -33419,33 +33109,29 @@
                 "**Follows the weights.** A token with a weight of 0.709 should count for far more than one with 0.115.",
                 "**Smooth.** A small change in a weight gives a small change in the result, so that training can adjust it."
               ]
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "Copying one token",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Copying only the highest-weighted token ignores the rest and cannot be trained: \"sat\" would take the value of \"cat\" and drop everything else."
             },
             {
               "heading": "The context vector",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Bahdanau et al. (2014) combined a translation model's states by a weighted sum, called a context vector: when translating \"the black cat\" into French, the word \"chat\" draws mostly on \"cat\". The Transformer keeps this idea."
-            }
-          ]
-        },
-        {
-          "id": "the-weighted-sum",
-          "title": "The weighted sum",
-          "blocks": [
+            },
+            {
+              "heading": "The weighted sum",
+              "level": 3
+            },
             {
               "p": "**One token.** Each token's new vector is the **weighted average** of the values of the tokens it can see. Multiply each value by its weight and add:"
             },
@@ -33471,20 +33157,20 @@
               }
             },
             {
-              "p": "**Every token at once.** With the weights as the rows of $A$ and the values as the rows of $V$, the outputs for all tokens are one matrix multiplication, $A V$. Steps 4 to 7 together are called **scaled dot-product attention**. In one line, with the mask of Step 6 applied before the softmax:"
+              "p": "**Every token at once.** With the weights as the rows of $A$ and the values as the rows of $V$, the outputs for all tokens are one matrix multiplication, $A V$. Queries, keys and values, the scores, the mask and softmax, and this weighted sum together are called **scaled dot-product attention**. In one line, with the mask from part 2 applied before the softmax:"
             },
             {
               "tex": "\\text{Attention}(Q, K, V) = \\text{softmax}\\!\\left(\\frac{Q K^\\top}{\\sqrt{d_k}}\\right) V,"
             },
             {
-              "p": "where $d_k$ is the head size, 2 in the running example. For head 1, the softmax gives the 3 × 3 table of weights from Step 6, and $V$ is the 3 × 2 table of values from Step 4, so the output is a 3 × 2 table with one row per token."
+              "p": "where $d_k$ is the head size, 2 in the running example. For head 1, the softmax gives the 3 × 3 table of weights from [Mask and softmax](/module/?id=transformer-qkv#lesson-mask-and-softmax), and $V$ is the 3 × 2 table of values from [Q, K, V](/module/?id=transformer-qkv#lesson-q-k-v), so the output is a 3 × 2 table with one row per token."
             },
             {
               "heading": "Gradients",
-              "level": 3
+              "level": 4
             },
             {
-              "p": "**One score.** Training changes attention through its scores. When the score $s_j$ of token $j$ rises by a small amount, its weight rises and the others fall (Step 6), and the output moves toward that token's value:"
+              "p": "**One score.** Training changes attention through its scores. When the score $s_j$ of token $j$ rises by a small amount, its weight rises and the others fall (see [Mask and softmax](/module/?id=transformer-qkv#lesson-mask-and-softmax)), and the output moves toward that token's value:"
             },
             {
               "tex": "\\frac{\\partial \\, \\text{output}}{\\partial s_j} = a_j \\, (v_j - \\text{output})."
@@ -33535,7 +33221,7 @@
               }
             },
             {
-              "p": "**The whole table.** Training starts from $dO$, how much the loss of [Step 12](/module/?id=transformer-predict) changes with each number of the output, one row per token. Working back through $O = AV$, the softmax and $S = QK^\\top / \\sqrt{d_k}$:"
+              "p": "**The whole table.** Training starts from $dO$, how much the training loss (see [Predict](/module/?id=transformer-predict#lesson-predict)) changes with each number of the output, one row per token. Working back through $O = AV$, the softmax and $S = QK^\\top / \\sqrt{d_k}$:"
             },
             {
               "tex": "dV = A^\\top dO, \\qquad dS = A \\odot \\left(dO \\, V^\\top - r\\right), \\qquad dQ = \\frac{dS \\, K}{\\sqrt{d_k}}, \\qquad dK = \\frac{dS^\\top Q}{\\sqrt{d_k}}."
@@ -33573,20 +33259,18 @@
               }
             },
             {
-              "p": "**Only the outputs.** The weighted average subtracted in each row equals the dot product of that token's row of $dO$ with its row of the output, because the output is itself the weighted average of the values. In the example it is (1, 0) · (0.872, 1.135) = 0.872. So it can be found from $O$ and $dO$ alone, before any weight is known. [Efficient Transformers: 4. FlashAttention](/module/?id=efficient-flashattention) relies on this: it stores no table of weights, and in the backward pass it recomputes them a block at a time."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+              "p": "**Only the outputs.** The weighted average subtracted in each row equals the dot product of that token's row of $dO$ with its row of the output, because the output is itself the weighted average of the values. In the example it is (1, 0) · (0.872, 1.135) = 0.872. So it can be found from $O$ and $dO$ alone, before any weight is known. [Efficient Transformers: FlashAttention](/module/?id=efficient-flashattention#lesson-flashattention) relies on this: it stores no table of weights, and in the backward pass it recomputes them a block at a time."
+            },
             {
-              "heading": "One token",
+              "heading": "Running example",
               "level": 3
             },
             {
-              "p": "For \"sat\" in head 1, the weights from Step 6 are 0.115, 0.709 and 0.175, and the values of head 1 come from Step 4:"
+              "heading": "One token",
+              "level": 4
+            },
+            {
+              "p": "For \"sat\" in head 1, the weights from part 2 are 0.115, 0.709 and 0.175, and the values of head 1 come from [Q, K, V](/module/?id=transformer-qkv#lesson-q-k-v):"
             },
             {
               "table": {
@@ -33629,7 +33313,7 @@
             },
             {
               "heading": "Every token in head 1",
-              "level": 3
+              "level": 4
             },
             {
               "table": {
@@ -33655,7 +33339,7 @@
             },
             {
               "heading": "Head 2",
-              "level": 3
+              "level": 4
             },
             {
               "table": {
@@ -33775,15 +33459,13 @@
                   "# [True, True, True]"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
             {
-              "p": "**Does the output replace the token's vector?** No. It is what the token gathered from the others. Step 9 adds it to the token's own vector, so nothing the token already had is lost."
+              "heading": "Common questions",
+              "level": 3
+            },
+            {
+              "p": "**Does the output replace the token's vector?** No. It is what the token gathered from the others. [Residual and LayerNorm](/module/?id=transformer-residual-and-layernorm#lesson-residual-and-layernorm) adds it to the token's own vector, so nothing the token already had is lost."
             },
             {
               "p": "**Why is the output of \"the\" just its own value?** \"the\" has a weight of 1 on itself and 0 on everything else, so its weighted sum is its own value: (1.000, 1.000) in head 1."
@@ -33795,62 +33477,20 @@
               "p": "**Why do the hand sums differ in the last digit?** The weights and values shown are rounded to three decimals. Adding the rounded products gives (0.870, 1.134), and full precision gives (0.872, 1.135)."
             },
             {
-              "p": "[Step 8](/module/?id=transformer-multi-head) combines the two heads."
+              "p": "The next section, [Multi-head](#lesson-multi-head), combines the two heads."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "multi-head",
+          "title": "Multi-head",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "Attention Is All You Need (Vaswani et al., 2017)",
-                  "url": "https://arxiv.org/abs/1706.03762",
-                  "source": "arXiv",
-                  "starred": true
-                },
-                {
-                  "title": "Neural Machine Translation by Jointly Learning to Align and Translate (Bahdanau et al., 2014)",
-                  "url": "https://arxiv.org/abs/1409.0473",
-                  "source": "arXiv"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "transformer-multi-head": {
-      "anchors": [
-        "prerequisites",
-        "the-problem",
-        "earlier-approaches",
-        "multi-head-attention",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "prerequisites",
-          "title": "Prerequisites",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
-              "list": [
-                "[Self-Attention Fundamentals](/module/?id=transformer-fundamentals)",
-                "[7. Weighted sum](/module/?id=transformer-weighted-sum)"
-              ]
-            }
-          ]
-        },
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
-            {
-              "p": "Steps 4 to 7 give each token one set of weights and one result. But a token often needs several things at once."
+              "p": "Attention so far gives each token one set of weights and one result. But a token often needs several things at once."
             },
             {
               "p": "To predict what follows \"the cat sat\", the model needs the subject, \"cat\", and also the verb, \"sat\" itself. With one set of weights, the token has to split its attention between them. If it puts 0.5 on each, it gets the average of their two values, and an average is not either one. For example, if the value of \"cat\" were (1, 0) and the value of \"sat\" (0, 1), the result would be (0.5, 0.5)."
@@ -33866,22 +33506,18 @@
             },
             {
               "p": "Putting all the weight on one of them returns that value exactly and loses the other. What the token needs is to look at \"cat\" fully and at \"sat\" fully, at the same time, and to keep the two results apart."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "p": "Attention before the Transformer used a single head. Making that head bigger does not help, because it still has only one set of weights per token: if it splits its weight evenly between \"cat\" and \"sat\", it returns the average of their values, not either one."
-            }
-          ]
-        },
-        {
-          "id": "multi-head-attention",
-          "title": "Multi-head attention",
-          "blocks": [
+            },
+            {
+              "heading": "Multi-head attention",
+              "level": 3
+            },
             {
               "p": "**Several heads.** **Multi-head attention** runs several heads side by side. Each head has its own queries, keys and values, so each can look for something different. For example, one set of weights split evenly between the values (1, 0) and (0, 1) returns (0.5, 0.5), which matches neither. Two heads can return (1, 0) and (0, 1) separately."
             },
@@ -33970,7 +33606,7 @@
               }
             },
             {
-              "p": "**Cost.** Splitting into heads costs nothing extra. Twelve heads of 64 numbers use the same number of weights as one head of 768, because 12 × 64 = 768. The four tables hold $4d^2$ weights whatever the number of heads: 4 × 16 = 64 in the running example, and 4 × 768 × 768 = 2,359,296 in GPT-2 small, which with 3,072 offsets is the 2,362,368 of [Step 11](/module/?id=transformer-stack). Computing the scores costs the same too: the running example's 2 heads each compute 9 scores of 2 products, 2 × 9 × 2 = 36 multiplications, as many as one head of 4 numbers, 9 × 4 = 36."
+              "p": "**Cost.** Splitting into heads costs nothing extra. Twelve heads of 64 numbers use the same number of weights as one head of 768, because 12 × 64 = 768. The four tables hold $4d^2$ weights whatever the number of heads: 4 × 16 = 64 in the running example, and 4 × 768 × 768 = 2,359,296 in GPT-2 small, which with 3,072 offsets is the 2,362,368 counted in [Stack](/module/?id=transformer-residual-and-layernorm#lesson-stack). Computing the scores costs the same too: the running example's 2 heads each compute 9 scores of 2 products, 2 × 9 × 2 = 36 multiplications, as many as one head of 4 numbers, 9 × 4 = 36."
             },
             {
               "problemCard": {
@@ -34010,16 +33646,14 @@
             },
             {
               "p": "**What heads learn.** In trained models, heads specialize (Voita et al., 2019): the most important and confident heads play consistent and often linguistically-interpretable roles."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "heading": "Several heads",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The two heads look at different tokens for \"sat\":"
@@ -34052,11 +33686,11 @@
               }
             },
             {
-              "p": "Head 1 finds the subject. Head 2, whose queries and keys are identical, stays on the token itself, the flaw Step 4 described. Placing the two outputs side by side gives each token four numbers again."
+              "p": "Head 1 finds the subject. Head 2, whose queries and keys are identical, stays on the token itself, the flaw described in [Q, K, V](/module/?id=transformer-qkv#lesson-q-k-v). Placing the two outputs side by side gives each token four numbers again."
             },
             {
               "heading": "Putting the heads together",
-              "level": 3
+              "level": 4
             },
             {
               "table": {
@@ -34109,13 +33743,11 @@
                   "print(M.round(3))"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**How many heads does a real model have?** GPT-2 small has 12 heads of 64 numbers in each of its 12 blocks. The width is fixed, so more heads means smaller heads: 768 numbers can be 12 heads of 64 or 6 heads of 128."
             },
@@ -34126,10 +33758,10 @@
               "p": "**Do the heads see each other's results?** Not inside one attention layer. They run side by side on the same input. Their outputs are mixed afterwards by the output projection, and later blocks can build on all of them."
             },
             {
-              "p": "**Why does head 2 attend to \"sat\" itself?** Its queries and keys were set to be identical in Step 4. A token then tends to match itself, so head 2 gives \"sat\" 0.771 of its own weight. A trained head would not be built this way."
+              "p": "**Why does head 2 attend to \"sat\" itself?** Its queries and keys were set to be identical in [Q, K, V](/module/?id=transformer-qkv#lesson-q-k-v). A token then tends to match itself, so head 2 gives \"sat\" 0.771 of its own weight. A trained head would not be built this way."
             },
             {
-              "p": "[Step 9](/module/?id=transformer-residual-and-layernorm) adds $M$ back to the block's input."
+              "p": "[Part 4](/module/?id=transformer-residual-and-layernorm#lesson-residual-and-layernorm) adds $M$ back to the block's input."
             }
           ]
         },
@@ -34144,6 +33776,11 @@
                   "url": "https://arxiv.org/abs/1706.03762",
                   "source": "arXiv",
                   "starred": true
+                },
+                {
+                  "title": "Neural Machine Translation by Jointly Learning to Align and Translate (Bahdanau et al., 2014)",
+                  "url": "https://arxiv.org/abs/1409.0473",
+                  "source": "arXiv"
                 },
                 {
                   "title": "Analyzing Multi-Head Self-Attention: Specialized Heads Do the Heavy Lifting, the Rest Can Be Pruned (Voita et al., 2019)",
@@ -34163,20 +33800,35 @@
     },
     "transformer-residual-and-layernorm": {
       "anchors": [
-        "the-problem",
-        "earlier-approaches",
-        "residual-connections-and-layernorm",
-        "running-example",
-        "common-questions",
+        "prerequisites",
+        "residual-and-layernorm",
+        "feed-forward",
+        "stack",
         "resources"
       ],
       "sections": [
         {
-          "id": "the-problem",
-          "title": "The problem",
+          "id": "prerequisites",
+          "title": "Prerequisites",
           "blocks": [
             {
-              "p": "Steps 4 to 8 are one attention layer, and a model stacks many layers. Three things go wrong when layers are simply chained, each one feeding the next."
+              "list": [
+                "[Self-Attention Fundamentals](/module/?id=transformer-fundamentals)",
+                "[MLPs and Activations](/module/?id=neural-networks-perceptrons-mlps-activations)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "residual-and-layernorm",
+          "title": "Residual and LayerNorm",
+          "blocks": [
+            {
+              "heading": "The problem",
+              "level": 3
+            },
+            {
+              "p": "Parts 2 and 3 make up one attention layer, and a model stacks many layers. Three things go wrong when layers are simply chained, each one feeding the next."
             },
             {
               "p": "**The training signal fades.** Training adjusts each layer using a signal passed back from the output through every layer in between. If each layer passes back only half of it, layer 1 of a 12-layer model receives $0.5^{12} = 0.00024$ of the signal and barely learns. Deeper plain networks do train worse: He et al. (2016) found that a plain 56-layer network did worse than a 20-layer one, and attributed the degradation to an optimization difficulty, arguing that vanishing gradients are not the cause."
@@ -34194,34 +33846,30 @@
               }
             },
             {
-              "p": "**A token loses itself.** Head 1's half of the attention output for \"sat\" in Step 8, (0.872, 1.135), is mostly the value of \"cat\". If the whole output simply replaced the vector of \"sat\", the model would lose track of the verb itself."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+              "p": "**A token loses itself.** Head 1's half of the attention output for \"sat\" in part 3, (0.872, 1.135), is mostly the value of \"cat\". If the whole output simply replaced the vector of \"sat\", the model would lose track of the verb itself."
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "Plain stacking",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Feeding each layer straight into the next has all of these problems. If each of 12 layers passes back only 1% of the training signal, the first layer receives $0.01^{12} = 10^{-24}$ of it, effectively nothing."
             },
             {
               "heading": "Batch normalization",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Batch normalization rescales numbers using statistics across a whole batch of texts, which fits text poorly: the same sentence gets different numbers depending on which other sentences share its batch, and generating one token at a time gives it no batch to average over, so it reuses statistics fixed during training instead of computing fresh ones."
-            }
-          ]
-        },
-        {
-          "id": "residual-connections-and-layernorm",
-          "title": "Residual connections and LayerNorm",
-          "blocks": [
+            },
+            {
+              "heading": "Residual connections and LayerNorm",
+              "level": 3
+            },
             {
               "p": "**The residual connection.** A **residual connection** adds a layer's input back to its output. For the attention layer, with input $H$ and output $M$:"
             },
@@ -34311,20 +33959,18 @@
               }
             },
             {
-              "p": "**The final norm.** With pre-norm, each part adds to the vectors and nothing normalizes them, so they tend to grow with depth. GPT-2 therefore adds one more LayerNorm after the last block, the final LayerNorm counted in [Step 11](/module/?id=transformer-stack), and scales the starting weights at the end of each part by $1/\\sqrt{N}$, where $N$ counts the residual additions: 2 per block, 24 in GPT-2 small, a factor of 0.204. Post-norm needs neither of these, because every block already ends with a norm. The rows of $H$ in the running example have lengths 1.732, 2.258 and 2.458, and every row of $Y$ below has length 2: after LayerNorm the squares of its 4 numbers average 1, so they add up to 4."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+              "p": "**The final norm.** With pre-norm, each part adds to the vectors and nothing normalizes them, so they tend to grow with depth. GPT-2 therefore adds one more LayerNorm after the last block, the final LayerNorm counted in [Stack](#lesson-stack), and scales the starting weights at the end of each part by $1/\\sqrt{N}$, where $N$ counts the residual additions: 2 per block, 24 in GPT-2 small, a factor of 0.204. Post-norm needs neither of these, because every block already ends with a norm. The rows of $H$ in the running example have lengths 1.732, 2.258 and 2.458, and every row of $Y$ below has length 2: after LayerNorm the squares of its 4 numbers average 1, so they add up to 4."
+            },
             {
-              "heading": "The residual connection",
+              "heading": "Running example",
               "level": 3
             },
             {
-              "p": "First, the residual connection adds $H$ from Step 3 to $M$ from Step 8. For \"sat\":"
+              "heading": "The residual connection",
+              "level": 4
+            },
+            {
+              "p": "First, the residual connection adds $H$ from part 1 to $M$ from part 3. For \"sat\":"
             },
             {
               "table": {
@@ -34399,7 +34045,7 @@
             },
             {
               "heading": "LayerNorm",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Then LayerNorm, worked through for \"sat\":"
@@ -34439,7 +34085,7 @@
               }
             },
             {
-              "p": "Doing every row gives the output of this step, $Y$:"
+              "p": "Doing every row gives the output of this section, $Y$:"
             },
             {
               "table": {
@@ -34500,13 +34146,11 @@
                   "print(Y.round(3))    # last digits differ slightly: the inputs are rounded"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Does LayerNorm lose information?** It removes the overall size and offset of a vector. (2, 2, 0, 2) and (4, 4, 0, 4) both become (0.577, 0.577, −1.732, 0.577), which is the row of \"the\" above. What is kept is the pattern, which numbers are larger than which. The learned scale and shift let the model put a size back if it needs one."
             },
@@ -34520,66 +34164,18 @@
               "p": "**What does the small number in the code do?** The code adds $10^{-5}$ under the square root so that a vector whose numbers are all equal, with a standard deviation of 0, does not cause a division by zero."
             },
             {
-              "p": "The same add-and-normalize follows the feed-forward network in [Step 10](/module/?id=transformer-feed-forward)."
+              "p": "The same add-and-normalize follows the feed-forward network in [Feed-forward](#lesson-feed-forward)."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "feed-forward",
+          "title": "Feed-forward",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "Deep Residual Learning for Image Recognition (He et al., 2016)",
-                  "url": "https://arxiv.org/abs/1512.03385",
-                  "source": "arXiv",
-                  "starred": true
-                },
-                {
-                  "title": "Layer Normalization (Ba et al., 2016)",
-                  "url": "https://arxiv.org/abs/1607.06450",
-                  "source": "arXiv"
-                },
-                {
-                  "title": "On Layer Normalization in the Transformer Architecture (Xiong et al., 2020)",
-                  "url": "https://arxiv.org/abs/2002.04745",
-                  "source": "arXiv"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "transformer-feed-forward": {
-      "anchors": [
-        "prerequisites",
-        "the-problem",
-        "earlier-approaches",
-        "the-feed-forward-network",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "prerequisites",
-          "title": "Prerequisites",
-          "blocks": [
-            {
-              "list": [
-                "[Self-Attention Fundamentals](/module/?id=transformer-fundamentals)",
-                "[Residual and LayerNorm](/module/?id=transformer-residual-and-layernorm)",
-                "[MLPs and Activations](/module/?id=neural-networks-perceptrons-mlps-activations)"
-              ]
-            }
-          ]
-        },
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "Attention moves information between tokens. What it produces for a token is a weighted average of values, and an average can only land between the things it averages."
             },
@@ -34597,33 +34193,29 @@
             },
             {
               "p": "So after attention, \"sat\" carries a mix of its own information and that of \"cat\", but nothing new has been computed from the mix. The model also needs to work on the combined vector, for example to recognize that a cat sitting is usually followed by where it sat. That takes a step that can produce something other than a blend of its inputs."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "Attention alone",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Stacking attention layers with nothing in between makes every token's vector more and more alike as the stack grows (Dong et al., 2021): after enough layers, \"the\", \"cat\" and \"sat\" would carry almost the same vector."
             },
             {
               "heading": "Another table of weights",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Multiplying by two tables of weights in a row is the same as multiplying by one, just as multiplying by 2 and then by 3 is the same as multiplying by 6, so another plain multiplication adds nothing. Something that is not just multiplying and adding is needed."
-            }
-          ]
-        },
-        {
-          "id": "the-feed-forward-network",
-          "title": "The feed-forward network",
-          "blocks": [
+            },
+            {
+              "heading": "The feed-forward network",
+              "level": 3
+            },
             {
               "p": "**Three stages.** Each block has a small network applied to every token separately. It expands the token's vector to a wider one, sets every negative number to zero (the **ReLU**), then shrinks it back:"
             },
@@ -34636,7 +34228,7 @@
             {
               "figure": {
                 "src": "assets/module-media/transformer-feed-forward.svg",
-                "alt": "Four rows of numbers for sat, joined by downward arrows. The input after Step 9 has 4 numbers: -0.241, -1.208, -0.121, 1.571. Expanding gives 8: -1.812, -1.208, -0.121, 1.812, 1.208, -0.120, -2.779, -0.121. After the ReLU only the two positive ones remain, 1.812 and 1.208, and the other six are 0. Shrinking gives 4 numbers: -0.604, 0, 0, 0.906.",
+                "alt": "Four rows of numbers for sat, joined by downward arrows. The input after the first add and norm has 4 numbers: -0.241, -1.208, -0.121, 1.571. Expanding gives 8: -1.812, -1.208, -0.121, 1.812, 1.208, -0.120, -2.779, -0.121. After the ReLU only the two positive ones remain, 1.812 and 1.208, and the other six are 0. Shrinking gives 4 numbers: -0.604, 0, 0, 0.906.",
                 "caption": "The feed-forward network for \"sat\" in the running example. The ReLU switches off six of the eight hidden values.",
                 "width": 503,
                 "height": 278
@@ -34652,17 +34244,15 @@
               "p": "**Size and role.** The two tables hold about two-thirds of each block's weights: 4,722,432 of 7,087,872 in GPT-2 small. They act like a learned memory (Geva et al., 2021): parts of the network respond to patterns such as \"The capital of France is\" and add the information that goes with them."
             },
             {
-              "p": "**Add and normalize.** Afterwards, the same add-and-normalize as Step 9 gives the output of the block."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+              "p": "**Add and normalize.** Afterwards, the same add-and-normalize as in [Residual and LayerNorm](#lesson-residual-and-layernorm) gives the output of the block."
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "heading": "The two tables",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The running example's first table turns each token's four numbers into eight hidden values, each a sum or difference of the inputs:"
@@ -34697,10 +34287,10 @@
             },
             {
               "heading": "Three stages",
-              "level": 3
+              "level": 4
             },
             {
-              "p": "The second table takes the first four hidden values, subtracts the last four, and halves the result. For \"sat\", the input is its row of $Y$ from Step 9, (−0.241, −1.208, −0.121, 1.571):"
+              "p": "The second table takes the first four hidden values, subtracts the last four, and halves the result. For \"sat\", the input is its row of $Y$ from [Residual and LayerNorm](#lesson-residual-and-layernorm), (−0.241, −1.208, −0.121, 1.571):"
             },
             {
               "table": {
@@ -34734,7 +34324,7 @@
             },
             {
               "heading": "Every token",
-              "level": 3
+              "level": 4
             },
             {
               "p": "For \"sat\" the ReLU switches off six of the eight hidden values. Doing the same for every token gives the output of the block, $H^{(1)}$:"
@@ -34805,15 +34395,13 @@
                   "print(H1.round(3))   # last digits differ slightly: the inputs are rounded"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
             {
-              "p": "**Does the feed-forward network see other tokens?** No. It is applied to each token on its own, with the same weights for every token. Whatever a token knows about the others was gathered by attention before this step."
+              "heading": "Common questions",
+              "level": 3
+            },
+            {
+              "p": "**Does the feed-forward network see other tokens?** No. It is applied to each token on its own, with the same weights for every token. Whatever a token knows about the others was gathered by attention before this section."
             },
             {
               "p": "**Why expand and then shrink?** The wide middle is where the detectors are. With 8 hidden values there can be 8 different patterns to respond to, and with GPT-2's 3,072 there are 3,072. Shrinking back keeps the width at $d$ so that blocks can be stacked."
@@ -34828,52 +34416,18 @@
               "p": "**Is it normal for most hidden values to be off?** Yes. For \"sat\", 6 of the 8 are 0. In trained models too, only a fraction of the hidden values are on for any one token, which is what makes each one a detector for something specific."
             },
             {
-              "p": "$H^{(1)}$ is the output of the block. [Step 11](/module/?id=transformer-stack) stacks blocks."
+              "p": "$H^{(1)}$ is the output of the block. The next section, [Stack](#lesson-stack), stacks blocks."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "stack",
+          "title": "Stack",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "Transformer Feed-Forward Layers Are Key-Value Memories (Geva et al., 2021)",
-                  "url": "https://arxiv.org/abs/2012.14913",
-                  "source": "arXiv",
-                  "starred": true
-                },
-                {
-                  "title": "Attention is Not All You Need: Pure Attention Loses Rank Doubly Exponentially with Depth (Dong et al., 2021)",
-                  "url": "https://arxiv.org/abs/2103.03404",
-                  "source": "arXiv"
-                },
-                {
-                  "title": "GLU Variants Improve Transformer (Shazeer, 2020)",
-                  "url": "https://arxiv.org/abs/2002.05202",
-                  "source": "arXiv"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "transformer-stack": {
-      "anchors": [
-        "the-problem",
-        "earlier-approaches",
-        "stacking-blocks",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "One block gives each token one round of gathering information, in attention, and one round of working on it, in the feed-forward network. Some predictions need more than one round, because the second step depends on the result of the first."
             },
@@ -34897,35 +34451,31 @@
             },
             {
               "p": "The second step cannot start until the first has finished: the model does not know where to look for \"the token after\" until it has found the earlier \"Harry\". Within one block, every head works from the same input at the same time, so no head can use another head's result. Olsson et al. (2022) showed that this task needs two attention layers in sequence."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "A wider block",
-              "level": 3
+              "level": 4
             },
             {
               "p": "More heads let a block compute more relationships from the same input, but not relationships built on the results of other ones: one head can find the earlier \"Harry\", but no head in the same block can use that to copy \"Potter\"."
             },
             {
               "heading": "Deep recurrent networks",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Recurrent networks were stacked too, but were hard to train deep. Google's 2016 translation system used eight layers in its encoder and eight in its decoder."
-            }
-          ]
-        },
-        {
-          "id": "stacking-blocks",
-          "title": "Stacking blocks",
-          "blocks": [
+            },
             {
-              "p": "**Same shape in, same shape out.** A block takes one vector per token and returns one vector per token of the same width, so the output of one block can be the input of the next. Writing $H^{(0)}$ for the input from Step 3:"
+              "heading": "Stacking blocks",
+              "level": 3
+            },
+            {
+              "p": "**Same shape in, same shape out.** A block takes one vector per token and returns one vector per token of the same width, so the output of one block can be the input of the next. Writing $H^{(0)}$ for the input from part 1:"
             },
             {
               "tex": "H^{(1)} = \\text{block}_1(H^{(0)}), \\quad H^{(2)} = \\text{block}_2(H^{(1)}), \\quad \\dots"
@@ -34957,27 +34507,27 @@
                 ],
                 "rows": [
                   [
-                    "Token embeddings (Step 2)",
+                    "Token embeddings (part 1)",
                     "One row of 768 for each of 50,257 tokens",
                     "38,597,376"
                   ],
                   [
-                    "Position embeddings (Step 3)",
+                    "Position embeddings (part 1)",
                     "One row of 768 for each of 1,024 positions",
                     "786,432"
                   ],
                   [
-                    "Attention layer (Steps 4 to 8)",
+                    "Attention layer (parts 2 and 3)",
                     "Query, key, value and output tables, 768 × 768 each, each with 768 offsets",
                     "2,362,368"
                   ],
                   [
-                    "Feed-forward layer (Step 10)",
+                    "Feed-forward layer (this part)",
                     "Two tables, 768 × 3,072 and 3,072 × 768, with 3,072 and 768 offsets",
                     "4,722,432"
                   ],
                   [
-                    "Two LayerNorms (Step 9)",
+                    "Two LayerNorms (this part)",
                     "A scale and a shift of 768 in each",
                     "3,072"
                   ],
@@ -35005,25 +34555,23 @@
               }
             },
             {
-              "p": "The output layer adds nothing, because GPT-2 reuses the token embeddings for it, as Step 12 explains."
+              "p": "The output layer adds nothing, because GPT-2 reuses the token embeddings for it, as [Predict](/module/?id=transformer-predict#lesson-predict) explains."
             },
             {
               "problemCard": {
                 "id": "tf-counting-gpt2-large"
               }
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
             {
-              "heading": "One token through the block",
+              "heading": "Running example",
               "level": 3
             },
             {
-              "p": "The running example has a single block, so its output is $H^{(1)}$ from Step 10. Following \"sat\" through it:"
+              "heading": "One token through the block",
+              "level": 4
+            },
+            {
+              "p": "The running example has a single block, so its output is $H^{(1)}$ from [Feed-forward](#lesson-feed-forward). Following \"sat\" through it:"
             },
             {
               "table": {
@@ -35033,23 +34581,23 @@
                 ],
                 "rows": [
                   [
-                    "Token embedding, Step 2",
+                    "Token embedding, part 1",
                     "(0.000, 0.000, 1.000, 1.000)"
                   ],
                   [
-                    "With position, Step 3",
+                    "With position, part 1",
                     "(0.909, −0.416, 1.020, 2.000)"
                   ],
                   [
-                    "Multi-head output, Step 8",
+                    "Multi-head output, part 3",
                     "(0.872, 1.135, 0.893, 1.771)"
                   ],
                   [
-                    "After add and norm, Step 9",
+                    "After add and norm",
                     "(−0.241, −1.208, −0.121, 1.571)"
                   ],
                   [
-                    "After feed-forward, add and norm, Step 10",
+                    "After feed-forward, add and norm",
                     "(−0.639, −0.891, −0.136, 1.667)"
                   ]
                 ]
@@ -35094,17 +34642,17 @@
             },
             {
               "heading": "A second block",
-              "level": 3
+              "level": 4
             },
             {
-              "p": "A second block would run Steps 4 to 10 again with new weights, and return the same shape. The whole running example has just 176 weights, so a second block would add another 176."
+              "p": "A second block would run attention, add and norm, and the feed-forward network again with new weights, and return the same shape. The whole running example has just 176 weights, so a second block would add another 176."
             },
             {
               "code": {
                 "language": "python",
                 "lines": [
                   "def block(H, weights):",
-                  "    \"\"\"Sketch: Steps 4 to 10, as one function from T x d to T x d.\"\"\"",
+                  "    \"\"\"Sketch: one block, as one function from T x d to T x d.\"\"\"",
                   "    ...",
                   "",
                   "H_out = H",
@@ -35112,13 +34660,11 @@
                   "    H_out = block(H_out, weights)"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Where do the 176 weights come from?** The embedding table has 8 × 4 = 32. The query, key, value and output tables have 4 × 4 = 16 each, 64 in all. The two feed-forward tables have 4 × 8 = 32 each, 64 in all. The two LayerNorms have a scale and a shift for each of 4 dimensions, 16 in all. That is 32 + 64 + 64 + 16 = 176."
             },
@@ -35129,10 +34675,10 @@
               "p": "**Do the blocks share weights?** No. Every block has its own tables, which is why 12 blocks cost 12 × 7,087,872 weights."
             },
             {
-              "p": "**Does a deep stack forget the original token?** Not by itself. Every block adds to the vector through the residual connections of Step 9 and never replaces it, so the pattern of the Step 2 embedding is still present at the top, rescaled once per block in the running example's post-norm."
+              "p": "**Does a deep stack forget the original token?** Not by itself. Every block adds to the vector through its residual connections and never replaces it, so the pattern of the original embedding is still present at the top, rescaled once per block in the running example's post-norm."
             },
             {
-              "p": "[Step 12](/module/?id=transformer-predict) turns the last block's output into a prediction."
+              "p": "[Part 5](/module/?id=transformer-predict#lesson-predict) turns the last block's output into a prediction."
             }
           ]
         },
@@ -35142,6 +34688,38 @@
           "blocks": [
             {
               "resources": [
+                {
+                  "title": "Deep Residual Learning for Image Recognition (He et al., 2016)",
+                  "url": "https://arxiv.org/abs/1512.03385",
+                  "source": "arXiv",
+                  "starred": true
+                },
+                {
+                  "title": "Layer Normalization (Ba et al., 2016)",
+                  "url": "https://arxiv.org/abs/1607.06450",
+                  "source": "arXiv"
+                },
+                {
+                  "title": "On Layer Normalization in the Transformer Architecture (Xiong et al., 2020)",
+                  "url": "https://arxiv.org/abs/2002.04745",
+                  "source": "arXiv"
+                },
+                {
+                  "title": "Transformer Feed-Forward Layers Are Key-Value Memories (Geva et al., 2021)",
+                  "url": "https://arxiv.org/abs/2012.14913",
+                  "source": "arXiv",
+                  "starred": true
+                },
+                {
+                  "title": "Attention is Not All You Need: Pure Attention Loses Rank Doubly Exponentially with Depth (Dong et al., 2021)",
+                  "url": "https://arxiv.org/abs/2103.03404",
+                  "source": "arXiv"
+                },
+                {
+                  "title": "GLU Variants Improve Transformer (Shazeer, 2020)",
+                  "url": "https://arxiv.org/abs/2002.05202",
+                  "source": "arXiv"
+                },
                 {
                   "title": "In-context Learning and Induction Heads (Olsson et al., 2022)",
                   "url": "https://arxiv.org/abs/2209.11895",
@@ -35171,18 +34749,19 @@
     },
     "transformer-predict": {
       "anchors": [
-        "the-problem",
-        "earlier-approaches",
-        "scores-probabilities-and-loss",
-        "running-example",
-        "common-questions",
+        "predict",
+        "generate",
         "resources"
       ],
       "sections": [
         {
-          "id": "the-problem",
-          "title": "The problem",
+          "id": "predict",
+          "title": "Predict",
           "blocks": [
+            {
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "The last block gives one vector per token. For \"sat\" it is (−0.639, −0.891, −0.136, 1.667). A vector is not yet a prediction."
             },
@@ -35190,7 +34769,7 @@
               "figure": {
                 "src": "assets/module-media/transformer-problem-predict.svg",
                 "alt": "On the left, the final vector of sat: -0.639, -0.891, -0.136, 1.667. An arrow with a question mark leads to a row of eight boxes, one for each word of the vocabulary, each holding a question mark. A note says: a probability for every token, adding up to 1.",
-                "caption": "What this step has to produce from the final vector of \"sat\".",
+                "caption": "What this part has to produce from the final vector of \"sat\".",
                 "width": 598,
                 "height": 215
               }
@@ -35203,35 +34782,31 @@
                 "**Probabilities.** The model has to turn each vector into a probability for every token in the vocabulary. After \"the cat sat\", each of the 8 words needs a probability of coming next, and the 8 have to add up to 1. For GPT-2 it is 50,257 probabilities.",
                 "**A measure of error.** Training needs one number that says how wrong those probabilities were, given the token that really came next. If \"on\" came next and the model gave it 0.74, that should count as a small error, and 0.02 as a large one."
               ]
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "Counting",
-              "level": 3
+              "level": 4
             },
             {
               "p": "An n-gram model predicts the next word by counting what followed the previous few words in a large text: after \"cat sat\", how often did \"on\" come next? Its context is short, and if \"cat sat\" never appeared, it has nothing to go on."
             },
             {
               "heading": "Neural language models",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Bengio et al. (2003) learned word vectors and a network over a fixed window of previous words, such as the last 4. Recurrent models extended the window to the whole text, but read it one word at a time."
-            }
-          ]
-        },
-        {
-          "id": "scores-probabilities-and-loss",
-          "title": "Scores, probabilities and loss",
-          "blocks": [
+            },
             {
-              "p": "**Logits.** Each final vector $h$ is compared with every token in the vocabulary to give one score per token, the **logits**. GPT-2 uses the dot product with each row of the embedding table $E$ of Step 2 (**weight tying**):"
+              "heading": "Scores, probabilities and loss",
+              "level": 3
+            },
+            {
+              "p": "**Logits.** Each final vector $h$ is compared with every token in the vocabulary to give one score per token, the **logits**. GPT-2 uses the dot product with each row of the embedding table $E$ from [part 1](/module/?id=transformer-setup#lesson-embed) (**weight tying**):"
             },
             {
               "tex": "\\text{logits} = h \\, E^\\top."
@@ -35240,7 +34815,7 @@
               "p": "With 8 tokens in the vocabulary, each position gets 8 logits. Reusing $E$ saves the smallest GPT-2 a second table of 38.6 million weights ($50{,}257 \\times 768$)."
             },
             {
-              "p": "**Probabilities.** The softmax of Step 6 turns the logits into probabilities that add up to 1. For example, logits of 3, 1 and 0 give probabilities of 0.844, 0.114 and 0.042."
+              "p": "**Probabilities.** The softmax from [part 2](/module/?id=transformer-qkv#lesson-mask-and-softmax) turns the logits into probabilities that add up to 1. For example, logits of 3, 1 and 0 give probabilities of 0.844, 0.114 and 0.042."
             },
             {
               "figure": {
@@ -35287,16 +34862,14 @@
             },
             {
               "p": "**Every position at once.** Each position predicts the token after it, so one run over a text trains every position. A text of 1,000 tokens gives about 1,000 predictions to learn from."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "heading": "Inputs and targets",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The training text is \"the cat sat on\". The model reads the first three tokens, and each position is trained to predict the token after it:"
@@ -35329,10 +34902,10 @@
             },
             {
               "heading": "Logits",
-              "level": 3
+              "level": 4
             },
             {
-              "p": "With weight tying, each logit is the dot product of a final vector from Step 10 with a token's embedding from Step 2. For \"sat\", the final vector is (−0.639, −0.891, −0.136, 1.667) and the embedding of \"on\" is (−1, −1, 0, 1):"
+              "p": "With weight tying, each logit is the dot product of a final vector from part 4 with a token's embedding from part 1. For \"sat\", the final vector is (−0.639, −0.891, −0.136, 1.667) and the embedding of \"on\" is (−1, −1, 0, 1):"
             },
             {
               "table": {
@@ -35434,7 +35007,7 @@
             },
             {
               "heading": "Probabilities",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The softmax of the last row: $e$ to the power of each logit gives 0.189, 0.528, 0.358, 4.620, 24.468, 0.216, 2.172 and 0.460, which add up to 33.011. Dividing each by the total:"
@@ -35472,7 +35045,7 @@
             },
             {
               "heading": "Loss",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The loss at each position is the negative logarithm of the probability given to its target:"
@@ -35541,13 +35114,11 @@
                   "print(p[2, 4].round(3), round(loss, 3))      # p(on) = 0.741, loss = 2.596"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Why are the first two predictions wrong?** The weights were chosen by hand to get one prediction right, \"on\" after \"the cat sat\". After \"the\", the model gives \"cat\" only 0.020. Training on many texts would improve every position."
             },
@@ -35561,47 +35132,18 @@
               "p": "**Does the model only predict the last token?** No. Every position predicts the token after it, in the same run. Only the last prediction is used when generating, but all of them are used in training."
             },
             {
-              "p": "[Step 13](/module/?id=transformer-generate) uses these probabilities to generate text."
+              "p": "The next section, [Generate](#lesson-generate), uses these probabilities to generate text."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "generate",
+          "title": "Generate",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "Using the Output Embedding to Improve Language Models (Press and Wolf, 2017)",
-                  "url": "https://arxiv.org/abs/1608.05859",
-                  "source": "arXiv",
-                  "starred": true
-                },
-                {
-                  "title": "A Neural Probabilistic Language Model (Bengio et al., 2003)",
-                  "url": "https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf",
-                  "source": "JMLR"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "transformer-generate": {
-      "anchors": [
-        "the-problem",
-        "earlier-approaches",
-        "temperature-top-k-and-top-p",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "After training, the model gives a probability for every possible next token. To write text, one token has to be chosen and appended, and then the model runs again. There is no target any more, so the question is how to choose."
             },
@@ -35625,40 +35167,36 @@
             },
             {
               "p": "The model needs a way of choosing that keeps some variety and still avoids the unlikely tokens."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "Greedy decoding",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Taking the most probable token every time is simple, but tends to fall into repetitive loops (Holtzman et al., 2020). The running example below predicts \"on\" twice in a row."
             },
             {
               "heading": "Beam search",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Keeping several of the most probable partial texts works well for translation, where a sentence has roughly one right answer, but for open-ended writing it produces bland, repetitive text."
             },
             {
               "heading": "Sampling from the full distribution",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Drawing at random by probability adds variety, but the many unlikely tokens together get picked often enough to derail the text: 49,000 words with a 0.001% chance each still add up to a 49% chance of picking one of them."
-            }
-          ]
-        },
-        {
-          "id": "temperature-top-k-and-top-p",
-          "title": "Temperature, top-k and top-p",
-          "blocks": [
+            },
+            {
+              "heading": "Temperature, top-k and top-p",
+              "level": 3
+            },
             {
               "p": "**Temperature.** The **temperature** $\\tau$ divides every logit before the softmax:"
             },
@@ -35684,20 +35222,18 @@
               "p": "**Top-p.** **Top-p** keeps the smallest set of tokens whose probabilities add up to at least $p$, such as 0.9. The set grows when the model is unsure and shrinks when it is confident: at temperature 0.5, \"on\" alone has 0.957, so it is the whole set."
             },
             {
-              "p": "**Stopping.** Generation stops at the end-of-text token or at a length limit. To avoid recomputing earlier tokens at every step, models keep their keys and values in a **KV cache**, covered in [Efficient Transformers: 2. KV cache](/module/?id=efficient-kv-cache)."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+              "p": "**Stopping.** Generation stops at the end-of-text token or at a length limit. To avoid recomputing earlier tokens at every step, models keep their keys and values in a **KV cache**, covered in [Efficient Transformers: KV cache](/module/?id=efficient-kv-cache#lesson-kv-cache)."
+            },
             {
-              "heading": "Temperature",
+              "heading": "Running example",
               "level": 3
             },
             {
-              "p": "The logits for the token after \"the cat sat\" are the last row of Step 12. The probabilities at three temperatures, from most to least likely:"
+              "heading": "Temperature",
+              "level": 4
+            },
+            {
+              "p": "The logits for the token after \"the cat sat\" are the last row of the logits from [Predict](#lesson-predict). The probabilities at three temperatures, from most to least likely:"
             },
             {
               "table": {
@@ -35761,7 +35297,7 @@
             },
             {
               "heading": "Top-k and top-p",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The strategies, applied to these probabilities:"
@@ -35802,10 +35338,10 @@
             },
             {
               "heading": "Generating again",
-              "level": 3
+              "level": 4
             },
             {
-              "p": "Appending \"on\" and running the model again predicts \"on\" a second time, with probability 0.736. The weights were chosen for one prediction only, so greedy decoding repeats itself, the loop Holtzman et al. describe. A trained model would continue with something like \"the mat\", as in the diagram in Step 0."
+              "p": "Appending \"on\" and running the model again predicts \"on\" a second time, with probability 0.736. The weights were chosen for one prediction only, so greedy decoding repeats itself, the loop Holtzman et al. describe. A trained model would continue with something like \"the mat\", as in the diagram in [part 1](/module/?id=transformer-setup#lesson-setup)."
             },
             {
               "code": {
@@ -35832,13 +35368,11 @@
                   "print(sample(z, tau=0.5, top_p=0.9))   # always \"on\""
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**What is temperature 0?** Dividing by 0 is not possible, so temperature 0 is defined as the limit: always take the most likely token, which is greedy decoding."
             },
@@ -35859,6 +35393,17 @@
           "blocks": [
             {
               "resources": [
+                {
+                  "title": "Using the Output Embedding to Improve Language Models (Press and Wolf, 2017)",
+                  "url": "https://arxiv.org/abs/1608.05859",
+                  "source": "arXiv",
+                  "starred": true
+                },
+                {
+                  "title": "A Neural Probabilistic Language Model (Bengio et al., 2003)",
+                  "url": "https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf",
+                  "source": "JMLR"
+                },
                 {
                   "title": "The Curious Case of Neural Text Degeneration (Holtzman et al., 2020)",
                   "url": "https://arxiv.org/abs/1904.09751",
@@ -35905,7 +35450,7 @@
           "title": "",
           "blocks": [
             {
-              "p": "The Build a Transformer series, starting at [Setup](/module/?id=transformer-setup), teaches the components one module at a time, from the query, key and value projections through to the stack. This module keeps what that series does not carry: attention and a full block implemented from scratch in NumPy, one worked example run by hand from scores to outputs, and the per-layer cost in FLOPs and memory."
+              "p": "The Build a Transformer series, starting at [Setup](/module/?id=transformer-setup#lesson-setup), teaches the components in five parts, from the query, key and value projections through to the stack. This module keeps what that series does not carry: attention and a full block implemented from scratch in NumPy, one worked example run by hand from scores to outputs, and the per-layer cost in FLOPs and memory."
             }
           ]
         },
@@ -35914,7 +35459,7 @@
           "title": "Attention Mechanisms",
           "blocks": [
             {
-              "p": "The components are taught one at a time in the Build a Transformer series: [queries, keys and values](/module/?id=transformer-qkv), [scores and the square-root scaling](/module/?id=transformer-scores), [the mask and the softmax](/module/?id=transformer-mask-and-softmax), [the weighted sum](/module/?id=transformer-weighted-sum), and [several heads](/module/?id=transformer-multi-head). What stays here is the whole operation implemented from scratch in NumPy, and one worked example run by hand."
+              "p": "The components are taught one at a time in the Build a Transformer series: [queries, keys and values](/module/?id=transformer-qkv#lesson-q-k-v), [scores and the square-root scaling](/module/?id=transformer-qkv#lesson-scores), [the mask and the softmax](/module/?id=transformer-qkv#lesson-mask-and-softmax), [the weighted sum](/module/?id=transformer-weighted-sum#lesson-weighted-sum), and [several heads](/module/?id=transformer-weighted-sum#lesson-multi-head). What stays here is the whole operation implemented from scratch in NumPy, and one worked example run by hand."
             },
             {
               "image": {
@@ -36181,7 +35726,7 @@
           "title": "The Transformer Block",
           "blocks": [
             {
-              "p": "The block's parts are taught by [Residual and LayerNorm](/module/?id=transformer-residual-and-layernorm), [Feed-Forward](/module/?id=transformer-feed-forward), and [the Stack](/module/?id=transformer-stack). What stays here is the whole block implemented from scratch in NumPy, the PyTorch library calls that build it, and the per-layer cost in FLOPs and memory."
+              "p": "The block's parts are taught by [Residual and LayerNorm](/module/?id=transformer-residual-and-layernorm#lesson-residual-and-layernorm), [Feed-Forward](/module/?id=transformer-residual-and-layernorm#lesson-feed-forward), and [the Stack](/module/?id=transformer-residual-and-layernorm#lesson-stack). What stays here is the whole block implemented from scratch in NumPy, the PyTorch library calls that build it, and the per-layer cost in FLOPs and memory."
             },
             {
               "image": {
@@ -36474,9 +36019,9 @@
             },
             {
               "olist": [
-                "Compare pre-norm and post-norm on a 24-layer transformer: train both with and without warmup and record which diverge. The placement is taught in [Residual and LayerNorm](/module/?id=transformer-residual-and-layernorm).",
+                "Compare pre-norm and post-norm on a 24-layer transformer: train both with and without warmup and record which diverge. The placement is taught in [Residual and LayerNorm](/module/?id=transformer-residual-and-layernorm#lesson-residual-and-layernorm).",
                 "Measure the actual crossover length where attention FLOPs exceed FFN FLOPs, and compare with the $n = 6d$ prediction in `### Cost` above.",
-                "Remove the FFN from a small trained transformer and measure the loss increase and compare it with removing an equal number of attention parameters. What the FFN does is in [Feed-Forward](/module/?id=transformer-feed-forward).",
+                "Remove the FFN from a small trained transformer and measure the loss increase and compare it with removing an equal number of attention parameters. What the FFN does is in [Feed-Forward](/module/?id=transformer-residual-and-layernorm#lesson-feed-forward).",
                 "Plot attention-map memory against sequence length for a fixed model and find the length at which it exceeds your GPU. `### Cost` above gives the formula."
               ]
             }
@@ -36500,7 +36045,7 @@
           "blocks": [
             {
               "list": [
-                "[11. Stack](/module/?id=transformer-stack)"
+                "[Stack](/module/?id=transformer-residual-and-layernorm#lesson-stack)"
               ]
             }
           ]
@@ -36554,7 +36099,7 @@
               "p": "A model that reads left to right, like GPT, predicts each word from the words before it. That works for writing text one word at a time. For understanding a sentence, it ignores everything to the right. A left-to-right model that reaches \"bank\" in \"The bank raised interest rates\" has seen only \"The\". The words that show it is a money bank come after it."
             },
             {
-              "p": "BERT is a Transformer **encoder** (see [Build a Transformer: 11. Stack](/module/?id=transformer-stack)). Every token attends to every other token, left and right. There is no causal mask, the mask a decoder like GPT uses to stop a token from seeing later tokens. The output at each position is a vector describing that token in the context of the whole sentence."
+              "p": "BERT is a Transformer **encoder** (see [Build a Transformer: Stack](/module/?id=transformer-residual-and-layernorm#lesson-stack)). Every token attends to every other token, left and right. There is no causal mask, the mask a decoder like GPT uses to stop a token from seeing later tokens. The output at each position is a vector describing that token in the context of the whole sentence."
             },
             {
               "p": "If every position can see every other position, the model could answer \"what is the word at position 5?\" by copying the word it sees at position 5. How can we hide the answer and still show the model both sides?"
@@ -37016,7 +36561,7 @@
           "blocks": [
             {
               "list": [
-                "[11. Stack](/module/?id=transformer-stack)"
+                "[Stack](/module/?id=transformer-residual-and-layernorm#lesson-stack)"
               ]
             }
           ]
@@ -37161,13 +36706,13 @@
               "p": "A Transformer already gives one output per position in a single pass. The catch is attention. If position 2 could attend to position 3, it could read the token it is supposed to predict. So we block every position from attending to later ones."
             },
             {
-              "p": "Look at the matrix of attention scores. Row $t$ is the query at position $t$, and column $s$ is the key at position $s$. The entries above the diagonal have $s > t$, so they point to the future. We set them to $-\\infty$ before the softmax. Since $e^{-\\infty} = 0$, their weights become exactly 0. This is the **causal mask**, the same one the decoder uses in [Build a Transformer: 6. Mask and softmax](/module/?id=transformer-mask-and-softmax)."
+              "p": "Look at the matrix of attention scores. Row $t$ is the query at position $t$, and column $s$ is the key at position $s$. The entries above the diagonal have $s > t$, so they point to the future. We set them to $-\\infty$ before the softmax. Since $e^{-\\infty} = 0$, their weights become exactly 0. This is the **causal mask**, the same one the decoder uses in [Build a Transformer: Mask and softmax](/module/?id=transformer-qkv#lesson-mask-and-softmax)."
             },
             {
               "p": "Every attention layer uses this mask, and the other layers act on each position alone. So the output at position $t$ depends only on tokens $1, \\dots, t$, and changing token $t+1$ cannot change it. The output at position $t$ is the same as if we ran the model on the first $t$ tokens alone. So one masked pass does the work of one separate run per prefix."
             },
             {
-              "p": "In code, the targets are the inputs shifted by one. The model reads tokens $1, \\dots, T-1$ and is scored on predicting tokens $2, \\dots, T$. So $T$ tokens give $T - 1$ predictions, because nothing comes before token 1. To get a probability for the first word too, as in the focus problem, many models (Llama among them) put a special start token `<s>` in front of every text. The first word is then predicted from `<s>` like any other token. Training on the true earlier tokens, rather than the model's own guesses, is called **teacher forcing**. [Pre-training & Fine-tuning](/module/?id=pre-training-fine-tuning) covers it and the shift in more detail."
+              "p": "In code, the targets are the inputs shifted by one. The model reads tokens $1, \\dots, T-1$ and is scored on predicting tokens $2, \\dots, T$. So $T$ tokens give $T - 1$ predictions, because nothing comes before token 1. To get a probability for the first word too, as in the focus problem, many models (Llama among them) put a special start token `<s>` in front of every text. The first word is then predicted from `<s>` like any other token. Training on the true earlier tokens, rather than the model's own guesses, is called **teacher forcing**. [Pre-training & Fine-tuning](/module/?id=pre-training-fine-tuning#teacher-forcing-and-the-one-token-shift) covers it and the shift in more detail."
             },
             {
               "problemCard": {
@@ -37237,7 +36782,7 @@
               }
             },
             {
-              "p": "Top-$k$ sampling, top-$p$ (nucleus) sampling and beam search are other ways to choose the token. [Pre-training & Fine-tuning](/module/?id=pre-training-fine-tuning) works through each one on an example. A fluent sample also does not certify factuality: next-token likelihood rewards compatibility with text patterns, including patterns that do not ground a claim in external evidence."
+              "p": "Top-$k$ sampling, top-$p$ (nucleus) sampling and beam search are other ways to choose the token. [Pre-training & Fine-tuning](/module/?id=pre-training-fine-tuning#generating-text-choosing-each-token) works through each one on an example. A fluent sample also does not certify factuality: next-token likelihood rewards compatibility with text patterns, including patterns that do not ground a claim in external evidence."
             },
             {
               "heading": "Solving the focus problem",
@@ -37422,7 +36967,7 @@
                     "p": "GPT-1 (2018) had 117 million parameters, GPT-2 (2019) had 1.5 billion and GPT-3 (2020) had 175 billion. All three were trained on the same next-token objective. The larger models showed **in-context learning**: shown a few examples of a task in the prompt, they continue the pattern without any change to their weights. The loss never mentions tasks or examples. One common explanation is that predicting web text well rewards working out what task a document is doing. Why in-context learning appears is still being studied."
                   },
                   {
-                    "p": "Generating one token at a time is slow if every step recomputes attention over the whole prefix. Real systems store each layer's keys and values for the tokens already processed. This store is the **KV cache**, covered in [Efficient Transformers: 2. KV cache](/module/?id=efficient-kv-cache)."
+                    "p": "Generating one token at a time is slow if every step recomputes attention over the whole prefix. Real systems store each layer's keys and values for the tokens already processed. This store is the **KV cache**, covered in [Efficient Transformers: KV cache](/module/?id=efficient-kv-cache#lesson-kv-cache)."
                   }
                 ]
               }
@@ -37574,7 +37119,7 @@
               "tex": "Q = H_\\text{dec} W_Q, \\quad K = H_\\text{enc} W_K, \\quad V = H_\\text{enc} W_V,\n\\qquad \\text{output} = \\mathrm{softmax}\\!\\left(\\frac{QK^\\top}{\\sqrt{d_k}}\\right) V ."
             },
             {
-              "p": "This is the formula from [Build a Transformer: 5. Scores](/module/?id=transformer-scores), with the queries and the keys taken from different places. $QK^\\top$ is the $T_\\text{out} \\times T_\\text{in}$ grid of scores. The softmax runs along each row. The output has one $d_k$-wide vector per decoder position."
+              "p": "This is the formula from [Build a Transformer: Scores](/module/?id=transformer-qkv#lesson-scores), with the queries and the keys taken from different places. $QK^\\top$ is the $T_\\text{out} \\times T_\\text{in}$ grid of scores. The softmax runs along each row. The output has one $d_k$-wide vector per decoder position."
             },
             {
               "problemCard": {
@@ -38160,7 +37705,7 @@
           "title": "CLIP",
           "blocks": [
             {
-              "p": "CLIP trains two encoders at once, usually a [ViT](/module/?id=vision-transformers-vit-attention) for images and a Transformer for text. A linear projection on each side maps both into one shared space."
+              "p": "CLIP trains two encoders at once, usually a [ViT](/module/?id=vision-transformers-vit-attention#lesson-vision-transformer) for images and a Transformer for text. A linear projection on each side maps both into one shared space."
             },
             {
               "p": "For a batch of $N$ pairs, embed everything and form the $N \\times N$ similarity matrix $S_{ij} = \\operatorname{sim}(I_i, T_j)/\\tau$. The **correct pairings are exactly the diagonal**. Then apply cross-entropy twice and average:"
@@ -38698,7 +38243,7 @@
               "level": 3
             },
             {
-              "p": "$D_{\\mathrm{KL}} \\ge 0$, with equality only when $p = q$. This is **Gibbs' inequality**. The proof uses Jensen's inequality from [Convex Optimization](/module/?id=advanced-optimization): for a convex function $f$, the average of $f$ is at least $f$ of the average. Apply it once to the convex function $-\\log$. The sums run over the outcomes with $p(x) > 0$, since the others add nothing to the KL:"
+              "p": "$D_{\\mathrm{KL}} \\ge 0$, with equality only when $p = q$. This is **Gibbs' inequality**. The proof uses Jensen's inequality from [Convex Optimization](/module/?id=advanced-optimization#convex-functions): for a convex function $f$, the average of $f$ is at least $f$ of the average. Apply it once to the convex function $-\\log$. The sums run over the outcomes with $p(x) > 0$, since the others add nothing to the KL:"
             },
             {
               "tex": "D_{\\mathrm{KL}}(p \\Vert q) = -\\sum_{p(x)>0} p(x) \\log \\frac{q(x)}{p(x)}\n\\;\\ge\\; -\\log \\sum_{p(x)>0} p(x) \\frac{q(x)}{p(x)}\n= -\\log \\sum_{p(x)>0} q(x) \\;\\ge\\; -\\log 1 = 0"
@@ -38725,7 +38270,7 @@
               ]
             },
             {
-              "p": "A VAE meets the reverse form through its training objective. The log-likelihood exceeds the ELBO by exactly $D_{\\mathrm{KL}}(q_\\phi(z\\mid x) \\Vert p(z\\mid x))$, so maximizing the ELBO pulls the approximation $q_\\phi$ toward the true posterior in the mode-seeking direction. As a result, a VAE's approximate posterior tends to be too narrow. Posterior collapse is a different failure, driven by the other KL in the [VAE loss](/module/?id=vae-encoder-decoder-generation), $D_{\\mathrm{KL}}(q_\\phi(z\\mid x) \\Vert p(z))$ against the prior. When the decoder can model $x$ without $z$, that term is cheapest at zero: every $q_\\phi(z\\mid x)$ becomes the prior itself, as broad as the prior and carrying no information about $x$."
+              "p": "A VAE meets the reverse form through its training objective. The log-likelihood exceeds the ELBO by exactly $D_{\\mathrm{KL}}(q_\\phi(z\\mid x) \\Vert p(z\\mid x))$, so maximizing the ELBO pulls the approximation $q_\\phi$ toward the true posterior in the mode-seeking direction. As a result, a VAE's approximate posterior tends to be too narrow. Posterior collapse is a different failure, driven by the other KL in the [VAE loss](/module/?id=representation-learning-autoencoders-vaes-latent-spaces#lesson-vae), $D_{\\mathrm{KL}}(q_\\phi(z\\mid x) \\Vert p(z))$ against the prior. When the decoder can model $x$ without $z$, that term is cheapest at zero: every $q_\\phi(z\\mid x)$ becomes the prior itself, as broad as the prior and carrying no information about $x$."
             },
             {
               "problemCard": {
@@ -38796,8 +38341,8 @@
             },
             {
               "list": [
-                "**Equal variances**, $\\sigma_1 = \\sigma_2 = \\sigma$: the log term is zero, and $\\sigma_1^2 / (2\\sigma_2^2) = \\tfrac12$ cancels the $-\\tfrac12$, leaving $(\\mu_1 - \\mu_2)^2 / 2\\sigma^2$. A KL between Gaussians of fixed shared variance is a scaled squared error between their means, which is why [diffusion models](/module/?id=generative-removing-noise) train on a squared error.",
-                "**Against the standard normal**, $\\mu_2 = 0$ and $\\sigma_2 = 1$: the result is $\\tfrac12(\\mu_1^2 + \\sigma_1^2 - 1 - \\log\\sigma_1^2)$, the regularizer in every [VAE](/module/?id=vae-encoder-decoder-generation), summed over latent dimensions."
+                "**Equal variances**, $\\sigma_1 = \\sigma_2 = \\sigma$: the log term is zero, and $\\sigma_1^2 / (2\\sigma_2^2) = \\tfrac12$ cancels the $-\\tfrac12$, leaving $(\\mu_1 - \\mu_2)^2 / 2\\sigma^2$. A KL between Gaussians of fixed shared variance is a scaled squared error between their means, which is why [diffusion models](/module/?id=generative-adding-noise#lesson-removing-noise) train on a squared error.",
+                "**Against the standard normal**, $\\mu_2 = 0$ and $\\sigma_2 = 1$: the result is $\\tfrac12(\\mu_1^2 + \\sigma_1^2 - 1 - \\log\\sigma_1^2)$, the regularizer in every [VAE](/module/?id=representation-learning-autoencoders-vaes-latent-spaces#lesson-vae), summed over latent dimensions."
               ]
             },
             {
@@ -38923,7 +38468,7 @@
               "p": "$\\beta$ trades compression against prediction. At $\\beta\\to0$ the optimum is a constant $Z$, where $I(X;Z) = I(Z;Y) = 0$, and at $\\beta\\to\\infty$ it is $Z = X$, where $I(X;Z) = H(X)$ and $I(Z;Y) = I(X;Y)$."
             },
             {
-              "p": "The **variational information bottleneck** is the practical descendant: a [$\\beta$-VAE](/module/?id=vae-encoder-decoder-generation) with a supervised term."
+              "p": "The **variational information bottleneck** is the practical descendant: a [$\\beta$-VAE](/module/?id=representation-learning-autoencoders-vaes-latent-spaces#lesson-vae) with a supervised term."
             }
           ]
         },
@@ -39100,11 +38645,8 @@
     "vision-transformers-vit-attention": {
       "anchors": [
         "prerequisites",
-        "the-problem",
-        "earlier-approaches",
-        "patches-as-tokens",
-        "running-example",
-        "common-questions",
+        "vision-transformer",
+        "object-detection",
         "resources"
       ],
       "sections": [
@@ -39116,15 +38658,21 @@
               "list": [
                 "[ResNets and Transfer Learning](/module/?id=modern-vision-architectures-resnet-efficientnet-transfer)",
                 "[Self-Attention Fundamentals](/module/?id=transformer-fundamentals)",
-                "[CNN Fundamentals](/module/?id=convolutional-neural-networks)"
+                "[CNN Fundamentals](/module/?id=convolutional-neural-networks)",
+                "[Model Evaluation](/module/?id=model-evaluation)",
+                "[Regularization and BatchNorm](/module/?id=neural-network-regularization-dropout-batchnorm)"
               ]
             }
           ]
         },
         {
-          "id": "the-problem",
-          "title": "The problem",
+          "id": "vision-transformer",
+          "title": "Vision Transformer",
           "blocks": [
+            {
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "A convolution only looks at a small area. A 3 × 3 filter sees 9 pixels at a time, so one layer can relate two things only if they are right next to each other."
             },
@@ -39145,33 +38693,29 @@
             },
             {
               "p": "Attention, from Build a Transformer, relates any two tokens in one layer. The question is what the tokens of an image should be."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
             {
-              "heading": "Deeper CNNs",
+              "heading": "Earlier approaches",
               "level": 3
             },
             {
-              "p": "Stacking more layers, as in Step 5, widens what each position sees, but information from far away still has to pass through many layers to arrive."
+              "heading": "Deeper CNNs",
+              "level": 4
+            },
+            {
+              "p": "Stacking more layers, as in [Deeper networks](/module/?id=vision-classify#lesson-deeper-networks), widens what each position sees, but information from far away still has to pass through many layers to arrive."
             },
             {
               "heading": "Attention on pixels",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Treating every pixel as a token makes attention far too expensive. A 224 × 224 image has 50,176 pixels, so one attention layer would compute 50,176 × 50,176, about 2.5 billion, scores."
-            }
-          ]
-        },
-        {
-          "id": "patches-as-tokens",
-          "title": "Patches as tokens",
-          "blocks": [
+            },
+            {
+              "heading": "Patches as tokens",
+              "level": 3
+            },
             {
               "p": "**Patches.** The **Vision Transformer** (ViT) cuts the image into square patches, usually 16 × 16 pixels, and treats each patch as a token. An image of $n \\times n$ pixels cut into patches of $p \\times p$ gives $(n / p)^2$ tokens. A 224 × 224 image gives 14 × 14 = 196 patches, so attention needs 196 × 196 = 38,416 scores, not 2.5 billion."
             },
@@ -39185,22 +38729,22 @@
               }
             },
             {
-              "p": "**From patch to token.** Each patch is flattened into a list of numbers, 16 × 16 × 3 = 768 for a color patch, and multiplied by a learned matrix to give its token vector. This is the embedding of Step 2 of Build a Transformer, with a multiplication in place of a table lookup."
+              "p": "**From patch to token.** Each patch is flattened into a list of numbers, 16 × 16 × 3 = 768 for a color patch, and multiplied by a learned matrix to give its token vector. This is the embedding from [Embed](/module/?id=transformer-setup#lesson-embed) in Build a Transformer, with a multiplication in place of a table lookup."
             },
             {
-              "p": "**Patch embedding as a convolution.** Each column of the learned matrix holds 768 numbers, one for each value of a patch, so it can be folded back into a 16 × 16 × 3 filter. Multiplying every patch by that column is then a convolution with the filter moved 16 pixels at a time, so the windows never overlap. Libraries compute the patch embedding this way, as `nn.Conv2d(3, D, kernel_size=16, stride=16)` in PyTorch, where $D$ is the size of a token vector. In the running example, multiplying each flattened patch by the flattened vertical filter of Step 2 gives −3, 0, −3, 0, the numbers of Step 2's vertical map at rows 1 and 4 and columns 1 and 4, where a filter moved 3 pixels at a time lands."
+              "p": "**Patch embedding as a convolution.** Each column of the learned matrix holds 768 numbers, one for each value of a patch, so it can be folded back into a 16 × 16 × 3 filter. Multiplying every patch by that column is then a convolution with the filter moved 16 pixels at a time, so the windows never overlap. Libraries compute the patch embedding this way, as `nn.Conv2d(3, D, kernel_size=16, stride=16)` in PyTorch, where $D$ is the size of a token vector. In the running example, multiplying each flattened patch by the flattened vertical filter from [Convolution](/module/?id=vision-convolution#lesson-convolution) gives −3, 0, −3, 0, the numbers of that vertical map at rows 1 and 4 and columns 1 and 4, where a filter moved 3 pixels at a time lands."
             },
             {
               "figure": {
                 "src": "assets/module-media/vision-patch-embedding.svg",
-                "alt": "The 6 by 6 image cut into four 3 by 3 patches, times the vertical filter, whose rows are each -1, 2, -1. An arrow labeled each patch leads to a 2 by 2 grid with rows -3, 0, one number per patch. An equals sign leads to Step 2's 4 by 4 vertical map with rows -3, 6, -3, 0, where only the four corner cells, -3, 0, -3 and 0, are outlined: the map at stride 3.",
+                "alt": "The 6 by 6 image cut into four 3 by 3 patches, times the vertical filter, whose rows are each -1, 2, -1. An arrow labeled each patch leads to a 2 by 2 grid with rows -3, 0, one number per patch. An equals sign leads to the 4 by 4 vertical map from Convolution with rows -3, 6, -3, 0, where only the four corner cells, -3, 0, -3 and 0, are outlined: the map at stride 3.",
                 "caption": "Multiplying each patch by one flattened filter gives the same numbers as the filter moved 3 pixels at a time.",
-                "width": 613,
-                "height": 209
+                "width": 606,
+                "height": 208
               }
             },
             {
-              "p": "**Position.** Position embeddings are added, as in Step 3 of Build a Transformer, because attention alone does not know where a patch came from. Without them, the image and the same patches shuffled would look identical."
+              "p": "**Position.** Position embeddings are added, as in [Add position](/module/?id=transformer-setup#lesson-add-position) in Build a Transformer, because attention alone does not know where a patch came from. Without them, the image and the same patches shuffled would look identical."
             },
             {
               "p": "**Classification.** An extra learned token, the **class token**, is added at the start, and after the Transformer layers its output vector is used to classify the image. Unlike a language model, there is no mask: every patch can look at every other patch."
@@ -39212,17 +38756,15 @@
               "p": "**Registers.** Trained ViTs develop high-norm artifact tokens in uninformative background patches, which corrupt the attention weights. Adding a few extra learnable tokens that carry no output gives the model somewhere to put that state, and the artifacts disappear."
             },
             {
-              "p": "**Data.** ViT has no built-in idea that nearby pixels are related, so it must learn that from data. Measuring the **attention distance** confirms it. For one query patch, average the pixel distance to every patch it attends to, weighting each patch by the attention it receives, then average over images, per head and per layer (heads come from Step 8 of Build a Transformer). Some heads in the first layer already attend to most of the image, while others keep a small distance, and the distance grows with depth. Trained on ImageNet alone, it did worse than ResNets. Trained first on 300 million images, it did better. DeiT (2020) later trained it well on ImageNet alone with heavy data augmentation."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+              "p": "**Data.** ViT has no built-in idea that nearby pixels are related, so it must learn that from data. Measuring the **attention distance** confirms it. For one query patch, average the pixel distance to every patch it attends to, weighting each patch by the attention it receives, then average over images, per head and per layer (heads come from [Multi-head](/module/?id=transformer-weighted-sum#lesson-multi-head) in Build a Transformer). Some heads in the first layer already attend to most of the image, while others keep a small distance, and the distance grows with depth. Trained on ImageNet alone, it did worse than ResNets. Trained first on 300 million images, it did better. DeiT (2020) later trained it well on ImageNet alone with heavy data augmentation."
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "heading": "Patches",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Cut the 6 × 6 image into four 3 × 3 patches. The line runs through the left half, so the two left patches contain it:"
@@ -39255,7 +38797,7 @@
             },
             {
               "heading": "Attention between patches",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Using these vectors directly as queries and keys, the top-left patch scores each patch with a dot product divided by $\\sqrt{9} = 3$, then a softmax:"
@@ -39353,13 +38895,11 @@
                   ]
                 }
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Why 16 × 16 patches?** It is a trade. Smaller patches keep more detail but give more tokens, and attention grows with the square of their number. Patches of 8 × 8 would give 28 × 28 = 784 tokens, four times as many, and 614,656 scores, sixteen times as many. A CNN's cost is only quadratic in resolution."
             },
@@ -39376,61 +38916,18 @@
               "p": "**Why do the two empty patches still get weight?** Their scores are 0, and $e^0 = 1$ is not 0. The softmax gives every patch some weight: 0.134 for each empty patch against 0.366 for each patch with the line."
             },
             {
-              "p": "[Step 8](/module/?id=object-detection-fpn-yolo) finds where objects are, not just what they are."
+              "p": "The next section, [Object detection](#lesson-object-detection), finds where objects are, not just what they are."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "object-detection",
+          "title": "Object detection",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "An Image is Worth 16x16 Words (Dosovitskiy et al., 2020)",
-                  "url": "https://arxiv.org/abs/2010.11929",
-                  "source": "arXiv",
-                  "starred": true
-                },
-                {
-                  "title": "Training data-efficient image transformers & distillation through attention (Touvron et al., 2020)",
-                  "url": "https://arxiv.org/abs/2012.12877",
-                  "source": "arXiv"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "object-detection-fpn-yolo": {
-      "anchors": [
-        "prerequisites",
-        "the-problem",
-        "earlier-approaches",
-        "detection-methods",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "prerequisites",
-          "title": "Prerequisites",
-          "blocks": [
-            {
-              "list": [
-                "[CNN Fundamentals](/module/?id=convolutional-neural-networks)",
-                "[Model Evaluation](/module/?id=model-evaluation)",
-                "[Regularization and BatchNorm](/module/?id=neural-network-regularization-dropout-batchnorm)"
-              ]
-            }
-          ]
-        },
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "A classifier gives one label for the whole image. Many tasks need more. A self-driving car has to know about every pedestrian, car and sign in view, and where each one is."
             },
@@ -39455,33 +38952,29 @@
                 "**How many.** One photo has 3 objects and the next has 12, so the output has no fixed size.",
                 "**Judging.** A predicted box is rarely exactly right. There has to be a way to say when it is close enough, and to notice when two boxes are the same object found twice."
               ]
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "Sliding windows",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Run a classifier on every window of the image, at several sizes. A 32 × 32 window fits in (224 − 32 + 1)² = 37,249 positions in a 224 × 224 image, and the search repeats for every size, so this is slow, and most windows contain nothing."
             },
             {
               "heading": "R-CNN",
-              "level": 3
+              "level": 4
             },
             {
               "p": "R-CNN (2014) first picked about 2,000 candidate regions with a separate method, then ran a CNN on each one. It was far more accurate than before, but proposing the regions and computing features for all 2,000 of them took 13 seconds per image on a GPU."
-            }
-          ]
-        },
-        {
-          "id": "detection-methods",
-          "title": "Detection methods",
-          "blocks": [
+            },
+            {
+              "heading": "Detection methods",
+              "level": 3
+            },
             {
               "p": "**One run.** **YOLO** (2015) runs the network once. It divides the image into a grid, 7 × 7 in the original, and each cell predicts a few boxes, how confident it is that each box holds an object, and the class. With 2 boxes per cell that is 7 × 7 × 2 = 98 boxes from one run, at 45 images per second."
             },
@@ -39511,7 +39004,7 @@
             },
             {
               "heading": "Anchor boxes",
-              "level": 3
+              "level": 4
             },
             {
               "p": "**Anchors.** Predicting a box from nothing is hard, so many detectors since Faster R-CNN (2015) start from **anchor boxes**: fixed boxes of a few sizes and shapes centered on every cell of a grid. For each anchor the network predicts class scores and four numbers that adjust the anchor toward an object. YOLO took them up in its second version (2016). In the running example, split the image into a 3 × 3 grid of cells of 2 × 2 pixels. The line's center, (2.5, 3), falls in the cell from 2 to 4 across and down, and two anchors are centered on that cell: a tall one, (2, 0, 4, 6), and a square one, (2, 2, 4, 4)."
@@ -39578,13 +39071,13 @@
             },
             {
               "heading": "Two stages",
-              "level": 3
+              "level": 4
             },
             {
               "p": "**Region proposals.** Faster R-CNN works in two stages. A small network slides over the CNN's feature map and scores 9 anchors at every position, 3 sizes times 3 shapes, as object or background. The best 300 boxes after non-maximum suppression go to a second head, which classifies each one and refines its box with the same offsets. It ran at about 5 images per second. One-stage detectors such as YOLO, SSD and RetinaNet skip the proposals and predict over the whole grid at once, which is faster: YOLO ran at 45 images per second."
             },
             {
-              "p": "**Reading a box's features.** The second stage needs features for each box, cut out of the feature map. The vertical pooled map of [Step 3](/module/?id=vision-relu-and-pooling) is 2 × 2 for a 6 × 6 image, so one unit on the map stands for 3 pixels, and box A runs from 2 ÷ 3 = 0.667 to 3 ÷ 3 = 1 across and from 0.333 to 2 down. **RoIPool** rounds the edges to whole cells: 0.667 and 1 both become 1, so it reads only the second column of the map, which holds 0, the empty side of the image. **RoIAlign** keeps the fractions and reads the map by bilinear interpolation. At the box's center, 0.833 across, a third of the way from the first column's center at 0.5 to the second's at 1.5, it reads 6 × (1 − 0.333) + 0 × 0.333 = 4. A shift like this hardly changes a class label but moves a mask, which is why Mask R-CNN ([Step 9](/module/?id=semantic-segmentation-unet-masks)) reads its features with RoIAlign."
+              "p": "**Reading a box's features.** The second stage needs features for each box, cut out of the feature map. The vertical pooled map from [ReLU and pooling](/module/?id=vision-convolution#lesson-relu-and-pooling) is 2 × 2 for a 6 × 6 image, so one unit on the map stands for 3 pixels, and box A runs from 2 ÷ 3 = 0.667 to 3 ÷ 3 = 1 across and from 0.333 to 2 down. **RoIPool** rounds the edges to whole cells: 0.667 and 1 both become 1, so it reads only the second column of the map, which holds 0, the empty side of the image. **RoIAlign** keeps the fractions and reads the map by bilinear interpolation. At the box's center, 0.833 across, a third of the way from the first column's center at 0.5 to the second's at 1.5, it reads 6 × (1 − 0.333) + 0 × 0.333 = 4. A shift like this hardly changes a class label but moves a mask, which is why Mask R-CNN ([Segmentation](/module/?id=semantic-segmentation-unet-masks#lesson-segmentation)) reads its features with RoIAlign."
             },
             {
               "figure": {
@@ -39597,7 +39090,7 @@
             },
             {
               "heading": "Objects of every size",
-              "level": 3
+              "level": 4
             },
             {
               "p": "**Feature pyramid.** Deep maps know what is in the image but have lost detail, and small objects vanish from them. Shallow maps keep the detail but know less. A **feature pyramid network** (FPN, 2017) sends what the deep maps know back down. Starting from the deepest map, it enlarges the map by a factor of 2 and adds the shallower map of the same size, passed through a 1 × 1 convolution called the lateral connection. In the running example the pooled map, 6, 0 in each row, is enlarged to 6, 6, 0, 0, and adding the 4 × 4 map from before pooling, 0, 6, 0, 0, with a lateral weight of 1 gives 6, 12, 0, 0. The finer level now holds the line's exact column, 12, and the wider area the deeper level found, 6. Every level has the same number of channels, 256 in the paper, so one detection head with one set of weights runs on all of them."
@@ -39640,7 +39133,7 @@
             },
             {
               "heading": "Scoring",
-              "level": 3
+              "level": 4
             },
             {
               "p": "**Precision and recall.** A predicted box is a true positive when its IoU with a true box of its class is above the threshold, usually 0.5, and no more confident box has already matched that true box. Otherwise it is a false positive, and a true box left unmatched is a false negative. Precision is the share of predicted boxes that are right and recall the share of true boxes found. After non-maximum suppression the running example has one box, A, and it is right: precision 1 and recall 1. Without non-maximum suppression, B is a second answer for a line A already found, a false positive, and precision falls to 0.5."
@@ -39728,16 +39221,14 @@
             },
             {
               "p": "The model would score 1.0 if it found all four with no false positives. It loses 0.25 for the missing object, whose recall level is never reached, and a further 0.0625 for the false positive at rank 3, which dragged precision down at the 0.75 recall level."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "heading": "Intersection over union",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Boxes are written as (left, top, right, bottom), in pixels. The line fills column 3, so the true box is (2, 0, 3, 6), with area 1 × 6 = 6. The detector predicts two boxes:"
@@ -39777,7 +39268,7 @@
             },
             {
               "heading": "Non-maximum suppression",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Both boxes found the same line. Non-maximum suppression keeps A, the more confident one, and checks B against it: they overlap in an area of 5 and cover 9 together, so their IoU is 0.556. That is above 0.5, so B is dropped. The final answer is box A, which counts as correct because its IoU with the truth is above 0.5."
@@ -39798,13 +39289,11 @@
                   "# 0.833 0.667 0.556"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Why not just measure the overlap?** A huge box that covers the whole image overlaps every object completely. Dividing by the union punishes that: box B covers all 6 units of the true box, but its extra area brings its IoU down to 0.667."
             },
@@ -39818,7 +39307,7 @@
               "p": "**What is the IoU of two boxes that do not touch?** 0. Their overlap is 0, whatever their sizes. **Why not train the box to maximize IoU?** Its gradient is zero whenever the boxes do not overlap, so a prediction far from the target gets no signal at all. **GIoU** repairs this by subtracting a penalty based on the smallest enclosing box $C$: $\\text{GIoU} = \\text{IoU} - \\frac{|C\\setminus(A\\cup B)|}{|C|} \\in[-1,1]$, which is negative when the boxes are separated and tends to $-1$ as they move apart."
             },
             {
-              "p": "[Step 9](/module/?id=semantic-segmentation-unet-masks) labels every pixel instead of drawing boxes."
+              "p": "[Segmentation](/module/?id=semantic-segmentation-unet-masks#lesson-segmentation), in part 4, labels every pixel instead of drawing boxes."
             }
           ]
         },
@@ -39828,6 +39317,17 @@
           "blocks": [
             {
               "resources": [
+                {
+                  "title": "An Image is Worth 16x16 Words (Dosovitskiy et al., 2020)",
+                  "url": "https://arxiv.org/abs/2010.11929",
+                  "source": "arXiv",
+                  "starred": true
+                },
+                {
+                  "title": "Training data-efficient image transformers & distillation through attention (Touvron et al., 2020)",
+                  "url": "https://arxiv.org/abs/2012.12877",
+                  "source": "arXiv"
+                },
                 {
                   "title": "You Only Look Once (Redmon et al., 2015)",
                   "url": "https://arxiv.org/abs/1506.02640",
@@ -39869,8 +39369,8 @@
           "blocks": [
             {
               "list": [
-                "[1. Tokenize](/module/?id=transformer-tokenize)",
-                "[2. Embed](/module/?id=transformer-embed)"
+                "[Tokenize](/module/?id=transformer-setup#lesson-tokenize)",
+                "[Embed](/module/?id=transformer-setup#lesson-embed)"
               ]
             }
           ]
@@ -39880,7 +39380,7 @@
           "title": "",
           "blocks": [
             {
-              "p": "[Build a Transformer: 1. Tokenize](/module/?id=transformer-tokenize) and [Build a Transformer: 2. Embed](/module/?id=transformer-embed) cover byte-pair encoding (BPE), the embedding table $E$ and cosine similarity."
+              "p": "[Build a Transformer: Tokenize](/module/?id=transformer-setup#lesson-tokenize) and [Build a Transformer: Embed](/module/?id=transformer-setup#lesson-embed) cover byte-pair encoding (BPE), the embedding table $E$ and cosine similarity."
             },
             {
               "heading": "WordPiece, Unigram, and byte-level BPE",
@@ -40229,7 +39729,7 @@
             },
             {
               "list": [
-                "[2026 Round 1](https://www.usaaio.org/attachments/past-problems/2026/usaaio-2026-round-1-problems.pdf), Problem 5: load `glove-wiki-gigaword-100`, rank tokens against each other by cosine similarity, then take the embedding matrix apart with SVD and an eigendecomposition. The similarity half is the cosine similarity of [Build a Transformer: 2. Embed](/module/?id=transformer-embed). The decomposition half is the linear algebra module arriving inside the same question."
+                "[2026 Round 1](https://www.usaaio.org/attachments/past-problems/2026/usaaio-2026-round-1-problems.pdf), Problem 5: load `glove-wiki-gigaword-100`, rank tokens against each other by cosine similarity, then take the embedding matrix apart with SVD and an eigendecomposition. The similarity half is the cosine similarity of [Build a Transformer: Embed](/module/?id=transformer-setup#lesson-embed). The decomposition half is the linear algebra module arriving inside the same question."
               ]
             }
           ]
@@ -40297,7 +39797,7 @@
           "blocks": [
             {
               "list": [
-                "[11. Stack](/module/?id=transformer-stack)",
+                "[Stack](/module/?id=transformer-residual-and-layernorm#lesson-stack)",
                 "[Writing a Training Loop in PyTorch](/module/?id=training-loop-in-pytorch)"
               ]
             }
@@ -40339,7 +39839,7 @@
               "tex": "\\mathcal{L}_{\\text{MLM}}(\\theta) = -\\sum_{t \\in \\mathcal{M}} \\log p_\\theta\\!\\left(x_t \\mid x_{\\setminus \\mathcal{M}}\\right),"
             },
             {
-              "p": "where $x_{\\setminus \\mathcal{M}}$ is the sequence with the masked positions blanked out. The key difference is *directionality*: GPT sees only the past (good for generation), while BERT sees both sides (good for understanding). Both are self-supervised and reduce to cross-entropy on the same [Transformer](/module/?id=transformer-stack) backbone. Only the objective and the attention mask differ."
+              "p": "where $x_{\\setminus \\mathcal{M}}$ is the sequence with the masked positions blanked out. The key difference is *directionality*: GPT sees only the past (good for generation), while BERT sees both sides (good for understanding). Both are self-supervised and reduce to cross-entropy on the same [Transformer](/module/?id=transformer-residual-and-layernorm#lesson-stack) backbone. Only the objective and the attention mask differ."
             },
             {
               "heading": "How BERT masks, how T5 corrupts, and how GPT batches",
@@ -40515,7 +40015,7 @@
               "level": 3
             },
             {
-              "p": "Generation runs the model on the prompt and turns the last position's logits into a probability distribution over the vocabulary. It then picks a token, appends it, and repeats, with the [KV cache](/module/?id=efficient-kv-cache) making each repeat cheap. Everything interesting happens in the step that picks a token."
+              "p": "Generation runs the model on the prompt and turns the last position's logits into a probability distribution over the vocabulary. It then picks a token, appends it, and repeats, with the [KV cache](/module/?id=efficient-kv-cache#lesson-kv-cache) making each repeat cheap. Everything interesting happens in the step that picks a token."
             },
             {
               "p": "**Greedy decoding** takes the most probable token every time. It is deterministic and often fine, but the best first token does not always start the best sequence. **Beam search** keeps the $B$ most probable partial sequences, ranked by total log-probability, and extends all of them, so it finds sequences greedy misses. In the toy model below, greedy commits to the likeliest first token and then faces five equally likely continuations. A beam of width 2 keeps a second prefix alive and finds a sequence 3.6 times as probable."
@@ -40617,7 +40117,7 @@
               "level": 3
             },
             {
-              "p": "The pretrained models you will actually be handed come from three lineages, and each pairs an [architecture](/module/?id=transformer-stack) with the objective its mask permits:"
+              "p": "The pretrained models you will actually be handed come from three lineages, and each pairs an [architecture](/module/?id=transformer-residual-and-layernorm#lesson-stack) with the objective its mask permits:"
             },
             {
               "table": {
@@ -40706,7 +40206,7 @@
               "p": "**The embedding column is the surprise.** For GPT-2 small, $31.7\\%$ of the parameters are the input embeddings (the token table, the position table and the final layer norm). The token table alone is $31.0\\%$, one vector per vocabulary entry. That share drops to $5.3\\%$ at GPT-2 XL, because embeddings grow as $V \\times d$ while the layers grow as $L \\times d^2$. So a small model with a large vocabulary is largely a lookup table. That is why weight tying, using the same matrix for the input embedding and the output projection, saved so much at that scale and saves relatively little now. Parameter count is also an imperfect guide to compute. Looking up each input token's row in the table costs almost nothing, unlike the matrix multiplies in the layers, although GPT-2 also reuses the table as its output layer, where it does cost a full matrix multiply."
             },
             {
-              "p": "**The feed-forward column matches what one block predicted.** It runs from $45.5\\%$ to $63.1\\%$ as models grow, approaching roughly two thirds. That is the same ratio the [single-block count](/module/?id=transformer-stack) gives when $d_{ff} = 4d$. By weight, a Transformer is mostly feed-forward layers at every scale, and more so as it grows."
+              "p": "**The feed-forward column matches what one block predicted.** It runs from $45.5\\%$ to $63.1\\%$ as models grow, approaching roughly two thirds. That is the same ratio the [single-block count](/module/?id=transformer-residual-and-layernorm#lesson-stack) gives when $d_{ff} = 4d$. By weight, a Transformer is mostly feed-forward layers at every scale, and more so as it grows."
             },
             {
               "problemCard": {
@@ -41058,7 +40558,7 @@
               }
             },
             {
-              "p": "Recurrent networks are not on the Round 1 syllabus. They are here because two things went wrong with them: gradients that vanish across long spans, and a fixed-size summary of the whole input. [Attention](/module/?id=transformer-qkv) and the Transformer were built to fix both, and that part of the syllabus makes more sense with the failure in view."
+              "p": "Recurrent networks are not on the Round 1 syllabus. They are here because two things went wrong with them: gradients that vanish across long spans, and a fixed-size summary of the whole input. [Attention](/module/?id=transformer-qkv#lesson-q-k-v) and the Transformer were built to fix both, and that part of the syllabus makes more sense with the failure in view."
             }
           ]
         },
@@ -41726,7 +41226,7 @@
               "level": 3
             },
             {
-              "p": "Suppose we could turn every piece of text into a list of numbers, an **embedding**, so that texts about similar things get vectors pointing in similar directions. Then a small angle between two vectors means the texts are related. You met this idea for single tokens in [Build a Transformer: 2. Embed](/module/?id=transformer-embed)."
+              "p": "Suppose we could turn every piece of text into a list of numbers, an **embedding**, so that texts about similar things get vectors pointing in similar directions. Then a small angle between two vectors means the texts are related. You met this idea for single tokens in [Build a Transformer: Embed](/module/?id=transformer-setup#lesson-embed)."
             },
             {
               "p": "The **cosine similarity** is the cosine of that angle:"
@@ -42107,9 +41607,9 @@
           "blocks": [
             {
               "list": [
-                "[3. Add position](/module/?id=transformer-add-position)",
-                "[4. Q, K, V](/module/?id=transformer-qkv)",
-                "[5. Scores](/module/?id=transformer-scores)"
+                "[Add position](/module/?id=transformer-setup#lesson-add-position)",
+                "[Q, K, V](/module/?id=transformer-qkv#lesson-q-k-v)",
+                "[Scores](/module/?id=transformer-qkv#lesson-scores)"
               ]
             }
           ]
@@ -42119,7 +41619,7 @@
           "title": "",
           "blocks": [
             {
-              "p": "[Build a Transformer: 3. Add position](/module/?id=transformer-add-position) adds a sinusoidal or learned vector to each token, so the model sees $\\mathbf{x}_i + \\mathbf{p}_i$ and position enters as an *absolute* index. What attention actually needs is almost always **relative**: \"the adjective three tokens to my left\" is a reusable pattern, while \"the adjective at position 417\" is not. An absolute scheme forces the model to *learn* relative structure as a derived quantity, separately at every pair of positions."
+              "p": "[Build a Transformer: Add position](/module/?id=transformer-setup#lesson-add-position) adds a sinusoidal or learned vector to each token, so the model sees $\\mathbf{x}_i + \\mathbf{p}_i$ and position enters as an *absolute* index. What attention actually needs is almost always **relative**: \"the adjective three tokens to my left\" is a reusable pattern, while \"the adjective at position 417\" is not. An absolute scheme forces the model to *learn* relative structure as a derived quantity, separately at every pair of positions."
             },
             {
               "p": "The step does show that two sinusoidal position vectors compare by offset alone: the dot product of $\\mathbf{p}_i$ and $\\mathbf{p}_j$ is a sum of terms $\\cos(w(i - j))$, one per pair of dimensions. Attention never takes that dot product on its own, though. Queries and keys are made from the sums $\\mathbf{x}_i + \\mathbf{p}_i$ with $W_Q$ and $W_K$, so a score expands into four terms: content against content, position against position, and two cross terms that pair one token's content with the other token's position. A cross term changes when a token moves, even if its distance to the other token stays the same, and the $W_Q$ and $W_K$ inside the position-against-position term break the cosine identity in general. The From scratch section below measures the result: with a sinusoidal encoding added, scores at one fixed offset differ by up to 2.83."
@@ -42378,7 +41878,7 @@
               "level": 3
             },
             {
-              "p": "Split the $d$-dimensional vector into $d/2$ consecutive pairs and rotate pair $i$ by $m\\theta_i$, with frequencies on the same geometric ladder as the speeds $w$ of the sinusoidal encoding in [Build a Transformer: 3. Add position](/module/?id=transformer-add-position):"
+              "p": "Split the $d$-dimensional vector into $d/2$ consecutive pairs and rotate pair $i$ by $m\\theta_i$, with frequencies on the same geometric ladder as the speeds $w$ of the sinusoidal encoding in [Build a Transformer: Add position](/module/?id=transformer-setup#lesson-add-position):"
             },
             {
               "tex": "\\theta_i = \\text{base}^{-2i/d}, \\qquad \\text{base} = 10000"
@@ -42468,7 +41968,7 @@
               ]
             },
             {
-              "p": "Caching rotated keys has one wrinkle, and it is the reason [MLA](/module/?id=efficient-sharing-keys-and-values) carries a *decoupled* RoPE key: RoPE is position-dependent while MLA's up-projection is not, and the two do not commute, so the rotated part must be stored separately from the compressed latent. A streaming cache that keeps sink tokens and evicts the middle, as the sink-tokens practice below does, builds on the eviction ideas taught in [Sparse attention, sinks and eviction](/module/?id=sparse-attention-sinks-and-eviction)."
+              "p": "Caching rotated keys has one wrinkle, and it is the reason [MLA](/module/?id=efficient-kv-cache#lesson-sharing-keys-and-values) carries a *decoupled* RoPE key: RoPE is position-dependent while MLA's up-projection is not, and the two do not commute, so the rotated part must be stored separately from the compressed latent. A streaming cache that keeps sink tokens and evicts the middle, as the sink-tokens practice below does, builds on the eviction ideas taught in [Sparse attention, sinks and eviction](/module/?id=sparse-attention-sinks-and-eviction)."
             }
           ]
         },
@@ -42477,7 +41977,7 @@
           "title": "Relative position in linear attention",
           "blocks": [
             {
-              "p": "[Linear attention](/module/?id=efficient-linear-attention) never forms the $n \\times n$ score matrix. It keeps a running state $S_t = \\sum_{j \\le t} \\varphi(\\mathbf{k}_j)\\mathbf{v}_j^\\top$, which works because every term depends on the key alone. A relative weight $w(i - j)$ multiplying each similarity survives only if it splits the same way, $w(i - j) = f(i)\\,g(j)$, one factor for the query and one for the key."
+              "p": "[Linear attention](/module/?id=efficient-flashattention#lesson-linear-attention) never forms the $n \\times n$ score matrix. It keeps a running state $S_t = \\sum_{j \\le t} \\varphi(\\mathbf{k}_j)\\mathbf{v}_j^\\top$, which works because every term depends on the key alone. A relative weight $w(i - j)$ multiplying each similarity survives only if it splits the same way, $w(i - j) = f(i)\\,g(j)$, one factor for the query and one for the key."
             },
             {
               "p": "That requirement pins $w$ down. Setting $j = i$ gives $g(i) = w(0)/f(i)$, so $w(i - j) = w(0)\\,f(i)/f(j)$. At an offset of 1 this reads $f(j + 1) = \\frac{w(1)}{w(0)}\\,f(j)$, so $f$ is geometric and $w(k) = w(0)\\,r^k$. **The only relative weights that factorize are exponentials in the offset.** A real ratio $0 < r < 1$ is a decay. A complex ratio of modulus 1 is a rotation by a fixed angle per step. Those are the two schemes that carry over, and they are ALiBi and RoPE:"
@@ -42905,7 +42405,7 @@
           "blocks": [
             {
               "list": [
-                "[Vision Transformers](/module/?id=vision-transformers-vit-attention)",
+                "[Vision Transformers](/module/?id=vision-transformers-vit-attention#lesson-vision-transformer)",
                 "[Contrastive Learning](/module/?id=contrastive-learning)",
                 "[GPT and Causal Language Modeling](/module/?id=gpt-causal-lm)"
               ]
@@ -42952,7 +42452,7 @@
               "p": "A language model does not work with token ids directly. It looks each id up in an embedding table and works with the vectors it gets back, one per token. If we turn an image into a sequence of vectors of the right size, we can skip the lookup and put them where word vectors would go."
             },
             {
-              "p": "A [vision transformer](/module/?id=vision-transformers-vit-attention) already does the first half. It cuts the image into a grid of square patches and turns each patch into a vector. A $224 \\times 224$ image cut into $14 \\times 14$ patches gives a $16 \\times 16$ grid:"
+              "p": "A [vision transformer](/module/?id=vision-transformers-vit-attention#lesson-vision-transformer) already does the first half. It cuts the image into a grid of square patches and turns each patch into a vector. A $224 \\times 224$ image cut into $14 \\times 14$ patches gives a $16 \\times 16$ grid:"
             },
             {
               "tex": "\\frac{224}{14} \\cdot \\frac{224}{14} = 16 \\cdot 16 = 256 \\text{ patches.}"
@@ -43306,11 +42806,8 @@
     "representation-learning-autoencoders-vaes-latent-spaces": {
       "anchors": [
         "prerequisites",
-        "the-problem",
-        "earlier-approaches",
-        "encoder-and-decoder",
-        "running-example",
-        "common-questions",
+        "autoencoder",
+        "vae",
         "resources"
       ],
       "sections": [
@@ -43325,15 +42822,23 @@
                 "[Eigenvalues and Spectral Theory](/module/?id=linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory)",
                 "[MLPs and Activations](/module/?id=neural-networks-perceptrons-mlps-activations)",
                 "[Information Theory](/module/?id=information-theory-core)",
-                "[CNN Fundamentals](/module/?id=convolutional-neural-networks)"
+                "[CNN Fundamentals](/module/?id=convolutional-neural-networks)",
+                "[Information Theory for AI](/module/?id=information-theory-core)",
+                "[GPT and Causal Language Modeling](/module/?id=gpt-causal-lm)",
+                "[Probability and Bayes](/module/?id=probability-foundations)",
+                "[Classification Metrics](/module/?id=model-evaluation)"
               ]
             }
           ]
         },
         {
-          "id": "the-problem",
-          "title": "The problem",
+          "id": "autoencoder",
+          "title": "Autoencoder",
           "blocks": [
+            {
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "To generate images, a model first needs a compact description of what makes an image look real."
             },
@@ -43354,33 +42859,29 @@
             },
             {
               "p": "Nobody tells the model which way the line runs. It has to find a short description like this on its own, from unlabeled images."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "Storing the images",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Keeping the training set and returning a random image from it produces perfectly realistic images, but never a new one."
             },
             {
               "heading": "Principal component analysis",
-              "level": 3
+              "level": 4
             },
             {
               "p": "PCA finds the directions in which the images vary most and describes each image by a few numbers along those directions. It is fast and exact, but it can only describe data lying near a flat surface. Images of faces do not, so a few PCA numbers give blurry, ghostly faces."
-            }
-          ]
-        },
-        {
-          "id": "encoder-and-decoder",
-          "title": "Encoder and decoder",
-          "blocks": [
+            },
+            {
+              "heading": "Encoder and decoder",
+              "level": 3
+            },
             {
               "p": "**Two networks.** An **autoencoder** is two networks trained together. The **encoder** compresses an image into a short list of numbers, its **code**. The **decoder** turns the code back into an image."
             },
@@ -43412,7 +42913,7 @@
               "p": "**Linear autoencoders and PCA.** With a linear encoder, an affine decoder (a linear map plus a constant) and the squared error as the loss, the best code describes the same line, or flat surface, that PCA finds. This chapter's autoencoder is built that way. PCA of LEFT and RIGHT finds the mean image (0.5, 0.5, 0.5, 0.5) and the direction (0.5, −0.5, 0.5, −0.5), and an image's position along that direction, (image − mean) · direction, is its code: 1 for LEFT and −1 for RIGHT. The decoder's output, mean + z × direction, is the reconstruction rule of the running example below."
             },
             {
-              "p": "**Denoising autoencoders.** Noise is added to each training image before it goes in, and the output is compared with the clean image. Copying the input then scores worse than removing the noise, so the network has to learn what clean images look like, even with a code as long as the image. For noisy LEFT, (0.9, 0.1, 1, 0), copying it scores $(0.1^2 + 0.1^2 + 0^2 + 0^2) \\div 4 = 0.005$ against LEFT. This chapter's autoencoder returns (0.95, 0.05, 0.95, 0.05), the nearest point on its line, and scores $0.05^2 = 0.0025$. Step 5 trains diffusion on noisy images in the same way."
+              "p": "**Denoising autoencoders.** Noise is added to each training image before it goes in, and the output is compared with the clean image. Copying the input then scores worse than removing the noise, so the network has to learn what clean images look like, even with a code as long as the image. For noisy LEFT, (0.9, 0.1, 1, 0), copying it scores $(0.1^2 + 0.1^2 + 0^2 + 0^2) \\div 4 = 0.005$ against LEFT. This chapter's autoencoder returns (0.95, 0.05, 0.95, 0.05), the nearest point on its line, and scores $0.05^2 = 0.0025$. [Removing noise](/module/?id=generative-adding-noise#lesson-removing-noise), in part 4, trains diffusion on noisy images in the same way."
             },
             {
               "figure": {
@@ -43430,17 +42931,15 @@
               "p": "A **contractive autoencoder** penalizes the encoder's sensitivity to its input: if $J$ is the Jacobian of the encoder, its loss is the reconstruction loss plus $\\lambda\\mathbb{E}_x\\|J(x)\\|_F^2$. For a small perturbation $\\delta$, the code changes approximately by $J(x)\\delta$. Reducing the Jacobian discourages large code changes from small input changes. Reconstruction pushes back, since a completely constant code cannot reconstruct varied inputs."
             },
             {
-              "p": "**Uses.** Autoencoders are used for compression and for removing noise. An image unlike anything in training does not lie on the line the decoder's outputs lie on, so its reconstruction error is high, and that error is used as an anomaly score. The autoencoder inside Stable Diffusion appears again in Step 6."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+              "p": "**Uses.** Autoencoders are used for compression and for removing noise. An image unlike anything in training does not lie on the line the decoder's outputs lie on, so its reconstruction error is high, and that error is used as an anomaly score. The autoencoder inside Stable Diffusion appears again in [Guidance and Stable Diffusion](/module/?id=generative-adding-noise#lesson-guidance-and-stable-diffusion)."
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "heading": "The images",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Images in this chapter have 4 pixels, in a 2 × 2 grid. The training set holds two images:"
@@ -43474,7 +42973,7 @@
             },
             {
               "heading": "Encoder and decoder",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The autoencoder squeezes each image into a single number. The encoder adds the left column and subtracts the right column, then halves: z = (top-left − top-right + bottom-left − bottom-right) ÷ 2. The decoder sets each left pixel to 0.5 + z ÷ 2 and each right pixel to 0.5 − z ÷ 2."
@@ -43510,7 +43009,7 @@
             },
             {
               "heading": "Generating",
-              "level": 3
+              "level": 4
             },
             {
               "p": "To generate a new image, pick a code and decode it. But the only codes seen in training are 1 and −1, and nothing says what other codes mean. The code 0 gives (0.5, 0.5, 0.5, 0.5), a gray square that looks like neither image, and the code 3 gives (2, −1, 2, −1), which is not even a valid image. A real autoencoder scatters its codes irregularly, so most random codes decode to nonsense."
@@ -43536,13 +43035,11 @@
               "problemCard": {
                 "id": "gen-a-stuck-pixel-and-a-stuck-gain"
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Why not make the code as long as the image?** Then the encoder could copy every pixel into the code and the decoder could copy them back, with a loss of 0 and nothing learned. The short code is what forces the network to find what the images have in common."
             },
@@ -43556,67 +43053,26 @@
               "p": "**Does a low reconstruction loss mean the code is useful?** Not for every purpose. Pixel error may reward accurately reproducing a large background even when a small symbol determines the class. A classifier trained on the code tests whether that symbol's identity is still accessible, and it can disagree with the reconstruction error without either measurement being wrong."
             },
             {
-              "p": "**Can an autoencoder generate new images?** Not reliably. Only the codes seen in training, 1 and −1 here, are sure to decode well. Code 0 gives a gray square and code 3 gives pixels outside the valid range. Step 2 fixes this."
+              "p": "**Can an autoencoder generate new images?** Not reliably. Only the codes seen in training, 1 and −1 here, are sure to decode well. Code 0 gives a gray square and code 3 gives pixels outside the valid range. The [VAE](#lesson-vae), next, fixes this."
             },
             {
               "p": "**Why don't my encoder's weights match PCA's components?** The reconstruction does not fix the code's units. Multiply every code by 10 and divide the decoder's weights by 10 and every rebuilt image is unchanged. With several code numbers, multiplying the encoder by any invertible matrix and the decoder by its inverse changes nothing either. So a linear autoencoder can rebuild exactly the line PCA finds and still carry different weights. Compare what the two reconstruct, not their weights."
             },
             {
-              "p": "[Step 2](/module/?id=vae-encoder-decoder-generation) arranges the codes so that random ones make sense."
+              "p": "The next section, [VAE](#lesson-vae), arranges the codes so that random ones make sense."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "vae",
+          "title": "VAE",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "From Autoencoder to Beta-VAE (Lilian Weng)",
-                  "url": "https://lilianweng.github.io/posts/2018-08-12-vae/",
-                  "source": "Lil'Log",
-                  "starred": true
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "vae-encoder-decoder-generation": {
-      "anchors": [
-        "prerequisites",
-        "the-problem",
-        "earlier-approaches",
-        "codes-as-ranges",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "prerequisites",
-          "title": "Prerequisites",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
-              "list": [
-                "[k-Means Clustering](/module/?id=clustering)",
-                "[1. Autoencoder](/module/?id=representation-learning-autoencoders-vaes-latent-spaces)",
-                "[Information Theory for AI](/module/?id=information-theory-core)",
-                "[GPT and Causal Language Modeling](/module/?id=gpt-causal-lm)",
-                "[Probability and Bayes](/module/?id=probability-foundations)",
-                "[Classification Metrics](/module/?id=model-evaluation)"
-              ]
-            }
-          ]
-        },
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
-            {
-              "p": "The autoencoder of Step 1 can rebuild an image from its code. To generate a new image, one would pick a code and decode it. The trouble is knowing which codes to pick."
+              "p": "The autoencoder above can rebuild an image from its code. To generate a new image, one would pick a code and decode it. The trouble is knowing which codes to pick."
             },
             {
               "p": "For example, that autoencoder uses the code 1 for LEFT and −1 for RIGHT, and nothing else. No other code was ever seen in training. The code 0 decodes to a gray square, and the code 3 to pixels of 2 and −1, which is not an image at all."
@@ -43635,33 +43091,29 @@
             },
             {
               "p": "To generate, the codes need to fill a known region with no gaps, so that any code drawn from that region decodes to a realistic image."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
             {
-              "heading": "Plain autoencoders",
+              "heading": "Earlier approaches",
               "level": 3
             },
             {
-              "p": "As in Step 1, the codes land wherever training puts them. Picking a code near a training image's code gives a near-copy of that image. Picking one elsewhere gives nonsense."
+              "heading": "Plain autoencoders",
+              "level": 4
+            },
+            {
+              "p": "As with the plain autoencoder above, the codes land wherever training puts them. Picking a code near a training image's code gives a near-copy of that image. Picking one elsewhere gives nonsense."
             },
             {
               "heading": "Boltzmann machines",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Earlier generative networks, such as the deep belief networks of Hinton et al. (2006), could produce new images, but drawing each one needed a long chain of random updates, and they were slow to train."
-            }
-          ]
-        },
-        {
-          "id": "codes-as-ranges",
-          "title": "Codes as ranges",
-          "blocks": [
+            },
+            {
+              "heading": "Codes as ranges",
+              "level": 3
+            },
             {
               "p": "A **variational autoencoder** (VAE) makes two changes to the autoencoder."
             },
@@ -43712,7 +43164,7 @@
             },
             {
               "heading": "The bound",
-              "level": 3
+              "level": 4
             },
             {
               "p": "**The model.** A VAE is a probability model of images. A code $z$ is drawn from the standard range, and the decoder gives each pixel a normal spread around its output. Generating from this model draws the code and then the pixel noise. Decoding a code and returning the output alone drops that noise, giving a narrower, less variable distribution than the model itself. Before comparing sharpness or diversity, say which of the two was made. With a variance of 0.5, a spread of $\\sqrt{0.5} = 0.707$,"
@@ -43736,7 +43188,7 @@
               "tex": "\\text{ELBO} = \\mathbb{E}_{q}\\big[\\ln p(x \\mid z)\\big] - \\text{KL}\\big(q \\,\\|\\, \\mathcal{N}(0, 1)\\big) \\le \\ln p(x)."
             },
             {
-              "p": "**The two terms.** The first rewards codes that decode back to $x$, and with a normal spread it is a constant minus a multiple of the squared error. The second is this page's KL term. With a variance of 0.5 the multiple is 1, so the ELBO is $-2.2895$ minus this page's loss, the squared error summed over the pixels plus the KL. For LEFT with $\\mu = 1$ and $\\sigma = 0.5$, codes from the range decode to points along the line of Step 1, which moves 1 unit for each unit of $z$, so the average squared error is the error at $\\mu$, here 0, plus $\\sigma^2 = 0.25$. The first term is $-2.2895 - 0.25 = -2.5395$, and the ELBO is $-2.5395 - 0.8181 = -3.3576$."
+              "p": "**The two terms.** The first rewards codes that decode back to $x$, and with a normal spread it is a constant minus a multiple of the squared error. The second is this page's KL term. With a variance of 0.5 the multiple is 1, so the ELBO is $-2.2895$ minus this page's loss, the squared error summed over the pixels plus the KL. For LEFT with $\\mu = 1$ and $\\sigma = 0.5$, codes from the range decode to points along the autoencoder's line, which moves 1 unit for each unit of $z$, so the average squared error is the error at $\\mu$, here 0, plus $\\sigma^2 = 0.25$. The first term is $-2.2895 - 0.25 = -2.5395$, and the ELBO is $-2.5395 - 0.8181 = -3.3576$."
             },
             {
               "p": "**The gap.** The ELBO falls short of $\\ln p(x)$ by the KL from the encoder's range to the posterior, so it is exact only when the range is the posterior itself:"
@@ -43794,20 +43246,18 @@
             },
             {
               "heading": "Conditional VAEs",
-              "level": 3
+              "level": 4
             },
             {
               "p": "**Conditioning on a label.** Giving a label $y$ to both the encoder and the decoder, usually as an extra input, lets a VAE make what is asked for. The bound is the same with every term conditioned on $y$. To generate, choose $y$, draw $z$ from the standard range, and decode both. In the running example, a label that names LEFT or RIGHT leaves the code nothing to describe: each image can keep the standard range, a KL of 0, and still decode to itself. Without the label, LEFT's best range, the posterior above, costs a KL of 0.438. With real images, the code keeps what the label does not say, such as how a digit is written."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "heading": "The KL term",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Suppose the encoder gives LEFT a mean of 1. The KL term for some possible ranges:"
@@ -43844,7 +43294,7 @@
               }
             },
             {
-              "p": "A narrow range far from 0 costs the most, so training widens LEFT's range and moves it toward 0, and does the same for RIGHT from the other side. With the decoder from Step 1, codes drawn from the standard range decode to:"
+              "p": "A narrow range far from 0 costs the most, so training widens LEFT's range and moves it toward 0, and does the same for RIGHT from the other side. With the autoencoder's decoder, codes drawn from the standard range decode to:"
             },
             {
               "table": {
@@ -43870,7 +43320,7 @@
             },
             {
               "heading": "Blur",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Codes between the two training codes decode to blends of LEFT and RIGHT, and the closer a code is to 0, where the two ranges overlap most, the grayer the image. A real VAE's decoder is trained on codes drawn from these ranges, so it learns to decode every likely code sensibly, but the gray blends are the blur described above."
@@ -43890,13 +43340,11 @@
                   "    print(z, 0.5 + z * pattern / 2)"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Why a mean of 0 and a spread of 1?** That range, the standard normal distribution, is easy to draw from. If all the codes fill it, generating is simple: draw a number from it and decode."
             },
@@ -43910,7 +43358,7 @@
               "p": "**How are the two loss terms balanced?** By a weight on the KL term. A larger weight fills the space better and blurs more. A smaller one gives sharper reconstructions and leaves gaps. KL annealing starts with a small KL weight so reconstruction can encourage use of the latent code early in training. A free-bits objective stops charging additional KL below a selected allowance."
             },
             {
-              "p": "[Step 3](/module/?id=generative-adversarial-networks) replaces the pixel loss with a judge."
+              "p": "[Part 3](/module/?id=generative-adversarial-networks) replaces the pixel loss with a judge."
             }
           ]
         },
@@ -43920,6 +43368,12 @@
           "blocks": [
             {
               "resources": [
+                {
+                  "title": "From Autoencoder to Beta-VAE (Lilian Weng)",
+                  "url": "https://lilianweng.github.io/posts/2018-08-12-vae/",
+                  "source": "Lil'Log",
+                  "starred": true
+                },
                 {
                   "title": "Tutorial: What is a Variational Autoencoder?",
                   "url": "https://jaan.io/what-is-variational-autoencoder-vae-tutorial/",
@@ -43955,10 +43409,10 @@
                 "[Tokenization and Embeddings](/module/?id=natural-language-processing-tokenization-embeddings)",
                 "[Probability and Bayes](/module/?id=probability-foundations)",
                 "[Information Theory](/module/?id=information-theory-core)",
-                "[Autoencoders and Latent Spaces](/module/?id=representation-learning-autoencoders-vaes-latent-spaces)",
-                "[VAE](/module/?id=vae-encoder-decoder-generation)",
+                "[Autoencoders and Latent Spaces](/module/?id=representation-learning-autoencoders-vaes-latent-spaces#lesson-autoencoder)",
+                "[VAE](/module/?id=representation-learning-autoencoders-vaes-latent-spaces#lesson-vae)",
                 "[GPT and Causal LM](/module/?id=gpt-causal-lm)",
-                "[Generate](/module/?id=transformer-generate)",
+                "[Generate](/module/?id=transformer-predict#lesson-generate)",
                 "[Contrastive Learning](/module/?id=contrastive-learning)",
                 "[Model Evaluation](/module/?id=model-evaluation)"
               ]
@@ -44054,7 +43508,7 @@
               "level": 3
             },
             {
-              "p": "Given $p(w_t\\mid w_{<t})$, produce text. This is a search problem, and the choice of method changes the output more than most people expect. Greedy decoding, sampling, temperature, top-$k$ and top-$p$ are taught in [Generate](/module/?id=transformer-generate) and [Pre-training & Fine-tuning](/module/?id=pre-training-fine-tuning)."
+              "p": "Given $p(w_t\\mid w_{<t})$, produce text. This is a search problem, and the choice of method changes the output more than most people expect. Greedy decoding, sampling, temperature, top-$k$ and top-$p$ are taught in [Generate](/module/?id=transformer-predict#lesson-generate) and [Pre-training & Fine-tuning](/module/?id=pre-training-fine-tuning)."
             },
             {
               "p": "**Beam search.** Keep the $B$ highest-scoring partial sequences at each step. With length normalization:"
@@ -44213,7 +43667,7 @@
             {
               "olist": [
                 "Train a trigram model with add-$k$, interpolated, and Kneser–Ney smoothing, and compare perplexity for each.",
-                "Generate 100 samples with greedy, beam-5, top-$k$=50, and top-$p$=0.9 (greedy, top-$k$ and top-$p$ are taught in [Generate](/module/?id=transformer-generate). Beam search is taught above.), and measure distinct-$n$ (fraction of unique $n$-grams) for each.",
+                "Generate 100 samples with greedy, beam-5, top-$k$=50, and top-$p$=0.9 (greedy, top-$k$ and top-$p$ are taught in [Generate](/module/?id=transformer-predict#lesson-generate). Beam search is taught above.), and measure distinct-$n$ (fraction of unique $n$-grams) for each.",
                 "Reproduce the beam-search curse: plot output diversity and human-judged quality against beam width for open-ended generation.",
                 "Implement $n$-gram blocking and the repetition penalty from From Scratch, and measure how each changes distinct-$n$ against plain greedy decoding.",
                 "Compute perplexity of the same text under a character-level and a subword model, then convert both to bits per byte and compare."
@@ -44317,7 +43771,7 @@
               "level": 3
             },
             {
-              "p": "Derived in [VAE](/module/?id=vae-encoder-decoder-generation). The ELBO:"
+              "p": "Derived in [VAE](/module/?id=representation-learning-autoencoders-vaes-latent-spaces#lesson-vae). The ELBO:"
             },
             {
               "tex": "\\mathcal{L} = \\mathbb{E}_{q_\\phi(z\\mid x)}\\big[\\log p_\\theta(x\\mid z)\\big] - D_{\\text{KL}}\\big(q_\\phi(z\\mid x)\\,\\Vert\\,p(z)\\big)."
@@ -44680,39 +44134,46 @@
             {
               "table": {
                 "head": [
-                  "Step",
+                  "Part",
+                  "Section",
                   "What it does"
                 ],
                 "rows": [
                   [
-                    "[1. Autoencoder](/module/?id=representation-learning-autoencoders-vaes-latent-spaces)",
+                    "2",
+                    "[Autoencoder](/module/?id=representation-learning-autoencoders-vaes-latent-spaces#lesson-autoencoder)",
                     "Compresses an image to a short code and back"
                   ],
                   [
-                    "[2. VAE](/module/?id=vae-encoder-decoder-generation)",
+                    "2",
+                    "[VAE](/module/?id=representation-learning-autoencoders-vaes-latent-spaces#lesson-vae)",
                     "Arranges the codes so that random ones decode to real-looking images"
                   ],
                   [
-                    "[3. GAN](/module/?id=generative-adversarial-networks)",
+                    "3",
+                    "[GAN](/module/?id=generative-adversarial-networks)",
                     "Trains a generator against a discriminator"
                   ],
                   [
-                    "[4. Adding noise](/module/?id=generative-adding-noise)",
+                    "4",
+                    "[Adding noise](/module/?id=generative-adding-noise#lesson-adding-noise)",
                     "Destroys an image step by step with noise"
                   ],
                   [
-                    "[5. Removing noise](/module/?id=generative-removing-noise)",
+                    "4",
+                    "[Removing noise](/module/?id=generative-adding-noise#lesson-removing-noise)",
                     "Learns to reverse the noise, and generates from pure noise"
                   ],
                   [
-                    "[6. Guidance and Stable Diffusion](/module/?id=generative-guidance-and-stable-diffusion)",
+                    "4",
+                    "[Guidance and Stable Diffusion](/module/?id=generative-adding-noise#lesson-guidance-and-stable-diffusion)",
                     "Follows a text prompt, and works on compressed codes for speed"
                   ]
                 ]
               }
             },
             {
-              "p": "The steps that follow explore these approaches one at a time, in the order they were developed."
+              "p": "The parts that follow explore these approaches one at a time, in the order they were developed."
             }
           ]
         },
@@ -44756,10 +44217,10 @@
           "blocks": [
             {
               "list": [
-                "[1. Autoencoder](/module/?id=representation-learning-autoencoders-vaes-latent-spaces)",
+                "[Autoencoder](/module/?id=representation-learning-autoencoders-vaes-latent-spaces#lesson-autoencoder)",
                 "[GPT and Causal Language Modeling](/module/?id=gpt-causal-lm)",
                 "[Information Theory for AI](/module/?id=information-theory-core)",
-                "[2. VAE](/module/?id=vae-encoder-decoder-generation)",
+                "[VAE](/module/?id=representation-learning-autoencoders-vaes-latent-spaces#lesson-vae)",
                 "[Convex Optimization](/module/?id=advanced-optimization)",
                 "[Probability and Bayes](/module/?id=probability-foundations)",
                 "[Classification Metrics](/module/?id=model-evaluation)",
@@ -44807,7 +44268,7 @@
               "level": 3
             },
             {
-              "p": "As in [Step 2](/module/?id=vae-encoder-decoder-generation), the VAE's codes can be sampled, but its pixel loss averages the images that share a code."
+              "p": "As in [part 2](/module/?id=representation-learning-autoencoders-vaes-latent-spaces#lesson-vae), the VAE's codes can be sampled, but its pixel loss averages the images that share a code."
             },
             {
               "heading": "Pixel losses in general",
@@ -45069,7 +44530,7 @@
               "p": "**Why does the real image score only 0.881?** This discriminator is a simple formula that gives 0.881 to any image whose rows match. A trained one would move toward 1 for real images."
             },
             {
-              "p": "[Step 4](/module/?id=generative-adding-noise) starts a different approach, built from many small steps."
+              "p": "[Part 4](/module/?id=generative-adding-noise#lesson-adding-noise) starts a different approach, built from many small steps."
             }
           ]
         },
@@ -45104,11 +44565,9 @@
     "generative-adding-noise": {
       "anchors": [
         "prerequisites",
-        "the-problem",
-        "earlier-approaches",
-        "many-small-steps",
-        "running-example",
-        "common-questions",
+        "adding-noise",
+        "removing-noise",
+        "guidance-and-stable-diffusion",
         "resources"
       ],
       "sections": [
@@ -45118,7 +44577,7 @@
           "blocks": [
             {
               "list": [
-                "[Variational Autoencoders](/module/?id=vae-encoder-decoder-generation)",
+                "[Variational Autoencoders](/module/?id=representation-learning-autoencoders-vaes-latent-spaces#lesson-vae)",
                 "[GANs](/module/?id=generative-adversarial-networks)",
                 "[Information Theory](/module/?id=information-theory-core)"
               ]
@@ -45126,16 +44585,20 @@
           ]
         },
         {
-          "id": "the-problem",
-          "title": "The problem",
+          "id": "adding-noise",
+          "title": "Adding noise",
           "blocks": [
             {
-              "p": "Steps 2 and 3 both turn random numbers into an image in a single pass, and each fails in its own way. For example, with the two images of this chapter:"
+              "heading": "The problem",
+              "level": 3
+            },
+            {
+              "p": "The VAE of part 2 and the GAN of part 3 both turn random numbers into an image in a single pass, and each fails in its own way. For example, with the two images of this chapter:"
             },
             {
               "list": [
-                "The **VAE** of Step 2 gives varied images, but blurry ones. Codes of 0.8, 0 and −0.4 decode to (0.9, 0.1, 0.9, 0.1), (0.5, 0.5, 0.5, 0.5) and (0.3, 0.7, 0.3, 0.7).",
-                "The collapsed **GAN** of Step 3 gives a sharp image, but the same one every time: LEFT, and never RIGHT."
+                "The **VAE** of part 2 gives varied images, but blurry ones. Codes of 0.8, 0 and −0.4 decode to (0.9, 0.1, 0.9, 0.1), (0.5, 0.5, 0.5, 0.5) and (0.3, 0.7, 0.3, 0.7).",
+                "The collapsed **GAN** of part 3 gives a sharp image, but the same one every time: LEFT, and never RIGHT."
               ]
             },
             {
@@ -45149,35 +44612,31 @@
             },
             {
               "p": "GAN training is also unstable, because two networks have to be kept in balance. A better approach would train one network with a simple, stable loss, and still produce images that are both sharp and varied."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
             {
-              "heading": "GANs",
+              "heading": "Earlier approaches",
               "level": 3
             },
             {
-              "p": "As in Step 3, the generator makes the whole image in one pass, guided only by a discriminator that is itself still learning."
+              "heading": "GANs",
+              "level": 4
+            },
+            {
+              "p": "As in part 3, the generator makes the whole image in one pass, guided only by a discriminator that is itself still learning."
             },
             {
               "heading": "Early diffusion",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Sohl-Dickstein et al. (2015) proposed generating by reversing a slow process that turns data into noise. The idea was sound, but its images were far behind GANs until DDPM (2020) simplified the training."
-            }
-          ]
-        },
-        {
-          "id": "many-small-steps",
-          "title": "Many small steps",
-          "blocks": [
+            },
             {
-              "p": "**The forward process.** Diffusion splits generation into many small steps. This step covers the **forward process**, which goes the other way: it destroys an image by adding a little random noise at each of $T$ steps, 1,000 in DDPM, until almost only noise is left. Nothing is learned here. It is a fixed recipe that produces training examples for Step 5."
+              "heading": "Many small steps",
+              "level": 3
+            },
+            {
+              "p": "**The forward process.** Diffusion splits generation into many small steps. This step covers the **forward process**, which goes the other way: it destroys an image by adding a little random noise at each of $T$ steps, 1,000 in DDPM, until almost only noise is left. Nothing is learned here. It is a fixed recipe that produces training examples for [Removing noise](#lesson-removing-noise)."
             },
             {
               "p": "**One jump.** The noise added at each step is drawn from a normal distribution, so the image after $t$ steps can be computed in one jump:"
@@ -45202,7 +44661,7 @@
             },
             {
               "heading": "The derivation",
-              "level": 3
+              "level": 4
             },
             {
               "p": "**One step.** Each step scales the image down slightly and adds a little fresh noise:"
@@ -45241,13 +44700,11 @@
               "problemCard": {
                 "id": "gen-where-to-split-a-thousand-steps"
               }
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "p": "Take LEFT and one draw of random noise, ε = (0.13, −0.13, 0.64, 0.10). With DDPM's schedule:"
             },
@@ -45306,13 +44763,11 @@
                   "    print(t, round(a, 5), (np.sqrt(a) * x0 + np.sqrt(1 - a) * eps).round(3))"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**If one jump gives any step, why have steps at all?** The jump is a shortcut for making training examples. The steps matter in the other direction: removing a little noise is a problem a network can learn, while turning pure noise into an image in one go is what GANs struggle with."
             },
@@ -45326,65 +44781,23 @@
               "p": "**Is the noise the same at every step?** In the one-jump formula, $\\varepsilon$ is a single draw used for whichever step is wanted. Each training example uses a new draw."
             },
             {
-              "p": "[Step 5](/module/?id=generative-removing-noise) learns to run this process backwards."
+              "p": "The next section, [Removing noise](#lesson-removing-noise), learns to run this process backwards."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "removing-noise",
+          "title": "Removing noise",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "Denoising Diffusion Probabilistic Models (Ho, Jain and Abbeel, 2020)",
-                  "url": "https://arxiv.org/abs/2006.11239",
-                  "source": "arXiv",
-                  "starred": true
-                },
-                {
-                  "title": "The Annotated Diffusion Model",
-                  "url": "https://huggingface.co/blog/annotated-diffusion",
-                  "source": "Hugging Face"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "generative-removing-noise": {
-      "anchors": [
-        "prerequisites",
-        "the-problem",
-        "earlier-approaches",
-        "predicting-the-noise",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "prerequisites",
-          "title": "Prerequisites",
-          "blocks": [
-            {
-              "list": [
-                "[Adding noise](/module/?id=generative-adding-noise)",
-                "[Information Theory](/module/?id=information-theory-core)"
-              ]
-            }
-          ]
-        },
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
-            {
-              "p": "Step 4 turns any image into noise. To generate, that process has to run backwards: start from pure noise and remove a little at a time until an image appears."
+              "heading": "The problem",
+              "level": 3
             },
             {
-              "p": "Adding noise needs no knowledge. Removing it does. For example, Step 4 turned LEFT into (0.136, −0.130, 0.646, 0.100) at step 1000. The same noise turns RIGHT into (0.130, −0.124, 0.640, 0.106), almost the same four numbers. Nothing in either says which image it came from."
+              "p": "[Adding noise](#lesson-adding-noise) turns any image into noise. To generate, that process has to run backwards: start from pure noise and remove a little at a time until an image appears."
+            },
+            {
+              "p": "Adding noise needs no knowledge. Removing it does. For example, adding noise turned LEFT into (0.136, −0.130, 0.646, 0.100) at step 1000. The same noise turns RIGHT into (0.130, −0.124, 0.640, 0.106), almost the same four numbers. Nothing in either says which image it came from."
             },
             {
               "figure": {
@@ -45396,36 +44809,32 @@
               }
             },
             {
-              "p": "To get from numbers like these to (1, 0, 1, 0) or (0, 1, 0, 1), and not to some other four numbers, the model has to know what the training images look like. It also has to learn that with a simple, stable loss, which was the aim of Step 4."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+              "p": "To get from numbers like these to (1, 0, 1, 0) or (0, 1, 0, 1), and not to some other four numbers, the model has to know what the training images look like. It also has to learn that with a simple, stable loss, which was the aim of [Adding noise](#lesson-adding-noise)."
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "Denoising filters",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Classical filters remove noise by averaging neighboring pixels. They also blur the image, and they cannot make an image appear out of pure noise."
             },
             {
               "heading": "Predicting the clean image",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The network could be trained to output the clean image directly. DDPM found that predicting the **noise** instead gave better images and a simpler loss."
-            }
-          ]
-        },
-        {
-          "id": "predicting-the-noise",
-          "title": "Predicting the noise",
-          "blocks": [
+            },
             {
-              "p": "**The network.** A network, usually a U-Net (Step 9 of Computer Vision), is given a noisy image $x_t$ and the step $t$, and predicts the noise $\\varepsilon$ that was added."
+              "heading": "Predicting the noise",
+              "level": 3
+            },
+            {
+              "p": "**The network.** A network, usually a U-Net (see [Segmentation](/module/?id=semantic-segmentation-unet-masks#lesson-segmentation) in Build a Vision Model), is given a noisy image $x_t$ and the step $t$, and predicts the noise $\\varepsilon$ that was added."
             },
             {
               "p": "**Training.** Training is simple:"
@@ -45433,7 +44842,7 @@
             {
               "olist": [
                 "Take a training image and a random step $t$.",
-                "Add noise as in Step 4.",
+                "Add noise as in [Adding noise](#lesson-adding-noise).",
                 "Train the network to predict that noise, using the mean squared error."
               ]
             },
@@ -45441,7 +44850,7 @@
               "p": "For example, a true noise of (0.1, −0.1) and a prediction of (0.2, −0.2) give a loss of $(0.1^2 + 0.1^2) \\div 2 = 0.01$."
             },
             {
-              "p": "**From noise to image.** From a predicted noise $\\hat\\varepsilon$, the clean image can be estimated by solving the formula of Step 4 for $x_0$:"
+              "p": "**From noise to image.** From a predicted noise $\\hat\\varepsilon$, the clean image can be estimated by solving the one-jump formula from [Adding noise](#lesson-adding-noise) for $x_0$:"
             },
             {
               "tex": "\\hat{x}_0 = \\frac{x_t - \\sqrt{1 - \\bar\\alpha_t}\\; \\hat\\varepsilon}{\\sqrt{\\bar\\alpha_t}}."
@@ -45463,7 +44872,7 @@
             },
             {
               "heading": "The reverse step",
-              "level": 3
+              "level": 4
             },
             {
               "p": "**Bayes' rule.** Given the clean image $x_0$, the step back from $x_t$ to $x_{t-1}$ has an exact distribution. By Bayes' rule, and because the forward step from $x_{t-1}$ does not look at $x_0$,"
@@ -45472,7 +44881,7 @@
               "tex": "q(x_{t-1} \\mid x_t, x_0) \\propto q(x_t \\mid x_{t-1})\\, q(x_{t-1} \\mid x_0)."
             },
             {
-              "p": "Both factors are normal in $x_{t-1}$, pixel by pixel. The forward step of Step 4, $x_t = \\sqrt{\\alpha_t}\\, x_{t-1} + \\sqrt{\\beta_t}\\, \\varepsilon_t$, puts $x_{t-1}$ near $x_t / \\sqrt{\\alpha_t}$ with variance $\\beta_t / \\alpha_t$. The one-jump formula puts it near $\\sqrt{\\bar\\alpha_{t-1}}\\, x_0$ with variance $1 - \\bar\\alpha_{t-1}$."
+              "p": "Both factors are normal in $x_{t-1}$, pixel by pixel. The forward step from [Adding noise](#lesson-adding-noise), $x_t = \\sqrt{\\alpha_t}\\, x_{t-1} + \\sqrt{\\beta_t}\\, \\varepsilon_t$, puts $x_{t-1}$ near $x_t / \\sqrt{\\alpha_t}$ with variance $\\beta_t / \\alpha_t$. The one-jump formula puts it near $\\sqrt{\\bar\\alpha_{t-1}}\\, x_0$ with variance $1 - \\bar\\alpha_{t-1}$."
             },
             {
               "p": "**Two normals multiplied.** The product of two normal curves in the same variable is a normal curve. Its precision, one over the variance, is the sum of the two precisions, and its mean is the average of the two centers weighted by their precisions. Simplifying with $\\alpha_t (1 - \\bar\\alpha_{t-1}) + \\beta_t = 1 - \\bar\\alpha_t$ gives"
@@ -45486,14 +44895,14 @@
             {
               "figure": {
                 "src": "assets/module-media/generative-reverse-step.svg",
-                "alt": "Three boxes: x0 = LEFT, x499 and x500. An arrow from x0 to x499 is labeled one jump, Step 4: center 0.282, variance 0.921. An arrow from x499 to x500 is labeled one step: times 0.995, variance 0.0100. A dashed arc from x500 back to x499 is labeled true reverse step, given x0: mean 0.994 x500 + 0.003 x0, variance 0.0100.",
+                "alt": "Three boxes: x0 = LEFT, x499 and x500. An arrow from x0 to x499 is labeled one jump: center 0.282, variance 0.921. An arrow from x499 to x500 is labeled one step: times 0.995, variance 0.0100. A dashed arc from x500 back to x499 is labeled true reverse step, given x0: mean 0.994 x500 + 0.003 x0, variance 0.0100.",
                 "caption": "The true reverse step at step 500 combines the two forward facts about $x_{499}$: where the one jump from $x_0$ puts it, and what one step turned it into.",
                 "width": 598,
                 "height": 215
               }
             },
             {
-              "p": "**The noise form.** At sampling time $x_0$ is unknown. Substituting $x_0 = (x_t - \\sqrt{1 - \\bar\\alpha_t}\\, \\varepsilon) / \\sqrt{\\bar\\alpha_t}$ from Step 4 turns the mean into"
+              "p": "**The noise form.** At sampling time $x_0$ is unknown. Substituting $x_0 = (x_t - \\sqrt{1 - \\bar\\alpha_t}\\, \\varepsilon) / \\sqrt{\\bar\\alpha_t}$ from [Adding noise](#lesson-adding-noise) turns the mean into"
             },
             {
               "tex": "\\tilde\\mu_t = \\frac{1}{\\sqrt{\\alpha_t}}\\Big(x_t - \\frac{\\beta_t}{\\sqrt{1 - \\bar\\alpha_t}}\\, \\varepsilon\\Big),"
@@ -45554,10 +44963,10 @@
             },
             {
               "heading": "The loss",
-              "level": 3
+              "level": 4
             },
             {
-              "p": "**KL between normals.** DDPM's training objective is a bound like the ELBO of Step 2. Its main terms, one per step, are the KL divergence from the true reverse step to the network's step, a normal with mean $\\mu_\\theta$ and a fixed variance $\\sigma_t^2$. For two normals with means $m_1, m_2$ and spreads $s_1, s_2$, the logarithm of the ratio of their densities at $x$ is"
+              "p": "**KL between normals.** DDPM's training objective is a bound like the ELBO of the VAE in [part 2](/module/?id=representation-learning-autoencoders-vaes-latent-spaces#lesson-vae). Its main terms, one per step, are the KL divergence from the true reverse step to the network's step, a normal with mean $\\mu_\\theta$ and a fixed variance $\\sigma_t^2$. For two normals with means $m_1, m_2$ and spreads $s_1, s_2$, the logarithm of the ratio of their densities at $x$ is"
             },
             {
               "tex": "\\ln \\frac{s_2}{s_1} - \\frac{(x - m_1)^2}{2 s_1^2} + \\frac{(x - m_2)^2}{2 s_2^2}."
@@ -45569,7 +44978,7 @@
               "tex": "\\text{KL} = \\ln \\frac{s_2}{s_1} + \\frac{s_1^2 + (m_1 - m_2)^2}{2 s_2^2} - \\frac{1}{2}"
             },
             {
-              "p": "([Information Theory for AI](/module/?id=information-theory-core) works this through). With $m_2 = 0$ and $s_2 = 1$ it is the KL term of Step 2. DDPM sets $\\sigma_t^2 = \\beta_t$. For the top-left pixel at step 500, $s_1^2 = \\tilde\\beta_{500} = 0.01003$ and $s_2^2 = \\beta_{500} = 0.01004$, so the variance terms, $\\ln(s_2/s_1) + s_1^2/(2 s_2^2) - \\tfrac{1}{2}$, come to 0.0000002. The means, 0.00123 apart (below), add $0.00123^2 \\div (2 \\times 0.01004) = 0.000075$. With equal variances only the means count, $\\text{KL} = (m_1 - m_2)^2 / (2\\sigma_t^2)$."
+              "p": "([Information Theory for AI](/module/?id=information-theory-core) works this through). With $m_2 = 0$ and $s_2 = 1$ it is the VAE's KL term from [part 2](/module/?id=representation-learning-autoencoders-vaes-latent-spaces#lesson-vae). DDPM sets $\\sigma_t^2 = \\beta_t$. For the top-left pixel at step 500, $s_1^2 = \\tilde\\beta_{500} = 0.01003$ and $s_2^2 = \\beta_{500} = 0.01004$, so the variance terms, $\\ln(s_2/s_1) + s_1^2/(2 s_2^2) - \\tfrac{1}{2}$, come to 0.0000002. The means, 0.00123 apart (below), add $0.00123^2 \\div (2 \\times 0.01004) = 0.000075$. With equal variances only the means count, $\\text{KL} = (m_1 - m_2)^2 / (2\\sigma_t^2)$."
             },
             {
               "p": "**The weight.** In the noise form the two means differ only through the noise, $m_1 - m_2 = \\dfrac{\\beta_t}{\\sqrt{\\alpha_t}\\sqrt{1 - \\bar\\alpha_t}}\\,(\\hat\\varepsilon - \\varepsilon)$, so for each pixel"
@@ -45582,7 +44991,7 @@
             },
             {
               "heading": "The step as an input",
-              "level": 3
+              "level": 4
             },
             {
               "p": "**Why the step is needed.** The same noisy image means different things at different steps. Read as step 500, the running example's $x_{500} = (0.405, -0.125, 0.895, 0.096)$ could have come from LEFT or RIGHT, with weights 0.6 and 0.4. Read as step 200, where an image keeps more of its signal, the same numbers point to LEFT with weight 0.959, and the best predicted noise changes sign in the first pixel:"
@@ -45617,7 +45026,7 @@
               "p": "A network that is not told the step has to give one answer for all three rows."
             },
             {
-              "p": "**A vector for the step.** DDPM gives $t$ to the network as sines and cosines, the way [Build a Transformer](/module/?id=transformer-add-position) gives a position. With 4 numbers they are $(\\sin t, \\cos t, \\sin(t/100), \\cos(t/100))$: step 500 becomes (−0.468, −0.884, −0.959, 0.284) and step 200 becomes (−0.873, 0.487, 0.909, −0.416). The slow pair changes little between nearby steps, (−0.959, 0.284) at step 500 and (−0.956, 0.293) at step 501."
+              "p": "**A vector for the step.** DDPM gives $t$ to the network as sines and cosines, the way [Build a Transformer](/module/?id=transformer-setup#lesson-add-position) gives a position. With 4 numbers they are $(\\sin t, \\cos t, \\sin(t/100), \\cos(t/100))$: step 500 becomes (−0.468, −0.884, −0.959, 0.284) and step 200 becomes (−0.873, 0.487, 0.909, −0.416). The slow pair changes little between nearby steps, (−0.959, 0.284) at step 500 and (−0.956, 0.293) at step 501."
             },
             {
               "p": "**Into the network.** A small MLP turns the vector into one number per channel, and every block of the U-Net adds it to its features, so each layer can adjust to the noise level. Later U-Nets predict a scale and a shift per channel from the step instead. Giving $t \\div 1000$ as one extra input also works on small problems."
@@ -45640,18 +45049,16 @@
                 "minutes": 30,
                 "difficulty": "Medium"
               }
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "p": "With only two training images, the best possible network can be computed exactly: its estimate of the clean image is an average of LEFT and RIGHT, weighted by how likely each is to have produced the noisy image."
             },
             {
-              "p": "**Training.** Take LEFT at step 500 from Step 4, (0.405, −0.125, 0.895, 0.096). The image is scaled down to 0.28 under noise of 0.96, so even the best network is unsure: it puts weight 0.6 on LEFT and 0.4 on RIGHT, and estimates the clean image as (0.6, 0.4, 0.6, 0.4). The noise it predicts is close to the true noise:"
+              "p": "**Training.** Take LEFT at step 500 from [Adding noise](#lesson-adding-noise), (0.405, −0.125, 0.895, 0.096). The image is scaled down to 0.28 under noise of 0.96, so even the best network is unsure: it puts weight 0.6 on LEFT and 0.4 on RIGHT, and estimates the clean image as (0.6, 0.4, 0.6, 0.4). The noise it predicts is close to the true noise:"
             },
             {
               "table": {
@@ -45728,7 +45135,7 @@
               }
             },
             {
-              "p": "Start A is (0.19, −0.52, −0.41, −2.44) and start B is (1.05, 1.78, −2.55, −0.14). At first the estimate is a gray blend. As the noise falls, it commits to one image, and different starts end at different images, so the model produces both kinds of image, unlike the collapsed GAN of Step 3."
+              "p": "Start A is (0.19, −0.52, −0.41, −2.44) and start B is (1.05, 1.78, −2.55, −0.14). At first the estimate is a gray blend. As the noise falls, it commits to one image, and different starts end at different images, so the model produces both kinds of image, unlike the collapsed GAN of part 3."
             },
             {
               "code": {
@@ -45758,13 +45165,11 @@
               "problemCard": {
                 "id": "gen-the-weight-of-the-two-images"
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Why predict the noise and not the image?** The two carry the same information, because the formula above turns one into the other. Their numerical weighting across noise levels differs, so parameterization can change optimization even when the underlying quantities determine one another. DDPM found that training on the noise gave better images."
             },
@@ -45778,54 +45183,20 @@
               "p": "**Why not finish in one step?** One step from pure noise returns the gray average. The image only becomes sharp because each step works on a less noisy input, where the estimate can commit."
             },
             {
-              "p": "[Step 6](/module/?id=generative-guidance-and-stable-diffusion) chooses which image to make."
+              "p": "The next section, [Guidance and Stable Diffusion](#lesson-guidance-and-stable-diffusion), chooses which image to make."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "guidance-and-stable-diffusion",
+          "title": "Guidance and Stable Diffusion",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "What are Diffusion Models? (Lilian Weng)",
-                  "url": "https://lilianweng.github.io/posts/2021-07-11-diffusion-models/",
-                  "source": "Lil'Log",
-                  "starred": true
-                },
-                {
-                  "title": "Score-Based Generative Modeling through Stochastic Differential Equations (Song et al., 2021)",
-                  "url": "https://arxiv.org/abs/2011.13456",
-                  "source": "arXiv"
-                },
-                {
-                  "title": "Denoising Diffusion Implicit Models (Song, Meng and Ermon, 2020)",
-                  "url": "https://arxiv.org/abs/2010.02502",
-                  "source": "arXiv"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "generative-guidance-and-stable-diffusion": {
-      "anchors": [
-        "the-problem",
-        "earlier-approaches",
-        "guidance-and-latent-diffusion",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
-              "p": "The model of Step 5 makes a random image like its training images. Which one it makes depends only on the starting noise: start A ends at LEFT and start B at RIGHT."
+              "p": "The model from [Removing noise](#lesson-removing-noise) makes a random image like its training images. Which one it makes depends only on the starting noise: start A ends at LEFT and start B at RIGHT."
             },
             {
               "p": "A user wants a particular image, described in a prompt such as \"a cat on a skateboard\", and wants the result to follow the prompt closely whatever the starting noise."
@@ -45841,33 +45212,29 @@
             },
             {
               "p": "There is also a cost problem. Diffusion runs the network once for every step, for dozens of steps, and each run works on the whole image. A 512 × 512 color image is 786,432 numbers, so 50 steps means processing all 786,432 of them 50 times. Generation should be fast enough to run on one GPU."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "Classifier guidance",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Dhariwal and Nichol (2021) steered sampling with a separate classifier, trained on noisy images, that pushed each step toward the requested class. This needed an extra network and worked only for the classes it was trained on, not free text."
             },
             {
               "heading": "Diffusion on pixels",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Running every step on full-size pixels is slow and memory-hungry. A 512 × 512 color image is 786,432 numbers, and the network processes all of them at every one of dozens of steps."
-            }
-          ]
-        },
-        {
-          "id": "guidance-and-latent-diffusion",
-          "title": "Guidance and latent diffusion",
-          "blocks": [
+            },
+            {
+              "heading": "Guidance and latent diffusion",
+              "level": 3
+            },
             {
               "p": "**Conditioning.** The prompt is given to the network as an extra input. In Stable Diffusion, a text encoder from CLIP turns the prompt into vectors, and the U-Net reads them through **cross-attention**: attention as in Build a Transformer, with queries from the image and keys and values from the text."
             },
@@ -45896,23 +45263,21 @@
               "p": "**Noise as a slope.** For the best network, the predicted noise is a slope: $\\hat\\varepsilon = -\\sqrt{1 - \\bar\\alpha_t} \\times$ (slope of $\\ln p(x_t)$), where $p(x_t)$ says how likely a noisy image is. At step 500 of start B, the unprompted noise is (1.088, 1.736, −2.512, −0.184), and $-0.960$ times the slope of $\\ln p(x_t)$, measured numerically, gives the same four numbers."
             },
             {
-              "p": "**Guidance as reweighting.** By Bayes' rule, $\\ln p(x_t \\mid \\text{prompt}) = \\ln p(x_t) + \\ln p(\\text{prompt} \\mid x_t) - \\ln p(\\text{prompt})$, and the last term does not change with $x_t$. So the prompted minus the unprompted noise is $-\\sqrt{1 - \\bar\\alpha_t}$ times the slope of $\\ln p(\\text{prompt} \\mid x_t)$, the slope of a classifier that comes for free. Guidance with weight $w$ follows $\\ln p(x_t) + w \\ln p(\\text{prompt} \\mid x_t)$, which reweights the noisy images by $p(\\text{prompt} \\mid x_t)^w$, so $w$ above 1 favors images where the prompt is unmistakable. At step 500 of start B, $p(\\text{left} \\mid x_t) = 0.28$, the unprompted estimate's weight on LEFT. The prompted minus the unprompted noise is the signal factor $\\sqrt{\\bar\\alpha_{500}} = 0.280$ of Step 4, divided by the noise factor $\\sqrt{1 - \\bar\\alpha_{500}} = 0.960$, with its sign changed, times the prompted minus the unprompted estimate: $-0.292 \\times 0.72 = -0.21$ in the top-left pixel. Written on the noise, guidance is $\\hat\\varepsilon_\\text{unprompted} + w\\,(\\hat\\varepsilon_\\text{prompted} - \\hat\\varepsilon_\\text{unprompted})$, the same as guiding the estimates, because the noise is a straight-line function of the estimate."
+              "p": "**Guidance as reweighting.** By Bayes' rule, $\\ln p(x_t \\mid \\text{prompt}) = \\ln p(x_t) + \\ln p(\\text{prompt} \\mid x_t) - \\ln p(\\text{prompt})$, and the last term does not change with $x_t$. So the prompted minus the unprompted noise is $-\\sqrt{1 - \\bar\\alpha_t}$ times the slope of $\\ln p(\\text{prompt} \\mid x_t)$, the slope of a classifier that comes for free. Guidance with weight $w$ follows $\\ln p(x_t) + w \\ln p(\\text{prompt} \\mid x_t)$, which reweights the noisy images by $p(\\text{prompt} \\mid x_t)^w$, so $w$ above 1 favors images where the prompt is unmistakable. At step 500 of start B, $p(\\text{left} \\mid x_t) = 0.28$, the unprompted estimate's weight on LEFT. The prompted minus the unprompted noise is the signal factor $\\sqrt{\\bar\\alpha_{500}} = 0.280$ from [Adding noise](#lesson-adding-noise), divided by the noise factor $\\sqrt{1 - \\bar\\alpha_{500}} = 0.960$, with its sign changed, times the prompted minus the unprompted estimate: $-0.292 \\times 0.72 = -0.21$ in the top-left pixel. Written on the noise, guidance is $\\hat\\varepsilon_\\text{unprompted} + w\\,(\\hat\\varepsilon_\\text{prompted} - \\hat\\varepsilon_\\text{unprompted})$, the same as guiding the estimates, because the noise is a straight-line function of the estimate."
             },
             {
-              "p": "**Latent diffusion.** Stable Diffusion runs diffusion on the codes of an autoencoder (Step 1), not on pixels. A 512 × 512 × 3 image becomes a 64 × 64 × 4 code: 16,384 numbers instead of 786,432, which is 48 times fewer. Only at the end does the decoder turn the final code into an image."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+              "p": "**Latent diffusion.** Stable Diffusion runs diffusion on the codes of an autoencoder (see [part 2](/module/?id=representation-learning-autoencoders-vaes-latent-spaces#lesson-autoencoder)), not on pixels. A 512 × 512 × 3 image becomes a 64 × 64 × 4 code: 16,384 numbers instead of 786,432, which is 48 times fewer. Only at the end does the decoder turn the final code into an image."
+            },
             {
-              "heading": "Guidance",
+              "heading": "Running example",
               "level": 3
             },
             {
-              "p": "Start B from Step 5 ends at RIGHT when there is no prompt. Now ask for \"left\". At step 500 of sampling, the two estimates are:"
+              "heading": "Guidance",
+              "level": 4
+            },
+            {
+              "p": "Start B from [Removing noise](#lesson-removing-noise) ends at RIGHT when there is no prompt. Now ask for \"left\". At step 500 of sampling, the two estimates are:"
             },
             {
               "table": {
@@ -45954,10 +45319,10 @@
             },
             {
               "heading": "Latent diffusion",
-              "level": 3
+              "level": 4
             },
             {
-              "p": "The autoencoder of Step 1 shows the latent idea at small scale: it turns each 4-pixel image into 1 number, LEFT into 1 and RIGHT into −1, so diffusion could work on 1 number instead of 4."
+              "p": "The autoencoder of part 2 shows the latent idea at small scale: it turns each 4-pixel image into 1 number, LEFT into 1 and RIGHT into −1, so diffusion could work on 1 number instead of 4."
             },
             {
               "code": {
@@ -45972,13 +45337,11 @@
                   "    print(w, unprompted + w * (prompted - unprompted))"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Does guidance cost anything?** Yes. Every step runs the network twice, once with the prompt and once without, so sampling takes about twice the computation."
             },
@@ -45999,6 +45362,33 @@
           "blocks": [
             {
               "resources": [
+                {
+                  "title": "Denoising Diffusion Probabilistic Models (Ho, Jain and Abbeel, 2020)",
+                  "url": "https://arxiv.org/abs/2006.11239",
+                  "source": "arXiv",
+                  "starred": true
+                },
+                {
+                  "title": "The Annotated Diffusion Model",
+                  "url": "https://huggingface.co/blog/annotated-diffusion",
+                  "source": "Hugging Face"
+                },
+                {
+                  "title": "What are Diffusion Models? (Lilian Weng)",
+                  "url": "https://lilianweng.github.io/posts/2021-07-11-diffusion-models/",
+                  "source": "Lil'Log",
+                  "starred": true
+                },
+                {
+                  "title": "Score-Based Generative Modeling through Stochastic Differential Equations (Song et al., 2021)",
+                  "url": "https://arxiv.org/abs/2011.13456",
+                  "source": "arXiv"
+                },
+                {
+                  "title": "Denoising Diffusion Implicit Models (Song, Meng and Ermon, 2020)",
+                  "url": "https://arxiv.org/abs/2010.02502",
+                  "source": "arXiv"
+                },
                 {
                   "title": "High-Resolution Image Synthesis with Latent Diffusion Models (Rombach et al., 2022)",
                   "url": "https://arxiv.org/abs/2112.10752",
@@ -46442,17 +45832,20 @@
     },
     "sciml-setup": {
       "anchors": [
-        "the-problem",
-        "history",
-        "the-intuition",
-        "roadmap",
+        "setup",
+        "the-equation",
+        "a-network-as-the-solution",
         "resources"
       ],
       "sections": [
         {
-          "id": "the-problem",
-          "title": "The problem",
+          "id": "setup",
+          "title": "Setup",
           "blocks": [
+            {
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "Science and engineering describe many systems by how they change: heat spreading through a metal plate, air flowing over a wing, a drug clearing from the blood. These descriptions are **differential equations**, and solving them is how engineers predict what a system will do."
             },
@@ -46470,13 +45863,11 @@
             },
             {
               "p": "Classical solvers also do not easily combine the equation with measured data. Scientific machine learning trains neural networks with the equation itself built into the loss, so a network can learn from physics, from data, or from both."
-            }
-          ]
-        },
-        {
-          "id": "history",
-          "title": "History",
-          "blocks": [
+            },
+            {
+              "heading": "History",
+              "level": 3
+            },
             {
               "table": {
                 "head": [
@@ -46520,112 +45911,85 @@
             },
             {
               "p": "The 1998 idea became practical at scale once deep learning libraries made automatic differentiation and GPUs easy to use."
-            }
-          ]
-        },
-        {
-          "id": "the-intuition",
-          "title": "The intuition",
-          "blocks": [
+            },
+            {
+              "heading": "The intuition",
+              "level": 3
+            },
             {
               "heading": "The equation as the teacher",
-              "level": 3
+              "level": 4
             },
             {
               "p": "A classifier learns from labeled examples. Here the equation does the teaching: wherever the network's output breaks the equation, the loss penalizes it. For example, an equation saying \"the rate of change equals minus the value\" asks for a slope of −0.5 wherever the value is 0.5, so a function whose value at some moment is 0.5 while its slope there is −0.2 is breaking it."
             },
             {
               "heading": "An adjustable function",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The network is a smooth function of time, or of position and time, with weights that can be adjusted. Training adjusts them until the equation holds at many chosen points."
             },
             {
               "heading": "Data where it exists",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Measurements, when there are some, go into the same loss as an extra term. Unknown constants in the equation, such as a decay rate, can then be learned along with the solution."
-            }
-          ]
-        },
-        {
-          "id": "roadmap",
-          "title": "Roadmap",
-          "blocks": [
+            },
+            {
+              "heading": "Roadmap",
+              "level": 3
+            },
             {
               "table": {
                 "head": [
-                  "Step",
+                  "Part",
+                  "Section",
                   "What it does"
                 ],
                 "rows": [
                   [
-                    "[1. The equation](/module/?id=sciml-the-equation)",
+                    "1",
+                    "[The equation](#lesson-the-equation)",
                     "States the equation and how to check a candidate solution"
                   ],
                   [
-                    "[2. A network as the solution](/module/?id=sciml-network-as-solution)",
+                    "1",
+                    "[A network as the solution](#lesson-a-network-as-the-solution)",
                     "Represents the unknown function with a small network"
                   ],
                   [
-                    "[3. Derivatives](/module/?id=sciml-derivatives)",
+                    "2",
+                    "[Derivatives](/module/?id=sciml-derivatives#lesson-derivatives)",
                     "Gets exact derivatives of the network's output"
                   ],
                   [
-                    "[4. Physics loss](/module/?id=sciml-physics-loss)",
+                    "2",
+                    "[Physics loss](/module/?id=sciml-derivatives#lesson-physics-loss)",
                     "Measures how badly the network breaks the equation"
                   ],
                   [
-                    "[5. Training and checking](/module/?id=sciml-training-and-checking)",
+                    "3",
+                    "[Training and checking](/module/?id=sciml-training-and-checking)",
                     "Trains the network and tests the result"
                   ]
                 ]
               }
             },
             {
-              "p": "The steps that follow build a physics-informed neural network one part at a time."
+              "p": "The sections that follow build a physics-informed neural network one piece at a time, over three parts."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "the-equation",
+          "title": "The equation",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "Physics-informed neural networks (Raissi, Perdikaris and Karniadakis, 2019)",
-                  "url": "https://www.sciencedirect.com/science/article/pii/S0021999118307125",
-                  "source": "Journal of Computational Physics",
-                  "starred": true
-                },
-                {
-                  "title": "Scientific Machine Learning Through Physics-Informed Neural Networks: Where we are and What's Next (Cuomo et al., 2022)",
-                  "url": "https://arxiv.org/abs/2201.05624",
-                  "source": "arXiv"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "sciml-the-equation": {
-      "anchors": [
-        "the-problem",
-        "earlier-approaches",
-        "the-residual",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "A differential equation says how a quantity changes, not what it is. This chapter uses"
             },
@@ -46646,23 +46010,21 @@
             },
             {
               "p": "At every point the equation gives a slope, the short lines in the figure. It does not give the curve. Many curves follow the slopes, one through every starting height. The starting value $y(0) = 1$ picks out exactly one of them. The task is to find that function."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "Solving by hand",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Some equations can be solved with algebra and calculus. This one has the solution $y = e^{-t}$. Most equations met in practice, such as those for air flowing over a wing, have no such formula."
             },
             {
               "heading": "Step-by-step solvers",
-              "level": 3
+              "level": 4
             },
             {
               "p": "**Euler's method** starts at the known value and repeatedly steps forward by a small time $h$, using the equation to get the slope:"
@@ -46681,13 +46043,11 @@
                 "width": 559,
                 "height": 327
               }
-            }
-          ]
-        },
-        {
-          "id": "the-residual",
-          "title": "The residual",
-          "blocks": [
+            },
+            {
+              "heading": "The residual",
+              "level": 3
+            },
             {
               "p": "**Checking a candidate.** A candidate function can be checked by putting it into the equation. Moving everything to one side, the equation says $dy/dt + y = 0$. The **residual** is how far a candidate is from that:"
             },
@@ -46698,17 +46058,15 @@
               "p": "**Two candidates.** For $y = e^{-t}$, the slope is $-e^{-t}$, so the residual is $-e^{-t} + e^{-t} = 0$ at every $t$. For the straight line $y = 1 - t$, the slope is −1, so the residual is $-1 + (1 - t) = -t$, which is 0 only at $t = 0$."
             },
             {
-              "p": "**Why it matters.** The residual needs no knowledge of the answer, only the candidate and its slope. For every solution of the equation it is 0 at every $t$, and for any other function it is not. Step 4 turns this into a loss."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+              "p": "**Why it matters.** The residual needs no knowledge of the answer, only the candidate and its slope. For every solution of the equation it is 0 at every $t$, and for any other function it is not. [Physics loss](/module/?id=sciml-derivatives#lesson-physics-loss), in part 2, turns this into a loss."
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "heading": "Euler's method",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Euler's method against the exact solution:"
@@ -46765,7 +46123,7 @@
             },
             {
               "heading": "The residual",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Now check two candidates with the residual. The straight line y = 1 − t starts at the right value, but its slope is −1, so its residual is −1 + (1 − t) = −t:"
@@ -46818,13 +46176,11 @@
                   "print(-1 + (1 - t))                          # residual of 1 - t"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Why is the starting value needed?** The equation alone has many solutions. $2e^{-t}$ and $5e^{-t}$ both shrink at a rate equal to their value. Only $y(0) = 1$ picks out $e^{-t}$."
             },
@@ -46832,53 +46188,29 @@
               "p": "**How does Euler's error depend on the step?** Roughly in proportion to it. At $t = 2$ the error is 0.073 with $h = 0.5$ and 0.014 with $h = 0.1$: a step 5 times smaller gives an error about 5 times smaller, for 5 times the work."
             },
             {
-              "p": "**Can the residual be 0 at some points for a wrong function?** Yes. The line $1 - t$ has a residual of 0 at $t = 0$. A solution must have a residual of 0 at every $t$, which is why Step 4 checks many points."
+              "p": "**Can the residual be 0 at some points for a wrong function?** Yes. The line $1 - t$ has a residual of 0 at $t = 0$. A solution must have a residual of 0 at every $t$, which is why the physics loss checks many points."
             },
             {
-              "p": "**Why use a network if Euler's method works?** For this equation there is no reason to. The chapter uses a problem with a known answer so that every step can be checked. Step 5 says where the approach pays off."
+              "p": "**Why use a network if Euler's method works?** For this equation there is no reason to. The chapter uses a problem with a known answer so that every step can be checked. [Part 3](/module/?id=sciml-training-and-checking) says where the approach pays off."
             },
             {
-              "p": "[Step 2](/module/?id=sciml-network-as-solution) represents the unknown function with a network."
+              "p": "The next section, [A network as the solution](#lesson-a-network-as-the-solution), represents the unknown function with a network."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "a-network-as-the-solution",
+          "title": "A network as the solution",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "Differential equations, studying the unsolvable",
-                  "url": "https://www.3blue1brown.com/lessons/differential-equations",
-                  "source": "3Blue1Brown",
-                  "starred": true
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "sciml-network-as-solution": {
-      "anchors": [
-        "the-problem",
-        "earlier-approaches",
-        "a-small-network",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
-            {
-              "p": "The answer to Step 1 is a function, $y(t)$. To search for it, the model needs a way to write down candidate functions with numbers it can adjust."
+              "heading": "The problem",
+              "level": 3
             },
             {
-              "p": "For example, the straight line $a + b\\,t$ is a family of functions with two adjustable numbers. Setting $a = 1$ and $b = -1$ gives $1 - t$, the candidate of Step 1. But no choice of $a$ and $b$ gives $e^{-t}$. The best-fit straight line in the least-squares sense, between $t = 0$ and $t = 2$, is $0.84 - 0.41\\,t$, which is already off by 0.16 at $t = 0$."
+              "p": "The answer to the equation is a function, $y(t)$. To search for it, the model needs a way to write down candidate functions with numbers it can adjust."
+            },
+            {
+              "p": "For example, the straight line $a + b\\,t$ is a family of functions with two adjustable numbers. Setting $a = 1$ and $b = -1$ gives $1 - t$, the candidate from [The equation](#lesson-the-equation). But no choice of $a$ and $b$ gives $e^{-t}$. The best-fit straight line in the least-squares sense, between $t = 0$ and $t = 2$, is $0.84 - 0.41\\,t$, which is already off by 0.16 at $t = 0$."
             },
             {
               "figure": {
@@ -46897,33 +46229,29 @@
                 "**Evaluated at any t**, not only at the points of a grid.",
                 "**Differentiated at any t**, because the equation is about $dy/dt$."
               ]
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "Values on a grid",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Euler's method and mesh-based solvers store y only at grid points. With more dimensions the grid grows fast: 100 points along each of three space directions and time is 100⁴ = 100 million values."
             },
             {
               "heading": "Fixed formulas",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Another approach writes y as a fixed sum of global basis functions, such as sinusoids or Chebyshev polynomials, and chooses the coefficients so the sum satisfies the equation. These **spectral methods** are very accurate for smooth problems on simple shapes, but struggle with sharp features and complicated geometry."
-            }
-          ]
-        },
-        {
-          "id": "a-small-network",
-          "title": "A small network",
-          "blocks": [
+            },
+            {
+              "heading": "A small network",
+              "level": 3
+            },
             {
               "p": "**A function of t.** A neural network takes $t$ as input and outputs $y(t)$. It is defined for every $t$, not just at grid points, and more dimensions only mean more inputs, such as $(x, y, z, t)$, rather than a bigger grid."
             },
@@ -46949,14 +46277,12 @@
               "p": "**One unit.** A single unit $\\tanh(w t + b)$ is a smooth step, from −1 up to 1 when $w$ is positive and from 1 down to −1 when $w$ is negative. For example, with $w = 1$ and $b = 0$ it is 0 at $t = 0$, 0.762 at $t = 1$ and 0.964 at $t = 2$. The weight $w$ sets how steep the step is and $b$ where it sits. The network builds its curve by adding four such steps."
             },
             {
-              "p": "**Why tanh.** The tanh function is smooth, so the network has derivatives of every order, which Step 3 needs. ReLU would be a poor choice here: its second derivative is 0 almost everywhere, which breaks equations that involve second derivatives."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+              "p": "**Why tanh.** The tanh function is smooth, so the network has derivatives of every order, which [part 2](/module/?id=sciml-derivatives#lesson-derivatives) needs. ReLU would be a poor choice here: its second derivative is 0 almost everywhere, which breaks equations that involve second derivatives."
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "p": "The 13 weights start as random numbers. At that point the network is far from the answer:"
             },
@@ -46991,7 +46317,7 @@
               }
             },
             {
-              "p": "It is nearly flat, slightly rising, and starts at −2.926 instead of 1. Training, in Steps 4 and 5, changes the 13 weights until the network matches the right column."
+              "p": "It is nearly flat, slightly rising, and starts at −2.926 instead of 1. Training, in parts 2 and 3, changes the 13 weights until the network matches the right column."
             },
             {
               "code": {
@@ -47013,13 +46339,11 @@
               "problemCard": {
                 "id": "sm-which-unit-sets-the-output"
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Why 4 hidden units?** It is enough for a smooth curve like $e^{-t}$ and small enough to write out. A harder problem needs more units and more layers."
             },
@@ -47027,10 +46351,10 @@
               "p": "**Why is the untrained network nearly flat?** Its 13 weights are standard-normal random numbers, and the four units' slopes mostly cancel, so the sum changes only slowly with $t$. The constant $c$ is −2.325, so the output sits near −2.9 across the whole range."
             },
             {
-              "p": "**Is this different from fitting a curve to data?** The network is the same. The difference is the loss: there are no data points to fit. Steps 4 and 5 train the network to satisfy the equation."
+              "p": "**Is this different from fitting a curve to data?** The network is the same. The difference is the loss: there are no data points to fit. Parts 2 and 3 train the network to satisfy the equation."
             },
             {
-              "p": "[Step 3](/module/?id=sciml-derivatives) computes this network's derivative."
+              "p": "[Part 2](/module/?id=sciml-derivatives#lesson-derivatives) computes this network's derivative."
             }
           ]
         },
@@ -47040,6 +46364,23 @@
           "blocks": [
             {
               "resources": [
+                {
+                  "title": "Physics-informed neural networks (Raissi, Perdikaris and Karniadakis, 2019)",
+                  "url": "https://www.sciencedirect.com/science/article/pii/S0021999118307125",
+                  "source": "Journal of Computational Physics",
+                  "starred": true
+                },
+                {
+                  "title": "Scientific Machine Learning Through Physics-Informed Neural Networks: Where we are and What's Next (Cuomo et al., 2022)",
+                  "url": "https://arxiv.org/abs/2201.05624",
+                  "source": "arXiv"
+                },
+                {
+                  "title": "Differential equations, studying the unsolvable",
+                  "url": "https://www.3blue1brown.com/lessons/differential-equations",
+                  "source": "3Blue1Brown",
+                  "starred": true
+                },
                 {
                   "title": "Artificial Neural Networks for Solving Ordinary and Partial Differential Equations (Lagaris, Likas and Fotiadis, 1997)",
                   "url": "https://arxiv.org/abs/physics/9705023",
@@ -47054,20 +46395,21 @@
     },
     "sciml-derivatives": {
       "anchors": [
-        "the-problem",
-        "earlier-approaches",
-        "automatic-differentiation",
-        "running-example",
-        "common-questions",
+        "derivatives",
+        "physics-loss",
         "resources"
       ],
       "sections": [
         {
-          "id": "the-problem",
-          "title": "The problem",
+          "id": "derivatives",
+          "title": "Derivatives",
           "blocks": [
             {
-              "p": "The residual of Step 1 is $dy/dt + y$. The network of Step 2 gives $y(t)$. The other half, $dy/dt$, is the slope of the network's output as its input $t$ changes, and it is needed at every chosen point."
+              "heading": "The problem",
+              "level": 3
+            },
+            {
+              "p": "The residual from part 1 is $dy/dt + y$. The network from part 1 gives $y(t)$. The other half, $dy/dt$, is the slope of the network's output as its input $t$ changes, and it is needed at every chosen point."
             },
             {
               "p": "For example, the slope of $1 - t$ is −1, which can be read off by hand. The network has 13 weights and no such shortcut. The residual at $t = 1$ needs its slope there as a number, which for the untrained network turns out to be 0.0538."
@@ -47086,33 +46428,29 @@
             },
             {
               "p": "A large step measures the slope of a line that cuts across the curve. A very small step subtracts two nearly equal numbers, and rounding errors take over. The slope has to be accurate, because the whole loss is built from it. Training will also need to know how the slope changes when the weights change."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "Finite differences",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Estimate the slope from two nearby values: (y(t + h) − y(t)) ÷ h. For $e^{-t}$ at t = 1 with h = 0.1, this gives −0.350 against the true −0.368 (the figure below uses the larger step h = 0.5, so the gap between the line and the curve is visible). A smaller h is more accurate, until h is so small that rounding errors in the computer's arithmetic take over."
             },
             {
               "heading": "Symbolic differentiation",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Computer algebra systems differentiate a formula exactly, by the rules of calculus. For a deep network the formula is enormous, and its derivative is larger still."
-            }
-          ]
-        },
-        {
-          "id": "automatic-differentiation",
-          "title": "Automatic differentiation",
-          "blocks": [
+            },
+            {
+              "heading": "Automatic differentiation",
+              "level": 3
+            },
             {
               "p": "**The idea.** **Automatic differentiation** applies the chain rule to each operation as the network computes, which gives exact derivatives, apart from ordinary rounding. It is the same machinery as backpropagation, applied to the input $t$ instead of the weights."
             },
@@ -47135,11 +46473,11 @@
               }
             },
             {
-              "p": "**In code.** In PyTorch it is one call, `torch.autograd.grad(y, t, torch.ones_like(y), create_graph=True)[0]`. The `torch.ones_like(y)` gives the slope at every point of `t` at once, `[0]` takes it out of the tuple the call returns, and `create_graph=True` keeps it differentiable so that the loss can later be differentiated with respect to the weights. [Step 4](/module/?id=sciml-physics-loss) runs it on the whole loss."
+              "p": "**In code.** In PyTorch it is one call, `torch.autograd.grad(y, t, torch.ones_like(y), create_graph=True)[0]`. The `torch.ones_like(y)` gives the slope at every point of `t` at once, `[0]` takes it out of the tuple the call returns, and `create_graph=True` keeps it differentiable so that the loss can later be differentiated with respect to the weights. [Physics loss](#lesson-physics-loss) runs it on the whole loss."
             },
             {
               "heading": "Second derivatives",
-              "level": 3
+              "level": 4
             },
             {
               "p": "**By the chain rule.** The equation in this chapter needs only $dy/dt$, but many equations in science also contain a second derivative. Differentiating each unit's slope once more, and writing $a_i = \\tanh(w_i t + b_i)$ for the output of unit $i$, gives"
@@ -47206,15 +46544,13 @@
               "problemCard": {
                 "id": "sm-two-derivatives-at-one-point"
               }
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
             {
-              "p": "For the untrained network from Step 2 at t = 1, the chain rule gives dy/dt = 0.053829. Finite differences with different step sizes:"
+              "heading": "Running example",
+              "level": 3
+            },
+            {
+              "p": "For the untrained network from part 1 at t = 1, the chain rule gives dy/dt = 0.053829. Finite differences with different step sizes:"
             },
             {
               "table": {
@@ -47266,13 +46602,11 @@
                   "    print(h, (net(1.0 + h) - net(1.0)) / h)"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Why not use finite differences in training?** They need a step $h$, and no choice is right: 0.1 gives an error of 0.0019 and $10^{-12}$ gives 0.000095 from rounding. Automatic differentiation has no $h$, and its result can itself be differentiated with respect to the weights, which training needs."
             },
@@ -47283,47 +46617,18 @@
               "p": "**Is this the same as backpropagation?** It is the same chain rule. Backpropagation asks how the loss changes with each weight, and here the question is how the output changes with the input $t$."
             },
             {
-              "p": "[Step 4](/module/?id=sciml-physics-loss) uses this derivative in the loss."
+              "p": "The next section, [Physics loss](#lesson-physics-loss), uses this derivative in the loss."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "physics-loss",
+          "title": "Physics loss",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "Automatic differentiation in machine learning: a survey (Baydin et al., 2018)",
-                  "url": "https://arxiv.org/abs/1502.05767",
-                  "source": "arXiv",
-                  "starred": true
-                },
-                {
-                  "title": "A Gentle Introduction to torch.autograd",
-                  "url": "https://pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html",
-                  "source": "PyTorch"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "sciml-physics-loss": {
-      "anchors": [
-        "the-problem",
-        "earlier-approaches",
-        "the-physics-loss",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "Training needs a loss: one number that says how wrong the network is. The usual loss compares the network with known answers."
             },
@@ -47344,33 +46649,29 @@
             },
             {
               "p": "So the loss has to measure how well the network satisfies the equation and the starting value, using only the network itself."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "heading": "Fitting measurements",
-              "level": 3
+              "level": 4
             },
             {
               "p": "If y has been measured at a few times, the network can be fit to those values like any regression. But between and beyond the measurements it can do anything, because nothing tells it about the equation. Through three measured points pass infinitely many curves."
             },
             {
               "heading": "Trial solutions",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Lagaris et al. (1998) built the starting value into the formula, for example y = 1 + t × (network output), which equals 1 at t = 0 whatever the network does, and trained only on the equation. This works for simple starting and boundary conditions, but such formulas are hard to build for complicated shapes."
-            }
-          ]
-        },
-        {
-          "id": "the-physics-loss",
-          "title": "The physics loss",
-          "blocks": [
+            },
+            {
+              "heading": "The physics loss",
+              "level": 3
+            },
             {
               "p": "**Two requirements, one loss.** A **physics-informed neural network** (PINN) adds the two requirements as two terms of one loss. Pick a set of **collocation points**, here $t = 0, 0.25, 0.5, \\dots, 2$, and compute the residual at each:"
             },
@@ -47393,14 +46694,14 @@
               }
             },
             {
-              "p": "**No labels.** The collocation points need no labels, so any number of them can be chosen anywhere. Measurements, when there are some, add a third term, as in Step 5."
+              "p": "**No labels.** The collocation points need no labels, so any number of them can be chosen anywhere. Measurements, when there are some, add a third term, as in [part 3](/module/?id=sciml-training-and-checking)."
             },
             {
               "p": "**Balance.** The terms can differ in size by orders of magnitude. In harder problems they are usually given weights so that one does not swamp the other."
             },
             {
               "heading": "Beyond one variable",
-              "level": 3
+              "level": 4
             },
             {
               "p": "**The heat equation.** Heat flowing along a rod of length 1 follows an equation in two variables, position $x$ and time $t$:"
@@ -47409,7 +46710,7 @@
               "tex": "\\frac{\\partial u}{\\partial t} = \\alpha \\, \\frac{\\partial^2 u}{\\partial x^2}."
             },
             {
-              "p": "Here $u(x, t)$ is the temperature, $\\alpha$ is how fast the material spreads heat, and each $\\partial$ is a derivative in one variable with the other held fixed, written $u_t$ and $u_{xx}$ for short. The ends are held at 0, $u(0, t) = u(1, t) = 0$, and the rod starts as $u(x, 0) = \\sin(\\pi x)$. The network takes $x$ and $t$ as inputs, and two autograd calls in $x$ give $u_{xx}$, as in Step 3."
+              "p": "Here $u(x, t)$ is the temperature, $\\alpha$ is how fast the material spreads heat, and each $\\partial$ is a derivative in one variable with the other held fixed, written $u_t$ and $u_{xx}$ for short. The ends are held at 0, $u(0, t) = u(1, t) = 0$, and the rod starts as $u(x, 0) = \\sin(\\pi x)$. The network takes $x$ and $t$ as inputs, and two autograd calls in $x$ give $u_{xx}$, as in [Derivatives](#lesson-derivatives)."
             },
             {
               "p": "**The loss.** The residual is now $u_t - \\alpha \\, u_{xx}$, and each condition gets its own term, checked at its own points: the equation inside the rod, the ends along $x = 0$ and $x = 1$, and the start along $t = 0$."
@@ -47462,13 +46763,11 @@
             },
             {
               "p": "For the second candidate, $u_t = -\\pi^2 u = -9.86960 \\times 0.37271 \\approx -3.6785$ and $\\alpha \\, u_{xx} = -0.5 \\times 9.86960 \\times 0.37271 \\approx -1.8392$, so the residual is $\\approx -1.8392$, as in the table. The [USAAIO 2025 Round 2 paper](https://forum.beaver-edge.ai/c/ai-olympiads/2025-usa-na-aio-round-2/9) opened with a problem on this kind of loss, for heat along a rod held at 0 at both ends and starting from a sine-shaped profile."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "p": "Using the 9 collocation points:"
             },
@@ -47528,10 +46827,10 @@
             },
             {
               "heading": "In PyTorch",
-              "level": 3
+              "level": 4
             },
             {
-              "p": "The same loss in PyTorch, with automatic differentiation in place of the hand-written slope. The weights are Step 2's 13 random starting weights, so the derivatives at $t = 1$ match Step 3 and the loss at step 0 matches the untrained network's 23.546. The collocation points get `requires_grad=True` so that autograd can differentiate with respect to $t$."
+              "p": "The same loss in PyTorch, with automatic differentiation in place of the hand-written slope. The weights are the 13 random starting weights from part 1, so the derivatives at $t = 1$ match [Derivatives](#lesson-derivatives) and the loss at step 0 matches the untrained network's 23.546. The collocation points get `requires_grad=True` so that autograd can differentiate with respect to $t$."
             },
             {
               "code": {
@@ -47589,19 +46888,17 @@
               }
             },
             {
-              "p": "Adam needs thousands of steps to get close, where the L-BFGS run of Step 5 takes 100 iterations, which is why PINNs usually finish with L-BFGS."
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+              "p": "Adam needs thousands of steps to get close, where the L-BFGS run of [part 3](/module/?id=sciml-training-and-checking) takes 100 iterations, which is why PINNs usually finish with L-BFGS."
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**How many collocation points are needed?** Enough to cover the range closely. This page uses 9. Real problems use thousands, often drawn at random."
             },
             {
-              "p": "**Can the loss be 0 for a wrong function?** In principle, yes: the loss only checks the collocation points, and a function could satisfy the equation at those 9 points and not between them. More points make this harder, and Step 5 checks the result at other points."
+              "p": "**Can the loss be 0 for a wrong function?** In principle, yes: the loss only checks the collocation points, and a function could satisfy the equation at those 9 points and not between them. More points make this harder, and [part 3](/module/?id=sciml-training-and-checking) checks the result at other points."
             },
             {
               "p": "**Why is the starting-value part needed?** Without it, $2e^{-t}$ would also have a loss of 0, since its residual is 0 everywhere. The second term costs it $(2 - 1)^2 = 1$."
@@ -47610,7 +46907,7 @@
               "p": "**Where is the data?** There is none. The network is never shown a value of the solution. The equation and the starting value are the only information it gets."
             },
             {
-              "p": "[Step 5](/module/?id=sciml-training-and-checking) trains the network on this loss."
+              "p": "[Part 3](/module/?id=sciml-training-and-checking) trains the network on this loss."
             }
           ]
         },
@@ -47620,6 +46917,17 @@
           "blocks": [
             {
               "resources": [
+                {
+                  "title": "Automatic differentiation in machine learning: a survey (Baydin et al., 2018)",
+                  "url": "https://arxiv.org/abs/1502.05767",
+                  "source": "arXiv",
+                  "starred": true
+                },
+                {
+                  "title": "A Gentle Introduction to torch.autograd",
+                  "url": "https://pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html",
+                  "source": "PyTorch"
+                },
                 {
                   "title": "Physics-informed neural networks (Raissi, Perdikaris and Karniadakis, 2019)",
                   "url": "https://www.sciencedirect.com/science/article/pii/S0021999118307125",
@@ -47652,7 +46960,7 @@
           "title": "The problem",
           "blocks": [
             {
-              "p": "Step 4 gave a loss. Two things remain."
+              "p": "Part 2 gave a loss. Two things remain."
             },
             {
               "p": "**Training.** The 13 weights have to be adjusted until the loss is close to 0. For the untrained network it is 23.5."
@@ -47768,7 +47076,7 @@
               "level": 3
             },
             {
-              "p": "Training with L-BFGS from the untrained network of Step 2:"
+              "p": "Training with L-BFGS from the untrained network of part 1:"
             },
             {
               "table": {
@@ -49484,17 +48792,31 @@
     },
     "efficient-setup": {
       "anchors": [
-        "the-problem",
-        "history",
-        "the-intuition",
-        "roadmap",
+        "prerequisites",
+        "setup",
+        "prefill-and-decode",
         "resources"
       ],
       "sections": [
         {
-          "id": "the-problem",
-          "title": "The problem",
+          "id": "prerequisites",
+          "title": "Prerequisites",
           "blocks": [
+            {
+              "list": [
+                "[Self-Attention Fundamentals](/module/?id=transformer-fundamentals)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "setup",
+          "title": "Setup",
+          "blocks": [
+            {
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "A model is trained once but run every time someone uses it, token by token, often for many users at once and on long texts. Three costs dominate:"
             },
@@ -49516,13 +48838,11 @@
             },
             {
               "p": "The size of the model adds to all three. A model with 70 billion weights needs about 140 GB just to store them, more than one 80 GB GPU holds, before any memory for the conversations it serves."
-            }
-          ]
-        },
-        {
-          "id": "history",
-          "title": "History",
-          "blocks": [
+            },
+            {
+              "heading": "History",
+              "level": 3
+            },
             {
               "table": {
                 "head": [
@@ -49566,116 +48886,89 @@
             },
             {
               "p": "These ideas became necessary as inputs grew longer. GPT-2 read at most 1,024 tokens. Many current models accept more than 100,000."
-            }
-          ]
-        },
-        {
-          "id": "the-intuition",
-          "title": "The intuition",
-          "blocks": [
+            },
+            {
+              "heading": "The intuition",
+              "level": 3
+            },
             {
               "list": [
-                "**Do not redo work.** Adding a token never changes the keys and values of the tokens before it, so they can be computed once and kept (Steps 1 and 2). Appending \"on\" to \"the cat sat\" leaves the keys and values of the first three tokens exactly as they were.",
-                "**Move fewer numbers.** Memory traffic sets the speed, so store less (Step 3) and keep the work in the GPU's small, fast memory (Step 4). Letting groups of 8 heads share their keys and values makes the cache 8 times smaller.",
-                "**Change the calculation.** Linear attention drops the softmax so the cost grows only with the length, at a price in what it can do (Step 5): \"sat\" then gives \"cat\" 44% of its attention instead of 71%."
+                "**Do not redo work.** Adding a token never changes the keys and values of the tokens before it, so they can be computed once and kept (see [Prefill and decode](#lesson-prefill-and-decode) and the [KV cache](/module/?id=efficient-kv-cache#lesson-kv-cache)). Appending \"on\" to \"the cat sat\" leaves the keys and values of the first three tokens exactly as they were.",
+                "**Move fewer numbers.** Memory traffic sets the speed, so store less (see [Sharing keys and values](/module/?id=efficient-kv-cache#lesson-sharing-keys-and-values)) and keep the work in the GPU's small, fast memory (see [FlashAttention](/module/?id=efficient-flashattention#lesson-flashattention)). Letting groups of 8 heads share their keys and values makes the cache 8 times smaller.",
+                "**Change the calculation.** Linear attention drops the softmax so the cost grows only with the length, at a price in what it can do (see [Linear attention](/module/?id=efficient-flashattention#lesson-linear-attention)): \"sat\" then gives \"cat\" 44% of its attention instead of 71%."
               ]
-            }
-          ]
-        },
-        {
-          "id": "roadmap",
-          "title": "Roadmap",
-          "blocks": [
+            },
+            {
+              "heading": "Roadmap",
+              "level": 3
+            },
             {
               "table": {
                 "head": [
-                  "Step",
+                  "Part",
+                  "Section",
                   "What it does",
                   "Cost it addresses"
                 ],
                 "rows": [
                   [
-                    "[1. Prefill and decode](/module/?id=efficient-prefill-and-decode)",
+                    "1",
+                    "[Prefill and decode](#lesson-prefill-and-decode)",
                     "Separates reading the prompt from producing new tokens",
                     "Shows where work is repeated"
                   ],
                   [
-                    "[2. KV cache](/module/?id=efficient-kv-cache)",
+                    "2",
+                    "[KV cache](/module/?id=efficient-kv-cache#lesson-kv-cache)",
                     "Keeps the keys and values of earlier tokens",
                     "Repeated work, and measures the memory it costs"
                   ],
                   [
-                    "[3. Sharing keys and values](/module/?id=efficient-sharing-keys-and-values)",
+                    "2",
+                    "[Sharing keys and values](/module/?id=efficient-kv-cache#lesson-sharing-keys-and-values)",
                     "Lets several heads use the same stored keys and values",
                     "The memory of the cache"
                   ],
                   [
-                    "[4. FlashAttention](/module/?id=efficient-flashattention)",
+                    "3",
+                    "[FlashAttention](/module/?id=efficient-flashattention#lesson-flashattention)",
                     "Computes attention in blocks that fit in fast memory",
                     "Moving numbers in and out of memory"
                   ],
                   [
-                    "[5. Linear attention](/module/?id=efficient-linear-attention)",
+                    "3",
+                    "[Linear attention](/module/?id=efficient-flashattention#lesson-linear-attention)",
                     "Replaces the softmax so the cost grows only with the length",
                     "Long texts"
+                  ],
+                  [
+                    "4",
+                    "[Sparse attention, sinks and eviction](/module/?id=sparse-attention-sinks-and-eviction)",
+                    "Keeps only some cache entries, and chooses which ones",
+                    "Memory that grows with the length"
+                  ],
+                  [
+                    "5",
+                    "[State-space models](/module/?id=state-space-models)",
+                    "Replaces attention with a fixed-size state",
+                    "Memory and work per token"
                   ]
                 ]
               }
             },
             {
-              "p": "The steps that follow explore these methods one at a time, using the model from Build a Transformer."
+              "p": "The parts that follow explore these methods one at a time, using the model from Build a Transformer."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "prefill-and-decode",
+          "title": "Prefill and decode",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "Efficiently Scaling Transformer Inference (Pope et al., 2022)",
-                  "url": "https://arxiv.org/abs/2211.05102",
-                  "source": "arXiv",
-                  "starred": true
-                },
-                {
-                  "title": "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness (Dao et al., 2022)",
-                  "url": "https://arxiv.org/abs/2205.14135",
-                  "source": "arXiv"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "efficient-prefill-and-decode": {
-      "anchors": [
-        "prerequisites",
-        "the-problem",
-        "earlier-approaches",
-        "prefill-and-decode",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "prerequisites",
-          "title": "Prerequisites",
-          "blocks": [
-            {
-              "list": [
-                "[Self-Attention Fundamentals](/module/?id=transformer-fundamentals)"
-              ]
-            }
-          ]
-        },
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "Generating a reply is a loop: predict a token, append it, run the model again."
             },
@@ -49723,22 +49016,18 @@
                 "width": 568,
                 "height": 327
               }
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "p": "The simplest approach reruns the whole model on the whole text after every new token. It is correct, and it is exactly the waste described above: writing a 5-token reply to a 10-token prompt reruns the model on 10, 11, 12, 13 and 14 tokens."
-            }
-          ]
-        },
-        {
-          "id": "prefill-and-decode",
-          "title": "Prefill and decode",
-          "blocks": [
+            },
+            {
+              "heading": "Prefill and decode",
+              "level": 3
+            },
             {
               "p": "**Two phases.** **Prefill** reads the prompt in one run, all tokens at once, which keeps the GPU busy. **Decode** then adds one token per run. For example, a 200-token prompt takes one prefill run, and a 30-token reply then takes 30 decode runs."
             },
@@ -49767,16 +49056,14 @@
               "problemCard": {
                 "id": "eff-scores-for-a-prompt-and-a-reply"
               }
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "heading": "Old keys and values",
-              "level": 3
+              "level": 4
             },
             {
               "p": "We continue the model from Build a Transformer. The prefill reads \"the cat sat\" and predicts \"on\". The first decode reads \"the cat sat on\". The keys and values of the first three tokens are the same in both runs. For head 1:"
@@ -49824,7 +49111,7 @@
             },
             {
               "heading": "The new token",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Only \"on\" is new. Its embedding plus its position values gives (−0.859, −1.990, 0.030, 2.000), and from that its query, key and value:"
@@ -49857,7 +49144,7 @@
             },
             {
               "heading": "The new row of scores",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Head 1's table of scores in the second run, with later tokens hidden:"
@@ -49931,13 +49218,11 @@
                   "print(K_second[3].round(3))                           # the only new key"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Why is the prompt read in one run but the reply written one token at a time?** Every token of the prompt already exists, so all of them can be processed side by side. A reply token does not exist until the one before it has been chosen, so decode runs cannot be done in parallel."
             },
@@ -49951,7 +49236,7 @@
               "p": "**How much is saved in the running example?** Running on \"the cat sat\" and then from scratch on \"the cat sat on\" computes 9 + 16 = 25 scores per head. Keeping the first three rows computes 9 + 4 = 13."
             },
             {
-              "p": "[Step 2](/module/?id=efficient-kv-cache) keeps the old keys and values so that each decode run computes only the new row."
+              "p": "[Part 2](/module/?id=efficient-kv-cache#lesson-kv-cache) keeps the old keys and values so that each decode run computes only the new row."
             }
           ]
         },
@@ -49966,6 +49251,11 @@
                   "url": "https://arxiv.org/abs/2211.05102",
                   "source": "arXiv",
                   "starred": true
+                },
+                {
+                  "title": "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness (Dao et al., 2022)",
+                  "url": "https://arxiv.org/abs/2205.14135",
+                  "source": "arXiv"
                 }
               ]
             }
@@ -49976,11 +49266,8 @@
     "efficient-kv-cache": {
       "anchors": [
         "prerequisites",
-        "the-problem",
-        "earlier-approaches",
-        "the-kv-cache",
-        "running-example",
-        "common-questions",
+        "kv-cache",
+        "sharing-keys-and-values",
         "resources"
       ],
       "sections": [
@@ -49990,17 +49277,24 @@
           "blocks": [
             {
               "list": [
-                "[1. Prefill and decode](/module/?id=efficient-prefill-and-decode)"
+                "[Prefill and decode](/module/?id=efficient-setup#lesson-prefill-and-decode)",
+                "[Self-Attention Fundamentals](/module/?id=transformer-fundamentals)",
+                "[GPT and Causal Language Modeling](/module/?id=gpt-causal-lm)",
+                "[Positional Encoding](/module/?id=relative-position-rope-positional-methods)"
               ]
             }
           ]
         },
         {
-          "id": "the-problem",
-          "title": "The problem",
+          "id": "kv-cache",
+          "title": "KV cache",
           "blocks": [
             {
-              "p": "Step 1 showed that the keys and values of earlier tokens never change. So they can be computed once and kept. Keeping them costs memory, and the amount adds up."
+              "heading": "The problem",
+              "level": 3
+            },
+            {
+              "p": "Part 1 showed that the keys and values of earlier tokens never change. So they can be computed once and kept. Keeping them costs memory, and the amount adds up."
             },
             {
               "p": "There is a key and a value for every token, in every key-value head, in every layer, and a separate set for every conversation the model is serving. For example, in Llama 2 70B one token costs 320 KiB of cache. A 4,096-token conversation needs 1.25 GiB, and 256 conversations at once need 320 GiB, more than twice the 140 GB of the model's weights."
@@ -50016,33 +49310,29 @@
             },
             {
               "p": "So the questions are what exactly has to be kept, and how much it costs to keep it."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
             {
-              "heading": "Recompute everything",
+              "heading": "Earlier approaches",
               "level": 3
             },
             {
-              "p": "This is the waste measured in Step 1: 333,833,500 scores per head for a 1,000-token reply instead of 500,500, so 333,333,000 of them are thrown away."
+              "heading": "Recompute everything",
+              "level": 4
+            },
+            {
+              "p": "This is the waste measured in part 1: 333,833,500 scores per head for a 1,000-token reply instead of 500,500, so 333,333,000 of them are thrown away."
             },
             {
               "heading": "Keep everything",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Keeping every number computed for earlier tokens would also avoid recomputation, but their queries, scores and weights are never used again. Later tokens need the key of \"the\", (1.000, 0.000) in head 1, but never its query."
-            }
-          ]
-        },
-        {
-          "id": "the-kv-cache",
-          "title": "The KV cache",
-          "blocks": [
+            },
+            {
+              "heading": "The KV cache",
+              "level": 3
+            },
             {
               "p": "**What is kept.** The **KV cache** keeps only the keys and values of earlier tokens. Each decode run computes the new token's query, key and value, adds the key and value to the cache, and compares the query with every cached key. For example, after \"the cat sat\" the cache holds 3 keys and 3 values per head, and decoding \"on\" adds a fourth of each."
             },
@@ -50057,7 +49347,7 @@
             },
             {
               "heading": "Cache size",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The cache holds a key and a value per token, per key-value head, per layer:"
@@ -50073,7 +49363,7 @@
             },
             {
               "heading": "Decoding speed",
-              "level": 3
+              "level": 4
             },
             {
               "p": "**Operations per byte.** Decoding \"on\" in head 1 reads the 4 cached keys and the 4 cached values, 16 numbers or 32 bytes at 2 bytes each. It uses them in 16 multiply-adds, 8 for the scores and 8 for the weighted sum, which is 32 operations when each multiply and each add counts as one. Operations per byte read, the **arithmetic intensity**, is then"
@@ -50089,7 +49379,7 @@
             },
             {
               "heading": "A chunk of new tokens",
-              "level": 3
+              "level": 4
             },
             {
               "p": "**The shifted mask.** Sometimes several new tokens arrive in one run, for example a follow-up message added to a conversation whose cache already exists. The new tokens come after the cached ones, so the causal mask has to be shifted by the number of cached tokens. With \"the cat sat\" in the cache and the chunk \"on the\" arriving, \"on\" may see 4 keys and the second \"the\" all 5."
@@ -50110,16 +49400,14 @@
               "problemCard": {
                 "id": "eff-mask-built-for-the-wrong-start"
               }
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "heading": "What is kept",
-              "level": 3
+              "level": 4
             },
             {
               "p": "After the prefill of \"the cat sat\", the cache of the one-layer model holds:"
@@ -50163,7 +49451,7 @@
             },
             {
               "heading": "Decoding one token",
-              "level": 3
+              "level": 4
             },
             {
               "p": "To decode \"on\", the model adds its key and value as a fourth row and compares its head 1 query, (0.030, 2.000), with the four keys:"
@@ -50235,13 +49523,11 @@
                   "print(weights.round(3))      # 0.097, 0.409, 0.398, 0.095"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Why are queries not cached?** A query is used once, by its own token, to score the keys. No later token ever needs it. Keys and values are different: every later token compares against the key of \"the\" and may take its value."
             },
@@ -50255,64 +49541,20 @@
               "p": "**Is the cache used in training?** No. In training the whole text is present and processed in one run, like a prefill, so there is nothing to keep between runs."
             },
             {
-              "p": "[Step 3](/module/?id=efficient-sharing-keys-and-values) makes the cache smaller."
+              "p": "The next section, [Sharing keys and values](#lesson-sharing-keys-and-values), makes the cache smaller."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "sharing-keys-and-values",
+          "title": "Sharing keys and values",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "Efficiently Scaling Transformer Inference (Pope et al., 2022)",
-                  "url": "https://arxiv.org/abs/2211.05102",
-                  "source": "arXiv",
-                  "starred": true
-                },
-                {
-                  "title": "Efficient Memory Management for Large Language Model Serving with PagedAttention (Kwon et al., 2023)",
-                  "url": "https://arxiv.org/abs/2309.06180",
-                  "source": "arXiv"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "efficient-sharing-keys-and-values": {
-      "anchors": [
-        "prerequisites",
-        "the-problem",
-        "earlier-approaches",
-        "sharing",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "prerequisites",
-          "title": "Prerequisites",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
-              "list": [
-                "[Self-Attention Fundamentals](/module/?id=transformer-fundamentals)",
-                "[GPT and Causal Language Modeling](/module/?id=gpt-causal-lm)",
-                "[Positional Encoding](/module/?id=relative-position-rope-positional-methods)",
-                "[2. KV cache](/module/?id=efficient-kv-cache)"
-              ]
-            }
-          ]
-        },
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
-            {
-              "p": "The cache of Step 2 stores a key and a value for every head, so its size grows with the number of heads."
+              "p": "The cache above stores a key and a value for every head, so its size grows with the number of heads."
             },
             {
               "p": "For example, the running example has 2 heads of 2 numbers, so it stores 2 keys and 2 values, 8 numbers, for every token. Llama 2 70B has 64 heads of 128 numbers, so each token costs 64 × (128 + 128) = 16,384 numbers in every one of its 80 layers."
@@ -50327,23 +49569,19 @@
               }
             },
             {
-              "p": "The heads cannot simply be removed. They are what lets a token look for several things at once, as in Step 8 of Build a Transformer. Making the cache smaller means storing fewer keys and values without losing too much of what the heads do."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+              "p": "The heads cannot simply be removed. They are what lets a token look for several things at once, as in [Multi-head](/module/?id=transformer-weighted-sum#lesson-multi-head) in Build a Transformer. Making the cache smaller means storing fewer keys and values without losing too much of what the heads do."
+            },
+            {
+              "heading": "Earlier approaches",
+              "level": 3
+            },
             {
               "p": "In standard multi-head attention, every head stores its own keys and values. That lets each head find and receive something different, and it is why the cache is so large: Llama 2 70B would store 64 keys and 64 values for every token in each of its 80 layers."
-            }
-          ]
-        },
-        {
-          "id": "sharing",
-          "title": "Sharing",
-          "blocks": [
+            },
+            {
+              "heading": "Sharing",
+              "level": 3
+            },
             {
               "p": "**The idea.** Each head's query is used once and never stored. So heads can keep their own queries, and still look for different things, while sharing the keys and values that are stored."
             },
@@ -50439,7 +49677,7 @@
             },
             {
               "heading": "Multi-head latent attention",
-              "level": 3
+              "level": 4
             },
             {
               "p": "**One short vector.** Every head's key and value is computed from the same token vector by fixed weights. So it is enough to store one short vector per token, the **latent**, and rebuild each head's key and value from it. In the running example the token's own 4 numbers can serve as the latent: for \"cat\", (0.841, 1.540, 1.010, 1.000) gives head 1's key (1.540, 1.010) and value (0.841, 1.540), and head 2's key (1.540, 1.000) and value (1.010, 1.000). Storing 4 numbers per token instead of 8 halves the cache, as one shared set does, but every head keeps its own keys and values: head 2's output for \"sat\" stays (0.893, 1.771)."
@@ -50454,7 +49692,7 @@
               }
             },
             {
-              "p": "**No rebuilding.** The keys never actually have to be rebuilt. A head's key weights can be applied to its query instead, once, and the result compared with the stored latents directly. Head 1 reads the second and third numbers of a latent, so its query for \"on\", (0.030, 2.000), becomes (0.000, 0.030, 2.000, 0.000), and against the latent of \"cat\" it gives 0.030 × 1.540 + 2.000 × 1.010 = 2.066, the same dot product as in Step 2. The value weights move into the output weights in the same way."
+              "p": "**No rebuilding.** The keys never actually have to be rebuilt. A head's key weights can be applied to its query instead, once, and the result compared with the stored latents directly. Head 1 reads the second and third numbers of a latent, so its query for \"on\", (0.030, 2.000), becomes (0.000, 0.030, 2.000, 0.000), and against the latent of \"cat\" it gives 0.030 × 1.540 + 2.000 × 1.010 = 2.066, the same dot product as in the [KV cache](#lesson-kv-cache) section. The value weights move into the output weights in the same way."
             },
             {
               "p": "**Position.** Models with rotary positions ([RoPE](/module/?id=relative-position-rope-positional-methods)) turn each key by an angle that depends on the key's position. The turn would sit between the latent and the score, so the key weights could no longer be moved onto the query once for all keys. MLA therefore keeps a small separate key, 64 numbers in DeepSeek-V2, that carries the position, is shared by all heads and is stored next to the latent."
@@ -50466,16 +49704,14 @@
             },
             {
               "p": "**Real sizes.** Real models compute the latent from the token vector with weights of its own, so it can be much shorter than the vector: 512 numbers in DeepSeek-V2, whose token vectors have 5,120. With the position key that is 512 + 64 = 576 numbers per token in each layer, against 2 × 128 × 128 = 32,768 if its 128 heads stored keys and values of their own, about 57 times fewer. 576 numbers are as many as 576 ÷ 256 = 2.25 shared sets of 128 + 128 numbers, the 2.25 in the table above, and DeepSeek reported quality above that of full multi-head attention in their tests."
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "heading": "One shared set",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The running example's 2 heads store 8 numbers per token. With multi-query attention both share head 1's keys and values, which halves that. Head 2 keeps its own query, (−0.416, 2.000) for \"sat\":"
@@ -50516,7 +49752,7 @@
             },
             {
               "heading": "The cost",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Head 2 still looks mostly at \"sat\", but it now receives head 1's values, so its output is (0.896, 0.347) instead of (0.893, 1.771). Shared heads can look in different places but bring back the same kind of information, which is the quality cost grouped-query attention reduces."
@@ -50536,13 +49772,11 @@
                   "print(weights.round(3), (weights @ V1).round(3))     # about [0.091 0.324 0.585] [0.895 0.347]; the inputs above are rounded, and the unrounded example gives (0.896, 0.347)"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Why share keys and values but not queries?** Only keys and values are stored. Queries are computed, used once and thrown away, so sharing them would save no memory and would make every head look at the same tokens."
             },
@@ -50556,7 +49790,7 @@
               "p": "**How is the number of groups chosen?** It is a trade between memory and quality. 1 group is multi-query attention, and as many groups as heads is ordinary multi-head attention. Llama 2 70B uses 8 groups for its 64 heads."
             },
             {
-              "p": "[Step 4](/module/?id=efficient-flashattention) turns from the cache to the table of scores."
+              "p": "[Part 3](/module/?id=efficient-flashattention#lesson-flashattention) turns from the cache to the table of scores."
             }
           ]
         },
@@ -50566,6 +49800,17 @@
           "blocks": [
             {
               "resources": [
+                {
+                  "title": "Efficiently Scaling Transformer Inference (Pope et al., 2022)",
+                  "url": "https://arxiv.org/abs/2211.05102",
+                  "source": "arXiv",
+                  "starred": true
+                },
+                {
+                  "title": "Efficient Memory Management for Large Language Model Serving with PagedAttention (Kwon et al., 2023)",
+                  "url": "https://arxiv.org/abs/2309.06180",
+                  "source": "arXiv"
+                },
                 {
                   "title": "Fast Transformer Decoding: One Write-Head is All You Need (Shazeer, 2019)",
                   "url": "https://arxiv.org/abs/1911.02150",
@@ -50591,11 +49836,8 @@
     "efficient-flashattention": {
       "anchors": [
         "prerequisites",
-        "the-problem",
-        "earlier-approaches",
         "flashattention",
-        "running-example",
-        "common-questions",
+        "linear-attention",
         "resources"
       ],
       "sections": [
@@ -50611,9 +49853,13 @@
           ]
         },
         {
-          "id": "the-problem",
-          "title": "The problem",
+          "id": "flashattention",
+          "title": "FlashAttention",
           "blocks": [
+            {
+              "heading": "The problem",
+              "level": 3
+            },
             {
               "p": "When a long text is read, each head builds a table with a score for every pair of tokens. At 8,192 tokens that is 8,192 × 8,192 = 67 million scores, which at 2 bytes each is 128 MiB per head."
             },
@@ -50630,34 +49876,30 @@
               }
             },
             {
-              "p": "So the usual method makes four trips to slow memory. It writes the scores, reads them back for the softmax, writes the weights, and reads them back to combine the values. The arithmetic is quick. The memory traffic is what takes the time: Step 0 gave the figure of 156 operations in the time it takes to read one byte."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+              "p": "So the usual method makes four trips to slow memory. It writes the scores, reads them back for the softmax, writes the weights, and reads them back to combine the values. The arithmetic is quick. The memory traffic is what takes the time: [Part 1](/module/?id=efficient-setup#lesson-setup) gave the figure of 156 operations in the time it takes to read one byte."
+            },
             {
-              "heading": "Doing it in one pass",
+              "heading": "Earlier approaches",
               "level": 3
             },
             {
-              "p": "Doing everything at once in fast memory seemed impossible, because the softmax divides by the total of a whole row, and a long row does not fit. To turn the scores of \"sat\", 0.721, 2.539 and 1.142, into weights, you seem to need the total of the whole row, 17.857, before any weight is known. ([Step 6](/module/?id=transformer-mask-and-softmax) prints 17.856 for this row: it adds its powers after rounding each to three decimals, and their full-precision sum is 17.857.)"
+              "heading": "Doing it in one pass",
+              "level": 4
+            },
+            {
+              "p": "Doing everything at once in fast memory seemed impossible, because the softmax divides by the total of a whole row, and a long row does not fit. To turn the scores of \"sat\", 0.721, 2.539 and 1.142, into weights, you seem to need the total of the whole row, 17.857, before any weight is known. ([Mask and softmax](/module/?id=transformer-qkv#lesson-mask-and-softmax) in Build a Transformer prints 17.856 for this row: it adds its powers after rounding each to three decimals, and their full-precision sum is 17.857.)"
             },
             {
               "heading": "Approximate attention",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Computing only some of the scores, for example scoring each token only against its 256 nearest neighbors, reduced the arithmetic and changed the result, but often did not run faster in practice, because the memory traffic stayed the same (Dao et al., 2022)."
-            }
-          ]
-        },
-        {
-          "id": "flashattention",
-          "title": "FlashAttention",
-          "blocks": [
+            },
+            {
+              "heading": "FlashAttention",
+              "level": 3
+            },
             {
               "p": "**The idea.** **FlashAttention** computes exactly the same attention without ever storing the full table. The keys and values are processed in blocks that fit in fast memory. For each query it keeps three running numbers: the largest score so far, a running total for the softmax, and a running weighted sum of values."
             },
@@ -50690,7 +49932,7 @@
             },
             {
               "heading": "Sliding windows",
-              "level": 3
+              "level": 4
             },
             {
               "p": "**Skipped blocks.** In **sliding-window attention** each token looks only at the last $w$ tokens, itself included. FlashAttention's loop then skips every block of keys that lies entirely before the window, as it skips blocks in the future, so each token costs the same work however long the text is. Scoring only nearby tokens did not run faster on its own (see Earlier approaches), but here the skipped blocks are never read from slow memory at all. With a window of 2, \"sat\" looks at \"cat\" and itself, so block 1, which holds only \"the\", is skipped. The loop starts at block 2 with largest score 2.539, total $1.000 + 0.247 = 1.247$ and weighted sum (0.841, 1.540) + 0.247 × (0.909, −0.416) = (1.066, 1.437). The output is (1.066 ÷ 1.247, 1.437 ÷ 1.247) = (0.855, 1.152) instead of (0.872, 1.135): unlike FlashAttention itself, a window changes the result."
@@ -50714,16 +49956,14 @@
               "problemCard": {
                 "id": "eff-window-of-three"
               }
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "heading": "Two blocks",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Take the row of \"sat\" in head 1, with scores 0.721, 2.539 and 1.142, and let the keys arrive in two blocks: first \"the\", then \"cat\" and \"sat\"."
@@ -50766,10 +50006,10 @@
             },
             {
               "heading": "The result",
-              "level": 3
+              "level": 4
             },
             {
-              "p": "Dividing gives (1.228 ÷ 1.409, 1.599 ÷ 1.409) = (0.872, 1.135), exactly head 1's output for \"sat\" in Step 7 of Build a Transformer, without ever storing the full row of weights."
+              "p": "Dividing gives (1.228 ÷ 1.409, 1.599 ÷ 1.409) = (0.872, 1.135), exactly head 1's output for \"sat\" in [Weighted sum](/module/?id=transformer-weighted-sum#lesson-weighted-sum) of Build a Transformer, without ever storing the full row of weights."
             },
             {
               "code": {
@@ -50790,18 +50030,16 @@
                   "    weighted = weighted * shrink + p @ values[block]",
                   "    largest = new_largest",
                   "",
-                  "print((weighted / total).round(3))           # about [0.871 1.135]; the inputs are rounded, so the last digit differs from Step 7's (0.872, 1.135)"
+                  "print((weighted / total).round(3))           # about [0.871 1.135]; the inputs are rounded, so the last digit differs from Build a Transformer's (0.872, 1.135)"
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
             {
-              "p": "**Is FlashAttention an approximation?** No. It gives the same output as ordinary attention, up to rounding. The running example ends at (0.872, 1.135), the output of Step 7 of Build a Transformer."
+              "heading": "Common questions",
+              "level": 3
+            },
+            {
+              "p": "**Is FlashAttention an approximation?** No. It gives the same output as ordinary attention, up to rounding. The running example ends at (0.872, 1.135), the output of [Weighted sum](/module/?id=transformer-weighted-sum#lesson-weighted-sum) in Build a Transformer."
             },
             {
               "p": "**Does it compute fewer scores?** No. Every score is still computed. What it avoids is writing the table of scores to slow memory and reading it back, which is where the time went."
@@ -50813,54 +50051,20 @@
               "p": "**Does the block size change the answer?** No. One block of three keys, three blocks of one, or the two blocks used here all end at the same output. The block size is chosen to fit the fast memory."
             },
             {
-              "p": "[Step 5](/module/?id=efficient-linear-attention) changes the calculation itself so that its cost grows only with the length."
+              "p": "The next section, [Linear attention](#lesson-linear-attention), changes the calculation itself so that its cost grows only with the length."
             }
           ]
         },
         {
-          "id": "resources",
-          "title": "Resources",
+          "id": "linear-attention",
+          "title": "Linear attention",
           "blocks": [
             {
-              "resources": [
-                {
-                  "title": "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness (Dao et al., 2022)",
-                  "url": "https://arxiv.org/abs/2205.14135",
-                  "source": "arXiv",
-                  "starred": true
-                },
-                {
-                  "title": "Online normalizer calculation for softmax (Milakov and Gimelshein, 2018)",
-                  "url": "https://arxiv.org/abs/1805.02867",
-                  "source": "arXiv"
-                },
-                {
-                  "title": "FlashAttention-2 (Dao, 2023)",
-                  "url": "https://arxiv.org/abs/2307.08691",
-                  "source": "arXiv"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "efficient-linear-attention": {
-      "anchors": [
-        "the-problem",
-        "earlier-approaches",
-        "linear-attention",
-        "running-example",
-        "common-questions",
-        "resources"
-      ],
-      "sections": [
-        {
-          "id": "the-problem",
-          "title": "The problem",
-          "blocks": [
+              "heading": "The problem",
+              "level": 3
+            },
             {
-              "p": "The KV cache (Step 2) and FlashAttention (Step 4) make attention cheaper without changing what it computes. Sharing keys and values (Step 3) and sliding windows (Step 4) save more by changing the result. With attention kept exact, two costs remain, and both grow with the length of the text:"
+              "p": "The KV cache (part 2) and FlashAttention (above) make attention cheaper without changing what it computes. Sharing keys and values (part 2) and sliding windows (above) save more by changing the result. With attention kept exact, two costs remain, and both grow with the length of the text:"
             },
             {
               "list": [
@@ -50879,33 +50083,29 @@
             },
             {
               "p": "The goal here is attention whose work per token stays the same however long the text is, and whose memory stays fixed during generation."
-            }
-          ]
-        },
-        {
-          "id": "earlier-approaches",
-          "title": "Earlier approaches",
-          "blocks": [
+            },
             {
-              "heading": "Recurrent networks",
+              "heading": "Earlier approaches",
               "level": 3
             },
             {
-              "p": "They have fixed memory and constant cost per token, but read one token at a time and forget over distance (Step 0 of Build a Transformer): by the blank in \"The students who failed the exam ___\", \"students\" may already be lost."
+              "heading": "Recurrent networks",
+              "level": 4
+            },
+            {
+              "p": "They have fixed memory and constant cost per token, but read one token at a time and forget over distance (see [Setup](/module/?id=transformer-setup#lesson-setup) in Build a Transformer): by the blank in \"The students who failed the exam ___\", \"students\" may already be lost."
             },
             {
               "heading": "Faster softmax attention",
-              "level": 3
+              "level": 4
             },
             {
-              "p": "The KV cache and FlashAttention keep attention exact, and shared keys and values trade some of the result for a smaller cache. All three still do work that grows with the square of the length: FlashAttention still computes about 67 million scores per head for 8,192 tokens. A sliding window (Step 4) fixes the work per token by changing the result, since no token can look directly further back than the window."
-            }
-          ]
-        },
-        {
-          "id": "linear-attention",
-          "title": "Linear attention",
-          "blocks": [
+              "p": "The KV cache and FlashAttention keep attention exact, and shared keys and values trade some of the result for a smaller cache. All three still do work that grows with the square of the length: FlashAttention still computes about 67 million scores per head for 8,192 tokens. A sliding window (see [FlashAttention](#lesson-flashattention)) fixes the work per token by changing the result, since no token can look directly further back than the window."
+            },
+            {
+              "heading": "Linear attention",
+              "level": 3
+            },
             {
               "p": "**A simpler similarity.** The obstacle is the softmax, which forces every score to be computed separately. **Linear attention** (Katharopoulos et al., 2020) replaces it. Each query and key is passed through a function $\\phi$ that makes its numbers positive, and the similarity is their dot product. For example, 1.020 becomes 2.020 and −0.416 becomes 0.660. The weights are the similarities divided by their total:"
             },
@@ -50956,7 +50156,7 @@
             },
             {
               "heading": "Feature map of the softmax",
-              "level": 3
+              "level": 4
             },
             {
               "p": "**Powers of a dot product.** The softmax weight $e^{q \\cdot k}$ can also be written as a dot product, but of endless lists. Its series is"
@@ -51026,16 +50226,14 @@
               "problemCard": {
                 "id": "eff-the-state-after-the-next-token"
               }
-            }
-          ]
-        },
-        {
-          "id": "running-example",
-          "title": "Running example",
-          "blocks": [
+            },
+            {
+              "heading": "Running example",
+              "level": 3
+            },
             {
               "heading": "A simpler similarity",
-              "level": 3
+              "level": 4
             },
             {
               "p": "Take the row of \"sat\" in head 1 again. Passing the query and keys through the function that makes their numbers positive:"
@@ -51109,7 +50307,7 @@
             },
             {
               "heading": "The running state",
-              "level": 3
+              "level": 4
             },
             {
               "p": "The same output comes from the running state: four totals of key-number × value-number, plus the totals of the key numbers. Each token adds its own products to the totals (the entries are computed before the inputs are rounded, so the last digit can differ from the products of the rounded numbers above):"
@@ -51199,13 +50397,11 @@
                 "minutes": 30,
                 "difficulty": "Medium"
               }
-            }
-          ]
-        },
-        {
-          "id": "common-questions",
-          "title": "Common questions",
-          "blocks": [
+            },
+            {
+              "heading": "Common questions",
+              "level": 3
+            },
             {
               "p": "**Why can softmax attention not keep a running state?** Its weight needs $e^{q \\cdot k}$. The feature map above writes it as a list computed from the query alone dotted with a list computed from the key alone, but that list gives the softmax exactly only at its full, endless length, and every cut of it is an approximation. A plain dot product $\\phi(q) \\cdot \\phi(k)$ of short lists splits at once, which is what lets the keys be added up before any query arrives."
             },
@@ -51226,6 +50422,22 @@
           "blocks": [
             {
               "resources": [
+                {
+                  "title": "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness (Dao et al., 2022)",
+                  "url": "https://arxiv.org/abs/2205.14135",
+                  "source": "arXiv",
+                  "starred": true
+                },
+                {
+                  "title": "Online normalizer calculation for softmax (Milakov and Gimelshein, 2018)",
+                  "url": "https://arxiv.org/abs/1805.02867",
+                  "source": "arXiv"
+                },
+                {
+                  "title": "FlashAttention-2 (Dao, 2023)",
+                  "url": "https://arxiv.org/abs/2307.08691",
+                  "source": "arXiv"
+                },
                 {
                   "title": "Transformers are RNNs: Fast Autoregressive Transformers with Linear Attention (Katharopoulos et al., 2020)",
                   "url": "https://arxiv.org/abs/2006.16236",
@@ -51797,7 +51009,7 @@
               "p": "Now the model gates content-dependently, which is what attention does. Reading the parameters: $\\Delta_t$ large means \"this token matters, update the state substantially\", and $\\Delta_t$ small means \"skip this one\". It is a learned, per-token, per-channel forget gate, the LSTM's idea ([Recurrent Networks](/module/?id=sequence-models-transfer-learning)) in a form that still parallelizes."
             },
             {
-              "p": "**But input-dependent parameters destroy the convolutional view**: the kernel is no longer fixed, so there is no single $\\bar K$ to FFT. Mamba's answer is a hardware-aware **parallel scan**: the recurrence $h_t = \\bar A_th_{t-1}+\\bar B_tx_t$ is an associative operation, so a prefix-scan computes all $h_t$ in $O(\\log n)$ depth with $O(n)$ work. The implementation keeps the state in SRAM and never materializes it in HBM, the same memory-hierarchy insight as [FlashAttention](/module/?id=efficient-flashattention)."
+              "p": "**But input-dependent parameters destroy the convolutional view**: the kernel is no longer fixed, so there is no single $\\bar K$ to FFT. Mamba's answer is a hardware-aware **parallel scan**: the recurrence $h_t = \\bar A_th_{t-1}+\\bar B_tx_t$ is an associative operation, so a prefix-scan computes all $h_t$ in $O(\\log n)$ depth with $O(n)$ work. The implementation keeps the state in SRAM and never materializes it in HBM, the same memory-hierarchy insight as [FlashAttention](/module/?id=efficient-flashattention#lesson-flashattention)."
             }
           ]
         },
@@ -52184,7 +51396,7 @@
           "blocks": [
             {
               "list": [
-                "[11. Stack](/module/?id=transformer-stack)",
+                "[Stack](/module/?id=transformer-residual-and-layernorm#lesson-stack)",
                 "[The Multilayer Perceptron](/module/?id=neural-networks-perceptrons-mlps-activations)"
               ]
             }

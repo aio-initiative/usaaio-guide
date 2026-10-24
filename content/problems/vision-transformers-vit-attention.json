@@ -16,6 +16,84 @@
    ],
    "prompt": "The running example is cut into 2 by 2 patches instead of 3 by 3, so the 6 by 6 image becomes a 3 by 3 grid of nine patches and each patch flattens to four numbers. With the patches used directly as queries and keys and each dot product divided by the square root of the vector length, what attention weight does the top-middle patch give to itself?",
    "answer": "0.192. The 9 patches form a 3 × 3 grid. Column 3 of the image is the left column of the three middle patches, so each of them flattens to 1, 0, 1, 0 and every other patch to zeros. The top-middle patch scores 2 against each of the three line patches, itself included, and 0 against the other six. Divided by the square root of 4, that is 1 and 0, so its weight on itself is e / (3e + 6) = 2.718 / 14.154 = 0.192. The three line patches get 0.576 together, less than the 0.731 the two line patches get with 3 × 3 patches, because six empty patches share the rest instead of two."
+  },
+  {
+   "id": "cv-anchor-for-a-horizontal-line",
+   "moduleId": "vision-transformers-vit-attention",
+   "title": "The Anchor for a Horizontal Line",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=cv-anchor-for-a-horizontal-line",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Camp"
+   ],
+   "prompt": "Transpose the running example, so that the line fills row 3. Its true box is (0, 2, 6, 3) as (left, top, right, bottom), and its center, (3, 2.5), lies in the same middle cell of the 3 × 3 grid of 2 × 2 cells. The same two anchors are centered on that cell: the tall one, (2, 0, 4, 6), and the square one, (2, 2, 4, 4). Anchors are labeled by Faster R-CNN's rule, as on the page. Which anchor is trained toward the line, and what is its target t_w?",
+   "answer": "The square anchor, with t_w = log 3 = 1.099. The line overlaps each anchor in a strip 2 wide and 1 high, an area of 2. The square anchor covers 4, so its IoU is 2 / (4 + 6 − 2) = 0.25. The tall one covers 12, so its IoU is 2 / (12 + 6 − 2) = 0.125. Both are below 0.3, but every object gets its best anchor, and that is the square one. In center form the line is 6 wide and the anchor 2, so t_w = log(6 / 2) = 1.099. Its other targets are t_x = 0, t_y = (2.5 − 3) / 2 = −0.25 and t_h = log(1 / 2) = −0.693."
+  },
+  {
+   "id": "cv-average-precision-and-nms",
+   "moduleId": "vision-transformers-vit-attention",
+   "title": "What NMS Does to Average Precision",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=cv-average-precision-and-nms",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "A line detector is scored on four 6 by 6 test images, each holding one line, with up to two predicted boxes per image. Compute average precision with and without non-maximum suppression at two IoU thresholds, then say when a teammate's two claims about duplicates and NMS each fail. 4 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "cv-anchor-targets-numpy",
+   "moduleId": "vision-transformers-vit-attention",
+   "title": "Anchor Labels and Offsets in NumPy",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=cv-anchor-targets-numpy",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Camp"
+   ],
+   "prompt": "A detector with anchors is trained on targets. Each anchor is labeled object, background or ignored by its IoU with the true boxes, and each object anchor gets the four offsets that would move it onto its true box. Compute those targets the way Faster R-CNN does, for a 3 by 3 grid of 2 by 2 cells with three anchors centered on each cell: tall, square and wide. Boxes are left, top, right, bottom in pixels. Write iou_matrix with broadcasting and no Python loops, label the anchors under Faster R-CNN's two rules (including that every true box makes its best anchor an object whatever its IoU), then encode and decode the four offsets in center form. 3 parts.",
+   "answer": "Auto-graded inside the notebook. iou_matrix must match the running example, 0.833 and 0.667 against the truth and 0.556 between the two test boxes, and never go negative. label_anchors on the vertical line alone must give one object anchor and 26 background anchors, with tall at (3, 3) an object even though its IoU is 0.5, because every true box makes its best anchor an object, and encode must give -0.25, 0, -0.693, 0 for tall at (3, 3) against the line, with decode its inverse."
+  },
+  {
+   "id": "advanced-computer-vision-implementation-task",
+   "moduleId": "vision-transformers-vit-attention",
+   "title": "Object Localization Practice",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=advanced-computer-vision",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Camp"
+   ],
+   "prompt": "Localize a bright blob in a noisy image by smoothing and an intensity-weighted centroid around the peak. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+   "answer": "Auto-graded inside the notebook. Mean Euclidean error over the test set must be below 1.5 pixels."
+  },
+  {
+   "id": "cv2-nms",
+   "moduleId": "vision-transformers-vit-attention",
+   "title": "A Dozen Boxes, One Object",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=cv2-nms",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Camp"
+   ],
+   "prompt": "Implement IoU with the intersection clamp and greedy non-maximum suppression, then report how many boxes survive at threshold 0.5 and at threshold 0.9.",
+   "answer": "Auto-graded inside the notebook. n_kept, kept_scores, max_iou_among_kept and n_kept_thresh_09 must match the reference to a relative tolerance of 1e-6, with no kept pair above 0.5, more boxes kept at 0.9 than at 0.5, and iou_matrix and nms matching the reference shapes and ordering."
   }
  ],
  "theory": [
@@ -65,6 +143,176 @@
       },
       {
        "result": "0.192"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cv-anchor-for-a-horizontal-line",
+   "moduleId": "vision-transformers-vit-attention",
+   "title": "The Anchor for a Horizontal Line",
+   "difficulty": "Medium",
+   "minutes": 8,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "Transpose the running example, so that the line fills row 3. Its true box is (0, 2, 6, 3) as (left, top, right, bottom), and its center, (3, 2.5), lies in the same middle cell of the 3 × 3 grid of 2 × 2 cells. The same two anchors are centered on that cell: the tall one, (2, 0, 4, 6), and the square one, (2, 2, 4, 4). Anchors are labeled by Faster R-CNN's rule, as on the page."
+      },
+      {
+       "p": "Which anchor is trained toward the line, and what is its target $t_w$?"
+      },
+      {
+       "choices": [
+        {
+         "text": "The square anchor, with $t_w = \\log 3 = 1.099$",
+         "correct": true,
+         "explain": "The line overlaps each anchor in a strip 2 wide and 1 high, an area of 2. The square anchor covers 4, so its IoU is 2 / (4 + 6 − 2) = 0.25. The tall one covers 12, so its IoU is 2 / (12 + 6 − 2) = 0.125. Both are below 0.3, but every object gets its best anchor, and that is the square one. In center form the line is 6 wide and the anchor 2, so t_w = log(6 / 2) = 1.099. Its other targets are t_x = 0, t_y = (2.5 − 3) / 2 = −0.25 and t_h = log(1 / 2) = −0.693."
+        },
+        {
+         "text": "The square anchor, with $t_w = (6 - 2) / 2 = 2$",
+         "explain": "The square anchor is the right one, but the width target is the logarithm of the ratio of widths, log(6 / 2) = 1.099, not the difference over the anchor's width. The difference would make three times as wide and a third as wide unequal in size, 2 against −0.67, where the logarithm gives 1.099 and −1.099."
+        },
+        {
+         "text": "The tall anchor, with $t_w = \\log 3 = 1.099$",
+         "explain": "The tall anchor was the vertical line's, but it covers 12 square units to meet this line in only 2. Its IoU is 2 / 16 = 0.125, half the square anchor's 0.25, so the square anchor is the line's best and the tall one is background."
+        },
+        {
+         "text": "Neither: both IoUs fall below 0.3, so both anchors are background",
+         "explain": "Both IoUs are below 0.3, but the rule also gives every object its best anchor, whatever that anchor's IoU. Without it this line would have no anchor, and the detector would never be trained to find it. The square anchor, at 0.25, is the best."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "The line overlaps each anchor in a strip 2 wide and 1 high, an area of 2. The square anchor covers 4, so its IoU is 2 / (4 + 6 − 2) = 0.25. The tall one covers 12, so its IoU is 2 / (12 + 6 − 2) = 0.125. Both are below 0.3, but every object gets its best anchor, and that is the square one. In center form the line is 6 wide and the anchor 2, so t_w = log(6 / 2) = 1.099. Its other targets are t_x = 0, t_y = (2.5 − 3) / 2 = −0.25 and t_h = log(1 / 2) = −0.693."
+      },
+      {
+       "result": "The square anchor, with $t_w = \\log 3 = 1.099$"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cv-average-precision-and-nms",
+   "moduleId": "vision-transformers-vit-attention",
+   "title": "What NMS Does to Average Precision",
+   "difficulty": "Hard",
+   "minutes": 30,
+   "overview": [
+    "A line detector is scored on four 6 × 6 test images, each holding one line. Boxes are (left, top, right, bottom) in pixels, and image 1 is the running example:"
+   ],
+   "setup": [
+    {
+     "tex": "\\begin{array}{ccc}\n\\text{Image} & \\text{True box} & \\text{Predicted boxes, with confidence} \\\\ \\hline\n1 & \\text{(2, 0, 3, 6)} & \\text{A (2, 1, 3, 6), 0.90 · B (2, 0, 3.5, 6), 0.70} \\\\\n2 & \\text{(4, 0, 5, 6)} & \\text{C (4, 0, 5, 5), 0.80 · D (3.5, 0, 5, 6), 0.95} \\\\\n3 & \\text{(0, 1, 6, 2)} & \\text{E (0, 1, 6, 2.5), 0.60} \\\\\n4 & \\text{(0, 0, 1, 6)} & \\text{F (1, 0, 2, 6), 0.85}\n\\end{array}"
+    },
+    {
+     "p": "Use the rules of the page. Non-maximum suppression, when it is used, runs on each image with threshold 0.5. A predicted box is a true positive when its IoU with the true box of its image is above the scoring threshold and no more confident box has already matched that true box. Otherwise it is a false positive. For the average precision (AP), go down all the boxes in order of confidence, and each time a true positive appears note the precision of the boxes so far. AP is the sum of those precisions divided by the number of true boxes, 4, so a true box that is never found adds 0. Since recall rises in steps of 1/4, the sum measures the region below the precision-recall curve."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the AP at IoU 0.5 after non-maximum suppression?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The IoUs with the true boxes:"
+      },
+      {
+       "tex": "\\begin{array}{cccc}\n\\text{Box} & \\text{Overlap} & \\text{Union} & \\text{IoU} \\\\ \\hline\n\\text{A} & 5 & \\text{5 + 6 − 5 = 6} & 0.833 \\\\\n\\text{B} & 6 & \\text{9 + 6 − 6 = 9} & 0.667 \\\\\n\\text{C} & 5 & \\text{5 + 6 − 5 = 6} & 0.833 \\\\\n\\text{D} & 6 & \\text{9 + 6 − 6 = 9} & 0.667 \\\\\n\\text{E} & 6 & \\text{9 + 6 − 6 = 9} & 0.667 \\\\\n\\text{F} & 0 & \\text{} & 0\n\\end{array}"
+      },
+      {
+       "p": "F only touches its true box along the edge $x = 1$. Non-maximum suppression keeps A in image 1 and drops B, whose IoU with A is 5 / 9 = 0.556. In image 2 it keeps D, the more confident, and drops C, whose IoU with D is also 5 / 9. That leaves D, A, F, E in order of confidence:"
+      },
+      {
+       "tex": "\\begin{array}{cccc}\n\\text{Rank} & \\text{Box} & \\text{Result} & \\text{Precision so far} \\\\ \\hline\n1 & \\text{D, 0.95} & \\text{true positive} & \\text{1 / 1} \\\\\n2 & \\text{A, 0.90} & \\text{true positive} & \\text{2 / 2} \\\\\n3 & \\text{F, 0.85} & \\text{false positive} & \\text{} \\\\\n4 & \\text{E, 0.60} & \\text{true positive} & \\text{3 / 4}\n\\end{array}"
+      },
+      {
+       "p": "The line of image 4 is never found, so"
+      },
+      {
+       "tex": "\\text{AP} = \\frac{1 + 1 + 0.75 + 0}{4} = 0.6875 ."
+      },
+      {
+       "result": "0.6875"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the AP at IoU 0.5 without non-maximum suppression?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "All six boxes are scored: D, A, F, C, B, E. C overlaps its true box well enough, but D has already matched it, so C is a false positive, and so is B after A. The true positives sit at ranks 1, 2 and 6:"
+      },
+      {
+       "tex": "\\text{AP} = \\frac{1 + 1 + 3/6 + 0}{4} = 0.625 ."
+      },
+      {
+       "p": "The two duplicates did not lower recall. They lowered the precision at which E was found, from 3/4 to 3/6, because both outrank it."
+      },
+      {
+       "result": "0.625"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the AP at IoU 0.75 without non-maximum suppression? Compare it with the AP at IoU 0.75 after non-maximum suppression."
+      }
+     ],
+     "answer": [
+      {
+       "p": "At 0.75 only the boxes with IoU 0.833, A and C, can be true positives. Without non-maximum suppression the order is D, A, F, C, B, E. D fails the threshold, so it matches nothing and is a false positive. A is a true positive at rank 2, precision 1/2. C is next for image 2, and since D did not match the true box, C does, a true positive at rank 4, precision 2/4. So"
+      },
+      {
+       "tex": "\\text{AP} = \\frac{1/2 + 2/4}{4} = 0.25 ."
+      },
+      {
+       "p": "After non-maximum suppression the order is D, A, F, E. Only A is a true positive, at rank 2, and $\\text{AP} = (1/2) / 4 = 0.125$, half as much. Non-maximum suppression keeps the most confident box, not the best placed one, and in image 2 it threw away C, the only box good enough at this threshold."
+      },
+      {
+       "result": "0.25"
+      }
+     ]
+    },
+    {
+     "id": "1.4",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "A teammate says that duplicate boxes cannot lower AP, since they never lower recall, and that non-maximum suppression can only raise it. Say when each claim fails, using the parts above."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Duplicates lower AP exactly when they outrank a true positive, because each one adds a false positive to the precision of every true positive found after it. In Part 2, C and B sit above E and take E's precision from 3/4 to 3/6. Give C and B confidences below 0.60 and the order becomes D, A, F, E, B, C: the true positives keep the precisions 1, 1 and 3/4, and AP is 0.6875 again. A duplicate ranked below every true positive costs nothing."
+      },
+      {
+       "p": "Non-maximum suppression removes those false positives, but it chooses by confidence, so it can remove a better placed box and keep a worse one. At IoU 0.5 it helps, 0.6875 against 0.625, because both boxes it kept still match. At 0.75 it halves the AP, as Part 3 found. The COCO benchmark's average over the thresholds 0.5, 0.55, ..., 0.95 comes out at 0.3125 with non-maximum suppression and 0.325 without, so on these four images it loses overall. The remedy is a confidence that tracks how well a box is placed, so that the box kept is also the best placed one."
       }
      ]
     }

@@ -1,0 +1,250 @@
+{
+ "module": "transformer-setup",
+ "stage": "Round 2",
+ "index": [
+  {
+   "id": "tf-tokenize-a-new-word",
+   "moduleId": "transformer-setup",
+   "title": "A Word the Tokenizer Never Saw",
+   "source": "Custom",
+   "difficulty": "Easy",
+   "url": "/theory/?id=tf-tokenize-a-new-word",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 2"
+   ],
+   "prompt": "A byte-pair encoding tokenizer trained on the words low, lower, newest and widest learned six joins, then meets the word nest, which never appeared in its training text. Which tokens does it turn nest into?",
+   "answer": "n est. Start from n e s t and apply the six joins in the order they were learned. The six joins are e + s → es, es + t → est, l + o → lo, lo + w → low, n + e → ne and ne + w → new. Join 1, e + s, gives n es t. Join 2, es + t, gives n est. Joins 3 and 4 need an l, and join 5 needs an n followed by an e, but the e is now inside est, so nothing else applies. The new word shares its ending with newest and widest and gets the same piece for it."
+  },
+  {
+   "id": "tf-a-token-used-twice",
+   "moduleId": "transformer-setup",
+   "title": "A Token Used Twice",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=tf-a-token-used-twice",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Round 2"
+   ],
+   "prompt": "The model trains on the text \"the cat sat on the\". The token \"the\" is looked up at positions 1 and 5, and its row in the embedding table is (1, 0, 0, 0). The backward pass gives the gradient (0.5, -1.0, 0.0, 2.0) for position 1 and (-1.5, 0.0, 1.0, 1.0) for position 5. With a learning rate of 0.1, what is the row of \"the\" after this step?",
+   "answer": "(1.1, 0.1, -0.1, -0.3). Each row of the input is a one-hot vector times the table, so the gradient for a row of the table adds the gradients of every position that looked it up. The token \"the\" is looked up at positions 1 and 5, so its gradient is (0.5, -1.0, 0.0, 2.0) + (-1.5, 0.0, 1.0, 1.0) = (-1.0, -1.0, 1.0, 3.0), and the row becomes (1, 0, 0, 0) - 0.1 * (-1.0, -1.0, 1.0, 3.0) = (1.1, 0.1, -0.1, -0.3)."
+  },
+  {
+   "id": "tf-position-least-like-the-first",
+   "moduleId": "transformer-setup",
+   "title": "The Position Least Like the First",
+   "source": "USAAIO-style",
+   "difficulty": "Easy",
+   "url": "/theory/?id=tf-position-least-like-the-first",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "With a width of 4, the values added at position p are (sin p, cos p, sin(p/100), cos(p/100)). Find which of the positions 1 to 10 is least like position 0 by dot product, and the dot product of the values at positions 250 and 265. 2 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "transformer-fundamentals-implementation-task",
+   "moduleId": "transformer-setup",
+   "title": "Sinusoidal Positional Encoding Practice",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=transformer-fundamentals",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "Implementing the sin/cos positional-encoding formula from the paper. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+   "answer": "Auto-graded inside the notebook. Max absolute difference from the reference matrix must be below 1e-9."
+  }
+ ],
+ "theory": [
+  {
+   "id": "tf-tokenize-a-new-word",
+   "moduleId": "transformer-setup",
+   "title": "A Word the Tokenizer Never Saw",
+   "difficulty": "Easy",
+   "minutes": 5,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "The byte-pair encoding example on this page learned six joins from the words low, lower, newest and widest. Its tokenizer now meets the word \"nest\", which never appeared in its training text. Which tokens does it turn \"nest\" into?"
+      },
+      {
+       "choices": [
+        {
+         "text": "`ne` `s` `t`",
+         "explain": "This takes the longest piece of the vocabulary at each step from the left: ne is a piece and nes is not. Byte-pair encoding does not search the vocabulary for long matches. It replays its joins in the order they were learned, and join 1, e + s, comes before join 5, n + e. Join 1 takes the e first, so n and e are never side by side when join 5 is tried."
+        },
+        {
+         "text": "`ne` `st`",
+         "explain": "st is not a piece of the vocabulary. In round 1 the pairs e s and s t tied at 9, but each round joins one pair, and e s won. After that join every s in the training words sits inside es, so s t never appeared again and was never joined."
+        },
+        {
+         "text": "`n` `est`",
+         "correct": true,
+         "explain": "Start from n e s t and apply the six joins in the order they were learned. Join 1, e + s, gives n es t. Join 2, es + t, gives n est. Joins 3 and 4 need an l, and join 5 needs an n followed by an e, but the e is now inside est, so nothing else applies. The new word shares its ending with newest and widest and gets the same piece for it."
+        },
+        {
+         "text": "`nest`",
+         "explain": "The tokenizer learns no joins after training. It can only use the six it learned, and none of them joins n with est, so nest stays two pieces. Joining a new word until it is one piece would give every new word its own entry, and the vocabulary is fixed before training."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Start from n e s t and apply the six joins in the order they were learned. The six joins are e + s → es, es + t → est, l + o → lo, lo + w → low, n + e → ne and ne + w → new. Join 1, e + s, gives n es t. Join 2, es + t, gives n est. Joins 3 and 4 need an l, and join 5 needs an n followed by an e, but the e is now inside est, so nothing else applies. The new word shares its ending with newest and widest and gets the same piece for it."
+      },
+      {
+       "result": "`n` `est`"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "tf-a-token-used-twice",
+   "moduleId": "transformer-setup",
+   "title": "A Token Used Twice",
+   "difficulty": "Medium",
+   "minutes": 8,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "The model trains on the text \"the cat sat on the\", whose five tokens are looked up in the running example's table $E$. The row of \"the\" is (1, 0, 0, 0). The forward and backward pass give these gradients for the rows of $X$, one row per position:"
+      },
+      {
+       "tex": "\\begin{array}{ccc}\n\\text{Position} & \\text{Token} & \\text{Gradient} \\\\ \\hline\n1 & \\text{the} & \\text{(0.5, −1.0, 0.0, 2.0)} \\\\\n2 & \\text{cat} & \\text{(1.0, 0.5, −0.5, 0.0)} \\\\\n3 & \\text{sat} & \\text{(0.0, 1.5, 0.5, −1.0)} \\\\\n4 & \\text{on} & \\text{(−0.5, 0.0, 1.0, 0.5)} \\\\\n5 & \\text{the} & \\text{(−1.5, 0.0, 1.0, 1.0)}\n\\end{array}"
+      },
+      {
+       "p": "With a learning rate of 0.1, what is the row of \"the\" in $E$ after this step?"
+      },
+      {
+       "choices": [
+        {
+         "text": "$(1.1,\\ 0.1,\\ -0.1,\\ -0.3)$",
+         "correct": true,
+         "explain": "Each row of X is a one-hot vector times E, so the gradient for a row of E adds the gradients of every position that looked it up. The token \"the\" is looked up at positions 1 and 5, so its gradient is (0.5, −1.0, 0.0, 2.0) + (−1.5, 0.0, 1.0, 1.0) = (−1.0, −1.0, 1.0, 3.0), and the row becomes (1, 0, 0, 0) − 0.1 × (−1.0, −1.0, 1.0, 3.0) = (1.1, 0.1, −0.1, −0.3). Applying the two updates one after the other gives the same row."
+        },
+        {
+         "text": "$(1.15,\\ 0,\\ -0.1,\\ -0.1)$",
+         "explain": "This uses only the gradient of position 5. It is what `E[ids] -= 0.1 * dX` does in NumPy when an ID repeats: each position's update is computed, but the two writes to the same row overwrite each other and the last one stays. `np.add.at(E, ids, -0.1 * dX)` adds both. Both uses of the token changed the loss, so both count."
+        },
+        {
+         "text": "$(1.05,\\ 0.05,\\ -0.05,\\ -0.15)$",
+         "explain": "This averages the two gradients. A row used twice reaches the loss along two paths, and the chain rule adds the contributions of the paths, so the gradients are summed. If the loss is an average over positions, that division is already inside each position's gradient."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Each row of X is a one-hot vector times E, so the gradient for a row of E adds the gradients of every position that looked it up. The token \"the\" is looked up at positions 1 and 5, so its gradient is (0.5, −1.0, 0.0, 2.0) + (−1.5, 0.0, 1.0, 1.0) = (−1.0, −1.0, 1.0, 3.0), and the row becomes (1, 0, 0, 0) − 0.1 × (−1.0, −1.0, 1.0, 3.0) = (1.1, 0.1, −0.1, −0.3). Applying the two updates one after the other gives the same row."
+      },
+      {
+       "result": "$(1.1,\\ 0.1,\\ -0.1,\\ -0.3)$"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "tf-position-least-like-the-first",
+   "moduleId": "transformer-setup",
+   "title": "The Position Least Like the First",
+   "difficulty": "Easy",
+   "minutes": 8,
+   "overview": [
+    "Attention compares vectors through dot products. In the running example, with a width of 4, the values added at position $p$ are"
+   ],
+   "setup": [
+    {
+     "tex": "\\big(\\sin p,\\ \\cos p,\\ \\sin(p/100),\\ \\cos(p/100)\\big)."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Of the positions 1 to 10, which one has values with the smallest dot product with the values of position 0?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The distance rule of this page applies to each pair separately. The fast pair of positions $p$ and $q$ contributes $\\cos(p - q)$ and the slow pair $\\cos\\big((p - q)/100\\big)$, so"
+      },
+      {
+       "tex": "P_p \\cdot P_q = \\cos(p - q) + \\cos\\!\\Big(\\frac{p - q}{100}\\Big)."
+      },
+      {
+       "p": "Against position 0, with $d$ the position:"
+      },
+      {
+       "tex": "\\begin{array}{ccccccccccc}\nd & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\\\ \\hline\n\\cos d & 0.54030 & \\text{−0.41615} & \\text{−0.98999} & \\text{−0.65364} & 0.28366 & 0.96017 & 0.75390 & \\text{−0.14550} & \\text{−0.91113} & \\text{−0.83907} \\\\\n\\cos(d/100) & 0.99995 & 0.99980 & 0.99955 & 0.99920 & 0.99875 & 0.99820 & 0.99755 & 0.99680 & 0.99595 & 0.99500 \\\\\n\\text{Dot product} & 1.54025 & 0.58365 & 0.00956 & 0.34556 & 1.28241 & 1.95837 & 1.75145 & 0.85130 & 0.08482 & 0.15593\n\\end{array}"
+      },
+      {
+       "p": "The two cosines carry five decimals so that each row of dot products is the sum of the row above it as printed."
+      },
+      {
+       "p": "Up to position 10 the slow pair adds almost exactly 1 every time, so the fast pair decides. $\\cos d$ is lowest at the whole number closest to $\\pi \\approx 3.14$, so the answer is position 3, where the fast pair points almost exactly the opposite way from position 0's."
+      },
+      {
+       "p": "Position 10, the farthest, is not the least alike. With only two pairs the values do not drift further apart as the distance grows: position 6 is almost back to position 0's values, with 1.958 out of a possible 2."
+      },
+      {
+       "result": "3"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the dot product of the values at positions 250 and 265? Give four decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "By the same rule it depends only on the distance, 15, so it is the dot product of positions 0 and 15:"
+      },
+      {
+       "tex": "\\cos 15 + \\cos 0.15 = -0.75969 + 0.98877 = 0.2291 ."
+      },
+      {
+       "p": "Here the fast pair is negative and the slow pair is close to 1, so the two nearly cancel. The sum is still a little above zero, but farther from it than at distance 3, where the fast pair is almost exactly $-1$."
+      },
+      {
+       "p": "The first part's table stops at distance 10, so distance 15 needs a cosine of its own."
+      },
+      {
+       "p": "No sine or cosine of 250 or of 265 is needed. Two positions 15 apart look the same to a dot product wherever they sit in the text."
+      },
+      {
+       "result": "0.2291"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

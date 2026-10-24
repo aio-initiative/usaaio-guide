@@ -27027,7 +27027,7 @@
     },
     {
       "id": "cv-every-column-the-line-can-take",
-      "moduleId": "vision-relu-and-pooling",
+      "moduleId": "vision-convolution",
       "title": "Every Column the Line Can Take",
       "difficulty": "Medium",
       "minutes": 12,
@@ -27144,7 +27144,7 @@
     },
     {
       "id": "cv-first-block-of-stage-2",
-      "moduleId": "vision-deeper-networks",
+      "moduleId": "vision-classify",
       "title": "The First Block of Stage 2",
       "difficulty": "Medium",
       "minutes": 15,
@@ -27204,7 +27204,7 @@
     },
     {
       "id": "cv-two-lines-through-a-frozen-backbone",
-      "moduleId": "vision-transfer-learning",
+      "moduleId": "vision-classify",
       "title": "Two Lines Through a Frozen Backbone",
       "difficulty": "Medium",
       "minutes": 12,
@@ -27353,7 +27353,7 @@
     },
     {
       "id": "cv-faint-lines-alone",
-      "moduleId": "vision-adversarial-attacks",
+      "moduleId": "semantic-segmentation-unet-masks",
       "title": "Faint Lines Without Dimming",
       "difficulty": "Hard",
       "minutes": 20,
@@ -27433,7 +27433,7 @@
     },
     {
       "id": "tf-tokenize-a-new-word",
-      "moduleId": "transformer-tokenize",
+      "moduleId": "transformer-setup",
       "title": "A Word the Tokenizer Never Saw",
       "difficulty": "Easy",
       "minutes": 5,
@@ -27481,7 +27481,7 @@
     },
     {
       "id": "tf-a-token-used-twice",
-      "moduleId": "transformer-embed",
+      "moduleId": "transformer-setup",
       "title": "A Token Used Twice",
       "difficulty": "Medium",
       "minutes": 8,
@@ -27531,7 +27531,7 @@
     },
     {
       "id": "tf-position-least-like-the-first",
-      "moduleId": "transformer-add-position",
+      "moduleId": "transformer-setup",
       "title": "The Position Least Like the First",
       "difficulty": "Easy",
       "minutes": 8,
@@ -27658,7 +27658,7 @@
     },
     {
       "id": "tf-a-head-whose-queries-are-its-keys",
-      "moduleId": "transformer-scores",
+      "moduleId": "transformer-qkv",
       "title": "A Head Whose Queries Are Its Keys",
       "difficulty": "Easy",
       "minutes": 8,
@@ -27706,7 +27706,7 @@
     },
     {
       "id": "tf-which-key-a-query-picks",
-      "moduleId": "transformer-scores",
+      "moduleId": "transformer-qkv",
       "title": "Which Key a Query Picks",
       "difficulty": "Medium",
       "minutes": 10,
@@ -27861,7 +27861,7 @@
     },
     {
       "id": "tf-a-pad-at-the-start",
-      "moduleId": "transformer-mask-and-softmax",
+      "moduleId": "transformer-qkv",
       "title": "A Pad at the Start",
       "difficulty": "Medium",
       "minutes": 12,
@@ -27953,7 +27953,7 @@
     },
     {
       "id": "tf-one-wide-head",
-      "moduleId": "transformer-multi-head",
+      "moduleId": "transformer-weighted-sum",
       "title": "One Wide Head in Place of Two",
       "difficulty": "Medium",
       "minutes": 12,
@@ -28053,7 +28053,7 @@
     },
     {
       "id": "tf-weights-that-learn-from-cat",
-      "moduleId": "transformer-feed-forward",
+      "moduleId": "transformer-residual-and-layernorm",
       "title": "The Weights That Learn from One Token",
       "difficulty": "Medium",
       "minutes": 10,
@@ -28095,7 +28095,7 @@
     },
     {
       "id": "tf-counting-gpt2-large",
-      "moduleId": "transformer-stack",
+      "moduleId": "transformer-residual-and-layernorm",
       "title": "Counting the Weights of GPT-2 Large",
       "difficulty": "Medium",
       "minutes": 12,
@@ -28186,7 +28186,7 @@
     },
     {
       "id": "tf-rows-a-training-step-changes",
-      "moduleId": "transformer-generate",
+      "moduleId": "transformer-predict",
       "title": "The Rows a Training Step Changes",
       "difficulty": "Medium",
       "minutes": 10,
@@ -28231,7 +28231,7 @@
     },
     {
       "id": "tf-word-order-without-positions",
-      "moduleId": "transformer-generate",
+      "moduleId": "transformer-predict",
       "title": "Word Order Without Position Values",
       "difficulty": "Hard",
       "minutes": 25,
@@ -28322,7 +28322,7 @@
     },
     {
       "id": "tf-sampling-from-the-logit-table",
-      "moduleId": "transformer-generate",
+      "moduleId": "transformer-predict",
       "title": "Sampling from the Running Example's Logits",
       "difficulty": "Medium",
       "minutes": 15,
@@ -31463,7 +31463,7 @@
     },
     {
       "id": "cv-anchor-for-a-horizontal-line",
-      "moduleId": "object-detection-fpn-yolo",
+      "moduleId": "vision-transformers-vit-attention",
       "title": "The Anchor for a Horizontal Line",
       "difficulty": "Medium",
       "minutes": 8,
@@ -31514,7 +31514,7 @@
     },
     {
       "id": "cv-average-precision-and-nms",
-      "moduleId": "object-detection-fpn-yolo",
+      "moduleId": "vision-transformers-vit-attention",
       "title": "What NMS Does to Average Precision",
       "difficulty": "Hard",
       "minutes": 30,
@@ -35333,7 +35333,7 @@
     },
     {
       "id": "gen-the-range-a-kl-weight-picks",
-      "moduleId": "vae-encoder-decoder-generation",
+      "moduleId": "representation-learning-autoencoders-vaes-latent-spaces",
       "title": "The Range a Weight on the KL Term Picks",
       "difficulty": "Hard",
       "minutes": 22,
@@ -35656,7 +35656,7 @@
     },
     {
       "id": "gen-the-weight-of-the-two-images",
-      "moduleId": "generative-removing-noise",
+      "moduleId": "generative-adding-noise",
       "title": "The Weight the Best Network Puts on Each Training Image",
       "difficulty": "Medium",
       "minutes": 18,
@@ -35751,7 +35751,7 @@
     },
     {
       "id": "gen-the-guided-value-at-step-500",
-      "moduleId": "generative-guidance-and-stable-diffusion",
+      "moduleId": "generative-adding-noise",
       "title": "The Guided Value at Step 500 of a Prompted Run",
       "difficulty": "Medium",
       "minutes": 16,
@@ -35852,7 +35852,7 @@
     },
     {
       "id": "gen-reweighting-an-imperfect-prompt",
-      "moduleId": "generative-guidance-and-stable-diffusion",
+      "moduleId": "generative-adding-noise",
       "title": "Reweighting by a Prompt the Classifier Is Unsure About",
       "difficulty": "Medium",
       "minutes": 10,
@@ -35903,7 +35903,7 @@
     },
     {
       "id": "gen-two-starts-with-the-same-contrast",
-      "moduleId": "generative-guidance-and-stable-diffusion",
+      "moduleId": "generative-adding-noise",
       "title": "Two Starts with the Same Contrast",
       "difficulty": "Hard",
       "minutes": 25,
@@ -36065,7 +36065,7 @@
     },
     {
       "id": "sm-six-steps-to-reach-t-six",
-      "moduleId": "sciml-the-equation",
+      "moduleId": "sciml-setup",
       "title": "Six Steps to Reach t = 6",
       "difficulty": "Medium",
       "minutes": 15,
@@ -36193,7 +36193,7 @@
     },
     {
       "id": "sm-which-unit-sets-the-output",
-      "moduleId": "sciml-network-as-solution",
+      "moduleId": "sciml-setup",
       "title": "Which Unit Sets the Output",
       "difficulty": "Medium",
       "minutes": 15,
@@ -36416,7 +36416,7 @@
     },
     {
       "id": "sm-where-the-points-sit",
-      "moduleId": "sciml-physics-loss",
+      "moduleId": "sciml-derivatives",
       "title": "Where the Collocation Points Sit",
       "difficulty": "Medium",
       "minutes": 20,
@@ -36916,7 +36916,7 @@
     },
     {
       "id": "eff-scores-for-a-prompt-and-a-reply",
-      "moduleId": "efficient-prefill-and-decode",
+      "moduleId": "efficient-setup",
       "title": "The Scores a Prompt and a Reply Cost",
       "difficulty": "Medium",
       "minutes": 14,
@@ -37181,7 +37181,7 @@
     },
     {
       "id": "eff-two-schemes-four-numbers",
-      "moduleId": "efficient-sharing-keys-and-values",
+      "moduleId": "efficient-kv-cache",
       "title": "Two Schemes That Store the Same Four Numbers",
       "difficulty": "Medium",
       "minutes": 14,
@@ -37365,7 +37365,7 @@
     },
     {
       "id": "eff-cut-after-degree-six",
-      "moduleId": "efficient-linear-attention",
+      "moduleId": "efficient-flashattention",
       "title": "Cutting the List After Degree Six",
       "difficulty": "Hard",
       "minutes": 24,
@@ -37454,7 +37454,7 @@
     },
     {
       "id": "eff-the-state-after-the-next-token",
-      "moduleId": "efficient-linear-attention",
+      "moduleId": "efficient-flashattention",
       "title": "The State After the Next Token",
       "difficulty": "Medium",
       "minutes": 16,

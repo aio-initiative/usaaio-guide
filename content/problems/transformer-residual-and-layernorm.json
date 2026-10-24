@@ -1,75 +1,209 @@
 {
-  "module": "transformer-residual-and-layernorm",
-  "stage": "Round 2",
-  "index": [
+ "module": "transformer-residual-and-layernorm",
+ "stage": "Round 2",
+ "index": [
+  {
+   "id": "tf-pre-norm-for-the-first-token",
+   "moduleId": "transformer-residual-and-layernorm",
+   "title": "Pre-Norm Attention for the First Token",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=tf-pre-norm-for-the-first-token",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "Rebuild the running example's transformer block as pre-norm, with the same weights: attention reads the LayerNorm of H and its output is added to H itself, with no LayerNorm after the addition. What is the length, to three decimal places, of the vector for the first token after the attention part and its residual addition? 1 part.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "tf-weights-that-learn-from-cat",
+   "moduleId": "transformer-residual-and-layernorm",
+   "title": "The Weights That Learn from One Token",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=tf-weights-that-learn-from-cat",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "Training on the loss at the second position sends a gradient back into the feed-forward network of one token, whose input has no zero entries. Count how many of the 32 weights in the first weight table get a nonzero gradient from this loss. 1 part.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "tf-counting-gpt2-large",
+   "moduleId": "transformer-residual-and-layernorm",
+   "title": "Counting the Weights of GPT-2 Large",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=tf-counting-gpt2-large",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "GPT-2 large keeps GPT-2 small's design, its vocabulary of 50,257 tokens and its 1,024 positions, but has a width of 1,280, 20 heads of 64 numbers and 36 blocks, and its feed-forward network widens to four times the width. Count its weights the way this module's table counts GPT-2 small, offsets included, and give the total in millions to two decimal places. 1 part.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "transformers-implementation-task",
+   "moduleId": "transformer-residual-and-layernorm",
+   "title": "Transformer Sequence Classification Practice",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=transformers",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "A small sequence model (transformer encoder / embedding pooling) in PyTorch. Write your solution in the marked cell, then run the evaluation cell to grade yourself.",
+   "answer": "Auto-graded inside the notebook. Test accuracy must reach the target shown in the evaluation cell."
+  }
+ ],
+ "theory": [
+  {
+   "id": "tf-pre-norm-for-the-first-token",
+   "moduleId": "transformer-residual-and-layernorm",
+   "title": "Pre-Norm Attention for the First Token",
+   "difficulty": "Medium",
+   "minutes": 10,
+   "overview": [
+    "Rebuild the running example's block as pre-norm, with the same weights: attention reads $\\text{LayerNorm}(H)$, and its output is added to $H$ itself, with no LayerNorm after the addition.",
+    "In the running example the causal mask lets the first token attend only to itself, and $W_V$ and $W_O$ leave a vector unchanged."
+   ],
+   "parts": [
     {
-      "id": "tf-pre-norm-for-the-first-token",
-      "moduleId": "transformer-residual-and-layernorm",
-      "title": "Pre-Norm Attention for the First Token",
-      "source": "USAAIO-style",
-      "difficulty": "Medium",
-      "url": "/theory/?id=tf-pre-norm-for-the-first-token",
-      "tags": [
-        "Theory",
-        "Multi-part",
-        "Round 2"
-      ],
-      "prompt": "Rebuild the running example's transformer block as pre-norm, with the same weights: attention reads the LayerNorm of H and its output is added to H itself, with no LayerNorm after the addition. What is the length, to three decimal places, of the vector for the first token after the attention part and its residual addition? 1 part.",
-      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the vector of \"the\" after the attention part and its residual addition? Give its length to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "\"the\" is the first token, so the mask leaves it only itself to look at, with weight 1 in both heads. Its attention output is therefore its own value, and in pre-norm the values are made from the normalized copy. $W_V$ and $W_O$ both leave a vector unchanged, so the output is $\\text{LayerNorm}$ of the row of \"the\", $(1, 1, 0, 1)$:"
+      },
+      {
+       "tex": "\\begin{array}{cc}\n\\text{Step} & \\text{Values} \\\\ \\hline\n\\text{Average} & 0.75 \\\\\n\\text{Subtract it} & \\text{0.25, 0.25, −0.75, 0.25} \\\\\n\\text{Average of the squares} & \\text{(0.0625 × 3 + 0.5625) / 4 = 0.1875} \\\\\n\\text{Standard deviation} & 0.433 \\\\\n\\text{Divide by it} & \\text{0.577, 0.577, −1.732, 0.577}\n\\end{array}"
+      },
+      {
+       "p": "The residual adds this to $H$ itself:"
+      },
+      {
+       "tex": "(1, 1, 0, 1) + (0.577, 0.577, -1.732, 0.577) = (1.577, 1.577, -1.732, 1.577),"
+      },
+      {
+       "p": "whose length is"
+      },
+      {
+       "tex": "\\sqrt{3 (1 + 1/\\sqrt{3})^2 + (\\sqrt{3})^2} = \\sqrt{7 + 2\\sqrt{3}} = 3.235 ."
+      },
+      {
+       "p": "In the post-norm block of this page, \"the\" leaves the same step with length 2, because a LayerNorm follows every addition. In pre-norm nothing normalizes the sum, so the vector carried to the next part is longer, and each later part adds to it again. That is why GPT-2 ends with a final LayerNorm."
+      },
+      {
+       "p": "Three slips give other lengths. Normalizing after the addition, as in post-norm, gives 2. Adding the output to the normalized copy instead of to $H$ gives $2 \\times (0.577, 0.577, -1.732, 0.577)$, of length 4. Letting attention read $H$ itself gives $2H$, of length 3.464."
+      },
+      {
+       "result": "3.235"
+      }
+     ]
     }
-  ],
-  "theory": [
+   ]
+  },
+  {
+   "id": "tf-weights-that-learn-from-cat",
+   "moduleId": "transformer-residual-and-layernorm",
+   "title": "The Weights That Learn from One Token",
+   "difficulty": "Medium",
+   "minutes": 10,
+   "overview": [
+    "Training on the loss at the second position, where \"cat\" predicts \"sat\", sends a gradient back into the feed-forward network of \"cat\", whose input is the row of \"cat\" in $Y$, $(-0.698,\\ 1.677,\\ -0.821,\\ -0.158)$. Assume that the gradient reaching the network's output for \"cat\" has no zero entries. The two rules you need are in [Backpropagation by Hand](/module/?id=backpropagation-mechanics): a weight's gradient is the input it reads times the error at the unit it feeds, and the ReLU's slope is 1 where its input is positive and 0 elsewhere."
+   ],
+   "parts": [
     {
-      "id": "tf-pre-norm-for-the-first-token",
-      "moduleId": "transformer-residual-and-layernorm",
-      "title": "Pre-Norm Attention for the First Token",
-      "difficulty": "Medium",
-      "minutes": 10,
-      "overview": [
-        "Rebuild the running example's block as pre-norm, with the same weights: attention reads $\\text{LayerNorm}(H)$, and its output is added to $H$ itself, with no LayerNorm after the addition.",
-        "In the running example the causal mask lets the first token attend only to itself, and $W_V$ and $W_O$ leave a vector unchanged."
-      ],
-      "parts": [
-        {
-          "id": "1.1",
-          "kind": "computation",
-          "requirement": "Reasoning is not required.",
-          "prompt": [
-            {
-              "p": "What is the vector of \"the\" after the attention part and its residual addition? Give its length to three decimal places."
-            }
-          ],
-          "answer": [
-            {
-              "p": "\"the\" is the first token, so the mask leaves it only itself to look at, with weight 1 in both heads. Its attention output is therefore its own value, and in pre-norm the values are made from the normalized copy. $W_V$ and $W_O$ both leave a vector unchanged, so the output is $\\text{LayerNorm}$ of the row of \"the\", $(1, 1, 0, 1)$:"
-            },
-            {
-              "tex": "\\begin{array}{cc}\n\\text{Step} & \\text{Values} \\\\ \\hline\n\\text{Average} & 0.75 \\\\\n\\text{Subtract it} & \\text{0.25, 0.25, −0.75, 0.25} \\\\\n\\text{Average of the squares} & \\text{(0.0625 × 3 + 0.5625) / 4 = 0.1875} \\\\\n\\text{Standard deviation} & 0.433 \\\\\n\\text{Divide by it} & \\text{0.577, 0.577, −1.732, 0.577}\n\\end{array}"
-            },
-            {
-              "p": "The residual adds this to $H$ itself:"
-            },
-            {
-              "tex": "(1, 1, 0, 1) + (0.577, 0.577, -1.732, 0.577) = (1.577, 1.577, -1.732, 1.577),"
-            },
-            {
-              "p": "whose length is"
-            },
-            {
-              "tex": "\\sqrt{3 (1 + 1/\\sqrt{3})^2 + (\\sqrt{3})^2} = \\sqrt{7 + 2\\sqrt{3}} = 3.235 ."
-            },
-            {
-              "p": "In the post-norm block of this page, \"the\" leaves the same step with length 2, because a LayerNorm follows every addition. In pre-norm nothing normalizes the sum, so the vector carried to the next part is longer, and each later part adds to it again. That is why GPT-2 ends with a final LayerNorm."
-            },
-            {
-              "p": "Three slips give other lengths. Normalizing after the addition, as in post-norm, gives 2. Adding the output to the normalized copy instead of to $H$ gives $2 \\times (0.577, 0.577, -1.732, 0.577)$, of length 4. Letting attention read $H$ itself gives $2H$, of length 3.464."
-            },
-            {
-              "result": "3.235"
-            }
-          ]
-        }
-      ]
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "How many of the 32 weights in $W_1$ get a nonzero gradient from this loss?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The eight hidden values of \"cat\", from the table of the running example:"
+      },
+      {
+       "tex": "\\begin{array}{cccc}\n\\text{Hidden value} & \\text{Computed as} & \\text{For \"cat\"} & \\text{After the ReLU} \\\\ \\hline\n1 & \\text{dim 1 − dim 4} & \\text{−0.540} & 0 \\\\\n2 & \\text{dim 2} & 1.677 & 1.677 \\\\\n3 & \\text{dim 3} & \\text{−0.821} & 0 \\\\\n4 & \\text{dim 4 − dim 1} & 0.540 & 0.540 \\\\\n5 & \\text{−dim 2} & \\text{−1.677} & 0 \\\\\n6 & \\text{dim 1 − dim 3} & 0.123 & 0.123 \\\\\n7 & \\text{dim 2 − dim 4} & 1.835 & 1.835 \\\\\n8 & \\text{dim 3} & \\text{−0.821} & 0\n\\end{array}"
+      },
+      {
+       "p": "Work back from the output. $W_2$ sends hidden value $j$ to output $j$ or $j - 4$ with a weight of $\\pm\\tfrac12$, so every hidden value after the ReLU gets a nonzero gradient. The ReLU passes that gradient on where its input was positive and blocks it where it was negative, because there its output stays 0 under a small change. So only the hidden values that are on, 2, 4, 6 and 7, pass a gradient back to their inputs."
+      },
+      {
+       "p": "Hidden value $j$ is $\\sum_i y_i\\,(W_1)_{ij}$, so the gradient of weight $(i, j)$ is $y_i$ times the gradient reaching hidden value $j$. All four numbers of the input are nonzero, so each of the 4 columns of the values that are on gets 4 nonzero entries: $4 \\times 4 = 16$."
+      },
+      {
+       "p": "Hidden value 6 is on by only 0.123, and it still counts. The other 16 weights learn nothing from this position. The same count gives 8 for \"sat\", whose hidden values 4 and 5 are on. Taking six of the eight as off for every token, as for \"sat\", would give 8 here, and letting the gradient through every hidden value would give all 32."
+      },
+      {
+       "result": "16"
+      }
+     ]
     }
-  ]
+   ]
+  },
+  {
+   "id": "tf-counting-gpt2-large",
+   "moduleId": "transformer-residual-and-layernorm",
+   "title": "Counting the Weights of GPT-2 Large",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "GPT-2 large keeps the design of GPT-2 small, its vocabulary of 50,257 tokens and its 1,024 positions, but has a width of 1,280, 20 heads of 64 numbers and 36 blocks. Its feed-forward network widens to four times the width."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "How many weights does it have? Count everything this module's table counts, offsets included, and give the total in millions to two decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "First read off from GPT-2 small, with $d = 768$, how many offsets each part has:"
+      },
+      {
+       "list": [
+        "Attention: $2{,}362{,}368 - 4 \\times 768^2 = 3{,}072 = 4d$, one list of $d$ offsets for each of the four tables.",
+        "Feed-forward: $4{,}722{,}432 - 2 \\times 768 \\times 3{,}072 = 3{,}840 = 4d + d$, one offset per hidden value and one per output number.",
+        "LayerNorms: a scale and a shift of $d$ numbers each, twice, $4d$."
+       ]
+      },
+      {
+       "p": "So a block holds $4d^2 + 4d$ in attention, $8d^2 + 5d$ in the feed-forward network and $4d$ in its norms. With $d = 1{,}280$:"
+      },
+      {
+       "tex": "\\begin{array}{cc}\n\\text{Part} & \\text{Weights} \\\\ \\hline\n\\text{Token embeddings, $50{,}257 \\times 1{,}280$} & \\text{64,328,960} \\\\\n\\text{Position embeddings, $1{,}024 \\times 1{,}280$} & \\text{1,310,720} \\\\\n\\text{Attention, $4d^2 + 4d$} & \\text{6,558,720} \\\\\n\\text{Feed-forward, $8d^2 + 5d$} & \\text{13,113,600} \\\\\n\\text{Two LayerNorms, $4d$} & \\text{5,120} \\\\\n\\text{One block} & \\text{19,677,440} \\\\\n\\text{36 blocks} & \\text{708,387,840} \\\\\n\\text{Final LayerNorm, $2d$} & \\text{2,560} \\\\\n\\textbf{Total} & \\textbf{774,030,080}\n\\end{array}"
+      },
+      {
+       "p": "That is 774.03 million, the figure usually quoted for GPT-2 large as 774M. The 20 heads do not enter the count: splitting the width into heads costs no weights (Step 8). Counting a separate output table would add another 64,328,960, for 838.36 million, and giving every head its own $1{,}280 \\times 1{,}280$ tables would multiply the attention weights by 20. The blocks hold 92% of the weights here, against 68% in GPT-2 small, because they grow with $d^2$ and the embedding tables only with $d$."
+      },
+      {
+       "result": "774.03"
+      }
+     ]
+    }
+   ]
+  }
+ ]
 }

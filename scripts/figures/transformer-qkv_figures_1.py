@@ -71,7 +71,7 @@ def transformer_qkv(ax):
     # B: cw, ch, gx = 1.3, 0.55, 9.3. cw is wider so each number fits its cell.
     cw, ch, gx = 1.6, 0.55, 9.9
     cells(ax, 0.2, 2.0, [h], cw, ch)
-    label(ax, 0.2 + 2 * cw, 2.9, "vector of “sat”, from Step 3", rank="tick",
+    label(ax, 0.2 + 2 * cw, 2.9, "vector of “sat”, from part 1", rank="tick",
           ha="center")
     for name, weights, vals, y in outs:
         arrow(ax, (0.3 + 4 * cw, 2.0 + ch / 2), (gx - 1.7, y + ch / 2))

@@ -276,17 +276,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.aioinitiative.com/module/?id=vision-pixels</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.aioinitiative.com/module/?id=vision-convolution</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.aioinitiative.com/module/?id=vision-relu-and-pooling</loc>
     <lastmod>2026-10-24</lastmod>
     <priority>0.7</priority>
   </url>
@@ -296,22 +286,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.aioinitiative.com/module/?id=vision-deeper-networks</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.aioinitiative.com/module/?id=vision-transfer-learning</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.aioinitiative.com/module/?id=hierarchical-vision-models</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.aioinitiative.com/module/?id=vision-adversarial-attacks</loc>
     <lastmod>2026-10-24</lastmod>
     <priority>0.7</priority>
   </url>
@@ -321,32 +296,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.aioinitiative.com/module/?id=transformer-tokenize</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.aioinitiative.com/module/?id=transformer-embed</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.aioinitiative.com/module/?id=transformer-add-position</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.aioinitiative.com/module/?id=transformer-qkv</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.aioinitiative.com/module/?id=transformer-scores</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.aioinitiative.com/module/?id=transformer-mask-and-softmax</loc>
     <lastmod>2026-10-24</lastmod>
     <priority>0.7</priority>
   </url>
@@ -356,32 +306,12 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.aioinitiative.com/module/?id=transformer-multi-head</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.aioinitiative.com/module/?id=transformer-residual-and-layernorm</loc>
     <lastmod>2026-10-24</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.aioinitiative.com/module/?id=transformer-feed-forward</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.aioinitiative.com/module/?id=transformer-stack</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.aioinitiative.com/module/?id=transformer-predict</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.aioinitiative.com/module/?id=transformer-generate</loc>
     <lastmod>2026-10-24</lastmod>
     <priority>0.7</priority>
   </url>
@@ -392,11 +322,6 @@
   </url>
   <url>
     <loc>https://www.aioinitiative.com/module/?id=information-theory-core</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.aioinitiative.com/module/?id=object-detection-fpn-yolo</loc>
     <lastmod>2026-10-24</lastmod>
     <priority>0.7</priority>
   </url>
@@ -436,11 +361,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.aioinitiative.com/module/?id=vae-encoder-decoder-generation</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.aioinitiative.com/module/?id=generative-adversarial-networks</loc>
     <lastmod>2026-10-24</lastmod>
     <priority>0.7</priority>
@@ -466,37 +386,12 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.aioinitiative.com/module/?id=generative-removing-noise</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.aioinitiative.com/module/?id=generative-guidance-and-stable-diffusion</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.aioinitiative.com/module/?id=sciml-setup</loc>
     <lastmod>2026-10-24</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.aioinitiative.com/module/?id=sciml-the-equation</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.aioinitiative.com/module/?id=sciml-network-as-solution</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.aioinitiative.com/module/?id=sciml-derivatives</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.aioinitiative.com/module/?id=sciml-physics-loss</loc>
     <lastmod>2026-10-24</lastmod>
     <priority>0.7</priority>
   </url>
@@ -531,27 +426,12 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.aioinitiative.com/module/?id=efficient-prefill-and-decode</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.aioinitiative.com/module/?id=efficient-kv-cache</loc>
     <lastmod>2026-10-24</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.aioinitiative.com/module/?id=efficient-sharing-keys-and-values</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.aioinitiative.com/module/?id=efficient-flashattention</loc>
-    <lastmod>2026-10-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.aioinitiative.com/module/?id=efficient-linear-attention</loc>
     <lastmod>2026-10-24</lastmod>
     <priority>0.7</priority>
   </url>

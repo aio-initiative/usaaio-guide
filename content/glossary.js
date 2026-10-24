@@ -504,7 +504,7 @@
       "term": "ELBO",
       "aka": "Evidence Lower BOund",
       "definition": "The VAE training objective: a tractable lower bound on log p(x), equal to a reconstruction term minus KL(q(z|x) ‖ p(z)). Maximizing it approximately maximizes the likelihood.",
-      "moduleId": "vae-encoder-decoder-generation",
+      "moduleId": "representation-learning-autoencoders-vaes-latent-spaces",
       "tags": [
         "vae",
         "variational-inference",
@@ -609,7 +609,7 @@
       "term": "Focal loss",
       "aka": null,
       "definition": "Cross-entropy scaled by (1 - p_t)^gamma, so confidently-correct examples contribute almost nothing. At gamma = 2 an anchor already correct at p_t = 0.99 has its loss cut 10,000-fold while a hard case at 0.25 is cut only twofold. It exists because a one-stage detector with a feature pyramid produces hundreds of thousands of anchors per image, almost all background, which plain cross-entropy lets drown the real objects.",
-      "moduleId": "object-detection-fpn-yolo",
+      "moduleId": "vision-transformers-vit-attention",
       "tags": [
         "detection",
         "loss",
@@ -633,7 +633,7 @@
       "term": "FPN",
       "aka": "Feature Pyramid Network",
       "definition": "Sends semantics back down the resolution ladder: enlarge the coarser feature map 2 times, add the same-size backbone map through a 1x1 lateral convolution, repeat. Every pyramid level ends up both high-resolution and semantically strong, and all levels share a channel count (256 in the paper) so a single detection head with one set of weights serves them all.",
-      "moduleId": "object-detection-fpn-yolo",
+      "moduleId": "vision-transformers-vit-attention",
       "tags": [
         "detection",
         "multi-scale",
@@ -681,7 +681,7 @@
       "term": "GQA",
       "aka": "Grouped-Query Attention",
       "definition": "Grouped-query attention: several query heads share one key/value head, shrinking the KV cache by the group factor. Sits between full multi-head and multi-query, and an existing MHA checkpoint can be uptrained into it cheaply. Landmine: it shrinks the cache, not the number of query heads.",
-      "moduleId": "efficient-sharing-keys-and-values",
+      "moduleId": "efficient-kv-cache",
       "tags": [
         "attention",
         "gqa",
@@ -800,7 +800,7 @@
       "term": "IoU",
       "aka": "Intersection over Union",
       "definition": "For two bounding boxes, area(A ∩ B) / area(A ∪ B) ∈ [0, 1]. The standard object-detection metric. Threshold 0.5 for \"correct detection\", 0.75 for stricter.",
-      "moduleId": "object-detection-fpn-yolo",
+      "moduleId": "vision-transformers-vit-attention",
       "tags": [
         "object-detection",
         "metrics",
@@ -1165,7 +1165,7 @@
       "term": "NMS",
       "aka": "Non-Maximum Suppression",
       "definition": "A greedy post-processing step for object detection: sort predictions by score, greedily keep the top, discard any that overlap it (IoU > threshold), repeat. Removes duplicate boxes for the same object.",
-      "moduleId": "object-detection-fpn-yolo",
+      "moduleId": "vision-transformers-vit-attention",
       "tags": [
         "object-detection",
         "post-processing",
@@ -1379,7 +1379,7 @@
       "term": "Reparameterization trick",
       "aka": null,
       "definition": "Rewrite z ~ N(μ, σ²) as z = μ + σε with ε ~ N(0,1). Gradients now flow through μ and σ, which is what makes a VAE trainable end-to-end.",
-      "moduleId": "vae-encoder-decoder-generation",
+      "moduleId": "representation-learning-autoencoders-vaes-latent-spaces",
       "tags": [
         "vae",
         "variational-inference",
@@ -1428,7 +1428,7 @@
       "term": "RoIAlign",
       "aka": null,
       "definition": "Extracts a fixed-size grid from a region without rounding its coordinates onto the feature grid, sampling with bilinear interpolation instead. RoIPool rounds the region’s edges to whole feature cells, which can move it onto the wrong cells: a shift a class label hardly notices but a mask does. The reason Mask R-CNN works.",
-      "moduleId": "object-detection-fpn-yolo",
+      "moduleId": "vision-transformers-vit-attention",
       "tags": [
         "detection",
         "segmentation",
@@ -1702,7 +1702,7 @@
       "term": "VAE",
       "aka": "Variational Autoencoder",
       "definition": "A probabilistic autoencoder: the encoder outputs a distribution over z, the decoder maps z back to x. Trained by maximizing the ELBO.",
-      "moduleId": "vae-encoder-decoder-generation",
+      "moduleId": "representation-learning-autoencoders-vaes-latent-spaces",
       "tags": [
         "vae",
         "generative-models",

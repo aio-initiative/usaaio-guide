@@ -1,10 +1,10 @@
 {
- "module": "efficient-prefill-and-decode",
+ "module": "efficient-setup",
  "stage": "Advanced",
  "index": [
   {
    "id": "eff-scores-for-a-prompt-and-a-reply",
-   "moduleId": "efficient-prefill-and-decode",
+   "moduleId": "efficient-setup",
    "title": "The Scores a Prompt and a Reply Cost",
    "source": "USAAIO-style",
    "difficulty": "Medium",
@@ -21,7 +21,7 @@
  "theory": [
   {
    "id": "eff-scores-for-a-prompt-and-a-reply",
-   "moduleId": "efficient-prefill-and-decode",
+   "moduleId": "efficient-setup",
    "title": "The Scores a Prompt and a Reply Cost",
    "difficulty": "Medium",
    "minutes": 14,

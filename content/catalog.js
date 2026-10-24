@@ -755,11 +755,11 @@
     },
     {
       "id": "vision-setup",
-      "title": "0. Setup",
+      "title": "1. Setup and pixels",
       "section": "round2",
       "level": "Core",
       "time": "1 week",
-      "summary": "What makes images hard, the history and the roadmap.",
+      "summary": "The image classification task, and how an image becomes numbers.",
       "prerequisites": [],
       "author": "USAAIO Guide Team",
       "file": "content/2_Round_2/2.21-CV8-vision-setup.md",
@@ -769,27 +769,12 @@
       "prerequisiteTitles": []
     },
     {
-      "id": "vision-pixels",
-      "title": "1. Pixels",
-      "section": "round2",
-      "level": "Core",
-      "time": "1 week",
-      "summary": "An image as a grid of numbers with channels.",
-      "prerequisites": [],
-      "author": "USAAIO Guide Team",
-      "file": "content/2_Round_2/2.22-CV9-vision-pixels.md",
-      "code": "CV9",
-      "number": "2.22",
-      "frequency": 3,
-      "prerequisiteTitles": []
-    },
-    {
       "id": "vision-convolution",
-      "title": "2. Convolution",
+      "title": "2. Convolution and pooling",
       "section": "round2",
       "level": "Core",
       "time": "1 week",
-      "summary": "Filters, shared weights and output size.",
+      "summary": "Convolution filters, ReLU and pooling.",
       "prerequisites": [
         "neural-networks-perceptrons-mlps-activations",
         "optimization-adam-sgd",
@@ -809,62 +794,17 @@
       ]
     },
     {
-      "id": "vision-relu-and-pooling",
-      "title": "3. ReLU and pooling",
-      "section": "round2",
-      "level": "Core",
-      "time": "1 week",
-      "summary": "ReLU, max pooling and what pooling gives up.",
-      "prerequisites": [],
-      "author": "USAAIO Guide Team",
-      "file": "content/2_Round_2/2.24-CV11-vision-relu-and-pooling.md",
-      "code": "CV11",
-      "number": "2.24",
-      "frequency": 2,
-      "prerequisiteTitles": []
-    },
-    {
       "id": "vision-classify",
-      "title": "4. Classify",
+      "title": "3. Classifying, going deeper and transfer learning",
       "section": "round2",
       "level": "Core",
       "time": "1 week",
-      "summary": "Flattening, class scores and the softmax.",
+      "summary": "A classifier head, deeper networks with residual connections, and reusing a trained network.",
       "prerequisites": [],
       "author": "USAAIO Guide Team",
       "file": "content/2_Round_2/2.25-CV12-vision-classify.md",
       "code": "CV12",
       "number": "2.25",
-      "frequency": 3,
-      "prerequisiteTitles": []
-    },
-    {
-      "id": "vision-deeper-networks",
-      "title": "5. Deeper networks",
-      "section": "round2",
-      "level": "Core",
-      "time": "1 week",
-      "summary": "VGG, ResNet shortcuts and counting ResNet-50's parameters.",
-      "prerequisites": [],
-      "author": "USAAIO Guide Team",
-      "file": "content/2_Round_2/2.26-CV13-vision-deeper-networks.md",
-      "code": "CV13",
-      "number": "2.26",
-      "frequency": 3,
-      "prerequisiteTitles": []
-    },
-    {
-      "id": "vision-transfer-learning",
-      "title": "6. Transfer learning",
-      "section": "round2",
-      "level": "Core",
-      "time": "1 week",
-      "summary": "Freezing, linear probes and fine-tuning a trained network.",
-      "prerequisites": [],
-      "author": "USAAIO Guide Team",
-      "file": "content/2_Round_2/2.27-CV14-vision-transfer-learning.md",
-      "code": "CV14",
-      "number": "2.27",
       "frequency": 3,
       "prerequisiteTitles": []
     },
@@ -884,11 +824,11 @@
     },
     {
       "id": "semantic-segmentation-unet-masks",
-      "title": "9. Segmentation",
+      "title": "4. Segmentation and adversarial attacks",
       "section": "round2",
       "level": "Core",
       "time": "1 week",
-      "summary": "U-Net, skip connections and transposed convolution.",
+      "summary": "A label for every pixel, and inputs built to fool a classifier.",
       "prerequisites": [
         "convolutional-neural-networks"
       ],
@@ -900,21 +840,6 @@
       "prerequisiteTitles": [
         "Convolutional Neural Networks"
       ]
-    },
-    {
-      "id": "vision-adversarial-attacks",
-      "title": "10. Adversarial attacks",
-      "section": "round2",
-      "level": "Core",
-      "time": "1 week",
-      "summary": "FGSM, PGD and adversarial training.",
-      "prerequisites": [],
-      "author": "USAAIO Guide Team",
-      "file": "content/2_Round_2/2.29-CV16-vision-adversarial-attacks.md",
-      "code": "CV16",
-      "number": "2.29",
-      "frequency": 0,
-      "prerequisiteTitles": []
     },
     {
       "id": "modern-vision-architectures-resnet-efficientnet-transfer",
@@ -936,7 +861,7 @@
       "number": "2.8",
       "prerequisiteTitles": [
         "Convolutional Neural Networks",
-        "9. Segmentation",
+        "4. Segmentation and adversarial attacks",
         "Core Layers (Affine, Normalization, Dropout)",
         "Bias-Variance Tradeoff & Cross-Validation",
         "Linear & Logistic Regression"
@@ -944,11 +869,11 @@
     },
     {
       "id": "transformer-setup",
-      "title": "0. Setup",
+      "title": "1. Setup and input",
       "section": "round2",
       "level": "Core",
-      "time": "1 week",
-      "summary": "The next-token task, the history and the architecture.",
+      "time": "2 weeks",
+      "summary": "The next-token task, then text to token IDs, vectors and positions.",
       "prerequisites": [],
       "author": "USAAIO Guide Team",
       "file": "content/2_Round_2/2.30-TF10-transformer-setup.md",
@@ -958,65 +883,12 @@
       "prerequisiteTitles": []
     },
     {
-      "id": "transformer-tokenize",
-      "title": "1. Tokenize",
-      "section": "round2",
-      "level": "Core",
-      "time": "1 week",
-      "summary": "Words, characters and byte-pair encoding.",
-      "prerequisites": [],
-      "author": "USAAIO Guide Team",
-      "file": "content/2_Round_2/2.31-TF11-transformer-tokenize.md",
-      "code": "TF11",
-      "number": "2.31",
-      "frequency": 2,
-      "prerequisiteTitles": []
-    },
-    {
-      "id": "transformer-embed",
-      "title": "2. Embed",
-      "section": "round2",
-      "level": "Core",
-      "time": "1 week",
-      "summary": "One-hot vectors, the embedding table and cosine similarity.",
-      "prerequisites": [
-        "transformer-tokenize"
-      ],
-      "author": "USAAIO Guide Team",
-      "file": "content/2_Round_2/2.32-TF12-transformer-embed.md",
-      "code": "TF12",
-      "number": "2.32",
-      "frequency": 3,
-      "prerequisiteTitles": [
-        "1. Tokenize"
-      ]
-    },
-    {
-      "id": "transformer-add-position",
-      "title": "3. Add position",
-      "section": "round2",
-      "level": "Core",
-      "time": "1 week",
-      "summary": "Sinusoidal position encodings, distances and rotary embeddings.",
-      "prerequisites": [
-        "transformer-embed"
-      ],
-      "author": "USAAIO Guide Team",
-      "file": "content/2_Round_2/2.33-TF13-transformer-add-position.md",
-      "code": "TF13",
-      "number": "2.33",
-      "frequency": 2,
-      "prerequisiteTitles": [
-        "2. Embed"
-      ]
-    },
-    {
       "id": "transformer-qkv",
-      "title": "4. Q, K, V",
+      "title": "2. Attention scores",
       "section": "round2",
       "level": "Core",
-      "time": "1 week",
-      "summary": "Queries, keys and values from each token's vector.",
+      "time": "1-2 weeks",
+      "summary": "Queries, keys and values, a score for every pair of tokens, and the causal mask and softmax.",
       "prerequisites": [],
       "author": "USAAIO Guide Team",
       "file": "content/2_Round_2/2.34-TF14-transformer-qkv.md",
@@ -1026,152 +898,58 @@
       "prerequisiteTitles": []
     },
     {
-      "id": "transformer-scores",
-      "title": "5. Scores",
-      "section": "round2",
-      "level": "Core",
-      "time": "1 week",
-      "summary": "Scaled dot-product scores and the square-root divisor.",
-      "prerequisites": [],
-      "author": "USAAIO Guide Team",
-      "file": "content/2_Round_2/2.35-TF15-transformer-scores.md",
-      "code": "TF15",
-      "number": "2.35",
-      "frequency": 4,
-      "prerequisiteTitles": []
-    },
-    {
-      "id": "transformer-mask-and-softmax",
-      "title": "6. Mask and softmax",
-      "section": "round2",
-      "level": "Core",
-      "time": "1 week",
-      "summary": "The causal mask, the softmax and padding.",
-      "prerequisites": [],
-      "author": "USAAIO Guide Team",
-      "file": "content/2_Round_2/2.36-TF16-transformer-mask-and-softmax.md",
-      "code": "TF16",
-      "number": "2.36",
-      "frequency": 3,
-      "prerequisiteTitles": []
-    },
-    {
       "id": "transformer-weighted-sum",
-      "title": "7. Weighted sum",
+      "title": "3. Attention output",
       "section": "round2",
       "level": "Core",
       "time": "1 week",
-      "summary": "Averaging the values by attention weight, and its gradients.",
-      "prerequisites": [],
+      "summary": "The weighted sum of values, and several heads side by side.",
+      "prerequisites": [
+        "transformer-fundamentals"
+      ],
       "author": "USAAIO Guide Team",
       "file": "content/2_Round_2/2.37-TF17-transformer-weighted-sum.md",
       "code": "TF17",
       "number": "2.37",
       "frequency": 4,
-      "prerequisiteTitles": []
-    },
-    {
-      "id": "transformer-multi-head",
-      "title": "8. Multi-head",
-      "section": "round2",
-      "level": "Core",
-      "time": "1 week",
-      "summary": "Several heads side by side, their shapes and cost.",
-      "prerequisites": [
-        "transformer-fundamentals",
-        "transformer-weighted-sum"
-      ],
-      "author": "USAAIO Guide Team",
-      "file": "content/2_Round_2/2.38-TF18-transformer-multi-head.md",
-      "code": "TF18",
-      "number": "2.38",
-      "frequency": 4,
       "prerequisiteTitles": [
-        "Self-Attention Fundamentals",
-        "7. Weighted sum"
+        "Self-Attention Fundamentals"
       ]
     },
     {
       "id": "transformer-residual-and-layernorm",
-      "title": "9. Residual and LayerNorm",
+      "title": "4. The Transformer block",
       "section": "round2",
       "level": "Core",
-      "time": "1 week",
-      "summary": "Residual connections, LayerNorm and pre-norm.",
-      "prerequisites": [],
+      "time": "1-2 weeks",
+      "summary": "Residual connections, LayerNorm, the feed-forward network, and stacking blocks.",
+      "prerequisites": [
+        "transformer-fundamentals",
+        "neural-networks-perceptrons-mlps-activations"
+      ],
       "author": "USAAIO Guide Team",
       "file": "content/2_Round_2/2.39-TF19-transformer-residual-and-layernorm.md",
       "code": "TF19",
       "number": "2.39",
       "frequency": 3,
-      "prerequisiteTitles": []
-    },
-    {
-      "id": "transformer-feed-forward",
-      "title": "10. Feed-forward",
-      "section": "round2",
-      "level": "Core",
-      "time": "1 week",
-      "summary": "The small network applied to every token.",
-      "prerequisites": [
-        "transformer-fundamentals",
-        "transformer-residual-and-layernorm",
-        "neural-networks-perceptrons-mlps-activations"
-      ],
-      "author": "USAAIO Guide Team",
-      "file": "content/2_Round_2/2.40-TF20-transformer-feed-forward.md",
-      "code": "TF20",
-      "number": "2.40",
-      "frequency": 3,
       "prerequisiteTitles": [
         "Self-Attention Fundamentals",
-        "9. Residual and LayerNorm",
         "The Multilayer Perceptron"
       ]
     },
     {
-      "id": "transformer-stack",
-      "title": "11. Stack",
-      "section": "round2",
-      "level": "Core",
-      "time": "1 week",
-      "summary": "Stacking blocks and counting GPT-2's weights.",
-      "prerequisites": [],
-      "author": "USAAIO Guide Team",
-      "file": "content/2_Round_2/2.41-TF21-transformer-stack.md",
-      "code": "TF21",
-      "number": "2.41",
-      "frequency": 3,
-      "prerequisiteTitles": []
-    },
-    {
       "id": "transformer-predict",
-      "title": "12. Predict",
+      "title": "5. Predicting and generating",
       "section": "round2",
       "level": "Core",
       "time": "1 week",
-      "summary": "Logits, probabilities and the cross-entropy loss.",
+      "summary": "Next-token probabilities, the training loss, and generating text.",
       "prerequisites": [],
       "author": "USAAIO Guide Team",
       "file": "content/2_Round_2/2.42-TF22-transformer-predict.md",
       "code": "TF22",
       "number": "2.42",
       "frequency": 2,
-      "prerequisiteTitles": []
-    },
-    {
-      "id": "transformer-generate",
-      "title": "13. Generate",
-      "section": "round2",
-      "level": "Core",
-      "time": "1 week",
-      "summary": "Temperature, top-k and top-p sampling.",
-      "prerequisites": [],
-      "author": "USAAIO Guide Team",
-      "file": "content/2_Round_2/2.43-TF23-transformer-generate.md",
-      "code": "TF23",
-      "number": "2.43",
-      "frequency": 1,
       "prerequisiteTitles": []
     },
     {
@@ -1210,7 +988,7 @@
       "time": "1 week",
       "summary": "How BERT learns by filling in blanks.",
       "prerequisites": [
-        "transformer-stack"
+        "transformer-residual-and-layernorm"
       ],
       "author": "USAAIO Guide Team",
       "file": "content/2_Round_2/2.10-TF2-transformer-architectures-bert-mlm.md",
@@ -1218,7 +996,7 @@
       "number": "2.10",
       "frequency": 2,
       "prerequisiteTitles": [
-        "11. Stack"
+        "4. The Transformer block"
       ]
     },
     {
@@ -1229,7 +1007,7 @@
       "time": "1 week",
       "summary": "Next-token prediction, the causal mask and generation.",
       "prerequisites": [
-        "transformer-stack"
+        "transformer-residual-and-layernorm"
       ],
       "author": "USAAIO Guide Team",
       "file": "content/2_Round_2/2.44-TF24-gpt-causal-lm.md",
@@ -1237,7 +1015,7 @@
       "number": "2.44",
       "frequency": 1,
       "prerequisiteTitles": [
-        "11. Stack"
+        "4. The Transformer block"
       ]
     },
     {
@@ -1311,15 +1089,17 @@
     },
     {
       "id": "vision-transformers-vit-attention",
-      "title": "7. Vision Transformer",
+      "title": "5. Vision Transformer and object detection",
       "section": "camp",
       "level": "Advanced",
-      "time": "1 week",
-      "summary": "Patches as tokens, the class token and position embeddings.",
+      "time": "1-2 weeks",
+      "summary": "Attention over image patches, and finding objects with boxes.",
       "prerequisites": [
         "modern-vision-architectures-resnet-efficientnet-transfer",
         "transformer-fundamentals",
-        "convolutional-neural-networks"
+        "convolutional-neural-networks",
+        "model-evaluation",
+        "neural-network-regularization-dropout-batchnorm"
       ],
       "author": "USAAIO Guide Team",
       "file": "content/3_Camp/3.3-CV6-vision-transformers-vit-attention.md",
@@ -1329,27 +1109,6 @@
       "prerequisiteTitles": [
         "ResNets and Transfer Learning",
         "Self-Attention Fundamentals",
-        "Convolutional Neural Networks"
-      ]
-    },
-    {
-      "id": "object-detection-fpn-yolo",
-      "title": "8. Object detection",
-      "section": "camp",
-      "level": "Advanced",
-      "time": "1 week",
-      "summary": "IoU, non-maximum suppression, anchors and average precision.",
-      "prerequisites": [
-        "convolutional-neural-networks",
-        "model-evaluation",
-        "neural-network-regularization-dropout-batchnorm"
-      ],
-      "author": "USAAIO Guide Team",
-      "file": "content/3_Camp/3.2-CV5-object-detection-fpn-yolo.md",
-      "code": "CV5",
-      "number": "3.2",
-      "frequency": 1,
-      "prerequisiteTitles": [
         "Convolutional Neural Networks",
         "Classification Metrics",
         "Core Layers (Affine, Normalization, Dropout)"
@@ -1363,8 +1122,7 @@
       "time": "1 week",
       "summary": "WordPiece, Unigram, and byte-level BPE, word2vec skip-gram and CBOW, negative sampling, and GloVe.",
       "prerequisites": [
-        "transformer-tokenize",
-        "transformer-embed"
+        "transformer-setup"
       ],
       "author": "USAAIO Guide Team",
       "file": "content/3_Camp/3.4-NL1-natural-language-processing-tokenization-embeddings.md",
@@ -1372,8 +1130,7 @@
       "number": "3.4",
       "frequency": 2,
       "prerequisiteTitles": [
-        "1. Tokenize",
-        "2. Embed"
+        "1. Setup and input"
       ]
     },
     {
@@ -1384,7 +1141,7 @@
       "time": "1 week",
       "summary": "Pretraining objectives, fine-tuning, and transfer.",
       "prerequisites": [
-        "transformer-stack",
+        "transformer-residual-and-layernorm",
         "training-loop-in-pytorch"
       ],
       "author": "USAAIO Guide Team",
@@ -1393,7 +1150,7 @@
       "number": "3.14",
       "frequency": 2,
       "prerequisiteTitles": [
-        "11. Stack",
+        "4. The Transformer block",
         "Writing a Training Loop in PyTorch"
       ]
     },
@@ -1447,9 +1204,8 @@
       "time": "1-2 weeks",
       "summary": "Relative encodings, rotary position embedding, relative position in linear attention, and stretching the context.",
       "prerequisites": [
-        "transformer-add-position",
-        "transformer-qkv",
-        "transformer-scores"
+        "transformer-setup",
+        "transformer-qkv"
       ],
       "author": "USAAIO Guide Team",
       "file": "content/3_Camp/3.7-TF6-relative-position-rope-positional-methods.md",
@@ -1457,9 +1213,8 @@
       "number": "3.7",
       "frequency": 3,
       "prerequisiteTitles": [
-        "3. Add position",
-        "4. Q, K, V",
-        "5. Scores"
+        "1. Setup and input",
+        "2. Attention scores"
       ]
     },
     {
@@ -1480,25 +1235,28 @@
       "number": "3.8",
       "frequency": 0,
       "prerequisiteTitles": [
-        "7. Vision Transformer",
+        "5. Vision Transformer and object detection",
         "Contrastive Learning and CLIP",
         "GPT and Causal Language Modeling"
       ]
     },
     {
       "id": "representation-learning-autoencoders-vaes-latent-spaces",
-      "title": "1. Autoencoder",
+      "title": "2. Autoencoders and VAEs",
       "section": "camp",
       "level": "Advanced",
       "time": "1 week",
-      "summary": "Encoder, decoder, the reconstruction loss and the link to PCA.",
+      "summary": "Compressing data through a bottleneck, and turning that into a generative model.",
       "prerequisites": [
         "clustering",
         "principal-component-analysis",
         "linear-algebra-ii-eigenvalues-eigenvectors-spectral-theory",
         "neural-networks-perceptrons-mlps-activations",
         "information-theory-core",
-        "convolutional-neural-networks"
+        "convolutional-neural-networks",
+        "gpt-causal-lm",
+        "probability-foundations",
+        "model-evaluation"
       ],
       "author": "USAAIO Guide Team",
       "file": "content/3_Camp/2.13-RP1-representation-learning-autoencoders-vaes-latent-spaces.md",
@@ -1511,33 +1269,7 @@
         "Eigenvalues and Spectral Theory",
         "The Multilayer Perceptron",
         "Information Theory for AI",
-        "Convolutional Neural Networks"
-      ]
-    },
-    {
-      "id": "vae-encoder-decoder-generation",
-      "title": "2. VAE",
-      "section": "camp",
-      "level": "Advanced",
-      "time": "1 week",
-      "summary": "Codes as ranges, the reparameterization trick and the ELBO.",
-      "prerequisites": [
-        "clustering",
-        "representation-learning-autoencoders-vaes-latent-spaces",
-        "information-theory-core",
-        "gpt-causal-lm",
-        "probability-foundations",
-        "model-evaluation"
-      ],
-      "author": "USAAIO Guide Team",
-      "file": "content/3_Camp/3.10-RP3-vae-encoder-decoder-generation.md",
-      "code": "RP3",
-      "number": "3.10",
-      "frequency": 2,
-      "prerequisiteTitles": [
-        "k-Means Clustering",
-        "1. Autoencoder",
-        "Information Theory for AI",
+        "Convolutional Neural Networks",
         "GPT and Causal Language Modeling",
         "Probability and Bayes",
         "Classification Metrics"
@@ -1555,9 +1287,8 @@
         "probability-foundations",
         "information-theory-core",
         "representation-learning-autoencoders-vaes-latent-spaces",
-        "vae-encoder-decoder-generation",
         "gpt-causal-lm",
-        "transformer-generate",
+        "transformer-predict",
         "contrastive-learning",
         "model-evaluation"
       ],
@@ -1569,17 +1300,16 @@
         "Tokenization & Word Embeddings",
         "Probability and Bayes",
         "Information Theory for AI",
-        "1. Autoencoder",
-        "2. VAE",
+        "2. Autoencoders and VAEs",
         "GPT and Causal Language Modeling",
-        "13. Generate",
+        "5. Predicting and generating",
         "Contrastive Learning and CLIP",
         "Classification Metrics"
       ]
     },
     {
       "id": "generative-setup",
-      "title": "0. Setup",
+      "title": "1. Setup",
       "section": "camp",
       "level": "Advanced",
       "time": "1 week",
@@ -1603,7 +1333,6 @@
         "representation-learning-autoencoders-vaes-latent-spaces",
         "gpt-causal-lm",
         "information-theory-core",
-        "vae-encoder-decoder-generation",
         "advanced-optimization",
         "probability-foundations",
         "model-evaluation",
@@ -1615,10 +1344,9 @@
       "number": "3.11",
       "frequency": 1,
       "prerequisiteTitles": [
-        "1. Autoencoder",
+        "2. Autoencoders and VAEs",
         "GPT and Causal Language Modeling",
         "Information Theory for AI",
-        "2. VAE",
         "Convex Optimization",
         "Probability and Bayes",
         "Classification Metrics",
@@ -1627,13 +1355,13 @@
     },
     {
       "id": "generative-adding-noise",
-      "title": "4. Adding noise",
+      "title": "4. Diffusion and guidance",
       "section": "camp",
       "level": "Advanced",
-      "time": "1 week",
-      "summary": "The forward process and its one-jump formula.",
+      "time": "1-2 weeks",
+      "summary": "Adding noise, learning to remove it, and steering generation with guidance.",
       "prerequisites": [
-        "vae-encoder-decoder-generation",
+        "representation-learning-autoencoders-vaes-latent-spaces",
         "generative-adversarial-networks",
         "information-theory-core"
       ],
@@ -1643,46 +1371,10 @@
       "number": "3.16",
       "frequency": 3,
       "prerequisiteTitles": [
-        "2. VAE",
+        "2. Autoencoders and VAEs",
         "3. GAN",
         "Information Theory for AI"
       ]
-    },
-    {
-      "id": "generative-removing-noise",
-      "title": "5. Removing noise",
-      "section": "camp",
-      "level": "Advanced",
-      "time": "1 week",
-      "summary": "Predicting the noise, the reverse step and the DDPM loss.",
-      "prerequisites": [
-        "generative-adding-noise",
-        "information-theory-core"
-      ],
-      "author": "USAAIO Guide Team",
-      "file": "content/3_Camp/3.17-GM5-generative-removing-noise.md",
-      "code": "GM5",
-      "number": "3.17",
-      "frequency": 3,
-      "prerequisiteTitles": [
-        "4. Adding noise",
-        "Information Theory for AI"
-      ]
-    },
-    {
-      "id": "generative-guidance-and-stable-diffusion",
-      "title": "6. Guidance and Stable Diffusion",
-      "section": "camp",
-      "level": "Advanced",
-      "time": "1 week",
-      "summary": "Classifier-free guidance and latent diffusion.",
-      "prerequisites": [],
-      "author": "USAAIO Guide Team",
-      "file": "content/3_Camp/3.18-GM6-generative-guidance-and-stable-diffusion.md",
-      "code": "GM6",
-      "number": "3.18",
-      "frequency": 1,
-      "prerequisiteTitles": []
     },
     {
       "id": "evaluating-generative-models",
@@ -1700,11 +1392,11 @@
     },
     {
       "id": "sciml-setup",
-      "title": "0. Setup",
+      "title": "1. The equation and the network",
       "section": "camp",
       "level": "Advanced",
       "time": "1 week",
-      "summary": "Learning from a differential equation, the history and the roadmap.",
+      "summary": "The heat equation, and a network whose output is its solution.",
       "prerequisites": [],
       "author": "USAAIO Guide Team",
       "file": "content/3_Camp/3.19-XT3-sciml-setup.md",
@@ -1714,68 +1406,23 @@
       "prerequisiteTitles": []
     },
     {
-      "id": "sciml-the-equation",
-      "title": "1. The equation",
-      "section": "camp",
-      "level": "Advanced",
-      "time": "1 week",
-      "summary": "Euler's method and the residual of a candidate solution.",
-      "prerequisites": [],
-      "author": "USAAIO Guide Team",
-      "file": "content/3_Camp/3.20-XT4-sciml-the-equation.md",
-      "code": "XT4",
-      "number": "3.20",
-      "frequency": 2,
-      "prerequisiteTitles": []
-    },
-    {
-      "id": "sciml-network-as-solution",
-      "title": "2. A network as the solution",
-      "section": "camp",
-      "level": "Advanced",
-      "time": "1 week",
-      "summary": "A small tanh network as a function of time.",
-      "prerequisites": [],
-      "author": "USAAIO Guide Team",
-      "file": "content/3_Camp/3.21-XT5-sciml-network-as-solution.md",
-      "code": "XT5",
-      "number": "3.21",
-      "frequency": 2,
-      "prerequisiteTitles": []
-    },
-    {
       "id": "sciml-derivatives",
-      "title": "3. Derivatives",
+      "title": "2. Derivatives and the physics loss",
       "section": "camp",
       "level": "Advanced",
       "time": "1 week",
-      "summary": "Automatic differentiation and second derivatives.",
+      "summary": "Derivatives of a network by autograd, and a loss built from the equation.",
       "prerequisites": [],
       "author": "USAAIO Guide Team",
       "file": "content/3_Camp/3.22-XT6-sciml-derivatives.md",
       "code": "XT6",
       "number": "3.22",
-      "frequency": 2,
-      "prerequisiteTitles": []
-    },
-    {
-      "id": "sciml-physics-loss",
-      "title": "4. Physics loss",
-      "section": "camp",
-      "level": "Advanced",
-      "time": "1 week",
-      "summary": "The PINN loss, collocation points and the heat equation.",
-      "prerequisites": [],
-      "author": "USAAIO Guide Team",
-      "file": "content/3_Camp/3.23-XT7-sciml-physics-loss.md",
-      "code": "XT7",
-      "number": "3.23",
       "frequency": 3,
       "prerequisiteTitles": []
     },
     {
       "id": "sciml-training-and-checking",
-      "title": "5. Training and checking",
+      "title": "3. Training and checking",
       "section": "camp",
       "level": "Advanced",
       "time": "1 week",
@@ -1832,89 +1479,55 @@
     },
     {
       "id": "efficient-setup",
-      "title": "0. Setup",
+      "title": "1. Setup, prefill and decode",
       "section": "advanced",
       "level": "Advanced",
       "time": "1 week",
-      "summary": "Repeated work, memory and long texts, and the roadmap.",
-      "prerequisites": [],
+      "summary": "Where long-context inference spends its time, and its two phases.",
+      "prerequisites": [
+        "transformer-fundamentals"
+      ],
       "author": "USAAIO Guide Team",
       "file": "content/4_Advanced/4.7-TF25-efficient-setup.md",
       "code": "TF25",
       "number": "4.7",
       "frequency": 3,
-      "prerequisiteTitles": []
-    },
-    {
-      "id": "efficient-prefill-and-decode",
-      "title": "1. Prefill and decode",
-      "section": "advanced",
-      "level": "Advanced",
-      "time": "1 week",
-      "summary": "The prefill and decode phases and the work each does.",
-      "prerequisites": [
-        "transformer-fundamentals"
-      ],
-      "author": "USAAIO Guide Team",
-      "file": "content/4_Advanced/4.8-TF26-efficient-prefill-and-decode.md",
-      "code": "TF26",
-      "number": "4.8",
-      "frequency": 1,
       "prerequisiteTitles": [
         "Self-Attention Fundamentals"
       ]
     },
     {
       "id": "efficient-kv-cache",
-      "title": "2. KV cache",
+      "title": "2. The KV cache and sharing it",
       "section": "advanced",
       "level": "Advanced",
       "time": "1 week",
-      "summary": "Keeping keys and values, cache size and memory-bound decoding.",
+      "summary": "Keeping keys and values between steps, and sharing them across heads.",
       "prerequisites": [
-        "efficient-prefill-and-decode"
+        "efficient-setup",
+        "transformer-fundamentals",
+        "gpt-causal-lm",
+        "relative-position-rope-positional-methods"
       ],
       "author": "USAAIO Guide Team",
       "file": "content/4_Advanced/4.9-TF27-efficient-kv-cache.md",
       "code": "TF27",
       "number": "4.9",
-      "frequency": 2,
-      "prerequisiteTitles": [
-        "1. Prefill and decode"
-      ]
-    },
-    {
-      "id": "efficient-sharing-keys-and-values",
-      "title": "3. Sharing keys and values",
-      "section": "advanced",
-      "level": "Advanced",
-      "time": "1 week",
-      "summary": "Multi-query, grouped-query and multi-head latent attention.",
-      "prerequisites": [
-        "transformer-fundamentals",
-        "gpt-causal-lm",
-        "relative-position-rope-positional-methods",
-        "efficient-kv-cache"
-      ],
-      "author": "USAAIO Guide Team",
-      "file": "content/4_Advanced/4.10-TF28-efficient-sharing-keys-and-values.md",
-      "code": "TF28",
-      "number": "4.10",
       "frequency": 3,
       "prerequisiteTitles": [
+        "1. Setup, prefill and decode",
         "Self-Attention Fundamentals",
         "GPT and Causal Language Modeling",
-        "Positional Encoding and RoPE",
-        "2. KV cache"
+        "Positional Encoding and RoPE"
       ]
     },
     {
       "id": "efficient-flashattention",
-      "title": "4. FlashAttention",
+      "title": "3. FlashAttention and linear attention",
       "section": "advanced",
       "level": "Advanced",
       "time": "1 week",
-      "summary": "Exact attention in blocks, a running softmax total and sliding windows.",
+      "summary": "Exact attention in blocks, and attention with a running state instead of a softmax.",
       "prerequisites": [
         "transformer-fundamentals"
       ],
@@ -1922,29 +1535,14 @@
       "file": "content/4_Advanced/4.11-TF29-efficient-flashattention.md",
       "code": "TF29",
       "number": "4.11",
-      "frequency": 0,
+      "frequency": 3,
       "prerequisiteTitles": [
         "Self-Attention Fundamentals"
       ]
     },
     {
-      "id": "efficient-linear-attention",
-      "title": "5. Linear attention",
-      "section": "advanced",
-      "level": "Advanced",
-      "time": "1 week",
-      "summary": "A feature map in place of the softmax, and the running state.",
-      "prerequisites": [],
-      "author": "USAAIO Guide Team",
-      "file": "content/4_Advanced/4.12-TF30-efficient-linear-attention.md",
-      "code": "TF30",
-      "number": "4.12",
-      "frequency": 3,
-      "prerequisiteTitles": []
-    },
-    {
       "id": "sparse-attention-sinks-and-eviction",
-      "title": "6. Sparse attention, sinks and eviction",
+      "title": "4. Sparse attention, sinks and eviction",
       "section": "advanced",
       "level": "Advanced",
       "time": "1 week",
@@ -1958,7 +1556,7 @@
     },
     {
       "id": "state-space-models",
-      "title": "7. State-space models",
+      "title": "5. State-space models",
       "section": "advanced",
       "level": "Advanced",
       "time": "1 week",
@@ -1978,7 +1576,7 @@
       "time": "1 week",
       "summary": "Sparse routing: growing parameter count without growing per-token compute.",
       "prerequisites": [
-        "transformer-stack",
+        "transformer-residual-and-layernorm",
         "neural-networks-perceptrons-mlps-activations"
       ],
       "author": "USAAIO Guide Team",
@@ -1987,7 +1585,7 @@
       "number": "4.15",
       "frequency": 0,
       "prerequisiteTitles": [
-        "11. Stack",
+        "4. The Transformer block",
         "The Multilayer Perceptron"
       ]
     },

@@ -1,153 +1,570 @@
 {
-  "module": "generative-adding-noise",
-  "stage": "Camp",
-  "index": [
+ "module": "generative-adding-noise",
+ "stage": "Camp",
+ "index": [
+  {
+   "id": "gen-where-to-split-a-thousand-steps",
+   "moduleId": "generative-adding-noise",
+   "title": "Where to Split a Thousand Steps",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=gen-where-to-split-a-thousand-steps",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "A cheap stand-in for DDPM's 1,000-step forward process would precompute training pairs as two jumps, one jump per stretch of the schedule. The split step is chosen so the two stretches add the same noise variance. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "gm4-forward-process",
+   "moduleId": "generative-adding-noise",
+   "title": "Jump to Any Timestep in One Line",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=gm4-forward-process",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Camp"
+   ],
+   "prompt": "Derive and verify the closed-form diffusion forward process against a 100-step simulation, and read the signal-to-noise curve off the schedule.",
+   "answer": "Auto-graded inside the notebook. Alpha-bar values, SNR in dB, the half-life step t_half, and the simulation gaps must match to 1e-5, with SNR falling monotonically and both gaps small."
+  },
+  {
+   "id": "gen-the-weight-of-the-two-images",
+   "moduleId": "generative-adding-noise",
+   "title": "The Weight the Best Network Puts on Each Training Image",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=gen-the-weight-of-the-two-images",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "The best possible network for the two training images returns a weighted average of LEFT and RIGHT, and one number, the weight on LEFT, describes it. Derive that weight, compute it when the same noisy image is read at a different step, and read what the printed weights say about when a sampling run commits to an image. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "gen-the-guided-value-at-step-500",
+   "moduleId": "generative-adding-noise",
+   "title": "The Guided Value at Step 500 of a Prompted Run",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=gen-the-guided-value-at-step-500",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "A prompted run holds a different noisy image at step 500 than the unguided run, so its unprompted estimate is different too. Give the weight on LEFT and the guided estimate for the prompted run's own step 500 image, and say which of the two a sampler uses. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "gen-reweighting-an-imperfect-prompt",
+   "moduleId": "generative-adding-noise",
+   "title": "Reweighting by a Prompt the Classifier Is Unsure About",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/theory/?id=gen-reweighting-an-imperfect-prompt",
+   "tags": [
+    "Theory",
+    "Multiple choice",
+    "Camp"
+   ],
+   "prompt": "The page turns guidance into reweighting: sampling with weight w follows ln p(x_t) plus w times ln p(prompt given x_t), which reweights the noisy images by p(prompt given x_t) raised to w. Keep the chapter's two training images, LEFT and RIGHT, each with half the data. The prompt asks for left, and an imperfect classifier scores a noisy image from LEFT at 0.9 and one from RIGHT at 0.2. How much of the reweighted mass sits on LEFT when w is 3?",
+   "answer": "0.989. Reweighting multiplies each image's share by the classifier's score raised to w, so LEFT gets 0.9 cubed = 0.729 and RIGHT gets 0.2 cubed = 0.008. LEFT's share of the total is 0.729 / 0.737 = 0.989. That is the sense in which w above 1 favors images where the prompt is unmistakable: the uncertain image falls away faster than the confident one."
+  },
+  {
+   "id": "gen-two-starts-with-the-same-contrast",
+   "moduleId": "generative-adding-noise",
+   "title": "Two Starts with the Same Contrast",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=gen-two-starts-with-the-same-contrast",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Camp"
+   ],
+   "prompt": "The running example's ten-jump sampler turns a start from pure noise into one of its two training images, and with only two training images the whole run depends on the start through one number, the contrast of its pixels. Show why, then use it to say what two starts that share a contrast have in common and what becomes of a start that barely leans either way. 3 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "gen-diffusion-in-numpy",
+   "moduleId": "generative-adding-noise",
+   "title": "The Chapter's Diffusion Model in NumPy",
+   "source": "USAAIO Guide",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=gen-diffusion-in-numpy",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Camp"
+   ],
+   "prompt": "Build the chapter's four-pixel diffusion model in NumPy: the noise schedule and the forward process, the estimate of the clean image from a noisy one, the ten-jump sampler, and classifier-free guidance on top of it.",
+   "answer": "Auto-graded inside the notebook. Each part's checks must pass: the schedule and forward-process values, the estimate's weights, the sampler's final image, and the guided sampler's final image."
+  },
+  {
+   "id": "gm5-cfg-scale",
+   "moduleId": "generative-adding-noise",
+   "title": "Turning Up the Guidance Until It Breaks",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=gm5-cfg-scale",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Camp"
+   ],
+   "prompt": "Work classifier-free guidance out in closed form on a Gaussian toy, and measure how prompt adherence and sample diversity trade off as the scale rises.",
+   "answer": "Auto-graded inside the notebook. Guided means, standard deviations, adherence fractions, and the largest w whose guided precision is still positive must match to 1e-5, with diversity falling as guidance rises."
+  }
+ ],
+ "theory": [
+  {
+   "id": "gen-where-to-split-a-thousand-steps",
+   "moduleId": "generative-adding-noise",
+   "title": "Where to Split a Thousand Steps",
+   "difficulty": "Medium",
+   "minutes": 18,
+   "overview": [
+    "A practitioner wants a cheap stand-in for the forward process, to precompute training pairs without running 1,000 single steps. The stand-in keeps DDPM's schedule but replaces the run with two stretches, each used as one jump. The split is chosen so that the noise grows evenly across the two halves of the run, which means picking the step $m$ where the second stretch starts so that the two stretches add the same noise variance."
+   ],
+   "parts": [
     {
-      "id": "gen-where-to-split-a-thousand-steps",
-      "moduleId": "generative-adding-noise",
-      "title": "Where to Split a Thousand Steps",
-      "source": "USAAIO-style",
-      "difficulty": "Medium",
-      "url": "/theory/?id=gen-where-to-split-a-thousand-steps",
-      "tags": [
-        "Theory",
-        "Multi-part",
-        "Camp"
-      ],
-      "prompt": "A cheap stand-in for DDPM's 1,000-step forward process would precompute training pairs as two jumps, one jump per stretch of the schedule. The split step is chosen so the two stretches add the same noise variance. 3 parts.",
-      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "The first stretch is steps 1 to $m$, so the second one is steps $m + 1$ to 1000. Write the noise variance each stretch adds in terms of $\\bar\\alpha_m$ and $\\bar\\alpha_{1000}$, set them equal, and find the step. Give $m$ to the nearest step. Also report the noise variance each stretch adds and the factor by which each one multiplies the image."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The first stretch keeps a share $\\bar\\alpha_m$ of the signal, so it multiplies the image by $\\sqrt{\\bar\\alpha_m}$ and adds noise of variance $1 - \\bar\\alpha_m$."
+      },
+      {
+       "p": "The second stretch covers the remaining steps, whose alphas multiply to $\\bar\\alpha_{1000} \\div \\bar\\alpha_m$. It multiplies the image by $\\sqrt{\\bar\\alpha_{1000} \\div \\bar\\alpha_m}$ and adds noise of variance $1 - \\bar\\alpha_{1000} \\div \\bar\\alpha_m$."
+      },
+      {
+       "p": "Setting the two variances equal,"
+      },
+      {
+       "tex": "1 - \\bar\\alpha_m = 1 - \\frac{\\bar\\alpha_{1000}}{\\bar\\alpha_m}\n\\qquad\\Longrightarrow\\qquad\n\\bar\\alpha_m^2 = \\bar\\alpha_{1000} ."
+      },
+      {
+       "p": "With $\\bar\\alpha_{1000} = 4.036 \\times 10^{-5}$ the split wants $\\bar\\alpha_m = 0.006353$, and the cumulative product of the schedule straddles that value between two steps,"
+      },
+      {
+       "tex": "\\bar\\alpha_{706} = 0.006397, \\qquad \\bar\\alpha_{707} = 0.006307 ."
+      },
+      {
+       "p": "So $m = 706$ to the nearest step. At that split the two stretches add noise of variance $0.99360$ and $0.99369$, and each multiplies the image by about $0.080$ ($0.0800$ and $0.0794$). Together they multiply the image by $0.00635 = \\sqrt{\\bar\\alpha_{1000}}$, the factor the one jump uses."
+      },
+      {
+       "p": "Note what the condition does to the two stretches. It makes them nearly interchangeable, since they share a noise variance and a signal factor, so their order cannot matter. What it does not balance is their length: 706 steps against 294, and each of those 294 steps scales down whatever the first 706 produced."
+      },
+      {
+       "result": "706"
+      }
+     ]
     },
     {
-      "id": "gm4-forward-process",
-      "moduleId": "generative-adding-noise",
-      "title": "Jump to Any Timestep in One Line",
-      "source": "Custom",
-      "difficulty": "Medium",
-      "url": "/editor/?nb=gm4-forward-process",
-      "tags": [
-        "Coding",
-        "Implementation",
-        "Notebook",
-        "Camp"
-      ],
-      "prompt": "Derive and verify the closed-form diffusion forward process against a 100-step simulation, and read the signal-to-noise curve off the schedule.",
-      "answer": "Auto-graded inside the notebook. Alpha-bar values, SNR in dB, the half-life step t_half, and the simulation gaps must match to 1e-5, with SNR falling monotonically and both gaps small."
-    }
-  ],
-  "theory": [
+     "id": "1.2",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "A colleague on the same team reads the merge the other way and adds the two noise variances. Give the number the colleague reports, to three decimals, and say what is wrong with it."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The colleague gets $0.99360 + 0.99369 = 1.98729$."
+      },
+      {
+       "p": "The noise from the first stretch does not reach step 1000 at the size it was drawn. The second stretch multiplies everything it carries by its own signal factor, $0.0794$, so the variance of that noise is scaled by the square of that factor, $0.006309$, on the way through:"
+      },
+      {
+       "tex": "0.006309 \\times 0.99360 = 0.00627 ."
+      },
+      {
+       "p": "Only the fresh noise of the second stretch, of variance $0.99369$, arrives undamped. Merged, the variance is"
+      },
+      {
+       "tex": "0.00627 + 0.99369 = 0.99996 = 1 - \\bar\\alpha_{1000},"
+      },
+      {
+       "p": "which is what the one jump to step 1000 gives."
+      },
+      {
+       "p": "Variances add when both reach the end of the run undamped. One of these two is scaled on the way, so the merge is a weighted combination of them rather than a plain sum. The colleague's number is close to 2, which would give the pixels a spread of about $1.41$ rather than $1.00$, and the coarse process would no longer hold the same range of values as the process it stands in for."
+      },
+      {
+       "result": "1.987"
+      }
+     ]
+    },
     {
-      "id": "gen-where-to-split-a-thousand-steps",
-      "moduleId": "generative-adding-noise",
-      "title": "Where to Split a Thousand Steps",
-      "difficulty": "Medium",
-      "minutes": 18,
-      "overview": [
-        "A practitioner wants a cheap stand-in for the forward process, to precompute training pairs without running 1,000 single steps. The stand-in keeps DDPM's schedule but replaces the run with two stretches, each used as one jump. The split is chosen so that the noise grows evenly across the two halves of the run, which means picking the step $m$ where the second stretch starts so that the two stretches add the same noise variance."
-      ],
-      "parts": [
-        {
-          "id": "1.1",
-          "kind": "computation",
-          "requirement": "Reasoning is not required.",
-          "prompt": [
-            {
-              "p": "The first stretch is steps 1 to $m$, so the second one is steps $m + 1$ to 1000. Write the noise variance each stretch adds in terms of $\\bar\\alpha_m$ and $\\bar\\alpha_{1000}$, set them equal, and find the step. Give $m$ to the nearest step. Also report the noise variance each stretch adds and the factor by which each one multiplies the image."
-            }
-          ],
-          "answer": [
-            {
-              "p": "The first stretch keeps a share $\\bar\\alpha_m$ of the signal, so it multiplies the image by $\\sqrt{\\bar\\alpha_m}$ and adds noise of variance $1 - \\bar\\alpha_m$."
-            },
-            {
-              "p": "The second stretch covers the remaining steps, whose alphas multiply to $\\bar\\alpha_{1000} \\div \\bar\\alpha_m$. It multiplies the image by $\\sqrt{\\bar\\alpha_{1000} \\div \\bar\\alpha_m}$ and adds noise of variance $1 - \\bar\\alpha_{1000} \\div \\bar\\alpha_m$."
-            },
-            {
-              "p": "Setting the two variances equal,"
-            },
-            {
-              "tex": "1 - \\bar\\alpha_m = 1 - \\frac{\\bar\\alpha_{1000}}{\\bar\\alpha_m}\n\\qquad\\Longrightarrow\\qquad\n\\bar\\alpha_m^2 = \\bar\\alpha_{1000} ."
-            },
-            {
-              "p": "With $\\bar\\alpha_{1000} = 4.036 \\times 10^{-5}$ the split wants $\\bar\\alpha_m = 0.006353$, and the cumulative product of the schedule straddles that value between two steps,"
-            },
-            {
-              "tex": "\\bar\\alpha_{706} = 0.006397, \\qquad \\bar\\alpha_{707} = 0.006307 ."
-            },
-            {
-              "p": "So $m = 706$ to the nearest step. At that split the two stretches add noise of variance $0.99360$ and $0.99369$, and each multiplies the image by about $0.080$ ($0.0800$ and $0.0794$). Together they multiply the image by $0.00635 = \\sqrt{\\bar\\alpha_{1000}}$, the factor the one jump uses."
-            },
-            {
-              "p": "Note what the condition does to the two stretches. It makes them nearly interchangeable, since they share a noise variance and a signal factor, so their order cannot matter. What it does not balance is their length: 706 steps against 294, and each of those 294 steps scales down whatever the first 706 produced."
-            },
-            {
-              "result": "706"
-            }
-          ]
-        },
-        {
-          "id": "1.2",
-          "kind": "derivation",
-          "requirement": "A complete derivation is required.",
-          "prompt": [
-            {
-              "p": "A colleague on the same team reads the merge the other way and adds the two noise variances. Give the number the colleague reports, to three decimals, and say what is wrong with it."
-            }
-          ],
-          "answer": [
-            {
-              "p": "The colleague gets $0.99360 + 0.99369 = 1.98729$."
-            },
-            {
-              "p": "The noise from the first stretch does not reach step 1000 at the size it was drawn. The second stretch multiplies everything it carries by its own signal factor, $0.0794$, so the variance of that noise is scaled by the square of that factor, $0.006309$, on the way through:"
-            },
-            {
-              "tex": "0.006309 \\times 0.99360 = 0.00627 ."
-            },
-            {
-              "p": "Only the fresh noise of the second stretch, of variance $0.99369$, arrives undamped. Merged, the variance is"
-            },
-            {
-              "tex": "0.00627 + 0.99369 = 0.99996 = 1 - \\bar\\alpha_{1000},"
-            },
-            {
-              "p": "which is what the one jump to step 1000 gives."
-            },
-            {
-              "p": "Variances add when both reach the end of the run undamped. One of these two is scaled on the way, so the merge is a weighted combination of them rather than a plain sum. The colleague's number is close to 2, which would give the pixels a spread of about $1.41$ rather than $1.00$, and the coarse process would no longer hold the same range of values as the process it stands in for."
-            },
-            {
-              "result": "1.987"
-            }
-          ]
-        },
-        {
-          "id": "1.3",
-          "kind": "derivation",
-          "requirement": "A complete derivation is required.",
-          "prompt": [
-            {
-              "p": "The practitioner expected a split this even to leave each stretch responsible for half of the noise in the final image. What share of the noise variance at step 1000 comes from the first stretch? Then say what this means for choosing split points."
-            }
-          ],
-          "answer": [
-            {
-              "p": "The first stretch contributes $0.00627$ of the $0.99996$ total, a share of $0.0063$, so $0.6\\%$. The second stretch brings the other $99.4\\%$, even though the two added the same variance at the time."
-            },
-            {
-              "p": "The asymmetry grows with every step after the split. A stretch's noise is multiplied by the signal factor of each step that follows it, and by step 706 those factors are small, so the first stretch's noise variance has been shrunk by about 158 times. Noise added late is never scaled down, because nothing follows it."
-            },
-            {
-              "p": "What sets the share is where the split sits in the schedule, and it moves in one direction only. At a split of step 350, where the first stretch adds noise of variance $0.715$, the share is $0.0001$. At a split of step 800 it is $0.026$, and only a split in the last steps of the run brings the first stretch near parity. Since a stretch that ends late already holds nearly all the noise, its share comes to very nearly the square of the following stretch's signal factor."
-            },
-            {
-              "p": "So a stretch's responsibility for the final image is set by how much signal the steps after it keep, not by how much noise it added when it ran. The equal-variance rule asks for a late split and lands at step 706, where the first stretch is adding nearly all of the noise and keeping almost none of it."
-            },
-            {
-              "result": "0.0063"
-            }
-          ]
-        }
-      ]
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "The practitioner expected a split this even to leave each stretch responsible for half of the noise in the final image. What share of the noise variance at step 1000 comes from the first stretch? Then say what this means for choosing split points."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The first stretch contributes $0.00627$ of the $0.99996$ total, a share of $0.0063$, so $0.6\\%$. The second stretch brings the other $99.4\\%$, even though the two added the same variance at the time."
+      },
+      {
+       "p": "The asymmetry grows with every step after the split. A stretch's noise is multiplied by the signal factor of each step that follows it, and by step 706 those factors are small, so the first stretch's noise variance has been shrunk by about 158 times. Noise added late is never scaled down, because nothing follows it."
+      },
+      {
+       "p": "What sets the share is where the split sits in the schedule, and it moves in one direction only. At a split of step 350, where the first stretch adds noise of variance $0.715$, the share is $0.0001$. At a split of step 800 it is $0.026$, and only a split in the last steps of the run brings the first stretch near parity. Since a stretch that ends late already holds nearly all the noise, its share comes to very nearly the square of the following stretch's signal factor."
+      },
+      {
+       "p": "So a stretch's responsibility for the final image is set by how much signal the steps after it keep, not by how much noise it added when it ran. The equal-variance rule asks for a late split and lands at step 706, where the first stretch is adding nearly all of the noise and keeping almost none of it."
+      },
+      {
+       "result": "0.0063"
+      }
+     ]
     }
-  ]
+   ]
+  },
+  {
+   "id": "gen-the-weight-of-the-two-images",
+   "moduleId": "generative-adding-noise",
+   "title": "The Weight the Best Network Puts on Each Training Image",
+   "difficulty": "Medium",
+   "minutes": 18,
+   "overview": [
+    "The best possible network returns a weighted average of the training images, and the weight on each image says how likely that image is to have produced the noisy image it was given. For LEFT and RIGHT the average always has the same shape, whatever the noisy image is, so one number describes it."
+   ],
+   "setup": [
+    {
+     "p": "Let the noisy image be $x = (x_1, x_2, x_3, x_4)$ read at step $t$, and write $C = x_1 + x_3 - x_2 - x_4$ for its contrast: how much its left column beats its right column."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Show that the estimate of the clean image is $(w,\\ 1 - w,\\ w,\\ 1 - w)$, and find $w$ as a function of $C$ and of $\\sqrt{\\bar\\alpha_t} \\div (1 - \\bar\\alpha_t)$."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The two training images are LEFT $= (1, 0, 1, 0)$ and RIGHT $= (0, 1, 0, 1)$, so any weighted average of them is $(w, 1 - w, w, 1 - w)$ for the weight $w$ on LEFT. That settles the shape for any input."
+      },
+      {
+       "p": "For the weight itself, put $s = \\sqrt{\\bar\\alpha_t}$ and let $d_L$ and $d_R$ be the two squared distances the page's `estimate` function computes, so that $w = e^{-d_L} \\div (e^{-d_L} + e^{-d_R})$. Write $\\|x - s L\\|^2 = \\|x\\|^2 - 2 s \\, x \\cdot L + s^2 \\|L\\|^2$. Both images have $\\|L\\|^2 = \\|R\\|^2 = 2$, so those last terms cancel in the difference, and"
+      },
+      {
+       "tex": "d_L - d_R = \\frac{-2 s \\, (x \\cdot L - x \\cdot R)}{2 (1 - \\bar\\alpha_t)}\n= \\frac{-s \\, C}{1 - \\bar\\alpha_t},"
+      },
+      {
+       "p": "because $x \\cdot L = x_1 + x_3$ and $x \\cdot R = x_2 + x_4$. Then"
+      },
+      {
+       "tex": "w = \\frac{1}{1 + e^{d_L - d_R}}\n= \\frac{1}{1 + \\exp\\!\\big(-C \\sqrt{\\bar\\alpha_t} \\div (1 - \\bar\\alpha_t)\\big)} ."
+      },
+      {
+       "p": "The weight is a logistic function of the contrast, scaled by $\\sqrt{\\bar\\alpha_t} \\div (1 - \\bar\\alpha_t)$. With the running example's noise $\\varepsilon = (0.13, -0.13, 0.64, 0.10)$, the noisy image at step 500 is $(0.405, -0.125, 0.895, 0.096)$, whose contrast is $C = 0.405 + 0.895 + 0.125 - 0.096 = 1.329$. At step 500 the factor is $0.280 \\div 0.921 = 0.304$, the product is $0.404$, and the weight comes to $0.600$, the page's number."
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Now read that same noisy image as step 350, where $\\bar\\alpha_{350} = 0.2852$ so that the factor is $0.534 \\div 0.715 = 0.747$. Give the weight on LEFT to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The contrast does not change, because the noisy image has not changed: it is still $C = 1.329$. Only the step, and with it the factor, changes."
+      },
+      {
+       "p": "The product is $1.329 \\times 0.747 = 0.993$, and"
+      },
+      {
+       "tex": "w = \\frac{1}{1 + e^{-0.993}} = \\frac{1}{1 + 0.371} = 0.730 ."
+      },
+      {
+       "p": "So the estimate is $(0.730,\\ 0.270,\\ 0.730,\\ 0.270)$, which leans further towards LEFT than the step 500 estimate of $(0.600,\\ 0.400,\\ 0.600,\\ 0.400)$ does. Reading the factor off the schedule matters: the step 500 factor of 0.304 would give $1.329 \\times 0.304 = 0.404$ and a weight of 0.600, the weight that belongs to a different step."
+      },
+      {
+       "result": "0.730"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "The page reads the same noisy image as steps 200, 500 and 800 and prints weights of 0.959, 0.600 and 0.513. The factor $\\sqrt{\\bar\\alpha_t} \\div (1 - \\bar\\alpha_t)$ is 2.381, 0.304 and 0.039 at those three steps. Explain why the weights come out as they do, and say what this says about where in a sampling run the image commits to one of the training images."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The factor grows with the surviving signal and shrinks with the added noise: $\\sqrt{\\bar\\alpha_t}$ is how much of the clean image survives, and $1 - \\bar\\alpha_t$ is the variance of the noise added alongside it. The product with the contrast is therefore the log-odds in favour of LEFT, the log of the ratio of the noisy image's likelihood under LEFT to its likelihood under RIGHT, and the logistic turns a log-odds into a weight."
+      },
+      {
+       "p": "At step 800 the factor is 0.039 / 0.999² = 0.039, so the contrast gives a log-odds of only 0.039 × 1.329 = 0.052 and the weight is 0.513. The noisy image is almost pure noise and the network can say almost nothing. At step 200 the factor is 0.812 / 0.584² = 2.381, so the contrast gives a log-odds of 2.381 × 1.329 = 3.16, the logistic has saturated, and the weight 0.959 is nearly all on LEFT. Step 500 sits between them at a log-odds of 0.404."
+      },
+      {
+       "p": "So the commitment happens over a band of middle steps. Early in a run the factor is tiny and the estimate is the average of the training images, which is a gray blend. Late in a run the factor is large and the estimate is one image, so the run's answer is fixed. The three rows are the same statement about three different noise levels, which is why the page has to tell the network the step: without $t$ one network would have to give one answer for all three."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "gen-the-guided-value-at-step-500",
+   "moduleId": "generative-adding-noise",
+   "title": "The Guided Value at Step 500 of a Prompted Run",
+   "difficulty": "Medium",
+   "minutes": 16,
+   "overview": [
+    "Guidance is recomputed at every step, from the noisy image the run is holding at that step. Turn the prompt on and that image changes, so the unprompted estimate changes with it."
+   ],
+   "setup": [
+    {
+     "p": "Start B of Step 5, $(1.05,\\ 1.78,\\ -2.55,\\ -0.14)$, is sampled over the same ten jumps, 1,000 down to 0, with the prompt \"left\" and $w = 3$. At step 500 that run holds"
+    },
+    {
+     "tex": "(1.589,\\ 1.401,\\ -1.866,\\ -0.442),"
+    },
+    {
+     "p": "not the $(1.123,\\ 1.868,\\ -2.333,\\ 0.025)$ of the unguided run. The training set is still LEFT and RIGHT, and $\\bar\\alpha_{500} = 0.0786$, so the signal factor is 0.2803 and the noise variance is 0.9214."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Give the weight the unprompted network puts on LEFT for that image, to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Step 5's `estimate` function gives each training image the squared distance $d = \\|x - \\sqrt{\\bar\\alpha_t} \\,(\\text{image})\\|^2 \\div (2 (1 - \\bar\\alpha_t))$ and then weights the images by $e^{-d}$, so what is needed is the difference $d_L - d_R$. With $s = 0.280$ the two sets of differences are"
+      },
+      {
+       "list": [
+        "LEFT: $(1.3091,\\ 1.4014,\\ -2.1466,\\ -0.4417)$, squares $1.7138 + 1.9639 + 4.6079 + 0.1951 = 8.4807$",
+        "RIGHT: $(1.5895,\\ 1.1210,\\ -1.8663,\\ -0.7220)$, squares $2.5265 + 1.2566 + 3.4831 + 0.5213 = 7.7875$"
+       ]
+      },
+      {
+       "p": "Dividing both by $2 \\times 0.9214 = 1.843$ gives $d_L = 4.602$ and $d_R = 4.226$, so the gap is $(8.4807 - 7.7875) \\div 1.843 = 0.376$. The image sits further from LEFT than from RIGHT, so that gap is positive and"
+      },
+      {
+       "tex": "w = \\frac{1}{1 + e^{0.376}} = \\frac{1}{1 + 1.456} = 0.407 ."
+      },
+      {
+       "p": "The gap does not depend on rounding the signal factor, because the two images have the same length and the $s^2$ terms cancel, so a reader who rounds $s$ to 0.280 gets the same 0.376."
+      },
+      {
+       "p": "The network now leans towards RIGHT, where the unguided run's own step 500 image gives a weight of only 0.280 on LEFT. Leaving the factor of 2 out of the distance doubles both distances, and the weight comes out 0.320 instead."
+      },
+      {
+       "result": "0.407"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "Give the first pixel of the guided estimate at step 500, to three decimal places."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Conditioned on \"left\" the training set is LEFT alone, so the prompted estimate is exactly $(1, 0, 1, 0)$ at every step. The unprompted estimate is the weighted average of LEFT and RIGHT, which has the form $(w, 1 - w, w, 1 - w)$ with $w = 0.407$, so it is $(0.407,\\ 0.593,\\ 0.407,\\ 0.593)$."
+      },
+      {
+       "p": "Guidance with $w = 3$ moves past the prompted estimate by three times the gap between the two, which is $3 \\times 0.593 = 1.779$. The first pixel is $0.407 + 1.779 = 2.186$, and the second is $0.593 - 1.779 = -1.186$. So the guided estimate is $(2.186,\\ -1.186,\\ 2.186,\\ -1.186)$."
+      },
+      {
+       "result": "2.186"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "The page's guidance table gives 2.44 as the first pixel of the guided estimate at step 500 of start B with $w = 3$. Explain why the number here is smaller, and say which of the two a sampler would use."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The page's 2.44 comes from an unprompted weight of 0.280, since its unprompted estimate is $(0.28,\\ 0.72,\\ 0.28,\\ 0.72)$ and $0.28 + 3 \\times 0.72 = 2.44$. That estimate belongs to the unguided run's step 500 image $(1.123,\\ 1.868,\\ -2.333,\\ 0.025)$, which is not the image the prompted run holds at step 500."
+      },
+      {
+       "p": "Guidance changes the estimate at step 1,000, so the jump to step 900 carries a different image, and the gap between the two runs has grown by step 500. The contrast $x_1 + x_3 - x_2 - x_4$ of the prompted run's image is $-0.277 - 0.960 = -1.237$, against $-1.210 - 1.893 = -3.103$ for the unguided one. The step 500 factor is 0.304, so those contrasts are worth 0.376 and 0.943 standard deviations, and the two unprompted weights come out 0.407 and 0.280. The prompted run's image leans towards RIGHT, but less sharply than the unguided run's, so guidance has less of a gap to work with."
+      },
+      {
+       "p": "A sampler uses the value it computes for the image it is holding, 2.186. Guiding the unguided run's estimate instead would mean steering a run that is not the one being sampled."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "gen-reweighting-an-imperfect-prompt",
+   "moduleId": "generative-adding-noise",
+   "title": "Reweighting by a Prompt the Classifier Is Unsure About",
+   "difficulty": "Medium",
+   "minutes": 10,
+   "overview": [],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "mcq",
+     "prompt": [
+      {
+       "p": "The page turns guidance into reweighting: sampling with weight $w$ follows $\\ln p(x_t) + w \\ln p(\\text{prompt} \\mid x_t)$, which reweights the noisy images by $p(\\text{prompt} \\mid x_t)^w$."
+      },
+      {
+       "p": "Keep the chapter's two training images, LEFT and RIGHT, each with half the data, and suppose the prompt is \"left\" and a classifier over prompts is imperfect: it returns 0.9 for a noisy image that came from LEFT and 0.2 for one that came from RIGHT. How much of the reweighted mass sits on LEFT when $w = 3$?"
+      },
+      {
+       "choices": [
+        {
+         "text": "0.729",
+         "explain": "This is the unnormalised 0.9 cubed, the weight LEFT would carry before the RIGHT image is counted at all. Both images are in the sum, so LEFT's share has to be divided by its total with RIGHT."
+        },
+        {
+         "text": "0.818",
+         "explain": "This is the w = 1 answer, where each image is reweighted once. Raising the classifier's score to the power w is what makes guidance bite: a score of 0.2 cubed is 0.008, so RIGHT loses far more than LEFT."
+        },
+        {
+         "text": "0.953",
+         "explain": "This is the w = 2 answer. The reweighting is 0.9 to the power w against 0.2 to the power w, so the answer has to be computed at w = 3, not at w = 2."
+        },
+        {
+         "text": "0.989",
+         "correct": true,
+         "explain": "Reweighting multiplies each image's share by the classifier's score raised to w, so LEFT gets 0.9 cubed = 0.729 and RIGHT gets 0.2 cubed = 0.008. LEFT's share of the total is 0.729 / 0.737 = 0.989. That is the sense in which w above 1 favors images where the prompt is unmistakable: the uncertain image falls away faster than the confident one."
+        }
+       ]
+      }
+     ],
+     "answer": [
+      {
+       "p": "Reweighting multiplies each image's share by the classifier's score raised to w, so LEFT gets 0.9 cubed = 0.729 and RIGHT gets 0.2 cubed = 0.008. LEFT's share of the total is 0.729 / 0.737 = 0.989. That is the sense in which w above 1 favors images where the prompt is unmistakable: the uncertain image falls away faster than the confident one."
+      },
+      {
+       "result": "0.989"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "gen-two-starts-with-the-same-contrast",
+   "moduleId": "generative-adding-noise",
+   "title": "Two Starts with the Same Contrast",
+   "difficulty": "Hard",
+   "minutes": 25,
+   "overview": [
+    "The running example's sampler turns a start from pure noise into one of its two training images. With LEFT and RIGHT as the training set, the whole run depends on the start through one number. Write the contrast of a noisy image as $C = x_1 + x_3 - x_2 - x_4$."
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "Show that the final image of the ten-jump sampler, over the steps 1,000, 900, 800, 700, 600, 500, 400, 300, 200, 100 and 0, depends on the start only through its contrast $C$."
+      }
+     ],
+     "answer": [
+      {
+       "p": "Three facts do the work. First, the estimate of the clean image is a weighted average of LEFT and RIGHT, so it is $(w, 1 - w, w, 1 - w)$ for the weight $w$ on LEFT, and that weight depends on the noisy image only through its contrast, as Step 5's problem shows. So the whole estimate at step $t$ is a function of $C_t$ alone, where $C_t$ is the contrast of the image the run holds at $t$."
+      },
+      {
+       "p": "Second, the implied noise is $\\varepsilon = (x_t - \\sqrt{\\bar\\alpha_t}\\, \\hat x_0) \\div \\sqrt{1 - \\bar\\alpha_t}$, so it is a linear function of $x_t$ and $\\hat x_0$, hence of $x_t$ alone once $\\hat x_0$ is fixed."
+      },
+      {
+       "p": "Third, the jump to the next step is $x_{t'} = \\sqrt{\\bar\\alpha_{t'}}\\, \\hat x_0 + \\sqrt{1 - \\bar\\alpha_{t'}}\\, \\varepsilon$, again linear in $x_t$ once $\\hat x_0$ is known. So there are constants $A$ and $B$ with $x_{t'} = A \\hat x_0(C_t) + B x_t$, and taking the contrast of both sides gives a rule for $C_{t'}$ that reads $C_t$ and nothing else. From $C_{1000}$ the rule determines $C_{900}$, then $C_{800}$, and so on down to $C_0$."
+      },
+      {
+       "p": "The final image is the estimate at the last step, because $\\sqrt{\\bar\\alpha_0} = 1$ and $\\sqrt{1 - \\bar\\alpha_0} = 0$, so the last jump returns the estimate and drops the noise. The final image is therefore a function of $C_{100}$, which is a function of $C_{1000}$ alone. The other three pixels of the start do nothing at all."
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "The start $(1.37,\\ 0,\\ 0,\\ -1.37)$ has the same contrast 2.74 as start A, $(0.19,\\ -0.52,\\ -0.41,\\ -2.44)$, but its four numbers are nothing like start A's. Give the contrast of the image each run holds at step 600."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The rule above says the two are the same, so the answer is one number for both. Following start A's run gives a contrast of 2.708 at step 500 and 2.671 at step 400, so step 600 sits at 2.728. Recomputing it directly from the update $\\hat x_0 = (w, 1 - w, w, 1 - w)$ and the jump gives the same 2.728 for the other start."
+      },
+      {
+       "p": "Carrying on, the contrast falls slowly at first and then quickly: 2.740 at step 900, 2.728 at 600, 2.565 at 200 and 2.407 at 100. The weight on LEFT runs 0.511, 0.611, 0.998 and 1.000 along the way, so the run ends at LEFT for both starts. Two starts that share a contrast but not a size therefore reach the same image, which is why the chapter can promise that a start with any lean towards LEFT ends at LEFT."
+      },
+      {
+       "result": "2.728"
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "A start of $(0.05,\\ -1.0,\\ -0.9,\\ 0.1)$ has a contrast of just 0.05. Give the first pixel of the image the ten-jump sampler returns from it, and explain why this start does not end at either training image."
+      }
+     ],
+     "answer": [
+      {
+       "p": "The contrast is $0.05 - 0.9 + 1.0 - 0.1 = 0.05$, which is almost zero, so the estimate starts as the average $(0.5, 0.5, 0.5, 0.5)$ and every jump moves it by very little. The run's contrast is 0.0498 at step 600 and 0.0541 at step 200, so the weight on LEFT is still 0.502 and 0.532 there. Only at the last step does it move, reaching 0.704 at step 100."
+      },
+      {
+       "p": "The final image is the estimate at that last step, so the first pixel is 0.704 and the run returns $(0.704,\\ 0.296,\\ 0.704,\\ 0.296)$. Which training image the run lands on, if either, is decided by the sign of the contrast, and a start that barely leans either way keeps the blend. The factor $\\sqrt{\\bar\\alpha_t} \\div (1 - \\bar\\alpha_t)$ is what turns a lean into a decision, and at step 100 it is 9.2, so the step-100 contrast of 0.094 is worth only 0.87 standard deviations, still just a weight of 0.704."
+      },
+      {
+       "result": "0.704"
+      }
+     ]
+    }
+   ]
+  }
+ ]
 }

@@ -1,136 +1,231 @@
 {
-  "module": "semantic-segmentation-unet-masks",
-  "stage": "Round 2",
-  "index": [
+ "module": "semantic-segmentation-unet-masks",
+ "stage": "Round 2",
+ "index": [
+  {
+   "id": "cv-kernel-four-stride-two",
+   "moduleId": "semantic-segmentation-unet-masks",
+   "title": "Kernel 4, Stride 2, Padding 1",
+   "source": "USAAIO-style",
+   "difficulty": "Medium",
+   "url": "/theory/?id=cv-kernel-four-stride-two",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "A transposed convolution with kernel size 4, stride 2 and padding 1 enlarges a map by a factor of 2. Apply it, with the kernel 1, 1, 1, 1, to the column 6, 6 and work out the output. 2 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  },
+  {
+   "id": "cv3-dice-empty-mask",
+   "moduleId": "semantic-segmentation-unet-masks",
+   "title": "A Perfect Score on an Empty Mask",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=cv3-dice-empty-mask",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "Compute Dice and IoU over slices where most ground-truth masks are empty, and measure how much the empty-empty convention moves the headline number.",
+   "answer": "Auto-graded inside the notebook. All three Dice conventions, IoU, and the counts must match to 1e-6, and the three Dice conventions must differ by more than 0.2."
+  },
+  {
+   "id": "cv3-boundary-iou",
+   "moduleId": "semantic-segmentation-unet-masks",
+   "title": "IoU Cannot See the Edges",
+   "source": "Custom",
+   "difficulty": "Hard",
+   "url": "/editor/?nb=cv3-boundary-iou",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "Implement binary erosion and boundary IoU, and show how a blob prediction with the right area hides from plain IoU but not from the boundary metric.",
+   "answer": "Auto-graded inside the notebook. Both IoUs, both boundary IoUs, and their gaps must match to 1e-6, with the boundary gap more than twice as large."
+  },
+  {
+   "id": "cv4-pck-normalization",
+   "moduleId": "semantic-segmentation-unet-masks",
+   "title": "A Keypoint Metric That Does Not Care How Big You Are",
+   "source": "Custom",
+   "difficulty": "Medium",
+   "url": "/editor/?nb=cv4-pck-normalization",
+   "tags": [
+    "Coding",
+    "Implementation",
+    "Notebook",
+    "Round 2"
+   ],
+   "prompt": "Score two pose models with PCK at 10 pixels and with PCK at 0.2 of the torso length on a dataset where half the people are small, and watch the raw pixel metric rank the models backwards.",
+   "answer": "Auto-graded inside the notebook. All four PCK values must match the reference to 1e-6, and the two metrics must disagree about which model is better."
+  },
+  {
+   "id": "cv-faint-lines-alone",
+   "moduleId": "semantic-segmentation-unet-masks",
+   "title": "Faint Lines Without Dimming",
+   "source": "USAAIO-style",
+   "difficulty": "Hard",
+   "url": "/theory/?id=cv-faint-lines-alone",
+   "tags": [
+    "Theory",
+    "Multi-part",
+    "Round 2"
+   ],
+   "prompt": "A 6 by 6 image holds a bright vertical line that a PGD attack has dimmed while adding faint horizontal lines across rows 2 and 5. Try the faint lines on their own: add a to every pixel of rows 2 and 5, keep the line at 1, and find the vertical filter's pooled total at a = 0.4 plus the smallest a at which the network stops preferring vertical. 2 parts.",
+   "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
+  }
+ ],
+ "theory": [
+  {
+   "id": "cv-kernel-four-stride-two",
+   "moduleId": "semantic-segmentation-unet-masks",
+   "title": "Kernel 4, Stride 2, Padding 1",
+   "difficulty": "Medium",
+   "minutes": 12,
+   "overview": [
+    "Many U-Nets and image generators enlarge a map 2 times with a transposed convolution of kernel size 4, stride 2 and padding 1, a kernel size that is a multiple of the stride."
+   ],
+   "setup": [
     {
-      "id": "cv-kernel-four-stride-two",
-      "moduleId": "semantic-segmentation-unet-masks",
-      "title": "Kernel 4, Stride 2, Padding 1",
-      "source": "USAAIO-style",
-      "difficulty": "Medium",
-      "url": "/theory/?id=cv-kernel-four-stride-two",
-      "tags": [
-        "Theory",
-        "Multi-part",
-        "Round 2"
-      ],
-      "prompt": "A transposed convolution with kernel size 4, stride 2 and padding 1 enlarges a map by a factor of 2. Apply it, with the kernel 1, 1, 1, 1, to the column 6, 6 and work out the output. 2 parts.",
-      "answer": "Worked solutions are given part by part on the problem page. Attempt each part on paper before revealing it."
-    },
-    {
-      "id": "cv3-dice-empty-mask",
-      "moduleId": "semantic-segmentation-unet-masks",
-      "title": "A Perfect Score on an Empty Mask",
-      "source": "Custom",
-      "difficulty": "Medium",
-      "url": "/editor/?nb=cv3-dice-empty-mask",
-      "tags": [
-        "Coding",
-        "Implementation",
-        "Notebook",
-        "Round 2"
-      ],
-      "prompt": "Compute Dice and IoU over slices where most ground-truth masks are empty, and measure how much the empty-empty convention moves the headline number.",
-      "answer": "Auto-graded inside the notebook. All three Dice conventions, IoU, and the counts must match to 1e-6, and the three Dice conventions must differ by more than 0.2."
-    },
-    {
-      "id": "cv3-boundary-iou",
-      "moduleId": "semantic-segmentation-unet-masks",
-      "title": "IoU Cannot See the Edges",
-      "source": "Custom",
-      "difficulty": "Hard",
-      "url": "/editor/?nb=cv3-boundary-iou",
-      "tags": [
-        "Coding",
-        "Implementation",
-        "Notebook",
-        "Round 2"
-      ],
-      "prompt": "Implement binary erosion and boundary IoU, and show how a blob prediction with the right area hides from plain IoU but not from the boundary metric.",
-      "answer": "Auto-graded inside the notebook. Both IoUs, both boundary IoUs, and their gaps must match to 1e-6, with the boundary gap more than twice as large."
-    },
-    {
-      "id": "cv4-pck-normalization",
-      "moduleId": "semantic-segmentation-unet-masks",
-      "title": "A Keypoint Metric That Does Not Care How Big You Are",
-      "source": "Custom",
-      "difficulty": "Medium",
-      "url": "/editor/?nb=cv4-pck-normalization",
-      "tags": [
-        "Coding",
-        "Implementation",
-        "Notebook",
-        "Round 2"
-      ],
-      "prompt": "Score two pose models with PCK at 10 pixels and with PCK at 0.2 of the torso length on a dataset where half the people are small, and watch the raw pixel metric rank the models backwards.",
-      "answer": "Auto-graded inside the notebook. All four PCK values must match the reference to 1e-6, and the two metrics must disagree about which model is better."
+     "p": "Apply this layer, with the kernel (1, 1, 1, 1), to the first column of the pooled vertical map, 6, 6."
     }
-  ],
-  "theory": [
+   ],
+   "parts": [
     {
-      "id": "cv-kernel-four-stride-two",
-      "moduleId": "semantic-segmentation-unet-masks",
-      "title": "Kernel 4, Stride 2, Padding 1",
-      "difficulty": "Medium",
-      "minutes": 12,
-      "overview": [
-        "Many U-Nets and image generators enlarge a map 2 times with a transposed convolution of kernel size 4, stride 2 and padding 1, a kernel size that is a multiple of the stride."
-      ],
-      "setup": [
-        {
-          "p": "Apply this layer, with the kernel (1, 1, 1, 1), to the first column of the pooled vertical map, 6, 6."
-        }
-      ],
-      "parts": [
-        {
-          "id": "1.1",
-          "kind": "computation",
-          "requirement": "Reasoning is not required.",
-          "prompt": [
-            {
-              "p": "What is the sum of the output values?"
-            }
-          ],
-          "answer": [
-            {
-              "p": "Each input value scales the kernel and is added in starting at its index times the stride, so the first 6 lands on places 1 to 4 and the second on places 3 to 6:"
-            },
-            {
-              "tex": "\\begin{array}{ccccccc}\n\\text{Place} & 1 & 2 & 3 & 4 & 5 & 6 \\\\ \\hline\n\\text{First 6} & 6 & 6 & 6 & 6 & \\text{} & \\text{} \\\\\n\\text{Second 6} & \\text{} & \\text{} & 6 & 6 & 6 & 6 \\\\\n\\text{Sum} & 6 & 6 & 12 & 12 & 6 & 6\n\\end{array}"
-            },
-            {
-              "p": "That is $(2 - 1) \\times 2 + 4 = 6$ values. Padding 1 drops the first and the last, leaving 6, 12, 12, 6, the $(2 - 1) \\times 2 - 2 + 4 = 4$ values of the formula, with sum 36."
-            },
-            {
-              "result": "36"
-            }
-          ]
-        },
-        {
-          "id": "1.2",
-          "kind": "derivation",
-          "requirement": "A complete derivation is required.",
-          "prompt": [
-            {
-              "p": "The column 6, 6 is the same value all the way along, and this kernel's copies overlap evenly. Is the output the same value all the way along? If not, say which values differ and why. Then say what the same layer gives for the longer column 6, 6, 6, 6, and find a kernel of size 4 whose output for 6, 6 is the same value all the way along."
-            }
-          ],
-          "answer": [
-            {
-              "p": "No. Every inside value gets two copies of the kernel and the two end values get one, so the output is 6, 12, 12, 6. That is not the checkerboard of the page, which alternates through the inside. It is an edge effect: an end value is missing the copy that an input value beyond the edge would have added. The longer column gives eight values, 6, 12, 12, 12, 12, 12, 12, 6: even inside, half at each end, whatever the length."
-            },
-            {
-              "p": "For a kernel $(a, b, c, d)$ the six values before padding are $6a, 6b, 6(a + c), 6(b + d), 6c, 6d$, so after padding the output is"
-            },
-            {
-              "tex": "6b, \\quad 6(a + c), \\quad 6(b + d), \\quad 6c ."
-            },
-            {
-              "p": "It is even when $b = a + c = b + d = c$, which forces $a = d = 0$ and $b = c$. The kernel (0, 1, 1, 0) gives 6, 6, 6, 6, the same as repeating each value twice. The inside values alternate between $a + c$ and $b + d$, so a learned kernel with $a + c \\ne b + d$ makes the checkerboard, and one with weight on its outer places, $a$ or $d$ not 0, leaves the ends out of step with the inside."
-            }
-          ]
-        }
-      ]
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the sum of the output values?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Each input value scales the kernel and is added in starting at its index times the stride, so the first 6 lands on places 1 to 4 and the second on places 3 to 6:"
+      },
+      {
+       "tex": "\\begin{array}{ccccccc}\n\\text{Place} & 1 & 2 & 3 & 4 & 5 & 6 \\\\ \\hline\n\\text{First 6} & 6 & 6 & 6 & 6 & \\text{} & \\text{} \\\\\n\\text{Second 6} & \\text{} & \\text{} & 6 & 6 & 6 & 6 \\\\\n\\text{Sum} & 6 & 6 & 12 & 12 & 6 & 6\n\\end{array}"
+      },
+      {
+       "p": "That is $(2 - 1) \\times 2 + 4 = 6$ values. Padding 1 drops the first and the last, leaving 6, 12, 12, 6, the $(2 - 1) \\times 2 - 2 + 4 = 4$ values of the formula, with sum 36."
+      },
+      {
+       "result": "36"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "derivation",
+     "requirement": "A complete derivation is required.",
+     "prompt": [
+      {
+       "p": "The column 6, 6 is the same value all the way along, and this kernel's copies overlap evenly. Is the output the same value all the way along? If not, say which values differ and why. Then say what the same layer gives for the longer column 6, 6, 6, 6, and find a kernel of size 4 whose output for 6, 6 is the same value all the way along."
+      }
+     ],
+     "answer": [
+      {
+       "p": "No. Every inside value gets two copies of the kernel and the two end values get one, so the output is 6, 12, 12, 6. That is not the checkerboard of the page, which alternates through the inside. It is an edge effect: an end value is missing the copy that an input value beyond the edge would have added. The longer column gives eight values, 6, 12, 12, 12, 12, 12, 12, 6: even inside, half at each end, whatever the length."
+      },
+      {
+       "p": "For a kernel $(a, b, c, d)$ the six values before padding are $6a, 6b, 6(a + c), 6(b + d), 6c, 6d$, so after padding the output is"
+      },
+      {
+       "tex": "6b, \\quad 6(a + c), \\quad 6(b + d), \\quad 6c ."
+      },
+      {
+       "p": "It is even when $b = a + c = b + d = c$, which forces $a = d = 0$ and $b = c$. The kernel (0, 1, 1, 0) gives 6, 6, 6, 6, the same as repeating each value twice. The inside values alternate between $a + c$ and $b + d$, so a learned kernel with $a + c \\ne b + d$ makes the checkerboard, and one with weight on its outer places, $a$ or $d$ not 0, leaves the ends out of step with the inside."
+      }
+     ]
     }
-  ]
+   ]
+  },
+  {
+   "id": "cv-faint-lines-alone",
+   "moduleId": "semantic-segmentation-unet-masks",
+   "title": "Faint Lines Without Dimming",
+   "difficulty": "Hard",
+   "minutes": 20,
+   "overview": [
+    "PGD's attacked image at $\\varepsilon = 0.4$ makes two changes: it dims the line to 0.6 in rows 1, 3, 4 and 6, and it adds faint lines of 0.4 across rows 2 and 5. Try the second change on its own. Add $a$ to every pixel of rows 2 and 5 and leave the line at 1 everywhere. Its pixels in rows 2 and 5 stay at 1, because the clip holds them there, so no pixel moves by more than $a$:"
+   ],
+   "setup": [
+    {
+     "tex": "\\begin{array}{ccccccc}\n\\text{Row} & \\text{Col 1} & \\text{Col 2} & \\text{Col 3} & \\text{Col 4} & \\text{Col 5} & \\text{Col 6} \\\\ \\hline\n1 & 0 & 0 & 1 & 0 & 0 & 0 \\\\\n2 & a & a & 1 & a & a & a \\\\\n3 & 0 & 0 & 1 & 0 & 0 & 0 \\\\\n4 & 0 & 0 & 1 & 0 & 0 & 0 \\\\\n5 & a & a & 1 & a & a & a \\\\\n6 & 0 & 0 & 1 & 0 & 0 & 0\n\\end{array}"
+    },
+    {
+     "p": "The network is the running example's: the two filters, ReLU, 2 × 2 max pooling and scores of a quarter of each pooled map's total."
+    }
+   ],
+   "parts": [
+    {
+     "id": "1.1",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "At $a = 0.4$, what is the total of the vertical pooled map?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "Every window of three rows holds exactly one of rows 2 and 5, so every row of a map has the same pattern."
+      },
+      {
+       "p": "**Vertical map.** Over columns 2 to 4, a plain row reads 0, 1, 0 and gives 2, and a faint row reads $a$, 1, $a$ and gives $2 - 2a$, so each value is $6 - 2a$. Over columns 1 to 3 a plain row gives $-1$ and a faint row $-a + 2a - 1 = a - 1$, a total of $a - 3$, below 0. Over columns 3 to 5 it is the same, and over columns 4 to 6 every row gives 0. After ReLU only $6 - 2a$ is left, the pooled map is $6 - 2a$, 0 in each row, and the vertical total is $12 - 4a$."
+      },
+      {
+       "p": "**Horizontal map.** The filter takes $-1$, 2, $-1$ times the sums of the window's top, middle and bottom rows. A plain row sums to 1 when the window covers column 3 (map columns 1 to 3) and to 0 over columns 4 to 6. A faint row sums to $1 + 2a$ and $3a$ in the same windows. Map rows 1 and 4 have the faint row in the middle, so they get twice the faint sum minus twice the plain sum: $4a$ in map columns 1 to 3 and $6a$ in map column 4. Map rows 2 and 3 have it at an edge and come out negative, so ReLU keeps"
+      },
+      {
+       "tex": "4a, \\ 4a, \\ 4a, \\ 6a \\quad \\text{in map rows 1 and 4, and 0 in rows 2 and 3.}"
+      },
+      {
+       "p": "Each pooled row is $4a, 6a$, and the horizontal total is $20a$."
+      },
+      {
+       "p": "At $a = 0.4$ the pooled vertical map is $6 - 2a, 0$ in each row, which is 5.2 and 0, and the total the classification layer scores is $12 - 4a = 10.4$. The horizontal total is $20a = 8$, so the scores are 2.6 and 2 and"
+      },
+      {
+       "tex": "p(\\text{vertical}) = \\frac{1}{1 + e^{-(2.6 - 2)}} = 0.646 ,"
+      },
+      {
+       "p": "against 0.953 for the untouched line. The faint rows cost the vertical total 1.6 of its 12 and give the horizontal map 8 out of nothing, but the network still says vertical."
+      },
+      {
+       "result": "10.4"
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "kind": "computation",
+     "requirement": "Reasoning is not required.",
+     "prompt": [
+      {
+       "p": "What is the smallest $a$ at which the network no longer prefers \"vertical\", that is, $p(\\text{vertical}) \\le 0.5$?"
+      }
+     ],
+     "answer": [
+      {
+       "p": "The scores are $0.25(12 - 4a) = 3 - a$ and $0.25 \\times 20a = 5a$. They tie when $3 - a = 5a$, at $a = 0.5$."
+      },
+      {
+       "p": "PGD's image does both things. The line dimmed to $1 - a$ makes the vertical total $12(1 - a)$. The faint rows now stand out by $3a$ in every window, $(1 + 2a) - (1 - a)$ where the window covers column 3 and $3a - 0$ where it does not, which makes all four pooled horizontal values $6a$ and the total $24a$. The scores are $3 - 3a$ and $6a$, equal at $a = 1/3$, which fits the page's PGD column, 0.574 at 0.3 and 0.354 at 0.4. Dimming the line costs no more budget than brightening the background, and it helps twice: it lowers the vertical score and raises the horizontal one. With the faint lines alone, a budget of 0.4 is not enough."
+      },
+      {
+       "result": "0.5"
+      }
+     ]
+    }
+   ]
+  }
+ ]
 }

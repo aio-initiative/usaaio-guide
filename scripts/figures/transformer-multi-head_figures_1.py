@@ -50,7 +50,7 @@ def cells(ax, x0, y0, rows, cw=1.0, ch=0.5, *, on=True, digits=3, muted=()):
                   color=P.mute if quiet else P.ink)
 
 
-# ------------------------------------------- 0. the whole model, step by step
+# ------------------------------------------- the whole model, section by section
 @render("transformer-steps", size="tower")
 def transformer_steps(ax):
     cx, w, h = 0.47, 0.62, 0.048
@@ -62,15 +62,15 @@ def transformer_steps(ax):
     }
 
     label(ax, cx, 0.025, "“the cat sat”", rank="label", ha="center")
-    block(ax, left, ys["tok"], w, h, "1. Tokenize")
-    block(ax, left, ys["emb"], w, h, "2. Embed")
-    block(ax, left, ys["pos"], w, h, "3. Add position")
-    block(ax, left, ys["attn"], w, h, "4 to 8. Masked multi-head attention",
+    block(ax, left, ys["tok"], w, h, "Tokenize")
+    block(ax, left, ys["emb"], w, h, "Embed")
+    block(ax, left, ys["pos"], w, h, "Add position")
+    block(ax, left, ys["attn"], w, h, "Masked multi-head attention",
           emph=True)
-    block(ax, left, ys["an1"], w, h, "9. Add & norm")
-    block(ax, left, ys["ffn"], w, h, "10. Feed-forward")
-    block(ax, left, ys["an2"], w, h, "9. Add & norm")
-    block(ax, left, ys["pred"], w, h, "12. Predict")
+    block(ax, left, ys["an1"], w, h, "Add & norm")
+    block(ax, left, ys["ffn"], w, h, "Feed-forward")
+    block(ax, left, ys["an2"], w, h, "Add & norm")
+    block(ax, left, ys["pred"], w, h, "Predict")
     label(ax, cx, 0.905, r"next token $x_4$ = “on”", rank="label",
           ha="center")
 
@@ -89,7 +89,7 @@ def transformer_steps(ax):
     fx0, fx1, fy0, fy1 = 0.055, 0.845, 0.335, 0.735
     ax.plot([fx0, fx1, fx1, fx0, fx0], [fy0, fy0, fy1, fy1, fy0],
             color=P.series[2], lw=THIN, ls=DASH, zorder=1)
-    label(ax, fx0, fy1 + 0.02, r"one block, $\times N$ (11. Stack)",
+    label(ax, fx0, fy1 + 0.02, r"one block, $\times N$ (Stack)",
           rank="small", ha="left", va="center")
 
     # Residual skips, on Manhattan routing: branch off the main flow, run down
@@ -115,7 +115,7 @@ def transformer_steps(ax):
             ls=DASH, zorder=2)
     arrow(ax, (lane, bottom + 0.008), (cx + 0.15, bottom + 0.008),
           color=P.series[2], linestyle=DASH)
-    label(ax, lane + 0.025, 0.47, "13. Generate: append the token, run again",
+    label(ax, lane + 0.025, 0.47, "Generate: append the token, run again",
           rank="small", ha="center", va="center", rotation=90)
 
     ax.set_xlim(0, 1)
@@ -543,7 +543,7 @@ def transformer_qkv(ax):
             ("value", "$W_V$", [0.909, -0.416, 1.020, 2.000], 0.4)]
     cw, ch, gx = 1.3, 0.55, 9.3
     cells(ax, 0.2, 2.0, [h], cw, ch)
-    label(ax, 0.2 + 2 * cw, 2.9, "vector of “sat”, from Step 3", rank="tick",
+    label(ax, 0.2 + 2 * cw, 2.9, "vector of “sat”, from part 1", rank="tick",
           ha="center")
     for name, weights, vals, y in outs:
         arrow(ax, (0.3 + 4 * cw, 2.0 + ch / 2), (gx - 1.7, y + ch / 2))
@@ -590,7 +590,7 @@ def transformer_mask_softmax(ax):
     upper = {(0, 1), (0, 2), (1, 2)}
     cw, ch = 1.0, 0.55
     xs = (0.9, 6.0, 11.1)
-    titles = ("scores from Step 5", "after the mask", "weights after softmax")
+    titles = ("scores", "after the mask", "weights after softmax")
     for x0, rows, title, mute in zip(xs, (scores, masked, weights), titles,
                                      (set(), upper, upper)):
         cells(ax, x0, 0, rows, cw, ch, muted=mute)
@@ -718,7 +718,7 @@ def transformer_feed_forward(ax):
     mid = x8 + 4 * cw
     for a, b in zip(ys, ys[1:]):
         arrow(ax, (mid, a - 0.05), (mid, b + ch + 0.05))
-    notes = ["“sat” after Step 9", "expand: 4 numbers to 8",
+    notes = ["“sat” after add and norm", "expand: 4 numbers to 8",
              "ReLU: negatives to 0", "shrink: 8 numbers to 4"]
     for y, note in zip(ys, notes):
         label(ax, 2.35, y + ch / 2, note, rank="small", ha="right",
