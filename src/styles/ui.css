@@ -1,18 +1,18 @@
 /* UI overhaul (2026-10-11): linked after main.css on every page so these rules win. Each area edits only its own file.
    The imports carry the asset version so bump-cache-version.mjs refreshes them with the pages. */
-@import url("ui/brand.css?v=20261025-fullsize");
-@import url("ui/lesson.css?v=20261025-fullsize");
-@import url("ui/controls.css?v=20261025-fullsize");
-@import url("ui/problems.css?v=20261025-fullsize");
-@import url("ui/problem-page.css?v=20261025-fullsize");
-@import url("ui/editor.css?v=20261025-fullsize");
-@import url("ui/mock.css?v=20261025-fullsize");
-@import url("ui/about-footer.css?v=20261025-fullsize");
-@import url("ui/glossary.css?v=20261025-fullsize");
-@import url("ui/nav.css?v=20261025-fullsize");
-@import url("ui/home.css?v=20261025-fullsize");
-@import url("ui/pages.css?v=20261025-fullsize");
-@import url("ui/about.css?v=20261025-fullsize");
-@import url("ui/footer.css?v=20261025-fullsize");
-@import url("ui/polish.css?v=20261025-fullsize");
-@import url("ui/shape.css?v=20261025-fullsize");
+@import url("ui/brand.css?v=20261025-hoang");
+@import url("ui/lesson.css?v=20261025-hoang");
+@import url("ui/controls.css?v=20261025-hoang");
+@import url("ui/problems.css?v=20261025-hoang");
+@import url("ui/problem-page.css?v=20261025-hoang");
+@import url("ui/editor.css?v=20261025-hoang");
+@import url("ui/mock.css?v=20261025-hoang");
+@import url("ui/about-footer.css?v=20261025-hoang");
+@import url("ui/glossary.css?v=20261025-hoang");
+@import url("ui/nav.css?v=20261025-hoang");
+@import url("ui/home.css?v=20261025-hoang");
+@import url("ui/pages.css?v=20261025-hoang");
+@import url("ui/about.css?v=20261025-hoang");
+@import url("ui/footer.css?v=20261025-hoang");
+@import url("ui/polish.css?v=20261025-hoang");
+@import url("ui/shape.css?v=20261025-hoang");
